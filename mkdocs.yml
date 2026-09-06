@@ -1,0 +1,101 @@
+site_name: CyberSetor · Instituto No Setor
+site_description: Visão de Produto e Projeto — Requisitos de Software (FGA0313) · T02 · 2026.2 · FCTE/UnB
+site_author: Equipe CyberSetor
+site_url: https://mdsreq-fga-unb.github.io/REQ-2026.2-T02-CyberSetor/
+repo_url: https://github.com/mdsreq-fga-unb/REQ-2026.2-T02-CyberSetor
+repo_name: mdsreq-fga-unb/REQ-2026.2-T02-CyberSetor
+edit_uri: edit/main/docs/
+copyright: Equipe CyberSetor · Engenharia de Software · FCTE/UnB · 2026.2
+
+theme:
+  name: material
+  language: pt-BR
+  favicon: assets/favicon.png
+  icon:
+    repo: fontawesome/brands/github
+  features:
+    - navigation.tabs
+    - navigation.tabs.sticky
+    - navigation.indexes
+    - navigation.instant
+    - navigation.tracking
+    - navigation.sections
+    - navigation.top
+    - navigation.footer
+    - content.action.edit
+    - content.code.copy
+    - toc.follow
+    - search.suggest
+    - search.highlight
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: deep purple
+      accent: purple
+      toggle:
+        icon: material/weather-night
+        name: Alternar para o modo escuro
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: deep purple
+      accent: purple
+      toggle:
+        icon: material/weather-sunny
+        name: Alternar para o modo claro
+
+extra_css:
+  - assets/stylesheets/extra.css
+
+markdown_extensions:
+  - abbr
+  - admonition
+  - attr_list
+  - def_list
+  - footnotes
+  - md_in_html
+  - tables
+  - pymdownx.details
+  - pymdownx.superfences
+  - pymdownx.caret
+  - pymdownx.mark
+  - pymdownx.tilde
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.snippets
+  - toc:
+      permalink: true
+      toc_depth: 3
+
+plugins:
+  - search:
+      lang: pt
+
+exclude_docs: |
+  *.txt
+
+nav:
+  - Início: index.md
+  - Documento de Visão:
+      - Sumário e versões: visao/index.md
+      - 1. Cenário atual do cliente e do negócio: visao/1-cenario-atual.md
+      - 2. Solução proposta: visao/2-solucao-proposta.md
+      - 3. Intervenção social: visao/3-intervencao-social.md
+      - 4. Estratégias de engenharia de software: visao/4-estrategia-esw.md
+      - 5. Engenharia de requisitos: visao/5-engenharia-requisitos.md
+      - 6. Cronograma e entregas: visao/6-cronograma.md
+      - 7. Interação entre equipe e cliente: visao/7-equipe-e-cliente.md
+  - Requisitos:
+      - 8. Requisitos de software: requisitos/8-requisitos.md
+      - 9. DoR e DoD: requisitos/9-dor-dod.md
+      - 10. Backlog de produto: requisitos/10-backlog.md
+  - Gestão do projeto:
+      - Processo e ritos (ScrumXP): gestao/processo-scrumxp.md
+      - Matriz de competências e stack: gestao/matriz-competencias.md
+      - Boas práticas no GitHub: gestao/boas-praticas-github.md
+      - Atas de reunião: gestao/atas.md
+  - Entregas:
+      - Unidade 1: entregas/unidade-1.md
+      - Unidade 2: entregas/unidade-2.md
+  - Lições aprendidas:
+      - Unidade 1: licoes-aprendidas/unidade-1.md
+  - Referências: referencias.md
