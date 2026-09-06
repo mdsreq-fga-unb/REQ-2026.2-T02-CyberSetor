@@ -4,6 +4,7 @@
 |---|---|---|---|
 | 01/09/2026 | 1.0 | Versão inicial | Equipe CyberSetor |
 | 05/09/2026 | 1.1 | Revisão com foco único nas seções 1.4, 1.5, 1.7, 2.1 e 2.2 | Equipe CyberSetor |
+| 06/09/2026 | 1.2 | Seções 4, 5, 6 e 7 redigidas para o site | Equipe CyberSetor |
 
 
 A solução proposta para o Instituto No Setor tende a produzir uma intervenção social voltada à qualificação da capacidade de uma organização da sociedade civil de demonstrar o próprio trabalho, à redução do esforço burocrático que hoje recai sobre a equipe e à introdução de práticas digitais em uma organização de atuação predominantemente presencial.
