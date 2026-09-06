@@ -1,4 +1,27 @@
-# Referências bibliográficas
+# 12. Referências bibliográficas
 
-!!! warning "Página em construção"
-    Conteúdo a ser migrado do Documento de Visão de Produto e Projeto.
+Relação das fontes citadas no Documento de Visão de Produto e Projeto. Referências sobre plataformas concorrentes sustentam as afirmações da seção 2.5 e foram conferidas nas datas indicadas.
+
+## Disciplina
+
+MARSICANO, G. **Requisitos de Software: Comunicação é tudo!** v1.1 draft. Brasília: Faculdade de Ciências e Tecnologias em Engenharia, Universidade de Brasília, 2026.
+
+MARSICANO, G. **Plano de Ensino: Requisitos de Software (FGA0313), Turma 02, 2026.2.** Brasília: FCTE/UnB, 2026.
+
+MARSICANO, G. **Template: Visão do Produto e Projeto, v8.** Brasília: FCTE/UnB, 2026.
+
+## Cliente
+
+INSTITUTO CULTURAL E SOCIAL NO SETOR. **Apresentação institucional.** Brasília, 2026.
+
+INSTITUTO CULTURAL E SOCIAL NO SETOR. **Site institucional.** Disponível em: https://www.nosetor.com.br. Acesso em: 6 set. 2026.
+
+## Plataformas analisadas na seção 2.5
+
+SYMPLA. **Taxa Sympla: quanto custa.** Disponível em: https://produtores.sympla.com.br/quanto-custa/. Acesso em: 6 set. 2026.
+
+EVEN3. **Planos e preços.** Disponível em: https://www.even3.com.br/como-funciona/planos-e-precos/. Acesso em: 6 set. 2026.
+
+BÚSSOLA SOCIAL. **Sistema de gestão para OSC.** Disponível em: https://www.bussolasocial.com.br/sistema-de-gestao-para-osc/. Acesso em: 6 set. 2026.
+
+BÚSSOLA SOCIAL. **Planos e preços.** Disponível em: https://www.bussolasocial.com.br/precos/. Acesso em: 6 set. 2026.
