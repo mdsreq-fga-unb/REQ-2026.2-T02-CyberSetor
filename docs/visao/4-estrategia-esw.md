@@ -24,6 +24,7 @@ A estratégia para o projeto adota o **ScrumXP** como processo de desenvolviment
 A abordagem Ágil prioriza indivíduos e interações, software em funcionamento e colaboração contínua com os *stakeholders* em detrimento de processos engessados e documentação exaustiva prévia, mostrando-se ideal para a adaptação rápida às demandas em campo no Setor Comercial Sul (SCS).
 
 **Por que escolher a Abordagem Ágil?**
+
 - **Adaptação a Requisitos Emergentes:** Permite ajustar o escopo e o nível de detalhamento dos requisitos conforme novas necessidades emergem da convivência em campo com o parceiro, superando a rigidez da abordagem Preditiva (Dirigida por Planos).
 - **Entregas Incrementais de Valor:** Disponibiliza funcionalidades essenciais para validação precoce e contínua com a coordenação pedagógica, sem postergar a visibilidade da solução funcional para o término do semestre.
 - **Foco no Usuário de Campo:** Prioriza atender às necessidades operacionais reais (como chamada e presença em oficinas culturais e mutirões), calibrando a interface de acordo com o nível de letramento digital de quem atua na ponta.
@@ -35,6 +36,7 @@ O Ciclo de Vida Ágil estrutura o desenvolvimento em ciclos temporais curtos, re
 Conforme o referencial da disciplina, o ciclo de vida ágil é um *superset* que engloba nativamente as dimensões iterativa e incremental, operando-as sob ritos temporais estritos, feedback contínuo em ciclos curtos e adaptação constante ao contexto real do parceiro.
 
 **Por que escolher o Ciclo de Vida Ágil?**
+
 - **Sincronia com Marcos Acadêmicos (Releases Fixas):** Adapta-se perfeitamente aos quatro pontos de controle da disciplina mantendo datas e recursos fixos, usando o escopo como variável de ajuste para garantir software funcional homologado a cada release.
 - **Feedback Contínuo Baseado em Evidências:** Promove validações frequentes a cada 2 semanas diretamente com os educadores e gestores do Instituto No Setor por meio de incrementos executáveis, reduzindo divergências entre o problema real e a solução.
 - **Mitigação Precoce de Riscos Sociotécnicos:** Expõe precocemente desafios de integração técnica, usabilidade e modelagem de regras de negócio, permitindo refatorações contínuas e evolução adaptativa da arquitetura sem retrabalho tardio.
