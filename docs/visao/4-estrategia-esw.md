@@ -6,6 +6,7 @@
 | 05/09/2026 | 1.1 | Revisão com foco único nas seções 1.4, 1.5, 1.7, 2.1 e 2.2 | Equipe CyberSetor |
 | 06/09/2026 | 1.2 | Seções 4, 5, 6 e 7 redigidas para o site | Equipe CyberSetor |
 | 06/09/2026 | 1.3 | Refatoração e melhoria na apresentação e estrutura da seção 4 | Equipe CyberSetor |
+| 07/09/2026 | 1.4 | Adequação da classificação do Ciclo de Vida | Equipe CyberSetor |
 
 A partir do cenário diagnosticado na Seção 1 e da solução proposta na Seção 2, a equipe CyberSetor estabeleceu as decisões de estratégia de engenharia de software para o atendimento ao Instituto No Setor nas três camadas metodológicas distinguidas pelo referencial da disciplina: **abordagem**, **ciclo de vida** e **processo**.
 
@@ -13,11 +14,11 @@ A partir do cenário diagnosticado na Seção 1 e da solução proposta na Seç�
 
 ## 4.1 Estratégia Priorizada
 
-A estratégia para o projeto adota o **ScrumXP** como processo de desenvolvimento, fundamentando-se em uma abordagem **Ágil** e em um ciclo de vida **Iterativo e Incremental**. Essa combinação foi desenhada para conectar o contexto real da organização atendida à dinâmica acadêmica da disciplina, garantindo entregas frequentes com alto valor agregado, mitigação contínua de riscos e excelência técnica.
+A estratégia para o projeto adota o **ScrumXP** como processo de desenvolvimento, fundamentando-se em uma abordagem **Ágil** e em um ciclo de vida **Ágil**. Essa combinação foi desenhada para conectar o contexto real da organização atendida à dinâmica acadêmica da disciplina, garantindo entregas frequentes com alto valor agregado, mitigação contínua de riscos e excelência técnica.
 
 | Abordagem | Ciclo de Vida | Processo |
 |---|---|---|
-| **Ágil** | **Iterativo e Incremental** | **ScrumXP** |
+| **Ágil** | **Ágil** | **ScrumXP** |
 
 ### Abordagem: Ágil
 A abordagem Ágil prioriza indivíduos e interações, software em funcionamento e colaboração contínua com os stakeholders em detrimento de processos engessados e documentação exaustiva prévia. Essa abordagem é ideal para o contexto do projeto devido à necessidade de adaptação rápida às demandas de usuários em campo.
@@ -27,13 +28,15 @@ A abordagem Ágil prioriza indivíduos e interações, software em funcionamento
 - **Foco no Usuário:** Prioriza atender às necessidades operacionais reais (como a gestão de chamada e presença em oficinas culturais), calibrando a interface de acordo com o nível de letramento digital de quem atua na ponta.
 - **Flexibilidade:** Permite ajustar o escopo e o nível de detalhamento dos requisitos conforme novas necessidades emergem da convivência em campo com o parceiro.
 
-### Ciclo de Vida: Iterativo e Incremental
-O ciclo de vida Iterativo e Incremental organiza a evolução do produto em ciclos sucessivos (iterações). A cada ciclo, o sistema é revisitado e refinado (dimensão iterativa), ao mesmo tempo em que novos incrementos de software prontos e testados são integrados à solução (dimensão incremental).
+### Ciclo de Vida: Ágil
+O Ciclo de Vida Ágil estrutura o desenvolvimento em ciclos temporais curtos, regulares e de duração fixa (timeboxes/sprints quinzenais). Cada ciclo repete iterativamente todas as atividades essenciais da engenharia de software — elicitação, análise, projeto, codificação e testes —, gerando ao final de cada período um incremento funcional utilizável, testado e de valor demonstrável (MARSICANO, 2026).
 
-**Por que escolher Iterativo e Incremental?**
-- **Mitigação Precoce de Riscos:** Identifica problemas de integração técnica, modelagem de banco de dados ou incompatibilidade de requisitos logo nas etapas iniciais, evitando retrabalho tardio.
-- **Feedback Contínuo Baseado em Evidências:** Promove validações frequentes com base em protótipos navegáveis e software executável, diminuindo distorções entre a expectativa do cliente e a implementação da equipe.
-- **Evolução Contínua em Marcos Fixos:** O cronograma letivo impõe quatro pontos de controle (releases) com datas fixas; ciclos incrementais asseguram que cada ponto de controle entregue um subconjunto coerente e funcional do produto.
+Conforme o referencial da disciplina, o ciclo de vida ágil é um *superset* que engloba nativamente as dimensões iterativa e incremental, operando-as sob ritos temporais estritos, feedback contínuo em ciclos curtos e adaptação constante ao contexto real do parceiro.
+
+**Por que escolher o Ciclo de Vida Ágil?**
+- **Sincronia com Marcos Acadêmicos (Releases Fixas):** Adapta-se perfeitamente aos quatro pontos de controle da disciplina mantendo datas e recursos fixos, usando o escopo como variável de ajuste para garantir software funcional homologado a cada release.
+- **Feedback Contínuo Baseado em Evidências:** Promove validações frequentes a cada 2 semanas diretamente com os educadores e gestores do Instituto No Setor por meio de incrementos executáveis, reduzindo divergências entre o problema real e a solução.
+- **Mitigação Precoce de Riscos Sociotécnicos:** Expõe precocemente desafios de integração técnica, usabilidade e modelagem de regras de negócio, permitindo refatorações contínuas e evolução adaptativa da arquitetura sem retrabalho tardio.
 
 ### Processo: ScrumXP
 O **ScrumXP** resulta da união de dois processos ágeis consagrados: o **Scrum**, que atua como arcabouço de gestão fornecendo papéis, timeboxes, cerimônias e foco no valor do negócio; e o **eXtreme Programming (XP)**, que fornece as práticas técnicas de engenharia de software para garantir que o código seja limpo, testável e sustentável (MARSICANO, 2026). O Scrum responde por *quando* e por *quem* o trabalho é executado; o XP responde por *como* a solução é tecnicamente construída.
@@ -116,7 +119,7 @@ Conforme registrado por Marsicano (2026, §5.4.1), os sete valores fundamentais 
 2. **Nivelamento Técnico via Práticas de Engenharia:**
    - O diagnóstico da equipe revelou assimetria de conhecimento técnico em relação à pilha de desenvolvimento. Práticas como programação em pares (*Pair Programming*), integração contínua (*CI*) e propriedade coletiva do código transformam a construção do software em um processo contínuo de nivelamento e garantia de qualidade.
 3. **Requisitos Emergentes e Validação Precoce:**
-   - O domínio de prestação de contas, gestão de oficinas e controle de presenças possui regras específicas que são refinadas ao longo do contato com os educadores. O processo iterativo permite adaptar os requisitos sem sobrecusto de renegociação documental.
+   - O domínio de prestação de contas, gestão de oficinas e controle de presenças possui regras específicas que são refinadas ao longo do contato com os educadores. O ciclo de vida ágil permite adaptar os requisitos sem sobrecusto de renegociação documental.
 4. **Foco no Núcleo de Maior Impacto Social:**
    - O parceiro necessita prioritariamente resolver a fragilidade no registro de frequência e consolidação de indicadores para editais. O Product Backlog priorizado por valor garante que o MVP (núcleo da solução) seja implementado e homologado antes de funcionalidades acessórias.
 
