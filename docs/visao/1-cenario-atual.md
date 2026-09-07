@@ -35,7 +35,12 @@ O diagrama ilustra o ecossistema do Instituto No Setor, destacando a articulaç�
 
 ## 1.4 Identificação da Oportunidade ou Problema
 
-A consolidação das informações para a prestação de contas da Instituto No Setor enfrenta atualmente gargalos críticos, resultado de uma coleta de dados fragmentada e da dependência excessiva de controles manuais em planilhas eletrônicas. Esse cenário gera uma desarticulação no fluxo de informações, que vai desde a inscrição de participantes em oficinas até a entrega do relatório final, obrigando a equipe a realizar uma consolidação manual exaustiva de registros e evidências de campo a cada ciclo. Tal retrabalho burocrático não apenas sobrecarrega a equipe administrativa e eleva o risco de inconsistências nos dados, como também inviabiliza o acompanhamento em tempo real do atingimento das metas pactuadas em editais.
+<figure markdown>
+  ![Diagrama de Ishikawa: causas dos gargalos na consolidação das informações para a prestação de contas](../assets/img/ishikawa.jpg)
+  <figcaption>Figura 2 – Diagrama de Ishikawa. Fonte: elaborada pelos autores.</figcaption>
+</figure>
+
+A consolidação das informações para a prestação de contas do Instituto No Setor enfrenta atualmente gargalos críticos, resultado de uma coleta de dados fragmentada e da dependência excessiva de controles manuais em planilhas eletrônicas. Esse cenário gera uma desarticulação no fluxo de informações, que vai desde a inscrição de participantes em oficinas até a entrega do relatório final, obrigando a equipe a realizar uma consolidação manual exaustiva de registros e evidências de campo a cada ciclo. Tal retrabalho burocrático não apenas sobrecarrega a equipe administrativa e eleva o risco de inconsistências nos dados, como também inviabiliza o acompanhamento em tempo real do atingimento das metas pactuadas em editais.
 
 ## 1.5 Desafios do Projeto
 
@@ -53,7 +58,7 @@ Os principais stakeholders do projeto são: Maria Clara e Maria Eduarda (represe
 
 <figure markdown>
   ![Mapa de stakeholders do projeto CyberSetor](../assets/img/mapa-stakeholders.png)
-  <figcaption>Figura 2 – Mapa de stakeholders do projeto CyberSetor. Fonte: elaborada pelos autores.</figcaption>
+  <figcaption>Figura 3 – Mapa de stakeholders do projeto CyberSetor. Fonte: elaborada pelos autores.</figcaption>
 </figure>
 
 | Stakeholder | Relação com a solução | Interesse principal | Influência |
