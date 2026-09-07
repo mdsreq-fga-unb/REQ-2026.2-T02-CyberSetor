@@ -21,13 +21,14 @@ A estratégia para o projeto adota o **ScrumXP** como processo de desenvolviment
 | **Ágil** | **Ágil** | **ScrumXP** |
 
 ### Abordagem: Ágil
-A abordagem Ágil prioriza indivíduos e interações, software em funcionamento e colaboração contínua com os stakeholders em detrimento de processos engessados e documentação exaustiva prévia. Essa abordagem é ideal para o contexto do projeto devido à necessidade de adaptação rápida às demandas de usuários em campo.
+A abordagem Ágil prioriza indivíduos e interações, software em funcionamento e colaboração contínua com os *stakeholders* em detrimento de processos engessados e documentação exaustiva prévia, mostrando-se ideal para a adaptação rápida às demandas em campo no Setor Comercial Sul (SCS).
 
-**Principais Benefícios:**
-- **Entregas Incrementais de Valor:** Permite disponibilizar funcionalidades essenciais para validação precoce com a coordenação, sem postergar a visibilidade da solução para o término do semestre.
-- **Foco no Usuário:** Prioriza atender às necessidades operacionais reais (como a gestão de chamada e presença em oficinas culturais), calibrando a interface de acordo com o nível de letramento digital de quem atua na ponta.
-- **Flexibilidade:** Permite ajustar o escopo e o nível de detalhamento dos requisitos conforme novas necessidades emergem da convivência em campo com o parceiro.
-
+**Por que escolher a Abordagem Ágil?**
+- **Adaptação a Requisitos Emergentes:** Permite ajustar o escopo e o nível de detalhamento dos requisitos conforme novas necessidades emergem da convivência em campo com o parceiro, superando a rigidez da abordagem Preditiva (Dirigida por Planos).
+- **Entregas Incrementais de Valor:** Disponibiliza funcionalidades essenciais para validação precoce e contínua com a coordenação pedagógica, sem postergar a visibilidade da solução funcional para o término do semestre.
+- **Foco no Usuário de Campo:** Prioriza atender às necessidades operacionais reais (como chamada e presença em oficinas culturais e mutirões), calibrando a interface de acordo com o nível de letramento digital de quem atua na ponta.
+- **Leveza Metodológica frente à Abordagem Híbrida:** Elimina a sobrecarga de manter especificações formais pesadas em paralelo aos ritos ágeis, concentrando a capacidade técnica de uma equipe de seis membros na entrega de valor para a organização.
+  
 ### Ciclo de Vida: Ágil
 O Ciclo de Vida Ágil estrutura o desenvolvimento em ciclos temporais curtos, regulares e de duração fixa (timeboxes/sprints quinzenais). Cada ciclo repete iterativamente todas as atividades essenciais da engenharia de software — elicitação, análise, projeto, codificação e testes —, gerando ao final de cada período um incremento funcional utilizável, testado e de valor demonstrável (MARSICANO, 2026).
 
