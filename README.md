@@ -32,7 +32,7 @@ O sistema unifica a cadeia de dados das atividades socioculturais realizadas no 
 
 ## 📚 Documentação do Projeto
 
-A documentação detalhada (Documento de Visão de Produto e Projeto, Engenharia de Requisitos e Guias Técnicos) está disponível no GitHub Pages via Docsify:
+A documentação detalhada (Documento de Visão de Produto e Projeto, Engenharia de Requisitos e Guias Técnicos) está disponível no GitHub Pages, construída com MkDocs Material:
 
 🔗 **[Acessar Documentação Oficial](https://mdsreq-fga-unb.github.io/REQ-2026.2-T02-CyberSetor/)**
 
