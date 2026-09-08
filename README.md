@@ -38,7 +38,18 @@ A documentação detalhada (Documento de Visão de Produto e Projeto, Engenharia
 
 ---
 
-## 👥 Equipe e Parceria
+## 👥 Equipe
+
+| | Integrante | Matrícula | GitHub | Papel |
+|---|---|---|---|---|
+| <img src="https://github.com/mariadenis.png?size=96" width="48" alt="Maria Eduarda Denis Duarte Marques"> | Maria Eduarda Denis Duarte Marques | 232014502 | [@mariadenis](https://github.com/mariadenis) | Líder · Product Owner interno |
+| <img src="https://github.com/viniciusvieira00.png?size=96" width="48" alt="Vinicius Angelo de Brito Vieira"> | Vinicius Angelo de Brito Vieira | 190118059 | [@viniciusvieira00](https://github.com/viniciusvieira00) | Scrum Master |
+| <img src="https://github.com/Fofodoido.png?size=96" width="48" alt="Rodrigo Henrique Donato de Souza"> | Rodrigo Henrique Donato de Souza | 241012374 | [@Fofodoido](https://github.com/Fofodoido) | Time de Desenvolvimento |
+| <img src="https://github.com/lucaspaulaleal.png?size=96" width="48" alt="Lucas de Paula Leal"> | Lucas de Paula Leal | 232004480 | [@lucaspaulaleal](https://github.com/lucaspaulaleal) | Time de Desenvolvimento |
+| <img src="https://github.com/daniboycam.png?size=96" width="48" alt="Daniel da Silva Batista"> | Daniel da Silva Batista | 231011201 | [@daniboycam](https://github.com/daniboycam) | Time de Desenvolvimento |
+| <img src="https://github.com/caioflmjr.png?size=96" width="48" alt="Caio Flávio de Lima Martins Junior"> | Caio Flávio de Lima Martins Junior | 231011168 | [@caioflmjr](https://github.com/caioflmjr) | Time de Desenvolvimento |
+
+## 🤝 Parceria
 
 * **Parceiro / Cliente:** Instituto Cultural e Social No Setor (Núcleo Pedagógico e Administrativo)  
 * **Metodologia:** ScrumXP (Gestão ágil integrada a práticas de engenharia de software)
