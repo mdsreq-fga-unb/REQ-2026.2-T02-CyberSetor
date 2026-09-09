@@ -97,7 +97,11 @@ nav:
       - Processo e ritos (ScrumXP): gestao/processo-scrumxp.md
       - Matriz de competências e stack: gestao/matriz-competencias.md
       - Boas práticas no GitHub: gestao/boas-praticas-github.md
-      - Atas de reunião: gestao/atas.md
+      - Atas de reunião:
+          - gestao/atas/index.md
+          - 27/08/2026 — Equipe: gestao/atas/2026-08-27-reuniao-equipe.md
+          - 01/09/2026 — Equipe: gestao/atas/2026-09-01-reuniao-equipe.md
+          - 08/09/2026 — Sprint Planning: gestao/atas/2026-09-08-sprint-planning.md
   - Entregas:
       - Unidade 1: entregas/unidade-1.md
       - Unidade 2: entregas/unidade-2.md

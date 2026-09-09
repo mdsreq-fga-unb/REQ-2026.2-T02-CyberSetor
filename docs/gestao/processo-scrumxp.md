@@ -48,7 +48,7 @@ A equipe é formada por seis estudantes com grades e compromissos distintos. Uma
 | Product Backlog | GitHub Projects e Issues | Product Owner |
 | Sprint Backlog | GitHub Projects | Time |
 | Incremento | Branch `main` e ambiente publicado | Time |
-| Atas de reunião | [Atas de reunião](atas.md) | Relator da reunião |
+| Atas de reunião | [Atas de reunião](atas/index.md) | Relator da reunião |
 | Definition of Ready e Definition of Done | Seção 9 do documento (Unidade 2) | Equipe |
 | Matriz de competências | [Matriz de competências e stack](matriz-competencias.md) | Scrum Master |
 
