@@ -1,5 +1,9 @@
 name: deploy-docs
 
+# Publica o site no GitHub Pages. Executa apenas na branch main: é ela que
+# corresponde ao que está publicado e avaliado. A branch docs-homologacao
+# acumula alterações que ainda não podem ir ao ar e nunca dispara publicação.
+
 on:
   push:
     branches:
@@ -8,24 +12,43 @@ on:
 permissions:
   contents: write
 
+concurrency:
+  group: deploy-docs
+  cancel-in-progress: false
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+
+      - name: Identificar o que está sendo publicado
+        run: |
+          echo "Branch:  ${{ github.ref_name }}"
+          echo "Commit:  ${{ github.sha }}"
+
       - name: Configurar credenciais do git
         run: |
           git config user.name github-actions[bot]
           git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+
       - uses: actions/setup-python@v5
         with:
           python-version: 3.x
+
       - run: echo "cache_id=$(date --utc '+%V')" >> $GITHUB_ENV
+
       - uses: actions/cache@v4
         with:
           key: mkdocs-material-${{ env.cache_id }}
           path: .cache
           restore-keys: |
             mkdocs-material-
+
       - run: pip install -r requirements.txt
-      - run: mkdocs gh-deploy --force
+
+      - name: Verificar antes de publicar
+        run: mkdocs build --strict
+
+      - name: Publicar no GitHub Pages
+        run: mkdocs gh-deploy --force

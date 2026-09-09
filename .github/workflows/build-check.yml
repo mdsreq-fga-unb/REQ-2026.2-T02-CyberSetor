@@ -1,15 +1,39 @@
 name: build-check
 
+# Verifica se o site compila sem avisos. Roda em pull request para qualquer
+# branch e também em push nas branches de trabalho, para que um erro apareça
+# antes da abertura do PR. A branch main não entra aqui: nela o deploy-docs
+# executa a mesma verificação antes de publicar.
+
 on:
   pull_request:
+    branches:
+      - main
+      - docs-homologacao
+  push:
+    branches:
+      - 'docs/**'
+      - 'chore/**'
+      - 'fix/**'
+      - docs-homologacao
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+
+      - name: Identificar o contexto da verificação
+        run: |
+          echo "Evento:  ${{ github.event_name }}"
+          echo "Branch:  ${{ github.head_ref || github.ref_name }}"
+          echo "Destino: ${{ github.base_ref || 'não se aplica' }}"
+
       - uses: actions/setup-python@v5
         with:
           python-version: 3.x
+
       - run: pip install -r requirements.txt
-      - run: mkdocs build --strict
+
+      - name: Compilar o site em modo estrito
+        run: mkdocs build --strict
