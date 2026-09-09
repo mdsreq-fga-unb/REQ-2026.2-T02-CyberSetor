@@ -16,6 +16,16 @@ INSTITUTO CULTURAL E SOCIAL NO SETOR. **Apresentação institucional.** Brasíli
 
 INSTITUTO CULTURAL E SOCIAL NO SETOR. **Site institucional.** Disponível em: https://www.nosetor.com.br. Acesso em: 6 set. 2026.
 
+## Processo e gestão do projeto
+
+SCHWABER, K.; SUTHERLAND, J. **The Scrum Guide.** 2020.
+
+CLEGG, D.; BARKER, R. **Case Method Fast-Track: A RAD Approach.** Wokingham: Addison-Wesley, 1994.
+
+STAPLETON, J. **DSDM: Business Focused Development.** 2. ed. Harlow: Pearson Education, 2003.
+
+AGILE BUSINESS CONSORTIUM. **DSDM Project Framework: MoSCoW Prioritisation.** Disponível em: https://www.agilebusiness.org/dsdm-project-framework/moscow-prioritisation.html. Acesso em: 9 set. 2026.
+
 ## Plataformas analisadas na seção 2.5
 
 SYMPLA. **Taxa Sympla: quanto custa.** Disponível em: https://produtores.sympla.com.br/quanto-custa/. Acesso em: 6 set. 2026.
