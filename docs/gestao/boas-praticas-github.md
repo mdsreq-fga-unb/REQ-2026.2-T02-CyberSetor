@@ -8,7 +8,7 @@ A entrega da disciplina é este site, publicado pelo GitHub Pages a partir da pa
 
 ## Branches
 
-A `main` recebe o deploy. O trabalho acontece em branches curtas, nomeadas pelo tipo de mudança:
+A `main` é a branch publicada: todo commit nela vai ao ar no site. O trabalho acontece em branches curtas, nomeadas pelo tipo de mudança:
 
 | Prefixo | Uso | Exemplo |
 |---|---|---|
@@ -17,6 +17,20 @@ A `main` recebe o deploy. O trabalho acontece em branches curtas, nomeadas pelo 
 | `fix/` | Correção pontual | `fix/link-atas` |
 
 Não há branch `develop`. O ciclo é curto e o repositório é de documentação.
+
+### A branch `docs-homologacao`
+
+Há uma exceção com finalidade própria. As entregas da disciplina são avaliadas na data em que foram feitas, e alterar uma seção já entregue pode ser lido como entrega fora do prazo. Ao mesmo tempo, o projeto continua produzindo conteúdo entre uma unidade e outra.
+
+A branch `docs-homologacao` existe para esse intervalo. Ela acumula alterações que já estão prontas, revisadas e com build passando, mas que ainda não podem ir ao ar por critério de avaliação. Quando a autorização vem, ela é integrada à `main` de uma vez.
+
+O que caracteriza a branch:
+
+- recebe pull requests como qualquer outra, com a mesma verificação de build;
+- **nunca dispara publicação**: o workflow de deploy roda apenas na `main`;
+- é integrada à `main` por decisão explícita, não por rotina.
+
+O que não vai para ela: correção de erro que já está publicado. Erro publicado se corrige na `main`, porque deixá-lo no ar é pior do que a alteração.
 
 ## Mensagens de commit
 
@@ -38,10 +52,14 @@ Toda mudança de conteúdo entra por pull request, revisado por alguém de outra
 
 ## Integração contínua
 
-Dois workflows do GitHub Actions:
+Dois workflows do GitHub Actions, cada um com um alvo declarado:
 
-- **build-check**, em todo pull request: executa `mkdocs build --strict` e reprova o PR se houver link quebrado, imagem ausente ou página fora do menu.
-- **deploy-docs**, em todo push na `main`: constrói o site e publica na branch `gh-pages`.
+| Workflow | Quando roda | O que faz |
+|---|---|---|
+| `build-check` | Pull request para `main` ou `docs-homologacao`, e push nas branches `docs/`, `chore/`, `fix/` e `docs-homologacao` | Executa `mkdocs build --strict` e reprova se houver link quebrado ou referência inválida no menu. Registra no log qual branch está sendo verificada e para onde vai |
+| `deploy-docs` | Push na `main` | Verifica o build e publica o site na branch `gh-pages` |
+
+A separação é intencional: o `build-check` roda também em push nas branches de trabalho, para que o erro apareça antes da abertura do pull request; e o `deploy-docs` fica restrito à `main`, de modo que nada em homologação chegue ao ar por engano.
 
 ## Antes de abrir o PR
 
