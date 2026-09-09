@@ -18,7 +18,7 @@ Registro das reuniões da equipe e das interações com o cliente. Desde 27/08/2
 |---|---|---|
 | 20/08/2026 | Videoconferência | Primeira reunião com o Instituto No Setor: entendimento do contexto e das dores |
 | 02/09/2026 | Mensagem | O Instituto validou a proposta de solução e propôs encontro presencial |
-| 08/09/2026 | Presencial, na sede do Instituto | Aprofundamento das questões em aberto: estrutura organizacional, ciclo do projeto financiado e dores confirmadas |
+| [08/09/2026](2026-09-08-reuniao-presencial-instituto.md) | Presencial, na sede do Instituto | Aprofundamento das questões em aberto: estrutura organizacional, ciclo do projeto financiado e dores confirmadas |
 
 !!! quote "Validação da proposta pelo Instituto, 02/09/2026"
     "Li a proposta de vocês e acho que acertaram em cheio na dor do Instituto."
