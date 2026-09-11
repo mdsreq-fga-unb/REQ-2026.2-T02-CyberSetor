@@ -1,0 +1,21 @@
+// Estado dojo/kata: modelo completo dos cinco campos documentados.
+generator client {
+  provider     = "prisma-client"
+  output       = "../src/generated/prisma"
+  moduleFormat = "cjs"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+// Artefato didatico. Nao define a fronteira de producao entre requisito e meta.
+model RequisitoDojo {
+  id                  String   @id @default(uuid())
+  origem              String
+  indicador           String
+  parametroAfericao   String
+  formaVerificacao    String
+  frequenciaApuracao  String
+  criadoEm            DateTime @default(now())
+}

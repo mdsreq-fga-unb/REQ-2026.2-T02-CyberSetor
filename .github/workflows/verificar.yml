@@ -1,0 +1,95 @@
+name: verificar
+
+# Portão de qualidade do material do dojo: a API instala pelo lockfile, as
+# migrations aplicam em um PostgreSQL descartável, o projeto compila e os
+# testes ponta a ponta passam. Não publica nada e não escreve em lugar nenhum.
+
+on:
+  push:
+    branches:
+      - 'dojo/11'
+      - 'dojo/11-**'
+  pull_request:
+    branches:
+      - 'dojo/11'
+
+permissions:
+  contents: read
+
+jobs:
+  api:
+    runs-on: ubuntu-latest
+
+    services:
+      db:
+        image: postgres:18.6
+        env:
+          POSTGRES_USER: cybersetor
+          POSTGRES_PASSWORD: dojo-local
+          POSTGRES_DB: cybersetor_dojo
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U cybersetor -d cybersetor_dojo"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 12
+
+    env:
+      DATABASE_URL: postgresql://cybersetor:dojo-local@localhost:5432/cybersetor_dojo?schema=public
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Node na versão do exercício
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: api/.nvmrc
+          cache: npm
+          cache-dependency-path: api/package-lock.json
+
+      - name: Instalar pelo lockfile
+        working-directory: api
+        run: npm ci
+
+      # O ponto de partida não tem migrations: criá-las é o exercício.
+      # Depois que alguém as cria, este passo passa a exercitá-las.
+      - name: Aplicar migrations, se existirem
+        working-directory: api
+        run: |
+          if compgen -G "prisma/migrations/*/migration.sql" > /dev/null; then
+            npx prisma migrate deploy
+          else
+            echo "Sem migrations no ponto de partida — nada a aplicar."
+          fi
+        shell: bash
+
+      - name: Gerar o Prisma Client
+        working-directory: api
+        run: npx prisma generate
+
+      - name: Compilar
+        working-directory: api
+        run: npm run build
+
+      - name: Testes ponta a ponta
+        working-directory: api
+        run: npm run test:e2e
+
+  material:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Os seis PDFs precisam existir
+        run: |
+          faltou=0
+          for f in 01-historias-e-criterios 02-fatia-nestjs-prisma \
+                   03-frontend-dexie-query-shadcn 04-exercicio-refinamento \
+                   05-desafios 06-guia-de-estudo; do
+            if [ ! -s "material/$f.pdf" ]; then
+              echo "ausente ou vazio: material/$f.pdf"
+              faltou=1
+            fi
+          done
+          exit $faltou
