@@ -1,16 +1,18 @@
 name: deploy-docs
 
-# Publica o site no GitHub Pages. Executa apenas na branch main: é ela que
-# corresponde ao que está publicado e avaliado. A branch docs-homologacao
-# acumula alterações que ainda não podem ir ao ar e nunca dispara publicação.
+# Publica o site no GitHub Pages. Executa na branch main e também quando houver
+# atualizações nas issues (abertura, labels, assignees ou fechamento pela monitoria).
 
 on:
   push:
     branches:
       - main
+  issues:
+    types: [opened, edited, closed, reopened, labeled, unlabeled, assigned, unassigned]
 
 permissions:
   contents: write
+  issues: read
 
 concurrency:
   group: deploy-docs
@@ -38,14 +40,24 @@ jobs:
 
       - run: echo "cache_id=$(date --utc '+%V')" >> $GITHUB_ENV
 
+      - name: Gerar ID de Cache Semanal
+        id: cache-step
+        run: echo "cache_id=$(date --utc '+%V')" >> "$GITHUB_OUTPUT"
+
       - uses: actions/cache@v4
         with:
-          key: mkdocs-material-${{ env.cache_id }}
+          key: mkdocs-material-${{ steps.cache-step.outputs.cache_id }}
           path: .cache
           restore-keys: |
             mkdocs-material-
 
       - run: pip install -r requirements.txt
+
+      - name: Sincronizar Tabela de Issues
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
+        run: python .github/scripts/fetch_issues.py
 
       - name: Verificar antes de publicar
         run: mkdocs build --strict
