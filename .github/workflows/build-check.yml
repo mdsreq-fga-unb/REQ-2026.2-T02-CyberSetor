@@ -4,6 +4,11 @@ name: build-check
 # branch e também em push nas branches de trabalho, para que um erro apareça
 # antes da abertura do PR. A branch main não entra aqui: nela o deploy-docs
 # executa a mesma verificação antes de publicar.
+#
+# Duas páginas do nav (entregas/debitos-u1.md e gestao/sprints/tarefas-sprint-1.md)
+# não estão versionadas: são geradas por .github/scripts/fetch_issues.py. Sem
+# gerá-las, `mkdocs build --strict` aborta por referência de nav inexistente.
+# Este workflow apenas compila; a publicação continua exclusiva do deploy-docs.
 
 on:
   pull_request:
@@ -16,6 +21,11 @@ on:
       - 'chore/**'
       - 'fix/**'
       - docs-homologacao
+
+# Somente leitura: o gerador consulta as issues; nada é escrito no repositório.
+permissions:
+  contents: read
+  issues: read
 
 jobs:
   build:
@@ -34,6 +44,23 @@ jobs:
           python-version: 3.x
 
       - run: pip install -r requirements.txt
+
+      - name: Sincronizar Tabela de Issues
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
+        run: python .github/scripts/fetch_issues.py
+
+      - name: Conferir páginas geradas
+        run: |
+          faltou=0
+          for pagina in docs/entregas/debitos-u1.md docs/gestao/sprints/tarefas-sprint-1.md; do
+            if [ ! -s "$pagina" ]; then
+              echo "::error file=$pagina::Página gerada ausente ou vazia. O gerador de issues não produziu o arquivo (token ou permissão de leitura de issues?)."
+              faltou=1
+            fi
+          done
+          exit "$faltou"
 
       - name: Compilar o site em modo estrito
         run: mkdocs build --strict
