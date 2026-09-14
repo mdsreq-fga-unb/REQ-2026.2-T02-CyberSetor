@@ -5,6 +5,7 @@
 | 01/09/2026 | 1.0 | Versão inicial | Equipe CyberSetor |
 | 05/09/2026 | 1.1 | Revisão com foco único nas seções 1.4, 1.5, 1.7, 2.1 e 2.2 | Equipe CyberSetor |
 | 06/09/2026 | 1.2 | Seções 4, 5, 6 e 7 redigidas para o site | Equipe CyberSetor |
+| 14/09/2026 | 1.3 | Ajustes na taxonomia de ER: artefatos de representação, critérios de aceitação objetivos, portões de qualidade e redução sistemática de ambiguidades (Issue #23) | Equipe CyberSetor |
 
 As seis atividades da Engenharia de Requisitos adotadas pela disciplina (elicitação e descoberta, análise e consenso, declaração, representação, verificação e validação, organização e atualização) não são etapas sequenciais. Elas se repetem e se entrelaçam ao longo do ciclo de desenvolvimento. Esta seção associa cada atividade às técnicas que a equipe usará no projeto e, em seguida, mapeia essas técnicas nas fases do ScrumXP.
 
@@ -28,24 +29,24 @@ As seis atividades da Engenharia de Requisitos adotadas pela disciplina (elicita
 **Declaração**
 
 - **Histórias de usuário:** requisitos escritos na perspectiva de quem usa, em linguagem não técnica, seguindo os critérios INVEST.
-- **Critérios de aceitação:** condições observáveis de cada história, no formato Dado, Quando, Então, que tornam o requisito testável.
+- **Critérios de aceitação:** lista de condições objetivas, observáveis e mensuráveis associadas a cada história, definindo o comportamento esperado, restrições e regras sem impor sintaxe rígida de cenários, tornando o requisito verificável.
 - **Catálogo de regras de negócio:** registro de regras como limite de vagas, prazo de inscrição, consentimento e cálculo de carga horária, separadas das histórias que as usam.
 - **Glossário:** definição dos termos que o Instituto e a equipe usam de formas diferentes, como atividade, oficina, participante, facilitador, presença e meta.
 
 **Representação**
 
-- **Rich Picture:** representação sistêmica do cenário atual, apresentada na seção 1.3.
-- **Mapa de stakeholders:** representação dos envolvidos e de suas relações com a solução, apresentada na seção 1.6.
-- **BPMN do processo atual:** modelagem do fluxo de inscrição, presença e prestação de contas como ele acontece hoje, para localizar onde a solução intervém.
-- **Casos de uso:** representação semiformal das interações de cada perfil com o sistema, restrita ao subconjunto da UML adequado à Engenharia de Requisitos.
-- **Sketches e mockups de baixa fidelidade:** esboços das telas de inscrição e de registro de participação, propositalmente rústicos, para validar com o Instituto antes de codificar.
+- **Modelagem conceitual livre:** técnica de diagramação de sistemas suaves para representar os fluxos informais e limites do cenário atual, gerando o artefato Rich Picture (seção 1.3).
+- **Mapeamento de papéis e relações:** técnica de identificação e categorização de partes interessadas para situar os envolvidos e suas relações com a solução, originando o mapa de stakeholders (seção 1.6).
+- **Modelagem de processos de negócio:** técnica de mapeamento de fluxos para elaborar o modelo do processo atual de inscrição, presença e prestação de contas em notação BPMN, delimitando onde a solução intervém.
+- **Modelagem de casos de uso:** técnica de representação semiformal para mapear as interações de cada perfil com o sistema, gerando especificações e diagramas de casos de uso.
+- **Prototipação de baixa fidelidade:** técnica de desenho preliminar de interfaces para alinhamento visual antes da implementação, gerando sketches e mockups das telas de inscrição e registro.
 
 **Verificação e Validação**
 
 - **Revisão cruzada entre duplas:** cada dupla revisa as seções e histórias escritas pela outra, verificando consistência, completude e testabilidade.
-- **Checklist de qualidade:** lista de verificação aplicada a cada história antes de entrar na sprint, que compõe a Definition of Ready.
+- **Checklist de qualidade:** lista de verificação aplicada a cada história para inspecionar critérios de completude, clareza e testabilidade antes do desenvolvimento.
 - **Sessão de validação com protótipo:** apresentação de mockups e do incremento ao Instituto para confirmar que o requisito é o certo.
-- **Testes de aceitação:** cenários derivados dos critérios de aceitação, automatizados quando possível, que definem quando uma história está concluída.
+- **Testes de aceitação:** testes derivados da lista de critérios de aceitação, automatizados quando possível, que verificam se o comportamento implementado no software atende ao que foi especificado.
 - **Sprint Review:** demonstração do incremento ao Instituto ao final de cada sprint, com o feedback registrado no backlog.
 
 **Organização e Atualização**
@@ -61,15 +62,15 @@ As seis atividades da Engenharia de Requisitos adotadas pela disciplina (elicita
 |---|---|---|---|---|
 | **Planejamento da Release** | Elicitação e Descoberta | Imersão no contexto do cliente | Entrevista semiestruturada · Análise de documentos existentes · Observação direta · Triangulação | Entendimento do processo atual e das dores; Documento de Visão |
 | | Análise e Consenso | Delimitação do problema e do escopo | Diagrama de Ishikawa · Workshop de priorização · Negociação | Problema central e escopo acordados com o Instituto |
-| | Representação | Representação sistêmica | Rich Picture · Mapa de stakeholders · BPMN do processo atual | Cenário atual visualizado e validado |
+| | Representação | Representação sistêmica | Modelagem conceitual livre · Mapeamento de papéis e relações · Modelagem de processos de negócio | Cenário atual e processos modelados e validados |
 | | Declaração | Escrita orientada a valor | Épicos · Histórias de usuário · Glossário | Product Backlog inicial em linguagem do cliente |
 | **Planejamento da Sprint** | Análise e Consenso | Priorização | MoSCoW · Matriz valor de negócio × esforço técnico | Sprint Backlog priorizado; MVP definido na Unidade 2 |
-| | Declaração | Detalhamento do item | Critérios de aceitação · Catálogo de regras de negócio · Definition of Ready | Itens prontos para desenvolvimento |
-| | Representação | Prototipação leve | Sketches e mockups de baixa fidelidade · Casos de uso | Entendimento compartilhado da interface antes de codificar |
+| | Declaração | Detalhamento do item | Critérios de aceitação · Catálogo de regras de negócio | Itens de backlog detalhados com critérios verificáveis e regras catalogadas |
+| | Representação | Prototipação leve | Prototipação de baixa fidelidade · Modelagem de casos de uso | Entendimento compartilhado da interface e das interações antes de codificar |
 | **Execução da Sprint** | Elicitação e Descoberta | Elicitação contínua | Dúvidas pontuais com o Product Owner interno e com o Instituto | Lacunas resolvidas sem interromper a sprint |
-| | Verificação e Validação | Inspeção interna | Revisão cruzada entre duplas · Checklist de qualidade · Análise de consistência entre história e mockup | Requisitos sem ambiguidade e testáveis |
+| | Verificação e Validação | Inspeção e verificação interna | Revisão cruzada entre duplas · Checklist de qualidade · Análise de consistência entre história e mockup · Testes de aceitação | Redução sistemática de ambiguidades e requisitos verificáveis |
 | | Organização e Atualização | Gestão do backlog | Product Backlog no GitHub Projects · Matriz de rastreabilidade | Requisitos rastreáveis do problema ao critério de aceitação |
-| **Revisão da Sprint** | Verificação e Validação | Validação com o cliente | Sprint Review · Sessão de validação com protótipo · Testes de aceitação · Definition of Done | Confirmação de que o requisito é o certo; feedback registrado |
+| **Revisão da Sprint** | Verificação e Validação | Validação com o cliente | Sprint Review · Sessão de validação com protótipo | Confirmação de que a solução atende às necessidades reais do cliente; feedback registrado |
 | | Declaração | Incorporação do feedback | Ajuste de histórias e critérios de aceitação · Negociação | Histórias ajustadas ao entendimento mais atual |
 | **Retrospectiva da Sprint** | Organização e Atualização | Melhoria do processo de ER | Retrospectiva · Registro de lições aprendidas · Atas de reunião | Ajustes nas práticas de ER para o próximo ciclo; seção 11 do documento |
 | **Planejamento da Próxima Release** | Elicitação e Descoberta | Refinamento estratégico | Workshop com o Instituto · Análise de documentos existentes | Novas necessidades identificadas |
