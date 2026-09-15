@@ -29,6 +29,8 @@ As atas em PDF serão publicadas em `assets/atas/` e linkadas nesta tabela à me
 
 ## Política de registro, acesso e publicação
 
+Esta política trata do **material de registro do projeto** — o que a equipe grava, transcreve, recebe do Instituto e publica neste site. Ela não descreve o tratamento dos dados pessoais que o sistema em construção irá armazenar, que é assunto da seção 2.6 do Documento de Visão.
+
 | Material | Onde fica | Quem acessa | Condição para publicar |
 |---|---|---|---|
 | Gravação de reunião (áudio/vídeo) | Drive da equipe | Integrantes da equipe | **Não se publica** |
@@ -36,6 +38,6 @@ As atas em PDF serão publicadas em `assets/atas/` e linkadas nesta tabela à me
 | Ata revisada pelo relator | Este site | Público | Após revisão; atas com o cliente, após conferência do Instituto |
 | Documento fornecido pelo cliente (planilha, relatório, edital) | Repositório de trabalho da equipe | Integrantes da equipe | **Não se publica na íntegra**; publicam-se extratos sem dado pessoal e sem informação sensível, com ciência do Instituto |
 | Citação de fala ou mensagem do cliente | Este site | Público | Com ciência do Instituto, registrada |
-| Dado pessoal de participante das atividades | — | — | **Não se coleta nem se publica** neste projeto |
+| Dado pessoal de participante das atividades | No sistema em construção, não nos registros do projeto | Conforme o perfil de acesso definido para o sistema | **Não se publica** neste site, nem em ata, nem em extrato de documento do cliente |
 
 **Estado das atas com o cliente.** A ata da reunião presencial de 08/09/2026 está publicada na versão **0.2**, enviada ao Instituto para conferência; a validação formal (versão 1.0) permanece **pendente**. As perguntas da seção "Pontos a confirmar" daquela ata são o objeto dessa conferência.
