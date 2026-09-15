@@ -1,5 +1,3 @@
-// Estado dojo/base: gerador e datasource prontos, sem nenhum modelo.
-// O Randori constroi o modelo a partir daqui.
 generator client {
   provider     = "prisma-client"
   output       = "../src/generated/prisma"
@@ -8,4 +6,14 @@ generator client {
 
 datasource db {
   provider = "postgresql"
+}
+
+model RequisitoDojo {
+  id                  String   @id @default(uuid())
+  origem              String
+  indicador           String
+  parametroAfericao   String
+  formaVerificacao    String
+  frequenciaApuracao  String
+  criadoEm            DateTime @default(now())
 }
