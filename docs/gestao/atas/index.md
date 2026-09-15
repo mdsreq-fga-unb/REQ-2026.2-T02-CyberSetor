@@ -1,6 +1,9 @@
 # Atas de reunião
 
-Registro das reuniões da equipe e das interações com o cliente. Desde 27/08/2026 as reuniões acontecem no Google Meet, com gravação e ata automática, e a transcrição completa fica no Drive da equipe.
+Registro das reuniões da equipe e das interações com o cliente. Desde 27/08/2026 as reuniões acontecem no Google Meet, com gravação e ata automática. **A ata automática é insumo, não registro final:** o que se publica aqui é sempre a ata revisada pelo relator. Gravações e transcrições brutas ficam no Drive da equipe, com acesso restrito aos integrantes — ver a política de registro ao fim desta página.
+
+!!! note "Duas pessoas chamadas Maria Eduarda"
+    **Maria Eduarda Marques** é a integrante da equipe CyberSetor e Product Owner interno; **Maria Eduarda, do núcleo pedagógico**, é uma das representantes do Instituto. As atas são registros formais e não são reeditadas depois de publicadas: quando o nome aparecer sem qualificação, vale o contexto da reunião — nas atas de reunião da equipe trata-se da integrante da equipe; na ata da reunião presencial de 08/09, da representante do Instituto, como o próprio documento declara.
 
 ## Reuniões da equipe
 
@@ -17,12 +20,22 @@ Registro das reuniões da equipe e das interações com o cliente. Desde 27/08/2
 | Data | Formato | Assunto |
 |---|---|---|
 | 20/08/2026 | Videoconferência | Primeira reunião com o Instituto No Setor: entendimento do contexto e das dores |
-| 02/09/2026 | Mensagem | O Instituto validou a proposta de solução e propôs encontro presencial |
+| 02/09/2026 | Mensagem | O Instituto manifestou concordância **preliminar** com a proposta de solução e propôs encontro presencial — ver seção 7.3.2 do Documento de Visão |
 | [08/09/2026](2026-09-08-reuniao-presencial-instituto.md) | Presencial, na sede do Instituto | Aprofundamento das questões em aberto: estrutura organizacional, ciclo do projeto financiado e dores confirmadas |
-
-!!! quote "Validação da proposta pelo Instituto, 02/09/2026"
-    "Li a proposta de vocês e acho que acertaram em cheio na dor do Instituto."
 
 ## Documentos
 
 As atas em PDF serão publicadas em `assets/atas/` e linkadas nesta tabela à medida que forem consolidadas.
+
+## Política de registro, acesso e publicação
+
+| Material | Onde fica | Quem acessa | Condição para publicar |
+|---|---|---|---|
+| Gravação de reunião (áudio/vídeo) | Drive da equipe | Integrantes da equipe | **Não se publica** |
+| Transcrição automática | Drive da equipe | Integrantes da equipe | **Não se publica**; é insumo da ata |
+| Ata revisada pelo relator | Este site | Público | Após revisão; atas com o cliente, após conferência do Instituto |
+| Documento fornecido pelo cliente (planilha, relatório, edital) | Repositório de trabalho da equipe | Integrantes da equipe | **Não se publica na íntegra**; publicam-se extratos sem dado pessoal e sem informação sensível, com ciência do Instituto |
+| Citação de fala ou mensagem do cliente | Este site | Público | Com ciência do Instituto, registrada |
+| Dado pessoal de participante das atividades | — | — | **Não se coleta nem se publica** neste projeto |
+
+**Estado das atas com o cliente.** A ata da reunião presencial de 08/09/2026 está publicada na versão **0.2**, enviada ao Instituto para conferência; a validação formal (versão 1.0) permanece **pendente**. As perguntas da seção "Pontos a confirmar" daquela ata são o objeto dessa conferência.
