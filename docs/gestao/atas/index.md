@@ -1,6 +1,6 @@
 # Atas de reunião
 
-Registro das reuniões da equipe e das interações com o cliente. Desde 27/08/2026 as reuniões acontecem no Google Meet, com gravação e ata automática, e a transcrição completa fica no Drive da equipe.
+Registro das reuniões da equipe e das interações com o cliente. As reuniões utilizam gravações e transcrições automáticas exclusivamente como insumo bruto de apoio interno restrito no Google Drive. O artefato oficial publicado neste site consiste em atas sintéticas elaboradas pelo relator e revisadas para controle de dados sensíveis e conformidade com a LGPD.
 
 ## Reuniões da equipe
 
@@ -10,7 +10,7 @@ Registro das reuniões da equipe e das interações com o cliente. Desde 27/08/2
 | 18/08/2026 | Organização do trabalho | Divisão inicial de tópicos do documento |
 | [27/08/2026](2026-08-27-reuniao-equipe.md) | Escopo e prestação de contas | Adoção de ata automática por IA; migração das reuniões para o Google Meet; estudo aprofundado do Instituto |
 | [01/09/2026](2026-09-01-reuniao-equipe.md) | Planejamento da entrega da Unidade 1 | Product Owner interno definido; duplas e prazos por seção; vídeo gravado em conjunto; stack decidida por matriz de competências |
-| [08/09/2026](2026-09-08-sprint-planning.md) | Sprint Planning da Sprint 1 | Adoção do MoSCoW para priorização do Product Backlog; estrutura da Sprint em duas semanas; padrão INVEST/Given-When-Then para histórias de usuário |
+| [08/09/2026](2026-09-08-sprint-planning.md) | Sprint Planning da Sprint 1 | Adoção do MoSCoW para priorização do Product Backlog; estrutura da Sprint em duas semanas; padrão INVEST e lista de critérios de aceitação objetivos para histórias de usuário |
 
 ## Interações com o cliente
 

@@ -52,18 +52,19 @@ A equipe é formada por seis estudantes com grades e compromissos distintos. Uma
 | Definition of Ready e Definition of Done | Seção 9 do documento (Unidade 2) | Equipe |
 | Matriz de competências | [Matriz de competências e stack](matriz-competencias.md) | Scrum Master |
 
-Histórias de usuário seguem o formato do XP: escritas em linguagem não técnica, na perspectiva de quem usa, com critérios de aceitação que as tornam testáveis.
+Histórias de usuário seguem o formato do XP: escritas em linguagem não técnica, na perspectiva de quem usa, acompanhadas por uma lista de critérios de aceitação objetivos e verificáveis.
 
 ```
 Como <perfil do Instituto>, quero <ação> para <resultado esperado>.
 
 Critérios de aceitação:
-- Dado <contexto>, quando <ação>, então <resultado observável>
+- [Condição observável ou regra que o sistema deve cumprir]
+- [Restrição de negócio, técnica ou de privacidade/LGPD]
 ```
 
 ## Práticas de XP
 
-**Adotadas:** histórias de usuário · critérios de aceitação · testes de aceitação · pequenas releases · integração contínua · programação em pares · propriedade coletiva do código · design simples · padrões de codificação · cliente presente **adaptado**, com Product Owner interno e validações periódicas.
+**Adotadas:** histórias de usuário · critérios de aceitação · testes de aceitação · pequenas releases · integração contínua · programação em pares · propriedade coletiva do código · design simples · padrões de codificação · cliente presente **adaptado**, com Product Owner interno (atuando como persona no intervalo) e validações semanais com o cliente.
 
 **Não adotadas, com justificativa:**
 
@@ -76,7 +77,7 @@ Critérios de aceitação:
 
 ## Comunicação
 
-Comunidade no WhatsApp *CyberSetor - Requisitos*, com três grupos: *Avisos* (comunicados), *CyberSetor - Geral* (discussão e decisões) e *Dailys* (só dailies). Reuniões no Google Meet, com gravação e ata automática. Entregas publicadas neste site; o Google Docs é rascunho.
+Comunidade no WhatsApp *CyberSetor - Requisitos*, com três grupos: *Avisos* (comunicados), *CyberSetor - Geral* (discussão e decisões) e *Dailys* (só dailies). Reuniões no Google Meet, com gravação e transcrição de apoio armazenadas no Drive com acesso restrito, e ata sintética oficial elaborada pelo relator, com revisão de dados sensíveis (LGPD). Entregas publicadas neste site; o Google Docs é rascunho.
 
 ## Referências
 
