@@ -21,7 +21,6 @@ As seis atividades da Engenharia de Requisitos adotadas pela disciplina (elicita
 **Análise e Consenso**
 
 - **Diagrama de Ishikawa:** organização das causas do problema central da seção 1.4 por categoria, para delimitar o que a solução ataca.
-- **Workshop de priorização:** sessão com a coordenação do Instituto para ordenar características e resolver divergências entre quem gerencia e quem opera as atividades.
 - **MoSCoW:** classificação das características de produto em obrigatórias, desejáveis, opcionais e fora de escopo, base da definição do MVP na Unidade 2.
 - **Matriz valor de negócio × esforço técnico:** cruzamento do valor percebido pelo Instituto com o esforço estimado pela equipe, para defender o corte de escopo com dados.
 - **Negociação:** condução das conversas em que um desejo do cliente é reposicionado em relação à necessidade identificada, sem recusa.
@@ -38,14 +37,13 @@ As seis atividades da Engenharia de Requisitos adotadas pela disciplina (elicita
 - **Modelagem conceitual livre:** técnica de diagramação de sistemas suaves para representar os fluxos informais e limites do cenário atual, gerando o artefato Rich Picture (seção 1.3).
 - **Mapeamento de papéis e relações:** técnica de identificação e categorização de partes interessadas para situar os envolvidos e suas relações com a solução, originando o mapa de stakeholders (seção 1.6).
 - **Modelagem de processos de negócio:** técnica de mapeamento de fluxos para elaborar o modelo do processo atual de inscrição, presença e prestação de contas em notação BPMN, delimitando onde a solução intervém.
-- **Modelagem de casos de uso:** técnica de representação semiformal para mapear as interações de cada perfil com o sistema, gerando especificações e diagramas de casos de uso.
-- **Prototipação de baixa fidelidade:** técnica de desenho preliminar de interfaces para alinhamento visual antes da implementação, gerando sketches e mockups das telas de inscrição e registro.
+- **Prototipação leve:** técnica de experimentação e desenho preliminar de telas para alinhamento visual e validação dos fluxos antes da codificação.
 
 **Verificação e Validação**
 
 - **Revisão cruzada entre duplas:** cada dupla revisa as seções e histórias escritas pela outra, verificando consistência, completude e testabilidade.
 - **Checklist de qualidade:** lista de verificação aplicada a cada história para inspecionar critérios de completude, clareza e testabilidade antes do desenvolvimento.
-- **Sessão de validação com protótipo:** apresentação de mockups e do incremento ao Instituto para confirmar que o requisito é o certo.
+- **Sessão de validação com protótipo:** apresentação de protótipos leves e do incremento ao Instituto para confirmar que o requisito é o certo.
 - **Testes de aceitação:** testes derivados da lista de critérios de aceitação, automatizados quando possível, que verificam se o comportamento implementado no software atende ao que foi especificado.
 - **Sprint Review:** demonstração do incremento ao Instituto ao final de cada sprint, com o feedback registrado no backlog.
 
@@ -54,26 +52,26 @@ As seis atividades da Engenharia de Requisitos adotadas pela disciplina (elicita
 - **Product Backlog no GitHub Projects:** repositório único dos requisitos, versionado e priorizado, com refinamento semanal.
 - **Matriz de rastreabilidade:** identificadores que ligam problema, objetivo específico, característica de produto, requisito, história e critério de aceitação.
 - **Histórico de versões do documento:** tabela de versões no início de cada seção deste documento, registrando o que mudou e quando.
-- **Atas de reunião:** registro das decisões de cada reunião, com transcrição automática, publicado na página de atas.
+- **Atas de reunião:** registro sintético das decisões e encaminhamentos de cada reunião, elaborado e revisado pela equipe com controle de dados sensíveis (LGPD) e publicado na página de atas.
 
 ## 5.2 Engenharia de Requisitos e o ScrumXP
 
 | Fase do ScrumXP | Atividade de ER | Prática | Técnica | Resultado esperado |
 |---|---|---|---|---|
 | **Planejamento da Release** | Elicitação e Descoberta | Imersão no contexto do cliente | Entrevista semiestruturada · Análise de documentos existentes · Observação direta · Triangulação | Entendimento do processo atual e das dores; Documento de Visão |
-| | Análise e Consenso | Delimitação do problema e do escopo | Diagrama de Ishikawa · Workshop de priorização · Negociação | Problema central e escopo acordados com o Instituto |
+| | Análise e Consenso | Delimitação do problema e do escopo | Diagrama de Ishikawa · Negociação | Problema central e escopo acordados com o Instituto |
 | | Representação | Representação sistêmica | Modelagem conceitual livre · Mapeamento de papéis e relações · Modelagem de processos de negócio | Cenário atual e processos modelados e validados |
 | | Declaração | Escrita orientada a valor | Épicos · Histórias de usuário · Glossário | Product Backlog inicial em linguagem do cliente |
 | **Planejamento da Sprint** | Análise e Consenso | Priorização | MoSCoW · Matriz valor de negócio × esforço técnico | Sprint Backlog priorizado; MVP definido na Unidade 2 |
 | | Declaração | Detalhamento do item | Critérios de aceitação · Catálogo de regras de negócio | Itens de backlog detalhados com critérios verificáveis e regras catalogadas |
-| | Representação | Prototipação leve | Prototipação de baixa fidelidade · Modelagem de casos de uso | Entendimento compartilhado da interface e das interações antes de codificar |
-| **Execução da Sprint** | Elicitação e Descoberta | Elicitação contínua | Dúvidas pontuais com o Product Owner interno e com o Instituto | Lacunas resolvidas sem interromper a sprint |
-| | Verificação e Validação | Inspeção e verificação interna | Revisão cruzada entre duplas · Checklist de qualidade · Análise de consistência entre história e mockup · Testes de aceitação | Redução sistemática de ambiguidades e requisitos verificáveis |
+| | Representação | Prototipação leve | Prototipação leve | Entendimento compartilhado da interface e do fluxo antes de codificar |
+| **Execução da Sprint** | Elicitação e Descoberta | Elicitação contínua | Dúvidas operacionais com o Product Owner interno (persona) e alinhamento de domínio com o Instituto | Lacunas operacionais destravadas e dúvidas de domínio encaminhadas para a reunião semanal |
+| | Verificação e Validação | Inspeção e verificação interna | Revisão cruzada entre duplas · Checklist de qualidade · Análise de consistência entre história e protótipo · Testes de aceitação | Redução sistemática de ambiguidades e requisitos verificáveis |
 | | Organização e Atualização | Gestão do backlog | Product Backlog no GitHub Projects · Matriz de rastreabilidade | Requisitos rastreáveis do problema ao critério de aceitação |
 | **Revisão da Sprint** | Verificação e Validação | Validação com o cliente | Sprint Review · Sessão de validação com protótipo | Confirmação de que a solução atende às necessidades reais do cliente; feedback registrado |
 | | Declaração | Incorporação do feedback | Ajuste de histórias e critérios de aceitação · Negociação | Histórias ajustadas ao entendimento mais atual |
 | **Retrospectiva da Sprint** | Organização e Atualização | Melhoria do processo de ER | Retrospectiva · Registro de lições aprendidas · Atas de reunião | Ajustes nas práticas de ER para o próximo ciclo; seção 11 do documento |
-| **Planejamento da Próxima Release** | Elicitação e Descoberta | Refinamento estratégico | Workshop com o Instituto · Análise de documentos existentes | Novas necessidades identificadas |
+| **Planejamento da Próxima Release** | Elicitação e Descoberta | Refinamento estratégico | Alinhamento com o Instituto · Análise de documentos existentes | Novas necessidades identificadas |
 | | Análise e Consenso | Repriorização por valor | MoSCoW · Matriz valor de negócio × esforço técnico | Backlog reordenado para o próximo ciclo |
 | | Organização e Atualização | Atualização do documento | Histórico de versões do documento · Refinamento semanal do backlog | Documento de Visão e backlog atualizados |
 
