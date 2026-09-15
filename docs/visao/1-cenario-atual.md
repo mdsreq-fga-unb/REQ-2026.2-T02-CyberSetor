@@ -5,6 +5,7 @@
 | 01/09/2026 | 1.0 | Versão inicial | Equipe CyberSetor |
 | 05/09/2026 | 1.1 | Revisão com foco único nas seções 1.4, 1.5, 1.7, 2.1 e 2.2 | Equipe CyberSetor |
 | 06/09/2026 | 1.2 | Seções 4, 5, 6 e 7 redigidas para o site | Equipe CyberSetor |
+| 14/09/2026 | 1.3 | Correção decorrente da issue #25: identificação institucional das representantes do Instituto nas seções 1.1, 1.5 e 1.6, para distingui-las da integrante homônima da equipe | Vinicius Vieira |
 
 ## 1.1 Identificação do Cliente/Parceiro
 
@@ -12,7 +13,7 @@
 
 - **Tipo:** Organização da Sociedade Civil (OSC) que atua como Instituto Social e Cultural
 
-- **Representantes:** Maria Clara e Maria Eduarda (representantes do núcleo pedagógico No Setor).
+- **Representantes:** Maria Clara e Maria Eduarda, ambas do **núcleo pedagógico do Instituto**. (Não confundir com Maria Eduarda Marques, integrante da equipe CyberSetor — ver seção 7.1.)
 
 - **Forma de contato:** Reuniões periódicas por videoconferência, canal no WhatsApp e e-mails.
 
@@ -54,7 +55,7 @@ A consolidação das informações para a prestação de contas do Instituto No 
 
 ## 1.6 Mapa de Stakeholders
 
-Os principais stakeholders do projeto são: Maria Clara e Maria Eduarda (representantes do núcleo pedagógico), que atuam como clientes e são responsáveis por validar entregas, avaliar a solução e direcionar decisões; os educadores em campo, diretamente impactados pela transição das planilhas para a interface móvel durante a execução das atividades; a Diretoria Administrativo-Financeira e a Coordenação de Projetos, que necessitam dos relatórios automatizados para garantir a prestação de contas, o controle orçamentário e a conformidade com as metas; as populações atendidas e a comunidade em geral, que são os beneficiários das ações culturais e de assistência; e a equipe de desenvolvimento, responsável por construir e integrar o fluxo único de dados com aderência à realidade operacional do Instituto.
+Os principais stakeholders do projeto são: Maria Clara e Maria Eduarda, do núcleo pedagógico do Instituto, que atuam como interlocutoras do cliente e são responsáveis por validar entregas, avaliar a solução e direcionar decisões; os educadores em campo, diretamente impactados pela transição das planilhas para a interface móvel durante a execução das atividades; a Diretoria Administrativo-Financeira e a Coordenação de Projetos, que necessitam dos relatórios automatizados para garantir a prestação de contas, o controle orçamentário e a conformidade com as metas; as populações atendidas e a comunidade em geral, que são os beneficiários das ações culturais e de assistência; e a equipe de desenvolvimento, responsável por construir e integrar o fluxo único de dados com aderência à realidade operacional do Instituto.
 
 <figure markdown>
   ![Mapa de stakeholders do projeto CyberSetor](../assets/img/mapa-stakeholders.png)
@@ -63,7 +64,7 @@ Os principais stakeholders do projeto são: Maria Clara e Maria Eduarda (represe
 
 | Stakeholder | Relação com a solução | Interesse principal | Influência |
 |---|---|---|---|
-| Maria Clara e Maria Eduarda | Representante do cliente (núcleo pedagógico) | Validar escopo, prioridades, entregas e auxiliar decisões operacionais | Alta |
+| Maria Clara e Maria Eduarda, do núcleo pedagógico do Instituto | Representantes do cliente | Validar escopo, prioridades, entregas e auxiliar decisões operacionais | Alta |
 | Educadores em campo | Usuários operacionais diretos | Registrar presenças e evidências de forma ágil e sem retrabalho | Alta |
 | Diretoria Administrativo-Financeira | Usuários internos de gestão | Acompanhar o atingimento de metas e automatizar relatórios de prestação de contas | Alta |
 | Populações atendidas e Comunidade | Usuários finais | Participar das ações formativas, culturais e de assistência com organização | Média |
