@@ -158,7 +158,7 @@ Extraído da Matriz de Competências. Considera-se aqui a aptidão para produtos
 
 | Integrante | Papel | Aptidão relevante nesta Sprint | Observação de alocação |
 |---|---|---|---|
-| Maria Eduarda | Product Owner · Dupla A | Interlocução direta com o Instituto; perfil técnico acima do exigido pelo papel | Evitar sobrecarga na acumulação de interlocução com cliente e produção de backlog |
+| Maria Eduarda Marques | Product Owner · Dupla A | Interlocução direta com o Instituto; perfil técnico acima do exigido pelo papel | Evitar sobrecarga na acumulação de interlocução com cliente e produção de backlog |
 | Vinicius | Scrum Master · Dupla B | Domínio do referencial normativo consolidado na análise pós-presencial | Risco de concentração de conhecimento; mitigado pelo Dojo P1 (R10) |
 | Caio | Dupla C | Segundo maior perfil técnico; aptidão para modelagem de dados | Alocar aos blocos de declaração de natureza estrutural (evidência e relatório) |
 | Rodrigo | Dupla B | Mentor em diagramação (Figma), Git e SQL | Alocação natural para representação em BPMN e Rich Picture |
@@ -436,10 +436,10 @@ Preserva-se a composição das duplas já definida pela equipe, com realocação
 
 | Dupla | Integrantes | Itens atribuídos | Fundamento da alocação |
 |---|---|---|---|
-| **A** | Maria Eduarda · Daniel | A1, A2 · HU-06 · D2 | Maria Eduarda exerce a interlocução com o Instituto na condição de Product Owner; Daniel completa a Matriz de Competências em paralelo e atua em par na declaração |
+| **A** | Maria Eduarda Marques · Daniel Batista | A1, A2 · HU-06 · D2 | Maria Eduarda Marques exerce a interlocução com o Instituto na condição de Product Owner; Daniel Batista completa a Matriz de Competências em paralelo e atua em par na declaração |
 | **B** | Vinicius · Rodrigo | B1, B2 · HU-01, HU-02 · ART-01 · A4 | Rodrigo é mentor em diagramação; Vinicius detém o domínio normativo consolidado na análise pós-presencial. A atribuição de A4 mantém coerência com o compromisso comunicado ao Instituto |
 | **C** | Caio · Lucas | HU-03, HU-04, HU-05 | Caio apresenta aptidão para modelagem estrutural de dados; Lucas detém conhecimento de campo sobre a prestação de contas, obtido em elicitação anterior |
-| **Equipe** | — | D1 (estruturação por Vinicius, alimentação por todos) · E1 (condução por Maria Eduarda) · A3 (conforme disponibilidade) | — |
+| **Equipe** | — | D1 (estruturação por Vinicius, alimentação por todos) · E1 (condução por Maria Eduarda Marques) · A3 (conforme disponibilidade) | — |
 
 Esta alocação constitui proposta inicial. A reunião de Planning deve confirmar ou ajustar a distribuição antes do encerramento (Anexo A, bloco 5).
 
