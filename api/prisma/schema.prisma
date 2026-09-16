@@ -1,5 +1,4 @@
-// Estado dojo/base: gerador e datasource prontos, sem nenhum modelo.
-// O Randori constroi o modelo a partir daqui.
+// Estado dojo/kata: modelo completo dos cinco campos documentados.
 generator client {
   provider     = "prisma-client"
   output       = "../src/generated/prisma"
@@ -8,4 +7,15 @@ generator client {
 
 datasource db {
   provider = "postgresql"
+}
+
+// Artefato didatico. Nao define a fronteira de producao entre requisito e meta.
+model RequisitoDojo {
+  id                  String   @id @default(uuid())
+  origem              String
+  indicador           String
+  parametroAfericao   String
+  formaVerificacao    String
+  frequenciaApuracao  String
+  criadoEm            DateTime @default(now())
 }
