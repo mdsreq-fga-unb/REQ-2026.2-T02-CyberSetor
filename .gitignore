@@ -4,3 +4,6 @@ __pycache__/
 .venv/
 venv/
 .DS_Store
+.env
+docs/entregas/debitos-u1.md
+docs/gestao/sprints/tarefas-sprint-1.md
