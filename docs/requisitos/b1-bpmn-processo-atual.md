@@ -21,13 +21,13 @@ Para comprovar a conformidade metodológica da modelagem, o processo seguiu a ca
 * **Atividade:** Elicitação, Descoberta e Representação de Processos de Negócio.
 * **Datas de Execução:** 08/09/2026 (presencial no SCS) e 15/09/2026 (reunião remota de alinhamento).
 * **Participantes:**
-  * *Pelo Instituto:* Maria Clara (Núcleo Pedagógico), Maria Eduarda (Núcleo Pedagógico), Fillipe Ramos (Coordenação Geral) e Fran (Projetos).
+  * *Pelo Instituto:* Maria Clara e Maria Eduarda, do núcleo pedagógico (08/09 e 15/09); a coordenação administrativo-financeira e de execução e a área de projetos (15/09).
   * *Pela Equipe:* Vinicius Vieira, Daniel Batista, Caio Martins e Maria Eduarda Marques.
-* **Técnicas Empregadas:** Entrevista semiestruturada, observação direta das instalações, análise documental da planilha-template e modelagem de processos em notação BPMN 2.0.
+* **Técnicas Empregadas:** Entrevista semiestruturada, observação direta das instalações e modelagem de processos, representada na notação BPMN 2.0. A análise documental da planilha de acompanhamento e da matriz de aquisição aguarda o envio dos modelos prometidos pelo Instituto em 15/09.
 * **Evidências Primárias Auditáveis:**
   * Ata formal da reunião presencial de 08/09: [`docs/gestao/atas/2026-09-08-reuniao-presencial-instituto.md`](../gestao/atas/2026-09-08-reuniao-presencial-instituto.md).
-  * Anotações da reunião de alinhamento e priorização de 15/09.
-  * Gravação e transcrição interna autorizada: arquivadas no Google Drive restrito da equipe.
+  * Ata da reunião online de 15/09 com o Instituto, em elaboração; publicada nesta página de atas após validação.
+  * Registros brutos: notas manuscritas da equipe em 08/09 (não houve gravação); gravação e transcrição automática de 15/09, com consentimento, arquivadas no Drive restrito da equipe conforme a [política de registro](../gestao/atas/index.md#politica-de-registro-acesso-e-publicacao).
 * **Resultado Produzido:** Diagrama BPMN 2.0 representativo do fluxo AS-IS com identificação de 6 gargalos críticos.
 * **Requisitos Derivados:** As dores mapeadas sustentam diretamente as histórias de usuário **HU-01**, **HU-02**, **HU-03**, **HU-04**, **HU-05** e **HU-06**.
 
@@ -82,7 +82,7 @@ O diagrama abaixo ilustra a cadeia operacional do Instituto No Setor. A piscina 
 * Os quantitativos consolidados e relatórios tabulares são digitados no sistema governamental (*TransferGov* / *Parcerias*).
 * **Avaliação pelo Financiador:**
   * *Aprovado:* Parceria homologada com sucesso e arquivamento formal.
-  * *Rejeitado / Sem Justificativa:* Aplicação de **Glosa** (obrigação de devolução integral ou proporcional de verbas públicas com juros e correção, conforme art. 64 da Lei 13.019/2014).
+  * *Rejeitado / Sem Justificativa:* Aplicação de **glosa**, com devolução dos valores impugnados, nos termos da Lei 13.019/2014 e de seu regulamento; o art. 64, §1º, exige justificativa para meta descumprida.
 
 ---
 
@@ -93,9 +93,9 @@ Para demonstrar a utilidade prática do modelo no projeto, cada ponto de atrito 
 | Gargalo Operacional Identificado | Impacto no Cenário AS-IS | Requisito / Solução no CyberSetor |
 | :--- | :--- | :--- |
 | **G01: Destrinchamento manual de editais** | Perda de prazos contratuais e requisitos esquecidos. | **HU-01:** Cadastro padronizado de requisitos com indicador, aferição e prazos. |
-| **G02: Descentralização de demandas por e-mail/WhatsApp** | Sobrecarga de analistas e falta de visibilidade sobre pendências. | **HU-02:** Atribuição formal de dono, setor e alertas preventivos por requisito. |
+| **G02: Descentralização de demandas por e-mail/WhatsApp** | Sobrecarga de analistas e falta de visibilidade sobre pendências. | **Candidato, sem história derivada:** abertura e acompanhamento de chamados ou ordens de serviço, pedido em 15/09. **HU-02** cobre apenas responsável, setor e prazo por requisito. |
 | **G03: Listas físicas em papel e fotos dispersas** | Alto esforço de resgate documental e risco de extravio. | **HU-03 e HU-04:** Registro de atividades por tipo de objeto e vinculação direta de evidências às metas. |
 | **G04: Contatos retidos em celulares particulares** | Falta de histórico de participantes e vulnerabilidade à LGPD. | **HU-06:** Base única de pessoas com histórico e governança de dados pessoais. |
-| **G05: Ausência de visão unificada para a Presidência** | Dependência de planilhas frágeis em Excel para consultar status. | Painel consolidado com cronogramas e progresso em tempo real (Painel Executivo). |
+| **G05: Ausência de visão unificada para a Presidência** | Dependência de planilhas frágeis em Excel para consultar status. | **Candidato, sem história derivada:** painel consolidado para a presidência, demanda de 15/09 relatada em nome do presidente e ainda não validada com ele nem priorizada. |
 | **G06: Risco iminente de glosa na prestação de contas** | Obrigatoriedade legal de ressarcimento por ausência de justificativa prévia. | **HU-05:** Geração automatizada do Relatório de Execução do Objeto com exigência de justificativa em metas parciais. |
 
