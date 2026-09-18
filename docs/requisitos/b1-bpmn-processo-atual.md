@@ -26,7 +26,6 @@ Para comprovar a conformidade metodológica da modelagem, o processo seguiu a ca
 * **Técnicas Empregadas:** Entrevista semiestruturada, observação direta das instalações e modelagem de processos, representada na notação BPMN 2.0. A análise documental da planilha de acompanhamento e da matriz de aquisição aguarda o envio dos modelos prometidos pelo Instituto em 15/09.
 * **Evidências Primárias Auditáveis:**
   * Ata formal da reunião presencial de 08/09: [`docs/gestao/atas/2026-09-08-reuniao-presencial-instituto.md`](../gestao/atas/2026-09-08-reuniao-presencial-instituto.md).
-  * Ata da reunião online de 15/09 com o Instituto, em elaboração; publicada nesta página de atas após validação.
   * Registros brutos: notas manuscritas da equipe em 08/09 (não houve gravação); gravação e transcrição automática de 15/09, com consentimento, arquivadas no Drive restrito da equipe conforme a [política de registro](../gestao/atas/index.md#politica-de-registro-acesso-e-publicacao).
 * **Resultado Produzido:** Diagrama BPMN 2.0 representativo do fluxo AS-IS com identificação de 6 gargalos críticos.
 * **Requisitos Derivados:** As dores mapeadas sustentam diretamente as histórias de usuário **HU-01**, **HU-02**, **HU-03**, **HU-04**, **HU-05** e **HU-06**.
