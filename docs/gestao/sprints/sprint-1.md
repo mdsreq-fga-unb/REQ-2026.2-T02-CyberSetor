@@ -5,8 +5,9 @@
 | Campo | Conteúdo |
 |---|---|
 | **Código do documento** | C21 |
-| **Versão** | 3.1 |
-| **Data de emissão** | 15 de setembro de 2026 |
+| **Versão** | 7.0 |
+| **Data de emissão** | 09 de setembro de 2026 |
+| **Última revisão** | 17 de setembro de 2026 (v7.0 — reconciliação das linhagens de emissão; ver Controle de versões) |
 | **Projeto** | CyberSetor — sistema de gestão do ciclo de projetos financiados |
 | **Cliente** | Instituto Cultural e Social No Setor |
 | **Disciplina** | FGA0313 — Requisitos de Software · Turma 02 · 2026.2 · FCTE/UnB |
@@ -108,7 +109,7 @@ A Sprint 1 organiza-se em duas semanas com finalidades distintas, o que constitu
 
 | Fase | Período | Finalidade | Produto |
 |---|---|---|---|
-| **Semana 1 — Habilitação** | 08/09 a 13/09 | Planejamento, nivelamento de domínio e de técnica de redação de requisitos | Equipe habilitada a declarar requisitos com o vocabulário correto |
+| **Semana 1 — Habilitação** | 08/09 a 13/09 | Planejamento, nivelamento de técnica de redação de requisitos e das duas tecnologias do núcleo do back-end | Equipe habilitada a declarar requisitos com o vocabulário correto e com ambiente em execução |
 | **Semana 2 — Produção** | 14/09 a 22/09 | Elaboração do Product Backlog | Product Backlog declarado, priorizado por MoSCoW e estruturado no GitHub Projects |
 
 A justificativa desta divisão é a seguinte: a elicitação de 08/09 revelou vocabulário técnico-normativo específico (indicador, parâmetro de aferição, forma de verificação, frequência de apuração, glosa, relatório de execução do objeto) cujo domínio é atualmente concentrado em um único integrante da equipe. Iniciar a redação do backlog sem nivelar esse domínio produziria histórias genéricas, incapazes de sustentar uma prestação de contas real. A Semana 1 elimina essa dependência antes que ela comprometa o produto de trabalho da Semana 2.
@@ -124,9 +125,11 @@ A justificativa desta divisão é a seguinte: a elicitação de 08/09 revelou vo
 | Item excluído | Justificativa |
 |---|---|
 | Qualquer linha de código de produto | A Sprint 1 é de Engenharia de Requisitos; codificação inicia na Sprint 3 |
-| Priorização MoSCoW e definição de MVP | Requer o backlog já declarado; previsto para a Sprint 2 |
-| Dojos técnicos (Prisma, NestJS, TanStack Query, shadcn/ui, Dexie) | Não desbloqueiam nenhum item desta Sprint; ver §6.3 |
+| Definição do MVP do produto | Requer o backlog declarado e validação com o Instituto e com o docente; não é objeto desta Sprint — ver §8.2-A |
+| ~~Dojos de TanStack Query, shadcn/ui e Dexie~~ | Decisão revista em 10/09 (v5.0): os três entram na noite de 10/09, com profundidade proporcional à lacuna real da matriz — ver §6.2-B. NestJS e Prisma seguem na Sprint 1, conforme a decisão D2 da ata da Planning |
 | Realização confirmada das entrevistas com Diretoria de Projetos e Administrativo-Financeiro | Depende de agenda do Instituto; o compromisso da Sprint é o agendamento formal — ver item A1/A2 em §7.1 |
+
+**Correção editorial registrada em 14/09/2026 (v6.0).** Até a emissão v5.0 esta tabela excluía do escopo da Sprint 1 a linha *"Priorização MoSCoW e definição de MVP"*. A exclusão do MoSCoW contradizia, dentro do próprio documento, a Meta da Sprint acima — que exige histórias "classificadas por MoSCoW" —, o §1, o §4.2, o §8, a *Definition of Ready* de §7, os critérios CAS-01 e CAS-02 do §11 e o Anexo D; e contradizia a decisão **D1** da ata da Sprint Planning de 08/09, que adota o MoSCoW como instrumento único de priorização do Product Backlog. Trata-se de resíduo editorial da emissão anterior, e não de deliberação: **nenhuma decisão nova é atribuída à reunião de 08/09**, cuja ata permanece inalterada. A definição do MVP continua fora do escopo desta Sprint, por razão distinta, registrada na linha acima.
 
 ---
 
@@ -138,7 +141,7 @@ A justificativa desta divisão é a seguinte: a elicitação de 08/09 revelou vo
 |---|---|---|---|
 | 08/09 | terça | Entrega da Unidade 1 · QAU (10h10–10h50) · reunião presencial no Instituto · **Sprint Planning** à noite (21h33–23h07, ver Anexo A) · início formal da Sprint | Nula — dia integralmente consumido pelas quatro atividades |
 | 09/09 | quarta | Produção — consolidação dos achados da presencial e da Planning; início da redação do glossário (ART-01) | **Plena** |
-| 10/09 | quinta | **Apresentação da Unidade 1** · **Dojos P1 e P2** (ver §6) | Nula — habilitação |
+| 10/09 | quinta | **Apresentação da Unidade 1** · **Dojos D1 e D2** (ver §6) | Nula — habilitação |
 | 11/09 | sexta | Produção | **Plena** |
 | 14/09 | segunda | Produção — Semana 2, Product Backlog | **Plena** |
 | 15/09 | terça | Produção · Refinamento semanal (~30 min) | **Plena** |
@@ -159,7 +162,7 @@ Extraído da Matriz de Competências. Considera-se aqui a aptidão para produtos
 | Integrante | Papel | Aptidão relevante nesta Sprint | Observação de alocação |
 |---|---|---|---|
 | Maria Eduarda Marques | Product Owner · Dupla A | Interlocução direta com o Instituto; perfil técnico acima do exigido pelo papel | Evitar sobrecarga na acumulação de interlocução com cliente e produção de backlog |
-| Vinicius | Scrum Master · Dupla B | Domínio do referencial normativo consolidado na análise pós-presencial | Risco de concentração de conhecimento; mitigado pelo Dojo P1 (R10) |
+| Vinicius | Scrum Master · Dupla B | Domínio do referencial normativo consolidado na análise pós-presencial | Risco de concentração de conhecimento, normativo e técnico; mitigado pela leitura verificada e pelo Dojo D2 (R10) |
 | Caio | Dupla C | Segundo maior perfil técnico; aptidão para modelagem de dados | Alocar aos blocos de declaração de natureza estrutural (evidência e relatório) |
 | Rodrigo | Dupla B | Mentor em diagramação (Figma), Git e SQL | Alocação natural para representação em BPMN e Rich Picture |
 | Lucas | Dupla C | Conhecimento de domínio obtido em campo — relatou originalmente a dor da prestação de contas (ata de 27/08) | Alocar sempre em par |
@@ -171,67 +174,72 @@ Extraído da Matriz de Competências. Considera-se aqui a aptidão para produtos
 
 ### 6.1 Diretriz
 
-Nenhum dojo técnico integra a Sprint 1. Os dois dojos previstos são de processo e domínio, e classificam-se como **pré-requisito de qualidade do Épico C**, não como atividade acessória: sem eles, a redação das histórias de usuário produziria campos genéricos, incapazes de sustentar uma prestação de contas real perante os financiadores.
+A Sprint 1 realiza **dois dojos: um de fundação e processo, outro técnico**, conforme a decisão D2 da Sprint Planning de 08/09/2026. A emissão anterior deste plano descreveu dois dojos de processo e deslocou os técnicos para a Sprint 2, o que não corresponde ao que a ata registra. Esta versão corrige o texto para que o plano seja fiel à deliberação que ele documenta; a ata não é alterada.
 
 Ambos os dojos ocorrem em **10/09/2026 (quinta-feira)**, aproveitando a presença integral da equipe na data da apresentação da Unidade 1, e são realizados **após** a apresentação.
 
-**A ordem entre os dois dojos é obrigatória.** O Dojo P1 fixa o vocabulário técnico-normativo que o Dojo P2 utilizará em seu exercício prático. A inversão da ordem anula o ganho do segundo dojo.
+**A ordem entre os dois dojos é obrigatória, e é a inversa da emissão anterior.** O dojo de fundação vem primeiro por dependência material, não pedagógica: o dojo técnico exige, na máquina de cada integrante, ambiente instalado, repositório clonado e banco de dados de pé. Sem isso, o segundo dojo vira exposição assistida por quem não consegue executar nada.
+
+O conteúdo normativo previsto na emissão anterior para o primeiro dojo — a cadeia do financiamento público, o relatório de execução do objeto, o modelo mínimo de meta e o conceito de glosa — **não é descartado**: converte-se de exposição oral em leitura individual da análise consolidada pós-presencial, com entrega verificável no glossário (ART-01) até o refinamento de 15/09. A mitigação do risco R10 muda de mecanismo, não deixa de existir.
 
 ### 6.2 Especificação dos dojos da Sprint 1
 
-#### Dojo P1 — Fundamentos de parcerias com o poder público
+#### Dojo D1 — Fundação: histórias, backlog, Git e ambiente
 
 | Parâmetro | Definição |
 |---|---|
 | **Data e horário** | 10/09/2026, após a apresentação da Unidade 1 |
-| **Duração** | 40 minutos |
-| **Facilitador** | Vinicius (Scrum Master) |
+| **Duração** | 60 minutos |
+| **Facilitação** | Vinicius (Scrum Master), com Rodrigo nos blocos de Git e de protocolo do backlog e Caio no apoio de ambiente |
 | **Participantes** | Equipe completa (6 integrantes) |
-| **Formato** | Exposição dialogada, com espaço para perguntas; não é prático |
-| **Material de apoio** | Análise consolidada da reunião presencial, integralmente — dispensa preparação de material adicional |
+| **Formato** | Prático |
 | **Registro** | Gravação em Google Meet, conforme prática da equipe |
 
 **Conteúdo programático:**
 
-1. A cadeia do financiamento público: edital → proposta de trabalho → plano de trabalho → execução → relatório de execução do objeto → prestação de contas.
-2. A convergência normativa entre financiadores: o *relatório de execução do objeto* como prova principal em todos os regimes analisados (MROSC federal e distrital, FAC-DF, PNAB, Lei Paulo Gustavo), estruturado como meta × resultado alcançado + evidência datada e vinculada.
-3. O modelo mínimo de meta: as nove colunas do Anexo VI da SEDET-DF (origem, indicador, parâmetro de aferição, forma de verificação, frequência de apuração, entre outras).
-4. O conceito de **glosa** e sua consequência: meta descumprida sem justificativa formal enseja devolução de recursos (Lei 13.019/2014, art. 64, §1º). Este é o erro de maior custo no ciclo, e explica por que o campo "justificativa" é obrigatório na história HU-05.
-5. Vocabulário do Instituto a ser adotado uniformemente pela equipe.
+1. Os seis critérios INVEST: Independente, Negociável, Valiosa, Estimável, Small (pequena) e Testável.
+2. O formato de história adotado pela equipe e a exigência de que o critério de aceitação seja **observável**: formulações como "Dado que o sistema funciona corretamente" não constituem critério de aceitação.
+3. Erro recorrente a evitar: a descrição da solução técnica em lugar do comportamento esperado.
+4. Protocolo do Product Backlog no quadro do projeto, conforme os campos e as etiquetas efetivamente criados (item D1): Épico, Atividade de ER, Objetivo específico, Característica proposta e MoSCoW. **O campo MoSCoW permanece vazio até o refinamento de 15/09**, para não ancorar a classificação antes da discussão.
+5. Fluxo de trabalho em Git da equipe: nomenclatura de branch com o identificador da história, Conventional Commits, revisão cruzada por par e vínculo do pull request à issue.
+6. Ambiente de desenvolvimento em execução na máquina de cada integrante.
 
-**Resultado esperado:** eliminação da concentração do conhecimento normativo em um único integrante (risco R10) e nivelamento do vocabulário empregado na redação do backlog.
+**Exercício prático.** O exercício utiliza as histórias candidatas reais do Épico C (§7.2), e não exemplos fictícios. Cada dupla assume os blocos que lhe foram alocados em §9, refina as histórias e redige as que faltarem. Em consequência, o dojo produz simultaneamente capacitação e produto de trabalho da Sprint: **as histórias resultantes constituem a primeira sessão de refinamento do backlog**, e não material descartável de treinamento.
 
-#### Dojo P2 — Redação de histórias de usuário (INVEST) e critérios de aceitação (Given/When/Then)
+**Resultado esperado:** equipe apta a redigir histórias em conformidade com INVEST e Given/When/Then; protocolo do backlog acordado; ambiente em execução e um commit no padrão da equipe por integrante.
+
+**Nota de 17/09/2026 (v7.0).** O dojo ocorreu em 10/09 no formato então vigente (decisão D3: Dado/Quando/Então), como registram o material da branch `dojo/11` e os exercícios entregues pelos integrantes. A orientação posterior da issue #23 não altera o que foi ensinado; seu efeito sobre os critérios já redigidos está registrado em §7.2.
+
+#### Dojo D2 — NestJS e Prisma: uma fatia vertical do domínio
 
 | Parâmetro | Definição |
 |---|---|
-| **Data e horário** | 10/09/2026, após o Dojo P1, com intervalo mínimo de 10 minutos |
-| **Duração** | 45 minutos |
+| **Data e horário** | 10/09/2026, após o Dojo D1, com intervalo mínimo de 10 minutos |
+| **Duração** | 75 minutos |
 | **Facilitador** | Vinicius (Scrum Master) |
 | **Participantes** | Equipe completa (6 integrantes) |
-| **Formato** | Prático, em duplas |
+| **Formato** | Prático: demonstração conduzida, seguida de rodízio de teclado |
+| **Pré-requisito** | Dojo D1 concluído, com ambiente em execução |
 | **Registro** | Gravação em Google Meet |
-| **Contingência** | Em caso de extensão da apresentação da Unidade 1, o Dojo P2 é remanejado para 11/09 pela manhã, sem impacto no plano da Sprint |
+| **Contingência** | Em caso de extensão da apresentação da Unidade 1, reduz-se o rodízio antes de reduzir a demonstração; a validação que recusa o registro incompleto não é suprimida |
 
 **Conteúdo programático:**
 
-1. Os seis critérios INVEST: Independente, Negociável, Valiosa, Estimável, Small (pequena) e Testável.
-2. O formato de história adotado pela equipe e a exigência de que o critério de aceitação seja **observável**: formulações genéricas como "o sistema deve funcionar corretamente" não constituem critério de aceitação; os critérios devem ser condições observáveis, regras e restrições verificáveis.
-3. Erro recorrente a evitar: a descrição da solução técnica em lugar do comportamento esperado.
-4. Vínculo com a Definition of Ready e com o método de priorização (§8).
+1. NestJS: módulo, controlador, provedor, injeção de dependência e objeto de transferência de dados com validação.
+2. Prisma: esquema como fonte única do banco, migrations versionadas e cliente tipado.
+3. Fatia vertical construída sobre o domínio real do projeto, e não sobre exemplo genérico.
+4. Convenções que passam a valer no repositório a partir da sessão.
 
-**Exercício prático — dupla função.** O exercício utiliza as histórias candidatas reais do Épico C (§7.2), e não exemplos fictícios. Cada dupla assume os blocos que lhe foram alocados em §9, refina as histórias e redige as que faltarem. Em consequência, o dojo produz simultaneamente capacitação e produto de trabalho da Sprint: **as histórias resultantes constituem a primeira sessão de refinamento do backlog**, e não material descartável de treinamento.
+**Delimitação necessária.** O modelo construído no exercício é material de aprendizagem sobre campos cuja existência já está documentada. **Ele não decide a fronteira entre requisito e meta**, que depende da análise da planilha-template do Instituto (item A4) e permanece em aberto.
 
-**Resultado esperado:** equipe apta a redigir histórias em conformidade com INVEST e listas de critérios de aceitação objetivos e verificáveis, e conjunto inicial de histórias refinadas coletivamente.
+**Resultado esperado:** nivelamento nas duas tecnologias de maior concentração de conhecimento na equipe (risco R10) e redução da dependência de um único integrante no núcleo do back-end.
 
 ### 6.3 Capacitação técnica prevista para a Sprint 2
 
-Os cinco dojos técnicos já identificados pela equipe permanecem planejados para a Sprint 2, pelas seguintes razões: (a) não desbloqueiam nenhum item da Sprint 1, que não contempla codificação; (b) antecedem em margem adequada a primeira sprint de desenvolvimento; (c) evita-se, na própria equipe, o acúmulo de frentes simultâneas sobre efetivo reduzido — precisamente o gargalo identificado no cliente
+Dos cinco dojos técnicos identificados pela matriz de competências, **NestJS e Prisma são antecipados para a Sprint 1** (§6.2), por serem o núcleo do back-end e por concentrarem o conhecimento em um único integrante. Os três restantes permanecem na Sprint 2, pelas seguintes razões: (a) não desbloqueiam nenhum item da Sprint 1, que não contempla codificação; (b) antecedem em margem adequada a primeira sprint de desenvolvimento; (c) evita-se, na própria equipe, o acúmulo de frentes simultâneas sobre efetivo reduzido — precisamente o gargalo identificado no cliente
 
 | Dojo | Facilitador | Duração | Justificativa |
 |---|---|---|---|
-| Prisma e migrations | Vinicius | 60 min | Nenhum integrante além do facilitador registra afinidade ≥ 2; é o ORM de todo o back-end |
-| NestJS — fundamentos | Vinicius | 60 min | Núcleo do back-end; apenas 2 integrantes registram afinidade ≥ 2 |
 | TanStack Query | Vinicius | 45 min | Sustenta a sincronização offline (mutations com retry e cache) |
 | shadcn/ui e Tailwind — padrões | Vinicius | 45 min | Consistência visual estabelecida antes da construção de telas |
 | Dexie / IndexedDB | Caio e Vinicius | 45–60 min | Caio é segundo mentor na competência; oportunidade de co-facilitação |
@@ -275,6 +283,8 @@ Os itens são organizados pelas atividades de Engenharia de Requisitos que exerc
 
 Constitui o produto de trabalho central da Sprint. As histórias abaixo são candidatas redigidas previamente, destinadas ao refinamento pela equipe — não a substituí-lo. Identificadores HU-xx e CA-xx.y são definitivos e devem ser preservados na transposição para o GitHub Projects, por serem a base da matriz de rastreabilidade (item D2).
 
+**Orientação docente posterior — registrada em 14/09/2026 (v6.0) e incorporada em 17/09/2026 (v7.0).** A decisão **D3** da ata de 08/09 padronizou os critérios de aceitação no formato Dado/Quando/Então (*Given/When/Then*). A issue **#23**, aberta pelo docente após a apresentação da Unidade 1, determina que, **para a disciplina**, os critérios de aceitação sejam redigidos como **lista de critérios**. A ata de 08/09 permanece como registro histórico e não é alterada. Em 15/09, Caio Martins converteu os 18 critérios para lista diretamente sobre a versão publicada no site (emissão 3.1, feita sem as emissões 4.0 a 6.0). Esta emissão incorpora a conversão **preservando o conteúdo aprovado na Planning**: o que mudou foi a forma. Onde a conversão de 15/09 ou a revisão de 17/09 propôs mudança de conteúdo, o critério abaixo mantém o sentido original em lista e a proposta está no bloco 🔧 ao fim desta seção, para deliberação na Sprint Review ou Retrospectiva de 22/09 — foro que também formaliza a mudança de formato em relação à D3.
+
 ---
 
 #### HU-01 — Cadastro de requisito com parâmetros de aferição
@@ -300,7 +310,7 @@ Constitui o produto de trabalho central da Sprint. As histórias abaixo são can
 | ID | Critério de aceitação |
 |---|---|
 | CA-02.1 | O painel do projeto deve exibir o responsável atribuído, setor e prazo de cada requisito ou meta cadastrada |
-| CA-02.2 | O painel deve destacar os requisitos cujo prazo entre na janela de antecedência configurada para o projeto; a antecedência-padrão é decisão pendente da Diretoria de Projetos |
+| CA-02.2 | O painel deve apresentar alerta para os requisitos cujo prazo vença em até 7 dias |
 | CA-02.3 | O sistema deve sinalizar pendência explícita no painel para qualquer requisito sem responsável atribuído no momento em que o projeto entra em execução |
 
 ---
@@ -315,7 +325,7 @@ Constitui o produto de trabalho central da Sprint. As histórias abaixo são can
 |---|---|
 | CA-03.1 | O cadastro de atividade deve disponibilizar lista predefinida para seleção do tipo de objeto (oficina, evento, ação de rua) |
 | CA-03.2 | Para atividades do tipo "evento", o sistema deve indicar e listar como evidências esperadas: público estimado, registro fotográfico com logomarca e clipping |
-| CA-03.3 | Para atividades do tipo "oficina", o sistema deve indicar e exigir a lista de presença como evidência principal |
+| CA-03.3 | Para atividades do tipo "oficina", o sistema deve indicar a lista de presença como evidência principal |
 
 ---
 
@@ -329,7 +339,7 @@ Constitui o produto de trabalho central da Sprint. As histórias abaixo são can
 |---|---|
 | CA-04.1 | O anexo de evidência em atividade concluída deve exigir data, local e a vinculação a uma ou mais metas do projeto |
 | CA-04.2 | A visualização da meta deve relacionar as evidências já anexadas e indicar as evidências pendentes conforme o tipo de objeto da atividade |
-| CA-04.3 | O sistema deve aceitar evidência sem meta vinculada apenas como rascunho, sinalizado como não computável em prestação de contas até ser vinculado a uma meta ou descartado |
+| CA-04.3 | Ao gravar evidência sem meta vinculada, o sistema deve alertar que ela não será considerada em nenhuma prestação de contas |
 
 ---
 
@@ -361,7 +371,17 @@ Constitui o produto de trabalho central da Sprint. As histórias abaixo são can
 | CA-06.2 | O sistema deve alertar sobre possível duplicidade cadastral caso sejam informados nome e telefone coincidentes com registro existente |
 | CA-06.3 | O cadastro de pessoa deve registrar a data e confirmação explícita de consentimento para tratamento de dados pessoais conforme a LGPD |
 
-**Restrição de conformidade.** Conforme decisão já tomada pela equipe, o produto não trata dados pessoais sensíveis (LGPD, art. 5º, II). O cadastro de pessoas restringe-se a dados de identificação e contato, com registro de consentimento (CA-06.3).
+**Restrição de conformidade.** Decisão da equipe: o produto **não mantém cadastro estruturado** de dados pessoais sensíveis (LGPD, art. 5º, II); o cadastro de pessoas restringe-se a identificação e contato, com registro de consentimento (CA-06.3). Fotografias e campos de texto livre podem revelar dado sensível mesmo sem campo próprio, e por isso ficam sob controle de acesso por finalidade, conforme a seção 2 do Documento de Visão revisada pela issue #20.
+
+#### 🔧 Propostas de refinamento de critérios, para deliberação em 22/09
+
+Nenhuma das propostas abaixo altera o critério vigente até registro em ata da Sprint Review ou da Retrospectiva de 22/09.
+
+| Critério | Texto vigente (forma em lista, conteúdo da Planning) | Proposta | Origem da proposta |
+|---|---|---|---|
+| CA-02.2 | alerta para prazo em até 7 dias | destacar requisitos cujo prazo entre na **janela de antecedência configurada** para o projeto; antecedência-padrão a definir com a Diretoria de Projetos | os 7 dias não têm fonte no Instituto nem em edital; o exercício EX-01 do Dojo D1 entregue por Maria Eduarda Marques em 15/09 e a auditoria interna de requisitos de 15/09 apontam o número como hipótese |
+| CA-03.3 | indica a lista de presença como evidência principal | **exigir** a lista de presença para oficinas | conversão de 15/09 (emissão 3.1, Caio Martins) |
+| CA-04.3 | alerta que evidência sem meta não será considerada | aceitar evidência sem meta apenas como **rascunho** ligado a projeto/atividade: não conta, não entra em relatório e **impede o fechamento** do relatório até ser vinculada ou descartada | decisão de especificação de 15/09 (pendência PEN-07 da auditoria interna), ainda não deliberada pela equipe; a emissão 3.1 propunha **bloquear** a gravação, alternativa que descarta material de campo |
 
 ---
 
@@ -390,6 +410,21 @@ O método também é coerente com o que a equipe já pratica: é a mesma lógica
 
 A proporção 60/20/20 incide sobre o esforço, não sobre a quantidade de itens** (AGILE BUSINESS CONSORTIUM, *DSDM Project Framework*). O limite de 60% para os Must Haves é o que garante margem para imprevisto: se todo o período estiver comprometido com itens obrigatórios, qualquer atraso compromete a entrega inteira. Os Could Haves não são "sobras" — são a reserva que se sacrifica primeiro, de propósito, para que o Must chegue ao fim da Sprint.
 
+### 8.2-A Objeto e horizonte da classificação
+
+**Seção acrescentada em 14/09/2026 (v6.0).** A classificação MoSCoW responde a duas perguntas distintas, que este documento passa a separar de forma explícita:
+
+| Horizonte | Pergunta que a classificação responde | Objeto classificado | Situação nesta Sprint |
+|---|---|---|---|
+| **A — trabalho de ER na Sprint 1** | O item é indispensável para alcançar o Sprint Goal (§4.3) até 22/09? | Itens do Product Backlog candidato de §7: elicitações, análises, histórias a redigir, representações e artefatos | **É o que se classifica nesta Sprint** (§8.5) |
+| **B — funcionalidade no produto e no MVP** | A funcionalidade é indispensável no primeiro recorte utilizável pelo Instituto? | Funcionalidades do produto, ao longo das sprints de construção, a partir da Sprint 3 | **Não classificado nesta Sprint**; depende do backlog declarado e de validação com o Instituto e com o docente |
+
+**A classificação em um horizonte não determina a do outro.** Um item pode ser *Must* no horizonte A sem integrar o MVP: analisar e descrever a variedade de relatórios do Instituto é indispensável agora — inclusive porque pode revelar que a geração automática do relatório não cabe no semestre —, sem que a funcionalidade correspondente seja obrigatória no primeiro recorte entregue. A leitura inversa também vale.
+
+Por essa razão, **"Must nesta Sprint" não é sinônimo de "Must do MVP"**, e nenhuma classificação registrada no quadro do projeto nesta Sprint deve ser lida como definição de MVP. O DSDM, de onde o MoSCoW vem, admite prioridades distintas para o projeto, o incremento e o período de trabalho (AGILE BUSINESS CONSORTIUM, *DSDM Project Framework*).
+
+**Consequência para a proporção de §8.2.** A regra 60/20/20 aqui aplicada incide sobre o esforço do horizonte A. Sua verificação apoia-se nos dias de produção de §5.1 e na verificação qualitativa de §8.4: contagem de itens não mede proporção de esforço e não substitui essa base de capacidade.
+
 ### 8.3 Procedimento de classificação
 
 | Etapa | Ação |
@@ -411,7 +446,9 @@ Concluída a classificação, a equipe faz uma única verificação, de forma qu
 
 ### 8.5 Aplicação a esta Sprint
 
-A classificação MoSCoW desta Sprint aplica-se ao Product Backlog candidato de §7, na reunião de Planning e no refinamento de 15/09. Como diretriz geral, aplicável já nesta emissão do documento:
+A classificação MoSCoW desta Sprint aplica-se ao Product Backlog candidato de §7, **no horizonte A definido em §8.2-A**, na reunião de Planning e no refinamento de 15/09. Não é definição de MVP.
+
+🔧 **O que segue é proposta do Scrum Master, não classificação atribuída.** Registra-se aqui apenas como ponto de partida da discussão, em coerência com §7: nenhum item entra no quadro do projeto já classificado, e o campo MoSCoW permanece vazio até o refinamento de 15/09.
 
 - **Must:** todas as histórias do Épico C (§7.2) — são o produto de trabalho central da Sprint, conforme a Meta (§4.3) — e os itens B1, B2, D1 e D2 do Épico A/B/D, que estruturam a representação do processo e o próprio backlog.
 - **Should:** A1, A2, A4 e ART-01 — de alto valor, mas cuja realização integral não é pré-condição do Sprint Goal.
@@ -449,16 +486,16 @@ Esta alocação constitui proposta inicial. A reunião de Planning deve confirma
 
 | ID | Risco | Prob. | Impacto | Mitigação | Responsável |
 |---|---|---|---|---|---|
-| R01 | A apresentação da Unidade 1 em 10/09 estende-se e compromete a realização dos dojos | Média | Alto | Dojos agendados após a apresentação; Dojo P2 remanejável para 11/09 pela manhã sem impacto no plano | SM |
-| R02 | A janela produtiva de 7 dias úteis é insuficiente para o backlog selecionado | Média | Alto | A Meta da Sprint delimita o Épico C como prioridade; épicos A, D e E admitem transbordo para a Sprint 2 | PO e SM |
+| R01 | A apresentação da Unidade 1 em 10/09 estende-se e compromete a realização dos dojos | Média | Alto | Dojos agendados após a apresentação; em caso de extensão, comprime-se o rodízio do Dojo D2 antes de suprimir qualquer bloco | SM |
+| R02 | A janela produtiva de 8 dias úteis (§5.1) é insuficiente para o backlog selecionado | Média | Alto | A Meta da Sprint delimita o Épico C como prioridade; épicos A, D e E admitem transbordo para a Sprint 2 | PO e SM |
 | R03 | A agenda do Instituto não permite realizar as entrevistas A1/A2 no período | Alta | Baixo | O compromisso da Sprint é o agendamento formal, não a realização; a Meta não depende destes itens | PO |
 | R04 | A planilha-template do Instituto não é enviada até 11/09 | Média | Médio | As histórias do Épico C são redigidas a partir do modelo normativo consolidado pela equipe (Anexo VI da SEDET-DF); o template do Instituto passa a insumo de validação posterior | Dupla B |
 | R05 | A primeira aplicação formal do MoSCoW gera divergência de critério entre os integrantes e estende a reunião de Planning | Média | Baixo | Regra de desempate por categoria mais restritiva (§8.3, etapa 5); em caso de extrapolação, classifica-se apenas o Épico C nesta reunião e o restante no refinamento de 15/09 | SM |
 | R06 | A cerimônia de encerramento em 22/09 coincide com o início da Semana Universitária | Média | Médio | Confirmar a disponibilidade dos 6 integrantes ainda na reunião de Planning; alternativa é antecipar para 21/09 | SM |
-| R07 | Dois dojos no mesmo dia, após apresentação, produzem fadiga e baixa retenção | Média | Médio | Intervalo mínimo de 10 minutos; o Dojo P2 é prático e produz artefato real, rompendo o formato expositivo; ambos gravados | SM |
-| R08 | Histórias redigidas sem o vocabulário técnico-normativo resultam genéricas | Média | Alto | O Dojo P1 precede obrigatoriamente o P2 e fixa o vocabulário; o glossário (ART-01) é item da Sprint | SM |
+| R07 | Dois dojos no mesmo dia, após apresentação, produzem fadiga e baixa retenção | Média | Médio | Intervalo mínimo de 10 minutos entre os dojos e pausa entre a demonstração e o rodízio do Dojo D2; ambos os dojos são práticos e produzem artefato real; ambos gravados | SM |
+| R08 | Histórias redigidas sem o vocabulário técnico-normativo resultam genéricas | Média | Alto | Leitura individual da análise consolidada pós-presencial, com entrega verificável no glossário (ART-01) até o refinamento de 15/09; o exercício do Dojo D1 usa as histórias reais do Épico C, não exemplos fictícios | SM |
 | R09 | A entrega da Unidade 2 (13/10) cai no interior da Sprint 3, não em fechamento de sprint, o que exige verificação de entrega fora da Sprint Review | Baixa | Médio | Cadência de 2 semanas mantida (§12); formalizar o novo início da Sprint 3 (06/10) nos documentos de equipe e de ritos na Sprint 2 Review/Retrospective | SM |
-| R10 | Concentração do conhecimento normativo em um único integrante | Alta | Alto | Transferência por meio do Dojo P1; a análise pós-presencial permanece como material de consulta permanente | SM |
+| R10 | Concentração do conhecimento normativo e técnico em um único integrante | Alta | Alto | No plano normativo: leitura da análise pós-presencial, que permanece como material de consulta permanente, com verificação pelo glossário. No plano técnico: Dojo D2 de NestJS e Prisma, com rodízio de teclado, e co-facilitação de Rodrigo e Caio no Dojo D1 | SM |
 
 ---
 
@@ -473,7 +510,7 @@ A Sprint 1 é considerada concluída com êxito, na Sprint Review de 22/09/2026,
 | CAS-03 | A representação do processo atual em BPMN está publicada e acessível | Verificação do artefato no repositório ou no site |
 | CAS-04 | O glossário de termos do Instituto (ART-01) está registrado | Verificação do artefato |
 | CAS-05 | As entrevistas A1 e A2 foram formalmente solicitadas, com proposta de data encaminhada ao Instituto | Registro da comunicação |
-| CAS-06 | Os dois dojos de processo foram realizados e gravados | Verificação das gravações |
+| CAS-06 | Os dois dojos foram realizados e gravados, e cada integrante registrou o ambiente em execução e um commit no padrão da equipe | Verificação das gravações e dos registros enviados pela equipe |
 | CAS-07 | A ata do Sprint Planning e a ata da Sprint Review estão publicadas | Verificação no Drive e no projeto |
 | CAS-08 | A proporção de itens Must concluídos está apurada, disponível como referência de capacidade para o dimensionamento do MoSCoW da Sprint 2 | Apuração na Review |
 
@@ -485,7 +522,11 @@ A Sprint 1 é considerada concluída com êxito, na Sprint Review de 22/09/2026,
 
 **Consequência:** a entrega da Unidade 2 (13/10) ocorre no interior da **Sprint 3**, que passa a iniciar em 06/10/2026. A verificação da entrega da U2 é feita pelo conteúdo publicado no prazo, não pela coincidência com o fechamento de uma sprint.
 
-**Calendário de referência.** A seção 6 do Documento de Visão registra o cronograma tal como planejado na data da entrega da Unidade 1, e ela própria declara esse planejamento como preliminar, sujeito a atualização ao fim de cada sprint. A partir desta Sprint, **o calendário vigente do projeto passa a ser mantido nos planos de sprint**, que são o registro corrente da cadência efetivamente praticada. A seção 6 será reconciliada com este calendário na revisão do Documento de Visão para a Unidade 2, preservando o documento da Unidade 1 como o retrato da entrega feita em 08/09.
+**Calendário de referência.** A seção 6 do Documento de Visão registra o cronograma tal como planejado na data da entrega da Unidade 1, e ela própria declara esse planejamento como preliminar, sujeito a atualização ao fim de cada sprint. A partir desta Sprint, **o calendário vigente do projeto passa a ser mantido nos planos de sprint**, que são o registro corrente da cadência efetivamente praticada. Em 17/09/2026 a seção 6 do Documento de Visão foi reconciliada com este calendário (versão 1.4 daquela seção, em resposta à issue #24) e passou a declarar a vigência de forma visível; a versão anterior permanece no histórico daquela página como retrato da entrega feita em 08/09.
+
+**Declaração de vigência registrada em 14/09/2026 (v6.0), em resposta à issue #24.** O calendário vigente do projeto é o desta seção e do §4.1: **Sprint 1 de 08/09 a 22/09; Sprint 2 de 22/09 a 06/10; Sprint 3 a partir de 06/10**. O calendário da seção 6 do Documento de Visão — Sprint 1 de 15/09 a 29/09, Sprint 2 de 29/09 a 13/10, Sprint 3 de 20/10 a 03/11 — é o retrato da entrega da Unidade 1 e **está superado**. **Atualização de 17/09/2026 (v7.0):** a marcação visível da vigência no Documento de Visão foi executada na seção 6. As Sprints 3 a 6 ali descritas — primeira fatia vertical, pessoas e evidências, progresso e relatório, estabilização e implantação — são planejamento do Scrum Master a confirmar na Sprint Review ou Retrospectiva de 22/09, não deliberação já registrada em ata.
+
+**Sobre a sobreposição de datas entre sprints.** Uma sprint encerra e a seguinte inicia na mesma terça-feira porque esse dia é ocupado pelos ritos, não pela produção: Review e Retrospectiva da sprint que encerra e Planning da que inicia. O §5.1 registra capacidade nula nesses dias; nenhum dia de produção é contado duas vezes.
 
 ---
 
@@ -536,13 +577,20 @@ Detalhamento operacional da fase de produção do Product Backlog (14/09 a 21/09
 Prazo de execução: 48 horas contadas do encerramento da reunião.
 
 - [ ] Ata da reunião publicada no Drive da equipe e registrada no projeto
-- [ ] Issues criadas no GitHub Projects, uma por item selecionado, com rótulo de épico, vínculo a OE/CP e classificação MoSCoW
+- [ ] Issues criadas no GitHub Projects, uma por item selecionado, com rótulo de épico e vínculo a OE/CP
+- [ ] Campo MoSCoW preenchido no quadro — **prazo próprio: refinamento de 15/09**, conforme §6.2 e §8.5, e não as 48 horas desta lista
 - [ ] Meta da Sprint fixada no quadro do projeto
 - [ ] Horário dos dois dojos comunicado no grupo *Avisos*
 - [ ] Daily assíncrona retomada a partir de 10/09, conforme molde já adotado pela equipe
 - [ ] Disponibilidade da equipe em 22/09 confirmada (risco R06)
-- [ ] Material do Dojo P1 revisado pelo facilitador
-- [ ] Histórias candidatas de §7.2 disponibilizadas às duplas antes do Dojo P2
+- [ ] Material dos Dojos D1 e D2 revisado pelo facilitador
+- [ ] Pré-requisitos de instalação comunicados à equipe antes de 10/09
+- [ ] Co-facilitação dos blocos de Git e de ambiente confirmada com os responsáveis
+- [ ] Histórias candidatas de §7.2 disponibilizadas às duplas antes do Dojo D1
+
+**Reconciliação de prazo registrada em 14/09/2026 (v6.0).** A emissão anterior exigia, dentro da janela de 48 horas contadas do encerramento da Planning, issues já com classificação MoSCoW, enquanto o §6.2 e o §8.5 determinam que o campo permaneça vazio até o refinamento de 15/09. Os dois prazos são incompatíveis; prevalece o mais recente e mais específico, 15/09.
+
+**Registro de execução, sem retroação.** Em 14/09/2026, a consulta ao quadro do projeto mostra os 18 itens **sem classificação MoSCoW**. O item correspondente permanece, portanto, em aberto, com prazo em 15/09. Esta reconciliação ajusta a incompatibilidade entre prazos do próprio plano; **não altera datas de atividades já ocorridas nem declara concluído o que não foi feito**.
 
 ---
 
@@ -553,7 +601,10 @@ Prazo de execução: 48 horas contadas do encerramento da reunião.
 | 1.0 | 09/09/2026 | Emissão inicial, elaborada antes da reunião de Sprint Planning | Vinicius |
 | 2.0 | 09/09/2026 | Estruturação da Sprint em duas fases, plano de dojos e Product Backlog candidato com identificadores rastreáveis | Vinicius |
 | 3.0 | 09/09/2026 | Registro do que foi deliberado na Sprint Planning de 08/09: MoSCoW como método único de priorização e dimensionamento, com a regra de proporção do DSDM e o fatiamento como mecanismo de ajuste de escopo; capacidade de 8 dias de produção; cadência de 2 semanas confirmada para a Sprint 2 | Vinicius |
-| 3.1 | 15/09/2026 | Conversão dos 18 critérios de aceitação de Dado/Quando/Então para listas de critérios objetivos e verificáveis (Issue #23) | Caio Martins |
-| 3.2 | 17/09/2026 | CA-02.2 e CA-04.3 alinhados às decisões de 15/09: janela de antecedência configurável, sem prazo fixo sem fonte; evidência sem meta aceita apenas como rascunho não computável, em vez de bloqueada | Vinicius Vieira |
+| 3.1 | 15/09/2026 | **Emissão feita diretamente sobre a versão publicada no site (3.0), sem as emissões 4.0 a 6.0, que não haviam sido publicadas.** Conversão dos 18 critérios de aceitação de Dado/Quando/Então para lista (issue #23); reescrita do §6.2 sobre o Dojo D1. Incorporada e revisada na 7.0 | Caio Martins |
+| 4.0 | 09/09/2026 | **Correção de fidelidade à ata da Planning.** A emissão anterior descrevia dois dojos de processo e deslocava os técnicos para a Sprint 2, contrariando a decisão D2 da ata de 08/09. Os dojos de 10/09 passam a ser um de fundação e processo e um de NestJS e Prisma, nesta ordem, por dependência de ambiente; o conteúdo normativo converte-se em leitura com entrega verificável no glossário. Ajustes decorrentes em §4.2, §4.3, §5.1, §5.2, §6.3, R01, R07, R08, R10, CAS-06 e Anexo D. Corrigidas ainda duas inconsistências internas: a capacidade citada em R02 (7 dias) passa a 8, conforme §5.1; e a proposta de classificação de §8.5 é explicitada como proposta sujeita a deliberação, em coerência com §7. A ata da Planning não foi alterada | Vinicius |
+| 5.0 | 10/09/2026 | **Ampliação de escopo dos dojos de 10/09, decisão do Scrum Master antes da sessão.** TanStack Query, shadcn/ui e Dexie deixam de ficar exclusivamente para a Sprint 2 e entram na noite de 10/09, com profundidade proporcional à lacuna registrada na matriz de competências: Dexie recebe tratamento amplo (Caio e Vinicius ensinam "os demais", conforme `contexto/07` §2-A); TanStack Query e shadcn/ui recebem segmento dirigido às duas pessoas abaixo do patamar em cada um, com o restante da equipe em tarefa autônoma. A duração total da noite passa a ~155 minutos, com janela de perguntas dedicada e tarefas para conclusão fora da sessão quando necessário. Detalhamento em `dojos/2026-09-10/ROTEIRO-DA-NOITE.md`. Não reabre nenhuma outra decisão do documento; os cinco dojos técnicos remanescentes de `contexto/07` ficam reduzidos, ao final desta noite, apenas ao que não for concluído | Vinicius |
+| 6.0 | 14/09/2026 | **Reconciliação interna posterior ao feedback da apresentação da Unidade 1.** Corrigido o resíduo editorial de §4.3, que excluía a priorização MoSCoW do escopo da Sprint 1 contra a Meta da própria seção, o §1, o §4.2, o §8, a DoR de §7, CAS-01, CAS-02, o Anexo D e a decisão D1 da ata de 08/09; a definição de MVP segue excluída, por razão distinta. Acrescentado o §8.2-A, que separa o horizonte do trabalho de ER desta Sprint do horizonte da funcionalidade no produto e no MVP. Reconciliado o conflito de prazo entre o Anexo D (48 horas) e §6.2/§8.5 (refinamento de 15/09), com registro do estado do quadro em 14/09 e sem retroação. Declarada a vigência do calendário em §12 e explicada a sobreposição de datas entre sprints, em resposta à issue #24. Registrada em §7.2 a orientação posterior da issue #23 sobre o formato dos critérios de aceitação, como pendência de decisão da equipe. Corrigida a ordem das linhas 4.0 e 5.0 nesta tabela. **Nenhuma decisão nova é atribuída à reunião de 08/09; a ata permanece inalterada.** | Vinicius |
+| 7.0 | 17/09/2026 | **Reconciliação das duas linhagens de emissão.** Sobre a 6.0, incorpora a conversão dos critérios para lista feita na 3.1, preservando o conteúdo aprovado na Planning: onde a 3.1 mudava conteúdo (CA-03.3 e CA-04.3), o critério mantém o sentido original em lista e a mudança vai ao bloco 🔧 de propostas para 22/09, junto com a proposta de janela configurável para CA-02.2; CA-01.1, CA-05.1, CA-05.2 e CA-06.3 ganham esclarecimentos sem mudança de regra (três origens do requisito; resultado pactuado; meta não atingida; consentimento explícito). O §6.2 mantém o registro do Dojo D1 como ocorreu em 10/09, com nota sobre a #23. Nomes desambiguados conforme a issue #25. Nota de conformidade da HU-06 alinhada à decisão da equipe e à seção 2 revisada pela issue #20. §12 atualizado: a seção 6 do Documento de Visão foi reconciliada em 17/09 | Vinicius |
 
 **Documentos impactados por esta versão:** calendário de sprints da equipe · cadência e calendário de ritos do processo · memória de decisões do projeto.

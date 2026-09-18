@@ -28,7 +28,7 @@ O projeto é organizado em sprints de **duas semanas, ancoradas nas terças-feir
 | **6 · Estabilização e implantação** | 17/11 | 01/12 | Sem funcionalidade nova: correção, segurança, implantação, treinamento e transferência | Produto implantado no ambiente de produção; teste de restauração cronometrado; treinamento das pessoas do Instituto; ensaio de transferência com a lista da seção 6.4; lições aprendidas (seção 11) | Validação final em uso real pelas áreas competentes | Questionário de avaliação geral em 24/11 |
 | **Margem** | 01/12 | 08/12 | Contingência e encerramento | Documentação final, aceite e transferência; **nenhum escopo novo** | Aceite formal do Instituto | **Entrega da Unidade 4 entre 01/12 e 08/12** |
 
-O planejamento é atualizado ao fim de cada sprint, na Retrospectiva, e cada mudança de data entra no histórico desta página. As datas das Sprints 3 a 6 são planejamento, não compromisso já validado pelo Instituto.
+O planejamento é atualizado ao fim de cada sprint, na Retrospectiva, e cada mudança de data entra no histórico desta página. As Sprints 1 e 2 seguem o que a Sprint Planning de 08/09 deliberou; as Sprints 3 a 6 e a margem são planejamento do Scrum Master, a confirmar pela equipe na Sprint Review ou Retrospectiva de 22/09, e não compromisso já validado pelo Instituto.
 
 ## 6.2 Dependências entre as características de produto
 
