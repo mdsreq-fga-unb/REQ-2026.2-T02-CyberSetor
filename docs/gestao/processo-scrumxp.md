@@ -66,7 +66,7 @@ Critérios de aceitação:
 
 ## Práticas de XP
 
-**Adotadas:** histórias de usuário · critérios de aceitação · testes de aceitação · pequenas releases · integração contínua · programação em pares · propriedade coletiva do código · design simples · padrões de codificação · cliente presente **adaptado**, com Product Owner interno (atuando como persona no intervalo) e validações semanais com o cliente.
+**Adotadas:** histórias de usuário · critérios de aceitação · testes de aceitação · pequenas releases · integração contínua · programação em pares · propriedade coletiva do código · design simples · padrões de codificação · cliente presente **adaptado**, com Product Owner interno no intervalo entre validações e validação quinzenal com o Instituto (Documento de Visão, seção 7.2).
 
 **Não adotadas, com justificativa:**
 

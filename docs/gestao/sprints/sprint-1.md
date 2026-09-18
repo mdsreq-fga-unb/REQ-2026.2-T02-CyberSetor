@@ -300,7 +300,7 @@ Constitui o produto de trabalho central da Sprint. As histórias abaixo são can
 | ID | Critério de aceitação |
 |---|---|
 | CA-02.1 | O painel do projeto deve exibir o responsável atribuído, setor e prazo de cada requisito ou meta cadastrada |
-| CA-02.2 | O sistema deve apresentar alerta visual em destaque no painel para requisitos cujo prazo expire em até 7 dias corridos |
+| CA-02.2 | O painel deve destacar os requisitos cujo prazo entre na janela de antecedência configurada para o projeto; a antecedência-padrão é decisão pendente da Diretoria de Projetos |
 | CA-02.3 | O sistema deve sinalizar pendência explícita no painel para qualquer requisito sem responsável atribuído no momento em que o projeto entra em execução |
 
 ---
@@ -329,7 +329,7 @@ Constitui o produto de trabalho central da Sprint. As histórias abaixo são can
 |---|---|
 | CA-04.1 | O anexo de evidência em atividade concluída deve exigir data, local e a vinculação a uma ou mais metas do projeto |
 | CA-04.2 | A visualização da meta deve relacionar as evidências já anexadas e indicar as evidências pendentes conforme o tipo de objeto da atividade |
-| CA-04.3 | O sistema deve bloquear a gravação de evidência sem meta vinculada, alertando que o documento não será computado em prestações de contas |
+| CA-04.3 | O sistema deve aceitar evidência sem meta vinculada apenas como rascunho, sinalizado como não computável em prestação de contas até ser vinculado a uma meta ou descartado |
 
 ---
 
@@ -553,6 +553,7 @@ Prazo de execução: 48 horas contadas do encerramento da reunião.
 | 1.0 | 09/09/2026 | Emissão inicial, elaborada antes da reunião de Sprint Planning | Vinicius |
 | 2.0 | 09/09/2026 | Estruturação da Sprint em duas fases, plano de dojos e Product Backlog candidato com identificadores rastreáveis | Vinicius |
 | 3.0 | 09/09/2026 | Registro do que foi deliberado na Sprint Planning de 08/09: MoSCoW como método único de priorização e dimensionamento, com a regra de proporção do DSDM e o fatiamento como mecanismo de ajuste de escopo; capacidade de 8 dias de produção; cadência de 2 semanas confirmada para a Sprint 2 | Vinicius |
-| 3.1 | 15/09/2026 | Conversão dos 18 critérios de aceitação de Dado/Quando/Então para listas de critérios objetivos e verificáveis (Issue #23) | Equipe CyberSetor |
+| 3.1 | 15/09/2026 | Conversão dos 18 critérios de aceitação de Dado/Quando/Então para listas de critérios objetivos e verificáveis (Issue #23) | Caio Martins |
+| 3.2 | 17/09/2026 | CA-02.2 e CA-04.3 alinhados às decisões de 15/09: janela de antecedência configurável, sem prazo fixo sem fonte; evidência sem meta aceita apenas como rascunho não computável, em vez de bloqueada | Vinicius Vieira |
 
 **Documentos impactados por esta versão:** calendário de sprints da equipe · cadência e calendário de ritos do processo · memória de decisões do projeto.
