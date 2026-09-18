@@ -5,7 +5,8 @@
 | 01/09/2026 | 1.0 | Versão inicial | Equipe CyberSetor |
 | 05/09/2026 | 1.1 | Revisão com foco único nas seções 1.4, 1.5, 1.7, 2.1 e 2.2 | Equipe CyberSetor |
 | 06/09/2026 | 1.2 | Seções 4, 5, 6 e 7 redigidas para o site | Equipe CyberSetor |
-| 17/09/2026 | 1.3 | Correção decorrente da issue #24: calendário vigente declarado e alinhado ao plano da Sprint 1; dependência da CP5 explicitada; cobertura das características por sprint; sprint de estabilização, implantação e transferência; validação com dados reais antes da sprint de relatório; explicação das datas de fronteira | Vinicius Vieira |
+| 15/09/2026 | 1.3 | Ajuste de validação na Sprint 1: alinhamento contínuo com a coordenação (issue #23) | Equipe CyberSetor |
+| 17/09/2026 | 1.4 | Correção decorrente da issue #24: calendário vigente declarado e alinhado ao plano da Sprint 1; dependência da CP5 explicitada; cobertura das características por sprint; sprint de estabilização, implantação e transferência; validação com dados reais antes da sprint de relatório; explicação das datas de fronteira | Vinicius Vieira |
 
 ## 6.1 Calendário vigente
 

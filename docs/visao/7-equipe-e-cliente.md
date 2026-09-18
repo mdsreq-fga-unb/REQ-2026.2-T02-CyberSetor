@@ -5,7 +5,7 @@
 | 01/09/2026 | 1.0 | Versão inicial | Equipe CyberSetor |
 | 05/09/2026 | 1.1 | Revisão com foco único nas seções 1.4, 1.5, 1.7, 2.1 e 2.2 | Equipe CyberSetor |
 | 06/09/2026 | 1.2 | Seções 4, 5, 6 e 7 redigidas para o site | Equipe CyberSetor |
-| 14/09/2026 | 1.3 | Correções decorrentes da issue #25: distinção entre as duas Maria Eduardas; caráter provisório da avaliação pelo Product Owner interno; área competente por funcionalidade; reconciliação da cadência de validação; validação de 02/09 apresentada como preliminar; responsabilidades por atividade de Engenharia de Requisitos | Vinicius Vieira |
+| 15/09/2026 | 1.3 | Reestruturação do processo de validação, papel do PO interno, distinção das interlocutoras, áreas competentes e cadência com o cliente (Issues #23 e #25) | Equipe CyberSetor |
 
 ## 7.1 Composição da Equipe
 
@@ -49,7 +49,7 @@ O Product Owner interno é a mitigação para duas limitações conhecidas: a de
 **Ferramentas**
 
 - **WhatsApp:** comunidade *CyberSetor - Requisitos*, com três grupos: *Avisos*, para comunicados; *CyberSetor - Geral*, para discussão e decisões; e *Dailys*, exclusivo para a daily assíncrona. É também o canal de mensagens com as representantes do Instituto.
-- **Google Meet:** todas as reuniões da equipe e as videochamadas com o Instituto, com gravação e ata gerada automaticamente. A ata automática é insumo: o que se publica é sempre a ata revisada pelo relator. Gravações e transcrições brutas ficam em acesso restrito — ver a [política de registro, acesso e publicação](../gestao/atas/index.md#politica-de-registro-acesso-e-publicacao).
+- **Google Meet:** todas as reuniões da equipe e as videochamadas com o Instituto, com gravação e ata gerada automaticamente. Gravações e transcrições brutas funcionam exclusivamente como apoio interno restrito no Google Drive; o registro oficial é a ata sintética elaborada pelo relator, revisada para controle de dados sensíveis (LGPD) e publicada neste site — ver a [política de registro, acesso e publicação](../gestao/atas/index.md#politica-de-registro-acesso-e-publicacao).
 - **GitHub:** repositório do projeto, Product Backlog e Sprint Backlog no GitHub Projects e Issues, feedback do professor por issues e publicação deste site.
 - **Google Docs:** rascunho colaborativo do documento. A entrega é o site; o rascunho não substitui a publicação.
 
@@ -77,13 +77,14 @@ Este site distingue **intenção, convite, confirmação e realização**: a tab
 
 ## 7.3 Processo de Validação
 
-A validação da solução acontece em três etapas, a cada sprint:
+A validação dos requisitos e da solução é um processo contínuo e centrado no cliente, estruturado em torno das interações e conversas de validação com as representantes do Instituto No Setor:
 
-1. **Antes de desenvolver, Definition of Ready.** Uma história só entra na sprint quando tem valor claro para um perfil do Instituto, critérios de aceitação escritos no formato Dado, Quando, Então, estimativa da equipe e nenhuma decisão externa pendente. Quando a história envolve interface, um mockup de baixa fidelidade é validado com o Instituto antes da codificação.
-
-2. **Ao concluir, Definition of Done.** Uma história é considerada concluída quando o código está na branch principal com revisão por par, os testes de aceitação derivados dos critérios passam na integração contínua, não há erro de padronização de código e a documentação foi atualizada quando aplicável.
-
-3. **Com o cliente, Sprint Review.** Ao final de cada sprint o incremento é demonstrado às representantes do Instituto, que o exercitam com cenários reais de uma atividade. O feedback é registrado em ata e incorporado ao Product Backlog antes do planejamento da sprint seguinte.
+1. **Validação com prototipação leve:** nas fases iniciais e a cada novo fluxo concebido, telas e navegações preliminares são apresentadas às representantes para validar a adequação da interface e do fluxo operacional antes do desenvolvimento completo.
+2. **Demonstração do MVP funcional mínimo:** com o avanço do desenvolvimento, as iterações e incrementos são demonstrados e exercitados com cenários reais das oficinas e eventos do Instituto, confirmando se o comportamento construído resolve de fato os gargalos de registro e prestação de contas.
+3. **Identificação conjunta de ambiguidades, inconsistências e omissões:** a equipe e as interlocutoras analisam ativamente cada funcionalidade demonstrada para identificar lacunas de regras de negócio, comportamentos inesperados ou fluxos ausentes.
+4. **Registro em ata e refinamento contínuo:** os apontamentos e acordos estabelecidos nas conversas de validação são formalmente sintetizados em ata de reunião, alimentando o refinamento imediato do Product Backlog e o planejamento das sprints seguintes.
+5. **Papel do Product Owner interno:** o PO interno não valida o trabalho da equipe pelo cliente. Seu papel é personificar as representantes do Instituto no dia a dia dos desenvolvedores, destravando decisões e dúvidas operacionais no intervalo entre as conversas de validação. Toda decisão de domínio, regra de prestação de contas ou alteração de escopo é submetida e confirmada com as representantes reais nas validações com o cliente.
+6. **Treinamento operacional e homologação:** nas etapas finais do semestre, os encontros de validação serão também aproveitados para conduzir sessões práticas de treinamento das facilitadoras e da coordenação no uso da ferramenta, garantindo autonomia operacional e validação em uso real antes da transferência definitiva.
 
 **Quando o Instituto não participar.** O papel de Product Owner interno foi adotado por decisão registrada em 01/09/2026, justamente para que o trabalho não parasse enquanto uma resposta do Instituto não chega: é a mitigação declarada em §7.1 para a ausência de cliente presente. O que esta revisão acrescenta não reverte essa decisão, apenas delimita seu alcance — a avaliação feita pelo Product Owner interno é **provisória**: mantém o trabalho em andamento, mas **não confirma regra de domínio nem substitui a validação do cliente**. Um item avaliado apenas por essa via permanece marcado como *pendente de validação externa* até ser confirmado pela área competente do Instituto. Quando a contingência assíncrona for usada — envio do material com prazo de resposta —, é o **registro escrito da resposta** que converte a avaliação provisória em validação.
 

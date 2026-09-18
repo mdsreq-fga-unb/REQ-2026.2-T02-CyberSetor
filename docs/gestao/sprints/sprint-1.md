@@ -5,8 +5,8 @@
 | Campo | Conteúdo |
 |---|---|
 | **Código do documento** | C21 |
-| **Versão** | 3.0 |
-| **Data de emissão** | 09 de setembro de 2026 |
+| **Versão** | 3.1 |
+| **Data de emissão** | 15 de setembro de 2026 |
 | **Projeto** | CyberSetor — sistema de gestão do ciclo de projetos financiados |
 | **Cliente** | Instituto Cultural e Social No Setor |
 | **Disciplina** | FGA0313 — Requisitos de Software · Turma 02 · 2026.2 · FCTE/UnB |
@@ -216,13 +216,13 @@ Ambos os dojos ocorrem em **10/09/2026 (quinta-feira)**, aproveitando a presenç
 **Conteúdo programático:**
 
 1. Os seis critérios INVEST: Independente, Negociável, Valiosa, Estimável, Small (pequena) e Testável.
-2. O formato de história adotado pela equipe e a exigência de que o critério de aceitação seja **observável**: formulações como "Dado que o sistema funciona corretamente" não constituem critério de aceitação.
+2. O formato de história adotado pela equipe e a exigência de que o critério de aceitação seja **observável**: formulações genéricas como "o sistema deve funcionar corretamente" não constituem critério de aceitação; os critérios devem ser condições observáveis, regras e restrições verificáveis.
 3. Erro recorrente a evitar: a descrição da solução técnica em lugar do comportamento esperado.
 4. Vínculo com a Definition of Ready e com o método de priorização (§8).
 
 **Exercício prático — dupla função.** O exercício utiliza as histórias candidatas reais do Épico C (§7.2), e não exemplos fictícios. Cada dupla assume os blocos que lhe foram alocados em §9, refina as histórias e redige as que faltarem. Em consequência, o dojo produz simultaneamente capacitação e produto de trabalho da Sprint: **as histórias resultantes constituem a primeira sessão de refinamento do backlog**, e não material descartável de treinamento.
 
-**Resultado esperado:** equipe apta a redigir histórias em conformidade com INVEST e Given/When/Then, e conjunto inicial de histórias refinadas coletivamente.
+**Resultado esperado:** equipe apta a redigir histórias em conformidade com INVEST e listas de critérios de aceitação objetivos e verificáveis, e conjunto inicial de histórias refinadas coletivamente.
 
 ### 6.3 Capacitação técnica prevista para a Sprint 2
 
@@ -285,9 +285,9 @@ Constitui o produto de trabalho central da Sprint. As histórias abaixo são can
 
 | ID | Critério de aceitação |
 |---|---|
-| CA-01.1 | Dado um projeto vinculado a um instrumento (edital, emenda ou parceria), quando cadastro um requisito, então informo obrigatoriamente origem, indicador, parâmetro de aferição, forma de verificação e frequência de apuração |
-| CA-01.2 | Dado um requisito com meta quantitativa e período definidos, quando uma atividade é registrada, então o progresso da meta é recalculado automaticamente |
-| CA-01.3 | Dado um requisito sem indicador ou sem forma de verificação, quando tento salvar, então o sistema impede a operação e indica os campos ausentes |
+| CA-01.1 | O formulário de cadastro de requisito deve exigir obrigatoriamente a indicação de: origem (edital, projeto ou Instituto), indicador, parâmetro de aferição, forma de verificação e frequência de apuração |
+| CA-01.2 | O sistema deve recalcular automaticamente o progresso percentual da meta associada ao requisito sempre que uma atividade vinculada for registrada |
+| CA-01.3 | O sistema deve impedir a gravação de requisitos sem indicador ou forma de verificação preenchidos, destacando os campos pendentes |
 
 ---
 
@@ -299,9 +299,9 @@ Constitui o produto de trabalho central da Sprint. As histórias abaixo são can
 
 | ID | Critério de aceitação |
 |---|---|
-| CA-02.1 | Dado um requisito cadastrado, quando defino responsável, setor e prazo, então esses dados são exibidos no painel do projeto |
-| CA-02.2 | Dado um requisito com prazo a vencer em até 7 dias, quando acesso o painel, então o sistema apresenta alerta correspondente |
-| CA-02.3 | Dado um requisito sem responsável atribuído, quando o projeto entra em execução, então o sistema sinaliza a pendência |
+| CA-02.1 | O painel do projeto deve exibir o responsável atribuído, setor e prazo de cada requisito ou meta cadastrada |
+| CA-02.2 | O sistema deve apresentar alerta visual em destaque no painel para requisitos cujo prazo expire em até 7 dias corridos |
+| CA-02.3 | O sistema deve sinalizar pendência explícita no painel para qualquer requisito sem responsável atribuído no momento em que o projeto entra em execução |
 
 ---
 
@@ -313,9 +313,9 @@ Constitui o produto de trabalho central da Sprint. As histórias abaixo são can
 
 | ID | Critério de aceitação |
 |---|---|
-| CA-03.1 | Dado um projeto, quando cadastro uma atividade, então seleciono um tipo de objeto em lista predefinida |
-| CA-03.2 | Dado o tipo "evento", quando a atividade é criada, então o sistema indica como evidências esperadas: público estimado, registro fotográfico com logomarca e clipping |
-| CA-03.3 | Dado o tipo "oficina", quando a atividade é criada, então o sistema indica a lista de presença como evidência principal |
+| CA-03.1 | O cadastro de atividade deve disponibilizar lista predefinida para seleção do tipo de objeto (oficina, evento, ação de rua) |
+| CA-03.2 | Para atividades do tipo "evento", o sistema deve indicar e listar como evidências esperadas: público estimado, registro fotográfico com logomarca e clipping |
+| CA-03.3 | Para atividades do tipo "oficina", o sistema deve indicar e exigir a lista de presença como evidência principal |
 
 ---
 
@@ -327,9 +327,9 @@ Constitui o produto de trabalho central da Sprint. As histórias abaixo são can
 
 | ID | Critério de aceitação |
 |---|---|
-| CA-04.1 | Dado uma atividade concluída, quando anexo uma evidência, então informo data, local e a meta ou metas relacionadas |
-| CA-04.2 | Dado uma meta com evidências pendentes, quando acesso a meta, então visualizo o que já foi anexado e o que resta anexar conforme o tipo de objeto |
-| CA-04.3 | Dado uma evidência sem meta vinculada, quando tento salvar, então o sistema alerta que ela não será considerada em nenhuma prestação de contas |
+| CA-04.1 | O anexo de evidência em atividade concluída deve exigir data, local e a vinculação a uma ou mais metas do projeto |
+| CA-04.2 | A visualização da meta deve relacionar as evidências já anexadas e indicar as evidências pendentes conforme o tipo de objeto da atividade |
+| CA-04.3 | O sistema deve bloquear a gravação de evidência sem meta vinculada, alertando que o documento não será computado em prestações de contas |
 
 ---
 
@@ -341,9 +341,9 @@ Constitui o produto de trabalho central da Sprint. As histórias abaixo são can
 
 | ID | Critério de aceitação |
 |---|---|
-| CA-05.1 | Dado um projeto com requisitos e atividades registrados, quando solicito o relatório de um período, então cada meta é apresentada com resultado alcançado, percentual de cumprimento e evidências vinculadas |
-| CA-05.2 | Dado uma meta cumprida parcialmente, quando o relatório é gerado, então o sistema exige justificativa formal antes de permitir a finalização |
-| CA-05.3 | Dado um relatório finalizado, quando efetuo a exportação, então recebo os formatos PDF e CSV com o mesmo conteúdo |
+| CA-05.1 | O relatório do período deve apresentar cada meta do projeto com resultado pactuado, resultado alcançado, percentual de cumprimento e links para as evidências vinculadas |
+| CA-05.2 | O sistema deve exigir obrigatoriamente justificativa formal antes de permitir a finalização de relatório que contenha metas cumpridas apenas parcialmente ou não atingidas |
+| CA-05.3 | A exportação do relatório finalizado deve disponibilizar download nos formatos PDF e CSV com integridade e equivalência de conteúdo |
 
 **Fundamento de CA-05.2:** a Lei 13.019/2014, art. 64, §1º, estabelece que meta descumprida sem justificativa enseja glosa. A obrigatoriedade da justificativa não é preferência de interface: é requisito de conformidade legal.
 
@@ -357,9 +357,9 @@ Constitui o produto de trabalho central da Sprint. As histórias abaixo são can
 
 | ID | Critério de aceitação |
 |---|---|
-| CA-06.1 | Dado uma pessoa cadastrada, quando acesso seu perfil, então visualizo todas as atividades e projetos de que participou |
-| CA-06.2 | Dado duas pessoas com nome e telefone coincidentes, quando uma delas é cadastrada, então o sistema alerta possível duplicidade |
-| CA-06.3 | Dado o cadastro de uma pessoa, quando ela é criada, então o consentimento de uso de dados é registrado com data |
+| CA-06.1 | O perfil de cada pessoa cadastrada deve exibir a listagem completa de todas as atividades e projetos de que participou |
+| CA-06.2 | O sistema deve alertar sobre possível duplicidade cadastral caso sejam informados nome e telefone coincidentes com registro existente |
+| CA-06.3 | O cadastro de pessoa deve registrar a data e confirmação explícita de consentimento para tratamento de dados pessoais conforme a LGPD |
 
 **Restrição de conformidade.** Conforme decisão já tomada pela equipe, o produto não trata dados pessoais sensíveis (LGPD, art. 5º, II). O cadastro de pessoas restringe-se a dados de identificação e contato, com registro de consentimento (CA-06.3).
 
@@ -553,5 +553,6 @@ Prazo de execução: 48 horas contadas do encerramento da reunião.
 | 1.0 | 09/09/2026 | Emissão inicial, elaborada antes da reunião de Sprint Planning | Vinicius |
 | 2.0 | 09/09/2026 | Estruturação da Sprint em duas fases, plano de dojos e Product Backlog candidato com identificadores rastreáveis | Vinicius |
 | 3.0 | 09/09/2026 | Registro do que foi deliberado na Sprint Planning de 08/09: MoSCoW como método único de priorização e dimensionamento, com a regra de proporção do DSDM e o fatiamento como mecanismo de ajuste de escopo; capacidade de 8 dias de produção; cadência de 2 semanas confirmada para a Sprint 2 | Vinicius |
+| 3.1 | 15/09/2026 | Conversão dos 18 critérios de aceitação de Dado/Quando/Então para listas de critérios objetivos e verificáveis (Issue #23) | Equipe CyberSetor |
 
 **Documentos impactados por esta versão:** calendário de sprints da equipe · cadência e calendário de ritos do processo · memória de decisões do projeto.
