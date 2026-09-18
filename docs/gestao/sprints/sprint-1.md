@@ -17,15 +17,14 @@
 | **Elaboração** | Vinicius Angelo de Brito Vieira (Scrum Master) |
 | **Product Owner** | Maria Eduarda Denis Duarte Marques |
 | **Situação** | **Aprovado na Sprint Planning de 08/09/2026** |
-| **Destino sugerido no repositório** | `docs/gestao/sprints/sprint-1.md` |
 
 ---
 
 ## 1. Objetivo e escopo do documento
 
-Este documento estabelece o planejamento formal da Sprint 1 do projeto CyberSetor, compreendendo: a definição do período e da Meta da Sprint; o dimensionamento da capacidade da equipe; o plano de capacitação interna (dojos); o Product Backlog candidato com histórias de usuário e critérios de aceitação; o método de priorização adotado; a alocação de responsabilidades; o registro de riscos; e os critérios de aceitação da própria Sprint.
+Este documento estabelece o planejamento formal da Sprint 1 do projeto CyberSetor, compreendendo: a definição do período e da Meta da Sprint; o dimensionamento da capacidade da equipe; o plano de capacitação interna (dojos); o Product Backlog candidato; o método de priorização adotado; a alocação de responsabilidades; o registro de riscos; e os critérios de aceitação da própria Sprint.
 
-O documento cumpre três funções: (a) instrumento de condução da reunião de Sprint Planning de 08/09/2026; (b) registro formal das decisões de planejamento da equipe, para fins de rastreabilidade e de composição das seções 5.2, 6, 7.2 e 11 do Documento de Visão; (c) insumo direto das seções 8 e 9 do Documento de Visão, a serem entregues na Unidade 2 em 13/10/2026.
+O documento cumpre três funções: (a) instrumento de condução da reunião de Sprint Planning de 08/09/2026; (b) registro formal das decisões de planejamento da equipe, para fins de rastreabilidade e de composição das seções 5.2, 6, 7.2 e 11 do Documento de Visão; (c) insumo direto das seções 8 e 9 do Documento de Visão.
 
 **Não integram o escopo deste documento:** a especificação de requisitos funcionais e não funcionais (Unidade 2); e qualquer decisão de arquitetura ou implementação. A priorização MoSCoW do Product Backlog desta Sprint **integra** o escopo (§8), por decisão tomada na Sprint Planning de 08/09.
 
@@ -118,7 +117,7 @@ A justificativa desta divisão é a seguinte: a elicitação de 08/09 revelou vo
 
 > **Sprint Goal (aprovado em 08/09):** *"Ao final da Sprint 1, a equipe dispõe de um Product Backlog estruturado no GitHub Projects que declara o ciclo do projeto financiado — requisito/meta, atividade, evidência, relatório de execução do objeto e base única de pessoas — em histórias de usuário com critérios de aceitação verificáveis, classificadas por MoSCoW e rastreadas aos Objetivos Específicos, acompanhado da representação do processo atual do Instituto em notação BPMN."*
 
-**Fundamentação do recorte.** A meta é integralmente verificável em 22/09: cada uma de suas cláusulas admite resposta objetiva de conformidade. Observa-se a orientação docente de formular objetivos pelo efeito produzido na organização, e não pela tecnologia empregada. A meta concentra-se no produto de trabalho que a equipe controla integralmente, excluindo compromissos cuja realização depende de agenda de terceiros.
+**Fundamentação do recorte.** A meta é integralmente verificável em 22/09: cada uma de suas cláusulas admite resposta objetiva de conformidade. Ela é formulada pelo efeito produzido na organização, e não pela tecnologia empregada. A meta concentra-se no produto de trabalho que a equipe controla integralmente, excluindo compromissos cuja realização depende de agenda de terceiros.
 
 **Exclusões explícitas do escopo da Sprint 1:**
 
@@ -163,7 +162,7 @@ Extraído da Matriz de Competências. Considera-se aqui a aptidão para produtos
 | Caio | Dupla C | Segundo maior perfil técnico; aptidão para modelagem de dados | Alocar aos blocos de declaração de natureza estrutural (evidência e relatório) |
 | Rodrigo | Dupla B | Mentor em diagramação (Figma), Git e SQL | Alocação natural para representação em BPMN e Rich Picture |
 | Lucas | Dupla C | Conhecimento de domínio obtido em campo — relatou originalmente a dor da prestação de contas (ata de 27/08) | Alocar sempre em par |
-| Daniel | Dupla A | Matriz de Competências incompleta | Completar a Matriz durante a Sprint; alocar em par na declaração |
+| Daniel | Dupla A | Familiaridade declarada na Matriz de Competências, concluída com os seis integrantes | Alocar em par na declaração |
 
 ---
 
@@ -261,7 +260,7 @@ Os itens são organizados pelas atividades de Engenharia de Requisitos que exerc
 | B1 | Representação do processo atual em BPMN (edital → prestação de contas) | B — Representação | Achado da reunião presencial | Sim | Utilizar o diagrama já esboçado pela equipe como rascunho inicial |
 | B2 | Atualização do Rich Picture e do mapa de stakeholders com os papéis reais | B — Representação | Ficha do cliente; achado da reunião presencial | Sim | Incorporar: Diretoria de Projetos, Captação, ausência de RH. Insumo das seções 1.3 e 1.6 |
 | D1 | Estruturação do Product Backlog no GitHub Projects | D — Organização e Atualização | Ritos da equipe | Sim | Colunas, rótulos por épico e por OE/CP, campo de classificação MoSCoW |
-| D2 | Esqueleto da matriz de rastreabilidade problema → OE → CP → RF | D — Organização e Atualização | Ritos da equipe | Sim | Utilizar os identificadores HU-xx e CA-xx.y deste documento |
+| D2 | Esqueleto da matriz de rastreabilidade problema → OE → CP → RF | D — Organização e Atualização | Ritos da equipe | Sim | Utilizar os identificadores HU-xx deste documento e os critérios de aceitação registrados no quadro do projeto |
 | E1 | Preparação da sessão de validação com o Instituto | E — Verificação e Validação | Achado da reunião presencial | Condicionado | Condicionado à conclusão do Épico C. Sessão prevista para a Sprint 2 |
 | ART-01 | Glossário de termos do Instituto | D — Organização e Atualização | Achado da reunião presencial | Sim | Artefato, não história. Termos: requisito, meta, indicador, comprovação, demanda, plano de trabalho, proposta de trabalho, termo aditivo, prestação de contas, instrumento, financiador, vertente, objeto |
 
@@ -269,107 +268,22 @@ Os itens são organizados pelas atividades de Engenharia de Requisitos que exerc
 
 ### 7.2 Épico C — Declaração: histórias de usuário
 
-Constitui o produto de trabalho central da Sprint. As histórias abaixo são candidatas redigidas previamente, destinadas ao refinamento pela equipe — não a substituí-lo. Identificadores HU-xx e CA-xx.y são definitivos e devem ser preservados na transposição para o GitHub Projects, por serem a base da matriz de rastreabilidade (item D2).
+Constitui o produto de trabalho central da Sprint. As seis histórias abaixo compõem o Épico C e foram redigidas previamente como material de partida para o refinamento da equipe, que elas não substituem: **são candidatas**. A redação corrente de cada história e de seus critérios de aceitação é mantida no item correspondente do quadro do projeto; os requisitos declarados e o backlog de produto são entregues nas seções 8 e 10 do Documento de Visão. Os identificadores HU-xx e CA-xx.y são preservados como base da matriz de rastreabilidade (item D2).
 
-**Formato dos critérios de aceitação.** A decisão **D3** da Sprint Planning de 08/09 padronizou os critérios no formato Dado/Quando/Então. A issue **#23**, aberta pelo docente após a apresentação da Unidade 1, determina que, para a disciplina, sejam redigidos como **lista de critérios**: é o formato adotado abaixo, com o conteúdo aprovado na Planning preservado. A ata de 08/09 permanece como registro histórico e não é alterada; a mudança de formato em relação à D3 é formalizada na Sprint Review ou na Retrospectiva de 22/09. As propostas de mudança de conteúdo, e não de forma, estão reunidas no bloco ao fim desta seção.
+Os critérios de aceitação são redigidos como **lista de condições verificáveis**. A Sprint Planning de 08/09 havia padronizado o formato Dado/Quando/Então (decisão D3); a ata permanece como registro daquela deliberação e a mudança de formato é formalizada na Sprint Review ou na Retrospectiva de 22/09.
 
----
+| ID | História | Bloco | Origem | Complexidade prevista |
+|---|---|---|---|---|
+| HU-01 | Cadastro de requisito com parâmetros de aferição | C1 — Requisito/Meta | CP1, ampliada pela análise pós-presencial | Alta |
+| HU-02 | Atribuição de responsabilidade e prazo a requisito | C1 — Requisito/Meta | Dor confirmada na reunião presencial: ausência de controle de demandas | — |
+| HU-03 | Cadastro de atividade por tipo de objeto | C2 — Atividade | CP2 | — |
+| HU-04 | Vinculação de evidência a meta | C3 — Evidência | CP7 | — |
+| HU-05 | Geração do relatório de execução do objeto | C4 — Relatório | CP8, reposicionada pela análise pós-presencial | — |
+| HU-06 | Consulta ao histórico de participação de pessoa | C5 — Base única de pessoas | CP5, ampliada pela análise pós-presencial | — |
 
-#### HU-01 — Cadastro de requisito com parâmetros de aferição
+**Fundamento normativo da justificativa de meta (HU-05).** A Lei 13.019/2014, art. 64, §1º, estabelece que meta descumprida sem justificativa enseja glosa. A obrigatoriedade da justificativa não é preferência de interface: é requisito de conformidade legal.
 
-**Bloco:** C1 — Requisito/Meta · **Origem:** CP01, ampliada pela análise pós-presencial · **Complexidade prevista:** alta
-
-> Como Diretora de Projetos, quero cadastrar cada requisito de um projeto com sua origem (edital, projeto ou Instituto), indicador, parâmetro de aferição, forma de verificação e frequência de apuração, para saber exatamente o que precisa ser comprovado e quando.
-
-| ID | Critério de aceitação |
-|---|---|
-| CA-01.1 | O formulário de cadastro de requisito deve exigir obrigatoriamente a indicação de: origem (edital, projeto ou Instituto), indicador, parâmetro de aferição, forma de verificação e frequência de apuração |
-| CA-01.2 | O sistema deve recalcular automaticamente o progresso percentual da meta associada ao requisito sempre que uma atividade vinculada for registrada |
-| CA-01.3 | O sistema deve impedir a gravação de requisitos sem indicador ou forma de verificação preenchidos, destacando os campos pendentes |
-
----
-
-#### HU-02 — Atribuição de responsabilidade e prazo a requisito
-
-**Bloco:** C1 — Requisito/Meta · **Origem:** dor confirmada na reunião presencial (ausência de controle de demandas)
-
-> Como responsável de área, quero atribuir dono, setor e prazo a cada requisito ou meta, para saber sempre com quem está a demanda e se o prazo está expirando.
-
-| ID | Critério de aceitação |
-|---|---|
-| CA-02.1 | O painel do projeto deve exibir o responsável atribuído, setor e prazo de cada requisito ou meta cadastrada |
-| CA-02.2 | O painel deve apresentar alerta para os requisitos cujo prazo vença em até 7 dias |
-| CA-02.3 | O sistema deve sinalizar pendência explícita no painel para qualquer requisito sem responsável atribuído no momento em que o projeto entra em execução |
-
----
-
-#### HU-03 — Cadastro de atividade por tipo de objeto
-
-**Bloco:** C2 — Atividade · **Origem:** CP02
-
-> Como educador ou coordenador, quero cadastrar uma atividade vinculada a um projeto e a um tipo de objeto (oficina, evento, ação de rua), para que o sistema determine qual conjunto de evidências será exigido.
-
-| ID | Critério de aceitação |
-|---|---|
-| CA-03.1 | O cadastro de atividade deve disponibilizar lista predefinida para seleção do tipo de objeto (oficina, evento, ação de rua) |
-| CA-03.2 | Para atividades do tipo "evento", o sistema deve indicar e listar como evidências esperadas: público estimado, registro fotográfico com logomarca e clipping |
-| CA-03.3 | Para atividades do tipo "oficina", o sistema deve indicar a lista de presença como evidência principal |
-
----
-
-#### HU-04 — Vinculação de evidência a meta
-
-**Bloco:** C3 — Evidência · **Origem:** CP07
-
-> Como educador, quero anexar uma evidência a uma atividade e vinculá-la a uma ou mais metas, para que a comprovação seja produzida já organizada por meta.
-
-| ID | Critério de aceitação |
-|---|---|
-| CA-04.1 | O anexo de evidência em atividade concluída deve exigir data, local e a vinculação a uma ou mais metas do projeto |
-| CA-04.2 | A visualização da meta deve relacionar as evidências já anexadas e indicar as evidências pendentes conforme o tipo de objeto da atividade |
-| CA-04.3 | Ao gravar evidência sem meta vinculada, o sistema deve alertar que ela não será considerada em nenhuma prestação de contas |
-
----
-
-#### HU-05 — Geração do relatório de execução do objeto
-
-**Bloco:** C4 — Relatório · **Origem:** CP08, reposicionada pela análise pós-presencial · estrutura fundamentada na convergência normativa entre financiadores
-
-> Como Diretora de Projetos, quero gerar o relatório de execução do objeto de um projeto para um período determinado, com metas propostas confrontadas aos resultados alcançados e evidências anexadas, para prestar contas sem montagem manual.
-
-| ID | Critério de aceitação |
-|---|---|
-| CA-05.1 | O relatório do período deve apresentar cada meta do projeto com resultado pactuado, resultado alcançado, percentual de cumprimento e links para as evidências vinculadas |
-| CA-05.2 | O sistema deve exigir obrigatoriamente justificativa formal antes de permitir a finalização de relatório que contenha metas cumpridas apenas parcialmente ou não atingidas |
-| CA-05.3 | A exportação do relatório finalizado deve disponibilizar download nos formatos PDF e CSV com integridade e equivalência de conteúdo |
-
-**Fundamento de CA-05.2:** a Lei 13.019/2014, art. 64, §1º, estabelece que meta descumprida sem justificativa enseja glosa. A obrigatoriedade da justificativa não é preferência de interface: é requisito de conformidade legal.
-
----
-
-#### HU-06 — Consulta ao histórico de participação de pessoa
-
-**Bloco:** C5 — Base única de pessoas · **Origem:** CP05, ampliada pela análise pós-presencial
-
-> Como integrante da equipe de comunicação, quero consultar o histórico de participação de uma pessoa nos diferentes projetos, para convidá-la a ações compatíveis com seu perfil e interesse.
-
-| ID | Critério de aceitação |
-|---|---|
-| CA-06.1 | O perfil de cada pessoa cadastrada deve exibir a listagem completa de todas as atividades e projetos de que participou |
-| CA-06.2 | O sistema deve alertar sobre possível duplicidade cadastral caso sejam informados nome e telefone coincidentes com registro existente |
-| CA-06.3 | O cadastro de pessoa deve registrar a data e confirmação explícita de consentimento para tratamento de dados pessoais conforme a LGPD |
-
-**Restrição de conformidade.** Decisão da equipe: o produto **não mantém cadastro estruturado** de dados pessoais sensíveis (LGPD, art. 5º, II); o cadastro de pessoas restringe-se a identificação e contato, com registro de consentimento (CA-06.3). Fotografias e campos de texto livre podem revelar dado sensível mesmo sem campo próprio, e por isso ficam sob controle de acesso por finalidade, conforme a seção 2 do Documento de Visão revisada pela issue #20.
-
-#### 🔧 Propostas de refinamento de critérios, para deliberação em 22/09
-
-São propostas da equipe. **Nenhuma altera o critério vigente antes de registro em ata** da Sprint Review ou da Retrospectiva de 22/09.
-
-| Critério | Texto vigente | Proposta | Motivo |
-|---|---|---|---|
-| CA-02.2 | alerta para prazo a vencer em até 7 dias | destacar os requisitos cujo prazo entre na janela de antecedência **configurada por projeto**, com a antecedência-padrão a definir com a Diretoria de Projetos | o prazo de 7 dias não decorre de exigência do Instituto nem de edital: foi arbitrado pela equipe |
-| CA-03.3 | indica a lista de presença como evidência principal | **exigir** a lista de presença nas atividades do tipo oficina | a lista é o que sustenta a apuração de participação perante o financiador; indicar pode não bastar |
-| CA-04.3 | alerta que a evidência sem meta não será considerada | aceitar a evidência sem meta como **rascunho** ligado a projeto e atividade: não conta, não integra relatório e impede o fechamento até ser vinculada ou descartada | alertar não impede o registro inconsistente, e bloquear a gravação descartaria material já coletado em campo |
+**Restrição de conformidade (HU-06).** O produto **não mantém cadastro estruturado** de dados pessoais sensíveis (LGPD, art. 5º, II); o cadastro de pessoas restringe-se a identificação e contato, com registro de consentimento. Fotografias e campos de texto livre podem revelar dado sensível mesmo sem campo próprio, e por isso ficam sob controle de acesso por finalidade, conforme a seção 2 do Documento de Visão.
 
 ---
 
@@ -394,13 +308,13 @@ O método também é coerente com o que a equipe já pratica: é a mesma lógica
 | **Could have** | O item é desejável e de menor impacto. Funciona como **contingência deliberada**: é o primeiro a ser descartado quando algo aperta, protegendo os Must Haves | cerca de **20%** |
 | **Won't have (desta Sprint)** | O item é reconhecido como válido, mas explicitamente fora do período. Não é o mesmo que "fora de escopo do produto" | — |
 
-**Nesta Sprint, o esforço a que a proporção se refere é o de Engenharia de Requisitos — elicitação, análise, redação de histórias, critérios de aceitação e representação do processo —, e não esforço de implementação. Não há codificação na Sprint 1, e nenhuma das histórias declaradas aqui é construída neste período: elas são declaradas para construção a partir da Sprint 3.
+**Nesta Sprint, o esforço a que a proporção se refere é o de Engenharia de Requisitos** — elicitação, análise, redação de histórias, critérios de aceitação e representação do processo —, e não esforço de implementação. Não há codificação na Sprint 1, e nenhuma das histórias declaradas aqui é construída neste período: elas são declaradas para construção a partir da Sprint 3.
 
-A proporção 60/20/20 incide sobre o esforço, não sobre a quantidade de itens** (AGILE BUSINESS CONSORTIUM, *DSDM Project Framework*). O limite de 60% para os Must Haves é o que garante margem para imprevisto: se todo o período estiver comprometido com itens obrigatórios, qualquer atraso compromete a entrega inteira. Os Could Haves não são "sobras" — são a reserva que se sacrifica primeiro, de propósito, para que o Must chegue ao fim da Sprint.
+**A proporção 60/20/20 incide sobre o esforço, não sobre a quantidade de itens** (AGILE BUSINESS CONSORTIUM, *DSDM Project Framework*). O limite de 60% para os Must Haves é o que garante margem para imprevisto: se todo o período estiver comprometido com itens obrigatórios, qualquer atraso compromete a entrega inteira. Os Could Haves não são "sobras" — são a reserva que se sacrifica primeiro, de propósito, para que o Must chegue ao fim da Sprint.
 
 ### 8.2-A Objeto e horizonte da classificação
 
-🔧 **Esclarecimento do Scrum Master, a ratificar na Retrospectiva de 22/09.** A classificação MoSCoW responde a duas perguntas distintas, que este documento separa de forma explícita:
+🔧 **Esclarecimento a ratificar na Retrospectiva de 22/09.** A classificação MoSCoW responde a duas perguntas distintas, que este documento separa de forma explícita:
 
 | Horizonte | Pergunta que a classificação responde | Objeto classificado | Situação nesta Sprint |
 |---|---|---|---|
@@ -436,7 +350,7 @@ Concluída a classificação, a equipe faz uma única verificação, de forma qu
 
 A classificação MoSCoW desta Sprint aplica-se ao Product Backlog candidato de §7, **no horizonte A definido em §8.2-A**. Não é definição de MVP.
 
-🔧 **O que segue é proposta do Scrum Master, não classificação atribuída.** Registra-se apenas como ponto de partida da discussão, em coerência com §7: **nenhum item entra no quadro do projeto já classificado**.
+🔧 **O que segue é proposta, não classificação atribuída.** Registra-se apenas como ponto de partida da discussão, em coerência com §7: **nenhum item entra no quadro do projeto já classificado**.
 
 - **Must:** todas as histórias do Épico C (§7.2) — são o produto de trabalho central da Sprint, conforme a Meta (§4.3) — e os itens B1, B2, D1 e D2 do Épico A/B/D, que estruturam a representação do processo e o próprio backlog.
 - **Should:** A1, A2, A4 e ART-01 — de alto valor, mas cuja realização integral não é pré-condição do Sprint Goal.
@@ -461,7 +375,7 @@ Preserva-se a composição das duplas já definida pela equipe, com realocação
 
 | Dupla | Integrantes | Itens atribuídos | Fundamento da alocação |
 |---|---|---|---|
-| **A** | Maria Eduarda Marques · Daniel Batista | A1, A2 · HU-06 · D2 | Maria Eduarda Marques exerce a interlocução com o Instituto na condição de Product Owner; Daniel Batista completa a Matriz de Competências em paralelo e atua em par na declaração |
+| **A** | Maria Eduarda Marques · Daniel Batista | A1, A2 · HU-06 · D2 | Maria Eduarda Marques exerce a interlocução com o Instituto na condição de Product Owner; Daniel Batista atua em par na declaração |
 | **B** | Vinicius · Rodrigo | B1, B2 · HU-01, HU-02 · ART-01 · A4 | Rodrigo é mentor em diagramação; Vinicius detém o domínio normativo consolidado na análise pós-presencial. A atribuição de A4 mantém coerência com o compromisso comunicado ao Instituto |
 | **C** | Caio · Lucas | HU-03, HU-04, HU-05 | Caio apresenta aptidão para modelagem estrutural de dados; Lucas detém conhecimento de campo sobre a prestação de contas, obtido em elicitação anterior |
 | **Equipe** | — | D1 (estruturação por Vinicius, alimentação por todos) · E1 (condução por Maria Eduarda Marques) · A3 (conforme disponibilidade) | — |
@@ -561,6 +475,6 @@ Detalhamento operacional da fase de produção do Product Backlog (14/09 a 21/09
 | 3.0 | 09/09/2026 | Registro do que foi deliberado na Planning de 08/09: MoSCoW como método único de priorização e dimensionamento, regra de proporção do DSDM, fatiamento como mecanismo de ajuste de escopo, capacidade de 8 dias de produção e cadência de 2 semanas confirmada para a Sprint 2 | Vinicius |
 | 4.0 | 09/09/2026 | Correção de fidelidade à ata: os dois dojos de 10/09 passam a ser um de fundação e um técnico, conforme a decisão D2, com a ordem invertida por dependência de ambiente | Vinicius |
 | 5.0 | 10/09/2026 | Ampliação do escopo da noite de 10/09: TanStack Query, shadcn/ui e Dexie entram como demonstrações orientadas, com profundidade proporcional à lacuna da matriz de competências | Vinicius |
-| 6.0 | 14/09/2026 | Correção do resíduo editorial de §4.3, que excluía a priorização MoSCoW do escopo da Sprint contra a Meta da própria seção, o §1, o §4.2, o §8, a Definition of Ready, os critérios CAS-01 e CAS-02 e a decisão D1 da ata; §8.2-A separa o horizonte de Engenharia de Requisitos do horizonte de produto e MVP; §12 declara o calendário vigente | Vinicius |
-| 3.1 | 15/09/2026 | Conversão dos critérios de aceitação de Dado/Quando/Então para lista, conforme a issue #23; emitida sobre a 3.0 publicada e incorporada na 7.0 | Caio Martins |
-| 7.0 | 17/09/2026 | Consolidação das emissões 4.0 a 6.0 com a 3.1. Critérios em lista com o conteúdo aprovado na Planning preservado, e propostas de mudança de conteúdo reunidas em bloco próprio para deliberação em 22/09; §6.3 alinhada à decisão registrada na 5.0; nomes desambiguados conforme a issue #25; nota de conformidade da HU-06 alinhada à seção 2 do Documento de Visão; anexo de verificação posterior à Planning retirado, por ser acompanhamento de execução, que passa a ser feito no GitHub Projects | Vinicius |
+| 6.0 | 14/09/2026 | Correção do resíduo editorial de §4.3, que excluía a priorização MoSCoW do escopo da Sprint contra a Meta, a DoR e os critérios de aceitação da própria Sprint; §8.2-A separa o horizonte de Engenharia de Requisitos do horizonte de produto e MVP; §12 declara o calendário vigente | Vinicius |
+| 3.1 | 15/09/2026 | Conversão dos critérios de aceitação de Dado/Quando/Então para lista; emitida sobre a 3.0 publicada e incorporada na 7.0 | Caio Martins |
+| 7.0 | 17/09/2026 | Consolidação das emissões 4.0 a 6.0 com a 3.1; §7.2 reduzido à relação das histórias candidatas, com a redação corrente no quadro do projeto e os requisitos declarados nas seções 8 e 10 do Documento de Visão; anexo de verificação posterior à Planning retirado | Vinicius |

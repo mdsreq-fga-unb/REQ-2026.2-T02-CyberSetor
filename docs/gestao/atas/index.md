@@ -15,9 +15,6 @@ Registro das reuniões da equipe e das interações com o cliente. Desde 27/08/2
 | [01/09/2026](2026-09-01-reuniao-equipe.md) | Planejamento da entrega da Unidade 1 | Product Owner interno definido; duplas e prazos por seção; vídeo gravado em conjunto; stack decidida por matriz de competências |
 | [08/09/2026](2026-09-08-sprint-planning.md) | Sprint Planning da Sprint 1 | Adoção do MoSCoW para priorização do Product Backlog; estrutura da Sprint em duas semanas; padrão INVEST/Given-When-Then para histórias de usuário |
 
-!!! note "Formato dos critérios de aceitação"
-    A Planning de 08/09 adotou Dado/Quando/Então (decisão D3). A issue #23 do professor, posterior à Planning, orienta que, para a disciplina, os critérios sejam redigidos como lista de condições verificáveis. A ata não é reeditada: a mudança de formato é registrada na Sprint Review ou Retrospectiva de 22/09, e os critérios já publicados no plano da Sprint 1 foram convertidos em 15/09.
-
 ## Interações com o cliente
 
 | Data | Formato | Assunto |
@@ -25,10 +22,7 @@ Registro das reuniões da equipe e das interações com o cliente. Desde 27/08/2
 | 20/08/2026 | Videoconferência | Primeira reunião com o Instituto No Setor: entendimento do contexto e das dores |
 | 02/09/2026 | Mensagem | O Instituto manifestou concordância **preliminar** com a proposta de solução e propôs encontro presencial — ver seção 7.3.2 do Documento de Visão |
 | [08/09/2026](2026-09-08-reuniao-presencial-instituto.md) | Presencial, na sede do Instituto | Aprofundamento das questões em aberto: estrutura organizacional, ciclo do projeto financiado e dores confirmadas |
-
-## Documentos
-
-As atas em PDF serão publicadas em `assets/atas/` e linkadas nesta tabela à medida que forem consolidadas.
+| 15/09/2026 | Videoconferência | Levantamento com a área de projetos, a coordenação administrativo-financeira e o núcleo pedagógico: rotina administrativa, matriz de aquisição, separação de acesso por área e necessidades de painel e de comprovação em campo |
 
 ## Política de registro, acesso e publicação
 
@@ -43,4 +37,4 @@ Esta política trata do **material de registro do projeto** — o que a equipe g
 | Citação de fala ou mensagem do cliente | Este site | Público | Com ciência do Instituto, registrada |
 | Dado pessoal de participante das atividades | No sistema em construção, não nos registros do projeto | Conforme o perfil de acesso definido para o sistema | **Não se publica** neste site, nem em ata, nem em extrato de documento do cliente |
 
-**Estado das atas com o cliente.** A ata da reunião presencial de 08/09/2026 está publicada na versão **0.2**, enviada ao Instituto para conferência; a validação formal (versão 1.0) permanece **pendente**. As perguntas da seção "Pontos a confirmar" daquela ata são o objeto dessa conferência.
+**Atas com o cliente.** São publicadas depois de conferidas pelo Instituto; enquanto a conferência não ocorre, a ata permanece em versão preliminar, e é essa versão que o site exibe.
