@@ -93,6 +93,7 @@ nav:
       - 8. Requisitos de software: requisitos/8-requisitos.md
       - 9. DoR e DoD: requisitos/9-dor-dod.md
       - 10. Backlog de produto: requisitos/10-backlog.md
+      - Processo Atual (BPMN): requisitos/b1-bpmn-processo-atual.md
   - Gestão do projeto:
       - Processo e ritos (ScrumXP): gestao/processo-scrumxp.md
       - Matriz de competências e stack: gestao/matriz-competencias.md

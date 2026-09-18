@@ -4,6 +4,7 @@ __pycache__/
 .venv/
 venv/
 .DS_Store
+.env
 
 # Páginas geradas por .github/scripts/fetch_issues.py a partir das issues.
 # Saída, não fonte: o deploy e o build-check as regeram a cada execução.
