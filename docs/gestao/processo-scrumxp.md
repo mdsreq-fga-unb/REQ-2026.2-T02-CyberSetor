@@ -2,32 +2,13 @@
 
 A equipe CyberSetor adota o **ScrumXP**: o framework Scrum para o gerenciamento do trabalho e as práticas técnicas do eXtreme Programming para a engenharia. Esta página registra como o processo funciona na prática. A fundamentação da escolha está na seção 4 do Documento de Visão.
 
-## Papéis
+## Papéis e cerimônias
 
-| Papel | Quem | Responsabilidade |
-|---|---|---|
-| **Product Owner (interno)** | Maria Eduarda Marques | Mantém o entendimento do Instituto vivo entre uma validação e outra; **propõe** a ordenação do Product Backlog, a partir do valor que o Instituto indica, e a mantém atualizada no dia a dia |
-| **Scrum Master** | Vinicius | Facilita as cerimônias; remove impedimentos; zela pelo processo e pelos prazos |
-| **Time de Desenvolvimento** | Todos os seis integrantes | Estima, seleciona o que cabe na sprint, constrói e testa |
-| **Cliente** | Instituto No Setor | **Valida as entregas**; **indica o valor dos itens e participa da ordenação do Product Backlog**; fonte primária dos requisitos |
-
-O Product Owner interno é a mitigação declarada para duas limitações conhecidas: a dependência da disponibilidade do Product Owner, no Scrum, e a dependência do cliente presente, no XP. O Instituto é uma organização sem equipe de tecnologia e com agenda reduzida, e não funcionaria como cliente presente no sentido literal.
-
-**O que o papel interno não faz.** Ele não substitui o cliente em nenhuma das duas atribuições da última linha da tabela. Quem **valida as entregas** é o Instituto, e quem diz **o que vale mais** é o Instituto. O Product Owner interno propõe a ordenação e sustenta o trabalho entre os encontros; a ordenação vale como proposta até o Instituto confirmá-la, e uma entrega avaliada apenas por essa via fica registrada como *pendente de validação externa*. O detalhamento de quem valida cada conjunto de funcionalidades — e por que o núcleo pedagógico não é a única fonte — está na [seção 7.3 do Documento de Visão](../visao/7-equipe-e-cliente.md#73-processo-de-validacao).
-
-## Cadência e cerimônias
+A composição da equipe, os papéis e o papel do cliente estão na [seção 7.1 do Documento de Visão](../visao/7-equipe-e-cliente.md); a cadência das cerimônias, com frequência, duração e formato, está na [seção 7.2](../visao/7-equipe-e-cliente.md#72-comunicacao). Esta página registra o que é próprio da operação da equipe: por que a daily é assíncrona, quais artefatos sustentam o processo, quais práticas de XP estão em uso e como a equipe se comunica.
 
 Sprints de duas semanas, ancoradas nas terças-feiras. A Sprint 0 (18/08 a 08/09) é excepcional, com três semanas, por ser de descoberta e formação da equipe.
 
-| Cerimônia | Quando | Duração | Formato | Resultado |
-|---|---|---|---|---|
-| **Sprint Planning** | Primeira terça da sprint | ~1h | Google Meet | Meta da sprint e Sprint Backlog |
-| **Daily** | Todo dia útil, até as 12h | ~5 min | Assíncrona, no grupo *Dailys* do WhatsApp | Impedimentos visíveis no mesmo dia |
-| **Refinamento do Backlog** | Semanal | ~30 min | Google Meet | Itens detalhados, estimados e priorizados |
-| **Sprint Review** | Última terça da sprint | ~1h | Google Meet; a participação do Instituto depende de agenda confirmada | Incremento demonstrado ao Instituto e feedback incorporado ao backlog. Sem o Instituto, a avaliação é provisória — ver seção 7.3 do Documento de Visão |
-| **Retrospectiva** | Ao fim de cada unidade | ~40 min | Google Meet | Ações de melhoria e texto da seção 11 |
-
-### Por que a daily é assíncrona
+## Por que a daily é assíncrona
 
 A equipe é formada por seis estudantes com grades e compromissos distintos. Uma daily síncrona diária não se sustentaria. O que a cerimônia precisa entregar é **compromisso** e **visibilidade de impedimentos**, dois dos sete valores da Engenharia de Requisitos adotados pela disciplina. Uma daily escrita, no mesmo lugar, todo dia, entrega isso de forma mais confiável. É uma adaptação consciente do rito ao contexto.
 
@@ -66,7 +47,9 @@ Critérios de aceitação:
 
 ## Práticas de XP
 
-**Adotadas:** histórias de usuário · critérios de aceitação · testes de aceitação · pequenas releases · integração contínua · programação em pares · propriedade coletiva do código · design simples · padrões de codificação · cliente presente **adaptado**, com Product Owner interno no intervalo entre validações e validação quinzenal com o Instituto (Documento de Visão, seção 7.2).
+**Em uso desde a Sprint 1:** histórias de usuário · critérios de aceitação · trabalho em duplas na documentação · integração contínua, que compila o site em modo estrito a cada alteração · cliente presente **adaptado**, com Product Owner interno no intervalo entre validações e validação semanal com o Instituto (Documento de Visão, seção 7.2).
+
+**A partir da primeira sprint de código:** testes de aceitação · pequenas releases · programação em pares · propriedade coletiva do código · design simples · padrões de codificação. Cada uma passa a valer quando houver código a que aplicá-la, e a evidência de adoção é registrada na Sprint Review correspondente.
 
 **Não adotadas, com justificativa:**
 

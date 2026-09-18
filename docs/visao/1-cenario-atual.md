@@ -3,9 +3,9 @@
 | Data | Versão | Descrição | Autor |
 |---|---|---|---|
 | 01/09/2026 | 1.0 | Versão inicial | Equipe CyberSetor |
-| 05/09/2026 | 1.1 | Revisão com foco único nas seções 1.4, 1.5, 1.7, 2.1 e 2.2 | Equipe CyberSetor |
-| 06/09/2026 | 1.2 | Seções 4, 5, 6 e 7 redigidas para o site | Equipe CyberSetor |
-| 14/09/2026 | 1.3 | Correção decorrente da issue #25: identificação institucional das representantes do Instituto nas seções 1.1, 1.5 e 1.6, e alinhamento do mapa de stakeholders com a validação por área da seção 7.3.1 | Vinicius Vieira e Maria Eduarda Marques |
+| 05/09/2026 | 1.1 | Revisão das seções 1.4, 1.5 e 1.7 | Equipe CyberSetor |
+| 14/09/2026 | 1.2 | Identificação institucional das representantes do Instituto nas seções 1.1, 1.5 e 1.6; mapa de stakeholders alinhado à validação por área da seção 7.3.1 | Vinicius Vieira e Maria Eduarda Marques |
+| 17/09/2026 | 1.3 | Segmentação de clientes alinhada ao escopo da seção 2.3: registro de presença e carga horária no lugar da emissão de certificado | Equipe CyberSetor |
 
 ## 1.1 Identificação do Cliente/Parceiro
 
@@ -76,7 +76,7 @@ Os principais stakeholders do projeto são: Maria Clara e Maria Eduarda, do núc
 
 - **2. Educadores, Artistas e Voluntários de Campo:** Profissionais que conduzem oficinas formativas e mutirões no SCS. Interagem pelo navegador móvel realizando chamadas digitais em lote e anexando evidências (fotos/atas). Necessitam de agilidade no registro presencial e emissão simplificada de declarações de atuação.
 
-- **3. Participantes de Oficinas e Cursos Formativos**: Jovens e adultos matriculados em turmas contínuas (ex.: oficinas de música, fotografia, serigrafia e arte urbana). Interagem acessando páginas públicas de inscrição por link/QR Code e confirmando seus dados. Necessitam de um canal acessível de inscrição e garantia de cômputo de presença para certificação.
+- **3. Participantes de Oficinas e Cursos Formativos**: Jovens e adultos matriculados em turmas contínuas (ex.: oficinas de música, fotografia, serigrafia e arte urbana). Interagem acessando páginas públicas de inscrição por link/QR Code e confirmando seus dados. Necessitam de um canal acessível de inscrição e do registro confiável da própria presença e carga horária.
 
 - **4. Comunidade e Pessoas em Situação de Vulnerabilidade:** Indivíduos atendidos em ações de cuidado, assistência social e hortas comunitárias no SCS. Não interagem diretamente com o sistema; seus atendimentos são registrados pelos facilitadores de campo. Necessitam de acolhimento ágil sem burocracia documental e garantia de sigilo de seus dados.
 

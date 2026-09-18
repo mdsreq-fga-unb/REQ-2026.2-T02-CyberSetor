@@ -3,20 +3,17 @@
 | Data | Versão | Descrição | Autor |
 |---|---|---|---|
 | 01/09/2026 | 1.0 | Versão inicial | Equipe CyberSetor |
-| 05/09/2026 | 1.1 | Revisão com foco único nas seções 1.4, 1.5, 1.7, 2.1 e 2.2 | Equipe CyberSetor |
-| 06/09/2026 | 1.2 | Seções 4, 5, 6 e 7 redigidas para o site | Equipe CyberSetor |
-| 14/09/2026 | 1.3 | Correções decorrentes da issue #25: distinção entre as duas Maria Eduardas; caráter provisório da avaliação pelo Product Owner interno; área competente por funcionalidade; reconciliação da cadência de validação; validação de 02/09 apresentada como preliminar; responsabilidades por atividade de Engenharia de Requisitos | Vinicius Vieira |
-| 15/09/2026 | 1.4 | Correções decorrentes da issue #23: processo de validação reestruturado em torno das conversas com o Instituto; Definition of Ready e Definition of Done retiradas da validação (são critérios de gestão de sprint, seção 9); política de gravações e transcrições | Caio Martins |
-| 17/09/2026 | 1.5 | Revisão da 7.3: papel do Product Owner interno unificado com a delimitação já publicada; compromisso de treinamento transferido para a seção 6.4 (issue #23) | Vinicius Vieira |
+| 06/09/2026 | 1.1 | Seção redigida para o site | Equipe CyberSetor |
+| 14/09/2026 | 1.2 | Distinção entre as duas Maria Eduardas; alcance da avaliação do Product Owner interno; área competente por funcionalidade; cadência de validação e responsabilidades por atividade de Engenharia de Requisitos | Vinicius Vieira |
+| 15/09/2026 | 1.3 | Processo de validação reestruturado em torno das conversas com o Instituto; Definition of Ready e Definition of Done remetidas à seção 9; política de gravações e transcrições | Caio Martins |
+| 17/09/2026 | 1.4 | Papel do cliente na validação e na ordenação do backlog declarado na 7.1; retrospectiva registrada ao fim de cada sprint; papel do Product Owner interno unificado com a delimitação já publicada; compromisso de treinamento remetido à seção 6.4; cadência de validação registrada como semanal; reunião de 15/09 nas interações realizadas; tabela de áreas competentes sem coluna de andamento | Vinicius Vieira |
 
 ## 7.1 Composição da Equipe
 
 A equipe é formada por seis estudantes. Todos compõem o Time de Desenvolvimento, que estima, seleciona o que cabe na sprint, constrói e testa. Dois papéis do Scrum estão designados: o Product Owner interno e o Scrum Master.
 
 !!! note "Duas pessoas chamadas Maria Eduarda"
-    Há uma **Maria Eduarda Marques**, integrante da equipe CyberSetor e Product Owner interno, e uma **Maria Eduarda do núcleo pedagógico do Instituto**, uma das representantes do cliente. A partir desta revisão, a integrante da equipe é referida com o sobrenome **Marques** e a representante do Instituto vem sempre acompanhada da identificação institucional. O sobrenome da representante do Instituto não é registrado porque a equipe não o tem confirmado.
-
-    Atas de reunião e planos de sprint **não são reeditados depois de publicados**, por serem registros formais do que foi deliberado em uma data. Nesses documentos o nome pode aparecer sem qualificação: vale o contexto da reunião — nas atas e nos planos da equipe trata-se de Maria Eduarda Marques; na ata da reunião presencial de 08/09, da representante do Instituto, como o próprio documento declara.
+    **Maria Eduarda Marques** é a integrante da equipe e Product Owner interno. **Maria Eduarda, do núcleo pedagógico**, é uma das representantes do Instituto, e vem sempre com essa identificação institucional; seu sobrenome não é registrado porque a equipe não o tem confirmado.
 
 | Integrante | Matrícula | GitHub | Papel | Responsabilidades |
 |---|---|---|---|---|
@@ -44,6 +41,8 @@ O que a tabela abaixo registra é **quem conduz cada atividade e responde por su
 
 A nomenclatura das seis atividades segue o livro-texto da disciplina (MARSICANO, 2026, §5.3): elicitação e descoberta, análise e consenso, declaração, representação, verificação e validação, organização e atualização.
 
+**O papel do cliente.** O Instituto No Setor **valida as entregas**, **indica o valor dos itens e participa da ordenação do Product Backlog** e é a fonte primária dos requisitos. O Product Owner interno **propõe** a ordenação a partir desse valor e a mantém atualizada entre os encontros; a proposta vale até o Instituto confirmá-la, e uma entrega avaliada apenas por essa via fica registrada como *pendente de validação externa*. Quem valida cada conjunto de funcionalidades está na seção 7.3.1.
+
 O Product Owner interno é a mitigação para duas limitações conhecidas: a dependência da disponibilidade do Product Owner, no Scrum, e a dependência do cliente presente, no XP. O Instituto No Setor não dispõe de equipe de tecnologia e atua com agenda reduzida, e por isso não funcionaria como cliente presente no sentido literal. As responsabilidades técnicas no desenvolvimento serão distribuídas a partir da matriz de competências, com programação em pares desde a Sprint 1.
 
 ## 7.2 Comunicação
@@ -60,22 +59,23 @@ O Product Owner interno é a mitigação para duas limitações conhecidas: a de
 - **Daily assíncrona:** todo dia útil, até as 12h, no grupo *Dailys*, com o que foi feito, o que será feito e os impedimentos. Impedimento declarado é resolvido ou escalado pelo Scrum Master em até 24 horas.
 - **Sprint Planning:** na primeira terça-feira de cada sprint, cerca de uma hora, no Google Meet.
 - **Refinamento do backlog:** semanal, cerca de trinta minutos, no Google Meet. É onde a Engenharia de Requisitos acontece no dia a dia.
-- **Sprint Review:** na última terça-feira de cada sprint, cerca de uma hora. A participação do Instituto depende de agenda confirmada; ver a reconciliação em §7.3.
-- **Retrospectiva:** ao final de cada unidade da disciplina, cerca de quarenta minutos. O resultado vai para a seção 11.
+- **Sprint Review:** na última terça-feira de cada sprint, cerca de uma hora, com o incremento demonstrado e o retorno incorporado ao backlog. Quando o Instituto não puder estar presente, a avaliação é provisória e a confirmação fica para a validação semanal seguinte (§7.3).
+- **Retrospectiva:** ao final de cada sprint, logo após a Review, cerca de quarenta minutos. As ações de melhoria acumuladas ao longo de cada unidade compõem a seção 11.
 
 **Interação com o cliente**
 
-As interlocutoras atuais são **Maria Clara e Maria Eduarda, do núcleo pedagógico do Instituto**. O contato corrente é por WhatsApp e e-mail. O formato acordado para a validação corrente é o de **conversas curtas e quinzenais**, de cerca de trinta minutos, em vez de reuniões longas e esporádicas, por respeito à agenda de uma organização com equipe reduzida. Encontros presenciais na sede do Instituto são realizados quando a elicitação exige observação direta.
+As interlocutoras atuais são **Maria Clara e Maria Eduarda, do núcleo pedagógico do Instituto**. O contato corrente é por WhatsApp e e-mail. O formato acordado para a validação corrente é o de **conversas curtas e semanais**, de cerca de trinta minutos, em vez de reuniões longas e esporádicas, por respeito à agenda de uma organização com equipe reduzida. Encontros presenciais na sede do Instituto são realizados quando a elicitação exige observação direta.
 
-**Interações efetivamente realizadas até 14/09/2026:**
+**Interações realizadas:**
 
 | Data | Formato | O que ocorreu |
 |---|---|---|
 | 20/08/2026 | Videoconferência | Primeira reunião: contexto e dores |
 | 02/09/2026 | Mensagem | Concordância **preliminar** com a proposta de solução — ver §7.3.2 |
 | 08/09/2026 | Presencial, na sede | Elicitação aprofundada, com observação direta e análise de documentos |
+| 15/09/2026 | Videoconferência | Levantamento com a área de projetos, a coordenação administrativo-financeira e o núcleo pedagógico: rotina administrativa, matriz de aquisição, separação de acesso por área e necessidades de painel e de comprovação em campo |
 
-Este site distingue **intenção, convite, confirmação e realização**: a tabela acima registra apenas o que ocorreu. Encontro agendado só é incorporado a ela depois de realizado. A cadência quinzenal é compromisso acordado e ainda em consolidação — o agendamento recorrente foi decidido na Sprint Planning de 08/09 e segue pendente de registro no calendário compartilhado.
+A tabela acima registra apenas encontros realizados: intenção e convite não entram nela. A cadência acordada é **semanal**. Quando um encontro não ocorre por incompatibilidade com o calendário do Instituto, a ausência é registrada com o motivo, em vez de a cadência ser reescrita: é assim que a tabela acima permanece fiel ao que aconteceu.
 
 ## 7.3 Processo de Validação
 
@@ -87,22 +87,24 @@ A validação dos requisitos e da solução é um processo contínuo e centrado 
 4. **Registro em ata e refinamento contínuo:** os apontamentos e acordos estabelecidos nas conversas de validação são formalmente sintetizados em ata de reunião, alimentando o refinamento imediato do Product Backlog e o planejamento das sprints seguintes.
 5. **Papel do Product Owner interno:** não valida o trabalho da equipe em nome do cliente; destrava dúvidas operacionais no intervalo entre as conversas de validação. Decisão de domínio, regra de prestação de contas ou alteração de escopo é confirmada com as representantes do Instituto — o alcance dessa avaliação provisória está delimitado no parágrafo seguinte.
 
-**Quando o Instituto não participar.** O papel de Product Owner interno foi adotado por decisão registrada em 01/09/2026, justamente para que o trabalho não parasse enquanto uma resposta do Instituto não chega: é a mitigação declarada em §7.1 para a ausência de cliente presente. O que esta revisão acrescenta não reverte essa decisão, apenas delimita seu alcance — a avaliação feita pelo Product Owner interno é **provisória**: mantém o trabalho em andamento, mas **não confirma regra de domínio nem substitui a validação do cliente**. Um item avaliado apenas por essa via permanece marcado como *pendente de validação externa* até ser confirmado pela área competente do Instituto. Quando a contingência assíncrona for usada — envio do material com prazo de resposta —, é o **registro escrito da resposta** que converte a avaliação provisória em validação.
+**Quando o Instituto não participar.** O Product Owner interno existe para que o trabalho não pare enquanto uma resposta do Instituto não chega: é a mitigação declarada em §7.1 para a ausência de cliente presente. Seu alcance é delimitado — a avaliação feita pelo Product Owner interno é **provisória**: mantém o trabalho em andamento, mas **não confirma regra de domínio nem substitui a validação do cliente**. Um item avaliado apenas por essa via permanece marcado como *pendente de validação externa* até ser confirmado pela área competente do Instituto. Quando a contingência assíncrona for usada — envio do material com prazo de resposta —, é o **registro escrito da resposta** que converte a avaliação provisória em validação.
 
 ### 7.3.1 Área competente por funcionalidade
 
 O núcleo pedagógico **não é a única fonte de validação**. Cada conjunto de funcionalidades é validado por quem o utiliza ou responde por ele:
 
-| Conjunto de funcionalidades | Área competente do Instituto | Situação em 14/09/2026 |
-|---|---|---|
-| Requisito, meta, indicador e parâmetro de aferição | Diretoria de Projetos e Captação de Recursos | Conversa **em agendamento** |
-| Relatório de execução do objeto e prestação de contas | Área Administrativo-Financeira | Conversa **em agendamento** |
-| Inscrição, registro de presença e uso em campo | Educadores que conduzem as atividades | Perspectiva **parcialmente coberta**: a representante do núcleo pedagógico com quem a equipe interage acumula a função de educadora. Falta observação direta de uma atividade em execução |
-| Plano de trabalho, atividades e acompanhamento pedagógico | Núcleo pedagógico | **Coberta** — 20/08, 02/09 e 08/09 |
-| Base de pessoas, consentimento e tratamento de dados | Direção, com apoio das áreas acima | **A tratar**, junto com os pontos a confirmar da ata de 08/09 |
-| Continuidade após o encerramento da disciplina | Direção | **A tratar** — pergunta registrada na ata de 08/09 |
+| Conjunto de funcionalidades | Área competente do Instituto |
+|---|---|
+| Requisito, meta, indicador e parâmetro de aferição | Diretoria de Projetos e Captação de Recursos |
+| Relatório de execução do objeto e prestação de contas | Área Administrativo-Financeira |
+| Inscrição, registro de presença e uso em campo | Educadores que conduzem as atividades |
+| Plano de trabalho, atividades e acompanhamento pedagógico | Núcleo pedagógico |
+| Base de pessoas, consentimento e tratamento de dados | Direção, com apoio das áreas acima |
+| Continuidade após o encerramento da disciplina | Direção |
 
-A ampliação dos interlocutores não é resposta improvisada: a consulta à área administrativo-financeira foi decidida na Sprint Planning de 08/09/2026, e o agendamento das conversas com a Diretoria de Projetos e com essa área consta dos encaminhamentos da ata da reunião presencial do mesmo dia.
+A cobertura efetiva de cada área, encontro a encontro, é a que a tabela de interações da seção 7.2 registra.
+
+A consulta à área administrativo-financeira e à Diretoria de Projetos integra os encaminhamentos da reunião presencial de 08/09/2026.
 
 ### 7.3.2 O que a validação de 02/09/2026 cobre — e o que não cobre
 
@@ -110,4 +112,4 @@ A ampliação dos interlocutores não é resposta improvisada: a consulta à ár
 
 **Não cobre:** a manifestação foi por mensagem, **antes** da elicitação presencial aprofundada de 08/09/2026, e é portanto **preliminar**. Ela não valida o que só foi descoberto depois — em particular o reposicionamento do centro do produto para o ciclo do projeto financiado, a estrutura organizacional real do Instituto e o modelo de requisito/meta com indicador e parâmetro de aferição. Esses achados constam da ata de 08/09, que está em conferência pelo Instituto e cuja validação formal permanece pendente.
 
-Uma aprovação anterior não se estende automaticamente a fatos posteriores. A sessão de validação prevista para o fim de setembro, com o modelo de meta e o esboço de relatório sobre um projeto real da organização, é o próximo marco de validação.
+Uma aprovação anterior não se estende automaticamente a fatos posteriores.

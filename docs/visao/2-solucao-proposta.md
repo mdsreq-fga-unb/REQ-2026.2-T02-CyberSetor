@@ -3,9 +3,9 @@
 | Data | Versão | Descrição | Autor |
 |---|---|---|---|
 | 01/09/2026 | 1.0 | Versão inicial | Equipe CyberSetor |
-| 05/09/2026 | 1.1 | Revisão com foco único nas seções 1.4, 1.5, 1.7, 2.1 e 2.2 | Equipe CyberSetor |
-| 06/09/2026 | 1.2 | Seções 4, 5, 6 e 7 redigidas para o site | Equipe CyberSetor |
-| 15/09/2026 | 1.3 | Revisão da seção 2 pela issue #20: tratamento de dados pessoais, custo em três fases, topologia de produção, fronteiras de cache e fila local, política de cópia de segurança e alcance da validação do cliente | Vinicius Vieira |
+| 05/09/2026 | 1.1 | Revisão das seções 2.1 e 2.2 | Equipe CyberSetor |
+| 15/09/2026 | 1.2 | Tratamento de dados pessoais, custo em três fases, topologia de produção, cópia de segurança e alcance da validação do cliente | Vinicius Vieira |
+| 17/09/2026 | 1.3 | Cópia de segurança descrita como configuração prevista; guarda documental de dez anos com a norma citada; verbos dos objetivos específicos 05 e 06 alinhados entre título e texto; cabeçalho da tabela de características sem colunas homônimas; blocos de equipe, prazo e conhecimento técnico da 2.6 sem repetir as seções 6, 7.1 e a matriz de competências | Vinicius Vieira |
 
 ## 2.1 Objetivo Geral do Produto
 
@@ -21,9 +21,9 @@ O objetivo do produto é centralizar as informações operacionais e as evidênc
 
 <a id="oe04"></a>**OE04 - Antecipar o acompanhamento das metas** - Aumentar a visibilidade da coordenação sobre o progresso das metas institucionais, permitindo identificar riscos de descumprimento antes do fechamento do ciclo.
 
-<a id="oe05"></a>**OE05 - Mitigar o risco de perda de evidências de execução** - Garantir que os comprovantes de realização das atividades permaneçam organizados e acessíveis para consulta e prestação de contas perante editais e parceiros.
+<a id="oe05"></a>**OE05 - Mitigar o risco de perda de evidências de execução** - Manter os comprovantes de realização das atividades organizados e acessíveis para consulta e prestação de contas perante editais e parceiros.
 
-<a id="oe06"></a>**OE06 - Reduzir o esforço de prestação de contas** - Agilizar a elaboração de relatórios de metas e atividades por período, eliminando a consolidação manual exigida a cada edital.
+<a id="oe06"></a>**OE06 - Reduzir o esforço de prestação de contas** - Agilizar a elaboração de relatórios de metas e atividades por período, a partir dos dados já registrados, em lugar da montagem manual de planilhas a cada edital.
 
 Cada objetivo específico responde a um elemento do problema descrito na seção 1.4. A dispersão do registro em múltiplas planilhas é endereçada pelo [OE01](#oe01). O retrabalho de digitação dos dados de participantes é endereçado pelo [OE02](#oe02). A transcrição posterior de listas de presença preenchidas em papel é endereçada pelo [OE03](#oe03). A impossibilidade de acompanhar, ao longo da execução, o atingimento das metas pactuadas em editais é endereçada pelo [OE04](#oe04). A dispersão das evidências que comprovam a realização das atividades é endereçada pelo [OE05](#oe05). E a elaboração manual dos relatórios de prestação de contas é endereçada pelo [OE06](#oe06). O conjunto dos seis objetivos cobre a cadeia completa identificada como origem dos gargalos, da inscrição do participante à entrega do relatório final ao financiador.
 
@@ -31,7 +31,7 @@ Cada objetivo específico responde a um elemento do problema descrito na seção
 
 A solução proposta para o Instituto No Setor deverá contemplar, de forma preliminar, as seguintes características:
 
-| ID | Característica de Produto (CP) | Descrição resumida | ID | Valor de negócio (VN) principal | Contribuição principal | Contribuição secundária |
+| CP | Característica de Produto | Descrição resumida | VN | Valor de negócio principal | Objetivo específico atendido | Objetivo específico secundário |
 |---|---|---|---|---|---|---|
 | <span id="cp1">CP1</span> | Gestão de projetos e metas | Cadastro dos projetos com suas metas, indicadores, valores a alcançar, prazos e origem do compromisso, seja edital, convênio, parceria ou planejamento interno. | <span id="vn1">VN1</span> | Vinculação explícita entre o que é executado e o que foi pactuado com financiadores. | [OE01](#oe01) | [OE04](#oe04) |
 | <span id="cp2">CP2</span> | Gestão de atividades | Cadastro das atividades que compõem os projetos, com data, local, responsável, número de vagas e tratamento de atividades que se repetem. | <span id="vn2">VN2</span> | Substituição do controle disperso em planilhas por um registro único e consultável. | [OE01](#oe01) | [OE04](#oe04), [OE06](#oe06) |
@@ -54,7 +54,7 @@ A pilha tecnológica do CyberSetor foi selecionada a partir da Matriz de Compet�
 |---|---|---|
 | Linguagem | TypeScript | Linguagem única no cliente e no servidor, o que reduz a curva de aprendizado da equipe e permite compartilhar tipos entre as duas pontas. |
 | Back-end | NestJS | Estrutura modular com injeção de dependências, documentação consolidada e integrações prontas para autenticação, validação e documentação de API. |
-| Banco de dados | PostgreSQL | Modelo relacional adequado ao encadeamento entre projeto, meta, atividade, inscrição, participação e evidência. Gratuito e de código aberto. As cópias de segurança são agendadas e executadas pela plataforma de implantação, conforme a política da seção 2.6. |
+| Banco de dados | PostgreSQL | Modelo relacional adequado ao encadeamento entre projeto, meta, atividade, inscrição, participação e evidência. Gratuito e de código aberto. As cópias de segurança serão agendadas e executadas pela plataforma de implantação, conforme a política da seção 2.6. |
 | Mapeamento objeto-relacional | Prisma | Esquema declarativo único e cliente com tipagem gerada automaticamente, com migrações versionadas desde o início. |
 | Front-end | Next.js com React | A renderização no servidor beneficia a página pública de inscrição, que precisa carregar rápido em conexões móveis. Integração nativa com a plataforma de publicação escolhida. |
 | Estilização e componentes | Tailwind CSS com shadcn/ui | Permite construir interfaces consistentes com rapidez, sem introduzir um segundo sistema de estilos. |
@@ -84,7 +84,7 @@ No segmento de gestão para organizações do terceiro setor e projetos sociocul
 
 A solução CyberSetor irá se diferenciar nos seguintes aspectos:
 
-**Fluxo único de dados.** Cada participação registrada em campo converte-se automaticamente em progresso de meta e em conteúdo consolidado para o relatório final, eliminando a transposição manual entre planilhas.
+**Fluxo único de dados.** Cada participação registrada em campo passa a alimentar o progresso da meta e o conteúdo do relatório final, sem a transposição manual entre planilhas.
 
 **Aderência ao ciclo de prestação de contas por editais.** As atividades são vinculadas diretamente aos planos de trabalho pactuados. O progresso de cada meta é apurado a partir dos registros de execução, segundo o indicador e a forma de aferição definidos no próprio instrumento, com sinalização antecipada das metas sob risco de não cumprimento.
 
@@ -96,15 +96,15 @@ A solução CyberSetor irá se diferenciar nos seguintes aspectos:
 
 A proposta é viável no contexto da disciplina, e esta seção registra sob que condições. A avaliação considerou primeiro a capacidade de execução — composição da equipe, prazo do semestre letivo, acesso ao cliente e conhecimento técnico disponível — e, em seguida, o que sustenta o sistema depois de pronto: custo, administração técnica, recuperação de dados, confiabilidade do registro em campo e tratamento de dados pessoais. Cada um desses fatores é condição de viabilidade, e não detalhe de implantação.
 
-**Equipe.** O projeto conta com seis integrantes, todos com disponibilidade parcial em razão das demais disciplinas do semestre. Para lidar com essa limitação, o trabalho foi organizado em ciclos de duas semanas, com priorização contínua e programação em pares, de modo que a própria construção do produto funcione também como nivelamento técnico. Os papéis de Product Owner interno e Scrum Master estão definidos, o que reduz a dependência de decisões concentradas em uma única pessoa.
+**Equipe.** Os seis integrantes têm disponibilidade parcial, em razão das demais disciplinas do semestre. A capacidade real de cada sprint é o que limita o escopo, e por isso o recorte descrito na seção 6.3 é estreito. A composição, os papéis e a forma de trabalho estão na seção 7.1.
 
-**Prazo.** O escopo foi delimitado para caber no ciclo letivo, com prioridade para o núcleo de valor da solução, que é o encadeamento entre atividade, participação, meta e relatório. Módulos de maior complexidade e menor urgência, como controle financeiro e orçamentário, foram deliberadamente deixados fora desta versão. O cronograma da seção 6 reserva três sprints de construção (Sprints 3 a 5, de 06/10 a 17/11), uma sprint de estabilização, implantação e transferência (Sprint 6, de 17/11 a 01/12) e uma margem final sem escopo novo até a entrega, com validação com o Instituto a cada sprint e um checkpoint com dados reais antes da sprint de relatório.
+**Prazo.** O escopo foi delimitado para caber no ciclo letivo, com prioridade para o encadeamento entre atividade, participação, meta e relatório, que é o núcleo de valor da solução. Módulos de maior complexidade e menor urgência, como o controle financeiro e orçamentário, ficam fora desta versão. O cronograma da seção 6 mostra quanto tempo resta para construir, estabilizar e transferir.
 
 **Acesso ao cliente.** O Instituto manifestou concordância **preliminar** com a proposta de solução em 02/09/2026 e recebeu a equipe em sua sede em 08/09/2026, para elicitação aprofundada. Essa concordância confirma o problema como ponto de partida; **não equivale a validação do escopo**, que depende das áreas competentes por conjunto de funcionalidades — ver a seção 7.3. Há canal direto de comunicação e representantes designadas. A principal restrição é a disponibilidade de agenda da organização, que atua com equipe reduzida, e por isso as validações foram planejadas em encontros curtos e periódicos.
 
-**Conhecimento técnico disponível.** O conhecimento da equipe foi levantado de forma objetiva por meio de uma matriz de competências, na qual cada integrante declarou seu nível de familiaridade com cada tecnologia considerada. O levantamento mostrou domínio consolidado nas camadas fundamentais, como TypeScript, React, PostgreSQL, controle de versão, contêineres e integração contínua, e apontou lacunas em ferramentas específicas, entre elas o mapeamento objeto-relacional e o armazenamento local para funcionamento sem conexão. Para essas lacunas foram realizadas sessões de nivelamento conduzidas pelos integrantes com maior experiência, em 10/09/2026, antes do início do desenvolvimento. As sessões demonstraram a viabilidade das ferramentas; a confirmação de que cada integrante opera com autonomia é verificada ao longo da construção, não pela realização da sessão. Esse mapeamento também orientou a escolha da pilha tecnológica: onde havia domínio, a decisão seguiu a experiência acumulada; onde não havia, prevaleceu o critério de menor custo de aprendizado.
+**Conhecimento técnico disponível.** A [matriz de competências](../gestao/matriz-competencias.md) registra o nível declarado por cada integrante em cada tecnologia considerada. Há domínio consolidado nas camadas fundamentais e lacunas em ferramentas específicas, tratadas em sessões de nivelamento antes do início da construção. Nenhuma tecnologia da pilha depende de uma única pessoa sem plano de nivelamento.
 
-**Entrega de um MVP funcional.** A arquitetura não depende de infraestrutura de hardware dedicada nem de integração com sistemas legados, uma vez que o Instituto não possui sistema de gestão em uso — o que elimina a classe de risco mais comum em projetos desta duração.
+**Entrega de um MVP funcional.** A arquitetura não depende de infraestrutura de hardware dedicada nem de integração com sistemas legados, uma vez que o Instituto não possui sistema de gestão em uso — o que afasta a classe de risco mais comum em projetos desta duração.
 
 **Custo, em três fases.** Dizer que a solução não gera custo só é exato com recorte temporal:
 
@@ -120,7 +120,7 @@ A possibilidade de custear essa manutenção como despesa indireta de projeto **
 
 **Administração técnica e continuidade.** O Instituto não possui equipe de tecnologia, e a arquitetura adotada exige administração de servidor, banco, armazenamento, certificados, atualizações e recuperação. Essa é uma dependência real do projeto, e não um detalhe de implantação. Ela é tratada em duas frentes: a solução em contêineres pode ser migrada para outro provedor sem reescrita, a partir das imagens e das cópias exportáveis; e a transferência ao final do semestre exige um plano próprio, com responsável nomeado, credenciais, documentação, domínio e rotina de cópia de segurança. Duas questões permanecem abertas: **quem assumirá essa administração após o encerramento da disciplina**, submetida ao Instituto e ainda sem resposta; e, durante o projeto, a designação de um **segundo responsável técnico**, para que a operação não dependa de uma única pessoa.
 
-**Cópia de segurança e recuperação.** A cópia do banco não é rotina escrita pela equipe: é tarefa agendada da própria plataforma de implantação, que reconhece o PostgreSQL, gera a cópia e a envia ao armazenamento externo. Cada execução é conferível — situação, banco copiado, tamanho do arquivo e confirmação do envio. A política adotada define periodicidade de seis horas e retenção por número de cópias, por prazo e por espaço ocupado.
+**Cópia de segurança e recuperação.** A cópia do banco não é rotina escrita pela equipe: será tarefa agendada da própria plataforma de implantação, que reconhece o PostgreSQL, gera a cópia e a envia ao armazenamento externo. Cada execução fica conferível — situação, banco copiado, tamanho do arquivo e confirmação do envio. A política adotada define periodicidade de seis horas e retenção por número de cópias, por prazo e por espaço ocupado.
 
 A plataforma grava primeiro no próprio servidor de implantação e só então envia a cópia para fora. Por isso a **cópia externa é obrigatória, e não um reforço**: sozinha, a cópia local não sobrevive à perda do servidor que hospeda o banco.
 
@@ -137,7 +137,7 @@ O principal risco técnico está no registro de participação durante atividade
 - **Nenhum campo estruturado** de saúde, origem racial ou étnica, convicção religiosa ou opinião política é coletado.
 - **Fotografia e relato são tratados como potencialmente reveladores** de condição pessoal, com acesso restrito por perfil.
 - **Comprovar e divulgar são tratamentos distintos.** A imagem usada como prova de execução fica restrita a quem presta contas; usá-la em divulgação é outra finalidade, com autorização própria e revogável, e a recusa não afeta o atendimento.
-- Cada finalidade tem **base legal declarada** e **prazo de retenção configurável por instrumento**. O prazo não é escolha do sistema: os financiadores exigem guarda de cinco a dez anos conforme o regime, e é o instrumento que o determina.
+- Cada finalidade tem **base legal declarada** e **prazo de retenção configurável por instrumento**. O prazo não é escolha do sistema: os financiadores exigem guarda de dez anos, contados do dia útil seguinte à apresentação da prestação de contas (Lei 13.019/2014, art. 68), e é o instrumento que o determina.
 - O consentimento é registrado onde é a base adequada, mas **não esgota a governança**: finalidade, necessidade, controle de acesso, retenção, direitos do titular e responsabilização são requisitos próprios.
 - **O Instituto permanece controlador dos dados.** O registro de quem enviou cada material produz rastreabilidade; não transfere a responsabilidade institucional para o educador.
 - A exportação integral dos dados permanece disponível a qualquer momento.
