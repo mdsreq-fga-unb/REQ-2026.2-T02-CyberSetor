@@ -1,4 +1,9 @@
-## Lições aprendidas da Unidade 1
+# 11. Lições aprendidas — Unidade 1
+
+| Data | Versão | Descrição | Autor |
+|---|---|---|---|
+| 07/09/2026 | 1.0 | Lições da Sprint 0 registradas para a entrega da Unidade 1 | Equipe CyberSetor |
+| 17/09/2026 | 1.1 | Cada lição passa a declarar responsável, prazo e indicador; alcance da validação de 02/09 delimitado; avaliação da daily assíncrona remetida à Retrospectiva | Daniel Batista |
 
 Durante a Sprint 0, dedicada à descoberta do problema e à formação da equipe e do processo, algumas lições relevantes foram registradas, com ênfase nas ações de melhoria adotadas e nas dificuldades enfrentadas.
 
@@ -13,24 +18,24 @@ Durante a Sprint 0, dedicada à descoberta do problema e à formação da equipe
 **Levantamento de competências técnicas da equipe e nivelamento**
 
 - *Desafio:* A equipe não tinha um diagnóstico objetivo do próprio nível técnico, o que dificultava decidir a stack sem incorrer no risco de escolher tecnologias que ninguém dominava.
-- *Ação de melhoria:* Foi construída uma Matriz de Competências para autoavaliação do domínio em cada tecnologia candidata (escala de 0 a 3). Na consolidação inicial da Sprint 0, a matriz contou com 5 dos 6 integrantes, registrando-se a pendência de Daniel Batista, que foi concluída e integrada durante a Sprint 1, totalizando 100% da equipe avaliada. O levantamento revelou domínio em TypeScript, React e PostgreSQL, e lacunas em Prisma e NestJS. Para mitigar o risco, foram realizados dojos de nivelamento técnico no início da Sprint 1 e adotada a programação em pares para evitar a concentração de conhecimento.
-- *Responsável:* Daniel Batista e Maria Eduarda Marques (Dupla A).
-- *Prazo:* Sprint 1 (conclusão da matriz e realização dos dojos).
-- *Indicador da ação:* 100% dos integrantes com avaliação preenchida na Matriz de Competências e realização dos dojos programados para nivelamento de Prisma e NestJS.
+- *Ação de melhoria:* Foi construída uma Matriz de Competências para autoavaliação do domínio em cada tecnologia candidata (escala de 0 a 3). A matriz cobre os seis integrantes. O levantamento revelou domínio em TypeScript, React e PostgreSQL, e lacunas em Prisma e NestJS. Para mitigar o risco, foram realizados dojos de nivelamento técnico no início da Sprint 1 e adotada a programação em pares para evitar a concentração de conhecimento.
+- *Responsável:* Dupla A, com facilitação do Scrum Master.
+- *Prazo:* Sprint 1.
+- *Indicador da ação:* os seis integrantes com avaliação preenchida na Matriz de Competências e dojos de nivelamento realizados.
 
 **Comunicação e validação com o cliente**
 
 - *Desafio:* O Instituto No Setor é uma organização com equipe reduzida e agenda concorrida, o que trazia risco de a validação do escopo demorar mais do que o cronograma da disciplina permite.
-- *Ação de melhoria:* A equipe estabeleceu uma comunicação ágil e de baixo atrito, combinando contato assíncrono via WhatsApp e e-mail com encontros curtos de validação. A manifestação do Instituto por mensagem em 02/09/2026 atuou estritamente como um alinhamento preliminar da direção geral do problema. O aprofundamento das necessidades teve início na reunião presencial de 08/09/2026, e a validação contínua e detalhada de regras e fluxos de negócio foi formalizada por meio dos ritos semanais com as representantes do Instituto.
+- *Ação de melhoria:* A equipe estabeleceu uma comunicação ágil e de baixo atrito, combinando contato assíncrono via WhatsApp e e-mail com encontros curtos de validação. A manifestação do Instituto por mensagem em 02/09/2026 atuou estritamente como um alinhamento preliminar da direção geral do problema. O aprofundamento das necessidades teve início na reunião presencial de 08/09/2026, e a validação detalhada de regras e fluxos de negócio ocorre de forma contínua nos encontros semanais com as representantes do Instituto.
 - *Responsável:* Maria Eduarda Marques (Product Owner interno) e interlocutores da equipe.
 - *Prazo:* Contínuo ao longo do semestre (ritos semanais).
-- *Indicador da ação:* Atas semanais de validação registradas e confirmação formal das regras de negócio apresentadas a cada ciclo.
+- *Indicador da ação:* ata registrada para cada encontro de validação realizado, com o motivo anotado quando o encontro não ocorre, e confirmação formal das regras de negócio apresentadas a cada ciclo.
 
 **Cadência de comunicação interna (Daily Assíncrona)**
 
 - *Desafio:* Com seis integrantes cursando outras disciplinas simultaneamente, uma daily síncrona diária não seria sustentável.
-- *Ação de melhoria:* A equipe adotou experimentalmente na Sprint 0 o formato de daily assíncrona escrita no grupo do WhatsApp até as 12h de cada dia útil. Como a prática foi introduzida na fase de planejamento, sua eficácia real quanto ao compromisso dos membros e à identificação ágil de impedimentos será formalmente mensurada e avaliada na Retrospectiva ao final da Sprint 1 completa.
+- *Ação de melhoria:* A equipe adotou experimentalmente na Sprint 0 o formato de daily assíncrona escrita no grupo do WhatsApp até as 12h de cada dia útil. Como a prática foi introduzida na fase de planejamento, sua eficácia quanto ao compromisso dos membros e à identificação de impedimentos é avaliada na Retrospectiva, ao fim de uma sprint completa.
 - *Responsável:* Vinicius Vieira (Scrum Master) e equipe.
 - *Prazo:* Retrospectiva da Sprint 1 (22/09/2026).
-- *Indicador da ação:* Taxa de envio dos relatos assíncronos até as 12h nos dias úteis (meta $\ge 80\%$) e registro/resolução dos impedimentos declarados no rito.
+- *Indicador da ação:* Taxa de envio dos relatos assíncronos até as 12h nos dias úteis (meta de 80% ou mais) e registro/resolução dos impedimentos declarados no rito.
 

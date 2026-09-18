@@ -37,6 +37,8 @@ Prazo: 08/09/2026, às 08h. Apresentações em 10/09/2026.
 
 | Unidade | Data | Conteúdo |
 |---|---|---|
+| Lista de requisitos | 22/09/2026 | Requisitos funcionais e não funcionais e regras de negócio |
+| MVP | 29/09/2026 | Recorte do MVP, com ajustes e validações |
 | Unidade 2 | 13/10/2026 | Requisitos, DoR e DoD, backlog e MVP |
 | Unidade 3 | 17/11/2026 | Desenvolvimento e validação do incremento |
 | Unidade 4 | 01 a 08/12/2026 | Entrega final |
