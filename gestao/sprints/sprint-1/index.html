@@ -1,0 +1,3581 @@
+
+<!doctype html>
+<html lang="pt" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Visão de Produto e Projeto — Requisitos de Software (FGA0313) · T02 · 2026.2 · FCTE/UnB">
+      
+      
+        <meta name="author" content="Equipe CyberSetor">
+      
+      
+        <link rel="canonical" href="https://mdsreq-fga-unb.github.io/REQ-2026.2-T02-CyberSetor/gestao/sprints/sprint-1/">
+      
+      
+        <link rel="prev" href="../../atas/2026-09-08-sprint-planning/">
+      
+      
+        <link rel="next" href="../tarefas-sprint-1/">
+      
+      
+      <link rel="icon" href="../../../assets/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.9">
+    
+    
+      
+        <title>Sprint 1 (Planejamento) - CyberSetor · Instituto No Setor</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.4af4bdda.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="deep-purple" data-md-color-accent="purple">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#plano-da-sprint-1-projeto-cybersetor" class="md-skip">
+          Pular para conteúdo
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Cabeçalho">
+    <a href="../../.." title="CyberSetor · Instituto No Setor" class="md-header__button md-logo" aria-label="CyberSetor · Instituto No Setor" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            CyberSetor · Instituto No Setor
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Sprint 1 (Planejamento)
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="deep-purple" data-md-color-accent="purple"  aria-label="Alternar para o modo escuro"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Alternar para o modo escuro" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="deep-purple" data-md-color-accent="purple"  aria-label="Alternar para o modo claro"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Alternar para o modo claro" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Buscar" placeholder="Buscar" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Pesquisar">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Limpar" aria-label="Limpar" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Inicializando busca
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/mdsreq-fga-unb/REQ-2026.2-T02-CyberSetor" title="Ir para repositório" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8M97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    mdsreq-fga-unb/REQ-2026.2-T02-CyberSetor
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+    
+      
+<nav class="md-tabs" aria-label="Abas" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../.." class="md-tabs__link">
+        
+  
+    
+  
+  Início
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../visao/" class="md-tabs__link">
+          
+  
+    
+  
+  Documento de Visão
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../requisitos/8-requisitos/" class="md-tabs__link">
+          
+  
+    
+  
+  Requisitos
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../../processo-scrumxp/" class="md-tabs__link">
+          
+  
+    
+  
+  Gestão do projeto
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../entregas/unidade-1/" class="md-tabs__link">
+          
+  
+    
+  
+  Entregas
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../licoes-aprendidas/unidade-1/" class="md-tabs__link">
+          
+  
+    
+  
+  Lições aprendidas
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../referencias/" class="md-tabs__link">
+        
+  
+    
+  
+  Referências
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navegação" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="CyberSetor · Instituto No Setor" class="md-nav__button md-logo" aria-label="CyberSetor · Instituto No Setor" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    CyberSetor · Instituto No Setor
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/mdsreq-fga-unb/REQ-2026.2-T02-CyberSetor" title="Ir para repositório" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8M97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    mdsreq-fga-unb/REQ-2026.2-T02-CyberSetor
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Início
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../visao/" class="md-nav__link ">
+              
+  
+  <span class="md-ellipsis">
+    Documento de Visão
+    
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_2" id="__nav_2_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            Documento de Visão
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../visao/1-cenario-atual/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    1. Cenário atual do cliente e do negócio
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../visao/2-solucao-proposta/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    2. Solução proposta
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../visao/3-intervencao-social/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    3. Intervenção social
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../visao/4-estrategia-esw/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    4. Estratégias de engenharia de software
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../visao/5-engenharia-requisitos/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    5. Engenharia de requisitos
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../visao/6-cronograma/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    6. Cronograma e entregas
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../visao/7-equipe-e-cliente/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    7. Interação entre equipe e cliente
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Requisitos
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            Requisitos
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../requisitos/8-requisitos/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    8. Requisitos de software
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../requisitos/9-dor-dod/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    9. DoR e DoD
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../requisitos/10-backlog/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    10. Backlog de produto
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Gestão do projeto
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            Gestão do projeto
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../processo-scrumxp/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Processo e ritos (ScrumXP)
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../matriz-competencias/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Matriz de competências e stack
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../boas-praticas-github/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Boas práticas no GitHub
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_4" >
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../atas/" class="md-nav__link ">
+              
+  
+  <span class="md-ellipsis">
+    Atas de reunião
+    
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_4_4" id="__nav_4_4_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_4">
+            <span class="md-nav__icon md-icon"></span>
+            Atas de reunião
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../atas/2026-08-27-reuniao-equipe/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    27/08/2026 — Equipe
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../atas/2026-09-01-reuniao-equipe/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    01/09/2026 — Equipe
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../atas/2026-09-08-reuniao-presencial-instituto/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    08/09/2026 — Instituto (presencial)
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../atas/2026-09-08-sprint-planning/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    08/09/2026 — Sprint Planning
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_5" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_4_5" id="__nav_4_5_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Planos de sprint
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_5_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4_5">
+            <span class="md-nav__icon md-icon"></span>
+            Planos de sprint
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Sprint 1 (Planejamento)
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    Sprint 1 (Planejamento)
+    
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Índice">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Índice
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-objetivo-e-escopo-do-documento" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. Objetivo e escopo do documento
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-referencias" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. Referências
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. Referências">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21-base-de-elaboracao-deste-plano" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.1 Base de elaboração deste plano
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#22-referencial-teorico" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.2 Referencial teórico
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#23-convencoes-deste-documento" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.3 Convenções deste documento
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-contexto" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. Contexto
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. Contexto">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31-reposicionamento-do-produto-apos-a-elicitacao-de-0809" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.1 Reposicionamento do produto após a elicitação de 08/09
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#32-implicacao-para-a-sprint-1" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.2 Implicação para a Sprint 1
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-definicao-da-sprint-1" class="md-nav__link">
+    <span class="md-ellipsis">
+      4. Definição da Sprint 1
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. Definição da Sprint 1">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#41-periodo-e-cadencia" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.1 Período e cadência
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#42-estrutura-da-sprint-em-duas-fases" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.2 Estrutura da Sprint em duas fases
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#43-meta-da-sprint" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.3 Meta da Sprint
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-capacidade-da-equipe" class="md-nav__link">
+    <span class="md-ellipsis">
+      5. Capacidade da equipe
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5. Capacidade da equipe">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#51-calendario-detalhado-da-sprint" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.1 Calendário detalhado da Sprint
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#52-perfil-da-equipe-para-os-produtos-de-trabalho-desta-sprint" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.2 Perfil da equipe para os produtos de trabalho desta Sprint
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-plano-de-capacitacao-dojos" class="md-nav__link">
+    <span class="md-ellipsis">
+      6. Plano de capacitação — dojos
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6. Plano de capacitação — dojos">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#61-diretriz" class="md-nav__link">
+    <span class="md-ellipsis">
+      6.1 Diretriz
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#62-especificacao-dos-dojos-da-sprint-1" class="md-nav__link">
+    <span class="md-ellipsis">
+      6.2 Especificação dos dojos da Sprint 1
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#63-capacitacao-tecnica-prevista-para-a-sprint-2" class="md-nav__link">
+    <span class="md-ellipsis">
+      6.3 Capacitação técnica prevista para a Sprint 2
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#64-padrao-aplicavel-a-todos-os-dojos" class="md-nav__link">
+    <span class="md-ellipsis">
+      6.4 Padrão aplicável a todos os dojos
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-product-backlog-candidato" class="md-nav__link">
+    <span class="md-ellipsis">
+      7. Product Backlog candidato
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="7. Product Backlog candidato">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#71-epicos-a-b-d-e-e-itens-sem-redacao-de-historia" class="md-nav__link">
+    <span class="md-ellipsis">
+      7.1 Épicos A, B, D e E — itens sem redação de história
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#72-epico-c-declaracao-historias-de-usuario" class="md-nav__link">
+    <span class="md-ellipsis">
+      7.2 Épico C — Declaração: histórias de usuário
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-metodo-de-priorizacao-e-dimensionamento-moscow" class="md-nav__link">
+    <span class="md-ellipsis">
+      8. Método de priorização e dimensionamento — MoSCoW
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="8. Método de priorização e dimensionamento — MoSCoW">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#81-metodo-unico-moscow" class="md-nav__link">
+    <span class="md-ellipsis">
+      8.1 Método único: MoSCoW
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#82-categorias-e-regra-de-proporcao" class="md-nav__link">
+    <span class="md-ellipsis">
+      8.2 Categorias e regra de proporção
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#83-procedimento-de-classificacao" class="md-nav__link">
+    <span class="md-ellipsis">
+      8.3 Procedimento de classificação
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#84-verificacao-de-capacidade-e-fatiamento" class="md-nav__link">
+    <span class="md-ellipsis">
+      8.4 Verificação de capacidade e fatiamento
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#85-aplicacao-a-esta-sprint" class="md-nav__link">
+    <span class="md-ellipsis">
+      8.5 Aplicação a esta Sprint
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#86-primeira-aplicacao-e-referencia-de-capacidade" class="md-nav__link">
+    <span class="md-ellipsis">
+      8.6 Primeira aplicação e referência de capacidade
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#9-alocacao-de-responsabilidades" class="md-nav__link">
+    <span class="md-ellipsis">
+      9. Alocação de responsabilidades
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#10-registro-de-riscos" class="md-nav__link">
+    <span class="md-ellipsis">
+      10. Registro de riscos
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#11-criterios-de-aceitacao-da-sprint" class="md-nav__link">
+    <span class="md-ellipsis">
+      11. Critérios de aceitação da Sprint
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#12-calendario-da-sprint-2" class="md-nav__link">
+    <span class="md-ellipsis">
+      12. Calendário da Sprint 2
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#anexo-a-conducao-da-reuniao-de-sprint-planning" class="md-nav__link">
+    <span class="md-ellipsis">
+      Anexo A — Condução da reunião de Sprint Planning
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#anexo-b-ata-da-reuniao-de-sprint-planning" class="md-nav__link">
+    <span class="md-ellipsis">
+      Anexo B — Ata da reunião de Sprint Planning
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#anexo-c-plano-de-execucao-da-semana-2" class="md-nav__link">
+    <span class="md-ellipsis">
+      Anexo C — Plano de execução da Semana 2
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#anexo-d-verificacao-posterior-a-reuniao-de-planning" class="md-nav__link">
+    <span class="md-ellipsis">
+      Anexo D — Verificação posterior à reunião de Planning
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#controle-de-versoes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Controle de versões
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tarefas-sprint-1/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Sprint 1 (Acompanhamento de Tarefas)
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Entregas
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            Entregas
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../entregas/unidade-1/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Unidade 1
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../entregas/debitos-u1/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Débitos e Feedbacks (U1)
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../entregas/unidade-2/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Unidade 2
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Lições aprendidas
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            Lições aprendidas
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../licoes-aprendidas/unidade-1/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Unidade 1
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../referencias/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Referências
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Índice">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Índice
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-objetivo-e-escopo-do-documento" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. Objetivo e escopo do documento
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-referencias" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. Referências
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. Referências">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21-base-de-elaboracao-deste-plano" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.1 Base de elaboração deste plano
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#22-referencial-teorico" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.2 Referencial teórico
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#23-convencoes-deste-documento" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.3 Convenções deste documento
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-contexto" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. Contexto
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. Contexto">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31-reposicionamento-do-produto-apos-a-elicitacao-de-0809" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.1 Reposicionamento do produto após a elicitação de 08/09
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#32-implicacao-para-a-sprint-1" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.2 Implicação para a Sprint 1
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-definicao-da-sprint-1" class="md-nav__link">
+    <span class="md-ellipsis">
+      4. Definição da Sprint 1
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. Definição da Sprint 1">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#41-periodo-e-cadencia" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.1 Período e cadência
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#42-estrutura-da-sprint-em-duas-fases" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.2 Estrutura da Sprint em duas fases
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#43-meta-da-sprint" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.3 Meta da Sprint
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-capacidade-da-equipe" class="md-nav__link">
+    <span class="md-ellipsis">
+      5. Capacidade da equipe
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5. Capacidade da equipe">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#51-calendario-detalhado-da-sprint" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.1 Calendário detalhado da Sprint
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#52-perfil-da-equipe-para-os-produtos-de-trabalho-desta-sprint" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.2 Perfil da equipe para os produtos de trabalho desta Sprint
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-plano-de-capacitacao-dojos" class="md-nav__link">
+    <span class="md-ellipsis">
+      6. Plano de capacitação — dojos
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6. Plano de capacitação — dojos">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#61-diretriz" class="md-nav__link">
+    <span class="md-ellipsis">
+      6.1 Diretriz
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#62-especificacao-dos-dojos-da-sprint-1" class="md-nav__link">
+    <span class="md-ellipsis">
+      6.2 Especificação dos dojos da Sprint 1
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#63-capacitacao-tecnica-prevista-para-a-sprint-2" class="md-nav__link">
+    <span class="md-ellipsis">
+      6.3 Capacitação técnica prevista para a Sprint 2
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#64-padrao-aplicavel-a-todos-os-dojos" class="md-nav__link">
+    <span class="md-ellipsis">
+      6.4 Padrão aplicável a todos os dojos
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-product-backlog-candidato" class="md-nav__link">
+    <span class="md-ellipsis">
+      7. Product Backlog candidato
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="7. Product Backlog candidato">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#71-epicos-a-b-d-e-e-itens-sem-redacao-de-historia" class="md-nav__link">
+    <span class="md-ellipsis">
+      7.1 Épicos A, B, D e E — itens sem redação de história
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#72-epico-c-declaracao-historias-de-usuario" class="md-nav__link">
+    <span class="md-ellipsis">
+      7.2 Épico C — Declaração: histórias de usuário
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-metodo-de-priorizacao-e-dimensionamento-moscow" class="md-nav__link">
+    <span class="md-ellipsis">
+      8. Método de priorização e dimensionamento — MoSCoW
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="8. Método de priorização e dimensionamento — MoSCoW">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#81-metodo-unico-moscow" class="md-nav__link">
+    <span class="md-ellipsis">
+      8.1 Método único: MoSCoW
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#82-categorias-e-regra-de-proporcao" class="md-nav__link">
+    <span class="md-ellipsis">
+      8.2 Categorias e regra de proporção
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#83-procedimento-de-classificacao" class="md-nav__link">
+    <span class="md-ellipsis">
+      8.3 Procedimento de classificação
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#84-verificacao-de-capacidade-e-fatiamento" class="md-nav__link">
+    <span class="md-ellipsis">
+      8.4 Verificação de capacidade e fatiamento
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#85-aplicacao-a-esta-sprint" class="md-nav__link">
+    <span class="md-ellipsis">
+      8.5 Aplicação a esta Sprint
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#86-primeira-aplicacao-e-referencia-de-capacidade" class="md-nav__link">
+    <span class="md-ellipsis">
+      8.6 Primeira aplicação e referência de capacidade
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#9-alocacao-de-responsabilidades" class="md-nav__link">
+    <span class="md-ellipsis">
+      9. Alocação de responsabilidades
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#10-registro-de-riscos" class="md-nav__link">
+    <span class="md-ellipsis">
+      10. Registro de riscos
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#11-criterios-de-aceitacao-da-sprint" class="md-nav__link">
+    <span class="md-ellipsis">
+      11. Critérios de aceitação da Sprint
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#12-calendario-da-sprint-2" class="md-nav__link">
+    <span class="md-ellipsis">
+      12. Calendário da Sprint 2
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#anexo-a-conducao-da-reuniao-de-sprint-planning" class="md-nav__link">
+    <span class="md-ellipsis">
+      Anexo A — Condução da reunião de Sprint Planning
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#anexo-b-ata-da-reuniao-de-sprint-planning" class="md-nav__link">
+    <span class="md-ellipsis">
+      Anexo B — Ata da reunião de Sprint Planning
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#anexo-c-plano-de-execucao-da-semana-2" class="md-nav__link">
+    <span class="md-ellipsis">
+      Anexo C — Plano de execução da Semana 2
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#anexo-d-verificacao-posterior-a-reuniao-de-planning" class="md-nav__link">
+    <span class="md-ellipsis">
+      Anexo D — Verificação posterior à reunião de Planning
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#controle-de-versoes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Controle de versões
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+    <a href="https://github.com/mdsreq-fga-unb/REQ-2026.2-T02-CyberSetor/edit/main/docs/gestao/sprints/sprint-1.md" title="Editar esta página" class="md-content__button md-icon">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4zm10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1z"/></svg>
+    </a>
+  
+  
+
+
+<h1 id="plano-da-sprint-1-projeto-cybersetor">Plano da Sprint 1 — Projeto CyberSetor<a class="headerlink" href="#plano-da-sprint-1-projeto-cybersetor" title="Permanent link">&para;</a></h1>
+<p><strong>Documento de planejamento, capacitação e priorização da Sprint 1</strong></p>
+<table>
+<thead>
+<tr>
+<th>Campo</th>
+<th>Conteúdo</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Código do documento</strong></td>
+<td>C21</td>
+</tr>
+<tr>
+<td><strong>Versão</strong></td>
+<td>3.0</td>
+</tr>
+<tr>
+<td><strong>Data de emissão</strong></td>
+<td>09 de setembro de 2026</td>
+</tr>
+<tr>
+<td><strong>Projeto</strong></td>
+<td>CyberSetor — sistema de gestão do ciclo de projetos financiados</td>
+</tr>
+<tr>
+<td><strong>Cliente</strong></td>
+<td>Instituto Cultural e Social No Setor</td>
+</tr>
+<tr>
+<td><strong>Disciplina</strong></td>
+<td>FGA0313 — Requisitos de Software · Turma 02 · 2026.2 · FCTE/UnB</td>
+</tr>
+<tr>
+<td><strong>Docente</strong></td>
+<td>Prof. George Marsicano</td>
+</tr>
+<tr>
+<td><strong>Sprint</strong></td>
+<td>Sprint 1</td>
+</tr>
+<tr>
+<td><strong>Período da Sprint</strong></td>
+<td>08/09/2026 (terça-feira) a 22/09/2026 (terça-feira) — 2 semanas</td>
+</tr>
+<tr>
+<td><strong>Elaboração</strong></td>
+<td>Vinicius Angelo de Brito Vieira (Scrum Master)</td>
+</tr>
+<tr>
+<td><strong>Product Owner</strong></td>
+<td>Maria Eduarda Denis Duarte Marques</td>
+</tr>
+<tr>
+<td><strong>Situação</strong></td>
+<td><strong>Aprovado na Sprint Planning de 08/09/2026</strong></td>
+</tr>
+<tr>
+<td><strong>Destino sugerido no repositório</strong></td>
+<td><code>docs/gestao/sprints/sprint-1.md</code></td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="1-objetivo-e-escopo-do-documento">1. Objetivo e escopo do documento<a class="headerlink" href="#1-objetivo-e-escopo-do-documento" title="Permanent link">&para;</a></h2>
+<p>Este documento estabelece o planejamento formal da Sprint 1 do projeto CyberSetor, compreendendo: a definição do período e da Meta da Sprint; o dimensionamento da capacidade da equipe; o plano de capacitação interna (dojos); o Product Backlog candidato com histórias de usuário e critérios de aceitação; o método de priorização adotado; a alocação de responsabilidades; o registro de riscos; e os critérios de aceitação da própria Sprint.</p>
+<p>O documento cumpre três funções: (a) instrumento de condução da reunião de Sprint Planning de 08/09/2026; (b) registro formal das decisões de planejamento da equipe, para fins de rastreabilidade e de composição das seções 5.2, 6, 7.2 e 11 do Documento de Visão; (c) insumo direto das seções 8 e 9 do Documento de Visão, a serem entregues na Unidade 2 em 13/10/2026.</p>
+<p><strong>Não integram o escopo deste documento:</strong> a especificação de requisitos funcionais e não funcionais (Unidade 2); e qualquer decisão de arquitetura ou implementação. A priorização MoSCoW do Product Backlog desta Sprint <strong>integra</strong>, sim, o escopo (§8), por decisão tomada na Sprint Planning de 08/09.</p>
+<hr />
+<h2 id="2-referencias">2. Referências<a class="headerlink" href="#2-referencias" title="Permanent link">&para;</a></h2>
+<h3 id="21-base-de-elaboracao-deste-plano">2.1 Base de elaboração deste plano<a class="headerlink" href="#21-base-de-elaboracao-deste-plano" title="Permanent link">&para;</a></h3>
+<p>Este plano apoia-se em registros e decisões anteriores do projeto: o contexto da disciplina e as decisões já consolidadas pela equipe; a ficha do cliente (Instituto Cultural e Social No Setor), com sua estrutura organizacional e seus regimes de financiamento; a definição do produto (Objetivos Específicos e Características Propostas); a composição das duplas e o calendário de sprints da equipe; as decisões técnicas e de infraestrutura, incluindo a Matriz de Competências; os ritos e cerimônias do ScrumXP adotados pela equipe; o roteiro e a ata da reunião presencial de 08/09/2026 no Instituto; a análise consolidada a partir dessa reunião, que fundamenta o Product Backlog candidato desta Sprint; e a ata da Sprint Planning de 08/09/2026, que registra a decisão de adoção do MoSCoW e a estrutura da Sprint.</p>
+<h3 id="22-referencial-teorico">2.2 Referencial teórico<a class="headerlink" href="#22-referencial-teorico" title="Permanent link">&para;</a></h3>
+<p>MARSICANO, G. <strong>Requisitos de Software: Comunicação é tudo!</strong> v1.1 draft. Brasília: FCTE/UnB, 2026. §4.6 (XP), §4.10 (Scrum), §5.3 (atividades de Engenharia de Requisitos), §5.4 (valores e princípios).</p>
+<p>SCHWABER, K.; SUTHERLAND, J. <strong>The Scrum Guide</strong>. 2020. — definição de Sprint Goal e de Sprint Backlog.</p>
+<p>CLEGG, D.; BARKER, R. <strong>Case Method Fast-Track: A RAD Approach</strong>. Addison-Wesley, 1994. — origem da técnica MoSCoW.</p>
+<p>STAPLETON, J. <strong>DSDM: Business Focused Development</strong>. 2ª ed. Pearson, 2003. — formalização do MoSCoW no método DSDM, adotado como referência de aplicação em §8.</p>
+<p>AGILE BUSINESS CONSORTIUM. <strong>DSDM Project Framework — MoSCoW Prioritisation</strong>. Disponível em: https://www.agilebusiness.org/dsdm-project-framework/moscow-prioritisation.html. — regra de proporção 60/20/20 sobre esforço e papel dos Could Haves como contingência.</p>
+<h3 id="23-convencoes-deste-documento">2.3 Convenções deste documento<a class="headerlink" href="#23-convencoes-deste-documento" title="Permanent link">&para;</a></h3>
+<p>Salvo indicação em contrário, os itens registrados constituem decisão já tomada pela equipe, seja na Sprint Planning de 08/09/2026, seja em documento anterior do projeto. Hipóteses ainda não validadas junto ao cliente são identificadas como tais no próprio texto, e propostas sujeitas a deliberação posterior são apresentadas de forma explícita.</p>
+<hr />
+<h2 id="3-contexto">3. Contexto<a class="headerlink" href="#3-contexto" title="Permanent link">&para;</a></h2>
+<h3 id="31-reposicionamento-do-produto-apos-a-elicitacao-de-0809">3.1 Reposicionamento do produto após a elicitação de 08/09<a class="headerlink" href="#31-reposicionamento-do-produto-apos-a-elicitacao-de-0809" title="Permanent link">&para;</a></h3>
+<p>Na reunião presencial realizada em 08 de setembro de 2026 na sede do Instituto Cultural e Social No Setor, registrada em ata e analisada pela equipe, confirmou-se que o problema central da organização tem origem anterior à execução das atividades: ele começa no <strong>edital de financiamento</strong>.</p>
+<p>A cadeia real de trabalho do Instituto observa a seguinte sequência: edital ou instrumento equivalente (emenda parlamentar, parceria) estabelece requisitos mínimos → a equipe destrincha esses requisitos manualmente → elabora-se a proposta de trabalho → aprovada a proposta, elabora-se o plano de trabalho com metas e indicadores → executa-se o projeto → produz-se comprovação → consolida-se o relatório de execução do objeto → efetua-se a prestação de contas.</p>
+<p>Em consequência, o centro do produto deixa de ser exclusivamente o ciclo da atividade e passa a ser <strong>o ciclo do projeto financiado</strong>, conforme o modelo:</p>
+<div class="highlight"><pre><span></span><code>instrumento (edital / emenda / parceria)
+   └── projeto
+        └── requisito / meta  (origem · indicador · parâmetro de aferição ·
+        │                      forma de verificação · frequência de apuração)
+             ├── demanda      (dono · setor · prazo · status)
+             ├── atividade    (tipo de objeto)
+             └── evidência    (vinculada à meta, datada)
+                  └── relatório de execução do objeto
+                       └── prestação de contas
+</code></pre></div>
+<p>Este reposicionamento não amplia o escopo do produto: mantém as mesmas Características Propostas já registradas pela equipe, com modelo de dados mais fiel à operação real da organização.</p>
+<h3 id="32-implicacao-para-a-sprint-1">3.2 Implicação para a Sprint 1<a class="headerlink" href="#32-implicacao-para-a-sprint-1" title="Permanent link">&para;</a></h3>
+<p>A Sprint 1 é a primeira sprint do projeto integralmente dedicada às atividades de Engenharia de Requisitos de <strong>Elicitação e Descoberta</strong>, <strong>Análise e Consenso</strong>, <strong>Declaração</strong> e <strong>Representação</strong> (§5.3 do livro-texto). Não há desenvolvimento de software nesta sprint; a primeira sprint de codificação está prevista a partir da Sprint 3.</p>
+<p>O produto de trabalho central da Sprint 1 é, portanto, o <strong>Product Backlog declarado em histórias de usuário com critérios de aceitação</strong>, que constitui a matéria-prima direta da seção 8 do Documento de Visão, entregue na Unidade 2 em 13/10/2026.</p>
+<hr />
+<h2 id="4-definicao-da-sprint-1">4. Definição da Sprint 1<a class="headerlink" href="#4-definicao-da-sprint-1" title="Permanent link">&para;</a></h2>
+<h3 id="41-periodo-e-cadencia">4.1 Período e cadência<a class="headerlink" href="#41-periodo-e-cadencia" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Parâmetro</th>
+<th>Definição</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Início</td>
+<td>08/09/2026 (terça-feira), coincidente com a entrega da Unidade 1</td>
+</tr>
+<tr>
+<td>Encerramento</td>
+<td>22/09/2026 (terça-feira)</td>
+</tr>
+<tr>
+<td>Duração</td>
+<td>2 semanas, conforme cadência-padrão estabelecida pela equipe</td>
+</tr>
+<tr>
+<td>Ancoragem</td>
+<td>Terças-feiras, conforme cadência-padrão</td>
+</tr>
+<tr>
+<td>Reunião de Planning</td>
+<td>08/09/2026 (terça-feira), à noite — ver observação abaixo</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Sprint Planning realizada.</strong> A reunião de Sprint Planning ocorreu em 08/09/2026, à noite (21h33–23h07), no mesmo dia da entrega da Unidade 1, da Questão de Aula (QAU, 10h10–10h50) e da reunião presencial no Instituto. Este documento registra o que foi efetivamente deliberado nessa reunião.</p>
+<p><strong>Observação sobre a Semana Universitária.</strong> A Semana Universitária ocorre entre 22 e 24/09/2026. Com o encerramento da Sprint 1 em 22/09, apenas o dia da cerimônia de encerramento coincide com o evento; <strong>os dias de produção da Sprint 1 não são afetados</strong>. O impacto da Semana Universitária desloca-se integralmente para o início da Sprint 2, o que deve ser considerado no planejamento daquela sprint (ver §12).</p>
+<h3 id="42-estrutura-da-sprint-em-duas-fases">4.2 Estrutura da Sprint em duas fases<a class="headerlink" href="#42-estrutura-da-sprint-em-duas-fases" title="Permanent link">&para;</a></h3>
+<p>A Sprint 1 organiza-se em duas semanas com finalidades distintas, o que constitui decisão deliberada de planejamento:</p>
+<table>
+<thead>
+<tr>
+<th>Fase</th>
+<th>Período</th>
+<th>Finalidade</th>
+<th>Produto</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Semana 1 — Habilitação</strong></td>
+<td>08/09 a 13/09</td>
+<td>Planejamento, nivelamento de domínio e de técnica de redação de requisitos</td>
+<td>Equipe habilitada a declarar requisitos com o vocabulário correto</td>
+</tr>
+<tr>
+<td><strong>Semana 2 — Produção</strong></td>
+<td>14/09 a 22/09</td>
+<td>Elaboração do Product Backlog</td>
+<td>Product Backlog declarado, priorizado por MoSCoW e estruturado no GitHub Projects</td>
+</tr>
+</tbody>
+</table>
+<p>A justificativa desta divisão é a seguinte: a elicitação de 08/09 revelou vocabulário técnico-normativo específico (indicador, parâmetro de aferição, forma de verificação, frequência de apuração, glosa, relatório de execução do objeto) cujo domínio é atualmente concentrado em um único integrante da equipe. Iniciar a redação do backlog sem nivelar esse domínio produziria histórias genéricas, incapazes de sustentar uma prestação de contas real. A Semana 1 elimina essa dependência antes que ela comprometa o produto de trabalho da Semana 2.</p>
+<h3 id="43-meta-da-sprint">4.3 Meta da Sprint<a class="headerlink" href="#43-meta-da-sprint" title="Permanent link">&para;</a></h3>
+<blockquote>
+<p><strong>Sprint Goal (aprovado em 08/09):</strong> <em>"Ao final da Sprint 1, a equipe dispõe de um Product Backlog estruturado no GitHub Projects que declara o ciclo do projeto financiado — requisito/meta, atividade, evidência, relatório de execução do objeto e base única de pessoas — em histórias de usuário com critérios de aceitação verificáveis, classificadas por MoSCoW e rastreadas aos Objetivos Específicos, acompanhado da representação do processo atual do Instituto em notação BPMN."</em></p>
+</blockquote>
+<p><strong>Fundamentação do recorte.</strong> A meta é integralmente verificável em 22/09: cada uma de suas cláusulas admite resposta objetiva de conformidade. Observa-se a orientação docente de formular objetivos pelo efeito produzido na organização, e não pela tecnologia empregada. A meta concentra-se no produto de trabalho que a equipe controla integralmente, excluindo compromissos cuja realização depende de agenda de terceiros.</p>
+<p><strong>Exclusões explícitas do escopo da Sprint 1:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Item excluído</th>
+<th>Justificativa</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Qualquer linha de código de produto</td>
+<td>A Sprint 1 é de Engenharia de Requisitos; codificação inicia na Sprint 3</td>
+</tr>
+<tr>
+<td>Priorização MoSCoW e definição de MVP</td>
+<td>Requer o backlog já declarado; previsto para a Sprint 2</td>
+</tr>
+<tr>
+<td>Dojos técnicos (Prisma, NestJS, TanStack Query, shadcn/ui, Dexie)</td>
+<td>Não desbloqueiam nenhum item desta Sprint; ver §6.3</td>
+</tr>
+<tr>
+<td>Realização confirmada das entrevistas com Diretoria de Projetos e Administrativo-Financeiro</td>
+<td>Depende de agenda do Instituto; o compromisso da Sprint é o agendamento formal — ver item A1/A2 em §7.1</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="5-capacidade-da-equipe">5. Capacidade da equipe<a class="headerlink" href="#5-capacidade-da-equipe" title="Permanent link">&para;</a></h2>
+<h3 id="51-calendario-detalhado-da-sprint">5.1 Calendário detalhado da Sprint<a class="headerlink" href="#51-calendario-detalhado-da-sprint" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Data</th>
+<th>Dia</th>
+<th>Natureza</th>
+<th>Capacidade produtiva</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>08/09</td>
+<td>terça</td>
+<td>Entrega da Unidade 1 · QAU (10h10–10h50) · reunião presencial no Instituto · <strong>Sprint Planning</strong> à noite (21h33–23h07, ver Anexo A) · início formal da Sprint</td>
+<td>Nula — dia integralmente consumido pelas quatro atividades</td>
+</tr>
+<tr>
+<td>09/09</td>
+<td>quarta</td>
+<td>Produção — consolidação dos achados da presencial e da Planning; início da redação do glossário (ART-01)</td>
+<td><strong>Plena</strong></td>
+</tr>
+<tr>
+<td>10/09</td>
+<td>quinta</td>
+<td><strong>Apresentação da Unidade 1</strong> · <strong>Dojos P1 e P2</strong> (ver §6)</td>
+<td>Nula — habilitação</td>
+</tr>
+<tr>
+<td>11/09</td>
+<td>sexta</td>
+<td>Produção</td>
+<td><strong>Plena</strong></td>
+</tr>
+<tr>
+<td>14/09</td>
+<td>segunda</td>
+<td>Produção — Semana 2, Product Backlog</td>
+<td><strong>Plena</strong></td>
+</tr>
+<tr>
+<td>15/09</td>
+<td>terça</td>
+<td>Produção · Refinamento semanal (~30 min)</td>
+<td><strong>Plena</strong></td>
+</tr>
+<tr>
+<td>16/09</td>
+<td>quarta</td>
+<td>Produção · revisão cruzada entre duplas</td>
+<td><strong>Plena</strong></td>
+</tr>
+<tr>
+<td>17/09</td>
+<td>quinta</td>
+<td>Produção — consolidação no GitHub Projects</td>
+<td><strong>Plena</strong></td>
+</tr>
+<tr>
+<td>18/09</td>
+<td>sexta</td>
+<td>Produção — fechamento do backlog</td>
+<td><strong>Plena</strong></td>
+</tr>
+<tr>
+<td>21/09</td>
+<td>segunda</td>
+<td>Consolidação e preparação da Sprint Review</td>
+<td><strong>Plena</strong></td>
+</tr>
+<tr>
+<td>22/09</td>
+<td>terça</td>
+<td><strong>Sprint Review · Retrospectiva · Sprint 2 Planning</strong></td>
+<td>Nula — cerimônia</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Síntese:</strong> 11 dias úteis no período, dos quais <strong>8 dias de capacidade produtiva plena</strong> (09, 11, 14, 15, 16, 17, 18 e 21 de setembro), sendo 6 deles concentrados na Semana 2.</p>
+<p><strong>Consequência para o dimensionamento do backlog.</strong> A Sprint dispõe de janela produtiva estreita e concentrada. Recomenda-se que a seleção do Sprint Backlog na reunião de Planning observe rigorosamente esse limite, priorizando a completude e a qualidade do Épico C (Declaração) sobre a quantidade de itens selecionados. Épicos A, D e E admitem transbordo para a Sprint 2 sem prejuízo da Meta.</p>
+<h3 id="52-perfil-da-equipe-para-os-produtos-de-trabalho-desta-sprint">5.2 Perfil da equipe para os produtos de trabalho desta Sprint<a class="headerlink" href="#52-perfil-da-equipe-para-os-produtos-de-trabalho-desta-sprint" title="Permanent link">&para;</a></h3>
+<p>Extraído da Matriz de Competências. Considera-se aqui a aptidão para produtos de trabalho não relacionados a código, adequados à natureza da Sprint 1.</p>
+<table>
+<thead>
+<tr>
+<th>Integrante</th>
+<th>Papel</th>
+<th>Aptidão relevante nesta Sprint</th>
+<th>Observação de alocação</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Maria Eduarda</td>
+<td>Product Owner · Dupla A</td>
+<td>Interlocução direta com o Instituto; perfil técnico acima do exigido pelo papel</td>
+<td>Evitar sobrecarga na acumulação de interlocução com cliente e produção de backlog</td>
+</tr>
+<tr>
+<td>Vinicius</td>
+<td>Scrum Master · Dupla B</td>
+<td>Domínio do referencial normativo consolidado na análise pós-presencial</td>
+<td>Risco de concentração de conhecimento; mitigado pelo Dojo P1 (R10)</td>
+</tr>
+<tr>
+<td>Caio</td>
+<td>Dupla C</td>
+<td>Segundo maior perfil técnico; aptidão para modelagem de dados</td>
+<td>Alocar aos blocos de declaração de natureza estrutural (evidência e relatório)</td>
+</tr>
+<tr>
+<td>Rodrigo</td>
+<td>Dupla B</td>
+<td>Mentor em diagramação (Figma), Git e SQL</td>
+<td>Alocação natural para representação em BPMN e Rich Picture</td>
+</tr>
+<tr>
+<td>Lucas</td>
+<td>Dupla C</td>
+<td>Conhecimento de domínio obtido em campo — relatou originalmente a dor da prestação de contas (ata de 27/08)</td>
+<td>Alocar sempre em par</td>
+</tr>
+<tr>
+<td>Daniel</td>
+<td>Dupla A</td>
+<td>Matriz de Competências incompleta</td>
+<td>Completar a Matriz durante a Sprint; alocar em par na declaração</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="6-plano-de-capacitacao-dojos">6. Plano de capacitação — dojos<a class="headerlink" href="#6-plano-de-capacitacao-dojos" title="Permanent link">&para;</a></h2>
+<h3 id="61-diretriz">6.1 Diretriz<a class="headerlink" href="#61-diretriz" title="Permanent link">&para;</a></h3>
+<p>Nenhum dojo técnico integra a Sprint 1. Os dois dojos previstos são de processo e domínio, e classificam-se como <strong>pré-requisito de qualidade do Épico C</strong>, não como atividade acessória: sem eles, a redação das histórias de usuário produziria campos genéricos, incapazes de sustentar uma prestação de contas real perante os financiadores.</p>
+<p>Ambos os dojos ocorrem em <strong>10/09/2026 (quinta-feira)</strong>, aproveitando a presença integral da equipe na data da apresentação da Unidade 1, e são realizados <strong>após</strong> a apresentação.</p>
+<p><strong>A ordem entre os dois dojos é obrigatória.</strong> O Dojo P1 fixa o vocabulário técnico-normativo que o Dojo P2 utilizará em seu exercício prático. A inversão da ordem anula o ganho do segundo dojo.</p>
+<h3 id="62-especificacao-dos-dojos-da-sprint-1">6.2 Especificação dos dojos da Sprint 1<a class="headerlink" href="#62-especificacao-dos-dojos-da-sprint-1" title="Permanent link">&para;</a></h3>
+<h4 id="dojo-p1-fundamentos-de-parcerias-com-o-poder-publico">Dojo P1 — Fundamentos de parcerias com o poder público<a class="headerlink" href="#dojo-p1-fundamentos-de-parcerias-com-o-poder-publico" title="Permanent link">&para;</a></h4>
+<table>
+<thead>
+<tr>
+<th>Parâmetro</th>
+<th>Definição</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Data e horário</strong></td>
+<td>10/09/2026, após a apresentação da Unidade 1</td>
+</tr>
+<tr>
+<td><strong>Duração</strong></td>
+<td>40 minutos</td>
+</tr>
+<tr>
+<td><strong>Facilitador</strong></td>
+<td>Vinicius (Scrum Master)</td>
+</tr>
+<tr>
+<td><strong>Participantes</strong></td>
+<td>Equipe completa (6 integrantes)</td>
+</tr>
+<tr>
+<td><strong>Formato</strong></td>
+<td>Exposição dialogada, com espaço para perguntas; não é prático</td>
+</tr>
+<tr>
+<td><strong>Material de apoio</strong></td>
+<td>Análise consolidada da reunião presencial, integralmente — dispensa preparação de material adicional</td>
+</tr>
+<tr>
+<td><strong>Registro</strong></td>
+<td>Gravação em Google Meet, conforme prática da equipe</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Conteúdo programático:</strong></p>
+<ol>
+<li>A cadeia do financiamento público: edital → proposta de trabalho → plano de trabalho → execução → relatório de execução do objeto → prestação de contas.</li>
+<li>A convergência normativa entre financiadores: o <em>relatório de execução do objeto</em> como prova principal em todos os regimes analisados (MROSC federal e distrital, FAC-DF, PNAB, Lei Paulo Gustavo), estruturado como meta × resultado alcançado + evidência datada e vinculada.</li>
+<li>O modelo mínimo de meta: as nove colunas do Anexo VI da SEDET-DF (origem, indicador, parâmetro de aferição, forma de verificação, frequência de apuração, entre outras).</li>
+<li>O conceito de <strong>glosa</strong> e sua consequência: meta descumprida sem justificativa formal enseja devolução de recursos (Lei 13.019/2014, art. 64, §1º). Este é o erro de maior custo no ciclo, e explica por que o campo "justificativa" é obrigatório na história HU-05.</li>
+<li>Vocabulário do Instituto a ser adotado uniformemente pela equipe.</li>
+</ol>
+<p><strong>Resultado esperado:</strong> eliminação da concentração do conhecimento normativo em um único integrante (risco R10) e nivelamento do vocabulário empregado na redação do backlog.</p>
+<h4 id="dojo-p2-redacao-de-historias-de-usuario-invest-e-criterios-de-aceitacao-givenwhenthen">Dojo P2 — Redação de histórias de usuário (INVEST) e critérios de aceitação (Given/When/Then)<a class="headerlink" href="#dojo-p2-redacao-de-historias-de-usuario-invest-e-criterios-de-aceitacao-givenwhenthen" title="Permanent link">&para;</a></h4>
+<table>
+<thead>
+<tr>
+<th>Parâmetro</th>
+<th>Definição</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Data e horário</strong></td>
+<td>10/09/2026, após o Dojo P1, com intervalo mínimo de 10 minutos</td>
+</tr>
+<tr>
+<td><strong>Duração</strong></td>
+<td>45 minutos</td>
+</tr>
+<tr>
+<td><strong>Facilitador</strong></td>
+<td>Vinicius (Scrum Master)</td>
+</tr>
+<tr>
+<td><strong>Participantes</strong></td>
+<td>Equipe completa (6 integrantes)</td>
+</tr>
+<tr>
+<td><strong>Formato</strong></td>
+<td>Prático, em duplas</td>
+</tr>
+<tr>
+<td><strong>Registro</strong></td>
+<td>Gravação em Google Meet</td>
+</tr>
+<tr>
+<td><strong>Contingência</strong></td>
+<td>Em caso de extensão da apresentação da Unidade 1, o Dojo P2 é remanejado para 11/09 pela manhã, sem impacto no plano da Sprint</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Conteúdo programático:</strong></p>
+<ol>
+<li>Os seis critérios INVEST: Independente, Negociável, Valiosa, Estimável, Small (pequena) e Testável.</li>
+<li>O formato de história adotado pela equipe e a exigência de que o critério de aceitação seja <strong>observável</strong>: formulações como "Dado que o sistema funciona corretamente" não constituem critério de aceitação.</li>
+<li>Erro recorrente a evitar: a descrição da solução técnica em lugar do comportamento esperado.</li>
+<li>Vínculo com a Definition of Ready e com o método de priorização (§8).</li>
+</ol>
+<p><strong>Exercício prático — dupla função.</strong> O exercício utiliza as histórias candidatas reais do Épico C (§7.2), e não exemplos fictícios. Cada dupla assume os blocos que lhe foram alocados em §9, refina as histórias e redige as que faltarem. Em consequência, o dojo produz simultaneamente capacitação e produto de trabalho da Sprint: <strong>as histórias resultantes constituem a primeira sessão de refinamento do backlog</strong>, e não material descartável de treinamento.</p>
+<p><strong>Resultado esperado:</strong> equipe apta a redigir histórias em conformidade com INVEST e Given/When/Then, e conjunto inicial de histórias refinadas coletivamente.</p>
+<h3 id="63-capacitacao-tecnica-prevista-para-a-sprint-2">6.3 Capacitação técnica prevista para a Sprint 2<a class="headerlink" href="#63-capacitacao-tecnica-prevista-para-a-sprint-2" title="Permanent link">&para;</a></h3>
+<p>Os cinco dojos técnicos já identificados pela equipe permanecem planejados para a Sprint 2, pelas seguintes razões: (a) não desbloqueiam nenhum item da Sprint 1, que não contempla codificação; (b) antecedem em margem adequada a primeira sprint de desenvolvimento; (c) evita-se, na própria equipe, o acúmulo de frentes simultâneas sobre efetivo reduzido — precisamente o gargalo identificado no cliente</p>
+<table>
+<thead>
+<tr>
+<th>Dojo</th>
+<th>Facilitador</th>
+<th>Duração</th>
+<th>Justificativa</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Prisma e migrations</td>
+<td>Vinicius</td>
+<td>60 min</td>
+<td>Nenhum integrante além do facilitador registra afinidade ≥ 2; é o ORM de todo o back-end</td>
+</tr>
+<tr>
+<td>NestJS — fundamentos</td>
+<td>Vinicius</td>
+<td>60 min</td>
+<td>Núcleo do back-end; apenas 2 integrantes registram afinidade ≥ 2</td>
+</tr>
+<tr>
+<td>TanStack Query</td>
+<td>Vinicius</td>
+<td>45 min</td>
+<td>Sustenta a sincronização offline (mutations com retry e cache)</td>
+</tr>
+<tr>
+<td>shadcn/ui e Tailwind — padrões</td>
+<td>Vinicius</td>
+<td>45 min</td>
+<td>Consistência visual estabelecida antes da construção de telas</td>
+</tr>
+<tr>
+<td>Dexie / IndexedDB</td>
+<td>Caio e Vinicius</td>
+<td>45–60 min</td>
+<td>Caio é segundo mentor na competência; oportunidade de co-facilitação</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Datas:</strong> a definir na Sprint 2 Planning de 22/09, observando o início após a Semana Universitária (a partir de 29/09) e espaçamento de 2 a 3 dias entre sessões.</p>
+<h3 id="64-padrao-aplicavel-a-todos-os-dojos">6.4 Padrão aplicável a todos os dojos<a class="headerlink" href="#64-padrao-aplicavel-a-todos-os-dojos" title="Permanent link">&para;</a></h3>
+<p>Registra-se como prática da equipe:</p>
+<ol>
+<li>Todo dojo é gravado, permitindo recuperação por integrantes ausentes.</li>
+<li>Todo dojo encerra-se com exercício prático de aplicação real, e não apenas com exposição.</li>
+<li>A facilitação não é atribuição exclusiva do Scrum Master. Integrantes com afinidade superior na competência devem facilitar as sessões correspondentes — como no caso de Rodrigo em diagramação e de Caio em persistência offline. Esta prática constitui aplicação da propriedade coletiva do XP estendida ao conhecimento, e não apenas ao código.</li>
+</ol>
+<hr />
+<h2 id="7-product-backlog-candidato">7. Product Backlog candidato<a class="headerlink" href="#7-product-backlog-candidato" title="Permanent link">&para;</a></h2>
+<p>Os itens são organizados pelas atividades de Engenharia de Requisitos que exercitam (§5.3 do livro-texto). A coluna DoR indica a aderência à Definition of Ready da equipe (valor claro para um perfil do Instituto · critérios de aceitação escritos · classificada no MoSCoW · não depende de decisão externa pendente · cabe em uma sprint).</p>
+<p><strong>Nenhum item deste documento apresenta classificação MoSCoW pré-atribuída.</strong> A classificação é atribuição da equipe na sessão de priorização (§8); a supressão de classificações sugeridas evita ancorar a discussão antes que ela aconteça.</p>
+<h3 id="71-epicos-a-b-d-e-e-itens-sem-redacao-de-historia">7.1 Épicos A, B, D e E — itens sem redação de história<a class="headerlink" href="#71-epicos-a-b-d-e-e-itens-sem-redacao-de-historia" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>Item</th>
+<th>Épico / Atividade de ER</th>
+<th>Origem</th>
+<th>DoR</th>
+<th>Observação</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>A1</td>
+<td>Solicitar e agendar entrevista de 30 min com a Diretora de Projetos</td>
+<td>A — Elicitação e Descoberta</td>
+<td>Risco R3 (agenda do Instituto)</td>
+<td>Sim</td>
+<td>O compromisso da Sprint é o agendamento formal; a realização depende da agenda do Instituto</td>
+</tr>
+<tr>
+<td>A2</td>
+<td>Solicitar e agendar entrevista de 30 min com a área Administrativo-Financeira</td>
+<td>A — Elicitação e Descoberta</td>
+<td>Achado da reunião presencial</td>
+<td>Sim</td>
+<td>Idem A1</td>
+</tr>
+<tr>
+<td>A3</td>
+<td>Observação direta de uma atividade em execução</td>
+<td>A — Elicitação e Descoberta</td>
+<td>Roteiro da reunião presencial</td>
+<td>Condicionado</td>
+<td>Executar apenas se houver data confirmada até 16/09; caso contrário, transborda para a Sprint 2</td>
+</tr>
+<tr>
+<td>A4</td>
+<td>Análise crítica da planilha-template do Instituto</td>
+<td>A — Elicitação e Descoberta</td>
+<td>Achado da reunião presencial</td>
+<td>Condicionado</td>
+<td>Condicionado ao envio pelo Instituto. Aplicar o checklist definido pela equipe. <strong>Executar preferencialmente em 11/09</strong>, antes da Semana 2</td>
+</tr>
+<tr>
+<td>B1</td>
+<td>Representação do processo atual em BPMN (edital → prestação de contas)</td>
+<td>B — Representação</td>
+<td>Achado da reunião presencial</td>
+<td>Sim</td>
+<td>Utilizar o diagrama já esboçado pela equipe como rascunho inicial</td>
+</tr>
+<tr>
+<td>B2</td>
+<td>Atualização do Rich Picture e do mapa de stakeholders com os papéis reais</td>
+<td>B — Representação</td>
+<td>Ficha do cliente; achado da reunião presencial</td>
+<td>Sim</td>
+<td>Incorporar: Diretoria de Projetos, Captação, ausência de RH. Insumo das seções 1.3 e 1.6</td>
+</tr>
+<tr>
+<td>D1</td>
+<td>Estruturação do Product Backlog no GitHub Projects</td>
+<td>D — Organização e Atualização</td>
+<td>Ritos da equipe</td>
+<td>Sim</td>
+<td>Colunas, rótulos por épico e por OE/CP, campo de classificação MoSCoW</td>
+</tr>
+<tr>
+<td>D2</td>
+<td>Esqueleto da matriz de rastreabilidade problema → OE → CP → RF</td>
+<td>D — Organização e Atualização</td>
+<td>Ritos da equipe</td>
+<td>Sim</td>
+<td>Utilizar os identificadores HU-xx e CA-xx.y deste documento</td>
+</tr>
+<tr>
+<td>E1</td>
+<td>Preparação da sessão de validação com o Instituto</td>
+<td>E — Verificação e Validação</td>
+<td>Achado da reunião presencial</td>
+<td>Condicionado</td>
+<td>Condicionado à conclusão do Épico C. Sessão prevista para a Sprint 2</td>
+</tr>
+<tr>
+<td>ART-01</td>
+<td>Glossário de termos do Instituto</td>
+<td>D — Organização e Atualização</td>
+<td>Achado da reunião presencial</td>
+<td>Sim</td>
+<td>Artefato, não história. Termos: requisito, meta, indicador, comprovação, demanda, plano de trabalho, proposta de trabalho, termo aditivo, prestação de contas, instrumento, financiador, vertente, objeto</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Nota sobre a classificação dos itens A1, A2 e A3.</strong> Estes itens dependem da agenda do Instituto. Ao classificá-los no MoSCoW, a equipe deve avaliar a necessidade de realizá-los (Must, dado o risco R3), e não confundir "necessário" com "sob controle da equipe": a realização efetiva das entrevistas depende de terceiros, mas o agendamento formal não.</p>
+<h3 id="72-epico-c-declaracao-historias-de-usuario">7.2 Épico C — Declaração: histórias de usuário<a class="headerlink" href="#72-epico-c-declaracao-historias-de-usuario" title="Permanent link">&para;</a></h3>
+<p>Constitui o produto de trabalho central da Sprint. As histórias abaixo são candidatas redigidas previamente, destinadas ao refinamento pela equipe — não a substituí-lo. Identificadores HU-xx e CA-xx.y são definitivos e devem ser preservados na transposição para o GitHub Projects, por serem a base da matriz de rastreabilidade (item D2).</p>
+<hr />
+<h4 id="hu-01-cadastro-de-requisito-com-parametros-de-afericao">HU-01 — Cadastro de requisito com parâmetros de aferição<a class="headerlink" href="#hu-01-cadastro-de-requisito-com-parametros-de-afericao" title="Permanent link">&para;</a></h4>
+<p><strong>Bloco:</strong> C1 — Requisito/Meta · <strong>Origem:</strong> CP01, ampliada pela análise pós-presencial · <strong>Complexidade prevista:</strong> alta</p>
+<blockquote>
+<p>Como Diretora de Projetos, quero cadastrar cada requisito de um projeto com sua origem (edital, projeto ou Instituto), indicador, parâmetro de aferição, forma de verificação e frequência de apuração, para saber exatamente o que precisa ser comprovado e quando.</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>Critério de aceitação</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>CA-01.1</td>
+<td>Dado um projeto vinculado a um instrumento (edital, emenda ou parceria), quando cadastro um requisito, então informo obrigatoriamente origem, indicador, parâmetro de aferição, forma de verificação e frequência de apuração</td>
+</tr>
+<tr>
+<td>CA-01.2</td>
+<td>Dado um requisito com meta quantitativa e período definidos, quando uma atividade é registrada, então o progresso da meta é recalculado automaticamente</td>
+</tr>
+<tr>
+<td>CA-01.3</td>
+<td>Dado um requisito sem indicador ou sem forma de verificação, quando tento salvar, então o sistema impede a operação e indica os campos ausentes</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h4 id="hu-02-atribuicao-de-responsabilidade-e-prazo-a-requisito">HU-02 — Atribuição de responsabilidade e prazo a requisito<a class="headerlink" href="#hu-02-atribuicao-de-responsabilidade-e-prazo-a-requisito" title="Permanent link">&para;</a></h4>
+<p><strong>Bloco:</strong> C1 — Requisito/Meta · <strong>Origem:</strong> dor confirmada na reunião presencial (ausência de controle de demandas)</p>
+<blockquote>
+<p>Como responsável de área, quero atribuir dono, setor e prazo a cada requisito ou meta, para saber sempre com quem está a demanda e se o prazo está expirando.</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>Critério de aceitação</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>CA-02.1</td>
+<td>Dado um requisito cadastrado, quando defino responsável, setor e prazo, então esses dados são exibidos no painel do projeto</td>
+</tr>
+<tr>
+<td>CA-02.2</td>
+<td>Dado um requisito com prazo a vencer em até 7 dias, quando acesso o painel, então o sistema apresenta alerta correspondente</td>
+</tr>
+<tr>
+<td>CA-02.3</td>
+<td>Dado um requisito sem responsável atribuído, quando o projeto entra em execução, então o sistema sinaliza a pendência</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h4 id="hu-03-cadastro-de-atividade-por-tipo-de-objeto">HU-03 — Cadastro de atividade por tipo de objeto<a class="headerlink" href="#hu-03-cadastro-de-atividade-por-tipo-de-objeto" title="Permanent link">&para;</a></h4>
+<p><strong>Bloco:</strong> C2 — Atividade · <strong>Origem:</strong> CP02</p>
+<blockquote>
+<p>Como educador ou coordenador, quero cadastrar uma atividade vinculada a um projeto e a um tipo de objeto (oficina, evento, ação de rua), para que o sistema determine qual conjunto de evidências será exigido.</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>Critério de aceitação</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>CA-03.1</td>
+<td>Dado um projeto, quando cadastro uma atividade, então seleciono um tipo de objeto em lista predefinida</td>
+</tr>
+<tr>
+<td>CA-03.2</td>
+<td>Dado o tipo "evento", quando a atividade é criada, então o sistema indica como evidências esperadas: público estimado, registro fotográfico com logomarca e clipping</td>
+</tr>
+<tr>
+<td>CA-03.3</td>
+<td>Dado o tipo "oficina", quando a atividade é criada, então o sistema indica a lista de presença como evidência principal</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h4 id="hu-04-vinculacao-de-evidencia-a-meta">HU-04 — Vinculação de evidência a meta<a class="headerlink" href="#hu-04-vinculacao-de-evidencia-a-meta" title="Permanent link">&para;</a></h4>
+<p><strong>Bloco:</strong> C3 — Evidência · <strong>Origem:</strong> CP07</p>
+<blockquote>
+<p>Como educador, quero anexar uma evidência a uma atividade e vinculá-la a uma ou mais metas, para que a comprovação seja produzida já organizada por meta.</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>Critério de aceitação</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>CA-04.1</td>
+<td>Dado uma atividade concluída, quando anexo uma evidência, então informo data, local e a meta ou metas relacionadas</td>
+</tr>
+<tr>
+<td>CA-04.2</td>
+<td>Dado uma meta com evidências pendentes, quando acesso a meta, então visualizo o que já foi anexado e o que resta anexar conforme o tipo de objeto</td>
+</tr>
+<tr>
+<td>CA-04.3</td>
+<td>Dado uma evidência sem meta vinculada, quando tento salvar, então o sistema alerta que ela não será considerada em nenhuma prestação de contas</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h4 id="hu-05-geracao-do-relatorio-de-execucao-do-objeto">HU-05 — Geração do relatório de execução do objeto<a class="headerlink" href="#hu-05-geracao-do-relatorio-de-execucao-do-objeto" title="Permanent link">&para;</a></h4>
+<p><strong>Bloco:</strong> C4 — Relatório · <strong>Origem:</strong> CP08, reposicionada pela análise pós-presencial · estrutura fundamentada na convergência normativa entre financiadores</p>
+<blockquote>
+<p>Como Diretora de Projetos, quero gerar o relatório de execução do objeto de um projeto para um período determinado, com metas propostas confrontadas aos resultados alcançados e evidências anexadas, para prestar contas sem montagem manual.</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>Critério de aceitação</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>CA-05.1</td>
+<td>Dado um projeto com requisitos e atividades registrados, quando solicito o relatório de um período, então cada meta é apresentada com resultado alcançado, percentual de cumprimento e evidências vinculadas</td>
+</tr>
+<tr>
+<td>CA-05.2</td>
+<td>Dado uma meta cumprida parcialmente, quando o relatório é gerado, então o sistema exige justificativa formal antes de permitir a finalização</td>
+</tr>
+<tr>
+<td>CA-05.3</td>
+<td>Dado um relatório finalizado, quando efetuo a exportação, então recebo os formatos PDF e CSV com o mesmo conteúdo</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Fundamento de CA-05.2:</strong> a Lei 13.019/2014, art. 64, §1º, estabelece que meta descumprida sem justificativa enseja glosa. A obrigatoriedade da justificativa não é preferência de interface: é requisito de conformidade legal.</p>
+<hr />
+<h4 id="hu-06-consulta-ao-historico-de-participacao-de-pessoa">HU-06 — Consulta ao histórico de participação de pessoa<a class="headerlink" href="#hu-06-consulta-ao-historico-de-participacao-de-pessoa" title="Permanent link">&para;</a></h4>
+<p><strong>Bloco:</strong> C5 — Base única de pessoas · <strong>Origem:</strong> CP05, ampliada pela análise pós-presencial</p>
+<blockquote>
+<p>Como integrante da equipe de comunicação, quero consultar o histórico de participação de uma pessoa nos diferentes projetos, para convidá-la a ações compatíveis com seu perfil e interesse.</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>Critério de aceitação</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>CA-06.1</td>
+<td>Dado uma pessoa cadastrada, quando acesso seu perfil, então visualizo todas as atividades e projetos de que participou</td>
+</tr>
+<tr>
+<td>CA-06.2</td>
+<td>Dado duas pessoas com nome e telefone coincidentes, quando uma delas é cadastrada, então o sistema alerta possível duplicidade</td>
+</tr>
+<tr>
+<td>CA-06.3</td>
+<td>Dado o cadastro de uma pessoa, quando ela é criada, então o consentimento de uso de dados é registrado com data</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Restrição de conformidade.</strong> Conforme decisão já tomada pela equipe, o produto não trata dados pessoais sensíveis (LGPD, art. 5º, II). O cadastro de pessoas restringe-se a dados de identificação e contato, com registro de consentimento (CA-06.3).</p>
+<hr />
+<h2 id="8-metodo-de-priorizacao-e-dimensionamento-moscow">8. Método de priorização e dimensionamento — MoSCoW<a class="headerlink" href="#8-metodo-de-priorizacao-e-dimensionamento-moscow" title="Permanent link">&para;</a></h2>
+<h3 id="81-metodo-unico-moscow">8.1 Método único: MoSCoW<a class="headerlink" href="#81-metodo-unico-moscow" title="Permanent link">&para;</a></h3>
+<p>A equipe adota o método <strong>MoSCoW</strong> (Must have · Should have · Could have · Won't have) como <strong>instrumento único</strong> de priorização e de dimensionamento do Product Backlog. Não se adota Planning Poker, pontos de história ou qualquer outra escala de estimativa em paralelo. A decisão é da Sprint Planning de 08/09/2026.</p>
+<p>A opção é deliberadamente minimalista, e é a forma em que o MoSCoW nasceu: no método DSDM, ele não é apenas um rótulo de prioridade, mas o próprio mecanismo de controle de escopo em prazo fixo. O prazo da Sprint é imutável; o escopo é a variável de ajuste. A regra de proporção do DSDM (§8.2) faz o papel que, em outras abordagens, caberia a uma estimativa numérica: ela responde à única pergunta que importa no planejamento — <em>o conjunto de Must Haves cabe no período, com folga suficiente para absorver imprevisto?</em></p>
+<p>O método também é coerente com o que a equipe já pratica: é a mesma lógica de necessidade × desejo aplicada às decisões de escopo desde o início do projeto, e corresponde à priorização por valor de negócio característica do Scrum, em que o Product Backlog é ordenado, não pontuado.</p>
+<p><strong>Por que nenhuma estimativa numérica nesta fase.</strong> A estimativa relativa em pontos só produz informação útil quando há itens de desenvolvimento comparáveis entre si e uma série histórica de velocidade. Nenhuma das duas condições existe antes da Sprint 3, primeira sprint de código. Estimar em pontos uma sprint de Engenharia de Requisitos produziria números sem lastro, e o custo da cerimônia não se converteria em decisão melhor.</p>
+<h3 id="82-categorias-e-regra-de-proporcao">8.2 Categorias e regra de proporção<a class="headerlink" href="#82-categorias-e-regra-de-proporcao" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Categoria</th>
+<th>Critério de inclusão</th>
+<th>Esforço-alvo</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Must have</strong></td>
+<td>O item é indispensável para que o Sprint Goal (§4.3) seja alcançado. Sua ausência invalida a entrega da Sprint</td>
+<td>até <strong>60%</strong></td>
+</tr>
+<tr>
+<td><strong>Should have</strong></td>
+<td>O item tem valor relevante, mas sua ausência não invalida o Sprint Goal — pode ser adiado para a Sprint 2 sem prejuízo</td>
+<td>cerca de <strong>20%</strong></td>
+</tr>
+<tr>
+<td><strong>Could have</strong></td>
+<td>O item é desejável e de menor impacto. Funciona como <strong>contingência deliberada</strong>: é o primeiro a ser descartado quando algo aperta, protegendo os Must Haves</td>
+<td>cerca de <strong>20%</strong></td>
+</tr>
+<tr>
+<td><strong>Won't have (desta Sprint)</strong></td>
+<td>O item é reconhecido como válido, mas explicitamente fora do período. Não é o mesmo que "fora de escopo do produto"</td>
+<td>—</td>
+</tr>
+</tbody>
+</table>
+<p>**Nesta Sprint, o esforço a que a proporção se refere é o de Engenharia de Requisitos — elicitação, análise, redação de histórias, critérios de aceitação e representação do processo —, e não esforço de implementação. Não há codificação na Sprint 1, e nenhuma das histórias declaradas aqui é construída neste período: elas são declaradas para construção a partir da Sprint 3.</p>
+<p>A proporção 60/20/20 incide sobre o esforço, não sobre a quantidade de itens<em><em> (AGILE BUSINESS CONSORTIUM, </em>DSDM Project Framework</em>). O limite de 60% para os Must Haves é o que garante margem para imprevisto: se todo o período estiver comprometido com itens obrigatórios, qualquer atraso compromete a entrega inteira. Os Could Haves não são "sobras" — são a reserva que se sacrifica primeiro, de propósito, para que o Must chegue ao fim da Sprint.</p>
+<h3 id="83-procedimento-de-classificacao">8.3 Procedimento de classificação<a class="headerlink" href="#83-procedimento-de-classificacao" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Etapa</th>
+<th>Ação</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>O facilitador lê o item e, no caso de história, seus critérios de aceitação</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Abre-se prazo de até 2 minutos para perguntas de esclarecimento sobre o item, não sobre a prioridade</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Cada integrante propõe uma categoria, com justificativa de uma frase ligada ao Sprint Goal ou a um risco registrado no §10</td>
+</tr>
+<tr>
+<td>4</td>
+<td><strong>Consenso imediato:</strong> a categoria é registrada sem mais debate</td>
+</tr>
+<tr>
+<td>5</td>
+<td><strong>Divergência:</strong> prevalece a categoria mais restritiva (a "mais alta" entre as propostas) até que o PO decida, de forma explícita, rebaixá-la — decisão de priorização de backlog é atribuição do Product Owner, não da maioria simples</td>
+</tr>
+<tr>
+<td>6</td>
+<td>Registra-se a categoria acordada na ata e no item correspondente do GitHub Projects</td>
+</tr>
+</tbody>
+</table>
+<h3 id="84-verificacao-de-capacidade-e-fatiamento">8.4 Verificação de capacidade e fatiamento<a class="headerlink" href="#84-verificacao-de-capacidade-e-fatiamento" title="Permanent link">&para;</a></h3>
+<p>Concluída a classificação, a equipe faz uma única verificação, de forma qualitativa e sem escala numérica: <strong>o conjunto de Must Haves cabe nos dias de produção disponíveis (§5.1), consumindo no máximo cerca de 60% deles?</strong></p>
+<ul>
+<li><strong>Cabe:</strong> a classificação é confirmada e a Sprint segue.</li>
+<li><strong>Não cabe:</strong> não se remove o requisito nem se estende o prazo. <strong>Fatia-se o item</strong>: a parte que sustenta o Sprint Goal permanece Must; o refinamento, a variação de caso ou o acabamento tornam-se Should ou Could. Um Must Have grande demais quase sempre é dois itens, um obrigatório e um desejável, ainda não separados.</li>
+<li><strong>Durante a Sprint:</strong> se o prazo apertar, descartam-se os Could Haves primeiro e os Should Haves em seguida. Os Must Haves não são negociados contra a data de encerramento — é para isso que a folga existe.</li>
+</ul>
+<h3 id="85-aplicacao-a-esta-sprint">8.5 Aplicação a esta Sprint<a class="headerlink" href="#85-aplicacao-a-esta-sprint" title="Permanent link">&para;</a></h3>
+<p>A classificação MoSCoW desta Sprint aplica-se ao Product Backlog candidato de §7, na reunião de Planning e no refinamento de 15/09. Como diretriz geral, aplicável já nesta emissão do documento:</p>
+<ul>
+<li><strong>Must:</strong> todas as histórias do Épico C (§7.2) — são o produto de trabalho central da Sprint, conforme a Meta (§4.3) — e os itens B1, B2, D1 e D2 do Épico A/B/D, que estruturam a representação do processo e o próprio backlog.</li>
+<li><strong>Should:</strong> A1, A2, A4 e ART-01 — de alto valor, mas cuja realização integral não é pré-condição do Sprint Goal.</li>
+<li><strong>Could:</strong> A3 (observação direta de uma atividade), condicionada a agenda disponível até 16/09, conforme já registrado em §7.1.</li>
+<li><strong>Won't (desta Sprint):</strong> E1 (preparação da sessão de validação), explicitamente deslocado para a Sprint 2 conforme §7.1.</li>
+</ul>
+<p>A confirmação ou o ajuste desta classificação é objeto da reunião de Planning e do refinamento, e deve ser registrada na coluna correspondente do GitHub Projects (item D1).</p>
+<h3 id="86-primeira-aplicacao-e-referencia-de-capacidade">8.6 Primeira aplicação e referência de capacidade<a class="headerlink" href="#86-primeira-aplicacao-e-referencia-de-capacidade" title="Permanent link">&para;</a></h3>
+<p>Esta é a primeira aplicação formal do MoSCoW no projeto. Em consequência:</p>
+<ol>
+<li>A seleção do Sprint Backlog apoia-se no julgamento da equipe quanto à capacidade descrita em §5.1 e na verificação de §8.4, não em uma métrica de velocidade.</li>
+<li>A proporção de Must Haves efetivamente concluídos ao final da Sprint 1, apurada na Sprint Review de 22/09, constitui a <strong>primeira referência de capacidade real</strong> do projeto e calibra o dimensionamento do MoSCoW da Sprint 2. É essa apuração, e não uma escala de pontos, que torna a estimativa mais precisa a cada sprint.</li>
+<li>O MoSCoW permanece como método único nas sprints seguintes. Qualquer alteração de método é decisão deliberada da equipe em Sprint Retrospective, registrada em ata — não é mudança silenciosa de prática.</li>
+</ol>
+<hr />
+<h2 id="9-alocacao-de-responsabilidades">9. Alocação de responsabilidades<a class="headerlink" href="#9-alocacao-de-responsabilidades" title="Permanent link">&para;</a></h2>
+<p>Preserva-se a composição das duplas já definida pela equipe, com realocação de foco à natureza dos produtos de trabalho da Sprint 1.</p>
+<table>
+<thead>
+<tr>
+<th>Dupla</th>
+<th>Integrantes</th>
+<th>Itens atribuídos</th>
+<th>Fundamento da alocação</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>A</strong></td>
+<td>Maria Eduarda · Daniel</td>
+<td>A1, A2 · HU-06 · D2</td>
+<td>Maria Eduarda exerce a interlocução com o Instituto na condição de Product Owner; Daniel completa a Matriz de Competências em paralelo e atua em par na declaração</td>
+</tr>
+<tr>
+<td><strong>B</strong></td>
+<td>Vinicius · Rodrigo</td>
+<td>B1, B2 · HU-01, HU-02 · ART-01 · A4</td>
+<td>Rodrigo é mentor em diagramação; Vinicius detém o domínio normativo consolidado na análise pós-presencial. A atribuição de A4 mantém coerência com o compromisso comunicado ao Instituto</td>
+</tr>
+<tr>
+<td><strong>C</strong></td>
+<td>Caio · Lucas</td>
+<td>HU-03, HU-04, HU-05</td>
+<td>Caio apresenta aptidão para modelagem estrutural de dados; Lucas detém conhecimento de campo sobre a prestação de contas, obtido em elicitação anterior</td>
+</tr>
+<tr>
+<td><strong>Equipe</strong></td>
+<td>—</td>
+<td>D1 (estruturação por Vinicius, alimentação por todos) · E1 (condução por Maria Eduarda) · A3 (conforme disponibilidade)</td>
+<td>—</td>
+</tr>
+</tbody>
+</table>
+<p>Esta alocação constitui proposta inicial. A reunião de Planning deve confirmar ou ajustar a distribuição antes do encerramento (Anexo A, bloco 5).</p>
+<hr />
+<h2 id="10-registro-de-riscos">10. Registro de riscos<a class="headerlink" href="#10-registro-de-riscos" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>Risco</th>
+<th>Prob.</th>
+<th>Impacto</th>
+<th>Mitigação</th>
+<th>Responsável</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>R01</td>
+<td>A apresentação da Unidade 1 em 10/09 estende-se e compromete a realização dos dojos</td>
+<td>Média</td>
+<td>Alto</td>
+<td>Dojos agendados após a apresentação; Dojo P2 remanejável para 11/09 pela manhã sem impacto no plano</td>
+<td>SM</td>
+</tr>
+<tr>
+<td>R02</td>
+<td>A janela produtiva de 7 dias úteis é insuficiente para o backlog selecionado</td>
+<td>Média</td>
+<td>Alto</td>
+<td>A Meta da Sprint delimita o Épico C como prioridade; épicos A, D e E admitem transbordo para a Sprint 2</td>
+<td>PO e SM</td>
+</tr>
+<tr>
+<td>R03</td>
+<td>A agenda do Instituto não permite realizar as entrevistas A1/A2 no período</td>
+<td>Alta</td>
+<td>Baixo</td>
+<td>O compromisso da Sprint é o agendamento formal, não a realização; a Meta não depende destes itens</td>
+<td>PO</td>
+</tr>
+<tr>
+<td>R04</td>
+<td>A planilha-template do Instituto não é enviada até 11/09</td>
+<td>Média</td>
+<td>Médio</td>
+<td>As histórias do Épico C são redigidas a partir do modelo normativo consolidado pela equipe (Anexo VI da SEDET-DF); o template do Instituto passa a insumo de validação posterior</td>
+<td>Dupla B</td>
+</tr>
+<tr>
+<td>R05</td>
+<td>A primeira aplicação formal do MoSCoW gera divergência de critério entre os integrantes e estende a reunião de Planning</td>
+<td>Média</td>
+<td>Baixo</td>
+<td>Regra de desempate por categoria mais restritiva (§8.3, etapa 5); em caso de extrapolação, classifica-se apenas o Épico C nesta reunião e o restante no refinamento de 15/09</td>
+<td>SM</td>
+</tr>
+<tr>
+<td>R06</td>
+<td>A cerimônia de encerramento em 22/09 coincide com o início da Semana Universitária</td>
+<td>Média</td>
+<td>Médio</td>
+<td>Confirmar a disponibilidade dos 6 integrantes ainda na reunião de Planning; alternativa é antecipar para 21/09</td>
+<td>SM</td>
+</tr>
+<tr>
+<td>R07</td>
+<td>Dois dojos no mesmo dia, após apresentação, produzem fadiga e baixa retenção</td>
+<td>Média</td>
+<td>Médio</td>
+<td>Intervalo mínimo de 10 minutos; o Dojo P2 é prático e produz artefato real, rompendo o formato expositivo; ambos gravados</td>
+<td>SM</td>
+</tr>
+<tr>
+<td>R08</td>
+<td>Histórias redigidas sem o vocabulário técnico-normativo resultam genéricas</td>
+<td>Média</td>
+<td>Alto</td>
+<td>O Dojo P1 precede obrigatoriamente o P2 e fixa o vocabulário; o glossário (ART-01) é item da Sprint</td>
+<td>SM</td>
+</tr>
+<tr>
+<td>R09</td>
+<td>A entrega da Unidade 2 (13/10) cai no interior da Sprint 3, não em fechamento de sprint, o que exige verificação de entrega fora da Sprint Review</td>
+<td>Baixa</td>
+<td>Médio</td>
+<td>Cadência de 2 semanas mantida (§12); formalizar o novo início da Sprint 3 (06/10) nos documentos de equipe e de ritos na Sprint 2 Review/Retrospective</td>
+<td>SM</td>
+</tr>
+<tr>
+<td>R10</td>
+<td>Concentração do conhecimento normativo em um único integrante</td>
+<td>Alta</td>
+<td>Alto</td>
+<td>Transferência por meio do Dojo P1; a análise pós-presencial permanece como material de consulta permanente</td>
+<td>SM</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="11-criterios-de-aceitacao-da-sprint">11. Critérios de aceitação da Sprint<a class="headerlink" href="#11-criterios-de-aceitacao-da-sprint" title="Permanent link">&para;</a></h2>
+<p>A Sprint 1 é considerada concluída com êxito, na Sprint Review de 22/09/2026, mediante verificação objetiva dos seguintes critérios:</p>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>Critério</th>
+<th>Verificação</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>CAS-01</td>
+<td>Todos os itens selecionados para o Sprint Backlog estão registrados no GitHub Projects, com rótulo de épico, vínculo a OE/CP e classificação MoSCoW</td>
+<td>Inspeção do quadro</td>
+</tr>
+<tr>
+<td>CAS-02</td>
+<td>Todas as histórias do Épico C atendem integralmente à Definition of Ready</td>
+<td>Conferência item a item</td>
+</tr>
+<tr>
+<td>CAS-03</td>
+<td>A representação do processo atual em BPMN está publicada e acessível</td>
+<td>Verificação do artefato no repositório ou no site</td>
+</tr>
+<tr>
+<td>CAS-04</td>
+<td>O glossário de termos do Instituto (ART-01) está registrado</td>
+<td>Verificação do artefato</td>
+</tr>
+<tr>
+<td>CAS-05</td>
+<td>As entrevistas A1 e A2 foram formalmente solicitadas, com proposta de data encaminhada ao Instituto</td>
+<td>Registro da comunicação</td>
+</tr>
+<tr>
+<td>CAS-06</td>
+<td>Os dois dojos de processo foram realizados e gravados</td>
+<td>Verificação das gravações</td>
+</tr>
+<tr>
+<td>CAS-07</td>
+<td>A ata do Sprint Planning e a ata da Sprint Review estão publicadas</td>
+<td>Verificação no Drive e no projeto</td>
+</tr>
+<tr>
+<td>CAS-08</td>
+<td>A proporção de itens Must concluídos está apurada, disponível como referência de capacidade para o dimensionamento do MoSCoW da Sprint 2</td>
+<td>Apuração na Review</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="12-calendario-da-sprint-2">12. Calendário da Sprint 2<a class="headerlink" href="#12-calendario-da-sprint-2" title="Permanent link">&para;</a></h2>
+<p><strong>Decisão: cadência-padrão de 2 semanas.</strong> A Sprint 2 segue a cadência padrão de duas semanas (22/09 a 06/10/2026). A exceção de 3 semanas aplicada à Sprint 0 é motivada pela sobreposição entre o início do projeto, a fase de descoberta e o calendário da disciplina para a entrega da Unidade 1, e não constitui precedente para as demais sprints.</p>
+<p><strong>Consequência:</strong> a entrega da Unidade 2 (13/10) ocorre no interior da <strong>Sprint 3</strong>, que passa a iniciar em 06/10/2026. A verificação da entrega da U2 é feita pelo conteúdo publicado no prazo, não pela coincidência com o fechamento de uma sprint.</p>
+<p><strong>Calendário de referência.</strong> A seção 6 do Documento de Visão registra o cronograma tal como planejado na data da entrega da Unidade 1, e ela própria declara esse planejamento como preliminar, sujeito a atualização ao fim de cada sprint. A partir desta Sprint, <strong>o calendário vigente do projeto passa a ser mantido nos planos de sprint</strong>, que são o registro corrente da cadência efetivamente praticada. A seção 6 será reconciliada com este calendário na revisão do Documento de Visão para a Unidade 2, preservando o documento da Unidade 1 como o retrato da entrega feita em 08/09.</p>
+<hr />
+<h2 id="anexo-a-conducao-da-reuniao-de-sprint-planning">Anexo A — Condução da reunião de Sprint Planning<a class="headerlink" href="#anexo-a-conducao-da-reuniao-de-sprint-planning" title="Permanent link">&para;</a></h2>
+<p><strong>Data:</strong> 08/09/2026, à noite · <strong>Duração:</strong> ~94 minutos (21h33–23h07) · <strong>Formato:</strong> Google Meet, com gravação e ata automática · <strong>Facilitador:</strong> Vinicius (Scrum Master)</p>
+<p>A reunião reuniu quatro blocos de trabalho: debrief da reunião presencial com o Instituto ocorrida mais cedo no mesmo dia; deliberação sobre o método de priorização do Product Backlog; apresentação e confirmação da estrutura da Sprint em duas semanas; e organização da comunicação e da dinâmica da equipe.</p>
+<table>
+<thead>
+<tr>
+<th>Bloco</th>
+<th>Conteúdo tratado</th>
+<th>Deliberação</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Debrief</td>
+<td>Impressões da reunião presencial com o Instituto; achados sobre a estrutura organizacional (setores de marcenaria, lavanderia, estilografia, atendimento social)</td>
+<td>Registrado na ata da reunião</td>
+</tr>
+<tr>
+<td>Método de priorização</td>
+<td>Comparação entre Planning Poker e MoSCoW para o contexto desta Sprint</td>
+<td><strong>MoSCoW adotado como método único</strong> (D1)</td>
+</tr>
+<tr>
+<td>Estrutura da Sprint</td>
+<td>Confirmação da divisão em duas semanas (dojos · Product Backlog)</td>
+<td>Confirmada (D2) — ver §4.2</td>
+</tr>
+<tr>
+<td>Padrão de histórias</td>
+<td>Critérios INVEST e Given/When/Then</td>
+<td>Confirmado (D3) — ver §6.2, §7.2</td>
+</tr>
+<tr>
+<td>Capacitação</td>
+<td>Conteúdo e data dos dois dojos (10/09)</td>
+<td>Confirmado — ver §6.2</td>
+</tr>
+<tr>
+<td>Comunicação</td>
+<td>Grupo com o Instituto, reuniões recorrentes, gravação das sessões</td>
+<td>Decidido (D4, D5)</td>
+</tr>
+<tr>
+<td>Dinâmica da equipe</td>
+<td>Distribuição de carga e composição das duplas</td>
+<td><strong>Não decidido</strong> — encaminhado à Sprint Retrospective</td>
+</tr>
+</tbody>
+</table>
+<p>O registro completo desta reunião — resumo, decisões, próximas etapas e insumos para o Documento de Visão — está na ata da Sprint Planning, publicada junto às demais atas de reunião do projeto.</p>
+<hr />
+<h2 id="anexo-b-ata-da-reuniao-de-sprint-planning">Anexo B — Ata da reunião de Sprint Planning<a class="headerlink" href="#anexo-b-ata-da-reuniao-de-sprint-planning" title="Permanent link">&para;</a></h2>
+<p>A ata completa da Sprint Planning de 08/09/2026 é um documento próprio, publicado junto às atas de reunião do projeto.</p>
+<hr />
+<h2 id="anexo-c-plano-de-execucao-da-semana-2">Anexo C — Plano de execução da Semana 2<a class="headerlink" href="#anexo-c-plano-de-execucao-da-semana-2" title="Permanent link">&para;</a></h2>
+<p>Detalhamento operacional da fase de produção do Product Backlog (14/09 a 21/09).</p>
+<table>
+<thead>
+<tr>
+<th>Data</th>
+<th>Dia</th>
+<th>Atividade</th>
+<th>Responsáveis</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>14/09</td>
+<td>segunda</td>
+<td>Redação das histórias por bloco atribuído; início da modelagem BPMN (B1)</td>
+<td>Todas as duplas</td>
+</tr>
+<tr>
+<td>15/09</td>
+<td>terça</td>
+<td>Continuidade da redação · <strong>Refinamento semanal do backlog</strong> (~30 min)</td>
+<td>Equipe</td>
+</tr>
+<tr>
+<td>16/09</td>
+<td>quarta</td>
+<td>Revisão cruzada entre duplas: cada dupla revisa as histórias de outra dupla, conforme a prática de feedback da equipe</td>
+<td>Duplas A↔C, B↔A, C↔B</td>
+</tr>
+<tr>
+<td>17/09</td>
+<td>quinta</td>
+<td>Consolidação dos itens no GitHub Projects (D1); início da matriz de rastreabilidade (D2)</td>
+<td>Vinicius (estruturação); todos (alimentação)</td>
+</tr>
+<tr>
+<td>18/09</td>
+<td>sexta</td>
+<td>Fechamento do backlog; consolidação do glossário (ART-01); conclusão do BPMN (B1) e do Rich Picture (B2)</td>
+<td>Duplas B e C</td>
+</tr>
+<tr>
+<td>21/09</td>
+<td>segunda</td>
+<td>Verificação dos critérios de aceitação da Sprint (§11); preparação da Sprint Review</td>
+<td>Scrum Master</td>
+</tr>
+<tr>
+<td>22/09</td>
+<td>terça</td>
+<td>Sprint Review · Retrospectiva · Sprint 2 Planning</td>
+<td>Equipe</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="anexo-d-verificacao-posterior-a-reuniao-de-planning">Anexo D — Verificação posterior à reunião de Planning<a class="headerlink" href="#anexo-d-verificacao-posterior-a-reuniao-de-planning" title="Permanent link">&para;</a></h2>
+<p>Prazo de execução: 48 horas contadas do encerramento da reunião.</p>
+<ul class="task-list">
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Ata da reunião publicada no Drive da equipe e registrada no projeto</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Issues criadas no GitHub Projects, uma por item selecionado, com rótulo de épico, vínculo a OE/CP e classificação MoSCoW</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Meta da Sprint fixada no quadro do projeto</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Horário dos dois dojos comunicado no grupo <em>Avisos</em></li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Daily assíncrona retomada a partir de 10/09, conforme molde já adotado pela equipe</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Disponibilidade da equipe em 22/09 confirmada (risco R06)</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Material do Dojo P1 revisado pelo facilitador</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Histórias candidatas de §7.2 disponibilizadas às duplas antes do Dojo P2</li>
+</ul>
+<hr />
+<h2 id="controle-de-versoes">Controle de versões<a class="headerlink" href="#controle-de-versoes" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Versão</th>
+<th>Data</th>
+<th>Alteração</th>
+<th>Responsável</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1.0</td>
+<td>09/09/2026</td>
+<td>Emissão inicial, elaborada antes da reunião de Sprint Planning</td>
+<td>Vinicius</td>
+</tr>
+<tr>
+<td>2.0</td>
+<td>09/09/2026</td>
+<td>Estruturação da Sprint em duas fases, plano de dojos e Product Backlog candidato com identificadores rastreáveis</td>
+<td>Vinicius</td>
+</tr>
+<tr>
+<td>3.0</td>
+<td>09/09/2026</td>
+<td>Registro do que foi deliberado na Sprint Planning de 08/09: MoSCoW como método único de priorização e dimensionamento, com a regra de proporção do DSDM e o fatiamento como mecanismo de ajuste de escopo; capacidade de 8 dias de produção; cadência de 2 semanas confirmada para a Sprint 2</td>
+<td>Vinicius</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Documentos impactados por esta versão:</strong> calendário de sprints da equipe · cadência e calendário de ritos do processo · memória de decisões do projeto.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Voltar para o topo
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Rodapé" >
+        
+          
+          <a href="../../atas/2026-09-08-sprint-planning/" class="md-footer__link md-footer__link--prev" aria-label="Anterior: 08/09/2026 — Sprint Planning">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Anterior
+              </span>
+              <div class="md-ellipsis">
+                08/09/2026 — Sprint Planning
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../tarefas-sprint-1/" class="md-footer__link md-footer__link--next" aria-label="Próximo: Sprint 1 (Acompanhamento de Tarefas)">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Próximo
+              </span>
+              <div class="md-ellipsis">
+                Sprint 1 (Acompanhamento de Tarefas)
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Equipe CyberSetor · Engenharia de Software · FCTE/UnB · 2026.2
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "../../..", "features": ["navigation.tabs", "navigation.tabs.sticky", "navigation.indexes", "navigation.instant", "navigation.tracking", "navigation.sections", "navigation.top", "navigation.footer", "content.action.edit", "content.code.copy", "toc.follow", "search.suggest", "search.highlight"], "search": "../../../assets/javascripts/workers/search.f8cc74c7.min.js", "translations": {"clipboard.copied": "Copiado para \u00e1rea de transfer\u00eancia", "clipboard.copy": "Copiar para \u00e1rea de transfer\u00eancia", "search.result.more.one": "mais 1 nesta p\u00e1gina", "search.result.more.other": "# mais nesta p\u00e1gina", "search.result.none": "Nenhum documento encontrado", "search.result.one": "1 documento encontrado", "search.result.other": "# documentos encontrados", "search.result.placeholder": "Digite para iniciar a busca", "search.result.term.missing": "Ausente", "select.version": "Selecione a vers\u00e3o"}}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.c8b220af.min.js"></script>
+      
+    
+  </body>
+</html>
