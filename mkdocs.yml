@@ -91,6 +91,7 @@ nav:
       - 7. Interação entre equipe e cliente: visao/7-equipe-e-cliente.md
   - Requisitos:
       - 8. Requisitos de software: requisitos/8-requisitos.md
+      - 8b. Atividades, campo offline e evidências (CP2/CP4/CP7): requisitos/8b-requisitos-campo-evidencias.md
       - 9. DoR e DoD: requisitos/9-dor-dod.md
       - 10. Backlog de produto: requisitos/10-backlog.md
   - Gestão do projeto:
