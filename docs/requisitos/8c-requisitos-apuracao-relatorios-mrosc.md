@@ -43,7 +43,7 @@
 
 <a id="rf-r07"></a>
 ### RF-R07 — Gerar relatório diagramado em PDF via servidor
-* **Descrição:** O sistema deve compilar e renderizar no servidor (via Puppeteer) o Relatório de Execução do Objeto diagramado em formato PDF padronizado, contendo cabeçalho institucional, sumário executivo, tabelas de metas, justificativas e miniaturas das evidências anexadas com seus metadados.
+* **Descrição:** O sistema deve compilar e renderizar no servidor o Relatório de Execução do Objeto diagramado em formato PDF padronizado, contendo cabeçalho institucional, sumário executivo, tabelas de metas, justificativas e miniaturas das evidências anexadas com seus metadados.
 * **Rastreabilidade:** CP8 | OE06 | Seção 2.4 | HU-05
 
 <a id="rf-r08"></a>
