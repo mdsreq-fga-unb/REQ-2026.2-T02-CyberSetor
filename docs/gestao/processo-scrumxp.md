@@ -2,30 +2,13 @@
 
 A equipe CyberSetor adota o **ScrumXP**: o framework Scrum para o gerenciamento do trabalho e as práticas técnicas do eXtreme Programming para a engenharia. Esta página registra como o processo funciona na prática. A fundamentação da escolha está na seção 4 do Documento de Visão.
 
-## Papéis
+## Papéis e cerimônias
 
-| Papel | Quem | Responsabilidade |
-|---|---|---|
-| **Product Owner (interno)** | Maria Eduarda | Consolida o entendimento do Instituto entre as validações; ordena o Product Backlog por valor; é a voz do cliente no dia a dia |
-| **Scrum Master** | Vinicius | Facilita as cerimônias; remove impedimentos; zela pelo processo e pelos prazos |
-| **Time de Desenvolvimento** | Todos os seis integrantes | Estima, seleciona o que cabe na sprint, constrói e testa |
-| **Cliente** | Instituto No Setor | Valida as entregas; fonte primária dos requisitos |
-
-O Product Owner interno é a mitigação declarada para duas limitações conhecidas: a dependência da disponibilidade do Product Owner, no Scrum, e a dependência do cliente presente, no XP. O Instituto é uma organização sem equipe de tecnologia e com agenda reduzida, e não funcionaria como cliente presente no sentido literal.
-
-## Cadência e cerimônias
+A composição da equipe, os papéis e o papel do cliente estão na [seção 7.1 do Documento de Visão](../visao/7-equipe-e-cliente.md); a cadência das cerimônias, com frequência, duração e formato, está na [seção 7.2](../visao/7-equipe-e-cliente.md#72-comunicacao). Esta página registra o que é próprio da operação da equipe: por que a daily é assíncrona, quais artefatos sustentam o processo, quais práticas de XP estão em uso e como a equipe se comunica.
 
 Sprints de duas semanas, ancoradas nas terças-feiras. A Sprint 0 (18/08 a 08/09) é excepcional, com três semanas, por ser de descoberta e formação da equipe.
 
-| Cerimônia | Quando | Duração | Formato | Resultado |
-|---|---|---|---|---|
-| **Sprint Planning** | Primeira terça da sprint | ~1h | Google Meet | Meta da sprint e Sprint Backlog |
-| **Daily** | Todo dia útil, até as 12h | ~5 min | Assíncrona, no grupo *Dailys* do WhatsApp | Impedimentos visíveis no mesmo dia |
-| **Refinamento do Backlog** | Semanal | ~30 min | Google Meet | Itens detalhados, estimados e priorizados |
-| **Sprint Review** | Última terça da sprint | ~1h | Google Meet, com o Instituto quando houver agenda | Incremento demonstrado e feedback incorporado ao backlog |
-| **Retrospectiva** | Ao fim de cada unidade | ~40 min | Google Meet | Ações de melhoria e texto da seção 11 |
-
-### Por que a daily é assíncrona
+## Por que a daily é assíncrona
 
 A equipe é formada por seis estudantes com grades e compromissos distintos. Uma daily síncrona diária não se sustentaria. O que a cerimônia precisa entregar é **compromisso** e **visibilidade de impedimentos**, dois dos sete valores da Engenharia de Requisitos adotados pela disciplina. Uma daily escrita, no mesmo lugar, todo dia, entrega isso de forma mais confiável. É uma adaptação consciente do rito ao contexto.
 
@@ -45,25 +28,28 @@ A equipe é formada por seis estudantes com grades e compromissos distintos. Uma
 | Artefato | Onde vive | Responsável |
 |---|---|---|
 | Visão do Produto | Este site | Equipe |
-| Product Backlog | GitHub Projects e Issues | Product Owner |
+| Product Backlog | GitHub Projects e Issues | Product Owner interno, com a ordenação validada pelo Instituto |
 | Sprint Backlog | GitHub Projects | Time |
 | Incremento | Branch `main` e ambiente publicado | Time |
 | Atas de reunião | [Atas de reunião](atas/index.md) | Relator da reunião |
 | Definition of Ready e Definition of Done | Seção 9 do documento (Unidade 2) | Equipe |
 | Matriz de competências | [Matriz de competências e stack](matriz-competencias.md) | Scrum Master |
 
-Histórias de usuário seguem o formato do XP: escritas em linguagem não técnica, na perspectiva de quem usa, com critérios de aceitação que as tornam testáveis.
+Histórias de usuário seguem o formato do XP: escritas em linguagem não técnica, na perspectiva de quem usa, acompanhadas por uma lista de critérios de aceitação objetivos e verificáveis.
 
 ```
 Como <perfil do Instituto>, quero <ação> para <resultado esperado>.
 
 Critérios de aceitação:
-- Dado <contexto>, quando <ação>, então <resultado observável>
+- [Condição observável ou regra que o sistema deve cumprir]
+- [Restrição de negócio, técnica ou de privacidade/LGPD]
 ```
 
 ## Práticas de XP
 
-**Adotadas:** histórias de usuário · critérios de aceitação · testes de aceitação · pequenas releases · integração contínua · programação em pares · propriedade coletiva do código · design simples · padrões de codificação · cliente presente **adaptado**, com Product Owner interno e validações periódicas.
+**Em uso desde a Sprint 1:** histórias de usuário · critérios de aceitação · trabalho em duplas na documentação · integração contínua, que compila o site em modo estrito a cada alteração · cliente presente **adaptado**, com Product Owner interno no intervalo entre validações e validação semanal com o Instituto (Documento de Visão, seção 7.2).
+
+**A partir da primeira sprint de código:** testes de aceitação · pequenas releases · programação em pares · propriedade coletiva do código · design simples · padrões de codificação. Cada uma passa a valer quando houver código a que aplicá-la, e a evidência de adoção é registrada na Sprint Review correspondente.
 
 **Não adotadas, com justificativa:**
 
@@ -76,7 +62,7 @@ Critérios de aceitação:
 
 ## Comunicação
 
-Comunidade no WhatsApp *CyberSetor - Requisitos*, com três grupos: *Avisos* (comunicados), *CyberSetor - Geral* (discussão e decisões) e *Dailys* (só dailies). Reuniões no Google Meet, com gravação e ata automática. Entregas publicadas neste site; o Google Docs é rascunho.
+Comunidade no WhatsApp *CyberSetor - Requisitos*, com três grupos: *Avisos* (comunicados), *CyberSetor - Geral* (discussão e decisões) e *Dailys* (só dailies). Reuniões no Google Meet, com gravação e transcrição de apoio armazenadas no Drive com acesso restrito, e ata sintética oficial elaborada pelo relator, com revisão de dados sensíveis (LGPD). Entregas publicadas neste site; o Google Docs é rascunho.
 
 ## Referências
 
