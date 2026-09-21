@@ -11,7 +11,7 @@ Versão **preliminar**, sujeita à conferência do Instituto antes da publicaç�
 | **Data** | 15/09/2026 (terça-feira) |
 | **Horário** | Início às 16h02 |
 | **Formato** | Remoto, Google Meet |
-| **Participantes — Instituto** | Clara Novaes (Núcleo Pedagógico), Fillipe Ramos (Coordenação Administrativo-Financeira) e Fran / France (Área de Projetos — Projetos INS). *(Menção ao presidente Rafael e a Natália, captação de recursos)* |
+| **Participantes — Instituto** | Clara Novaes (Núcleo Pedagógico), Fillipe Ramos (Coordenação Administrativo-Financeira) e Franci (Coordenação de Execução) |
 | **Participantes — CyberSetor** | Vinicius Vieira, Daniel Batista e Caio Martins |
 | **Registro** | Gravação e transcrição automática, com consentimento, arquivadas no Drive restrito da equipe |
 | **Sprint** | Sprint 1 |
@@ -39,7 +39,7 @@ Reunião de alinhamento com o Instituto para debater as demandas da organizaçã
 
 ### 2.3 Demandas e prioridades do MVP (automação e painéis gerenciais)
 
-* **Painel consolidado para a Presidência:** France e Fillipe Ramos relataram o pedido do presidente Rafael por um dashboard unificado que permita acompanhar execuções, cronogramas, saldos e remanejamentos entre projetos. A equipe técnica esclareceu a limitação temporal do semestre e registrou a demanda como candidata, pendente de validação direta com a Presidência e sem prioridade definida no MVP atual.
+* **Painel consolidado para a Presidência:** Franci e Fillipe Ramos relataram o pedido do presidente Rafael por um dashboard unificado que permita acompanhar execuções, cronogramas, saldos e remanejamentos entre projetos. A equipe técnica esclareceu a limitação temporal do semestre e registrou a demanda como candidata, pendente de validação direta com a Presidência e sem prioridade definida no MVP atual.
 * **Gestão de chamados descentralizados:** Fillipe Ramos apontou a sobrecarga decorrente de demandas internas que chegam de forma desordenada por e-mail e mensagens, sugerindo uma ferramenta de chamados ou ordens de serviço (registrada como candidata).
 * **Comprovações em campo e redundância:** Reforçada a necessidade de registro de fotos com coordenadas e presenças em campo, inclusive sem internet. Vinicius Vieira esclareceu que a aplicação terá rotinas automatizadas de backup a cada 6 horas e permitirá exportação de relatórios em PDF e planilhas para que o Instituto guarde cópias no Google Drive institucional.
 
@@ -67,4 +67,5 @@ Reunião de alinhamento com o Instituto para debater as demandas da organizaçã
 |---|---|---|---|
 | 0.1 | 19/09/2026 | Maria Eduarda Marques | Estrutura inicial da ata e resumo da reunião |
 | 0.2 | 20/09/2026 | Daniel da Silva Batista | Preenchimento integral dos registros temáticos, participantes, decisões e encaminhamentos a partir das anotações da reunião |
+| 0.3 | 21/09/2026 | Caio Martins | Correção da identificação dos participantes (Franci - Coordenação de Execução) e remoção de menção a terceiros na lista de presença |
 | 1.0 | Pendente | — | Validação formal pelo Instituto, após conferência |
