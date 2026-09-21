@@ -7,7 +7,7 @@
 Liga cada requisito à sua origem (problema do cliente, objetivo específico, característica de produto) e ao seu destino (história de usuário e critério de aceitação da Sprint 1). Inclui a auditoria de cobertura e de divergências entre os PRs #48, #50 e #52.
 
 !!! note "Identificadores provisórios"
-    Os RFs usam os códigos provisórios das duplas: `RF01`–`RF06` (Dupla B, PR #50), `RF-C01`–`RF-C10` (Dupla C, PR #52), `RF-R01`–`RF-R09` (Duplas C e B, PR #52) e `RF-P01`–`RF-P12` (Dupla A, PR #48). Os RNFs usam a numeração proposta em o arquivo 8d (PR #43) (`RNF01`–`RNF18`). Quando a Dupla B fixar a numeração definitiva, basta trocar a primeira coluna.
+    Os RFs usam os códigos provisórios das duplas: `RF01`–`RF06` (Dupla B, PR #50), `RF-C01`–`RF-C10` (Dupla C, PR #52), `RF-R01`–`RF-R09` (Duplas C e B, PR #52) e `RF-P01`–`RF-P12` (Dupla A, PR #48). Os RNFs usam a numeração proposta no arquivo 8d (PR #43) (`RNF01`–`RNF18`). Quando a Dupla B fixar a numeração definitiva, basta trocar a primeira coluna.
 
 ## 1. Convenções
 
