@@ -1,6 +1,9 @@
 # Atas de reunião
 
-Registro das reuniões da equipe e das interações com o cliente. Desde 27/08/2026 as reuniões acontecem no Google Meet, com gravação e ata automática, e a transcrição completa fica no Drive da equipe.
+Registro das reuniões da equipe e das interações com o cliente. Desde 27/08/2026 as reuniões acontecem no Google Meet, com gravação e ata automática. **A ata automática é insumo, não registro final:** gravações e transcrições brutas funcionam exclusivamente como apoio interno restrito no Google Drive. O artefato oficial publicado neste site consiste em atas sintéticas elaboradas pelo relator, revisadas para controle de dados sensíveis e conformidade com a LGPD — ver a [política de registro, acesso e publicação](#politica-de-registro-acesso-e-publicacao) ao fim desta página.
+
+!!! note "Duas pessoas chamadas Maria Eduarda"
+    **Maria Eduarda Marques** é a integrante da equipe CyberSetor e Product Owner interno; **Maria Eduarda, do núcleo pedagógico**, é uma das representantes do Instituto. As atas são registros formais e não são reeditadas depois de publicadas: quando o nome aparecer sem qualificação, vale o contexto da reunião — nas atas de reunião da equipe trata-se da integrante da equipe; na ata da reunião presencial de 08/09, da representante do Instituto, como o próprio documento declara.
 
 ## Reuniões da equipe
 
@@ -17,13 +20,21 @@ Registro das reuniões da equipe e das interações com o cliente. Desde 27/08/2
 | Data | Formato | Assunto |
 |---|---|---|
 | 20/08/2026 | Videoconferência | Primeira reunião com o Instituto No Setor: entendimento do contexto e das dores |
-| 02/09/2026 | Mensagem | O Instituto validou a proposta de solução e propôs encontro presencial |
+| 02/09/2026 | Mensagem | O Instituto manifestou concordância **preliminar** com a proposta de solução e propôs encontro presencial — ver seção 7.3.2 do Documento de Visão |
 | [08/09/2026](2026-09-08-reuniao-presencial-instituto.md) | Presencial, na sede do Instituto | Aprofundamento das questões em aberto: estrutura organizacional, ciclo do projeto financiado e dores confirmadas |
-| [15/09/2026](2026-09-15-reuniao-alinhamento-instituto.md) | Videoconferência | Alinhamento de demandas e prioridades do MVP; fluxo organizacional e LGPD (versão preliminar) |
+| 15/09/2026 | Videoconferência | Levantamento com a área de projetos, a coordenação administrativo-financeira e o núcleo pedagógico: rotina administrativa, matriz de aquisição, separação de acesso por área e necessidades de painel e de comprovação em campo |
 
-!!! quote "Validação da proposta pelo Instituto, 02/09/2026"
-    "Li a proposta de vocês e acho que acertaram em cheio na dor do Instituto."
+## Política de registro, acesso e publicação
 
-## Documentos
+Esta política trata do **material de registro do projeto** — o que a equipe grava, transcreve, recebe do Instituto e publica neste site. Ela não descreve o tratamento dos dados pessoais que o sistema em construção irá armazenar, que é assunto da seção 2.6 do Documento de Visão.
 
-As atas em PDF serão publicadas em `assets/atas/` e linkadas nesta tabela à medida que forem consolidadas.
+| Material | Onde fica | Quem acessa | Condição para publicar |
+|---|---|---|---|
+| Gravação de reunião (áudio/vídeo) | Drive da equipe | Integrantes da equipe | **Não se publica** |
+| Transcrição automática | Drive da equipe | Integrantes da equipe | **Não se publica**; é insumo da ata |
+| Ata revisada pelo relator | Este site | Público | Após revisão; atas com o cliente, após conferência do Instituto |
+| Documento fornecido pelo cliente (planilha, relatório, edital) | Repositório de trabalho da equipe | Integrantes da equipe | **Não se publica na íntegra**; publicam-se extratos sem dado pessoal e sem informação sensível, com ciência do Instituto |
+| Citação de fala ou mensagem do cliente | Este site | Público | Com ciência do Instituto, registrada |
+| Dado pessoal de participante das atividades | No sistema em construção, não nos registros do projeto | Conforme o perfil de acesso definido para o sistema | **Não se publica** neste site, nem em ata, nem em extrato de documento do cliente |
+
+**Atas com o cliente.** São publicadas depois de conferidas pelo Instituto; enquanto a conferência não ocorre, a ata permanece em versão preliminar, e é essa versão que o site exibe.
