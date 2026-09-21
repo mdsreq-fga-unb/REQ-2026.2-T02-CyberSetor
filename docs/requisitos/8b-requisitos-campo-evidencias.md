@@ -28,12 +28,12 @@
 
 <a id="rf-c04"></a>
 ### RF-C04 — Operar registro de presença em modo offline
-* **Descrição:** O sistema deve permitir o registro e a consulta de chamadas de oficinas mesmo na ausência completa de conexão com a internet no SCS, persistindo todos os dados de marcação no armazenamento local seguro do navegador (IndexedDB via Dexie.js) e gerenciando uma fila local de eventos pendentes de sincronização.
+* **Descrição:** O sistema deve permitir o registro e a consulta de chamadas de oficinas mesmo na ausência completa de conexão com a internet no SCS, persistindo todos os dados de marcação no armazenamento local seguro do dispositivo cliente e gerenciando uma fila local de eventos pendentes de sincronização.
 * **Rastreabilidade:** CP4 | OE02 | Seção 3.3.3 | BPMN G03 | HU-03
 
 <a id="rf-c05"></a>
 ### RF-C05 — Sincronizar presenças com reconciliação idempotente
-* **Descrição:** O sistema deve sincronizar automaticamente a fila local de presenças com o servidor assim que a conectividade for restabelecida, utilizando identificadores únicos (UUIDv4) gerados no dispositivo cliente e garantindo que submissões repetidas do mesmo lote não gerem registros duplicados de presença no banco de dados relacional (PostgreSQL).
+* **Descrição:** O sistema deve sincronizar automaticamente a fila local de presenças com o servidor assim que a conectividade for restabelecida, utilizando identificadores exclusivos gerados no dispositivo cliente e garantindo que submissões repetidas do mesmo lote não gerem registros duplicados de presença na base de dados central.
 * **Rastreabilidade:** CP4 | OE02 | Seção 3.3.3 | BPMN G03 | HU-03
 
 <a id="rf-c06"></a>
@@ -50,7 +50,7 @@
 
 <a id="rf-c08"></a>
 ### RF-C08 — Anexar evidências documentais e fotográficas
-* **Descrição:** Deve ser possível ao usuário realizar o upload de arquivos comprobatórios de realização de atividades (imagens JPEG/PNG/WebP, listas de papel digitalizadas em PDF e atas de realização), extraindo e registrando automaticamente metadados técnicos de data, hora e georreferenciamento (quando disponível).
+* **Descrição:** Deve ser possível ao usuário realizar o upload de arquivos comprobatórios de realização de atividades (registros fotográficos, listas físicas digitalizadas e atas de realização), extraindo e registrando automaticamente metadados técnicos de data, hora e georreferenciamento (quando disponível).
 * **Rastreabilidade:** CP7 | OE04 | BPMN G03 | HU-04
 
 <a id="rf-c09"></a>
