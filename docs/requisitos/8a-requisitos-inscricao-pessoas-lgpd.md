@@ -20,7 +20,7 @@ Requisitos funcionais e não funcionais de **inscrição de participantes (CP3)*
 <a id="rf-p01"></a>
 ### RF-P01 — Disponibilizar formulário público de inscrição
 * **Descrição:** O sistema deve permitir que o interessado se inscreva em oficina ou evento por formulário público acessível em navegador móvel, sem criar conta nem senha.
-* **Rastreabilidade:** CP3 | OE02 | G04 | HU-06
+* **Rastreabilidade:** CP3 | OE02 | G03, G04 | HU-06
 
 <a id="rf-p02"></a>
 ### RF-P02 — Gerar QR Code de inscrição
@@ -52,19 +52,19 @@ Requisitos funcionais e não funcionais de **inscrição de participantes (CP3)*
 <a id="rf-p07"></a>
 ### RF-P07 — Alertar cadastro duplicado
 * **Descrição:** O sistema deve alertar o usuário, no ato do cadastro, quando nome e telefone coincidirem com os de uma pessoa já cadastrada, permitindo reaproveitar o registro existente.
-* **Rastreabilidade:** CP5 | OE01 | HU-06
+* **Rastreabilidade:** CP5 | OE01 | G04 | HU-06 (CA-06.2)
 
 ### Privacidade e LGPD (CP5)
 
 <a id="rf-p08"></a>
 ### RF-P08 — Registrar consentimento de guarda de dados
 * **Descrição:** O sistema deve registrar, com data e hora, o consentimento da pessoa (ou de seu responsável legal, se menor) para a guarda de seus dados cadastrais, como condição para concluir a inscrição.
-* **Rastreabilidade:** CP5 | OE01 | LGPD art. 7º e 8º | HU-06
+* **Rastreabilidade:** CP5 | OE01 | G04 | LGPD art. 7º e 8º | HU-06 (CA-06.3)
 
 <a id="rf-p09"></a>
 ### RF-P09 — Registrar autorização de contato
 * **Descrição:** O sistema deve registrar, de forma opcional e separada do consentimento cadastral, a autorização da pessoa para receber informes sobre futuras atividades, permitindo revogá-la (*opt-out*) a qualquer momento.
-* **Rastreabilidade:** CP5 | OE01 | Seção 3.3.5 | LGPD art. 8º, §5º | HU-06
+* **Rastreabilidade:** CP5 | OE01 | G04 | Seção 3.3.5 | LGPD art. 8º, §5º | HU-06
 
 <a id="rf-p10"></a>
 ### RF-P10 — Registrar autorização de uso de imagem
@@ -141,7 +141,7 @@ Requisitos funcionais e não funcionais de **inscrição de participantes (CP3)*
 
 | Requisito | CP | OE | Gargalo BPMN | Mitigação / norma | HU |
 | :--- | :---: | :---: | :---: | :--- | :---: |
-| RF-P01 | CP3 | OE02 | G04 | — | HU-06 |
+| RF-P01 | CP3 | OE02 | G03, G04 | — | HU-06 |
 | RF-P02 | CP3 | OE02 | — | — | HU-06 |
 | RF-P03 | CP3 | OE02 | — | Seção 3.3.10 | HU-06 |
 | RF-P04 | CP3 | OE01, OE02 | — | — | HU-06 |
@@ -161,5 +161,6 @@ Requisitos funcionais e não funcionais de **inscrição de participantes (CP3)*
 
 ## 5. Pontos abertos para a consolidação
 
-* Numeração definitiva, a combinar com a Dupla B. No catálogo do PR #45, RF09 a RF11 sobrepõem RF-P01, RF-P06 e RF-P08; os demais requisitos deste documento são novos.
-* Critérios de aceitação (Dado, Quando, Então) por requisito, após a validação das hipóteses com o Instituto.
+* Numeração definitiva, a combinar com a Dupla B. No catálogo atualizado (PR #50), RF10 a RF12 (formulário público, histórico e consentimento) sobrepõem RF-P01, RF-P06 e RF-P08; os demais requisitos deste documento são novos.
+* Critérios de aceitação em **lista de critérios verificáveis e objetivos**, e não no formato Dado, Quando, Então (diretriz da disciplina, registrada na issue #23). Partem dos critérios já existentes da HU-06 (CA-06.1 a CA-06.3) e serão detalhados após a validação das hipóteses com o Instituto.
+* A inscrição (CP3) não tem história própria na Sprint 1: a HU-06 trata do histórico, da duplicidade e do consentimento. RF-P01 a RF-P05 ficam como candidatos a nova história, o que a matriz de rastreabilidade (#44) deve registrar.
