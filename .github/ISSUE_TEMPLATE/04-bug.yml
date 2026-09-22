@@ -1,0 +1,36 @@
+name: Bug
+description: Comportamento incorreto em algo já entregue (site, CI, quadro ou, a partir da Sprint 3, o produto).
+title: "bug: <onde> — <o que acontece>"
+labels: ["tipo: bug"]
+body:
+  - type: input
+    id: onde
+    attributes:
+      label: Onde
+      description: URL da página ou do workflow, ou tela do produto.
+    validations:
+      required: true
+  - type: textarea
+    id: acontece
+    attributes:
+      label: O que acontece
+    validations:
+      required: true
+  - type: textarea
+    id: esperado
+    attributes:
+      label: O que era esperado
+    validations:
+      required: true
+  - type: textarea
+    id: passos
+    attributes:
+      label: Como reproduzir
+      placeholder: |
+        1. ...
+        2. ...
+  - type: textarea
+    id: evidencia
+    attributes:
+      label: Evidência
+      description: Captura de tela, saída do build ou link do log.
