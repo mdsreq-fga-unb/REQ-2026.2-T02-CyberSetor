@@ -12,6 +12,7 @@
 | 21/09/2026 | 1.5 | Consolidação dos 18 RNFs sob FURPS+ e Sommerville (Issue #43) | Maria Eduarda Marques (PO) e Vinicius Vieira (SM) |
 | 21/09/2026 | 1.6 | Construção da matriz de rastreabilidade bidirecional e auditoria de lacunas (Issue #44) | Dupla A (Maria Eduarda Marques e Daniel Batista) |
 | 21/09/2026 | 2.0 | Unificação final do catálogo consolidado (RF01–RF37, RNF01–RNF18), notas de domínio e matriz de rastreabilidade oficial (Issue #45) | Equipe CyberSetor |
+| 21/09/2026 | 2.1 | Âncoras dos requisitos restauradas; descrições alinhadas às decisões registradas (requisito e meta como registros distintos; rascunho de evidência; prova e divulgação separadas; aviso de tratamento na inscrição); valores sem fonte marcados como iniciais; referências de seção e de norma conferidas | Equipe CyberSetor |
 
 ---
 
@@ -23,6 +24,7 @@ A governança do catálogo adota:
 * **Identificadores unívocos:** Códigos prefixados (`RFxx` e `RNFxx`) em sequência única e contínua, acompanhados de âncoras explícitas para permitir rastreamento direto a partir de issues, histórias de usuário e matrizes. Os RFs seguem rigorosamente a ordem das Características de Produto (CP1 a CP8).
 * **Padronização verbal:** Todo requisito funcional é expresso no formato **Verbo no Infinitivo + Objeto Direto**, definindo uma única ação verificável, sem ambiguidades de escopo.
 * **Critérios verificáveis:** Todo requisito não funcional estabelece uma métrica quantitativa numérica, passível de verificação objetiva por testes automatizados, auditoria de código ou inspeção determinística.
+* **Valores iniciais:** O símbolo 🔧 marca parâmetro adotado como valor inicial, sem fonte normativa ou medição que o fixe; permanece válido para verificação até ser confirmado com o Instituto ou recalibrado no piloto. Nenhum requisito deste catálogo está validado pelo Instituto nem aprovado pelo docente; a validação é etapa própria do processo (seção 5).
 
 ---
 
@@ -30,62 +32,75 @@ A governança do catálogo adota:
 
 ### CP1 — Gestão de Projetos e Metas
 
+<a id="rf01"></a>
 #### RF01 — Cadastrar instrumento convocatório e parceria
-* **Descrição:** Deve ser possível ao usuário com perfil de Diretoria de Projetos ou Presidência cadastrar instrumentos formais de parceria (termos de fomento, termos de colaboração, acordos de cooperação, convênios ou emendas parlamentares), registrando tipo de instrumento, órgão concedente/financiador, número do processo administrativo, valor global repassado, datas de celebração e de vigência contratual (início e término), com anexo obrigatório do documento homologado em formato PDF.
+* **Descrição:** Deve ser possível ao usuário com perfil de Diretoria de Projetos ou Presidência cadastrar instrumentos formais de parceria (termos de fomento, termos de colaboração, acordos de cooperação, convênios ou emendas parlamentares), registrando tipo de instrumento, órgão concedente/financiador, número do processo administrativo, valor global repassado, datas de celebração e de vigência contratual (início e término) e o documento homologado anexado em PDF (obrigatoriedade do anexo 🔧).
 * **Rastreabilidade:** CP1 | OE01 | BPMN G01 | HU-01 | MROSC (Lei 13.019/2014, art. 16 e 42)
 
+<a id="rf02"></a>
 #### RF02 — Cadastrar projeto operacional
 * **Descrição:** Deve ser possível ao usuário da Diretoria de Projetos cadastrar projetos operacionais vinculados a um instrumento convocatório ativo previamente cadastrado, registrando código de identificação, título, coordenador responsável e cronograma planejado de execução.
 * **Rastreabilidade:** CP1 | OE01 | BPMN G01 | HU-01
 
+<a id="rf03"></a>
 #### RF03 — Desdobrar requisitos contratuais e metas
-* **Descrição:** Deve ser possível ao usuário da Diretoria de Projetos desdobrar o plano de trabalho de um projeto em metas e requisitos contratuais auditáveis, registrando: origem normativa (edital, projeto ou Instituto), descrição da meta, indicador de desempenho associado, modalidade de aferição (quantitativa numérica ou qualitativa descritiva), parâmetro planejado (quando quantitativa), frequência de apuração e forma documental de comprovação/verificação (ex.: lista de presença assinada, relatório técnico, ata de reunião ou registro fotográfico).
+* **Descrição:** Deve ser possível ao usuário da Diretoria de Projetos desdobrar o plano de trabalho de um projeto em requisitos do instrumento e metas, mantidos como registros distintos e relacionados entre si (uma meta pode atender a mais de um requisito e um requisito pode exigir mais de uma meta). Para cada meta registram-se: origem (edital, projeto ou Instituto), descrição, indicador de desempenho associado, modalidade de aferição (quantitativa numérica ou qualitativa descritiva), parâmetro planejado (quando quantitativa), período e frequência de apuração e forma documental de comprovação/verificação (ex.: lista de presença assinada, relatório técnico, ata de reunião ou registro fotográfico). Meta sem indicador, forma de verificação ou prazo permanece como rascunho e não entra na apuração.
 * **Rastreabilidade:** CP1 | OE01, OE04 | BPMN G01 | HU-01 | MROSC (Lei 13.019/2014, art. 22 e 42)
 
+<a id="rf04"></a>
 #### RF04 — Atribuir responsável, setor e prazo a meta
 * **Descrição:** Deve ser possível ao usuário da Diretoria de Projetos vincular a cada meta cadastrada um titular responsável (dono da meta), um setor executor competente (Diretoria de Projetos, Administrativo-Financeiro, Núcleo Pedagógico ou Presidência) e uma data limite fatal para conclusão da entrega. O sistema deve registrar a situação da meta (pendente, em andamento ou concluída) e sinalizar no painel do projeto as metas ainda sem responsável atribuído.
 * **Rastreabilidade:** CP1 | OE01, OE04 | BPMN G02 | HU-02 (CA-02.1, CA-02.3) | Ata de 08/09, decisão 3
 
+<a id="rf05"></a>
 #### RF05 — Exibir linha do tempo e painel de prazos de metas
 * **Descrição:** Deve ser possível aos usuários autorizados consultar uma visualização consolidada em linha do tempo contendo a vigência dos instrumentos e a relação ordenada dos prazos fatais de entrega de todas as metas e requisitos de um projeto.
 * **Rastreabilidade:** CP1 | OE01, OE04 | BPMN G01, G02 | HU-02
 
+<a id="rf06"></a>
 #### RF06 — Emitir alertas de proximidade de vencimento de metas
-* **Descrição:** O sistema deve emitir notificações e alertas visuais destacados no painel do projeto quando o prazo fatal de uma meta estiver a 7 dias corridos ou menos do vencimento, ou quando a data limite já estiver expirada sem comprovação protocolada.
+* **Descrição:** O sistema deve emitir notificações e alertas visuais destacados no painel do projeto quando o prazo fatal de uma meta estiver dentro da antecedência de alerta configurada para o instrumento (valor inicial: 7 dias corridos 🔧), ou quando a data limite já estiver expirada sem comprovação registrada.
 * **Rastreabilidade:** CP1 | OE04 | BPMN G02 | HU-02
 
 ---
 
 ### CP2 — Gestão de Atividades
 
+<a id="rf07"></a>
 #### RF07 — Cadastrar atividade por modalidade de objeto
 * **Descrição:** Deve ser possível ao usuário da equipe de projetos ou coordenação pedagógica cadastrar atividades vinculadas a um projeto, classificando a modalidade em: Oficina Contínua, Evento Aberto ou Ação de Acolhimento Comunitário, configurando número de vagas planejadas, carga horária prevista, facilitador responsável, local de realização, datas e parâmetros de recorrência de turmas.
 * **Rastreabilidade:** CP2 | OE01, OE04 | BPMN G03 | HU-03
 
+<a id="rf08"></a>
 #### RF08 — Parametrizar exigência de comprovação de presença
-* **Descrição:** O sistema deve parametrizar as regras de comprovação de acordo com a modalidade da atividade: exigindo chamada nominal com controle de assiduidade para oficinas formativas contínuas, ou contagem quantitativa agregada e anônima de público para ações de acolhimento e eventos de rua no Setor Comercial Sul (SCS), dispensando a obrigatoriedade de CPF nestas últimas.
+* **Descrição:** O sistema deve parametrizar, por instrumento e por modalidade da atividade, quais comprovações são obrigatórias, opcionais ou condicionais, e associar a cada atividade a versão vigente dessa configuração no momento do cadastro. Configuração inicial 🔧: chamada nominal com controle de assiduidade para oficinas formativas contínuas, e contagem quantitativa agregada e anônima de público para ações de acolhimento e eventos de rua no Setor Comercial Sul (SCS), sem exigência de CPF nestas últimas.
 * **Rastreabilidade:** CP2 | OE01, OE04 | Seção 3.3.6 | BPMN G03 | HU-03
 
 ---
 
 ### CP3 — Inscrição de Participantes
 
+<a id="rf09"></a>
 #### RF09 — Disponibilizar formulário público de inscrição
 * **Descrição:** O sistema deve permitir que o interessado se inscreva em oficina ou evento por formulário público acessível em navegador móvel, sem necessidade de criação de conta nem senha.
 * **Rastreabilidade:** CP3 | OE02 | BPMN G03, G04 | *Candidato a nova história na Sprint 2*
 
+<a id="rf10"></a>
 #### RF10 — Gerar QR Code de inscrição
 * **Descrição:** O sistema deve permitir que o usuário gere, para cada atividade, um link e um QR Code dinâmico que abrem o formulário público de inscrição, para divulgação em cartazes impressos e redes sociais.
 * **Rastreabilidade:** CP3 | OE02 | *Candidato a nova história na Sprint 2*
 
+<a id="rf11"></a>
 #### RF11 — Registrar inscrição presencial assistida
 * **Descrição:** O sistema deve permitir que o educador ou o recepcionista inscreva um participante presencialmente em seu nome, garantindo o acolhimento de pessoas em situação de rua ou sem conectividade própria.
 * **Rastreabilidade:** CP3 | OE02 | Seção 3.3.10 | *Candidato a nova história na Sprint 2*
 
+<a id="rf12"></a>
 #### RF12 — Limitar vagas da atividade
 * **Descrição:** O sistema deve bloquear automaticamente novas inscrições confirmadas quando o número máximo de vagas estabelecido para a turma for atingido.
 * **Rastreabilidade:** CP3 | OE01, OE02 | *Candidato a nova história na Sprint 2*
 
+<a id="rf13"></a>
 #### RF13 — Ordenar lista de espera
 * **Descrição:** O sistema deve registrar as inscrições submetidas após o esgotamento das vagas regulares em uma fila de espera ordenada cronologicamente pelo timestamp da submissão.
 * **Rastreabilidade:** CP3 | OE01, OE02 | *Candidato a nova história na Sprint 2*
@@ -94,22 +109,27 @@ A governança do catálogo adota:
 
 ### CP4 — Registro de Participação em Campo
 
+<a id="rf14"></a>
 #### RF14 — Registrar frequência em dispositivo móvel
 * **Descrição:** Deve ser possível ao educador ou facilitador de campo realizar a chamada digital diretamente em smartphone pessoal (BYOD), fornecendo interface otimizada para marcação individual ou confirmação em lote.
 * **Rastreabilidade:** CP4 | OE03, OE04 | BPMN G03 | *Candidato a nova história na Sprint 2*
 
+<a id="rf15"></a>
 #### RF15 — Operar registro de presença em modo offline
 * **Descrição:** O sistema deve permitir a chamada de oficinas mesmo na ausência completa de conexão com a internet no SCS, retendo os registros no armazenamento local seguro do navegador (IndexedDB) e gerenciando uma fila local de eventos pendentes de sincronização.
 * **Rastreabilidade:** CP4 | OE03, OE04 | Seção 3.3.3 | BPMN G03 | *Candidato a nova história na Sprint 2*
 
+<a id="rf16"></a>
 #### RF16 — Sincronizar presenças com reconciliação idempotente
 * **Descrição:** O sistema deve sincronizar automaticamente a fila local de presenças com o servidor assim que a conectividade for restabelecida, utilizando identificadores únicos (UUIDv4) e garantindo que submissões repetidas do mesmo lote não dupliquem registros no banco de dados.
 * **Rastreabilidade:** CP4 | OE03, OE04 | Seção 3.3.3 | BPMN G03 | *Candidato a nova história na Sprint 2*
 
+<a id="rf17"></a>
 #### RF17 — Registrar lançamento extemporâneo com justificativa
 * **Descrição:** Deve ser possível lançar ou retificar chamadas após a data de realização da atividade, exigindo obrigatoriamente justificativa textual fundamentada e registrando autor, data, hora e motivo na trilha de auditoria.
 * **Rastreabilidade:** CP4 | OE03, OE04 | Seção 3.3.8 | BPMN G03 | *Candidato a nova história na Sprint 2*
 
+<a id="rf18"></a>
 #### RF18 — Apurar carga horária de participantes e facilitadores
 * **Descrição:** O sistema deve acumular automaticamente o total de horas de participação efetiva de cada beneficiário e o total de horas ministradas por facilitador em cada ciclo de oficinas.
 * **Rastreabilidade:** CP4 | OE03, OE04 | BPMN G03 | *Candidato a nova história na Sprint 2*
@@ -118,90 +138,109 @@ A governança do catálogo adota:
 
 ### CP5 — Cadastro e Histórico de Pessoas
 
+<a id="rf19"></a>
 #### RF19 — Consultar histórico de participação
 * **Descrição:** O sistema deve permitir ao núcleo pedagógico consultar a ficha única consolidada de uma pessoa, exibindo oficinas e eventos de que participou em diferentes projetos ao longo do tempo.
 * **Rastreabilidade:** CP5 | OE01 | BPMN G04 | HU-06 (CA-06.1)
 
+<a id="rf20"></a>
 #### RF20 — Alertar cadastro duplicado
 * **Descrição:** O sistema deve alertar o operador, no ato do cadastro, quando nome e telefone coincidirem com os de uma pessoa já registrada, permitindo reaproveitar o registro histórico.
 * **Rastreabilidade:** CP5 | OE01 | BPMN G04 | HU-06 (CA-06.2)
 
-#### RF21 — Registrar consentimento de guarda de dados
-* **Descrição:** O sistema deve registrar, com carimbo de data/hora, o consentimento do titular (ou responsável legal, se menor) para guarda de dados cadastrais, como condição para concluir a inscrição.
-* **Rastreabilidade:** CP5 | OE01 | BPMN G04 | LGPD art. 7º e 8º | HU-06 (CA-06.3)
+<a id="rf21"></a>
+#### RF21 — Registrar aviso de tratamento de dados na inscrição
+* **Descrição:** O sistema deve apresentar na inscrição, pública ou assistida, o aviso de tratamento de dados aplicável (finalidade, base legal, dados necessários, prazo de guarda e canal para exercício de direitos) e registrar, com carimbo de data/hora, a versão do aviso apresentada a cada pessoa e, quando menor de idade, o responsável legal identificado. Para os dados necessários à execução da parceria e à prestação de contas, a inscrição não é condicionada a consentimento (LGPD, art. 7º, II); o consentimento é registrado apenas para as finalidades que o exigem (contato, RF22; imagem, RF23).
+* **Rastreabilidade:** CP5 | OE01 | BPMN G04 | LGPD art. 7º, I e II, 8º, 9º e 14 | Seção 2.6 | HU-06 (CA-06.3)
 
+<a id="rf22"></a>
 #### RF22 — Registrar autorização de contato
 * **Descrição:** O sistema deve registrar, de forma opcional e separada, a autorização para receber comunicados de novas atividades, permitindo revogação (*opt-out*) a qualquer momento.
 * **Rastreabilidade:** CP5 | OE01 | BPMN G04 | Seção 3.3.5 | LGPD art. 8º, §5º | HU-06
 
+<a id="rf23"></a>
 #### RF23 — Registrar autorização de uso de imagem
 * **Descrição:** O sistema deve registrar, de forma destacada e independente, a concessão ou recusa para captação de imagem institucional, sem que a negativa impeça a participação na atividade.
 * **Rastreabilidade:** CP5 | OE01 | Seção 3.3.4 | LGPD art. 7º e 8º | HU-06
 
+<a id="rf24"></a>
 #### RF24 — Retificar dados cadastrais
 * **Descrição:** O sistema deve permitir a correção de dados pessoais a pedido do titular, registrando autor, data, hora e justificativa da retificação.
 * **Rastreabilidade:** CP5 | OE01 | Seção 3.3.9 | LGPD art. 18, III | HU-06
 
+<a id="rf25"></a>
 #### RF25 — Excluir ou anonimizar cadastro
-* **Descrição:** O sistema deve permitir a exclusão ou anonimização definitiva dos dados a pedido do titular, preservando os totais quantitativos já consolidados para prestações de contas.
-* **Rastreabilidade:** CP5 | OE01 | Seção 3.3.9 | LGPD art. 18, IV e VI | HU-06
+* **Descrição:** O sistema deve permitir a exclusão ou anonimização definitiva dos dados a pedido do titular ou ao término da finalidade, preservando os totais quantitativos já consolidados para prestações de contas e os registros sob guarda legal obrigatória (RNF07), com indicação do fundamento que impedir a eliminação de cada classe de dado.
+* **Rastreabilidade:** CP5 | OE01 | Seção 3.3.9 | LGPD art. 16, I, e art. 18, IV e VI | HU-06
 
 ---
 
 ### CP6 — Acompanhamento Automático de Metas
 
+<a id="rf26"></a>
 #### RF26 — Calcular progresso físico de metas em tempo real
-* **Descrição:** O sistema deve calcular automaticamente o progresso quantitativo e o percentual de atingimento de cada meta a partir da consolidação contínua das presenças e evidências homologadas.
+* **Descrição:** O sistema deve calcular automaticamente o progresso quantitativo e o percentual de atingimento de cada meta a partir da consolidação contínua das presenças e evidências homologadas, exclusivamente pela regra de apuração e pelas fontes definidas para a meta (RF27), exibindo os registros que compõem o valor apurado.
 * **Rastreabilidade:** CP6 | OE01, OE04 | BPMN G05 | HU-01 (CA-01.2), HU-05 (CA-05.1)
 
+<a id="rf27"></a>
 #### RF27 — Parametrizar apuração para metas não lineares e marcos
 * **Descrição:** Deve ser possível parametrizar regras distintas conforme o indicador: apuração cumulativa linear ou aferição binária por marco (*milestone*, ex.: publicação de catálogo).
 * **Rastreabilidade:** CP6 | OE04 | Seção 2.3 | BPMN G05 | *Candidato a nova história na Sprint 2*
 
+<a id="rf28"></a>
 #### RF28 — Emitir alertas de risco de inexecução
 * **Descrição:** O sistema deve emitir avisos destacados quando o ritmo de execução estiver abaixo da curva planejada, possibilitando ações corretivas preventivas antes do vencimento do prazo.
 * **Rastreabilidade:** CP6 | OE04 | BPMN G05 | *Candidato a nova história na Sprint 2*
 
+<a id="rf29"></a>
 #### RF29 — Versionar metas por Termo Aditivo
-* **Descrição:** O sistema deve registrar repactuações contratuais de metas ou prazos decorrentes de Termos Aditivos, mantendo o histórico da pactuação inicial e gerando comparativo auditável.
+* **Descrição:** O sistema deve registrar repactuações de metas, valores ou prazos decorrentes de termo aditivo ou de apostila ao plano de trabalho como nova versão do plano, mantendo a pactuação inicial e seus resultados e gerando comparativo auditável (previsto original, reprogramado e realizado).
 * **Rastreabilidade:** CP6 | OE04 | BPMN G05 | Lei 13.019/2014, art. 55 e 57 | *Candidato a nova história na Sprint 2*
 
 ---
 
 ### CP7 — Repositório de Evidências e Documentação
 
+<a id="rf30"></a>
 #### RF30 — Anexar evidências documentais e fotográficas
-* **Descrição:** Deve ser possível anexar arquivos comprobatórios de atividades (fotos, listas assinadas digitalizadas e atas), extraindo e registrando automaticamente metadados de data, hora e geolocalização.
+* **Descrição:** Deve ser possível anexar arquivos comprobatórios de atividades (fotos, listas assinadas digitalizadas e atas), registrando automaticamente autor, data e hora de captura e de envio e, quando disponível, a geolocalização. Até ser vinculado a atividade e meta (RF31), o arquivo permanece como rascunho e não compõe o índice de comprovações.
 * **Rastreabilidade:** CP7 | OE05, OE06 | BPMN G03 | HU-04
 
+<a id="rf31"></a>
 #### RF31 — Vincular evidência a meta contratual
-* **Descrição:** O sistema deve exigir a associação expressa de cada documento a uma atividade e a uma ou mais metas contratuais, exibindo o índice de comprovações e as pendências documentais.
+* **Descrição:** O sistema deve permitir a associação expressa de cada documento a uma atividade executada e a uma ou mais metas contratuais, exibindo por atividade e por meta as comprovações recebidas e as pendentes, e impedir o encerramento da atividade e a geração do relatório final enquanto houver rascunho não vinculado nem descartado.
 * **Rastreabilidade:** CP7 | OE05, OE06 | BPMN G03 | HU-04 (CA-04.1, CA-04.2, CA-04.3)
 
+<a id="rf32"></a>
 #### RF32 — Segregar acesso a fotos de beneficiários vulneráveis
-* **Descrição:** O sistema deve aplicar controle de acesso estrito às imagens de pessoas em vulnerabilidade social, restringindo a visualização a coordenadores e auditores e orientando tomadas panorâmicas.
-* **Rastreabilidade:** CP7 | OE05, OE06 | Seção 3.3.4 | LGPD | ECA | HU-04
+* **Descrição:** O sistema deve tratar imagem de prova de execução e material de divulgação como registros distintos: a prova fica restrita aos perfis de coordenação e de prestação de contas, não é publicada automaticamente e só é reutilizada para divulgação com a autorização registrada (RF23). No momento da captura, o sistema orienta o enquadramento panorâmico, sem closes faciais.
+* **Rastreabilidade:** CP7 | OE05, OE06 | Seção 3.3.4 | LGPD art. 7º, I, e art. 14 | HU-04
 
 ---
 
 ### CP8 — Relatórios e Exportação de Dados
 
+<a id="rf33"></a>
 #### RF33 — Exigir justificativa prévia para metas não atingidas
 * **Descrição:** O sistema deve bloquear o fechamento do ciclo de prestação de contas de projetos que apresentem inexecução parcial sem prévia justificativa técnica registrada pelo analista.
 * **Rastreabilidade:** CP8 | OE04, OE06 | BPMN G06 | Lei 13.019/2014, art. 64, §1º | HU-05
 
+<a id="rf34"></a>
 #### RF34 — Emitir Relatório de Execução do Objeto
 * **Descrição:** Deve ser possível compilar o Relatório de Execução do Objeto consolidando metas previstas vs. realizadas, justificativas técnicas e índice ordenado de comprovações.
 * **Rastreabilidade:** CP8 | OE04, OE06 | BPMN G06 | Lei 13.019/2014, art. 63 a 66 | HU-05
 
+<a id="rf35"></a>
 #### RF35 — Gerar relatório diagramado em PDF via servidor
 * **Descrição:** O sistema deve compilar e renderizar no servidor o documento diagramado em formato PDF, com sumário executivo, tabelas analíticas e miniaturas de evidências com metadados.
 * **Rastreabilidade:** CP8 | OE06 | Seção 2.4 | HU-05
 
+<a id="rf36"></a>
 #### RF36 — Exportar dados consolidados em formato tabular aberto
 * **Descrição:** Deve ser possível exportar dados brutos de execução, presenças e status de metas em formato aberto (CSV) para auditorias externas independentes.
 * **Rastreabilidade:** CP8 | OE06 | Lei 13.019/2014, art. 64 | HU-05
 
+<a id="rf37"></a>
 #### RF37 — Registrar trilha de auditoria para retificações na prestação
 * **Descrição:** O sistema deve registrar em trilha imutável qualquer alteração de dados, inclusão extemporânea de justificativas ou geração de relatórios oficiais.
 * **Rastreabilidade:** CP8 | OE04 | BPMN G06 | HU-05
@@ -212,64 +251,74 @@ A governança do catálogo adota:
 
 ### Confiabilidade e Integridade
 
+<a id="rnf01"></a>
 #### RNF01 — Integridade transacional dos dados
 * **Classificação FURPS+:** Confiabilidade (Reliability)
 * **Classificação Sommerville:** Requisito de Produto (Confiabilidade)
 * **Descrição:** O sistema deve garantir que operações compostas sejam concluídas por inteiro ou revertidas por inteiro, sem deixar registros parciais em caso de falha.
 * **Métrica Verificável:** 100% de reversão automática em operações compostas que falham e 0 registros órfãos ou inconsistentes após os testes de integração.
 
+<a id="rnf02"></a>
 #### RNF02 — Auditabilidade das alterações
 * **Classificação FURPS+:** Confiabilidade (Reliability) / Segurança (Security)
 * **Classificação Sommerville:** Requisito de Produto (Segurança e integridade)
 * **Descrição:** O sistema deve registrar em trilha de auditoria permanente toda criação, alteração ou exclusão lógica de dados, com autor, data/hora, valores anteriores e posteriores e justificativa.
 * **Métrica Verificável:** 100% das operações de escrita com registro de auditoria e 0 comandos de alteração ou exclusão permitidos sobre a trilha, mesmo para o perfil administrador, em teste de rotas.
 
+<a id="rnf08"></a>
 #### RNF08 — Integridade de relatórios fechados
 * **Classificação FURPS+:** Confiabilidade (Reliability) / Segurança (Security)
 * **Classificação Sommerville:** Requisito de Produto (Integridade)
 * **Descrição:** O sistema deve garantir que o relatório finalizado reflita exatamente o estado dos dados no fechamento do ciclo e impedir alteração posterior sem rastro.
 * **Métrica Verificável:** 100% de correspondência entre o hash SHA-256 do arquivo gerado e o registro gravado na base de dados, e 0 alterações diretas sobre o período fechado.
 
+<a id="rnf09"></a>
 #### RNF09 — Resiliência offline e sincronização sem duplicidade
 * **Classificação FURPS+:** Confiabilidade (Reliability) / Usabilidade (Usability)
 * **Classificação Sommerville:** Requisito de Produto (Confiabilidade e resiliência)
 * **Descrição:** O registro de presenças e evidências em campo deve continuar funcionando sem conexão, reter os dados no aparelho mesmo após fechar o navegador ou reiniciar o dispositivo e, ao restabelecer a rede, sincronizar sem perder nem duplicar registros.
 * **Métrica Verificável:** 0% de perda de registros após corte simulado de conexão e recarga da página; 0 presenças duplicadas após 5 submissões idênticas do mesmo lote em testes ponta a ponta (Playwright).
 
+<a id="rnf18"></a>
 #### RNF18 — Cópia de segurança e recuperação de dados
 * **Classificação FURPS+:** Confiabilidade (Reliability)
 * **Classificação Sommerville:** Requisito Organizacional (Operacional)
 * **Descrição:** O sistema deve manter rotinas automatizadas de cópia de segurança do banco de dados, com retenção externa ao servidor de produção, e suportar processo documentado de restauração.
-* **Métrica Verificável:** Perda máxima aceitável de 6 horas de dados (RPO) e restabelecimento operacional em até 8 horas (RTO), com ao menos um ensaio prático de restauração aprovado antes da homologação.
+* **Métrica Verificável:** Perda máxima aceitável de 6 horas de dados (RPO) e restabelecimento operacional em até 8 horas (RTO), metas iniciais 🔧 ainda não medidas, com ao menos um ensaio prático de restauração em banco descartável registrado antes da homologação e repetido periodicamente.
 
 ---
 
 ### Segurança e Privacidade
 
+<a id="rnf03"></a>
 #### RNF03 — Segurança das comunicações e das sessões
 * **Classificação FURPS+:** Funcionalidade / Segurança (Security)
 * **Classificação Sommerville:** Requisito de Produto (Segurança)
 * **Descrição:** O sistema deve proteger as comunicações em trânsito, rejeitar requisições sem credenciais válidas e limitar a duração das sessões, inclusive a inatividade em aparelhos pessoais.
-* **Métrica Verificável:** 100% do tráfego sob conexão cifrada (HTTPS/TLS); 100% de rejeição (HTTP 401) para requisições sem credenciais válidas; sessão expirada em até 8 h contínuas e em até 30 min de inatividade.
+* **Métrica Verificável:** 100% do tráfego sob conexão cifrada (HTTPS/TLS); 100% de rejeição (HTTP 401) para requisições sem credenciais válidas; sessão expirada em até 8 h contínuas e em até 30 min de inatividade (valores iniciais 🔧, a confirmar no trabalho de campo); sessão revogável pelo administrador em caso de perda do aparelho.
 
+<a id="rnf04"></a>
 #### RNF04 — Controle de acesso por perfil
 * **Classificação FURPS+:** Funcionalidade / Segurança (Security)
 * **Classificação Sommerville:** Requisito de Produto (Segurança)
 * **Descrição:** O sistema deve restringir cada operação e cada dado ao perfil autorizado, conforme a matriz de perfis da seção 8.5.1.
 * **Métrica Verificável:** 100% de bloqueio (HTTP 403) de requisições de escopo insuficiente e 0 acessos a dados nominais pelo perfil administrativo-financeiro em testes automatizados de rotas.
 
+<a id="rnf05"></a>
 #### RNF05 — Minimização de dados pessoais
 * **Classificação FURPS+:** Restrição de Design (+) / Segurança (Security)
 * **Classificação Sommerville:** Requisito Externo (Legislativo)
 * **Descrição:** O cadastro deve conter apenas identificação, contato e consentimentos, sem campos estruturados de dado pessoal sensível (LGPD, art. 5º, II).
 * **Métrica Verificável:** 0 campos estruturados de dado sensível no esquema do banco de dados (revisão formal de esquema).
 
+<a id="rnf06"></a>
 #### RNF06 — Prazo de atendimento à exclusão de dados
 * **Classificação FURPS+:** Funcionalidade / Requisito Legal (+)
 * **Classificação Sommerville:** Requisito Externo (Legislativo)
-* **Descrição:** O sistema deve executar a exclusão ou anonimização solicitada pelo titular em prazo regulamentar, com registro auditável (LGPD, art. 18).
-* **Métrica Verificável:** 100% das solicitações atendidas em até 72 horas, medido pelo intervalo entre o protocolo e a efetivação na trilha de auditoria.
+* **Descrição:** O sistema deve executar a exclusão ou anonimização solicitada pelo titular no prazo definido pelo Instituto, com registro auditável (LGPD, art. 18).
+* **Métrica Verificável:** 100% das solicitações atendidas em até 72 horas (valor inicial 🔧; a LGPD não fixa prazo para a eliminação e prevê 15 dias apenas para a resposta ao pedido de acesso, art. 19), medido pelo intervalo entre o protocolo e a efetivação na trilha de auditoria.
 
+<a id="rnf10"></a>
 #### RNF10 — Descarte de dados pessoais no aparelho
 * **Classificação FURPS+:** Segurança (Security)
 * **Classificação Sommerville:** Requisito de Produto (Segurança)
@@ -280,6 +329,7 @@ A governança do catálogo adota:
 
 ### Conformidade Legal (MROSC)
 
+<a id="rnf07"></a>
 #### RNF07 — Retenção documental decenal
 * **Classificação FURPS+:** Suportabilidade (Supportability) / Requisito Legal (+)
 * **Classificação Sommerville:** Requisito Externo (Legislativo)
@@ -290,46 +340,53 @@ A governança do catálogo adota:
 
 ### Desempenho e Eficiência
 
+<a id="rnf11"></a>
 #### RNF11 — Desempenho das consultas agregadas
 * **Classificação FURPS+:** Desempenho (Performance)
 * **Classificação Sommerville:** Requisito de Produto (Eficiência)
 * **Descrição:** As consultas aos painéis de acompanhamento e listagens de projetos devem responder com agilidade sob picos de acesso concorrente.
-* **Métrica Verificável:** Tempo de resposta inferior a 800 ms no percentil 95 (p95) sob carga de 50 requisições concorrentes por segundo, mantendo consumo de CPU do servidor abaixo de 75%.
+* **Métrica Verificável:** Tempo de resposta inferior a 800 ms no percentil 95 (p95) sob carga de 50 requisições concorrentes por segundo, mantendo consumo de CPU do servidor abaixo de 75% (valores iniciais 🔧, a recalibrar com a carga observada no piloto).
 
+<a id="rnf12"></a>
 #### RNF12 — Desempenho da inscrição pública
 * **Classificação FURPS+:** Desempenho (Performance)
 * **Classificação Sommerville:** Requisito de Produto (Eficiência)
 * **Descrição:** O formulário público de inscrição deve carregar rapidamente em navegadores móveis sob redes móveis com largura de banda restrita.
 * **Métrica Verificável:** First Contentful Paint (FCP) inferior a 2,5 s em perfil simulado de rede 4G lenta, atestado por auditoria Lighthouse no pipeline de CI.
 
+<a id="rnf13"></a>
 #### RNF13 — Desempenho da geração de relatórios
 * **Classificação FURPS+:** Desempenho (Performance)
 * **Classificação Sommerville:** Requisito de Produto (Eficiência)
 * **Descrição:** A compilação e renderização do relatório oficial em PDF deve ocorrer de maneira assíncrona e performática, mesmo contendo elevado volume de imagens.
-* **Métrica Verificável:** Arquivo PDF de até 50 páginas e 100 miniaturas disponível para download em menos de 5 segundos no percentil 95 (p95) em testes de carga.
+* **Métrica Verificável:** Arquivo PDF de até 50 páginas e 100 miniaturas disponível para download em menos de 5 segundos no percentil 95 (p95) em testes de carga (valores iniciais 🔧).
 
+<a id="rnf14"></a>
 #### RNF14 — Eficiência no envio de evidências
 * **Classificação FURPS+:** Desempenho (Performance)
 * **Classificação Sommerville:** Requisito de Produto (Eficiência)
 * **Descrição:** O cliente web deve comprimir fotos localmente antes do envio, otimizando o consumo da franquia de dados móveis do educador de campo.
-* **Métrica Verificável:** Redução média mínima de 60% no peso das imagens de alta resolução e tempo de transmissão por imagem inferior a 4 s em conexão 4G padrão.
+* **Métrica Verificável:** Redução média mínima de 60% no peso das imagens de alta resolução e tempo de transmissão por imagem inferior a 4 s em conexão 4G padrão (valores iniciais 🔧).
 
 ---
 
 ### Usabilidade, Portabilidade e Restrições
 
+<a id="rnf15"></a>
 #### RNF15 — Usabilidade móvel e inclusiva
 * **Classificação FURPS+:** Usabilidade (Usability)
 * **Classificação Sommerville:** Requisito de Produto (Usabilidade)
 * **Descrição:** As telas de campo e de inscrição pública devem ser ergonomicamente confortáveis em telas compactas, legíveis sob luz solar direta e acessíveis a pessoas com baixo letramento digital.
 * **Métrica Verificável:** Áreas de toque de no mínimo 48x48 px; inexistência de rolagem horizontal a partir de 360 px de largura; conformidade com 100% dos critérios WCAG 2.1 nível AA aplicáveis; inscrição concluída em até 5 telas e 3 min por ao menos 4 de 5 pessoas do público-alvo em testes de usabilidade.
 
+<a id="rnf16"></a>
 #### RNF16 — Compatibilidade entre navegadores e dispositivos
 * **Classificação FURPS+:** Suportabilidade (Supportability)
 * **Classificação Sommerville:** Requisito de Produto (Portabilidade)
 * **Descrição:** O frontend deve garantir equivalência visual e operacional em dispositivos móveis e desktops nos navegadores modernos.
-* **Métrica Verificável:** 0 quebras de layout ou falhas de script entre 360 px e 1920 px nos navegadores Chromium >= 120, Firefox >= 120 e WebKit/Safari >= 17, em testes de regressão visual.
+* **Métrica Verificável:** 0 quebras de layout ou falhas de script entre 360 px e 1920 px nas duas versões estáveis mais recentes de Chromium, Firefox e WebKit/Safari (versões mínimas 🔧), em testes de regressão visual.
 
+<a id="rnf17"></a>
 #### RNF17 — Restrição tecnológica e qualidade de código
 * **Classificação FURPS+:** Restrição de Implementação (+)
 * **Classificação Sommerville:** Requisito Organizacional (Implementação)
@@ -383,11 +440,11 @@ A rastreabilidade estabelece o vínculo bidirecional entre os problemas diagnost
 | :--- | :--- | :---: | :--- | :--- | :---: |
 | **RF19** | Consultar histórico de participação | G04 | — | HU-06 (CA-06.1) | Total |
 | **RF20** | Alertar cadastro duplicado | G04 | — | HU-06 (CA-06.2) | Total |
-| **RF21** | Registrar consentimento de guarda de dados | G04 | LGPD art. 7º e 8º | HU-06 (CA-06.3) | Total |
+| **RF21** | Registrar aviso de tratamento de dados na inscrição | G04 | LGPD art. 7º, I e II, 8º, 9º e 14; Seção 2.6 | HU-06 (CA-06.3) | Total |
 | **RF22** | Registrar autorização de contato | G04 | Seção 3.3.5; LGPD art. 8º, §5º | HU-06 (restrição de conformidade) | Parcial |
 | **RF23** | Registrar autorização de uso de imagem | — | Seção 3.3.4; LGPD art. 7º e 8º | HU-06 (restrição de conformidade) | Parcial |
 | **RF24** | Retificar dados cadastrais | — | Seção 3.3.9; LGPD art. 18 | HU-06 (restrição de conformidade) | Parcial |
-| **RF25** | Excluir ou anonimizar cadastro | — | Seção 3.3.9; LGPD art. 18 | HU-06 (restrição de conformidade) | Parcial |
+| **RF25** | Excluir ou anonimizar cadastro | — | Seção 3.3.9; LGPD art. 16, I, e 18, IV e VI | HU-06 (restrição de conformidade) | Parcial |
 
 #### CP6 — Acompanhamento Automático de Metas (OE04; OE01)
 | Requisito | Nome | Gargalo BPMN | Norma / Mitigação | História e Critério (Sprint 1) | Cobertura |
@@ -402,7 +459,7 @@ A rastreabilidade estabelece o vínculo bidirecional entre os problemas diagnost
 | :--- | :--- | :---: | :--- | :--- | :---: |
 | **RF30** | Anexar evidências documentais e fotográficas | G03 | — | HU-04 (CA-04.1) | Total |
 | **RF31** | Vincular evidência a meta contratual | G03 | — | HU-04 (CA-04.1, CA-04.3) | Parcial |
-| **RF32** | Segregar acesso a fotos de beneficiários vulneráveis | G03 | Seção 3.3.4; LGPD; ECA | HU-04 (sem CA) | Parcial |
+| **RF32** | Segregar acesso a fotos de beneficiários vulneráveis | G03 | Seção 3.3.4; LGPD art. 7º, I, e 14 | HU-04 (sem CA) | Parcial |
 
 #### CP8 — Relatórios e Exportação de Dados (OE06; OE04, OE05)
 | Requisito | Nome | Gargalo BPMN | Norma / Mitigação | História e Critério (Sprint 1) | Cobertura |
@@ -422,13 +479,13 @@ A rastreabilidade estabelece o vínculo bidirecional entre os problemas diagnost
 | **RNF01** | Integridade transacional dos dados | HU-01 (CA-01.3) | RF03, RF16 |
 | **RNF02** | Auditabilidade das alterações | Seção 3.3.9 | RF17, RF24, RF37 |
 | **RNF03** | Segurança das comunicações e das sessões | Seções 3.3.1 e 3.3.2 | *Transversal (Todos os RFs)* |
-| **RNF04** | Controle de acesso por perfil | Seção 3.5 (Matriz de Perfis) | RF32, RF19 a RF25 |
+| **RNF04** | Controle de acesso por perfil | Seção 3.5 (visibilidade por perfil); matriz da seção 8.5.1 | RF32, RF19 a RF25 |
 | **RNF05** | Minimização de dados pessoais | LGPD art. 5º, II; Restrição HU-06 | RF09, RF11, RF19 |
 | **RNF06** | Prazo de atendimento à exclusão de dados | LGPD art. 18 | RF25 |
 | **RNF07** | Retenção documental decenal | MROSC art. 68 | RF30, RF34 |
 | **RNF08** | Integridade de relatórios fechados | MROSC art. 63 a 66 | RF33, RF34, RF35 |
 | **RNF09** | Resiliência offline e sincronização sem duplicidade | Seção 3.3.3 | RF14 a RF17, RF30 |
-| **RNF10** | Descarte de dados pessoais no aparelho | Seção 3.4 (BYOD) | RF15, RF30 |
+| **RNF10** | Descarte de dados pessoais no aparelho | Seções 3.3.1 e 3.3.2 | RF15, RF30 |
 | **RNF11** | Desempenho das consultas agregadas | OE04 | RF05, RF06, RF26 |
 | **RNF12** | Desempenho da inscrição pública | OE02 | RF09, RF10 |
 | **RNF13** | Desempenho da geração de relatórios | OE06 | RF34, RF35 |
@@ -509,6 +566,7 @@ Responde à divisão operacional de responsabilidades entre quem cria, edita ou 
 3. **Escopo dos Gargalos G02 e G05:** O controle interno de ordens de serviço/chamados (G02) e o painel estratégico consolidado da Presidência (G05) permanecem mapeados como oportunidades no BPMN, dependendo de validação de valor na dinâmica de priorização MoSCoW da Sprint 2.
 4. **Parâmetros de Sessão e Campo (RNF03):** Manter sob observação durante os testes de campo se o encerramento automático por inatividade em 30 minutos não trará fricção operacional aos educadores durante oficinas de longa duração.
 5. **Hipóteses a validar com o Instituto:** Validação presencial do fluxo de consentimento de responsáveis por menores (LGPD art. 14) e do nível de visualização da Presidência sobre dados cadastrais individualizados.
+6. **Valores iniciais 🔧:** antecedência de alerta (RF06), configuração inicial de comprovações (RF08), obrigatoriedade do anexo do instrumento (RF01), sessão e inatividade (RNF03), prazo de exclusão (RNF06), latências e carga (RNF11, RNF13, RNF14), versões de navegador (RNF16) e RPO/RTO (RNF18) são parâmetros adotados sem fonte que os fixe; confirmação com o Instituto e com a equipe antes da verificação.
 
 ---
 
@@ -534,7 +592,7 @@ A tabela a seguir registra a rastreabilidade entre os códigos provisórios util
 | **RF-C07** | **RF18** | Apurar carga horária de participantes e facilitadores | Dupla C (PR #52 / Issue #40) |
 | **RF-P06** | **RF19** | Consultar histórico de participação | Dupla A (PR #48 / Issue #41) |
 | **RF-P07** | **RF20** | Alertar cadastro duplicado | Dupla A (PR #48 / Issue #41) |
-| **RF-P08** | **RF21** | Registrar consentimento de guarda de dados | Dupla A (PR #48 / Issue #41) |
+| **RF-P08** | **RF21** | Registrar aviso de tratamento de dados na inscrição | Dupla A (PR #48 / Issue #41) |
 | **RF-P09** | **RF22** | Registrar autorização de contato | Dupla A (PR #48 / Issue #41) |
 | **RF-P10** | **RF23** | Registrar autorização de uso de imagem | Dupla A (PR #48 / Issue #41) |
 | **RF-P11** | **RF24** | Retificar dados cadastrais | Dupla A (PR #48 / Issue #41) |
@@ -553,7 +611,7 @@ A tabela a seguir registra a rastreabilidade entre os códigos provisórios util
 | **RF-R09** | **RF37** | Registrar trilha de auditoria para retificações na prestação | Dupla C & B (PR #52 / Issue #42) |
 
 ### Requisitos Não Funcionais (RNFs)
-| Código Provisório | Código Definitivo | Nome / Propriedade | Tratamento de Consolidação (PR #43 / Issue #43) |
+| Código Provisório | Código Definitivo | Nome / Propriedade | Tratamento de Consolidação (PR #53 / Issue #43) |
 | :---: | :---: | :--- | :--- |
 | **RNF01 (#50)** | **RNF01** | Integridade transacional dos dados | Mantido; descrição generalizada sem amarra tecnológica |
 | **RNF02 (#50)** | **RNF02** | Auditabilidade das alterações | Ampliado para cobrir retificações, extemporaneidade e relatórios |
@@ -572,4 +630,5 @@ A tabela a seguir registra a rastreabilidade entre os códigos provisórios util
 | **RNF-C03 + RNF-P04** | **RNF15** | Usabilidade móvel e inclusiva | Unifica ergonomia de campo e formulário para baixo letramento |
 | **RNF06 (#50)** | **RNF16** | Compatibilidade entre navegadores e dispositivos | Mantido com cobertura Chromium, Firefox e WebKit |
 | **RNF07 (#50)** | **RNF17** | Restrição tecnológica e qualidade de código | Mantido com 0 erros de tipagem estrita no CI |
+| — | **RNF18** | Cópia de segurança e recuperação de dados | Acrescentado na consolidação a partir da seção 2.6 do Documento de Visão |
 | **Documento de Visão 2.6** | **RNF18** | Cópia de segurança e recuperação de dados | Incorporado formalmente a partir das decisões de gestão |
