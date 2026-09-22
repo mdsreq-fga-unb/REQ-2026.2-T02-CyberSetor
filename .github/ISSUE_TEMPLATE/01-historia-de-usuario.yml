@@ -1,0 +1,80 @@
+name: História de usuário
+description: Item do Product Backlog que descreve valor para um perfil do Instituto, ligado a requisitos e regras.
+title: "HU-xx: <ação> <objeto>"
+labels: ["tipo: historia", "er: declaracao"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Uma história por capacidade. Antes de abrir, confira a Definition of Ready (seção 9 do site): valor para um perfil do Instituto · ator explícito · vinculada a RF/RNF e às regras que a condicionam · critérios de aceitação em lista · classificada no MoSCoW · sem decisão externa pendente · cabe em uma sprint.
+  - type: textarea
+    id: historia
+    attributes:
+      label: História
+      description: Formato do XP, em linguagem do Instituto.
+      placeholder: "Como <perfil do Instituto>, quero <ação> para <resultado esperado>."
+    validations:
+      required: true
+  - type: dropdown
+    id: cp
+    attributes:
+      label: Característica de produto
+      options:
+        - CP1 — Gestão de projetos e metas
+        - CP2 — Gestão de atividades
+        - CP3 — Inscrição de participantes
+        - CP4 — Registro de participação em campo
+        - CP5 — Cadastro e histórico de pessoas
+        - CP6 — Acompanhamento automático de metas
+        - CP7 — Repositório de evidências e documentação
+        - CP8 — Relatórios e exportação de dados
+        - Transversal (identidade, acesso, operação)
+    validations:
+      required: true
+  - type: checkboxes
+    id: oe
+    attributes:
+      label: Objetivos específicos atendidos
+      options:
+        - label: OE01
+        - label: OE02
+        - label: OE03
+        - label: OE04
+        - label: OE05
+        - label: OE06
+  - type: input
+    id: rf
+    attributes:
+      label: Requisitos funcionais relacionados
+      description: Códigos da seção 8.2 do site.
+      placeholder: "RF03, RF04"
+    validations:
+      required: true
+  - type: input
+    id: rnf_rn
+    attributes:
+      label: Requisitos não funcionais e regras de negócio relacionados
+      description: Códigos das seções 8.3 e 8.8 do site.
+      placeholder: "RNF02; RN-01, RN-02"
+  - type: textarea
+    id: criterios
+    attributes:
+      label: Critérios de aceitação
+      description: Lista de critérios verificáveis, um por linha, numerados CA-xx.1, CA-xx.2. Não usar Dado/Quando/Então.
+      placeholder: |
+        - CA-xx.1 ...
+        - CA-xx.2 ...
+    validations:
+      required: true
+  - type: textarea
+    id: pendencias
+    attributes:
+      label: Dependências e pendências 🔧
+      description: Decisão do Instituto ou da equipe de que a história depende; valor inicial ainda não confirmado.
+  - type: checkboxes
+    id: quadro
+    attributes:
+      label: Ao abrir, preencher no quadro
+      options:
+        - label: Sprint, Épico e Atividade de ER preenchidos no quadro do projeto
+          required: true

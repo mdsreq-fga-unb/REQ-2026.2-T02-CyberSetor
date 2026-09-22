@@ -1,53 +1,49 @@
-import os
+"""
+Gera as páginas de acompanhamento do site a partir das issues e do quadro do projeto.
+
+Saída (não versionada; ver .gitignore):
+  docs/entregas/debitos-u1.md               issues abertas pelo docente (rótulo "origem: professor")
+  docs/gestao/sprints/tarefas-sprint-N.md   uma página por sprint, N em SPRINTS
+
+A sprint de cada issue vem do campo Sprint do quadro quando o token consegue
+lê-lo; senão, do rótulo "sprint: N". O Status vem do quadro; sem ele, dos
+rótulos de situação e do estado da issue.
+"""
 import json
+import os
+import re
 import urllib.request
 
 REPO_FULL = os.environ.get("GITHUB_REPOSITORY", "mdsreq-fga-unb/REQ-2026.2-T02-CyberSetor")
 TOKEN = os.environ.get("GITHUB_TOKEN")
-
 FEEDBACK_FILE = "docs/entregas/debitos-u1.md"
-SPRINT_FILE = "docs/gestao/sprints/tarefas-sprint-1.md"
+SPRINT_FILE = "docs/gestao/sprints/tarefas-sprint-{n}.md"
+SPRINTS = [1, 2]  # páginas geradas; acrescentar aqui e no nav do mkdocs.yml a cada sprint
+PROFESSOR = "marsicanogeorge"
 
 if not TOKEN:
     print("GITHUB_TOKEN ausente. Execução ignorada.")
-    exit(0)
+    raise SystemExit(0)
 
 owner, repo_name = REPO_FULL.split("/")
 
-# Consulta GraphQL para buscar Issues + Labels + Status no GitHub Projects (Projects v2)
-graphql_query = """
-query($owner: String!, $repo: String!) {
+QUERY = """
+query($owner: String!, $repo: String!, $after: String) {
   repository(owner: $owner, name: $repo) {
-    issues(first: 100, orderBy: {field: CREATED_AT, direction: ASC}) {
+    issues(first: 100, after: $after, orderBy: {field: CREATED_AT, direction: ASC}) {
+      pageInfo { hasNextPage endCursor }
       nodes {
-        number
-        title
-        state
-        url
-        author {
-          login
-        }
-        assignees(first: 10) {
-          nodes {
-            login
-          }
-        }
-        labels(first: 20) {
-          nodes {
-            name
-          }
-        }
+        number title state url
+        author { login }
+        assignees(first: 10) { nodes { login } }
+        labels(first: 20) { nodes { name } }
         projectItems(first: 5) {
           nodes {
-            fieldValues(first: 10) {
+            fieldValues(first: 20) {
               nodes {
                 ... on ProjectV2ItemFieldSingleSelectValue {
                   name
-                  field {
-                    ... on ProjectV2SingleSelectField {
-                      name
-                    }
-                  }
+                  field { ... on ProjectV2SingleSelectField { name } }
                 }
               }
             }
@@ -59,162 +55,134 @@ query($owner: String!, $repo: String!) {
 }
 """
 
-payload = json.dumps({
-    "query": graphql_query,
-    "variables": {"owner": owner, "repo": repo_name}
-}).encode("utf-8")
 
-req = urllib.request.Request(
-    "https://api.github.com/graphql",
-    data=payload,
-    headers={
-        "Authorization": f"Bearer {TOKEN}",
-        "Content-Type": "application/json",
-        "User-Agent": "Python-GitHub-Action"
-    }
-)
-
-try:
+def graphql(variables):
+    payload = json.dumps({"query": QUERY, "variables": variables}).encode("utf-8")
+    req = urllib.request.Request(
+        "https://api.github.com/graphql",
+        data=payload,
+        headers={"Authorization": f"Bearer {TOKEN}", "Content-Type": "application/json",
+                 "User-Agent": "cybersetor-fetch-issues"},
+    )
     with urllib.request.urlopen(req) as response:
-        result = json.loads(response.read().decode())
-        issues_nodes = result.get("data", {}).get("repository", {}).get("issues", {}).get("nodes", [])
-except Exception as e:
-    print(f"Erro ao consultar GraphQL da API do GitHub: {e}")
-    exit(1)
+        return json.loads(response.read().decode())
 
 
-def extrair_status_project(node):
-    """Extrai o valor da coluna 'Status' no GitHub Projects v2."""
+issues = []
+after = None
+while True:
+    try:
+        data = graphql({"owner": owner, "repo": repo_name, "after": after})
+    except Exception as e:  # noqa: BLE001
+        print(f"Erro ao consultar a API do GitHub: {e}")
+        raise SystemExit(1)
+    conn = data.get("data", {}).get("repository", {}).get("issues", {})
+    issues.extend(conn.get("nodes", []))
+    if not conn.get("pageInfo", {}).get("hasNextPage"):
+        break
+    after = conn["pageInfo"]["endCursor"]
+
+
+def campos_do_quadro(node):
+    """Valores dos campos de seleção única do item no quadro: {campo: valor}."""
+    valores = {}
     for item in node.get("projectItems", {}).get("nodes", []):
         for fv in item.get("fieldValues", {}).get("nodes", []):
-            field_name = fv.get("field", {}).get("name", "")
-            if field_name.lower() == "status":
-                return fv.get("name")
+            nome = (fv.get("field") or {}).get("name")
+            if nome and fv.get("name"):
+                valores[nome.lower()] = fv["name"]
+    return valores
+
+
+def sprint_da_issue(node, campos):
+    valor = campos.get("sprint")  # ex.: "Sprint 2"
+    if valor:
+        m = re.search(r"(\d+)", valor)
+        if m:
+            return int(m.group(1))
+    for lb in [l["name"].lower() for l in node.get("labels", {}).get("nodes", [])]:
+        m = re.match(r"sprint[:\- ]\s*(\d+)", lb)
+        if m:
+            return int(m.group(1))
     return None
 
 
-issues_feedback = []
-issues_sprint = []
-
-for node in issues_nodes:
-    titulo = node["title"].lower()
-    autor = node.get("author", {}).get("login", "").lower() if node.get("author") else ""
+def situacao(node, campos, feedback=False):
+    estado = node["state"]
+    status = (campos.get("status") or "").lower()
     labels = [l["name"].lower() for l in node.get("labels", {}).get("nodes", [])]
-    
-    # Classificação entre Feedback da Monitoria vs Sprint da Equipe
-    is_feedback = (
-        autor == "marsicanogeorge"
-        or "unidade 1" in titulo
-        or "u1" in titulo
-        or any(lb in labels for lb in ["improvement", "requirements", "help wanted", "feedback", "monitoria"])
-    )
-    
-    is_sprint_1 = (
-        any("sprint: 1" in lb or "sprint-1" in lb for lb in labels)
-        or not is_feedback
-    )
-    
-    if is_feedback:
-        issues_feedback.append(node)
-    elif is_sprint_1:
-        issues_sprint.append(node)
+    if estado == "CLOSED" or status in ("done", "concluído", "concluido"):
+        return "🟢 Validado e fechado" if feedback else "🟢 Concluído"
+    if status in ("aguardando", "aguarda cliente", "bloqueado") or "aguarda cliente" in labels or "bloqueado" in labels:
+        return "⏳ Aguardando retorno ou decisão"
+    if status in ("em revisão", "em revisao", "review") or "pronto-para-revisao" in labels:
+        return "🔵 Em revisão"
+    if status in ("in progress", "em andamento") or "em-andamento" in labels:
+        return "🟡 Em andamento"
+    if status:
+        return f"📋 {campos.get('status')}"
+    return "⚪ A fazer"
 
 
-# ==============================================================================
-# 1. GERAÇÃO DA ABA DO PROFESSOR (DÉBITOS U1)
-# ==============================================================================
-conteudo_feedback = """# Débitos e Feedbacks da Monitoria (Unidade 1)
+def responsaveis(node):
+    nomes = [f"@{a['login']}" for a in node.get("assignees", {}).get("nodes", [])]
+    return ", ".join(nomes) if nomes else "Não atribuído"
 
-> **Regra de Governança:** As issues de feedback permanecem abertas pela equipe durante a atuação e são fechadas exclusivamente pelo professor ou monitores após a validação no site.
 
-| Issue | Título | Responsáveis | Status da Correção | Acesso |
+def e_do_professor(node):
+    labels = [l["name"].lower() for l in node.get("labels", {}).get("nodes", [])]
+    autor = ((node.get("author") or {}).get("login") or "").lower()
+    return "origem: professor" in labels or autor == PROFESSOR
+
+
+feedback = [n for n in issues if e_do_professor(n)]
+por_sprint = {n: [] for n in SPRINTS}
+for node in issues:
+    if e_do_professor(node):
+        continue
+    s = sprint_da_issue(node, campos_do_quadro(node))
+    if s in por_sprint:
+        por_sprint[s].append(node)
+
+# ---- issues do docente ----
+texto = """# Débitos e Feedbacks da Monitoria (Unidade 1)
+
+> As issues abertas pelo docente permanecem abertas durante a atuação da equipe e são fechadas pelo docente ou pela monitoria após a validação no site.
+
+| Issue | Título | Responsáveis | Situação | Acesso |
 | :--- | :--- | :--- | :---: | :---: |
 """
-
-if not issues_feedback:
-    conteudo_feedback += "| - | *Nenhum feedback registrado no momento.* | - | - | - |\n"
-else:
-    for node in issues_feedback:
-        num = f"#{node['number']}"
-        titulo = node["title"].replace("|", "-")
-        assignees_list = [f"@{a['login']}" for a in node.get("assignees", {}).get("nodes", [])]
-        assignees = ", ".join(assignees_list) if assignees_list else "Não atribuído"
-        labels = [l["name"].lower() for l in node.get("labels", {}).get("nodes", [])]
-        proj_status = extrair_status_project(node)
-        proj_status_lower = proj_status.lower() if proj_status else ""
-        
-        # 1º: Checa se foi fechada pela monitoria (no estado nativo ou no board)
-        if node["state"] == "CLOSED" or proj_status_lower in ["done", "concluído", "concluido", "closed"]:
-            status = "🟢 Validado e Fechado (Monitoria)"
-        # 2º: Checa status do Project ou Labels de revisão
-        elif proj_status_lower in ["pronto para revisão", "pronto para revisao", "review", "em revisão"] or any(lb in labels for lb in ["pronto-para-revisao", "pronto para revisao", "em revisao"]):
-            status = "🔵 Pronto para Revisão"
-        # 3º: Checa status do Project ou Labels de em andamento
-        elif proj_status_lower in ["in progress", "em andamento", "doing", "fazendo"] or any(lb in labels for lb in ["em-andamento", "em andamento"]):
-            status = "🟡 Em Correção pela Equipe"
-        # 4º: Default
-        else:
-            status = "🔴 Pendente de Atuação"
-            
-        conteudo_feedback += f"| **{num}** | {titulo} | {assignees} | {status} | [Ver no GitHub]({node['url']}) |\n"
-
+if not feedback:
+    texto += "| - | *Nenhum feedback registrado.* | - | - | - |\n"
+for node in feedback:
+    texto += (f"| **#{node['number']}** | {node['title'].replace('|', '-')} | {responsaveis(node)} | "
+              f"{situacao(node, campos_do_quadro(node), feedback=True)} | [Ver no GitHub]({node['url']}) |\n")
 os.makedirs(os.path.dirname(FEEDBACK_FILE), exist_ok=True)
 with open(FEEDBACK_FILE, "w", encoding="utf-8") as f:
-    f.write(conteudo_feedback)
+    f.write(texto)
 
+# ---- uma página por sprint ----
+for n in SPRINTS:
+    texto = f"""# Acompanhamento de Tarefas — Sprint {n}
 
-# ==============================================================================
-# 2. GERAÇÃO DA ABA DA SPRINT 1 (BACKLOG DA EQUIPE)
-# ==============================================================================
-conteudo_sprint = """# Acompanhamento de Tarefas — Sprint 1
+> Gerado a partir das issues e do quadro do projeto a cada publicação do site. A fonte é o quadro; esta página é uma leitura.
 
-> Acompanhamento em tempo real das histórias de usuário, elicitações e artefatos de modelagem.
-
-| Issue | Título | Tipo / Atividade de ER | Responsáveis | Status | Acesso |
+| Issue | Título | Tipo / Atividade de ER | Responsáveis | Situação | Acesso |
 | :--- | :--- | :--- | :--- | :---: | :---: |
 """
+    itens = por_sprint[n]
+    if not itens:
+        texto += f"| - | *Nenhum item alocado à Sprint {n}.* | - | - | - | - |\n"
+    for node in itens:
+        campos = campos_do_quadro(node)
+        tags = [l["name"] for l in node.get("labels", {}).get("nodes", []) if l["name"].startswith(("er:", "tipo:"))]
+        tipo = ", ".join(f"`{t}`" for t in tags) if tags else "—"
+        texto += (f"| **#{node['number']}** | {node['title'].replace('|', '-')} | {tipo} | {responsaveis(node)} | "
+                  f"{situacao(node, campos)} | [Ver no GitHub]({node['url']}) |\n")
+    caminho = SPRINT_FILE.format(n=n)
+    os.makedirs(os.path.dirname(caminho), exist_ok=True)
+    with open(caminho, "w", encoding="utf-8") as f:
+        f.write(texto)
 
-if not issues_sprint:
-    conteudo_sprint += "| - | *Nenhuma tarefa cadastrada para a Sprint 1.* | - | - | - | - |\n"
-else:
-    for node in issues_sprint:
-        num = f"#{node['number']}"
-        titulo = node["title"].replace("|", "-")
-        assignees_list = [f"@{a['login']}" for a in node.get("assignees", {}).get("nodes", [])]
-        assignees = ", ".join(assignees_list) if assignees_list else "Não atribuído"
-        
-        labels_raw = [l["name"] for l in node.get("labels", {}).get("nodes", [])]
-        labels_lower = [l.lower() for l in labels_raw]
-        
-        tags_er = [l for l in labels_raw if l.startswith("er:") or l.startswith("tipo:")]
-        tipo_str = ", ".join([f"`{t}`" for t in tags_er]) if tags_er else "—"
-        
-        proj_status = extrair_status_project(node)
-        proj_status_lower = proj_status.lower() if proj_status else ""
-        
-        # 1º: Concluído
-        if node["state"] == "CLOSED" or proj_status_lower in ["done", "concluído", "concluido", "closed"]:
-            status = "🟢 Concluído"
-        # 2º: Bloqueio / Espera externa (Project ou label)
-        elif proj_status_lower in ["aguarda cliente", "waiting", "bloqueado", "blocked"] or "aguarda cliente" in labels_lower:
-            status = "⏳ Aguarda Cliente"
-        # 3º: Em Revisão
-        elif proj_status_lower in ["pronto para revisão", "pronto para revisao", "review", "em revisão"] or any(lb in labels_lower for lb in ["pronto-para-revisao", "pronto para revisao"]):
-            status = "🔵 Pronto para Revisão"
-        # 4º: Em Andamento / In Progress
-        elif proj_status_lower in ["in progress", "em andamento", "doing", "fazendo"] or any(lb in labels_lower for lb in ["em-andamento", "em andamento", "in-progress"]):
-            status = "🟡 Em Andamento"
-        # 5º: Outro status customizado no Project Board
-        elif proj_status:
-            status = f"📋 {proj_status}"
-        # 6º: To Do padrão
-        else:
-            status = "⚪ A Fazer (To Do)"
-            
-        conteudo_sprint += f"| **{num}** | {titulo} | {tipo_str} | {assignees} | {status} | [Ver no GitHub]({node['url']}) |\n"
-
-os.makedirs(os.path.dirname(SPRINT_FILE), exist_ok=True)
-with open(SPRINT_FILE, "w", encoding="utf-8") as f:
-    f.write(conteudo_sprint)
-
-print(f"Sucesso: {FEEDBACK_FILE} ({len(issues_feedback)} itens) e {SPRINT_FILE} ({len(issues_sprint)} itens) gerados com status do Projects!")
+print(f"Gerado: {FEEDBACK_FILE} ({len(feedback)}) e "
+      + ", ".join(f"sprint {n} ({len(por_sprint[n])})" for n in SPRINTS))

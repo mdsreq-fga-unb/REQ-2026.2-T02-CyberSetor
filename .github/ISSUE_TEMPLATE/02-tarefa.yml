@@ -1,0 +1,64 @@
+name: Tarefa
+description: Trabalho de processo, pesquisa, elicitação ou infraestrutura, sem valor direto ao usuário final.
+title: "<verbo> <objeto>"
+labels: ["tipo: tarefa"]
+body:
+  - type: textarea
+    id: objetivo
+    attributes:
+      label: Objetivo
+      description: O que fica pronto quando a tarefa termina, em uma ou duas frases.
+    validations:
+      required: true
+  - type: dropdown
+    id: atividade_er
+    attributes:
+      label: Atividade de Engenharia de Requisitos
+      description: Adicione também o rótulo `er:` correspondente.
+      options:
+        - Elicitação e descoberta
+        - Análise e consenso
+        - Declaração
+        - Representação
+        - Verificação e validação
+        - Organização e atualização
+        - Não se aplica (infraestrutura ou processo)
+    validations:
+      required: true
+  - type: dropdown
+    id: epico
+    attributes:
+      label: Épico
+      options:
+        - Requisito e meta
+        - Atividade
+        - Evidência
+        - Relatório
+        - Pessoas
+        - Processo e infraestrutura
+    validations:
+      required: true
+  - type: textarea
+    id: origem
+    attributes:
+      label: Origem
+      description: Ata, decisão, seção do Documento de Visão, atividade da disciplina ou pedido do Instituto que motiva a tarefa.
+    validations:
+      required: true
+  - type: textarea
+    id: pronto
+    attributes:
+      label: Concluída quando
+      description: Condições objetivas de conclusão, uma por linha.
+      placeholder: |
+        - [ ] ...
+        - [ ] ...
+    validations:
+      required: true
+  - type: checkboxes
+    id: quadro
+    attributes:
+      label: Ao abrir, preencher no quadro
+      options:
+        - label: Sprint, Épico e Atividade de ER preenchidos no quadro do projeto
+          required: true

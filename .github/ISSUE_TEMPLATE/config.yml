@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Site do projeto (documentação publicada)
+    url: https://mdsreq-fga-unb.github.io/REQ-2026.2-T02-CyberSetor/
+    about: Documento de Visão, requisitos, atas e planos de sprint.
+  - name: Quadro do projeto (Product Backlog)
+    url: https://github.com/orgs/mdsreq-fga-unb/projects/121
+    about: Toda issue nova entra no quadro automaticamente; preencha Sprint, Épico e Atividade de ER ao abrir.

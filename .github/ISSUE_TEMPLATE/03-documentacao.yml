@@ -1,0 +1,36 @@
+name: Documentação
+description: Alteração em página do site (Documento de Visão, requisitos, atas, planos de sprint).
+title: "docs(<escopo>): <o que muda>"
+labels: ["tipo: documentacao"]
+body:
+  - type: input
+    id: pagina
+    attributes:
+      label: Página e seção
+      placeholder: "docs/requisitos/8-requisitos.md — seção 8.6"
+    validations:
+      required: true
+  - type: textarea
+    id: mudanca
+    attributes:
+      label: O que muda
+      description: Descreva pelo conteúdo, não pelo processo. Nada de "corrigir issue" ou "reverter".
+    validations:
+      required: true
+  - type: textarea
+    id: fonte
+    attributes:
+      label: Fonte da mudança
+      description: Ata, decisão registrada, norma (com artigo), feedback da monitoria ou do docente. Número sem fonte entra como valor inicial 🔧.
+    validations:
+      required: true
+  - type: checkboxes
+    id: regras
+    attributes:
+      label: Regras da página publicada
+      options:
+        - label: Linha nova no histórico de versões da página, descrevendo o conteúdo que mudou
+        - label: Sem número de issue, PR, dupla ou narração de processo no corpo da página
+        - label: Sem tecnologia nem informação de planejamento dentro de requisito
+        - label: "`mkdocs build --strict` limpo antes do PR"
+        - label: PR revisado por integrante de outra dupla antes do merge

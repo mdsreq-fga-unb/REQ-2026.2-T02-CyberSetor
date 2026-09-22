@@ -9,4 +9,4 @@ venv/
 # Páginas geradas por .github/scripts/fetch_issues.py a partir das issues.
 # Saída, não fonte: o deploy e o build-check as regeram a cada execução.
 docs/entregas/debitos-u1.md
-docs/gestao/sprints/tarefas-sprint-1.md
+docs/gestao/sprints/tarefas-sprint-*.md

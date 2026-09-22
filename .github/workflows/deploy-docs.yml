@@ -1,7 +1,9 @@
 name: deploy-docs
 
-# Publica o site no GitHub Pages. Executa na branch main e também quando houver
-# atualizações nas issues (abertura, labels, assignees ou fechamento pela monitoria).
+# Publica o site no GitHub Pages. Executa na branch main, quando houver
+# atualização nas issues e a cada seis horas: mudanças de Status e Sprint no
+# quadro do projeto não geram evento no repositório, e as páginas de
+# acompanhamento são lidas do quadro.
 
 on:
   push:
@@ -9,6 +11,9 @@ on:
       - main
   issues:
     types: [opened, edited, closed, reopened, labeled, unlabeled, assigned, unassigned]
+  schedule:
+    - cron: "0 */6 * * *"
+  workflow_dispatch:
 
 permissions:
   contents: write
