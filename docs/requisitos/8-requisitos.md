@@ -83,27 +83,27 @@ A governança do catálogo adota:
 <a id="rf09"></a>
 #### RF09 — Disponibilizar formulário público de inscrição
 * **Descrição:** O sistema deve permitir que o interessado se inscreva em oficina ou evento por formulário público acessível em navegador móvel, sem necessidade de criação de conta nem senha.
-* **Rastreabilidade:** CP3 | OE02 | BPMN G03, G04 | *Candidato a nova história na Sprint 2*
+* **Rastreabilidade:** CP3 | OE02 | BPMN G03, G04
 
 <a id="rf10"></a>
 #### RF10 — Gerar QR Code de inscrição
-* **Descrição:** O sistema deve permitir que o usuário gere, para cada atividade, um link e um QR Code dinâmico que abrem o formulário público de inscrição, para divulgação em cartazes impressos e redes sociais.
-* **Rastreabilidade:** CP3 | OE02 | *Candidato a nova história na Sprint 2*
+* **Descrição:** O sistema deve permitir que o usuário gere, para cada atividade, um link e um QR Code que abrem o formulário público de inscrição, para divulgação em cartazes impressos e redes sociais.
+* **Rastreabilidade:** CP3 | OE02
 
 <a id="rf11"></a>
 #### RF11 — Registrar inscrição presencial assistida
 * **Descrição:** O sistema deve permitir que o educador ou o recepcionista inscreva um participante presencialmente em seu nome, garantindo o acolhimento de pessoas em situação de rua ou sem conectividade própria.
-* **Rastreabilidade:** CP3 | OE02 | Seção 3.3.10 | *Candidato a nova história na Sprint 2*
+* **Rastreabilidade:** CP3 | OE02 | Seção 3.3.10
 
 <a id="rf12"></a>
 #### RF12 — Limitar vagas da atividade
 * **Descrição:** O sistema deve bloquear automaticamente novas inscrições confirmadas quando o número máximo de vagas estabelecido para a turma for atingido.
-* **Rastreabilidade:** CP3 | OE01, OE02 | *Candidato a nova história na Sprint 2*
+* **Rastreabilidade:** CP3 | OE01, OE02
 
 <a id="rf13"></a>
 #### RF13 — Ordenar lista de espera
-* **Descrição:** O sistema deve registrar as inscrições submetidas após o esgotamento das vagas regulares em uma fila de espera ordenada cronologicamente pelo timestamp da submissão.
-* **Rastreabilidade:** CP3 | OE01, OE02 | *Candidato a nova história na Sprint 2*
+* **Descrição:** O sistema deve registrar as inscrições submetidas após o esgotamento das vagas regulares em uma fila de espera ordenada pelo momento da inscrição.
+* **Rastreabilidade:** CP3 | OE01, OE02
 
 ---
 
@@ -111,28 +111,28 @@ A governança do catálogo adota:
 
 <a id="rf14"></a>
 #### RF14 — Registrar frequência em dispositivo móvel
-* **Descrição:** Deve ser possível ao educador ou facilitador de campo realizar a chamada digital diretamente em smartphone pessoal (BYOD), fornecendo interface otimizada para marcação individual ou confirmação em lote.
-* **Rastreabilidade:** CP4 | OE03, OE04 | BPMN G03 | *Candidato a nova história na Sprint 2*
+* **Descrição:** Deve ser possível ao educador ou facilitador de campo realizar a chamada digital no próprio smartphone, fornecendo interface otimizada para marcação individual ou confirmação em lote.
+* **Rastreabilidade:** CP4 | OE03, OE04 | BPMN G03
 
 <a id="rf15"></a>
 #### RF15 — Operar registro de presença em modo offline
-* **Descrição:** O sistema deve permitir a chamada de oficinas mesmo na ausência completa de conexão com a internet no SCS, retendo os registros no armazenamento local seguro do navegador (IndexedDB) e gerenciando uma fila local de eventos pendentes de sincronização.
-* **Rastreabilidade:** CP4 | OE03, OE04 | Seção 3.3.3 | BPMN G03 | *Candidato a nova história na Sprint 2*
+* **Descrição:** O sistema deve permitir a chamada de oficinas mesmo na ausência completa de conexão com a internet no SCS, retendo os registros no armazenamento local do dispositivo e gerenciando uma fila local de eventos pendentes de sincronização.
+* **Rastreabilidade:** CP4 | OE03, OE04 | Seção 3.3.3 | BPMN G03
 
 <a id="rf16"></a>
 #### RF16 — Sincronizar presenças com reconciliação idempotente
-* **Descrição:** O sistema deve sincronizar automaticamente a fila local de presenças com o servidor assim que a conectividade for restabelecida, utilizando identificadores únicos (UUIDv4) e garantindo que submissões repetidas do mesmo lote não dupliquem registros no banco de dados.
-* **Rastreabilidade:** CP4 | OE03, OE04 | Seção 3.3.3 | BPMN G03 | *Candidato a nova história na Sprint 2*
+* **Descrição:** O sistema deve sincronizar automaticamente a fila local de presenças com o servidor assim que a conectividade for restabelecida, utilizando identificadores únicos gerados no dispositivo e garantindo que submissões repetidas do mesmo lote não dupliquem registros no banco de dados.
+* **Rastreabilidade:** CP4 | OE03, OE04 | Seção 3.3.3 | BPMN G03
 
 <a id="rf17"></a>
 #### RF17 — Registrar lançamento extemporâneo com justificativa
 * **Descrição:** Deve ser possível lançar ou retificar chamadas após a data de realização da atividade, exigindo obrigatoriamente justificativa textual fundamentada e registrando autor, data, hora e motivo na trilha de auditoria.
-* **Rastreabilidade:** CP4 | OE03, OE04 | Seção 3.3.8 | BPMN G03 | *Candidato a nova história na Sprint 2*
+* **Rastreabilidade:** CP4 | OE03, OE04 | Seção 3.3.8 | BPMN G03
 
 <a id="rf18"></a>
 #### RF18 — Apurar carga horária de participantes e facilitadores
 * **Descrição:** O sistema deve acumular automaticamente o total de horas de participação efetiva de cada beneficiário e o total de horas ministradas por facilitador em cada ciclo de oficinas.
-* **Rastreabilidade:** CP4 | OE03, OE04 | BPMN G03 | *Candidato a nova história na Sprint 2*
+* **Rastreabilidade:** CP4 | OE03, OE04 | BPMN G03
 
 ---
 
@@ -185,17 +185,17 @@ A governança do catálogo adota:
 <a id="rf27"></a>
 #### RF27 — Parametrizar apuração para metas não lineares e marcos
 * **Descrição:** Deve ser possível parametrizar regras distintas conforme o indicador: apuração cumulativa linear ou aferição binária por marco (*milestone*, ex.: publicação de catálogo).
-* **Rastreabilidade:** CP6 | OE04 | Seção 2.3 | BPMN G05 | *Candidato a nova história na Sprint 2*
+* **Rastreabilidade:** CP6 | OE04 | Seção 2.3 | BPMN G05
 
 <a id="rf28"></a>
 #### RF28 — Emitir alertas de risco de inexecução
 * **Descrição:** O sistema deve emitir avisos destacados quando o ritmo de execução estiver abaixo da curva planejada, possibilitando ações corretivas preventivas antes do vencimento do prazo.
-* **Rastreabilidade:** CP6 | OE04 | BPMN G05 | *Candidato a nova história na Sprint 2*
+* **Rastreabilidade:** CP6 | OE04 | BPMN G05
 
 <a id="rf29"></a>
 #### RF29 — Versionar metas por Termo Aditivo
 * **Descrição:** O sistema deve registrar repactuações de metas, valores ou prazos decorrentes de termo aditivo ou de apostila ao plano de trabalho como nova versão do plano, mantendo a pactuação inicial e seus resultados e gerando comparativo auditável (previsto original, reprogramado e realizado).
-* **Rastreabilidade:** CP6 | OE04 | BPMN G05 | Lei 13.019/2014, art. 55 e 57 | *Candidato a nova história na Sprint 2*
+* **Rastreabilidade:** CP6 | OE04 | BPMN G05 | Lei 13.019/2014, art. 55 e 57
 
 ---
 
@@ -270,14 +270,14 @@ A governança do catálogo adota:
 * **Classificação FURPS+:** Confiabilidade (Reliability) / Segurança (Security)
 * **Classificação Sommerville:** Requisito de Produto (Integridade)
 * **Descrição:** O sistema deve garantir que o relatório finalizado reflita exatamente o estado dos dados no fechamento do ciclo e impedir alteração posterior sem rastro.
-* **Métrica Verificável:** 100% de correspondência entre o hash SHA-256 do arquivo gerado e o registro gravado na base de dados, e 0 alterações diretas sobre o período fechado.
+* **Métrica Verificável:** 100% de correspondência entre a verificação de integridade do arquivo gerado e o registro gravado na base de dados, e 0 alterações diretas sobre o período fechado.
 
 <a id="rnf09"></a>
 #### RNF09 — Resiliência offline e sincronização sem duplicidade
 * **Classificação FURPS+:** Confiabilidade (Reliability) / Usabilidade (Usability)
 * **Classificação Sommerville:** Requisito de Produto (Confiabilidade e resiliência)
 * **Descrição:** O registro de presenças e evidências em campo deve continuar funcionando sem conexão, reter os dados no aparelho mesmo após fechar o navegador ou reiniciar o dispositivo e, ao restabelecer a rede, sincronizar sem perder nem duplicar registros.
-* **Métrica Verificável:** 0% de perda de registros após corte simulado de conexão e recarga da página; 0 presenças duplicadas após 5 submissões idênticas do mesmo lote em testes ponta a ponta (Playwright).
+* **Métrica Verificável:** 0% de perda de registros após corte simulado de conexão e recarga da página; 0 presenças duplicadas após 5 submissões idênticas do mesmo lote em testes ponta a ponta.
 
 <a id="rnf18"></a>
 #### RNF18 — Cópia de segurança e recuperação de dados
@@ -295,14 +295,14 @@ A governança do catálogo adota:
 * **Classificação FURPS+:** Funcionalidade / Segurança (Security)
 * **Classificação Sommerville:** Requisito de Produto (Segurança)
 * **Descrição:** O sistema deve proteger as comunicações em trânsito, rejeitar requisições sem credenciais válidas e limitar a duração das sessões, inclusive a inatividade em aparelhos pessoais.
-* **Métrica Verificável:** 100% do tráfego sob conexão cifrada (HTTPS/TLS); 100% de rejeição (HTTP 401) para requisições sem credenciais válidas; sessão expirada em até 8 h contínuas e em até 30 min de inatividade (valores iniciais 🔧, a confirmar no trabalho de campo); sessão revogável pelo administrador em caso de perda do aparelho.
+* **Métrica Verificável:** 100% do tráfego sob conexão cifrada; 100% de rejeição de requisições sem credenciais válidas; sessão expirada em até 8 h contínuas e em até 30 min de inatividade (valores iniciais 🔧, a confirmar no trabalho de campo); sessão revogável pelo administrador em caso de perda do aparelho.
 
 <a id="rnf04"></a>
 #### RNF04 — Controle de acesso por perfil
 * **Classificação FURPS+:** Funcionalidade / Segurança (Security)
 * **Classificação Sommerville:** Requisito de Produto (Segurança)
 * **Descrição:** O sistema deve restringir cada operação e cada dado ao perfil autorizado, conforme a matriz de perfis da seção 8.5.1.
-* **Métrica Verificável:** 100% de bloqueio (HTTP 403) de requisições de escopo insuficiente e 0 acessos a dados nominais pelo perfil administrativo-financeiro em testes automatizados de rotas.
+* **Métrica Verificável:** 100% de bloqueio de requisições de escopo insuficiente e 0 acessos a dados nominais pelo perfil administrativo-financeiro em testes automatizados de rotas.
 
 <a id="rnf05"></a>
 #### RNF05 — Minimização de dados pessoais
@@ -322,8 +322,8 @@ A governança do catálogo adota:
 #### RNF10 — Descarte de dados pessoais no aparelho
 * **Classificação FURPS+:** Segurança (Security)
 * **Classificação Sommerville:** Requisito de Produto (Segurança)
-* **Descrição:** O sistema deve descartar os dados pessoais mantidos temporariamente no armazenamento local de dispositivos móveis pessoais (BYOD) imediatamente após a confirmação da sincronização com o servidor.
-* **Métrica Verificável:** 0 registros nominais de participantes remanescentes no IndexedDB após a confirmação de envio em testes automatizados.
+* **Descrição:** O sistema deve descartar os dados pessoais mantidos temporariamente no armazenamento local de dispositivos móveis pessoais imediatamente após a confirmação da sincronização com o servidor.
+* **Métrica Verificável:** 0 registros nominais de participantes remanescentes no armazenamento local do dispositivo após a confirmação de envio em testes automatizados.
 
 ---
 
@@ -352,7 +352,7 @@ A governança do catálogo adota:
 * **Classificação FURPS+:** Desempenho (Performance)
 * **Classificação Sommerville:** Requisito de Produto (Eficiência)
 * **Descrição:** O formulário público de inscrição deve carregar rapidamente em navegadores móveis sob redes móveis com largura de banda restrita.
-* **Métrica Verificável:** First Contentful Paint (FCP) inferior a 2,5 s em perfil simulado de rede 4G lenta, atestado por auditoria Lighthouse no pipeline de CI.
+* **Métrica Verificável:** First Contentful Paint (FCP) inferior a 2,5 s em perfil simulado de rede 4G lenta, medido por auditoria automatizada de desempenho na integração contínua.
 
 <a id="rnf13"></a>
 #### RNF13 — Desempenho da geração de relatórios
@@ -397,12 +397,12 @@ A governança do catálogo adota:
 
 ## 8.4 Matriz de Rastreabilidade Bidirecional
 
-A rastreabilidade estabelece o vínculo bidirecional entre os problemas diagnosticados no fluxo atual (BPMN G01 a G06), os Objetivos Específicos (OEs), as Características de Produto (CP1 a CP8), os requisitos especificados e o plano de desenvolvimento da Sprint 1 (Histórias de Usuário e Critérios de Aceitação).
+A rastreabilidade estabelece o vínculo bidirecional entre os problemas diagnosticados no fluxo atual (BPMN G01 a G06), os Objetivos Específicos (OEs), as Características de Produto (CP1 a CP8), os requisitos especificados e as histórias de usuário e critérios de aceitação já elaborados.
 
 ### 8.4.1 Matriz de Rastreabilidade dos Requisitos Funcionais (RFs)
 
 #### CP1 — Gestão de Projetos e Metas (OE01; OE04)
-| Requisito | Nome | Gargalo BPMN | Norma / Mitigação | História e Critério (Sprint 1) | Cobertura |
+| Requisito | Nome | Gargalo BPMN | Norma / Mitigação | História e Critério de origem | Cobertura |
 | :--- | :--- | :---: | :--- | :--- | :---: |
 | **RF01** | Cadastrar instrumento convocatório e parceria | G01 | MROSC art. 16 e 42 | HU-01 (pré-condição do CA-01.1) | Parcial |
 | **RF02** | Cadastrar projeto operacional | G01 | — | HU-01 (pré-condição do CA-01.1) | Parcial |
@@ -412,31 +412,31 @@ A rastreabilidade estabelece o vínculo bidirecional entre os problemas diagnost
 | **RF06** | Emitir alertas de proximidade de vencimento de metas | G02 | — | HU-02 (CA-02.2) | Total |
 
 #### CP2 — Gestão de Atividades (OE01; OE04, OE06)
-| Requisito | Nome | Gargalo BPMN | Norma / Mitigação | História e Critério (Sprint 1) | Cobertura |
+| Requisito | Nome | Gargalo BPMN | Norma / Mitigação | História e Critério de origem | Cobertura |
 | :--- | :--- | :---: | :--- | :--- | :---: |
 | **RF07** | Cadastrar atividade por modalidade de objeto | G03 | Seção 3.3.6 | HU-03 (CA-03.1) | Total |
 | **RF08** | Parametrizar exigência de comprovação de presença | G03 | Seção 3.3.6 | HU-03 (CA-03.2, CA-03.3) | Total |
 
 #### CP3 — Inscrição de Participantes (OE02; OE01)
-| Requisito | Nome | Gargalo BPMN | Norma / Mitigação | História e Critério (Sprint 1) | Cobertura |
+| Requisito | Nome | Gargalo BPMN | Norma / Mitigação | História e Critério de origem | Cobertura |
 | :--- | :--- | :---: | :--- | :--- | :---: |
-| **RF09** | Disponibilizar formulário público de inscrição | G03, G04 | — | *Sem HU na Sprint 1* | Lacuna de história |
-| **RF10** | Gerar QR Code de inscrição | — | — | *Sem HU na Sprint 1* | Lacuna de história |
-| **RF11** | Registrar inscrição presencial assistida | — | Seção 3.3.10 | *Sem HU na Sprint 1* | Lacuna de história |
-| **RF12** | Limitar vagas da atividade | — | — | *Sem HU na Sprint 1* | Lacuna de história |
-| **RF13** | Ordenar lista de espera | — | — | *Sem HU na Sprint 1* | Lacuna de história |
+| **RF09** | Disponibilizar formulário público de inscrição | G03, G04 | — | — | Lacuna de história |
+| **RF10** | Gerar QR Code de inscrição | — | — | — | Lacuna de história |
+| **RF11** | Registrar inscrição presencial assistida | — | Seção 3.3.10 | — | Lacuna de história |
+| **RF12** | Limitar vagas da atividade | — | — | — | Lacuna de história |
+| **RF13** | Ordenar lista de espera | — | — | — | Lacuna de história |
 
 #### CP4 — Registro de Participação em Campo (OE03; OE04)
-| Requisito | Nome | Gargalo BPMN | Norma / Mitigação | História e Critério (Sprint 1) | Cobertura |
+| Requisito | Nome | Gargalo BPMN | Norma / Mitigação | História e Critério de origem | Cobertura |
 | :--- | :--- | :---: | :--- | :--- | :---: |
-| **RF14** | Registrar frequência em dispositivo móvel | G03 | — | *Sem HU na Sprint 1* | Lacuna de história |
-| **RF15** | Operar registro de presença em modo offline | G03 | Seção 3.3.3 | *Sem HU na Sprint 1* | Lacuna de história |
-| **RF16** | Sincronizar presenças com reconciliação idempotente | G03 | Seção 3.3.3 | *Sem HU na Sprint 1* | Lacuna de história |
-| **RF17** | Registrar lançamento extemporâneo com justificativa | G03 | Seção 3.3.8 | *Sem HU na Sprint 1* | Lacuna de história |
-| **RF18** | Apurar carga horária de participantes e facilitadores | G03 | — | *Sem HU na Sprint 1* | Lacuna de história |
+| **RF14** | Registrar frequência em dispositivo móvel | G03 | — | — | Lacuna de história |
+| **RF15** | Operar registro de presença em modo offline | G03 | Seção 3.3.3 | — | Lacuna de história |
+| **RF16** | Sincronizar presenças com reconciliação idempotente | G03 | Seção 3.3.3 | — | Lacuna de história |
+| **RF17** | Registrar lançamento extemporâneo com justificativa | G03 | Seção 3.3.8 | — | Lacuna de história |
+| **RF18** | Apurar carga horária de participantes e facilitadores | G03 | — | — | Lacuna de história |
 
 #### CP5 — Cadastro e Histórico de Pessoas (OE01; OE03, OE06)
-| Requisito | Nome | Gargalo BPMN | Norma / Mitigação | História e Critério (Sprint 1) | Cobertura |
+| Requisito | Nome | Gargalo BPMN | Norma / Mitigação | História e Critério de origem | Cobertura |
 | :--- | :--- | :---: | :--- | :--- | :---: |
 | **RF19** | Consultar histórico de participação | G04 | — | HU-06 (CA-06.1) | Total |
 | **RF20** | Alertar cadastro duplicado | G04 | — | HU-06 (CA-06.2) | Total |
@@ -447,22 +447,22 @@ A rastreabilidade estabelece o vínculo bidirecional entre os problemas diagnost
 | **RF25** | Excluir ou anonimizar cadastro | — | Seção 3.3.9; LGPD art. 16, I, e 18, IV e VI | HU-06 (restrição de conformidade) | Parcial |
 
 #### CP6 — Acompanhamento Automático de Metas (OE04; OE01)
-| Requisito | Nome | Gargalo BPMN | Norma / Mitigação | História e Critério (Sprint 1) | Cobertura |
+| Requisito | Nome | Gargalo BPMN | Norma / Mitigação | História e Critério de origem | Cobertura |
 | :--- | :--- | :---: | :--- | :--- | :---: |
 | **RF26** | Calcular progresso físico de metas em tempo real | G05 | — | HU-01 (CA-01.2); HU-05 (CA-05.1) | Total |
-| **RF27** | Parametrizar apuração para metas não lineares e marcos | G05 | Seção 2.3 | *Sem HU na Sprint 1* | Lacuna de história |
-| **RF28** | Emitir alertas de risco de inexecução | G05 | — | *Sem HU na Sprint 1* | Lacuna de história |
-| **RF29** | Versionar metas por Termo Aditivo | G05 | MROSC art. 55 e 57 | *Sem HU na Sprint 1* | Lacuna de história |
+| **RF27** | Parametrizar apuração para metas não lineares e marcos | G05 | Seção 2.3 | — | Lacuna de história |
+| **RF28** | Emitir alertas de risco de inexecução | G05 | — | — | Lacuna de história |
+| **RF29** | Versionar metas por Termo Aditivo | G05 | MROSC art. 55 e 57 | — | Lacuna de história |
 
 #### CP7 — Repositório de Evidências e Documentação (OE05; OE06)
-| Requisito | Nome | Gargalo BPMN | Norma / Mitigação | História e Critério (Sprint 1) | Cobertura |
+| Requisito | Nome | Gargalo BPMN | Norma / Mitigação | História e Critério de origem | Cobertura |
 | :--- | :--- | :---: | :--- | :--- | :---: |
 | **RF30** | Anexar evidências documentais e fotográficas | G03 | — | HU-04 (CA-04.1) | Total |
 | **RF31** | Vincular evidência a meta contratual | G03 | — | HU-04 (CA-04.1, CA-04.3) | Parcial |
 | **RF32** | Segregar acesso a fotos de beneficiários vulneráveis | G03 | Seção 3.3.4; LGPD art. 7º, I, e 14 | HU-04 (sem CA) | Parcial |
 
 #### CP8 — Relatórios e Exportação de Dados (OE06; OE04, OE05)
-| Requisito | Nome | Gargalo BPMN | Norma / Mitigação | História e Critério (Sprint 1) | Cobertura |
+| Requisito | Nome | Gargalo BPMN | Norma / Mitigação | História e Critério de origem | Cobertura |
 | :--- | :--- | :---: | :--- | :--- | :---: |
 | **RF33** | Exigir justificativa prévia para metas não atingidas | G06 | MROSC art. 64, §1º | HU-05 (CA-05.2) | Total |
 | **RF34** | Emitir Relatório de Execução do Objeto | G06 | MROSC art. 63 a 66 | HU-05 (CA-05.1) | Total |
@@ -561,9 +561,9 @@ Responde à divisão operacional de responsabilidades entre quem cria, edita ou 
 
 ## 8.6 Pontos em Aberto e Auditoria de Lacunas
 
-1. **Lacunas de Histórias de Usuário na Sprint 1:** As características de inscrição pública (**CP3**, RF09 a RF13) e registro de presença em campo (**CP4**, RF14 a RF18), além das regras de apuração por marcos (RF27), alerta de ritmo (RF28) e termos aditivos (RF29), não foram cobertas pelas histórias da Sprint 1. Elas constituem o insumo prioritário para o planejamento da Sprint 2.
+1. **Lacunas de Histórias de Usuário:** As características de inscrição pública (**CP3**, RF09 a RF13) e registro de presença em campo (**CP4**, RF14 a RF18), além das regras de apuração por marcos (RF27), alerta de ritmo (RF28) e termos aditivos (RF29), ainda não têm história de usuário associada.
 2. **Formato dos Critérios de Aceitação:** Em atendimento estrito à diretriz metodológica da disciplina (Issue #23), os critérios de aceitação pendentes (RF22 a RF25, RF32 e RF37) serão redigidos como listas determinísticas e verificáveis, abandonando definitivamente a sintaxe *Dado, Quando, Então*.
-3. **Escopo dos Gargalos G02 e G05:** O controle interno de ordens de serviço/chamados (G02) e o painel estratégico consolidado da Presidência (G05) permanecem mapeados como oportunidades no BPMN, dependendo de validação de valor na dinâmica de priorização MoSCoW da Sprint 2.
+3. **Escopo dos Gargalos G02 e G05:** O controle interno de ordens de serviço/chamados (G02) e o painel estratégico consolidado da Presidência (G05) permanecem mapeados como oportunidades no BPMN, dependendo de validação de valor na priorização.
 4. **Parâmetros de Sessão e Campo (RNF03):** Manter sob observação durante os testes de campo se o encerramento automático por inatividade em 30 minutos não trará fricção operacional aos educadores durante oficinas de longa duração.
 5. **Hipóteses a validar com o Instituto:** Validação presencial do fluxo de consentimento de responsáveis por menores (LGPD art. 14) e do nível de visualização da Presidência sobre dados cadastrais individualizados.
 6. **Valores iniciais 🔧:** antecedência de alerta (RF06), configuração inicial de comprovações (RF08), obrigatoriedade do anexo do instrumento (RF01), sessão e inatividade (RNF03), prazo de exclusão (RNF06), latências e carga (RNF11, RNF13, RNF14), versões de navegador (RNF16) e RPO/RTO (RNF18) são parâmetros adotados sem fonte que os fixe; confirmação com o Instituto e com a equipe antes da verificação.
@@ -621,7 +621,7 @@ A tabela a seguir registra a rastreabilidade entre os códigos provisórios util
 | **RNF-P02 (#48)** | **RNF06** | Prazo de atendimento à exclusão de dados | Mantido com prazo regulamentar de 72 h |
 | **RNF-R01 (#52)** | **RNF07** | Retenção documental decenal | Mantido com prazo obrigatório de 10 anos (MROSC art. 68) |
 | **RNF-R03 (#52)** | **RNF08** | Integridade de relatórios fechados | Mantido com validação determinística por hash SHA-256 |
-| **RNF05 + RNF-C01 + C02** | **RNF09** | Resiliência offline e sincronização sem duplicidade | Três requisitos fundidos cobrindo IndexedDB e idempotência |
+| **RNF05 + RNF-C01 + C02** | **RNF09** | Resiliência offline e sincronização sem duplicidade | Três requisitos fundidos cobrindo armazenamento local e idempotência |
 | **RNF-P03 (#48)** | **RNF10** | Descarte de dados pessoais no aparelho | Regra estrita de descarte de dados nominais em BYOD |
 | **RNF04 (#50)** | **RNF11** | Desempenho das consultas agregadas | Mantido com métrica p95 < 800 ms sob 50 req/s |
 | **RNF-P01 (#48)** | **RNF12** | Desempenho da inscrição pública | Mantido com métrica de FCP < 2,5 s no Lighthouse |
