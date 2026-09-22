@@ -59,14 +59,12 @@ criar "stack: devops"         "BFD4F2" "Docker, Coolify, Vercel e Backblaze B2"
 echo "Origem"
 criar "origem: professor"     "5319E7" "Issue aberta pelo docente (feedback de unidade)"
 
-echo "Situação e apoio"
-# "sprint: N" espelha o campo Sprint do quadro para o gerador do site
-# (.github/scripts/fetch_issues.py), que lê o campo quando o token permite e
-# cai no rótulo quando não. O campo é a fonte; o rótulo acompanha.
-criar "sprint: 1"             "FEF2C0" "Selecionado para a Sprint 1"
-criar "sprint: 2"             "FEF2C0" "Selecionado para a Sprint 2"
-criar "bloqueado"             "D73A4A" "Impedido por dependência externa ou decisão pendente"
-criar "aguarda cliente"       "E99695" "Depende de retorno do Instituto"
+echo "Apoio"
+# Sprint e situação (a fazer, em andamento, aguardando, em revisão, concluído)
+# são campos do quadro do projeto, lidos pelo gerador do site. Os rótulos
+# "sprint: N", "aguarda cliente", "bloqueado", "em-andamento" e
+# "pronto-para-revisao" ficam no repositório como histórico da Sprint 1 e não
+# são mais aplicados.
 criar "dojo"                  "FBCA04" "Sessão de nivelamento técnico ou de processo"
 criar "boa primeira tarefa"   "7057FF" "Tarefa adequada a quem está começando na frente"
 

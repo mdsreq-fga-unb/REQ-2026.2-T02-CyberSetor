@@ -5,9 +5,11 @@ Saída (não versionada; ver .gitignore):
   docs/entregas/debitos-u1.md               issues abertas pelo docente (rótulo "origem: professor")
   docs/gestao/sprints/tarefas-sprint-N.md   uma página por sprint, N em SPRINTS
 
-A sprint de cada issue vem do campo Sprint do quadro quando o token consegue
-lê-lo; senão, do rótulo "sprint: N". O Status vem do quadro; sem ele, dos
-rótulos de situação e do estado da issue.
+Sprint e Situação vêm exclusivamente do quadro do projeto (campos Sprint e
+Status). Rótulos não representam situação. O token padrão das Actions não lê
+projetos de organização: os workflows usam o segredo PROJECTS_READ_TOKEN
+(token pessoal com escopo read:project). Sem ele, o script avisa e as páginas
+saem com "sem registro no quadro".
 """
 import json
 import os
@@ -94,34 +96,31 @@ def campos_do_quadro(node):
     return valores
 
 
-def sprint_da_issue(node, campos):
+def sprint_da_issue(campos):
     valor = campos.get("sprint")  # ex.: "Sprint 2"
     if valor:
         m = re.search(r"(\d+)", valor)
-        if m:
-            return int(m.group(1))
-    for lb in [l["name"].lower() for l in node.get("labels", {}).get("nodes", [])]:
-        m = re.match(r"sprint[:\- ]\s*(\d+)", lb)
         if m:
             return int(m.group(1))
     return None
 
 
 def situacao(node, campos, feedback=False):
-    estado = node["state"]
+    """Situação pelo Status do quadro; o estado da issue só decide o fechamento."""
     status = (campos.get("status") or "").lower()
-    labels = [l["name"].lower() for l in node.get("labels", {}).get("nodes", [])]
-    if estado == "CLOSED" or status in ("done", "concluído", "concluido"):
+    if node["state"] == "CLOSED" or status == "done":
         return "🟢 Validado e fechado" if feedback else "🟢 Concluído"
-    if status in ("aguardando", "aguarda cliente", "bloqueado") or "aguarda cliente" in labels or "bloqueado" in labels:
+    if status == "aguardando":
         return "⏳ Aguardando retorno ou decisão"
-    if status in ("em revisão", "em revisao", "review") or "pronto-para-revisao" in labels:
+    if status == "em revisão":
         return "🔵 Em revisão"
-    if status in ("in progress", "em andamento") or "em-andamento" in labels:
+    if status == "in progress":
         return "🟡 Em andamento"
+    if status == "todo":
+        return "⚪ A fazer"
     if status:
         return f"📋 {campos.get('status')}"
-    return "⚪ A fazer"
+    return "▫️ Sem registro no quadro"
 
 
 def responsaveis(node):
@@ -135,12 +134,17 @@ def e_do_professor(node):
     return "origem: professor" in labels or autor == PROFESSOR
 
 
+com_quadro = sum(1 for n in issues if campos_do_quadro(n))
+if issues and com_quadro == 0:
+    print("::warning::Nenhuma issue trouxe campos do quadro. O token não lê o projeto da organização: "
+          "configure o segredo PROJECTS_READ_TOKEN (token pessoal com escopo read:project).")
+
 feedback = [n for n in issues if e_do_professor(n)]
 por_sprint = {n: [] for n in SPRINTS}
 for node in issues:
     if e_do_professor(node):
         continue
-    s = sprint_da_issue(node, campos_do_quadro(node))
+    s = sprint_da_issue(campos_do_quadro(node))
     if s in por_sprint:
         por_sprint[s].append(node)
 
@@ -184,5 +188,6 @@ for n in SPRINTS:
     with open(caminho, "w", encoding="utf-8") as f:
         f.write(texto)
 
+print(f"Issues lidas: {len(issues)}; com campos do quadro: {com_quadro}")
 print(f"Gerado: {FEEDBACK_FILE} ({len(feedback)}) e "
       + ", ".join(f"sprint {n} ({len(por_sprint[n])})" for n in SPRINTS))
