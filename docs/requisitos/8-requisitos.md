@@ -630,7 +630,6 @@ A tabela a seguir registra a rastreabilidade entre os códigos provisórios util
 | **RNF-C03 + RNF-P04** | **RNF15** | Usabilidade móvel e inclusiva | Unifica ergonomia de campo e formulário para baixo letramento |
 | **RNF06 (#50)** | **RNF16** | Compatibilidade entre navegadores e dispositivos | Mantido com cobertura Chromium, Firefox e WebKit |
 | **RNF07 (#50)** | **RNF17** | Restrição tecnológica e qualidade de código | Mantido com 0 erros de tipagem estrita no CI |
-| — | **RNF18** | Cópia de segurança e recuperação de dados | Acrescentado na consolidação a partir da seção 2.6 do Documento de Visão |
 | **Documento de Visão 2.6** | **RNF18** | Cópia de segurança e recuperação de dados | Incorporado formalmente a partir das decisões de gestão |
 
 ---
