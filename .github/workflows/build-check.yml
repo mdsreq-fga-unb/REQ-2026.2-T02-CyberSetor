@@ -5,8 +5,8 @@ name: build-check
 # antes da abertura do PR. A branch main não entra aqui: nela o deploy-docs
 # executa a mesma verificação antes de publicar.
 #
-# Duas páginas do nav (entregas/debitos-u1.md e gestao/sprints/tarefas-sprint-1.md)
-# não estão versionadas: são geradas por .github/scripts/fetch_issues.py. Sem
+# As páginas de acompanhamento do nav (entregas/debitos-u1.md e
+# gestao/sprints/tarefas-sprint-N.md) não estão versionadas: são geradas por .github/scripts/fetch_issues.py. Sem
 # gerá-las, `mkdocs build --strict` aborta por referência de nav inexistente.
 # Este workflow apenas compila; a publicação continua exclusiva do deploy-docs.
 
@@ -54,7 +54,7 @@ jobs:
       - name: Conferir páginas geradas
         run: |
           faltou=0
-          for pagina in docs/entregas/debitos-u1.md docs/gestao/sprints/tarefas-sprint-1.md; do
+          for pagina in docs/entregas/debitos-u1.md docs/gestao/sprints/tarefas-sprint-1.md docs/gestao/sprints/tarefas-sprint-2.md; do
             if [ ! -s "$pagina" ]; then
               echo "::error file=$pagina::Página gerada ausente ou vazia. O gerador de issues não produziu o arquivo (token ou permissão de leitura de issues?)."
               faltou=1

@@ -108,6 +108,7 @@ nav:
       - Planos de sprint:
           - Sprint 1 (Planejamento): gestao/sprints/sprint-1.md
           - Sprint 1 (Acompanhamento de Tarefas): gestao/sprints/tarefas-sprint-1.md
+          - Sprint 2 (Acompanhamento de Tarefas): gestao/sprints/tarefas-sprint-2.md
   - Entregas:
       - Unidade 1: entregas/unidade-1.md
       - Débitos e Feedbacks (U1): entregas/debitos-u1.md
