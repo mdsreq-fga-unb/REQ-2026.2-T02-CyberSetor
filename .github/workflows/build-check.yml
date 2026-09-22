@@ -47,7 +47,9 @@ jobs:
 
       - name: Sincronizar Tabela de Issues
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          # PROJECTS_READ_TOKEN: token pessoal com escopo read:project. O token padrão
+          # não lê projetos de organização; sem o segredo, as páginas saem sem situação.
+          GITHUB_TOKEN: ${{ secrets.PROJECTS_READ_TOKEN || secrets.GITHUB_TOKEN }}
           GITHUB_REPOSITORY: ${{ github.repository }}
         run: python .github/scripts/fetch_issues.py
 
