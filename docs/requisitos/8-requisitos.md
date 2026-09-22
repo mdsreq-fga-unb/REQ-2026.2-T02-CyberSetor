@@ -12,7 +12,7 @@
 | 21/09/2026 | 1.5 | Consolidação dos 18 RNFs sob FURPS+ e Sommerville (Issue #43) | Maria Eduarda Marques (PO) e Vinicius Vieira (SM) |
 | 21/09/2026 | 1.6 | Construção da matriz de rastreabilidade bidirecional e auditoria de lacunas (Issue #44) | Dupla A (Maria Eduarda Marques e Daniel Batista) |
 | 21/09/2026 | 2.0 | Unificação final do catálogo consolidado (RF01–RF37, RNF01–RNF18), notas de domínio e matriz de rastreabilidade oficial (Issue #45) | Equipe CyberSetor |
-| 21/09/2026 | 2.1 | Âncoras dos requisitos restauradas; descrições alinhadas às decisões registradas (requisito e meta como registros distintos; rascunho de evidência; prova e divulgação separadas; aviso de tratamento na inscrição); valores sem fonte marcados como iniciais; referências de seção e de norma conferidas | Equipe CyberSetor |
+| 21/09/2026 | 2.1 | Âncoras dos requisitos restauradas; descrições alinhadas às decisões registradas (requisito e meta como registros distintos; rascunho de evidência; prova e divulgação separadas; aviso de tratamento na inscrição); valores sem fonte marcados como iniciais; regras de negócio que os requisitos referenciam reunidas na seção 8.8; tecnologia e informação de planejamento retiradas das descrições e da rastreabilidade | Equipe CyberSetor |
 
 ---
 
@@ -21,7 +21,7 @@
 A especificação de requisitos do sistema CyberSetor orienta-se pela abordagem ágil ScrumXP combinada aos preceitos da Engenharia de Requisitos contemporânea. A declaração e a taxonomia seguem as diretrizes metodológicas da disciplina (Marsicano, 2026), com requisitos funcionais orientados à ação e requisitos não funcionais fundamentados no modelo **FURPS+** e na taxonomia de **Ian Sommerville**.
 
 A governança do catálogo adota:
-* **Identificadores unívocos:** Códigos prefixados (`RFxx` e `RNFxx`) em sequência única e contínua, acompanhados de âncoras explícitas para permitir rastreamento direto a partir de issues, histórias de usuário e matrizes. Os RFs seguem rigorosamente a ordem das Características de Produto (CP1 a CP8).
+* **Identificadores unívocos:** Códigos prefixados (`RFxx` e `RNFxx`; `RN-xx` para regras de negócio) em sequência única e contínua, acompanhados de âncoras explícitas para permitir rastreamento direto a partir de issues, histórias de usuário e matrizes. Os RFs seguem rigorosamente a ordem das Características de Produto (CP1 a CP8).
 * **Padronização verbal:** Todo requisito funcional é expresso no formato **Verbo no Infinitivo + Objeto Direto**, definindo uma única ação verificável, sem ambiguidades de escopo.
 * **Critérios verificáveis:** Todo requisito não funcional estabelece uma métrica quantitativa numérica, passível de verificação objetiva por testes automatizados, auditoria de código ou inspeção determinística.
 * **Valores iniciais:** O símbolo 🔧 marca parâmetro adotado como valor inicial, sem fonte normativa ou medição que o fixe; permanece válido para verificação até ser confirmado com o Instituto ou recalibrado no piloto. Nenhum requisito deste catálogo está validado pelo Instituto nem aprovado pelo docente; a validação é etapa própria do processo (seção 5).
@@ -44,8 +44,8 @@ A governança do catálogo adota:
 
 <a id="rf03"></a>
 #### RF03 — Desdobrar requisitos contratuais e metas
-* **Descrição:** Deve ser possível ao usuário da Diretoria de Projetos desdobrar o plano de trabalho de um projeto em requisitos do instrumento e metas, mantidos como registros distintos e relacionados entre si (uma meta pode atender a mais de um requisito e um requisito pode exigir mais de uma meta). Para cada meta registram-se: origem (edital, projeto ou Instituto), descrição, indicador de desempenho associado, modalidade de aferição (quantitativa numérica ou qualitativa descritiva), parâmetro planejado (quando quantitativa), período e frequência de apuração e forma documental de comprovação/verificação (ex.: lista de presença assinada, relatório técnico, ata de reunião ou registro fotográfico). Meta sem indicador, forma de verificação ou prazo permanece como rascunho e não entra na apuração.
-* **Rastreabilidade:** CP1 | OE01, OE04 | BPMN G01 | HU-01 | MROSC (Lei 13.019/2014, art. 22 e 42)
+* **Descrição:** Deve ser possível ao usuário da Diretoria de Projetos desdobrar o plano de trabalho de um projeto em requisitos do instrumento e metas, registrando para cada meta origem, descrição, indicador, modalidade de aferição, parâmetro planejado, período de apuração e forma de comprovação.
+* **Rastreabilidade:** CP1 | OE01, OE04 | BPMN G01 | HU-01 | MROSC (Lei 13.019/2014, art. 22 e 42) | RN-01, RN-02
 
 <a id="rf04"></a>
 #### RF04 — Atribuir responsável, setor e prazo a meta
@@ -59,8 +59,8 @@ A governança do catálogo adota:
 
 <a id="rf06"></a>
 #### RF06 — Emitir alertas de proximidade de vencimento de metas
-* **Descrição:** O sistema deve emitir notificações e alertas visuais destacados no painel do projeto quando o prazo fatal de uma meta estiver dentro da antecedência de alerta configurada para o instrumento (valor inicial: 7 dias corridos 🔧), ou quando a data limite já estiver expirada sem comprovação registrada.
-* **Rastreabilidade:** CP1 | OE04 | BPMN G02 | HU-02
+* **Descrição:** O sistema deve emitir alertas visuais no painel do projeto quando o prazo de uma meta estiver dentro da antecedência de alerta configurada ou já expirado sem comprovação registrada.
+* **Rastreabilidade:** CP1 | OE04 | BPMN G02 | HU-02 | RN-03
 
 ---
 
@@ -73,8 +73,8 @@ A governança do catálogo adota:
 
 <a id="rf08"></a>
 #### RF08 — Parametrizar exigência de comprovação de presença
-* **Descrição:** O sistema deve parametrizar, por instrumento e por modalidade da atividade, quais comprovações são obrigatórias, opcionais ou condicionais, e associar a cada atividade a versão vigente dessa configuração no momento do cadastro. Configuração inicial 🔧: chamada nominal com controle de assiduidade para oficinas formativas contínuas, e contagem quantitativa agregada e anônima de público para ações de acolhimento e eventos de rua no Setor Comercial Sul (SCS), sem exigência de CPF nestas últimas.
-* **Rastreabilidade:** CP2 | OE01, OE04 | Seção 3.3.6 | BPMN G03 | HU-03
+* **Descrição:** O sistema deve parametrizar, por instrumento e por modalidade de atividade, as comprovações obrigatórias, opcionais e condicionais exigidas de cada atividade.
+* **Rastreabilidade:** CP2 | OE01, OE04 | Seção 3.3.6 | BPMN G03 | HU-03 | RN-04
 
 ---
 
@@ -150,8 +150,8 @@ A governança do catálogo adota:
 
 <a id="rf21"></a>
 #### RF21 — Registrar aviso de tratamento de dados na inscrição
-* **Descrição:** O sistema deve apresentar na inscrição, pública ou assistida, o aviso de tratamento de dados aplicável (finalidade, base legal, dados necessários, prazo de guarda e canal para exercício de direitos) e registrar, com carimbo de data/hora, a versão do aviso apresentada a cada pessoa e, quando menor de idade, o responsável legal identificado. Para os dados necessários à execução da parceria e à prestação de contas, a inscrição não é condicionada a consentimento (LGPD, art. 7º, II); o consentimento é registrado apenas para as finalidades que o exigem (contato, RF22; imagem, RF23).
-* **Rastreabilidade:** CP5 | OE01 | BPMN G04 | LGPD art. 7º, I e II, 8º, 9º e 14 | Seção 2.6 | HU-06 (CA-06.3)
+* **Descrição:** O sistema deve apresentar na inscrição o aviso de tratamento de dados aplicável e registrar, com data e hora, a versão apresentada a cada pessoa e, quando menor de idade, o responsável legal.
+* **Rastreabilidade:** CP5 | OE01 | BPMN G04 | LGPD art. 7º, 8º, 9º e 14 | Seção 2.6 | HU-06 (CA-06.3) | RN-05, RN-06
 
 <a id="rf22"></a>
 #### RF22 — Registrar autorização de contato
@@ -170,8 +170,8 @@ A governança do catálogo adota:
 
 <a id="rf25"></a>
 #### RF25 — Excluir ou anonimizar cadastro
-* **Descrição:** O sistema deve permitir a exclusão ou anonimização definitiva dos dados a pedido do titular ou ao término da finalidade, preservando os totais quantitativos já consolidados para prestações de contas e os registros sob guarda legal obrigatória (RNF07), com indicação do fundamento que impedir a eliminação de cada classe de dado.
-* **Rastreabilidade:** CP5 | OE01 | Seção 3.3.9 | LGPD art. 16, I, e art. 18, IV e VI | HU-06
+* **Descrição:** O sistema deve permitir a exclusão ou anonimização dos dados de uma pessoa a pedido do titular ou ao término da finalidade, preservando o que estiver sob guarda legal obrigatória.
+* **Rastreabilidade:** CP5 | OE01 | Seção 3.3.9 | LGPD art. 16, I, e art. 18, IV e VI | HU-06 | RN-07
 
 ---
 
@@ -179,8 +179,8 @@ A governança do catálogo adota:
 
 <a id="rf26"></a>
 #### RF26 — Calcular progresso físico de metas em tempo real
-* **Descrição:** O sistema deve calcular automaticamente o progresso quantitativo e o percentual de atingimento de cada meta a partir da consolidação contínua das presenças e evidências homologadas, exclusivamente pela regra de apuração e pelas fontes definidas para a meta (RF27), exibindo os registros que compõem o valor apurado.
-* **Rastreabilidade:** CP6 | OE01, OE04 | BPMN G05 | HU-01 (CA-01.2), HU-05 (CA-05.1)
+* **Descrição:** O sistema deve calcular automaticamente o progresso e o percentual de atingimento de cada meta a partir das presenças e evidências homologadas, conforme a regra de apuração definida na meta.
+* **Rastreabilidade:** CP6 | OE01, OE04 | BPMN G05 | HU-01 (CA-01.2), HU-05 (CA-05.1) | RN-08
 
 <a id="rf27"></a>
 #### RF27 — Parametrizar apuração para metas não lineares e marcos
@@ -194,8 +194,8 @@ A governança do catálogo adota:
 
 <a id="rf29"></a>
 #### RF29 — Versionar metas por Termo Aditivo
-* **Descrição:** O sistema deve registrar repactuações de metas, valores ou prazos decorrentes de termo aditivo ou de apostila ao plano de trabalho como nova versão do plano, mantendo a pactuação inicial e seus resultados e gerando comparativo auditável (previsto original, reprogramado e realizado).
-* **Rastreabilidade:** CP6 | OE04 | BPMN G05 | Lei 13.019/2014, art. 55 e 57
+* **Descrição:** O sistema deve registrar repactuações de metas, valores ou prazos por termo aditivo ou apostila como nova versão do plano de trabalho, com comparativo entre previsto, reprogramado e realizado.
+* **Rastreabilidade:** CP6 | OE04 | BPMN G05 | Lei 13.019/2014, art. 55 e 57 | RN-09
 
 ---
 
@@ -203,18 +203,18 @@ A governança do catálogo adota:
 
 <a id="rf30"></a>
 #### RF30 — Anexar evidências documentais e fotográficas
-* **Descrição:** Deve ser possível anexar arquivos comprobatórios de atividades (fotos, listas assinadas digitalizadas e atas), registrando automaticamente autor, data e hora de captura e de envio e, quando disponível, a geolocalização. Até ser vinculado a atividade e meta (RF31), o arquivo permanece como rascunho e não compõe o índice de comprovações.
-* **Rastreabilidade:** CP7 | OE05, OE06 | BPMN G03 | HU-04
+* **Descrição:** Deve ser possível anexar arquivos comprobatórios de atividades (fotos, listas assinadas digitalizadas e atas), registrando automaticamente autor, data e hora e, quando disponível, a geolocalização.
+* **Rastreabilidade:** CP7 | OE05, OE06 | BPMN G03 | HU-04 | RN-10
 
 <a id="rf31"></a>
 #### RF31 — Vincular evidência a meta contratual
-* **Descrição:** O sistema deve permitir a associação expressa de cada documento a uma atividade executada e a uma ou mais metas contratuais, exibindo por atividade e por meta as comprovações recebidas e as pendentes, e impedir o encerramento da atividade e a geração do relatório final enquanto houver rascunho não vinculado nem descartado.
-* **Rastreabilidade:** CP7 | OE05, OE06 | BPMN G03 | HU-04 (CA-04.1, CA-04.2, CA-04.3)
+* **Descrição:** Deve ser possível vincular cada arquivo anexado a uma atividade executada e a uma ou mais metas, exibindo por meta as comprovações recebidas e as pendentes.
+* **Rastreabilidade:** CP7 | OE05, OE06 | BPMN G03 | HU-04 (CA-04.1, CA-04.2, CA-04.3) | RN-10, RN-11
 
 <a id="rf32"></a>
 #### RF32 — Segregar acesso a fotos de beneficiários vulneráveis
-* **Descrição:** O sistema deve tratar imagem de prova de execução e material de divulgação como registros distintos: a prova fica restrita aos perfis de coordenação e de prestação de contas, não é publicada automaticamente e só é reutilizada para divulgação com a autorização registrada (RF23). No momento da captura, o sistema orienta o enquadramento panorâmico, sem closes faciais.
-* **Rastreabilidade:** CP7 | OE05, OE06 | Seção 3.3.4 | LGPD art. 7º, I, e art. 14 | HU-04
+* **Descrição:** O sistema deve restringir o acesso às imagens de prova de execução aos perfis de coordenação e de prestação de contas e orientar, na captura, o enquadramento sem closes faciais.
+* **Rastreabilidade:** CP7 | OE05, OE06 | Seção 3.3.4 | LGPD art. 7º, I, e art. 14 | HU-04 | RN-12
 
 ---
 
@@ -406,16 +406,16 @@ A rastreabilidade estabelece o vínculo bidirecional entre os problemas diagnost
 | :--- | :--- | :---: | :--- | :--- | :---: |
 | **RF01** | Cadastrar instrumento convocatório e parceria | G01 | MROSC art. 16 e 42 | HU-01 (pré-condição do CA-01.1) | Parcial |
 | **RF02** | Cadastrar projeto operacional | G01 | — | HU-01 (pré-condição do CA-01.1) | Parcial |
-| **RF03** | Desdobrar requisitos contratuais e metas | G01 | MROSC art. 22 e 42 | HU-01 (CA-01.1, CA-01.3) | Total |
+| **RF03** | Desdobrar requisitos contratuais e metas | G01 | MROSC art. 22 e 42; RN-01, RN-02 | HU-01 (CA-01.1, CA-01.3) | Total |
 | **RF04** | Atribuir responsável, setor e prazo a meta | G02 | Decisão 3 da ata de 08/09 | HU-02 (CA-02.1, CA-02.3) | Parcial |
 | **RF05** | Exibir linha do tempo e painel de prazos de metas | G01, G02 | — | HU-02 (CA-02.1) | Total |
-| **RF06** | Emitir alertas de proximidade de vencimento de metas | G02 | — | HU-02 (CA-02.2) | Total |
+| **RF06** | Emitir alertas de proximidade de vencimento de metas | G02 | RN-03 | HU-02 (CA-02.2) | Total |
 
 #### CP2 — Gestão de Atividades (OE01; OE04, OE06)
 | Requisito | Nome | Gargalo BPMN | Norma / Mitigação | História e Critério de origem | Cobertura |
 | :--- | :--- | :---: | :--- | :--- | :---: |
 | **RF07** | Cadastrar atividade por modalidade de objeto | G03 | Seção 3.3.6 | HU-03 (CA-03.1) | Total |
-| **RF08** | Parametrizar exigência de comprovação de presença | G03 | Seção 3.3.6 | HU-03 (CA-03.2, CA-03.3) | Total |
+| **RF08** | Parametrizar exigência de comprovação de presença | G03 | Seção 3.3.6; RN-04 | HU-03 (CA-03.2, CA-03.3) | Total |
 
 #### CP3 — Inscrição de Participantes (OE02; OE01)
 | Requisito | Nome | Gargalo BPMN | Norma / Mitigação | História e Critério de origem | Cobertura |
@@ -440,26 +440,26 @@ A rastreabilidade estabelece o vínculo bidirecional entre os problemas diagnost
 | :--- | :--- | :---: | :--- | :--- | :---: |
 | **RF19** | Consultar histórico de participação | G04 | — | HU-06 (CA-06.1) | Total |
 | **RF20** | Alertar cadastro duplicado | G04 | — | HU-06 (CA-06.2) | Total |
-| **RF21** | Registrar aviso de tratamento de dados na inscrição | G04 | LGPD art. 7º, I e II, 8º, 9º e 14; Seção 2.6 | HU-06 (CA-06.3) | Total |
+| **RF21** | Registrar aviso de tratamento de dados na inscrição | G04 | LGPD art. 7º, 8º, 9º e 14; Seção 2.6; RN-05, RN-06 | HU-06 (CA-06.3) | Total |
 | **RF22** | Registrar autorização de contato | G04 | Seção 3.3.5; LGPD art. 8º, §5º | HU-06 (restrição de conformidade) | Parcial |
 | **RF23** | Registrar autorização de uso de imagem | — | Seção 3.3.4; LGPD art. 7º e 8º | HU-06 (restrição de conformidade) | Parcial |
 | **RF24** | Retificar dados cadastrais | — | Seção 3.3.9; LGPD art. 18 | HU-06 (restrição de conformidade) | Parcial |
-| **RF25** | Excluir ou anonimizar cadastro | — | Seção 3.3.9; LGPD art. 16, I, e 18, IV e VI | HU-06 (restrição de conformidade) | Parcial |
+| **RF25** | Excluir ou anonimizar cadastro | — | Seção 3.3.9; LGPD art. 16, I, e 18, IV e VI; RN-07 | HU-06 (restrição de conformidade) | Parcial |
 
 #### CP6 — Acompanhamento Automático de Metas (OE04; OE01)
 | Requisito | Nome | Gargalo BPMN | Norma / Mitigação | História e Critério de origem | Cobertura |
 | :--- | :--- | :---: | :--- | :--- | :---: |
-| **RF26** | Calcular progresso físico de metas em tempo real | G05 | — | HU-01 (CA-01.2); HU-05 (CA-05.1) | Total |
+| **RF26** | Calcular progresso físico de metas em tempo real | G05 | RN-08 | HU-01 (CA-01.2); HU-05 (CA-05.1) | Total |
 | **RF27** | Parametrizar apuração para metas não lineares e marcos | G05 | Seção 2.3 | — | Lacuna de história |
 | **RF28** | Emitir alertas de risco de inexecução | G05 | — | — | Lacuna de história |
-| **RF29** | Versionar metas por Termo Aditivo | G05 | MROSC art. 55 e 57 | — | Lacuna de história |
+| **RF29** | Versionar metas por Termo Aditivo | G05 | MROSC art. 55 e 57; RN-09 | — | Lacuna de história |
 
 #### CP7 — Repositório de Evidências e Documentação (OE05; OE06)
 | Requisito | Nome | Gargalo BPMN | Norma / Mitigação | História e Critério de origem | Cobertura |
 | :--- | :--- | :---: | :--- | :--- | :---: |
-| **RF30** | Anexar evidências documentais e fotográficas | G03 | — | HU-04 (CA-04.1) | Total |
-| **RF31** | Vincular evidência a meta contratual | G03 | — | HU-04 (CA-04.1, CA-04.3) | Parcial |
-| **RF32** | Segregar acesso a fotos de beneficiários vulneráveis | G03 | Seção 3.3.4; LGPD art. 7º, I, e 14 | HU-04 (sem CA) | Parcial |
+| **RF30** | Anexar evidências documentais e fotográficas | G03 | RN-10 | HU-04 (CA-04.1) | Total |
+| **RF31** | Vincular evidência a meta contratual | G03 | RN-10, RN-11 | HU-04 (CA-04.1, CA-04.3) | Parcial |
+| **RF32** | Segregar acesso a fotos de beneficiários vulneráveis | G03 | Seção 3.3.4; LGPD art. 7º, I, e 14; RN-12 | HU-04 (sem CA) | Parcial |
 
 #### CP8 — Relatórios e Exportação de Dados (OE06; OE04, OE05)
 | Requisito | Nome | Gargalo BPMN | Norma / Mitigação | História e Critério de origem | Cobertura |
@@ -632,3 +632,24 @@ A tabela a seguir registra a rastreabilidade entre os códigos provisórios util
 | **RNF07 (#50)** | **RNF17** | Restrição tecnológica e qualidade de código | Mantido com 0 erros de tipagem estrita no CI |
 | — | **RNF18** | Cópia de segurança e recuperação de dados | Acrescentado na consolidação a partir da seção 2.6 do Documento de Visão |
 | **Documento de Visão 2.6** | **RNF18** | Cópia de segurança e recuperação de dados | Incorporado formalmente a partir das decisões de gestão |
+
+---
+
+## 8.8 Regras de Negócio
+
+Regras que condicionam o comportamento descrito nos requisitos funcionais. Cada regra tem origem declarada; o símbolo 🔧 marca valor inicial pendente de confirmação (seção 8.1).
+
+| ID | Regra | Origem | Requisitos relacionados |
+| :---: | :--- | :--- | :---: |
+| <a id="rn-01"></a>**RN-01** | Requisito do instrumento e meta do plano de trabalho são registros distintos, relacionados entre si: uma meta pode atender a mais de um requisito e um requisito pode exigir mais de uma meta. | Seção 2.3 (CP1); Lei 13.019/2014, art. 22 | RF03, RF05 |
+| <a id="rn-02"></a>**RN-02** | Meta sem indicador, forma de verificação ou prazo permanece como rascunho e não entra na apuração nem no relatório. | Lei 13.019/2014, art. 22, II e III | RF03, RF26 |
+| <a id="rn-03"></a>**RN-03** | A antecedência do alerta de vencimento é configurada por instrumento; valor inicial de 7 dias corridos 🔧. | Seção 2.6 (parâmetros por instrumento) | RF06 |
+| <a id="rn-04"></a>**RN-04** | As comprovações exigidas de uma atividade são configuradas por instrumento e modalidade, e a atividade guarda a versão vigente no momento do cadastro. Configuração inicial 🔧: chamada nominal com assiduidade para oficinas formativas contínuas; contagem agregada e anônima, sem CPF, para ações de acolhimento e eventos de rua. | Seção 3.3.6; Seção 2.6 | RF07, RF08, RF31 |
+| <a id="rn-05"></a>**RN-05** | A inscrição não é condicionada a consentimento para os dados exigidos pela execução da parceria e pela prestação de contas; o consentimento é registrado apenas para contato e uso de imagem. | LGPD, art. 7º, I e II; Seção 2.6 | RF21, RF22, RF23 |
+| <a id="rn-06"></a>**RN-06** | Para pessoa menor de idade, o registro de inscrição identifica o responsável legal. | LGPD, art. 14 | RF21 |
+| <a id="rn-07"></a>**RN-07** | A exclusão ou anonimização preserva os totais agregados já reportados a financiadores e os registros sob guarda legal, com o fundamento registrado por classe de dado. | LGPD, art. 16, I; Lei 13.019/2014, art. 68 | RF25, RNF07 |
+| <a id="rn-08"></a>**RN-08** | O progresso de uma meta é apurado exclusivamente pela regra de apuração e pelas fontes definidas na própria meta, e o sistema exibe os registros que compõem o valor apurado. | Seção 2.3 (CP6) | RF26, RF27 |
+| <a id="rn-09"></a>**RN-09** | Repactuação por termo aditivo ou apostila gera nova versão do plano de trabalho, preservando a pactuação original e seus resultados. | Lei 13.019/2014, art. 57 | RF29 |
+| <a id="rn-10"></a>**RN-10** | Arquivo anexado é rascunho até ser vinculado a uma atividade e a pelo menos uma meta; rascunho não compõe o índice de comprovações. | Seção 2.3 (relatório com índice de evidências por meta) | RF30, RF31 |
+| <a id="rn-11"></a>**RN-11** | O encerramento de uma atividade e a geração do relatório final exigem que não haja rascunho pendente de vinculação ou descarte. | Seção 2.3; Lei 13.019/2014, arts. 63 a 66 | RF31, RF34 |
+| <a id="rn-12"></a>**RN-12** | Imagem de prova de execução e material de divulgação são registros distintos: a prova fica restrita aos perfis de coordenação e prestação de contas, não é publicada automaticamente e só é reutilizada para divulgação com autorização registrada. | Seção 3.3.4; LGPD, art. 7º, I, e art. 14 | RF23, RF32 |

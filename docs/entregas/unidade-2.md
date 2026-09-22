@@ -30,7 +30,7 @@ A entrega da Unidade 2 consolida a especificação formal de requisitos de softw
 - [ ] **Critérios de Aceitação Detalhados:** Detalhamento dos critérios pendentes (RF22–RF25, RF32, RF37) em lista verificável, planejado para o refinamento da Sprint 2.
 - [ ] **Validação Presencial com o Instituto:** Homologação presencial das hipóteses de menores de idade, dados na inscrição e matriz de perfis, e confirmação dos valores iniciais marcados 🔧 (seção 8.6 dos requisitos).
 - [ ] **Priorização e MVP:** Classificação MoSCoW de cada requisito e hipótese de MVP pela matriz valor de negócio × capacidade técnica, com entrega prevista para 29/09/2026 (seções 5 e 6 do Documento de Visão).
-- [ ] **Regras de Negócio e Restrições:** Consolidação das regras que os requisitos referenciam (metas, evidências, dados pessoais e prestação de contas) e das restrições de escopo, planejada para a Sprint 2.
+- [ ] **Regras de Negócio e Restrições:** As regras que os requisitos referenciam estão na [seção 8.8](../requisitos/8-requisitos.md#88-regras-de-negocio) (RN-01 a RN-12); as demais regras e as restrições de escopo são consolidadas na Sprint 2.
 
 ---
 
