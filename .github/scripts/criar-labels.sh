@@ -31,11 +31,9 @@ criar "tipo: bug"             "D73A4A" "Comportamento incorreto em algo já entr
 criar "tipo: pesquisa"        "FBCA04" "Investigação, elicitação ou estudo normativo"
 criar "tipo: infraestrutura"  "BFD4F2" "CI, deploy, ambiente e configuração do repositório"
 
-echo "Prioridade MoSCoW"
-criar "moscow: must"          "B60205" "Indispensável para a meta da sprint"
-criar "moscow: should"        "D93F0B" "Relevante, mas não invalida a meta se ficar de fora"
-criar "moscow: could"         "FEF2C0" "Desejável; é a contingência descartada primeiro"
-criar "moscow: wont"          "CFD3D7" "Reconhecido como válido, fora deste período"
+# Prioridade MoSCoW: desde 22/09/2026 é campo do quadro (com justificativa),
+# não rótulo. Os rótulos "moscow: *" da Sprint 1 permanecem no repositório
+# como histórico e não são mais aplicados.
 
 echo "Épico e atividade de Engenharia de Requisitos"
 criar "epico: requisito-meta" "C2E0C6" "Cadastro de requisitos, metas e parâmetros de aferição"
@@ -48,6 +46,7 @@ criar "er: analise"           "D4C5F9" "Análise e consenso"
 criar "er: declaracao"        "D4C5F9" "Declaração de requisitos"
 criar "er: representacao"     "D4C5F9" "Representação e modelagem"
 criar "er: verificacao"       "D4C5F9" "Verificação e validação"
+criar "er: organizacao"       "D4C5F9" "Organização e atualização"
 
 echo "Camada técnica, conforme a stack adotada"
 criar "stack: backend"        "006B75" "NestJS, Prisma e PostgreSQL"
@@ -57,8 +56,15 @@ criar "stack: dados"          "5319E7" "Modelagem de dados e migrations"
 criar "stack: testes"         "0E8A16" "Jest, Supertest e Playwright"
 criar "stack: devops"         "BFD4F2" "Docker, Coolify, Vercel e Backblaze B2"
 
+echo "Origem"
+criar "origem: professor"     "5319E7" "Issue aberta pelo docente (feedback de unidade)"
+
 echo "Situação e apoio"
+# "sprint: N" espelha o campo Sprint do quadro para o gerador do site
+# (.github/scripts/fetch_issues.py), que lê o campo quando o token permite e
+# cai no rótulo quando não. O campo é a fonte; o rótulo acompanha.
 criar "sprint: 1"             "FEF2C0" "Selecionado para a Sprint 1"
+criar "sprint: 2"             "FEF2C0" "Selecionado para a Sprint 2"
 criar "bloqueado"             "D73A4A" "Impedido por dependência externa ou decisão pendente"
 criar "aguarda cliente"       "E99695" "Depende de retorno do Instituto"
 criar "dojo"                  "FBCA04" "Sessão de nivelamento técnico ou de processo"
