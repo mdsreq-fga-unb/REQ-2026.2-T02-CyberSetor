@@ -34,3 +34,10 @@ body:
     attributes:
       label: Evidência
       description: Captura de tela, saída do build ou link do log.
+  - type: checkboxes
+    id: quadro
+    attributes:
+      label: Ao abrir, preencher no quadro
+      options:
+        - label: Sprint e Épico preenchidos no quadro do projeto
+          required: true

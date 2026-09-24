@@ -34,3 +34,10 @@ body:
         - label: Sem tecnologia nem informação de planejamento dentro de requisito
         - label: "`mkdocs build --strict` limpo antes do PR"
         - label: PR revisado por integrante de outra dupla antes do merge
+  - type: checkboxes
+    id: quadro
+    attributes:
+      label: Ao abrir, preencher no quadro
+      options:
+        - label: Sprint, Épico e Atividade de ER preenchidos no quadro do projeto
+          required: true

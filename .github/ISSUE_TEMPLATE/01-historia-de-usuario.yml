@@ -15,6 +15,19 @@ body:
       placeholder: "Como <perfil do Instituto>, quero <ação> para <resultado esperado>."
     validations:
       required: true
+  - type: dropdown
+    id: epico
+    attributes:
+      label: Épico
+      options:
+        - Requisito e meta
+        - Atividade
+        - Presença em campo
+        - Evidência
+        - Relatório
+        - Pessoas
+    validations:
+      required: true
   - type: checkboxes
     id: cp
     attributes:
@@ -75,5 +88,5 @@ body:
     attributes:
       label: Ao abrir, preencher no quadro
       options:
-        - label: "Épico e Atividade de ER preenchidos no quadro; Sprint só quando a história for selecionada para construção"
+        - label: "Épico, Atividade de ER, características e objetivos conferidos no quadro; Sprint só quando a história for selecionada para construção"
           required: true
