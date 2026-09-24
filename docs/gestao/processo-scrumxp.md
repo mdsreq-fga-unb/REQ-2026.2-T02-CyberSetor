@@ -45,6 +45,8 @@ Critérios de aceitação:
 - [Restrição de negócio, técnica ou de privacidade/LGPD]
 ```
 
+Cada história é aberta pelo formulário de história do repositório, que pede a história nesse formato, as características de produto e os objetivos específicos em caixas de marcação (seções 2.3 e 2.2), os RFs, RNFs e regras de negócio que a condicionam, os critérios de aceitação em lista e as dependências. No quadro do projeto, características e objetivos ficam em campos de seleção múltipla com os mesmos títulos.
+
 ## Práticas de XP
 
 **Em uso desde a Sprint 1:** histórias de usuário · critérios de aceitação · trabalho em duplas na documentação · integração contínua, que compila o site em modo estrito a cada alteração · cliente presente **adaptado**, com Product Owner interno no intervalo entre validações e validação semanal com o Instituto (Documento de Visão, seção 7.2).

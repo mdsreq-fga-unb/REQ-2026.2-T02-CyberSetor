@@ -5,4 +5,4 @@ contact_links:
     about: Documento de Visão, requisitos, atas e planos de sprint.
   - name: Quadro do projeto (Product Backlog)
     url: https://github.com/orgs/mdsreq-fga-unb/projects/121
-    about: Toda issue nova entra no quadro automaticamente; preencha Sprint, Épico e Atividade de ER ao abrir.
+    about: Toda issue nova entra no quadro automaticamente; preencha Épico e Atividade de ER ao abrir; Sprint só em tarefa da sprint (história fica no Product Backlog até ser selecionada).
