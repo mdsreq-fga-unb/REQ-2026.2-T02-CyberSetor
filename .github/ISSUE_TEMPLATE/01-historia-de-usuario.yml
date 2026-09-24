@@ -15,33 +15,32 @@ body:
       placeholder: "Como <perfil do Instituto>, quero <ação> para <resultado esperado>."
     validations:
       required: true
-  - type: dropdown
+  - type: checkboxes
     id: cp
     attributes:
-      label: Característica de produto
+      label: Características de produto
+      description: Seção 2.3 do site. Marque as CPs dos RFs desta história.
       options:
-        - CP1 — Gestão de projetos e metas
-        - CP2 — Gestão de atividades
-        - CP3 — Inscrição de participantes
-        - CP4 — Registro de participação em campo
-        - CP5 — Cadastro e histórico de pessoas
-        - CP6 — Acompanhamento automático de metas
-        - CP7 — Repositório de evidências e documentação
-        - CP8 — Relatórios e exportação de dados
-        - Transversal (identidade, acesso, operação)
-    validations:
-      required: true
+        - label: "CP1 — Gestão de projetos e metas"
+        - label: "CP2 — Gestão de atividades"
+        - label: "CP3 — Inscrição de participantes"
+        - label: "CP4 — Registro de participação em campo"
+        - label: "CP5 — Cadastro e histórico de pessoas"
+        - label: "CP6 — Acompanhamento automático de metas"
+        - label: "CP7 — Repositório de evidências e documentação"
+        - label: "CP8 — Relatórios e exportação de dados"
   - type: checkboxes
     id: oe
     attributes:
       label: Objetivos específicos atendidos
+      description: Seção 2.2 do site.
       options:
-        - label: OE01
-        - label: OE02
-        - label: OE03
-        - label: OE04
-        - label: OE05
-        - label: OE06
+        - label: "OE01 — Eliminar a dispersão do registro"
+        - label: "OE02 — Agilizar a inscrição de participantes"
+        - label: "OE03 — Eliminar a transcrição manual de presenças"
+        - label: "OE04 — Antecipar o acompanhamento das metas"
+        - label: "OE05 — Mitigar a perda de evidências de execução"
+        - label: "OE06 — Reduzir o esforço de prestação de contas"
   - type: input
     id: rf
     attributes:
@@ -76,5 +75,5 @@ body:
     attributes:
       label: Ao abrir, preencher no quadro
       options:
-        - label: Sprint, Épico e Atividade de ER preenchidos no quadro do projeto
+        - label: "Épico e Atividade de ER preenchidos no quadro; Sprint só quando a história for selecionada para construção"
           required: true

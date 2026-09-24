@@ -32,6 +32,7 @@ body:
       options:
         - Requisito e meta
         - Atividade
+        - Presença em campo
         - Evidência
         - Relatório
         - Pessoas
