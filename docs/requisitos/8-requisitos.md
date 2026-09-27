@@ -13,6 +13,7 @@
 | 21/09/2026 | 1.6 | Construção da matriz de rastreabilidade bidirecional e auditoria de lacunas (Issue #44) | Dupla A (Maria Eduarda Marques e Daniel Batista) |
 | 21/09/2026 | 2.0 | Unificação final do catálogo consolidado (RF01–RF37, RNF01–RNF18), notas de domínio e matriz de rastreabilidade oficial (Issue #45) | Equipe CyberSetor |
 | 21/09/2026 | 2.1 | Âncoras dos requisitos restauradas; descrições alinhadas às decisões registradas (requisito e meta como registros distintos; rascunho de evidência; prova e divulgação separadas; aviso de tratamento na inscrição); valores sem fonte marcados como iniciais; regras de negócio que os requisitos referenciam reunidas na seção 8.8; tecnologia e informação de planejamento retiradas das descrições e da rastreabilidade | Equipe CyberSetor |
+| 27/09/2026 | 2.2 | Decomposição formal de RF01 e RF04 (atendendo à DoD da Issue #70) expandindo a CP1 para RF01–RF08; refinamento da redação de CP1, CP6 e CP8 no padrão da Sprint 2 com incorporação das decisões da revisão em pares | Daniel Batista e Rodrigo Henrique |
 
 ---
 
@@ -34,32 +35,42 @@ A governança do catálogo adota:
 
 <a id="rf01"></a>
 #### RF01 — Cadastrar instrumento convocatório e parceria
-* **Descrição:** Deve ser possível ao usuário com perfil de Diretoria de Projetos ou Presidência cadastrar instrumentos formais de parceria (termos de fomento, termos de colaboração, acordos de cooperação, convênios ou emendas parlamentares), registrando tipo de instrumento, órgão concedente/financiador, número do processo administrativo, valor global repassado, datas de celebração e de vigência contratual (início e término) e o documento homologado anexado em PDF (obrigatoriedade do anexo 🔧).
+* **Descrição:** Permitir ao usuário da Diretoria de Projetos ou Presidência cadastrar instrumentos formais de parceria com o poder público, registrando tipo de instrumento, órgão concedente, número do processo administrativo, valor global repassado e datas de vigência contratual.
 * **Rastreabilidade:** CP1 | OE01 | BPMN G01 | HU-01 | MROSC (Lei 13.019/2014, art. 16 e 42)
 
-<a id="rf02"></a>
-#### RF02 — Cadastrar projeto operacional
-* **Descrição:** Deve ser possível ao usuário da Diretoria de Projetos cadastrar projetos operacionais vinculados a um instrumento convocatório ativo previamente cadastrado, registrando código de identificação, título, coordenador responsável e cronograma planejado de execução.
-* **Rastreabilidade:** CP1 | OE01 | BPMN G01 | HU-01
+<a id="rf02-termo"></a>
+#### RF02 — Anexar documento formal homologado de parceria
+* **Descrição:** Permitir ao usuário da Diretoria de Projetos anexar o arquivo digital homologado da parceria em formato PDF, vinculando o documento comprobatório ao respectivo instrumento cadastrado.
+* **Rastreabilidade:** CP1 | OE01 | BPMN G01 | HU-01 | MROSC (Lei 13.019/2014, art. 16 e 42)
 
 <a id="rf03"></a>
-#### RF03 — Desdobrar requisitos contratuais e metas
-* **Descrição:** Deve ser possível ao usuário da Diretoria de Projetos desdobrar o plano de trabalho de um projeto em requisitos do instrumento e metas, registrando para cada meta origem, descrição, indicador, modalidade de aferição, parâmetro planejado, período de apuração e forma de comprovação.
-* **Rastreabilidade:** CP1 | OE01, OE04 | BPMN G01 | HU-01 | MROSC (Lei 13.019/2014, art. 22 e 42) | RN-01, RN-02
+#### RF03 — Cadastrar projeto operacional
+* **Descrição:** Permitir ao usuário da Diretoria de Projetos cadastrar projetos operacionais vinculados a um instrumento ativo, registrando código de identificação, título, coordenador responsável e cronograma planejado de execução.
+* **Rastreabilidade:** CP1 | OE01 | BPMN G01 | HU-01
 
 <a id="rf04"></a>
-#### RF04 — Atribuir responsável, setor e prazo a meta
-* **Descrição:** Deve ser possível ao usuário da Diretoria de Projetos vincular a cada meta cadastrada um titular responsável (dono da meta), um setor executor competente (Diretoria de Projetos, Administrativo-Financeiro, Núcleo Pedagógico ou Presidência) e uma data limite fatal para conclusão da entrega. O sistema deve registrar a situação da meta (pendente, em andamento ou concluída) e sinalizar no painel do projeto as metas ainda sem responsável atribuído.
-* **Rastreabilidade:** CP1 | OE01, OE04 | BPMN G02 | HU-02 (CA-02.1, CA-02.3) | Ata de 08/09, decisão 3
+#### RF04 — Desdobrar requisitos contratuais e metas
+* **Descrição:** Permitir ao usuário da Diretoria de Projetos desdobrar o plano de trabalho em metas operacionais vinculadas aos requisitos contratuais do edital, registrando para cada meta indicador de desempenho, modalidade de aferição, parâmetro planejado e frequência de apuração.
+* **Rastreabilidade:** CP1 | OE01, OE04 | BPMN G01 | HU-01 | MROSC (Lei 13.019/2014, art. 22 e 42) | RN-01, RN-02
 
 <a id="rf05"></a>
-#### RF05 — Exibir linha do tempo e painel de prazos de metas
-* **Descrição:** Deve ser possível aos usuários autorizados consultar uma visualização consolidada em linha do tempo contendo a vigência dos instrumentos e a relação ordenada dos prazos fatais de entrega de todas as metas e requisitos de um projeto.
+#### RF05 — Atribuir responsável e setor executor a meta
+* **Descrição:** Permitir ao usuário da Diretoria de Projetos vincular a cada meta cadastrada um titular responsável e o setor executor competente do Instituto.
+* **Rastreabilidade:** CP1 | OE01, OE04 | BPMN G02 | HU-02 | Ata de 08/09, decisão 3
+
+<a id="rf06-status"></a>
+#### RF06 — Fixar prazo fatal e status de meta
+* **Descrição:** Permitir ao usuário da Diretoria de Projetos definir a data limite fatal de entrega e atualizar a situação de execução da meta (pendente, em andamento ou concluída).
+* **Rastreabilidade:** CP1 | OE01, OE04 | BPMN G02 | HU-02
+
+<a id="rf07-prazos"></a>
+#### RF07 — Exibir linha do tempo e painel de prazos de metas
+* **Descrição:** Permitir aos usuários autorizados consultar a linha do tempo do projeto consolidando a vigência do instrumento, os marcos contratuais e os prazos fatais de entrega de todas as metas operacionais cadastradas.
 * **Rastreabilidade:** CP1 | OE01, OE04 | BPMN G01, G02 | HU-02
 
-<a id="rf06"></a>
-#### RF06 — Emitir alertas de proximidade de vencimento de metas
-* **Descrição:** O sistema deve emitir alertas visuais no painel do projeto quando o prazo de uma meta estiver dentro da antecedência de alerta configurada ou já expirado sem comprovação registrada.
+<a id="rf08-alertas"></a>
+#### RF08 — Emitir alertas de proximidade e pendências de metas
+* **Descrição:** Alertar visualmente os usuários autorizados no painel do projeto quando uma meta estiver próxima do vencimento, com prazo expirado sem comprovação ou sem responsável atribuído.
 * **Rastreabilidade:** CP1 | OE04 | BPMN G02 | HU-02 | RN-03
 
 ---
@@ -178,23 +189,23 @@ A governança do catálogo adota:
 ### CP6 — Acompanhamento Automático de Metas
 
 <a id="rf26"></a>
-#### RF26 — Calcular progresso físico de metas em tempo real
-* **Descrição:** O sistema deve calcular automaticamente o progresso e o percentual de atingimento de cada meta a partir das presenças e evidências homologadas, conforme a regra de apuração definida na meta.
+#### RF26 — Calcular progresso físico de metas automaticamente
+* **Descrição:** Calcular automaticamente o progresso quantitativo e o percentual de atingimento de cada meta contratual imediatamente após a validação de presenças em atividades ou a homologação de comprovações.
 * **Rastreabilidade:** CP6 | OE01, OE04 | BPMN G05 | HU-01 (CA-01.2), HU-05 (CA-05.1) | RN-08
 
 <a id="rf27"></a>
-#### RF27 — Parametrizar apuração para metas não lineares e marcos
-* **Descrição:** Deve ser possível parametrizar regras distintas conforme o indicador: apuração cumulativa linear ou aferição binária por marco (*milestone*, ex.: publicação de catálogo).
+#### RF27 — Parametrizar apuração de metas por acúmulo contínuo ou marco de entrega
+* **Descrição:** Permitir ao analista de projetos configurar se o indicador da meta é apurado por soma contínua acumulada ou por entrega de marco binário de realização.
 * **Rastreabilidade:** CP6 | OE04 | Seção 2.3 | BPMN G05
 
 <a id="rf28"></a>
 #### RF28 — Emitir alertas de risco de inexecução
-* **Descrição:** O sistema deve emitir avisos destacados quando o ritmo de execução estiver abaixo da curva planejada, possibilitando ações corretivas preventivas antes do vencimento do prazo.
+* **Descrição:** Alertar a equipe de projetos no painel de gestão quando o percentual executado de uma meta estiver 20% ou mais abaixo da proporção de tempo decorrido do cronograma.
 * **Rastreabilidade:** CP6 | OE04 | BPMN G05
 
 <a id="rf29"></a>
 #### RF29 — Versionar metas por Termo Aditivo
-* **Descrição:** O sistema deve registrar repactuações de metas, valores ou prazos por termo aditivo ou apostila como nova versão do plano de trabalho, com comparativo entre previsto, reprogramado e realizado.
+* **Descrição:** Permitir ao usuário da Diretoria de Projetos registrar repactuações de prazos ou metas decorrentes de Termos Aditivos, preservando o histórico da pactuação original e exibindo o comparativo entre previsto e reprogramado.
 * **Rastreabilidade:** CP6 | OE04 | BPMN G05 | Lei 13.019/2014, art. 55 e 57 | RN-09
 
 ---
@@ -222,27 +233,27 @@ A governança do catálogo adota:
 
 <a id="rf33"></a>
 #### RF33 — Exigir justificativa prévia para metas não atingidas
-* **Descrição:** O sistema deve bloquear o fechamento do ciclo de prestação de contas de projetos que apresentem inexecução parcial sem prévia justificativa técnica registrada pelo analista.
+* **Descrição:** Bloquear a finalização do ciclo de prestação de contas de qualquer meta que apresente cumprimento parcial ou inexecução física sem que haja justificativa técnica fundamentada registrada.
 * **Rastreabilidade:** CP8 | OE04, OE06 | BPMN G06 | Lei 13.019/2014, art. 64, §1º | HU-05
 
 <a id="rf34"></a>
 #### RF34 — Emitir Relatório de Execução do Objeto
-* **Descrição:** Deve ser possível compilar o Relatório de Execução do Objeto consolidando metas previstas vs. realizadas, justificativas técnicas e índice ordenado de comprovações.
+* **Descrição:** Permitir ao analista de projetos ou coordenador gerar o Relatório de Execução do Objeto oficial contendo indicadores pactuados vs. atingidos, justificativas e índice de comprovações agrupado por meta e ordenado cronologicamente por data.
 * **Rastreabilidade:** CP8 | OE04, OE06 | BPMN G06 | Lei 13.019/2014, art. 63 a 66 | HU-05
 
 <a id="rf35"></a>
-#### RF35 — Gerar relatório diagramado em PDF via servidor
-* **Descrição:** O sistema deve compilar e renderizar no servidor o documento diagramado em formato PDF, com sumário executivo, tabelas analíticas e miniaturas de evidências com metadados.
+#### RF35 — Gerar relatório diagramado em PDF
+* **Descrição:** Compilar e disponibilizar para download o Relatório de Execução do Objeto diagramado em formato PDF padronizado, contendo cabeçalho institucional, sumário executivo, tabelas de metas, justificativas e miniaturas de evidências.
 * **Rastreabilidade:** CP8 | OE06 | Seção 2.4 | HU-05
 
 <a id="rf36"></a>
-#### RF36 — Exportar dados consolidados em formato tabular aberto
-* **Descrição:** Deve ser possível exportar dados brutos de execução, presenças e status de metas em formato aberto (CSV) para auditorias externas independentes.
+#### RF36 — Exportar dados analíticos e consolidados em planilha aberta
+* **Descrição:** Permitir ao usuário exportar os dados do projeto em formato tabular aberto (CSV), selecionando entre a visualização analítica detalhada de chamadas e a visão consolidada de metas.
 * **Rastreabilidade:** CP8 | OE06 | Lei 13.019/2014, art. 64 | HU-05
 
 <a id="rf37"></a>
-#### RF37 — Registrar trilha de auditoria para retificações na prestação
-* **Descrição:** O sistema deve registrar em trilha imutável qualquer alteração de dados, inclusão extemporânea de justificativas ou geração de relatórios oficiais.
+#### RF37 — Registrar trilha de auditoria das operações de prestação de contas
+* **Descrição:** Registrar em trilha de auditoria permanente qualquer retificação de dados, inserção de justificativas ou emissão de relatórios oficiais, persistindo identificação do usuário, carimbo de data/hora e valores alterados.
 * **Rastreabilidade:** CP8 | OE04 | BPMN G06 | HU-05
 
 ---
@@ -405,11 +416,13 @@ A rastreabilidade estabelece o vínculo bidirecional entre os problemas diagnost
 | Requisito | Nome | Gargalo BPMN | Norma / Mitigação | História e Critério de origem | Cobertura |
 | :--- | :--- | :---: | :--- | :--- | :---: |
 | **RF01** | Cadastrar instrumento convocatório e parceria | G01 | MROSC art. 16 e 42 | HU-01 (pré-condição do CA-01.1) | Parcial |
-| **RF02** | Cadastrar projeto operacional | G01 | — | HU-01 (pré-condição do CA-01.1) | Parcial |
-| **RF03** | Desdobrar requisitos contratuais e metas | G01 | MROSC art. 22 e 42; RN-01, RN-02 | HU-01 (CA-01.1, CA-01.3) | Total |
-| **RF04** | Atribuir responsável, setor e prazo a meta | G02 | Decisão 3 da ata de 08/09 | HU-02 (CA-02.1, CA-02.3) | Parcial |
-| **RF05** | Exibir linha do tempo e painel de prazos de metas | G01, G02 | — | HU-02 (CA-02.1) | Total |
-| **RF06** | Emitir alertas de proximidade de vencimento de metas | G02 | RN-03 | HU-02 (CA-02.2) | Total |
+| **RF02** | Anexar termo homologado de parceria | G01 | MROSC art. 16 e 42 | HU-01 (pré-condição do CA-01.1) | Parcial |
+| **RF03** | Cadastrar projeto operacional | G01 | — | HU-01 (pré-condição do CA-01.1) | Parcial |
+| **RF04** | Desdobrar requisitos contratuais e metas | G01 | MROSC art. 22 e 42; RN-01, RN-02 | HU-01 (CA-01.1, CA-01.3) | Total |
+| **RF05** | Atribuir responsável e setor executor a meta | G02 | Decisão 3 da ata de 08/09 | HU-02 (CA-02.1, CA-02.3) | Parcial |
+| **RF06** | Fixar prazo fatal e status de meta | G02 | — | HU-02 (CA-02.1) | Total |
+| **RF07** | Exibir linha do tempo e painel de prazos de metas | G01, G02 | — | HU-02 (CA-02.1) | Total |
+| **RF08** | Emitir alertas de proximidade e pendências de metas | G02 | RN-03 | HU-02 (CA-02.2) | Total |
 
 #### CP2 — Gestão de Atividades (OE01; OE04, OE06)
 | Requisito | Nome | Gargalo BPMN | Norma / Mitigação | História e Critério de origem | Cobertura |
@@ -449,8 +462,8 @@ A rastreabilidade estabelece o vínculo bidirecional entre os problemas diagnost
 #### CP6 — Acompanhamento Automático de Metas (OE04; OE01)
 | Requisito | Nome | Gargalo BPMN | Norma / Mitigação | História e Critério de origem | Cobertura |
 | :--- | :--- | :---: | :--- | :--- | :---: |
-| **RF26** | Calcular progresso físico de metas em tempo real | G05 | RN-08 | HU-01 (CA-01.2); HU-05 (CA-05.1) | Total |
-| **RF27** | Parametrizar apuração para metas não lineares e marcos | G05 | Seção 2.3 | — | Lacuna de história |
+| **RF26** | Calcular progresso físico de metas automaticamente | G05 | RN-08 | HU-01 (CA-01.2); HU-05 (CA-05.1) | Total |
+| **RF27** | Parametrizar apuração de metas por acúmulo contínuo ou marco de entrega | G05 | Seção 2.3 | — | Lacuna de história |
 | **RF28** | Emitir alertas de risco de inexecução | G05 | — | — | Lacuna de história |
 | **RF29** | Versionar metas por Termo Aditivo | G05 | MROSC art. 55 e 57; RN-09 | — | Lacuna de história |
 
@@ -466,9 +479,9 @@ A rastreabilidade estabelece o vínculo bidirecional entre os problemas diagnost
 | :--- | :--- | :---: | :--- | :--- | :---: |
 | **RF33** | Exigir justificativa prévia para metas não atingidas | G06 | MROSC art. 64, §1º | HU-05 (CA-05.2) | Total |
 | **RF34** | Emitir Relatório de Execução do Objeto | G06 | MROSC art. 63 a 66 | HU-05 (CA-05.1) | Total |
-| **RF35** | Gerar relatório diagramado em PDF via servidor | G06 | Seção 2.4 | HU-05 (CA-05.3) | Total |
-| **RF36** | Exportar dados consolidados em formato tabular aberto | G06 | MROSC art. 64 | HU-05 (CA-05.3) | Total |
-| **RF37** | Registrar trilha de auditoria para retificações na prestação | G06 | — | HU-05 (sem CA) | Parcial |
+| **RF35** | Gerar relatório diagramado em PDF | G06 | Seção 2.4 | HU-05 (CA-05.3) | Total |
+| **RF36** | Exportar dados analíticos e consolidados em planilha aberta | G06 | MROSC art. 64 | HU-05 (CA-05.3) | Total |
+| **RF37** | Registrar trilha de auditoria das operações de prestação de contas | G06 | — | HU-05 (sem CA) | Parcial |
 
 ---
 
