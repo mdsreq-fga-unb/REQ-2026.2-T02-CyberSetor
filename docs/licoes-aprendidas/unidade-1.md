@@ -4,6 +4,7 @@
 |---|---|---|---|
 | 07/09/2026 | 1.0 | Lições da Sprint 0 registradas para a entrega da Unidade 1 | Equipe CyberSetor |
 | 17/09/2026 | 1.1 | Cada lição passa a declarar responsável, prazo e indicador; alcance da validação de 02/09 delimitado; avaliação da daily assíncrona remetida à Retrospectiva | Daniel Batista |
+| 28/09/2026 | 1.2 | Explicitação da pendência da avaliação de Daniel na consolidação inicial da Sprint 0 e sua resolução e integração integral na Sprint 1 | Daniel Batista |
 
 Durante a Sprint 0, dedicada à descoberta do problema e à formação da equipe e do processo, algumas lições relevantes foram registradas, com ênfase nas ações de melhoria adotadas e nas dificuldades enfrentadas.
 
@@ -18,10 +19,10 @@ Durante a Sprint 0, dedicada à descoberta do problema e à formação da equipe
 **Levantamento de competências técnicas da equipe e nivelamento**
 
 - *Desafio:* A equipe não tinha um diagnóstico objetivo do próprio nível técnico, o que dificultava decidir a stack sem incorrer no risco de escolher tecnologias que ninguém dominava.
-- *Ação de melhoria:* Foi construída uma Matriz de Competências para autoavaliação do domínio em cada tecnologia candidata (escala de 0 a 3). A matriz cobre os seis integrantes. O levantamento revelou domínio em TypeScript, React e PostgreSQL, e lacunas em Prisma e NestJS. Para mitigar o risco, foram realizados dojos de nivelamento técnico no início da Sprint 1 e adotada a programação em pares para evitar a concentração de conhecimento.
-- *Responsável:* Dupla A, com facilitação do Scrum Master.
-- *Prazo:* Sprint 1.
-- *Indicador da ação:* os seis integrantes com avaliação preenchida na Matriz de Competências e dojos de nivelamento realizados.
+- *Ação de melhoria:* Foi construída uma Matriz de Competências para autoavaliação do domínio em cada tecnologia candidata (escala de 0 a 3). Na consolidação inicial da Sprint 0 (03/09/2026), a matriz contou com 5 dos 6 integrantes, registrando-se a pendência da avaliação individual de Daniel Batista. Essa pendência foi integralmente sanada e integrada na abertura da Sprint 1 (08/09/2026), consolidando 100% da equipe (6 de 6 integrantes) avaliada antes do início do desenvolvimento. O levantamento revelou domínio em TypeScript, React e PostgreSQL, e lacunas em Prisma e NestJS. Para mitigar o risco, foram realizados dojos de nivelamento técnico no início da Sprint 1 e adotada a programação em pares para evitar a concentração de conhecimento.
+- *Responsável:* Daniel Batista e Maria Eduarda Marques (Dupla A), com facilitação do Scrum Master.
+- *Prazo:* Sprint 0 (levantamento inicial) e início da Sprint 1 (conclusão integral e dojos).
+- *Indicador da ação:* 100% dos integrantes (6 de 6) com avaliação preenchida na Matriz de Competências e dojos de nivelamento realizados.
 
 **Comunicação e validação com o cliente**
 

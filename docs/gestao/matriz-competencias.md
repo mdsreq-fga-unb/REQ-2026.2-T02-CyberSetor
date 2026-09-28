@@ -1,6 +1,11 @@
 # Matriz de competências e stack
 
-A pilha tecnológica citada na seção 2.4 do Documento de Visão não foi escolhida por preferência. Foi decidida a partir de uma matriz de competências preenchida pela equipe entre 02/09 e 03/09/2026.
+| Data | Versão | Descrição | Autor |
+|---|---|---|---|
+| 03/09/2026 | 1.0 | Registro inicial das decisões técnicas e método da matriz de competências | Equipe CyberSetor |
+| 28/09/2026 | 1.1 | Explicitação do histórico de consolidação (pendência da Sprint 0 sanada no início da Sprint 1) | Daniel Batista |
+
+A pilha tecnológica citada na seção 2.4 do Documento de Visão não foi escolhida por preferência. Foi decidida a partir de uma matriz de competências preenchida pela equipe entre 02/09 e 03/09/2026 e consolidada integralmente no início da Sprint 1.
 
 ## Como a matriz funciona
 
