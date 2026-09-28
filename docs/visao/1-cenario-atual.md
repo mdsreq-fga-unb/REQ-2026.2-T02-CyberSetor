@@ -7,6 +7,7 @@
 | 14/09/2026 | 1.2 | Identificação institucional das representantes do Instituto nas seções 1.1, 1.5 e 1.6; mapa de stakeholders alinhado à validação por área da seção 7.3.1 | Vinicius Vieira e Maria Eduarda Marques |
 | 17/09/2026 | 1.3 | Segmentação de clientes alinhada ao escopo da seção 2.3: registro de presença e carga horária no lugar da emissão de certificado | Equipe CyberSetor |
 | 17/09/2026 | 1.4 | Dimensionamento do problema, matriz de interesse e poder com estratégias de engajamento, distinção entre usuário, titular e beneficiário, aprofundamento da área administrativo-financeira e heterogeneidade dos editais | Rodrigo Henrique e Daniel Batista |
+| 28/09/2026 | 1.5 | Rich Picture refeito com os oito componentes do fluxo operacional (financiadores públicos, editais e termos de fomento, projetos e metas, formulários avulsos, campo com listas e fotos, área administrativo-financeira, consolidação manual e entrega dos relatórios com risco de glosa), detalhados na seção 1.3 | Daniel Batista |
 
 ---
 
@@ -41,13 +42,18 @@ Para sustentar essas intervenções, o Instituto articula parcerias com a admini
   <figcaption>Figura 1 – Rich Picture do Cenário Operacional do Instituto No Setor. Fonte: elaborada pelos autores.</figcaption>
 </figure>
 
-O Rich Picture situa a articulação institucional. O fluxo operacional em que os gargalos se originam está modelado em notação BPMN, na página [B1 · Modelo do processo atual](../requisitos/b1-bpmn-processo-atual.md), e percorre as seguintes etapas:
-1. **Financiadores e Editais:** O ciclo nasce na captação de editais públicos e termos de fomento, que estipulam metas quantitativas, prazos e parâmetros rígidos de comprovação.
-2. **Projetos e Metas:** A Diretoria desdobra os compromissos em planos de trabalho segmentados por linhas orçamentárias.
-3. **Descentralização em Formulários e Planilhas:** As metas de campo são distribuídas em formulários avulsos do Google Forms, enquanto a execução financeira é lançada na Matriz de Aquisição em planilhas Excel desprovidas de integração.
-4. **Campo, Presença e Evidências:** Educadores e assistentes executam atividades formativas no SCS, registrando frequência em listas de papel e fotos em aparelhos celulares pessoais.
-5. **Setor Administrativo-Financeiro:** O núcleo financeiro executa tomadas de preço e desembolsos em sistemas públicos externos sem sincronia em tempo real com as comprovações pedagógicas.
-6. **Consolidação manual e prestação de contas:** no encerramento dos ciclos, a equipe transcreve dados e compila mídias para gerar os relatórios exigidos pelos órgãos de controle.
+O Rich Picture sintetiza visualmente a articulação institucional e o fluxo operacional do Instituto No Setor, explicitando os oito componentes centrais do ecossistema e os gargalos críticos que justificam a concepção da solução de software:
+
+1. **Financiadores Públicos:** Órgãos concedentes e fontes de emendas parlamentares (SEDET-DF, FAC-DF, Fiocruz e Ministério da Cultura), responsáveis pelos repasses financeiros e pela fiscalização das metas contratuais pactuadas.
+2. **Editais e Termos de Fomento:** Instrumentos jurídicos disciplinados pelo Marco Regulatório das Organizações da Sociedade Civil — MROSC (Lei Federal nº 13.019/2014), que fixam metas quantitativas, prazos de execução, limites orçamentários e regras de prestação de contas.
+3. **Instituto No Setor (Projetos e Metas):** Organização da Sociedade Civil sediada no Setor Comercial Sul (SCS) que gerencia múltiplos projetos socioculturais concomitantes, desdobrando as obrigações dos termos de fomento em planos de trabalho de campo.
+4. **Formulários Avulsos:** Instrumentos descentralizados (como Google Forms) operados pelo núcleo pedagógico (Maria Clara e Maria Eduarda) para inscrições de turmas e cadastro de participantes, desconectados de um banco centralizado.
+5. **Educadores em Campo, Listas de Presença e Evidências:** Educadores, oficineiros e monitores realizam as atividades formativas com populações vulneráveis no SCS sob oscilações de rede, coletando assinaturas em listas de presença físicas de papel (sujeitas a perda, rasgos e umidade) e fotografias/vídeos comprobatórios em aparelhos celulares pessoais dispersos.
+6. **Equipe Administrativo-Financeira e Planilhas Dispersas:** Conduzida por Fillipe Ramos e analistas, gerencia cotações de preços, notas fiscais e alimentação manual da Matriz de Aquisição em arquivos isolados do Excel, sem sincronia em tempo real com as evidências pedagógicas.
+7. **Consolidação Manual (Gargalo Operacional):** Ponto crítico de estrangulamento onde convergem listas de papel, fotos de celulares e planilhas financeiras. Exige digitação manual, triagem de mídias e conferência linha a linha entre presenças e rubricas orçamentárias.
+8. **Relatórios de Execução, Entrega Explícita e Risco de Glosa:** Etapa final de consolidação dos relatórios de cumprimento do objeto para submissão formal aos órgãos financiadores. A lentidão e a fragilidade do processo manual expõem a organização ao severo **Risco de Glosa** (art. 64 da Lei 13.019/2014), com possibilidade de rejeição de contas e exigência de devolução compulsória de recursos públicos.
+
+O fluxo em que os gargalos se originam está modelado em notação BPMN na página [B1 · Modelo do processo atual](../requisitos/b1-bpmn-processo-atual.md).
 
 ---
 
