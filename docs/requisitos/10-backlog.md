@@ -4,7 +4,8 @@
 
 | Data | Versão | Descrição | Autor(es) |
 | :---: | :---: | :--- | :--- |
-| 28/09/2026 | 1.0 | Estruturação inicial da seção e registro da avaliação de esforço técnico dos requisitos de CP2, CP4 e CP7 (Atividade 4) | Caio Martins e Lucas Leal |
+| 27/09/2026 | 1.0 | Estruturação inicial da seção e registro da avaliação de esforço técnico dos requisitos de CP1, CP6 e CP8 (Atividade 4) | Daniel Batista e Rodrigo Henrique |
+| 28/09/2026 | 1.1 | Adição da avaliação de esforço técnico dos requisitos de CP2, CP4 e CP7 (Issue #71) | Caio Martins e Lucas Leal |
 
 ---
 
@@ -26,21 +27,48 @@ A fundamentação da lacuna de capacidade baseia-se na **Matriz de Competências
 
 ---
 
-## 10.2 Avaliação de Esforço Técnico dos Requisitos (CP2, CP4 e CP7)
+## 10.2 Avaliação de Esforço Técnico dos Requisitos (CP1, CP6 e CP8)
+
+A tabela a seguir consolida a apuração das notas técnicas para os requisitos funcionais das Características de Produto sob responsabilidade dos épicos de *Requisito e Meta* e *Relatório*:
+
+| Código | Requisito Funcional | Esforço (Horas) | Complexidade | Lacuna de Capacidade | Média | Esforço Técnico Final | Fundamentação Técnica (Pós-Dojos) |
+| :---: | :--- | :---: | :---: | :---: | :---: | :---: | :--- |
+| **RF01** | Cadastrar instrumento convocatório e parceria | 2 | 1 | 1 | 1,33 | **1** | CRUD administrativo padrão em Next.js e PostgreSQL (stack consolidada). |
+| **RF02** | Anexar documento formal homologado de parceria | 2 | 1 | 1 | 1,33 | **1** | Upload de arquivo digital e persistência de metadados no banco. |
+| **RF03** | Cadastrar projeto operacional | 1 | 1 | 1 | 1,00 | **1** | Formulário direto de cadastro com relacionamento 1:N no Prisma. |
+| **RF04** | Desdobrar requisitos contratuais e metas | 2 | 2 | 1 | 1,67 | **2** | Modelagem relacional N:N no Prisma para amarração de metas a cláusulas. |
+| **RF05** | Atribuir responsável e setor executor a meta | 1 | 1 | 1 | 1,00 | **1** | Associação direta de campos de chave e governança de setor. |
+| **RF06** | Fixar prazo fatal e status de meta | 1 | 1 | 1 | 1,00 | **1** | Atualização de campos de data limite e máquina de estados de status. |
+| **RF07** | Exibir linha do tempo e painel de prazos de metas | 2 | 2 | 1 | 1,67 | **2** | Componente visual de linha do tempo com filtros temporais em shadcn/ui. |
+| **RF08** | Emitir alertas de proximidade e pendências de metas | 2 | 2 | 1 | 1,67 | **2** | Consultas condicionais de intervalo de datas e verificação de pendências. |
+| **RF28** | Calcular progresso físico de metas automaticamente | 3 | 2 | 1 | 2,00 | **2** | Lógica de agregação de presenças validadas e evidências homologadas via serviços no NestJS. |
+| **RF29** | Parametrizar apuração de metas por acúmulo contínuo ou marco de entrega | 2 | 1 | 1 | 1,33 | **1** | Parametrização condicional de fórmula conforme modalidade da meta cadastrada. |
+| **RF30** | Emitir alertas de risco de inexecução | 3 | 2 | 1 | 2,00 | **2** | Comparação algorítmica entre o percentual realizado e a fração temporal decorrida do cronograma. |
+| **RF31** | Versionar metas por Termo Aditivo | 3 | 2 | 1 | 2,00 | **2** | Esquema de versionamento com snapshots históricos de metas no Prisma. |
+| **RF35** | Exigir justificativa prévia para metas não atingidas | 1 | 1 | 1 | 1,00 | **1** | Validação transacional de bloqueio de encerramento sem justificativa registrada. |
+| **RF36** | Emitir Relatório de Execução do Objeto | 3 | 2 | 1 | 2,00 | **2** | Agrupamento de indicadores previstos versus realizados e ordenação cronológica do índice de evidências. |
+| **RF37** | Gerar relatório diagramado em PDF | 4 | 3 | 2 | 3,00 | **3** | Diagramação de impressão de relatório formal em PDF com templates e ajustes de quebra de página via Puppeteer. |
+| **RF38** | Exportar dados analíticos e consolidados em planilha aberta | 2 | 1 | 1 | 1,33 | **1** | Geração e download de arquivo tabular estruturado (CSV) a partir de consultas na base. |
+| **RF39** | Registrar trilha de auditoria das operações de prestação de contas | 2 | 1 | 1 | 1,33 | **1** | Registro automático de snapshots de alterações e justificativas em tabela de log permanente. |
+
+
+---
+
+## 10.3 Avaliação de Esforço Técnico dos Requisitos (CP2, CP4 e CP7)
 
 A tabela a seguir consolida a apuração das notas técnicas para os requisitos funcionais das Características de Produto sob responsabilidade dos épicos de *Atividade*, *Presença em Campo* e *Evidência*:
 
 | Código | Requisito Funcional | Esforço (Horas) | Complexidade | Lacuna de Capacidade | Média | Esforço Técnico Final | Fundamentação Técnica (Pós-Dojos) |
 | :---: | :--- | :---: | :---: | :---: | :---: | :---: | :--- |
-| **RF07** | Cadastrar atividade por modalidade de objeto | 1 | 1 | 2 | 1,33 | **1** | Formulário administrativo padrão com vínculo relacional 1:N com projetos e N:N com metas contratuais no Prisma. |
-| **RF08** | Parametrizar exigência de comprovação de presença | 2 | 3 | 3 | 2,67 | **3** | Estrutura de versionamento de configurações de comprovação por instrumento e modalidade (RN-04); requer modelagem de snapshots no Prisma. |
-| **RF14** | Registrar frequência em dispositivo móvel | 3 | 2 | 3 | 2,67 | **3** | Interface mobile-first com gerenciamento de estado da chamada, marcação em lote e modal de inclusão avulsa de participantes; exige atenção à usabilidade em telas pequenas (RNF15). |
-| **RF15** | Operar registro de presença em modo offline | 3 | 4 | 3 | 3,33 | **3** | Configuração de PWA com Service Workers e persistência determinística em IndexedDB; maior complexidade técnica da frente — exige pesquisa e estudo prévio de bibliotecas como Workbox/Dexie.js. |
-| **RF16** | Sincronizar presenças com reconciliação idempotente | 2 | 3 | 3 | 2,67 | **3** | Fila assíncrona de envio no frontend com endpoints idempotentes no NestJS; requer transações de banco e tratamento de divergências de concorrência no PostgreSQL. |
-| **RF17** | Registrar lançamento extemporâneo com justificativa | 1 | 1 | 2 | 1,33 | **1** | Validação de regra temporal no backend com preenchimento obrigatório de justificativa e gravação de evento na trilha de auditoria (RNF02). |
-| **RF30** | Anexar evidências documentais e fotográficas | 2 | 3 | 3 | 2,67 | **3** | Pipeline de upload multipart com validação de formato e tamanho no NestJS; integração com a Geolocation API do navegador condicionada à permissão do usuário. |
-| **RF31** | Vincular evidência a meta contratual | 2 | 2 | 2 | 2,00 | **2** | Vínculo relacional N:N no Prisma entre evidência, atividade e metas; controle de ciclo de vida de rascunhos e verificação de bloqueio de encerramento (RN-11). |
-| **RF32** | Segregar acesso a fotos de beneficiários vulneráveis | 3 | 3 | 2 | 2,67 | **3** | Controle de acesso granular via Guards no NestJS com restrição de escopo de visualização por perfil (RN-12) e exibição de diretrizes de enquadramento na interface de captura. |
+| **RF09** | Cadastrar atividade por modalidade de objeto | 1 | 1 | 2 | 1,33 | **1** | Formulário administrativo padrão com vínculo relacional 1:N com projetos e N:N com metas contratuais no Prisma. |
+| **RF10** | Parametrizar exigência de comprovação de presença | 2 | 3 | 3 | 2,67 | **3** | Estrutura de versionamento de configurações de comprovação por instrumento e modalidade (RN-04); requer modelagem de snapshots no Prisma. |
+| **RF16** | Registrar frequência em dispositivo móvel | 3 | 2 | 3 | 2,67 | **3** | Interface mobile-first com gerenciamento de estado da chamada, marcação em lote e modal de inclusão avulsa de participantes; exige atenção à usabilidade em telas pequenas (RNF15). |
+| **RF17** | Operar registro de presença em modo offline | 3 | 4 | 3 | 3,33 | **3** | Configuração de PWA com Service Workers e persistência determinística em IndexedDB; maior complexidade técnica da frente — exige pesquisa e estudo prévio de bibliotecas como Workbox/Dexie.js. |
+| **RF18** | Sincronizar presenças com reconciliação idempotente | 2 | 3 | 3 | 2,67 | **3** | Fila assíncrona de envio no frontend com endpoints idempotentes no NestJS; requer transações de banco e tratamento de divergências de concorrência no PostgreSQL. |
+| **RF19** | Registrar lançamento extemporâneo com justificativa | 1 | 1 | 2 | 1,33 | **1** | Validação de regra temporal no backend com preenchimento obrigatório de justificativa e gravação de evento na trilha de auditoria (RNF02). |
+| **RF32** | Anexar evidências documentais e fotográficas | 2 | 3 | 3 | 2,67 | **3** | Pipeline de upload multipart com validação de formato e tamanho no NestJS; integração com a Geolocation API do navegador condicionada à permissão do usuário. |
+| **RF33** | Vincular evidência a meta contratual | 2 | 2 | 2 | 2,00 | **2** | Vínculo relacional N:N no Prisma entre evidência, atividade e metas; controle de ciclo de vida de rascunhos e verificação de bloqueio de encerramento (RN-11). |
+| **RF34** | Segregar acesso a fotos de beneficiários vulneráveis | 3 | 3 | 2 | 2,67 | **3** | Controle de acesso granular via Guards no NestJS com restrição de escopo de visualização por perfil (RN-12) e exibição de diretrizes de enquadramento na interface de captura. |
 
 ---
 
