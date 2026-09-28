@@ -13,6 +13,7 @@
 | 21/09/2026 | 1.6 | Construção da matriz de rastreabilidade bidirecional e auditoria de lacunas (Issue #44) | Dupla A (Maria Eduarda Marques e Daniel Batista) |
 | 21/09/2026 | 2.0 | Unificação final do catálogo consolidado (RF01–RF37, RNF01–RNF18), notas de domínio e matriz de rastreabilidade oficial (Issue #45) | Equipe CyberSetor |
 | 21/09/2026 | 2.1 | Âncoras dos requisitos restauradas; descrições alinhadas às decisões registradas (requisito e meta como registros distintos; rascunho de evidência; prova e divulgação separadas; aviso de tratamento na inscrição); valores sem fonte marcados como iniciais; regras de negócio que os requisitos referenciam reunidas na seção 8.8; tecnologia e informação de planejamento retiradas das descrições e da rastreabilidade | Equipe CyberSetor |
+| 28/09/2026 | 2.2 | Refinamento e padronização dos RFs das frentes CP2, CP4 e CP7 (RF07, RF08, RF14 a RF17, RF30 a RF32) no padrão da Sprint 2; inclusão de meta contratual em RF07 (D6); previsão de participante não inscrito em RF14; explicitação de pré-carga offline e descarte de rascunhos | Caio Martins e Lucas Leal |
 
 ---
 
@@ -68,12 +69,12 @@ A governança do catálogo adota:
 
 <a id="rf07"></a>
 #### RF07 — Cadastrar atividade por modalidade de objeto
-* **Descrição:** Deve ser possível ao usuário da equipe de projetos ou coordenação pedagógica cadastrar atividades vinculadas a um projeto, classificando a modalidade em: Oficina Contínua, Evento Aberto ou Ação de Acolhimento Comunitário, configurando número de vagas planejadas, carga horária prevista, facilitador responsável, local de realização, datas e parâmetros de recorrência de turmas.
+* **Descrição:** Permitir ao usuário autorizado cadastrar uma atividade vinculada a um projeto e a uma ou mais metas contratuais, classificando sua modalidade entre Oficina Contínua, Evento Aberto e Ação de Acolhimento Comunitário.
 * **Rastreabilidade:** CP2 | OE01, OE04 | BPMN G03 | HU-03
 
 <a id="rf08"></a>
 #### RF08 — Parametrizar exigência de comprovação de presença
-* **Descrição:** O sistema deve parametrizar, por instrumento e por modalidade de atividade, as comprovações obrigatórias, opcionais e condicionais exigidas de cada atividade.
+* **Descrição:** Permitir ao usuário autorizado configurar, por instrumento e por modalidade de atividade, quais comprovações são obrigatórias, opcionais ou condicionais, herdando a atividade a configuração vigente no cadastro.
 * **Rastreabilidade:** CP2 | OE01, OE04 | Seção 3.3.6 | BPMN G03 | HU-03 | RN-04
 
 ---
@@ -111,22 +112,22 @@ A governança do catálogo adota:
 
 <a id="rf14"></a>
 #### RF14 — Registrar frequência em dispositivo móvel
-* **Descrição:** Deve ser possível ao educador ou facilitador de campo realizar a chamada digital no próprio smartphone, fornecendo interface otimizada para marcação individual ou confirmação em lote.
+* **Descrição:** Permitir ao educador registrar a frequência dos participantes no dispositivo móvel, individualmente ou em lote, bem como realizar a inclusão avulsa de participantes não inscritos com dados mínimos de identificação durante a chamada.
 * **Rastreabilidade:** CP4 | OE03, OE04 | BPMN G03
 
 <a id="rf15"></a>
 #### RF15 — Operar registro de presença em modo offline
-* **Descrição:** O sistema deve permitir a chamada de oficinas mesmo na ausência completa de conexão com a internet no SCS, retendo os registros no armazenamento local do dispositivo e gerenciando uma fila local de eventos pendentes de sincronização.
+* **Descrição:** Permitir ao educador carregar previamente no dispositivo a lista de participantes da atividade enquanto conectado e realizar o registro de presenças sem conexão com a internet, indicando na tela a confirmação de salvamento local.
 * **Rastreabilidade:** CP4 | OE03, OE04 | Seção 3.3.3 | BPMN G03
 
 <a id="rf16"></a>
 #### RF16 — Sincronizar presenças com reconciliação idempotente
-* **Descrição:** O sistema deve sincronizar automaticamente a fila local de presenças com o servidor assim que a conectividade for restabelecida, utilizando identificadores únicos gerados no dispositivo e garantindo que submissões repetidas do mesmo lote não dupliquem registros no banco de dados.
+* **Descrição:** Enviar automaticamente os registros de presença salvos no dispositivo assim que a conectividade for restabelecida, assegurando a reconciliação dos dados sem duplicidade de registros.
 * **Rastreabilidade:** CP4 | OE03, OE04 | Seção 3.3.3 | BPMN G03
 
 <a id="rf17"></a>
 #### RF17 — Registrar lançamento extemporâneo com justificativa
-* **Descrição:** Deve ser possível lançar ou retificar chamadas após a data de realização da atividade, exigindo obrigatoriamente justificativa textual fundamentada e registrando autor, data, hora e motivo na trilha de auditoria.
+* **Descrição:** Permitir ao usuário autorizado lançar ou retificar a frequência de uma atividade após a data de sua realização, exigindo o preenchimento obrigatório de justificativa escrita.
 * **Rastreabilidade:** CP4 | OE03, OE04 | Seção 3.3.8 | BPMN G03
 
 <a id="rf18"></a>
@@ -203,17 +204,17 @@ A governança do catálogo adota:
 
 <a id="rf30"></a>
 #### RF30 — Anexar evidências documentais e fotográficas
-* **Descrição:** Deve ser possível anexar arquivos comprobatórios de atividades (fotos, listas assinadas digitalizadas e atas), registrando automaticamente autor, data e hora e, quando disponível, a geolocalização.
+* **Descrição:** Permitir ao usuário autorizado anexar arquivos comprobatórios de execução da atividade, registrando automaticamente autor, data e hora e, mediante permissão concedida no dispositivo, as coordenadas geográficas.
 * **Rastreabilidade:** CP7 | OE05, OE06 | BPMN G03 | HU-04 | RN-10
 
 <a id="rf31"></a>
 #### RF31 — Vincular evidência a meta contratual
-* **Descrição:** Deve ser possível vincular cada arquivo anexado a uma atividade executada e a uma ou mais metas, exibindo por meta as comprovações recebidas e as pendentes.
+* **Descrição:** Permitir ao usuário autorizado vincular o arquivo comprobatório a uma atividade executada e a uma ou mais metas contratuais, possibilitando o descarte de rascunhos para liberar o encerramento da atividade.
 * **Rastreabilidade:** CP7 | OE05, OE06 | BPMN G03 | HU-04 (CA-04.1, CA-04.2, CA-04.3) | RN-10, RN-11
 
 <a id="rf32"></a>
 #### RF32 — Segregar acesso a fotos de beneficiários vulneráveis
-* **Descrição:** O sistema deve restringir o acesso às imagens de prova de execução aos perfis de coordenação e de prestação de contas e orientar, na captura, o enquadramento sem closes faciais.
+* **Descrição:** Restringir a visualização de imagens comprobatórias aos perfis autorizados e exibir, durante a captura no dispositivo, orientações de enquadramento para salvaguardar a identificação visual de participantes.
 * **Rastreabilidade:** CP7 | OE05, OE06 | Seção 3.3.4 | LGPD art. 7º, I, e art. 14 | HU-04 | RN-12
 
 ---
