@@ -61,7 +61,7 @@ A reunião consolidou a organização interna da equipe para a entrega da Unidad
 
 | # | Ação | Responsável | Prazo | Situação |
 |---|---|---|---|---|
-| A1 | Preencher a Matriz de Competências | Todos | 03/09 | Concluída (5 de 6; Daniel incompleto) |
+| A1 | Preencher a Matriz de Competências | Todos | 03/09 | Concluída inicialmente com 5 de 6 em 03/09 (Daniel pendente); concluída integralmente com os 6 integrantes em 08/09 (Sprint 1) |
 | A2 | Fechar a stack técnica a partir da Matriz | Vinicius e Rodrigo | após 03/09 | Concluída em 03/09 |
 | A3 | Redigir as seções atribuídas do Documento de Visão | Cada dupla | 06/09 (domingo) — meta final de conclusão dos documentos | Concluída |
 | A4 | Estruturar o repositório e publicar o site em GitHub Pages | Vinicius | até 07/09 | Concluída em 07/09 |
@@ -128,3 +128,4 @@ Método definido: preenchimento da Matriz de Competências por todos, com prazo 
 | 2.0 | 09/09/2026 | Reconstrução no template formal a partir dos registros de decisão do projeto; lacunas marcadas para conferência com a transcrição | Vinicius |
 | 3.0 | 09/09/2026 | Conferida contra a transcrição automática da reunião e contra a equipe: participação confirmada como equipe completa; horário, ações adicionais (A6 a A9) e pendências atualizadas | Vinicius |
 | 4.0 | 09/09/2026 | Revisão de estilo para publicação: substituição dos marcadores gráficos por texto corrido | Vinicius |
+| 5.0 | 28/09/2026 | Atualização da situação de A1 explicitando a conclusão integral da avaliação por Daniel na Sprint 1 (Issue #26) | Daniel Batista |
