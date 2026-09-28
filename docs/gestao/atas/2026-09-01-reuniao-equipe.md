@@ -128,4 +128,4 @@ Método definido: preenchimento da Matriz de Competências por todos, com prazo 
 | 2.0 | 09/09/2026 | Reconstrução no template formal a partir dos registros de decisão do projeto; lacunas marcadas para conferência com a transcrição | Vinicius |
 | 3.0 | 09/09/2026 | Conferida contra a transcrição automática da reunião e contra a equipe: participação confirmada como equipe completa; horário, ações adicionais (A6 a A9) e pendências atualizadas | Vinicius |
 | 4.0 | 09/09/2026 | Revisão de estilo para publicação: substituição dos marcadores gráficos por texto corrido | Vinicius |
-| 5.0 | 28/09/2026 | Atualização da situação de A1 explicitando a conclusão integral da avaliação por Daniel na Sprint 1 (Issue #26) | Daniel Batista |
+| 5.0 | 28/09/2026 | Atualização da situação de A1 explicitando a conclusão integral da avaliação por Daniel na Sprint 1 | Daniel Batista |

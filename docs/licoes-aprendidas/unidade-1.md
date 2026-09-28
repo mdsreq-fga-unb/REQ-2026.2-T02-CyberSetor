@@ -4,7 +4,7 @@
 |---|---|---|---|
 | 07/09/2026 | 1.0 | Lições da Sprint 0 registradas para a entrega da Unidade 1 | Equipe CyberSetor |
 | 17/09/2026 | 1.1 | Cada lição passa a declarar responsável, prazo e indicador; alcance da validação de 02/09 delimitado; avaliação da daily assíncrona remetida à Retrospectiva | Daniel Batista |
-| 28/09/2026 | 1.2 | Explicitação da pendência da avaliação de Daniel na consolidação inicial da Sprint 0 e sua resolução e integração integral na Sprint 1 (Issue #26) | Daniel Batista |
+| 28/09/2026 | 1.2 | Explicitação da pendência da avaliação de Daniel na consolidação inicial da Sprint 0 e sua resolução e integração integral na Sprint 1 | Daniel Batista |
 
 Durante a Sprint 0, dedicada à descoberta do problema e à formação da equipe e do processo, algumas lições relevantes foram registradas, com ênfase nas ações de melhoria adotadas e nas dificuldades enfrentadas.
 

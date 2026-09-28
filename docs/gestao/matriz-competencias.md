@@ -3,14 +3,11 @@
 | Data | Versão | Descrição | Autor |
 |---|---|---|---|
 | 03/09/2026 | 1.0 | Registro inicial das decisões técnicas e método da matriz de competências | Equipe CyberSetor |
-| 28/09/2026 | 1.1 | Explicitação do histórico de consolidação (pendência da Sprint 0 sanada no início da Sprint 1) (Issue #26) | Daniel Batista |
+| 28/09/2026 | 1.1 | Explicitação do histórico de consolidação (pendência da Sprint 0 sanada no início da Sprint 1) | Daniel Batista |
 
 A pilha tecnológica citada na seção 2.4 do Documento de Visão não foi escolhida por preferência. Foi decidida a partir de uma matriz de competências preenchida pela equipe entre 02/09 e 03/09/2026 e consolidada integralmente no início da Sprint 1.
 
 ## Como a matriz funciona
-
-> [!NOTE] Histórico de Consolidação
-> O preenchimento da matriz teve início na Sprint 0 (02/09 a 03/09/2026) com 5 dos 6 integrantes, registrando pendência na avaliação individual de Daniel Batista. Essa avaliação foi integralmente concluída e consolidada no início da Sprint 1 (08/09/2026), totalizando os 6 integrantes avaliados antes da realização dos dojos técnicos e do início dos ciclos de desenvolvimento.
 
 Cada integrante declarou, para cada tecnologia candidata, o próprio nível de familiaridade em uma escala de 0 a 3: 0 para nunca usou, 1 para já viu ou estudou, 2 para já usou em projeto, 3 para domina e pode ensinar. Marcar 0 é informação, não demérito. A planilha consolida, por tecnologia, quantas pessoas estão no nível 2 ou acima e quem está no nível 3 e pode atuar como mentor.
 
