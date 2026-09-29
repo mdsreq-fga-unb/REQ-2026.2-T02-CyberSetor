@@ -6,7 +6,7 @@ body:
   - type: markdown
     attributes:
       value: |
-        Uma história por capacidade. Antes de abrir, confira a Definition of Ready (seção 9 do site): valor para um perfil do Instituto · ator explícito · vinculada a RF/RNF e às regras que a condicionam · critérios de aceitação em lista · classificada no MoSCoW · sem decisão externa pendente · cabe em uma sprint.
+        Uma história por capacidade. A história entra em uma sprint só quando atende à Definition of Ready da seção 9 do site, conferida no refinamento.
   - type: textarea
     id: historia
     attributes:
@@ -82,7 +82,7 @@ body:
     id: pendencias
     attributes:
       label: Dependências e pendências 🔧
-      description: Decisão do Instituto ou da equipe de que a história depende; valor inicial ainda não confirmado.
+      description: Decisão do Instituto ou da equipe de que a história depende; valor inicial ainda não confirmado, com responsável e prazo.
   - type: checkboxes
     id: quadro
     attributes:
