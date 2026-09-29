@@ -1,6 +1,6 @@
 # Ata — Visita presencial e levantamento de processos no Instituto No Setor
 
-Versão **preliminar**, sujeita à conferência e validação do Instituto antes da publicação definitiva. Esta ata consolida os achados da visita técnica e do workshop presencial de levantamento de processos internos com a coordenação e diretoria do Instituto No Setor.
+Ata conferida pelo Instituto No Setor em 29/09/2026. Ela consolida os achados da visita técnica e do workshop presencial de levantamento de processos internos com a coordenação e diretoria do Instituto No Setor.
 
 ## Identificação
 
@@ -109,4 +109,4 @@ A Matriz de Aquisição centraliza todas as compras e contratações do projeto.
 | 0.1 | 21/09/2026 | Lucas De Paula Leal e Caio Martins | Elaboração inicial a partir das anotações de campo e áudio gravado na sede do Instituto |
 | 0.2 | 22/09/2026 | Maria Eduarda Marques | Complementação com a descrição do fluxo da Matriz de Aquisição apresentado por Franci e falas dos participantes |
 | 0.3 | 29/09/2026 | Caio Martins | Consolidação e formatação para o padrão oficial de atas, registro exato dos participantes do Instituto (Franci, Rafael, Maria Eduarda, Maria Clara) e da CyberSetor, e status preliminar de validação |
-| 1.0 | Pendente | — | Validação formal e homologação pelo Instituto No Setor |
+| 1.0 | 29/09/2026 | Caio Martins | Conferida pelo Instituto No Setor, sem ajustes |

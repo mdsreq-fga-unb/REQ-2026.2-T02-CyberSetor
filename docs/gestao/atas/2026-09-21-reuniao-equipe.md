@@ -15,7 +15,7 @@ Reunião interna da equipe CyberSetor com a participação da monitoria da disci
 | **Participantes — CyberSetor** | Vinicius Vieira, Maria Eduarda Marques, Lucas De Paula Leal, Rodrigo Henrique, Daniel Batista e Caio Martins |
 | **Participantes — externos / convidados** | Camila Careli (Monitora da disciplina) |
 | **Condução** | Vinicius Vieira (Scrum Master) e Camila Careli (Monitora) |
-| **Registro** | Transcrição automática via IA · consolidação: Rodrigo Henrique e Vinicius Vieira |
+| **Registro** | Transcrição automática · consolidação: Rodrigo Henrique e Vinicius Vieira |
 | **Sprint** | Transição Sprint 1 → Sprint 2 |
 | **Documentos relacionados** | [Ata da visita técnica presencial de 21/09/2026](2026-09-21-reuniao-presencial-instituto.md) |
 
@@ -46,7 +46,7 @@ Com a presença da monitora Camila Careli, o grupo alinhou os preparativos para 
 Lucas De Paula Leal, Maria Eduarda Marques e Vinicius Vieira relataram a rotina observada no SCS junto a Franci e Rafael. Ficou evidente a ausência de controles internos automatizados e a dependência de processos manuais estabelecidos há duas décadas. A busca por informações no Google Drive é caótica, e o trabalho das analistas é sobrecarregado pelo preenchimento redundante de planilhas de compras e cotações.
 
 ### 3.2 Alinhamento pedagógico e dinâmica em sala
-Camila Careli alinhou a preparação da equipe para a atividade de avaliação cruzada na aula seguinte, onde uma equipe parceira auditará a documentação do CyberSetor. Vinicius Vieira e Rodrigo Henrique esclareceram que a prioridade técnica imediata consistiu na resolução dos débitos da Unidade 1 e na consolidação das *issues* de requisitos abertas no GitHub (issues #39, #40 e #43). O merge na ramificação `main` foi concluído por Rodrigo, permitindo a leitura atualizada no GitHub Pages.
+Camila Careli alinhou a preparação da equipe para a atividade de avaliação cruzada na aula seguinte, onde uma equipe parceira auditará a documentação do CyberSetor. Vinicius Vieira e Rodrigo Henrique esclareceram que a prioridade técnica imediata consistiu na resolução dos débitos da Unidade 1 e na consolidação das *issues* de requisitos abertas no GitHub. O merge na ramificação `main` foi concluído por Rodrigo, permitindo a leitura atualizada no GitHub Pages.
 
 ### 3.3 Matriz de rastreabilidade e histórias de usuário
 Daniel Batista apresentou a estruturação da matriz de rastreabilidade para conectar necessidades do negócio a requisitos funcionais, não funcionais e histórias de usuário. Camila sugeriu atentar para ambiguidades conceituais. A equipe validou que os requisitos devem conter critérios de aceitação objetivos e rastreabilidade bidirecional.
@@ -55,7 +55,7 @@ Daniel Batista apresentou a estruturação da matriz de rastreabilidade para con
 Camila questionou a maturidade da escolha técnica para os dados. Vinicius Vieira fundamentou a necessidade inegociável de um banco de dados centralizado: o sistema lidará com dados de prestação de contas, histórico de fornecedores, cadastros pedagógicos e comprovações de campo, algo inviável de manter sobre planilhas. Para assegurar padronização de ambiente e simplificar a futura entrega técnica ao Instituto, deliberou-se o uso de Docker Compose em desenvolvimento e imagens Docker prontas para implantação.
 
 ### 3.5 Controle de escopo do MVP e priorização MoSCoW
-Diante de uma listagem volumosa levantada (mais de 30 requisitos funcionais e 20 não funcionais), Camila recomendou cuidado para não apresentar um escopo inviável ao professor Jorge. Maria Eduarda pontuou que os requisitos mapeiam a visão completa, mas Daniel Batista e Vinicius Vieira frisaram que a matriz de priorização MoSCoW selecionará estritamente os itens essenciais (*Must-have*) para a entrega funcional do semestre.
+Diante de uma listagem volumosa levantada (mais de 30 requisitos funcionais e 20 não funcionais), Camila recomendou cuidado para não apresentar um escopo inviável ao professor George. Maria Eduarda pontuou que os requisitos mapeiam a visão completa, mas Daniel Batista e Vinicius Vieira frisaram que a matriz de priorização MoSCoW selecionará estritamente os itens essenciais (*Must-have*) para a entrega funcional do semestre.
 
 ---
 
