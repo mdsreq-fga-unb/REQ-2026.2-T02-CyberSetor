@@ -14,6 +14,9 @@ Registro das reuniões da equipe e das interações com o cliente. Desde 27/08/2
 | [27/08/2026](2026-08-27-reuniao-equipe.md) | Escopo e prestação de contas | Adoção de ata automática por IA; migração das reuniões para o Google Meet; estudo aprofundado do Instituto |
 | [01/09/2026](2026-09-01-reuniao-equipe.md) | Planejamento da entrega da Unidade 1 | Product Owner interno definido; duplas e prazos por seção; vídeo gravado em conjunto; stack decidida por matriz de competências |
 | [08/09/2026](2026-09-08-sprint-planning.md) | Sprint Planning da Sprint 1 | Adoção do MoSCoW para priorização do Product Backlog; estrutura da Sprint em duas semanas; padrão INVEST/Given-When-Then para histórias de usuário |
+| [21/09/2026](2026-09-21-reuniao-equipe.md) | Debrief da visita, arquitetura técnica e alinhamento com monitoria | Adoção de banco de dados relacional centralizado e Docker/Docker Compose; corte de escopo do MVP via MoSCoW |
+| [22/09/2026](2026-09-22-sprint-review-retrospective.md) | Sprint Review e Retrospective (Sprint 1) | Aprovação condicionada do incremento da Sprint 1; rotinas de backup para documentação; refinamento e saneamento do backlog para a Sprint 2 |
+| [23/09/2026](2026-09-23-sprint-planning.md) | Sprint Planning da Sprint 2 | Priorização do MVP da U2; aprovação formal de DoR e DoD; dashboard da Presidência como *Should-have*; comprovação de pair programming e regularização de atas e ritos (Issue #77) |
 
 ## Interações com o cliente
 
@@ -22,7 +25,8 @@ Registro das reuniões da equipe e das interações com o cliente. Desde 27/08/2
 | 20/08/2026 | Videoconferência | Primeira reunião com o Instituto No Setor: entendimento do contexto e das dores |
 | 02/09/2026 | Mensagem | O Instituto manifestou concordância **preliminar** com a proposta de solução e propôs encontro presencial — ver seção 7.3.2 do Documento de Visão |
 | [08/09/2026](2026-09-08-reuniao-presencial-instituto.md) | Presencial, na sede do Instituto | Aprofundamento das questões em aberto: estrutura organizacional, ciclo do projeto financiado e dores confirmadas |
-| 15/09/2026 | Videoconferência | Levantamento com a área de projetos, a coordenação administrativo-financeira e o núcleo pedagógico: rotina administrativa, matriz de aquisição, separação de acesso por área e necessidades de painel e de comprovação em campo |
+| [15/09/2026](2026-09-15-reuniao-alinhamento-instituto.md) | Videoconferência | Levantamento com coordenação administrativo-financeira, de execução e núcleo pedagógico: rotina administrativa, matriz de aquisição, separação de acesso por área (LGPD), infraestrutura com VPS/backup 6h e demandas de painel e comprovação em campo |
+| [21/09/2026](2026-09-21-reuniao-presencial-instituto.md) | Presencial, na sede do Instituto | Imersão operacional e análise prática de projetos reais com Franci, Rafael, Maria Eduarda e Maria Clara: apresentação do fluxo de trabalho por Franci, centralidade e fragilidade da Matriz de Aquisição, gargalos no Google Drive e visão de dashboard da Presidência |
 
 ## Política de registro, acesso e publicação
 
