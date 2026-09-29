@@ -32,7 +32,7 @@ A equipe é formada por seis estudantes com grades e compromissos distintos. Uma
 | Sprint Backlog | GitHub Projects | Time |
 | Incremento | Branch `main` e ambiente publicado | Time |
 | Atas de reunião | [Atas de reunião](atas/index.md) | Relator da reunião |
-| Definition of Ready e Definition of Done | Seção 9 do documento (Unidade 2) | Equipe |
+| Definition of Ready e Definition of Done | [Seção 9 do Documento de Visão](../requisitos/9-dor-dod.md) | Equipe |
 | Matriz de competências | [Matriz de competências e stack](matriz-competencias.md) | Scrum Master |
 
 Histórias de usuário seguem o formato do XP: escritas em linguagem não técnica, na perspectiva de quem usa, acompanhadas por uma lista de critérios de aceitação objetivos e verificáveis.
