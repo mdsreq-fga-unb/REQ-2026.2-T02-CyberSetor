@@ -14,6 +14,7 @@ Este histórico é o do Documento de Visão como um todo. Cada seção traz, no 
 | 14/09/2026 | 1.3 | Identificação das representantes do Instituto, taxonomia de Engenharia de Requisitos e processo de validação com o cliente | Equipe CyberSetor |
 | 15/09/2026 | 1.4 | Solução proposta revista quanto a dados pessoais, custo, topologia e cópia de segurança; processo de validação e critérios de aceitação em lista | Equipe CyberSetor |
 | 17/09/2026 | 1.5 | Riscos da intervenção social aprofundados; calendário alinhado ao plano de sprint e aos prazos da Unidade 2; cadência de validação semanal; correções de coerência, de base legal e de nomenclatura em todas as seções | Equipe CyberSetor |
+| 29/09/2026 | 1.6 | Definition of Ready, com os critérios INVEST, e Definition of Done na seção 9; processo de validação ligado a elas | Equipe CyberSetor |
 
 ## Sumário
 
@@ -27,7 +28,7 @@ Este histórico é o do Documento de Visão como um todo. Cada seção traz, no 
 | [6. Cronograma e entregas](6-cronograma.md) | Planejamento temporal do projeto |
 | [7. Interação entre equipe e cliente](7-equipe-e-cliente.md) | Composição da equipe, comunicação e validação |
 | [8. Requisitos de software](../requisitos/8-requisitos.md) | Unidade 2 |
-| [9. DoR e DoD](../requisitos/9-dor-dod.md) | Unidade 2 |
+| [9. DoR e DoD](../requisitos/9-dor-dod.md) | Critérios para uma história entrar na sprint e para um item ser dado como concluído |
 | [10. Backlog de produto](../requisitos/10-backlog.md) | Unidade 2 |
 | [11. Lições aprendidas](../licoes-aprendidas/unidade-1.md) | Por unidade, após cada retrospectiva |
 | [12. Referências bibliográficas](../referencias.md) | Fontes citadas no documento |

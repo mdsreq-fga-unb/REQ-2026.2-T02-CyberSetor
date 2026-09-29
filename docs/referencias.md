@@ -18,7 +18,9 @@ INSTITUTO CULTURAL E SOCIAL NO SETOR. **Site institucional.** Disponível em: ht
 
 ## Processo e gestão do projeto
 
-SCHWABER, K.; SUTHERLAND, J. **The Scrum Guide.** 2020.
+SCHWABER, K.; SUTHERLAND, J. **The Scrum Guide.** 2020. Disponível em: https://scrumguides.org/docs/scrumguide/v2020/2020-Scrum-Guide-US.pdf. Acesso em: 28 set. 2026.
+
+WAKE, B. **INVEST in Good Stories, and SMART Tasks.** XP123, 17 ago. 2003. Disponível em: https://xp123.com/invest-in-good-stories-and-smart-tasks/. Acesso em: 29 set. 2026.
 
 CLEGG, D.; BARKER, R. **Case Method Fast-Track: A RAD Approach.** Wokingham: Addison-Wesley, 1994.
 
