@@ -11,10 +11,12 @@ Registro das reuniões da equipe e das interações com o cliente. Desde 27/08/2
 |---|---|---|
 | 17/08/2026 | Alinhamento inicial | Domínio social; prospecção de clientes; abordagem ágil |
 | 18/08/2026 | Organização do trabalho | Divisão inicial de tópicos do documento |
-| [27/08/2026](2026-08-27-reuniao-equipe.md) | Escopo e prestação de contas | Adoção de ata automática por IA; migração das reuniões para o Google Meet; estudo aprofundado do Instituto |
+| [27/08/2026](2026-08-27-reuniao-equipe.md) | Escopo e prestação de contas | Adoção de ata automática; migração das reuniões para o Google Meet; estudo aprofundado do Instituto |
 | [01/09/2026](2026-09-01-reuniao-equipe.md) | Planejamento da entrega da Unidade 1 | Product Owner interno definido; duplas e prazos por seção; vídeo gravado em conjunto; stack decidida por matriz de competências |
 | [08/09/2026](2026-09-08-sprint-planning.md) | Sprint Planning da Sprint 1 | Adoção do MoSCoW para priorização do Product Backlog; estrutura da Sprint em duas semanas; padrão INVEST/Given-When-Then para histórias de usuário |
 | [21/09/2026](2026-09-21-reuniao-equipe.md) | Debrief da visita, arquitetura técnica e alinhamento com monitoria | Adoção de banco de dados relacional centralizado e Docker/Docker Compose; corte de escopo do MVP via MoSCoW |
+| [22/09/2026](2026-09-22-sprint-review-retrospectiva.md) | Sprint Review e Retrospectiva da Sprint 1 | Meta da Sprint 1 parcialmente atingida, com refinamento e priorização transferidos para a Sprint 2; duplas, revisão de pull request registrada e divisão de RF01 e RF04 |
+| [23/09/2026](2026-09-23-sprint-planning.md) | Sprint Planning da Sprint 2 | Meta da Sprint 2 com lista ajustada, matriz 4 × 4, MVP validado com o Instituto e DoR e DoD publicadas; sete épicos e quinze histórias; painel gerencial como *Should* |
 
 ## Interações com o cliente
 
