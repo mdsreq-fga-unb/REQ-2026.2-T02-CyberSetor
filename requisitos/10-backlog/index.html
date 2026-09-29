@@ -1,0 +1,3361 @@
+
+<!doctype html>
+<html lang="pt" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Visão de Produto e Projeto — Requisitos de Software (FGA0313) · T02 · 2026.2 · FCTE/UnB">
+      
+      
+        <meta name="author" content="Equipe CyberSetor">
+      
+      
+        <link rel="canonical" href="https://mdsreq-fga-unb.github.io/REQ-2026.2-T02-CyberSetor/requisitos/10-backlog/">
+      
+      
+        <link rel="prev" href="../9-dor-dod/">
+      
+      
+        <link rel="next" href="../b1-bpmn-processo-atual/">
+      
+      
+      <link rel="icon" href="../../assets/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.9">
+    
+    
+      
+        <title>10. Backlog de produto - CyberSetor · Instituto No Setor</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.4af4bdda.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="deep-purple" data-md-color-accent="purple">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#10-backlog-de-produto" class="md-skip">
+          Pular para conteúdo
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Cabeçalho">
+    <a href="../.." title="CyberSetor · Instituto No Setor" class="md-header__button md-logo" aria-label="CyberSetor · Instituto No Setor" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            CyberSetor · Instituto No Setor
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              10. Backlog de produto
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="deep-purple" data-md-color-accent="purple"  aria-label="Alternar para o modo escuro"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Alternar para o modo escuro" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="deep-purple" data-md-color-accent="purple"  aria-label="Alternar para o modo claro"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Alternar para o modo claro" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Buscar" placeholder="Buscar" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Pesquisar">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Limpar" aria-label="Limpar" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Inicializando busca
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/mdsreq-fga-unb/REQ-2026.2-T02-CyberSetor" title="Ir para repositório" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8M97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    mdsreq-fga-unb/REQ-2026.2-T02-CyberSetor
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+    
+      
+<nav class="md-tabs" aria-label="Abas" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+    
+  
+  Início
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../visao/" class="md-tabs__link">
+          
+  
+    
+  
+  Documento de Visão
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../8-requisitos/" class="md-tabs__link">
+          
+  
+    
+  
+  Requisitos
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../gestao/processo-scrumxp/" class="md-tabs__link">
+          
+  
+    
+  
+  Gestão do projeto
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../entregas/unidade-1/" class="md-tabs__link">
+          
+  
+    
+  
+  Entregas
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../licoes-aprendidas/unidade-1/" class="md-tabs__link">
+          
+  
+    
+  
+  Lições aprendidas
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../referencias/" class="md-tabs__link">
+        
+  
+    
+  
+  Referências
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navegação" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="CyberSetor · Instituto No Setor" class="md-nav__button md-logo" aria-label="CyberSetor · Instituto No Setor" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    CyberSetor · Instituto No Setor
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/mdsreq-fga-unb/REQ-2026.2-T02-CyberSetor" title="Ir para repositório" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8M97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    mdsreq-fga-unb/REQ-2026.2-T02-CyberSetor
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Início
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../visao/" class="md-nav__link ">
+              
+  
+  <span class="md-ellipsis">
+    Documento de Visão
+    
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_2" id="__nav_2_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            Documento de Visão
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../visao/1-cenario-atual/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    1. Cenário atual do cliente e do negócio
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../visao/2-solucao-proposta/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    2. Solução proposta
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../visao/3-intervencao-social/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    3. Intervenção social
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../visao/4-estrategia-esw/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    4. Estratégias de engenharia de software
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../visao/5-engenharia-requisitos/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    5. Engenharia de requisitos
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../visao/6-cronograma/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    6. Cronograma e entregas
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../visao/7-equipe-e-cliente/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    7. Interação entre equipe e cliente
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Requisitos
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            Requisitos
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../8-requisitos/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    8. Requisitos de software
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../9-dor-dod/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    9. DoR e DoD
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    10. Backlog de produto
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    10. Backlog de produto
+    
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Índice">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Índice
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#historico-de-versoes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Histórico de Versões
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#101-backlog-geral" class="md-nav__link">
+    <span class="md-ellipsis">
+      10.1 Backlog geral
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#102-priorizacao-do-backlog-geral-e-mvp" class="md-nav__link">
+    <span class="md-ellipsis">
+      10.2 Priorização do backlog geral e MVP
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="10.2 Priorização do backlog geral e MVP">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1021-criterios-e-escalas" class="md-nav__link">
+    <span class="md-ellipsis">
+      10.2.1 Critérios e escalas
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1022-avaliacao-de-negocio-com-o-instituto" class="md-nav__link">
+    <span class="md-ellipsis">
+      10.2.2 Avaliação de negócio com o Instituto
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1023-avaliacao-tecnica" class="md-nav__link">
+    <span class="md-ellipsis">
+      10.2.3 Avaliação técnica
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1024-tabela-consolidada" class="md-nav__link">
+    <span class="md-ellipsis">
+      10.2.4 Tabela consolidada
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1025-matriz-4-4" class="md-nav__link">
+    <span class="md-ellipsis">
+      10.2.5 Matriz 4 × 4
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1026-mvp-e-incrementos" class="md-nav__link">
+    <span class="md-ellipsis">
+      10.2.6 MVP e incrementos
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1027-requisitos-nao-funcionais-no-mvp" class="md-nav__link">
+    <span class="md-ellipsis">
+      10.2.7 Requisitos não funcionais no MVP
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1028-validacao-com-o-instituto" class="md-nav__link">
+    <span class="md-ellipsis">
+      10.2.8 Validação com o Instituto
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../b1-bpmn-processo-atual/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    B1 · Modelo do processo atual (BPMN)
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Gestão do projeto
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            Gestão do projeto
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../gestao/processo-scrumxp/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Processo e ritos (ScrumXP)
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../gestao/matriz-competencias/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Matriz de competências e stack
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../gestao/boas-praticas-github/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Boas práticas no GitHub
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_4" >
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../gestao/atas/" class="md-nav__link ">
+              
+  
+  <span class="md-ellipsis">
+    Atas de reunião
+    
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_4_4" id="__nav_4_4_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_4">
+            <span class="md-nav__icon md-icon"></span>
+            Atas de reunião
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../gestao/atas/2026-08-27-reuniao-equipe/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    27/08/2026 — Equipe
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../gestao/atas/2026-09-01-reuniao-equipe/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    01/09/2026 — Equipe
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../gestao/atas/2026-09-08-reuniao-presencial-instituto/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    08/09/2026 — Instituto (presencial)
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../gestao/atas/2026-09-08-sprint-planning/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    08/09/2026 — Sprint Planning
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../gestao/atas/2026-09-15-reuniao-alinhamento-instituto/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    15/09/2026 — Instituto (alinhamento)
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../gestao/atas/2026-09-21-reuniao-presencial-instituto/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    21/09/2026 — Instituto (presencial)
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../gestao/atas/2026-09-21-reuniao-equipe/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    21/09/2026 — Equipe (alinhamento)
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../gestao/atas/2026-09-22-sprint-review-retrospectiva/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    22/09/2026 — Sprint Review e Retrospectiva
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../gestao/atas/2026-09-23-sprint-planning/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    23/09/2026 — Sprint Planning
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_4_5" id="__nav_4_5_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Planos de sprint
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_5">
+            <span class="md-nav__icon md-icon"></span>
+            Planos de sprint
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../gestao/sprints/sprint-1/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Sprint 1 (Planejamento)
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../gestao/sprints/tarefas-sprint-1/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Sprint 1 (Acompanhamento de Tarefas)
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../gestao/sprints/sprint-2/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Sprint 2 (Planejamento)
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../gestao/sprints/tarefas-sprint-2/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Sprint 2 (Acompanhamento de Tarefas)
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Entregas
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            Entregas
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../entregas/unidade-1/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Unidade 1
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../entregas/debitos-u1/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Débitos e Feedbacks (U1)
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../entregas/unidade-2/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Unidade 2
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../entregas/atividade-3/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Atividade 3: ajuste da lista de requisitos
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Lições aprendidas
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            Lições aprendidas
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../licoes-aprendidas/unidade-1/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Unidade 1
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../referencias/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Referências
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Índice">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Índice
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#historico-de-versoes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Histórico de Versões
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#101-backlog-geral" class="md-nav__link">
+    <span class="md-ellipsis">
+      10.1 Backlog geral
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#102-priorizacao-do-backlog-geral-e-mvp" class="md-nav__link">
+    <span class="md-ellipsis">
+      10.2 Priorização do backlog geral e MVP
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="10.2 Priorização do backlog geral e MVP">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1021-criterios-e-escalas" class="md-nav__link">
+    <span class="md-ellipsis">
+      10.2.1 Critérios e escalas
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1022-avaliacao-de-negocio-com-o-instituto" class="md-nav__link">
+    <span class="md-ellipsis">
+      10.2.2 Avaliação de negócio com o Instituto
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1023-avaliacao-tecnica" class="md-nav__link">
+    <span class="md-ellipsis">
+      10.2.3 Avaliação técnica
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1024-tabela-consolidada" class="md-nav__link">
+    <span class="md-ellipsis">
+      10.2.4 Tabela consolidada
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1025-matriz-4-4" class="md-nav__link">
+    <span class="md-ellipsis">
+      10.2.5 Matriz 4 × 4
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1026-mvp-e-incrementos" class="md-nav__link">
+    <span class="md-ellipsis">
+      10.2.6 MVP e incrementos
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1027-requisitos-nao-funcionais-no-mvp" class="md-nav__link">
+    <span class="md-ellipsis">
+      10.2.7 Requisitos não funcionais no MVP
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1028-validacao-com-o-instituto" class="md-nav__link">
+    <span class="md-ellipsis">
+      10.2.8 Validação com o Instituto
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+    <a href="https://github.com/mdsreq-fga-unb/REQ-2026.2-T02-CyberSetor/edit/main/docs/requisitos/10-backlog.md" title="Editar esta página" class="md-content__button md-icon">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4zm10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1z"/></svg>
+    </a>
+  
+  
+
+
+<h1 id="10-backlog-de-produto">10. Backlog de produto<a class="headerlink" href="#10-backlog-de-produto" title="Permanent link">&para;</a></h1>
+<h2 id="historico-de-versoes">Histórico de Versões<a class="headerlink" href="#historico-de-versoes" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">Data</th>
+<th style="text-align: center;">Versão</th>
+<th style="text-align: left;">Descrição</th>
+<th style="text-align: left;">Autor(es)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">27/09/2026</td>
+<td style="text-align: center;">1.0</td>
+<td style="text-align: left;">Estruturação inicial da seção e registro da avaliação de esforço técnico dos requisitos de CP1, CP6 e CP8</td>
+<td style="text-align: left;">Daniel Batista e Rodrigo Henrique</td>
+</tr>
+<tr>
+<td style="text-align: center;">28/09/2026</td>
+<td style="text-align: center;">1.1</td>
+<td style="text-align: left;">Adição da avaliação de esforço técnico dos requisitos de CP2, CP4 e CP7</td>
+<td style="text-align: left;">Caio Martins e Lucas Leal</td>
+</tr>
+<tr>
+<td style="text-align: center;">29/09/2026</td>
+<td style="text-align: center;">2.0</td>
+<td style="text-align: left;">Backlog geral com as quinze histórias e seus critérios de aceitação; valor de negócio validado com o Instituto; avaliação técnica dos requisitos de CP3, de CP5 e do RF20; tabela consolidada, matriz 4 × 4, MVP, incrementos, requisitos não funcionais do MVP e registro da validação; seção organizada em 10.1 e 10.2, como no template</td>
+<td style="text-align: left;">Vinicius Vieira e Maria Eduarda Marques</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p>O backlog de produto reúne as histórias de usuário que derivam dos requisitos funcionais da <a href="../8-requisitos/">seção 8</a> e mostra como foram priorizadas e o que forma o Produto Mínimo Viável (MVP).</p>
+<h2 id="101-backlog-geral">10.1 Backlog geral<a class="headerlink" href="#101-backlog-geral" title="Permanent link">&para;</a></h2>
+<p>Quinze histórias de usuário, uma capacidade cada, organizadas em épicos. Cada história atende à <a href="../9-dor-dod/">Definition of Ready</a> antes de entrar em uma sprint; os critérios de aceitação de cada uma estão no quadro recolhível abaixo da tabela.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Épico</th>
+<th style="text-align: left;">História</th>
+<th style="text-align: left;">Requisitos funcionais</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Requisito e meta</td>
+<td style="text-align: left;"><strong>HU-01</strong> Cadastrar requisitos e metas com parâmetros de aferição</td>
+<td style="text-align: left;"><a href="../8-requisitos/#rf01">RF01</a>, <a href="../8-requisitos/#rf02">RF02</a>, <a href="../8-requisitos/#rf03">RF03</a>, <a href="../8-requisitos/#rf04">RF04</a></td>
+</tr>
+<tr>
+<td style="text-align: left;">Requisito e meta</td>
+<td style="text-align: left;"><strong>HU-02</strong> Atribuir responsável e prazo a meta e acompanhar vencimentos</td>
+<td style="text-align: left;"><a href="../8-requisitos/#rf05">RF05</a>, <a href="../8-requisitos/#rf06">RF06</a>, <a href="../8-requisitos/#rf07">RF07</a>, <a href="../8-requisitos/#rf08">RF08</a></td>
+</tr>
+<tr>
+<td style="text-align: left;">Requisito e meta</td>
+<td style="text-align: left;"><strong>HU-11</strong> Acompanhar progresso e risco de meta</td>
+<td style="text-align: left;"><a href="../8-requisitos/#rf28">RF28</a>, <a href="../8-requisitos/#rf29">RF29</a>, <a href="../8-requisitos/#rf30">RF30</a></td>
+</tr>
+<tr>
+<td style="text-align: left;">Requisito e meta</td>
+<td style="text-align: left;"><strong>HU-14</strong> Registrar termo aditivo como nova versão do plano</td>
+<td style="text-align: left;"><a href="../8-requisitos/#rf31">RF31</a></td>
+</tr>
+<tr>
+<td style="text-align: left;">Relatório</td>
+<td style="text-align: left;"><strong>HU-05</strong> Gerar relatório de execução do objeto</td>
+<td style="text-align: left;"><a href="../8-requisitos/#rf35">RF35</a>, <a href="../8-requisitos/#rf36">RF36</a>, <a href="../8-requisitos/#rf37">RF37</a>, <a href="../8-requisitos/#rf39">RF39</a></td>
+</tr>
+<tr>
+<td style="text-align: left;">Relatório</td>
+<td style="text-align: left;"><strong>HU-13</strong> Exportar dados do projeto em planilha aberta</td>
+<td style="text-align: left;"><a href="../8-requisitos/#rf38">RF38</a></td>
+</tr>
+<tr>
+<td style="text-align: left;">Atividade</td>
+<td style="text-align: left;"><strong>HU-03</strong> Cadastrar atividade por modalidade de objeto</td>
+<td style="text-align: left;"><a href="../8-requisitos/#rf09">RF09</a>, <a href="../8-requisitos/#rf10">RF10</a></td>
+</tr>
+<tr>
+<td style="text-align: left;">Evidência</td>
+<td style="text-align: left;"><strong>HU-04</strong> Vincular evidência a atividade e meta</td>
+<td style="text-align: left;"><a href="../8-requisitos/#rf32">RF32</a>, <a href="../8-requisitos/#rf33">RF33</a>, <a href="../8-requisitos/#rf34">RF34</a></td>
+</tr>
+<tr>
+<td style="text-align: left;">Presença em campo</td>
+<td style="text-align: left;"><strong>HU-09</strong> Registrar presença em campo sem conexão</td>
+<td style="text-align: left;"><a href="../8-requisitos/#rf16">RF16</a>, <a href="../8-requisitos/#rf17">RF17</a></td>
+</tr>
+<tr>
+<td style="text-align: left;">Presença em campo</td>
+<td style="text-align: left;"><strong>HU-10</strong> Lançar ou corrigir presença fora do prazo com justificativa</td>
+<td style="text-align: left;"><a href="../8-requisitos/#rf19">RF19</a></td>
+</tr>
+<tr>
+<td style="text-align: left;">Presença em campo</td>
+<td style="text-align: left;"><strong>HU-12</strong> Sincronizar presenças sem duplicidade</td>
+<td style="text-align: left;"><a href="../8-requisitos/#rf18">RF18</a></td>
+</tr>
+<tr>
+<td style="text-align: left;">Pessoas</td>
+<td style="text-align: left;"><strong>HU-06</strong> Consultar histórico de participação de pessoa</td>
+<td style="text-align: left;"><a href="../8-requisitos/#rf20">RF20</a>, <a href="../8-requisitos/#rf21">RF21</a>, <a href="../8-requisitos/#rf22">RF22</a>, <a href="../8-requisitos/#rf24">RF24</a></td>
+</tr>
+<tr>
+<td style="text-align: left;">Pessoas</td>
+<td style="text-align: left;"><strong>HU-07</strong> Inscrever-se em atividade por link ou QR Code</td>
+<td style="text-align: left;"><a href="../8-requisitos/#rf11">RF11</a>, <a href="../8-requisitos/#rf12">RF12</a>, <a href="../8-requisitos/#rf14">RF14</a>, <a href="../8-requisitos/#rf15">RF15</a>, <a href="../8-requisitos/#rf23">RF23</a>, <a href="../8-requisitos/#rf24">RF24</a>, <a href="../8-requisitos/#rf25">RF25</a></td>
+</tr>
+<tr>
+<td style="text-align: left;">Pessoas</td>
+<td style="text-align: left;"><strong>HU-08</strong> Inscrever presencialmente pessoa sem celular</td>
+<td style="text-align: left;"><a href="../8-requisitos/#rf13">RF13</a>, <a href="../8-requisitos/#rf14">RF14</a>, <a href="../8-requisitos/#rf15">RF15</a>, <a href="../8-requisitos/#rf22">RF22</a>, <a href="../8-requisitos/#rf23">RF23</a></td>
+</tr>
+<tr>
+<td style="text-align: left;">Pessoas</td>
+<td style="text-align: left;"><strong>HU-15</strong> Atender pedido do titular para corrigir, excluir ou anonimizar dados</td>
+<td style="text-align: left;"><a href="../8-requisitos/#rf26">RF26</a>, <a href="../8-requisitos/#rf27">RF27</a></td>
+</tr>
+</tbody>
+</table>
+<details class="note">
+<summary>HU-01 · Cadastrar requisitos e metas com parâmetros de aferição</summary>
+<p>Como Diretora de Projetos, quero cadastrar os requisitos do instrumento e as metas do plano de trabalho de um projeto, com os parâmetros de aferição de cada meta, para saber exatamente o que precisa ser comprovado, como e quando.</p>
+<p><strong>Critérios de aceitação</strong></p>
+<ul>
+<li>CA-01.1 Em um projeto vinculado a um instrumento (edital, emenda ou parceria), a Diretora de Projetos cadastra requisitos do instrumento e metas como registros distintos e relaciona cada meta a um ou mais requisitos.</li>
+<li>CA-01.2 Cada meta registra origem, indicador, modalidade de aferição, parâmetro planejado, período e frequência de apuração e forma de comprovação.</li>
+<li>CA-01.3 Meta sem indicador, forma de verificação ou prazo fica como rascunho, é identificada como tal na lista de metas e não entra na apuração.</li>
+</ul>
+<p><strong>Requisitos não funcionais e regras de negócio:</strong> RNF01, RNF02; RN-01, RN-02</p>
+</details>
+<details class="note">
+<summary>HU-02 · Atribuir responsável e prazo a meta e acompanhar vencimentos</summary>
+<p>Como responsável de área do Instituto, quero atribuir responsável, setor e prazo a cada meta e acompanhar os vencimentos no painel do projeto, para saber com quem está cada demanda e agir antes de o prazo expirar.</p>
+<p><strong>Critérios de aceitação</strong></p>
+<ul>
+<li>CA-02.1 Ao atribuir responsável, setor e prazo a uma meta, esses dados aparecem no painel e na linha do tempo do projeto.</li>
+<li>CA-02.2 Meta cujo prazo esteja dentro da antecedência de alerta configurada para o instrumento, ou já vencida sem comprovação, aparece destacada no painel.</li>
+<li>CA-02.3 Meta sem responsável atribuído é sinalizada no painel do projeto.</li>
+<li>CA-02.4 A situação de cada meta (pendente, em andamento ou concluída) é exibida junto ao responsável e ao prazo.</li>
+</ul>
+<p><strong>Requisitos não funcionais e regras de negócio:</strong> RNF11; RN-03</p>
+</details>
+<details class="note">
+<summary>HU-11 · Acompanhar progresso e risco de meta</summary>
+<p>Como coordenadora de projeto, quero acompanhar o progresso de cada meta e ser avisada quando o ritmo estiver abaixo do planejado, para agir antes do fim do prazo em vez de descobrir na prestação de contas.</p>
+<p><strong>Critérios de aceitação</strong></p>
+<ul>
+<li>CA-11.1 A meta exibe valor apurado, alvo, unidade, período e data do último cálculo.</li>
+<li>CA-11.2 A partir do valor exibido, a coordenadora abre os registros de presença e evidência que o compõem.</li>
+<li>CA-11.3 Meta por marco (entrega única) aparece como cumprida ou não cumprida, sem percentual contínuo.</li>
+<li>CA-11.4 Quando o ritmo de execução fica abaixo do critério de risco definido para a meta, a meta aparece sinalizada no painel, sem alteração do alvo.</li>
+</ul>
+<p><strong>Requisitos não funcionais e regras de negócio:</strong> RNF11; RN-08</p>
+</details>
+<details class="note">
+<summary>HU-14 · Registrar termo aditivo como nova versão do plano</summary>
+<p>Como Diretora de Projetos, quero registrar um termo aditivo ou apostila como nova versão do plano de trabalho, para acompanhar as metas repactuadas sem perder o que foi pactuado originalmente.</p>
+<p><strong>Critérios de aceitação</strong></p>
+<ul>
+<li>CA-14.1 O registro de termo aditivo ou apostila cria nova versão do plano de trabalho, com data e documento de origem.</li>
+<li>CA-14.2 A versão original das metas e os resultados já apurados são preservados.</li>
+<li>CA-14.3 Cada meta repactuada exibe o comparativo entre previsto original, reprogramado e realizado.</li>
+</ul>
+<p><strong>Requisitos não funcionais e regras de negócio:</strong> RNF02; RN-09</p>
+</details>
+<details class="note">
+<summary>HU-05 · Gerar relatório de execução do objeto</summary>
+<p>Como Diretora de Projetos, quero gerar o relatório de execução do objeto de um projeto para um período, com metas previstas confrontadas aos resultados e às evidências vinculadas, para prestar contas sem montagem manual.</p>
+<p><strong>Critérios de aceitação</strong></p>
+<ul>
+<li>CA-05.1 Ao solicitar o relatório de um período, cada meta aparece com resultado alcançado, percentual de cumprimento e índice das evidências vinculadas.</li>
+<li>CA-05.2 Meta cumprida parcialmente ou não cumprida exige justificativa registrada antes que o relatório possa ser finalizado (Lei 13.019/2014, art. 64, §1º).</li>
+<li>CA-05.3 O relatório finalizado é gerado em PDF diagramado, com as metas, as justificativas e as miniaturas das evidências com seus dados de registro.</li>
+<li>CA-05.4 Retificação feita após a finalização gera nova versão do relatório e registro na trilha de auditoria, preservando a versão anterior.</li>
+<li>CA-05.5 A geração do relatório final é bloqueada enquanto houver rascunho de evidência pendente no período, com a indicação do que falta.</li>
+</ul>
+<p><strong>Requisitos não funcionais e regras de negócio:</strong> RNF02, RNF07, RNF08, RNF13; RN-08, RN-11</p>
+</details>
+<details class="note">
+<summary>HU-13 · Exportar dados do projeto em planilha aberta</summary>
+<p>Como Diretora de Projetos, quero exportar os dados de execução do projeto em planilha aberta, para permitir conferências internas e auditorias externas independentes e não depender do sistema para preservar a informação.</p>
+<p><strong>Critérios de aceitação</strong></p>
+<ul>
+<li>CA-13.1 A exportação traz, em planilha aberta, as atividades, as presenças e a situação das metas do projeto no período escolhido.</li>
+<li>CA-13.2 O arquivo inclui a legenda dos campos e a data de corte dos dados.</li>
+<li>CA-13.3 Só entram os dados necessários à finalidade da exportação; dados nominais não saem para perfil sem permissão.</li>
+<li>CA-13.4 Cada exportação fica registrada na trilha de auditoria, com autor e data.</li>
+</ul>
+<p><strong>Requisitos não funcionais e regras de negócio:</strong> RNF02, RNF05</p>
+</details>
+<details class="note">
+<summary>HU-03 · Cadastrar atividade por modalidade de objeto</summary>
+<p>Como coordenador pedagógico, quero cadastrar uma atividade vinculada a um projeto e a uma modalidade de objeto, para que o sistema indique quais comprovações serão exigidas dessa atividade.</p>
+<p><strong>Critérios de aceitação</strong></p>
+<ul>
+<li>CA-03.1 Ao cadastrar uma atividade em um projeto, o coordenador seleciona a meta ou as metas contratuais a que a atividade contribui e a modalidade de objeto em lista predefinida (oficina contínua, evento aberto, ação de acolhimento).</li>
+<li>CA-03.2 Ao criar a atividade, o sistema exibe as comprovações obrigatórias, opcionais e condicionais configuradas para o instrumento e a modalidade.</li>
+<li>CA-03.3 Para oficina contínua, a comprovação principal exibida é a lista de presença nominal; para ação de acolhimento, a contagem agregada de público, sem exigência de CPF.</li>
+<li>CA-03.4 A atividade guarda a versão da configuração de comprovações vigente no cadastro; mudança posterior na configuração não altera atividades já criadas.</li>
+</ul>
+<p><strong>Requisitos não funcionais e regras de negócio:</strong> RN-04</p>
+</details>
+<details class="note">
+<summary>HU-04 · Vincular evidência a atividade e meta</summary>
+<p>Como educador, quero anexar uma evidência a uma atividade e vinculá-la a uma ou mais metas, para que a comprovação já nasça organizada por meta.</p>
+<p><strong>Critérios de aceitação</strong></p>
+<ul>
+<li>CA-04.1 Ao anexar uma evidência a uma atividade realizada, o educador informa data, local e a meta ou as metas relacionadas; autor, data e hora de envio são registrados automaticamente.</li>
+<li>CA-04.2 Ao abrir uma meta, o usuário vê as comprovações já recebidas e as pendentes, conforme a modalidade da atividade.</li>
+<li>CA-04.3 Arquivo salvo sem meta vinculada fica como rascunho, com aviso de que não compõe o índice de comprovações nem o relatório.</li>
+<li>CA-04.4 A atividade não pode ser encerrada enquanto houver rascunho pendente de vinculação ou descarte.</li>
+<li>CA-04.5 Imagem registrada como prova de execução fica visível apenas aos perfis de coordenação e prestação de contas.</li>
+</ul>
+<p><strong>Requisitos não funcionais e regras de negócio:</strong> RNF07, RNF09, RNF14; RN-10, RN-11, RN-12</p>
+</details>
+<details class="note">
+<summary>HU-09 · Registrar presença em campo sem conexão</summary>
+<p>Como educador em campo, quero registrar a presença dos participantes no meu celular mesmo sem internet, para que o registro nasça digital no local da atividade e não volte para o papel.</p>
+<p><strong>Critérios de aceitação</strong></p>
+<ul>
+<li>CA-09.1 Antes de ir a campo, o educador prepara a lista da atividade no celular, que guarda apenas os dados mínimos para a chamada.</li>
+<li>CA-09.2 O educador marca presença individual ou em lote dos inscritos da atividade.</li>
+<li>CA-09.3 Sem conexão, cada marcação fica salva no aparelho antes da confirmação na tela, que indica "salvo neste dispositivo", não "sincronizado".</li>
+<li>CA-09.4 As marcações salvas continuam disponíveis após fechar o navegador ou reiniciar o aparelho.</li>
+<li>CA-09.5 O educador pode incluir participante não inscrito na hora da atividade com dados mínimos de identificação, registrando sua presença na chamada.</li>
+</ul>
+<p><strong>Requisitos não funcionais e regras de negócio:</strong> RNF09, RNF15</p>
+</details>
+<details class="note">
+<summary>HU-10 · Lançar ou corrigir presença fora do prazo com justificativa</summary>
+<p>Como coordenador autorizado, quero lançar ou corrigir uma presença depois da data da atividade, informando a justificativa, para manter o registro correto sem apagar o que foi registrado antes.</p>
+<p><strong>Critérios de aceitação</strong></p>
+<ul>
+<li>CA-10.1 Lançamento ou correção de presença após a data da atividade exige justificativa escrita.</li>
+<li>CA-10.2 Cada lançamento ou correção preserva o valor anterior, o valor novo, o autor, a data e a hora na trilha de auditoria.</li>
+<li>CA-10.3 Usuário sem permissão para a atividade não consegue lançar nem corrigir presenças dela.</li>
+<li>CA-10.4 Correção em dado que compõe relatório já finalizado não altera esse relatório; a retificação segue a HU-05 (CA-05.4).</li>
+</ul>
+<p><strong>Requisitos não funcionais e regras de negócio:</strong> RNF02, RNF04</p>
+</details>
+<details class="note">
+<summary>HU-12 · Sincronizar presenças sem duplicidade</summary>
+<p>Como educador, quero que as presenças registradas sem conexão sejam enviadas assim que o celular voltar a ter internet, sem duplicar nem perder registros, para confiar no resultado da chamada.</p>
+<p><strong>Critérios de aceitação</strong></p>
+<ul>
+<li>CA-12.1 Ao voltar a conexão, as presenças pendentes são enviadas automaticamente e a tela passa a indicar "sincronizado".</li>
+<li>CA-12.2 Reenvio do mesmo lote, por falha ou repetição, não gera presença duplicada.</li>
+<li>CA-12.3 Se a sessão tiver expirado, as presenças pendentes são preservadas no aparelho e o sistema pede novo acesso antes de enviar.</li>
+<li>CA-12.4 Registro que diverge do que já está no servidor fica visível como conflito, para tratamento pelo coordenador, sem ser descartado.</li>
+<li>CA-12.5 Após a confirmação do envio, os dados nominais dos participantes deixam de ficar no aparelho, e outro usuário no mesmo aparelho não acessa a lista anterior.</li>
+</ul>
+<p><strong>Requisitos não funcionais e regras de negócio:</strong> RNF01, RNF03, RNF09, RNF10</p>
+</details>
+<details class="note">
+<summary>HU-06 · Consultar histórico de participação de pessoa</summary>
+<p>Como integrante do núcleo pedagógico, quero consultar o histórico de participação e a carga horária acumulada de uma pessoa em diferentes projetos, para convidá-la a atividades compatíveis com seu perfil, respeitando a autorização de contato que ela registrou.</p>
+<p><strong>Critérios de aceitação</strong></p>
+<ul>
+<li>CA-06.1 Ao abrir a ficha de uma pessoa, o núcleo pedagógico vê as atividades e os projetos de que ela participou, com datas.</li>
+<li>CA-06.2 Ao cadastrar uma pessoa com nome e telefone iguais aos de outra já cadastrada, o sistema alerta a possível duplicidade e oferece reaproveitar o registro existente.</li>
+<li>CA-06.4 Convite para nova atividade só é oferecido a quem tem autorização de contato registrada e não revogada.</li>
+<li>CA-06.5 O perfil administrativo-financeiro não acessa a ficha nominal das pessoas.</li>
+<li>CA-06.6 A ficha mostra a carga horária acumulada da pessoa, como participante ou facilitadora, a partir das presenças confirmadas.</li>
+</ul>
+<p><strong>Requisitos não funcionais e regras de negócio:</strong> RNF04, RNF05</p>
+</details>
+<details class="note">
+<summary>HU-07 · Inscrever-se em atividade por link ou QR Code</summary>
+<p>Como pessoa interessada em uma atividade do Instituto, quero me inscrever por um link ou QR Code no celular, sem criar conta, para garantir minha vaga sem depender de a equipe transcrever meus dados.</p>
+<p><strong>Critérios de aceitação</strong></p>
+<ul>
+<li>CA-07.1 O formulário público da atividade abre pelo link ou pelo QR Code em navegador de celular, sem cadastro de conta ou senha.</li>
+<li>CA-07.2 Ao enviar os campos mínimos válidos, a pessoa recebe confirmação da inscrição na tela.</li>
+<li>CA-07.3 Com as vagas esgotadas, a inscrição entra na lista de espera e a pessoa é informada da posição.</li>
+<li>CA-07.4 O formulário apresenta o aviso de tratamento de dados e registra, com data e hora, a versão apresentada; para menor de idade, pede a identificação do responsável legal.</li>
+<li>CA-07.5 Envio repetido pela mesma pessoa para a mesma atividade não gera inscrição duplicada.</li>
+<li>CA-07.6 Autorização para receber comunicados e autorização de uso de imagem são opções separadas e opcionais; recusar qualquer uma não impede a inscrição.</li>
+</ul>
+<p><strong>Requisitos não funcionais e regras de negócio:</strong> RNF05, RNF12, RNF15; RN-05, RN-06</p>
+</details>
+<details class="note">
+<summary>HU-08 · Inscrever presencialmente pessoa sem celular</summary>
+<p>Como coordenador ou educador, quero inscrever presencialmente uma pessoa que não tem celular ou conexão, para que ela participe nas mesmas condições de quem se inscreve pelo link.</p>
+<p><strong>Critérios de aceitação</strong></p>
+<ul>
+<li>CA-08.1 O coordenador inscreve a pessoa na atividade em seu nome, a partir do próprio aparelho, sem que ela precise de celular.</li>
+<li>CA-08.2 A inscrição assistida respeita o limite de vagas e a lista de espera da atividade.</li>
+<li>CA-08.3 Antes de concluir, o coordenador vê o alerta de possível duplicidade e pode reaproveitar o cadastro existente.</li>
+<li>CA-08.4 O aviso de tratamento de dados apresentado à pessoa fica registrado com data, hora e autor da inscrição assistida.</li>
+</ul>
+<p><strong>Requisitos não funcionais e regras de negócio:</strong> RNF05, RNF15; RN-05, RN-06</p>
+</details>
+<details class="note">
+<summary>HU-15 · Atender pedido do titular para corrigir, excluir ou anonimizar dados</summary>
+<p>Como integrante do núcleo pedagógico, quero atender o pedido de uma pessoa para corrigir, excluir ou anonimizar seus dados, para cumprir os direitos do titular sem comprometer a prestação de contas.</p>
+<p><strong>Critérios de aceitação</strong></p>
+<ul>
+<li>CA-15.1 A correção de dado a pedido do titular registra autor, data, hora e justificativa.</li>
+<li>CA-15.2 A exclusão ou anonimização é feita a pedido do titular ou ao término da finalidade.</li>
+<li>CA-15.3 Totais já reportados a financiadores e registros sob guarda legal são preservados, com o fundamento registrado por classe de dado.</li>
+<li>CA-15.4 O pedido é atendido dentro do prazo definido pelo Instituto, medido na trilha de auditoria.</li>
+</ul>
+<p><strong>Requisitos não funcionais e regras de negócio:</strong> RNF02, RNF06; RN-07</p>
+</details>
+<h2 id="102-priorizacao-do-backlog-geral-e-mvp">10.2 Priorização do backlog geral e MVP<a class="headerlink" href="#102-priorizacao-do-backlog-geral-e-mvp" title="Permanent link">&para;</a></h2>
+<h3 id="1021-criterios-e-escalas">10.2.1 Critérios e escalas<a class="headerlink" href="#1021-criterios-e-escalas" title="Permanent link">&para;</a></h3>
+<p>A priorização cruza o <strong>valor de negócio</strong>, dado pelo Instituto, com o <strong>esforço técnico</strong>, avaliado pela equipe. O valor é dado por história, em conversa com o Instituto, e vale para todos os requisitos funcionais dela; quando um requisito pertence a mais de uma história, prevalece o maior valor.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">Valor</th>
+<th style="text-align: left;">MoSCoW</th>
+<th style="text-align: left;">Significado para o Instituto</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">4</td>
+<td style="text-align: left;"><em>Must have</em></td>
+<td style="text-align: left;">Sem isso a solução não serve</td>
+</tr>
+<tr>
+<td style="text-align: center;">3</td>
+<td style="text-align: left;"><em>Should have</em></td>
+<td style="text-align: left;">Importante; o produto opera temporariamente sem ele</td>
+</tr>
+<tr>
+<td style="text-align: center;">2</td>
+<td style="text-align: left;"><em>Could have</em></td>
+<td style="text-align: left;">Agrega valor, pode esperar</td>
+</tr>
+<tr>
+<td style="text-align: center;">1</td>
+<td style="text-align: left;"><em>Won't have now</em></td>
+<td style="text-align: left;">Não é prioridade nesta versão</td>
+</tr>
+</tbody>
+</table>
+<p>Cada valor registra o critério que mais pesou: problema central, objetivo do projeto, impacto para os usuários, abrangência de uso, urgência, obrigação legal ou institucional, ou dependência de outra função.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">Nota</th>
+<th style="text-align: left;">Esforço</th>
+<th style="text-align: left;">Complexidade</th>
+<th style="text-align: left;">Lacuna de capacidade da equipe</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">1</td>
+<td style="text-align: left;">até 2 h</td>
+<td style="text-align: left;">solução conhecida</td>
+<td style="text-align: left;">tecnologia dominada</td>
+</tr>
+<tr>
+<td style="text-align: center;">2</td>
+<td style="text-align: left;">de 2 a 6 h</td>
+<td style="text-align: left;">exige investigação ou integração</td>
+<td style="text-align: left;">conhecimento básico nivelado</td>
+</tr>
+<tr>
+<td style="text-align: center;">3</td>
+<td style="text-align: left;">de 6 a 12 h</td>
+<td style="text-align: left;">várias dependências ou incertezas</td>
+<td style="text-align: left;">exige estudo adicional</td>
+</tr>
+<tr>
+<td style="text-align: center;">4</td>
+<td style="text-align: left;">mais de 12 h</td>
+<td style="text-align: left;">incerteza alta ou integração crítica</td>
+<td style="text-align: left;">tecnologia não dominada</td>
+</tr>
+</tbody>
+</table>
+<p>O <strong>esforço técnico</strong> de cada requisito é a média das três notas, arredondada para o inteiro mais próximo (0,5 arredonda para cima). A lacuna de capacidade se apoia na <a href="../../gestao/matriz-competencias/">matriz de competências</a>.</p>
+<h3 id="1022-avaliacao-de-negocio-com-o-instituto">10.2.2 Avaliação de negócio com o Instituto<a class="headerlink" href="#1022-avaliacao-de-negocio-com-o-instituto" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">História</th>
+<th style="text-align: center;">Valor</th>
+<th style="text-align: left;">Critério</th>
+<th style="text-align: left;">Justificativa do Instituto</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">HU-01</td>
+<td style="text-align: center;">4</td>
+<td style="text-align: left;">Problema central</td>
+<td style="text-align: left;">"Se vocês forem entregar só uma coisa, é isso"; perder prazos está em "grande parte dos problemas" do Instituto.</td>
+</tr>
+<tr>
+<td style="text-align: left;">HU-02</td>
+<td style="text-align: center;">4</td>
+<td style="text-align: left;">Problema central</td>
+<td style="text-align: left;">Perder prazos está em "grande parte dos problemas" do Instituto; aviso com 7 dias não dá tempo de refazer o que falta.</td>
+</tr>
+<tr>
+<td style="text-align: left;">HU-11</td>
+<td style="text-align: center;">3</td>
+<td style="text-align: left;">Impacto para os usuários</td>
+<td style="text-align: left;">A presidência quer o painel, mas ele só é confiável com o sistema abastecido de dados.</td>
+</tr>
+<tr>
+<td style="text-align: left;">HU-14</td>
+<td style="text-align: center;">4</td>
+<td style="text-align: left;">Obrigação legal</td>
+<td style="text-align: left;">Alterações de prazo e orçamento impostas pelo financiador precisam preservar o plano original.</td>
+</tr>
+<tr>
+<td style="text-align: left;">HU-05</td>
+<td style="text-align: center;">4</td>
+<td style="text-align: left;">Problema central</td>
+<td style="text-align: left;">A prestação de contas é "o maior gargalo" do Instituto; a proposta da equipe de tentar o relatório em PDF no MVP foi confirmada.</td>
+</tr>
+<tr>
+<td style="text-align: left;">HU-13</td>
+<td style="text-align: center;">4</td>
+<td style="text-align: left;">Problema central</td>
+<td style="text-align: left;">Exportação para conferência e auditoria proposta pela equipe e confirmada pelo Instituto no corte do MVP.</td>
+</tr>
+<tr>
+<td style="text-align: left;">HU-03</td>
+<td style="text-align: center;">4</td>
+<td style="text-align: left;">Dependência de outra função</td>
+<td style="text-align: left;">Complemento das parcerias e metas; as modalidades são criadas pelo próprio Instituto.</td>
+</tr>
+<tr>
+<td style="text-align: left;">HU-04</td>
+<td style="text-align: center;">4</td>
+<td style="text-align: left;">Problema central</td>
+<td style="text-align: left;">Comprovação "não pode passar despercebido"; entra logo depois do MVP.</td>
+</tr>
+<tr>
+<td style="text-align: left;">HU-09</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: left;">Urgência</td>
+<td style="text-align: left;">Registro sem internet "não é um must have": as quedas são pontuais e lista e foto sobem depois.</td>
+</tr>
+<tr>
+<td style="text-align: left;">HU-10</td>
+<td style="text-align: center;">4</td>
+<td style="text-align: left;">Obrigação legal</td>
+<td style="text-align: left;">Justificativa obrigatória para correção fora do prazo "deveríamos ter", sem exigir aprovação.</td>
+</tr>
+<tr>
+<td style="text-align: left;">HU-12</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: left;">Urgência</td>
+<td style="text-align: left;">Mesmo motivo da HU-09: sincronização sem conexão fica para depois.</td>
+</tr>
+<tr>
+<td style="text-align: left;">HU-06</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: left;">Impacto para os usuários</td>
+<td style="text-align: left;">"Sonho do pedagógico", mas não é prioridade no contexto geral do Instituto.</td>
+</tr>
+<tr>
+<td style="text-align: left;">HU-07</td>
+<td style="text-align: center;">4</td>
+<td style="text-align: left;">Abrangência de uso</td>
+<td style="text-align: left;">"Seria excelente": facilitaria o controle de inscritos e de metas para todas as equipes.</td>
+</tr>
+<tr>
+<td style="text-align: left;">HU-08</td>
+<td style="text-align: center;">4</td>
+<td style="text-align: left;">Abrangência de uso</td>
+<td style="text-align: left;">Mesmo valor das inscrições por link ("seria excelente"); para a equipe, garante acesso a quem não tem celular.</td>
+</tr>
+<tr>
+<td style="text-align: left;">HU-15</td>
+<td style="text-align: center;">4 🔧</td>
+<td style="text-align: left;">Obrigação legal</td>
+<td style="text-align: left;">Obrigação legal (LGPD, art. 18); não foi votada na sessão e vai à conferência do Instituto.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="1023-avaliacao-tecnica">10.2.3 Avaliação técnica<a class="headerlink" href="#1023-avaliacao-tecnica" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">Código</th>
+<th style="text-align: left;">Requisito funcional</th>
+<th style="text-align: center;">Esforço</th>
+<th style="text-align: center;">Complexidade</th>
+<th style="text-align: center;">Lacuna</th>
+<th style="text-align: center;">Média</th>
+<th style="text-align: center;">Esforço técnico</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;"><a href="../8-requisitos/#rf01">RF01</a></td>
+<td style="text-align: left;">Cadastrar instrumento convocatório e parceria</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">1,3</td>
+<td style="text-align: center;"><strong>1</strong></td>
+</tr>
+<tr>
+<td style="text-align: center;"><a href="../8-requisitos/#rf02">RF02</a></td>
+<td style="text-align: left;">Anexar documento formal homologado de parceria</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">1,3</td>
+<td style="text-align: center;"><strong>1</strong></td>
+</tr>
+<tr>
+<td style="text-align: center;"><a href="../8-requisitos/#rf03">RF03</a></td>
+<td style="text-align: left;">Cadastrar projeto operacional</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">1,0</td>
+<td style="text-align: center;"><strong>1</strong></td>
+</tr>
+<tr>
+<td style="text-align: center;"><a href="../8-requisitos/#rf04">RF04</a></td>
+<td style="text-align: left;">Desdobrar requisitos contratuais e metas</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">1,7</td>
+<td style="text-align: center;"><strong>2</strong></td>
+</tr>
+<tr>
+<td style="text-align: center;"><a href="../8-requisitos/#rf05">RF05</a></td>
+<td style="text-align: left;">Atribuir responsável e setor executor a meta</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">1,0</td>
+<td style="text-align: center;"><strong>1</strong></td>
+</tr>
+<tr>
+<td style="text-align: center;"><a href="../8-requisitos/#rf06">RF06</a></td>
+<td style="text-align: left;">Fixar prazo fatal e status de meta</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">1,0</td>
+<td style="text-align: center;"><strong>1</strong></td>
+</tr>
+<tr>
+<td style="text-align: center;"><a href="../8-requisitos/#rf07">RF07</a></td>
+<td style="text-align: left;">Exibir linha do tempo e painel de prazos de metas</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">1,7</td>
+<td style="text-align: center;"><strong>2</strong></td>
+</tr>
+<tr>
+<td style="text-align: center;"><a href="../8-requisitos/#rf08">RF08</a></td>
+<td style="text-align: left;">Emitir alertas de proximidade e pendências de metas</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">1,7</td>
+<td style="text-align: center;"><strong>2</strong></td>
+</tr>
+<tr>
+<td style="text-align: center;"><a href="../8-requisitos/#rf09">RF09</a></td>
+<td style="text-align: left;">Cadastrar atividade por modalidade de objeto</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">1,3</td>
+<td style="text-align: center;"><strong>1</strong></td>
+</tr>
+<tr>
+<td style="text-align: center;"><a href="../8-requisitos/#rf10">RF10</a></td>
+<td style="text-align: left;">Parametrizar exigência de comprovação de presença</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">2,7</td>
+<td style="text-align: center;"><strong>3</strong></td>
+</tr>
+<tr>
+<td style="text-align: center;"><a href="../8-requisitos/#rf11">RF11</a></td>
+<td style="text-align: left;">Disponibilizar formulário público de inscrição</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">1,7</td>
+<td style="text-align: center;"><strong>2</strong></td>
+</tr>
+<tr>
+<td style="text-align: center;"><a href="../8-requisitos/#rf12">RF12</a></td>
+<td style="text-align: left;">Gerar link e QR Code de inscrição</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">1,0</td>
+<td style="text-align: center;"><strong>1</strong></td>
+</tr>
+<tr>
+<td style="text-align: center;"><a href="../8-requisitos/#rf13">RF13</a></td>
+<td style="text-align: left;">Registrar inscrição presencial assistida</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">1,3</td>
+<td style="text-align: center;"><strong>1</strong></td>
+</tr>
+<tr>
+<td style="text-align: center;"><a href="../8-requisitos/#rf14">RF14</a></td>
+<td style="text-align: left;">Limitar vagas da atividade</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">1,7</td>
+<td style="text-align: center;"><strong>2</strong></td>
+</tr>
+<tr>
+<td style="text-align: center;"><a href="../8-requisitos/#rf15">RF15</a></td>
+<td style="text-align: left;">Registrar lista de espera</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">1,7</td>
+<td style="text-align: center;"><strong>2</strong></td>
+</tr>
+<tr>
+<td style="text-align: center;"><a href="../8-requisitos/#rf16">RF16</a></td>
+<td style="text-align: left;">Registrar frequência em dispositivo móvel</td>
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">2,7</td>
+<td style="text-align: center;"><strong>3</strong></td>
+</tr>
+<tr>
+<td style="text-align: center;"><a href="../8-requisitos/#rf17">RF17</a></td>
+<td style="text-align: left;">Operar registro de presença em modo offline</td>
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">4</td>
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">3,3</td>
+<td style="text-align: center;"><strong>3</strong></td>
+</tr>
+<tr>
+<td style="text-align: center;"><a href="../8-requisitos/#rf18">RF18</a></td>
+<td style="text-align: left;">Sincronizar presenças com reconciliação idempotente</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">2,7</td>
+<td style="text-align: center;"><strong>3</strong></td>
+</tr>
+<tr>
+<td style="text-align: center;"><a href="../8-requisitos/#rf19">RF19</a></td>
+<td style="text-align: left;">Registrar lançamento extemporâneo com justificativa</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">1,3</td>
+<td style="text-align: center;"><strong>1</strong></td>
+</tr>
+<tr>
+<td style="text-align: center;"><a href="../8-requisitos/#rf20">RF20</a></td>
+<td style="text-align: left;">Apurar carga horária de participantes e facilitadores</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">1,7</td>
+<td style="text-align: center;"><strong>2</strong></td>
+</tr>
+<tr>
+<td style="text-align: center;"><a href="../8-requisitos/#rf21">RF21</a></td>
+<td style="text-align: left;">Consultar histórico de participação</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">1,3</td>
+<td style="text-align: center;"><strong>1</strong></td>
+</tr>
+<tr>
+<td style="text-align: center;"><a href="../8-requisitos/#rf22">RF22</a></td>
+<td style="text-align: left;">Alertar cadastro duplicado</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">1,7</td>
+<td style="text-align: center;"><strong>2</strong></td>
+</tr>
+<tr>
+<td style="text-align: center;"><a href="../8-requisitos/#rf23">RF23</a></td>
+<td style="text-align: left;">Registrar aviso de tratamento de dados na inscrição</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">1,0</td>
+<td style="text-align: center;"><strong>1</strong></td>
+</tr>
+<tr>
+<td style="text-align: center;"><a href="../8-requisitos/#rf24">RF24</a></td>
+<td style="text-align: left;">Registrar autorização de contato</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">1,0</td>
+<td style="text-align: center;"><strong>1</strong></td>
+</tr>
+<tr>
+<td style="text-align: center;"><a href="../8-requisitos/#rf25">RF25</a></td>
+<td style="text-align: left;">Registrar autorização de uso de imagem</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">1,7</td>
+<td style="text-align: center;"><strong>2</strong></td>
+</tr>
+<tr>
+<td style="text-align: center;"><a href="../8-requisitos/#rf26">RF26</a></td>
+<td style="text-align: left;">Corrigir dados a pedido do titular</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">1,3</td>
+<td style="text-align: center;"><strong>1</strong></td>
+</tr>
+<tr>
+<td style="text-align: center;"><a href="../8-requisitos/#rf27">RF27</a></td>
+<td style="text-align: left;">Excluir ou anonimizar dados de pessoa</td>
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">2,7</td>
+<td style="text-align: center;"><strong>3</strong></td>
+</tr>
+<tr>
+<td style="text-align: center;"><a href="../8-requisitos/#rf28">RF28</a></td>
+<td style="text-align: left;">Calcular progresso físico de metas automaticamente</td>
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">2,0</td>
+<td style="text-align: center;"><strong>2</strong></td>
+</tr>
+<tr>
+<td style="text-align: center;"><a href="../8-requisitos/#rf29">RF29</a></td>
+<td style="text-align: left;">Parametrizar apuração de metas por acúmulo contínuo ou marco de entrega</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">1,3</td>
+<td style="text-align: center;"><strong>1</strong></td>
+</tr>
+<tr>
+<td style="text-align: center;"><a href="../8-requisitos/#rf30">RF30</a></td>
+<td style="text-align: left;">Emitir alertas de risco de inexecução</td>
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">2,0</td>
+<td style="text-align: center;"><strong>2</strong></td>
+</tr>
+<tr>
+<td style="text-align: center;"><a href="../8-requisitos/#rf31">RF31</a></td>
+<td style="text-align: left;">Versionar metas por Termo Aditivo</td>
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">2,0</td>
+<td style="text-align: center;"><strong>2</strong></td>
+</tr>
+<tr>
+<td style="text-align: center;"><a href="../8-requisitos/#rf32">RF32</a></td>
+<td style="text-align: left;">Anexar evidências documentais e fotográficas</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">2,7</td>
+<td style="text-align: center;"><strong>3</strong></td>
+</tr>
+<tr>
+<td style="text-align: center;"><a href="../8-requisitos/#rf33">RF33</a></td>
+<td style="text-align: left;">Vincular evidência a meta contratual</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">2,0</td>
+<td style="text-align: center;"><strong>2</strong></td>
+</tr>
+<tr>
+<td style="text-align: center;"><a href="../8-requisitos/#rf34">RF34</a></td>
+<td style="text-align: left;">Segregar acesso a fotos de beneficiários vulneráveis</td>
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">2,7</td>
+<td style="text-align: center;"><strong>3</strong></td>
+</tr>
+<tr>
+<td style="text-align: center;"><a href="../8-requisitos/#rf35">RF35</a></td>
+<td style="text-align: left;">Exigir justificativa prévia para metas não atingidas</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">1,0</td>
+<td style="text-align: center;"><strong>1</strong></td>
+</tr>
+<tr>
+<td style="text-align: center;"><a href="../8-requisitos/#rf36">RF36</a></td>
+<td style="text-align: left;">Emitir Relatório de Execução do Objeto</td>
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">2,0</td>
+<td style="text-align: center;"><strong>2</strong></td>
+</tr>
+<tr>
+<td style="text-align: center;"><a href="../8-requisitos/#rf37">RF37</a></td>
+<td style="text-align: left;">Gerar relatório diagramado em PDF</td>
+<td style="text-align: center;">4</td>
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">3,0</td>
+<td style="text-align: center;"><strong>3</strong></td>
+</tr>
+<tr>
+<td style="text-align: center;"><a href="../8-requisitos/#rf38">RF38</a></td>
+<td style="text-align: left;">Exportar dados analíticos e consolidados em planilha aberta</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">1,3</td>
+<td style="text-align: center;"><strong>1</strong></td>
+</tr>
+<tr>
+<td style="text-align: center;"><a href="../8-requisitos/#rf39">RF39</a></td>
+<td style="text-align: left;">Registrar trilha de auditoria das operações de prestação de contas</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">1,3</td>
+<td style="text-align: center;"><strong>1</strong></td>
+</tr>
+</tbody>
+</table>
+<details class="note">
+<summary>Fundamentação técnica por requisito</summary>
+<ul>
+<li><strong>RF01:</strong> CRUD administrativo padrão em Next.js e PostgreSQL (stack consolidada).</li>
+<li><strong>RF02:</strong> Upload de arquivo digital e persistência de metadados no banco.</li>
+<li><strong>RF03:</strong> Formulário direto de cadastro com relacionamento 1:N no Prisma.</li>
+<li><strong>RF04:</strong> Modelagem relacional N:N no Prisma para amarração de metas a cláusulas.</li>
+<li><strong>RF05:</strong> Associação direta de campos de chave e governança de setor.</li>
+<li><strong>RF06:</strong> Atualização de campos de data limite e máquina de estados de status.</li>
+<li><strong>RF07:</strong> Componente visual de linha do tempo com filtros temporais em shadcn/ui.</li>
+<li><strong>RF08:</strong> Consultas condicionais de intervalo de datas e verificação de pendências.</li>
+<li><strong>RF09:</strong> Formulário administrativo padrão com vínculo relacional 1:N com projetos e N:N com metas contratuais no Prisma.</li>
+<li><strong>RF10:</strong> Estrutura de versionamento de configurações de comprovação por instrumento e modalidade (RN-04); requer modelagem de snapshots no Prisma.</li>
+<li><strong>RF11:</strong> Formulário público sem conta, com validação e proteção contra envio repetido.</li>
+<li><strong>RF12:</strong> Geração de código a partir do link público da atividade.</li>
+<li><strong>RF13:</strong> Reuso do formulário de inscrição em modo operado pela equipe.</li>
+<li><strong>RF14:</strong> Controle de concorrência na última vaga.</li>
+<li><strong>RF15:</strong> Fila ordenada por data de inscrição, com promoção quando abre vaga.</li>
+<li><strong>RF16:</strong> Interface mobile-first com gerenciamento de estado da chamada, marcação em lote e modal de inclusão avulsa de participantes; exige atenção à usabilidade em telas pequenas (RNF15).</li>
+<li><strong>RF17:</strong> Configuração de PWA com Service Workers e persistência determinística em IndexedDB; maior complexidade técnica da frente — exige pesquisa e estudo prévio de bibliotecas como Workbox/Dexie.js.</li>
+<li><strong>RF18:</strong> Fila assíncrona de envio no frontend com endpoints idempotentes no NestJS; requer transações de banco e tratamento de divergências de concorrência no PostgreSQL.</li>
+<li><strong>RF19:</strong> Validação de regra temporal no backend com preenchimento obrigatório de justificativa e gravação de evento na trilha de auditoria (RNF02).</li>
+<li><strong>RF20:</strong> Agregação sobre presenças confirmadas; depende do registro de presença.</li>
+<li><strong>RF21:</strong> Consulta com filtros sobre inscrições e presenças, restrita por perfil.</li>
+<li><strong>RF22:</strong> Comparação de nome e telefone no ato do cadastro, com opção de reaproveitar o registro.</li>
+<li><strong>RF23:</strong> Texto de aviso versionado e registro de ciência junto à inscrição.</li>
+<li><strong>RF24:</strong> Campo de autorização com data e revogação.</li>
+<li><strong>RF25:</strong> Autorização com revogação e efeito sobre fotos de divulgação.</li>
+<li><strong>RF26:</strong> Edição com registro na trilha de auditoria.</li>
+<li><strong>RF27:</strong> Anonimização que preserva totais já reportados e registros sob guarda legal.</li>
+<li><strong>RF28:</strong> Lógica de agregação de presenças validadas e evidências homologadas via serviços no NestJS.</li>
+<li><strong>RF29:</strong> Parametrização condicional de fórmula conforme modalidade da meta cadastrada.</li>
+<li><strong>RF30:</strong> Comparação algorítmica entre o percentual realizado e a fração temporal decorrida do cronograma.</li>
+<li><strong>RF31:</strong> Esquema de versionamento com snapshots históricos de metas no Prisma.</li>
+<li><strong>RF32:</strong> Pipeline de upload multipart com validação de formato e tamanho no NestJS; integração com a Geolocation API do navegador condicionada à permissão do usuário.</li>
+<li><strong>RF33:</strong> Vínculo relacional N:N no Prisma entre evidência, atividade e metas; controle de ciclo de vida de rascunhos e verificação de bloqueio de encerramento (RN-11).</li>
+<li><strong>RF34:</strong> Controle de acesso granular via Guards no NestJS com restrição de escopo de visualização por perfil (RN-12) e exibição de diretrizes de enquadramento na interface de captura.</li>
+<li><strong>RF35:</strong> Validação transacional de bloqueio de encerramento sem justificativa registrada.</li>
+<li><strong>RF36:</strong> Agrupamento de indicadores previstos versus realizados e ordenação cronológica do índice de evidências.</li>
+<li><strong>RF37:</strong> Diagramação de impressão de relatório formal em PDF com templates e ajustes de quebra de página via Puppeteer.</li>
+<li><strong>RF38:</strong> Geração e download de arquivo tabular estruturado (CSV) a partir de consultas na base.</li>
+<li><strong>RF39:</strong> Registro automático de snapshots de alterações e justificativas em tabela de log permanente.</li>
+</ul>
+</details>
+<h3 id="1024-tabela-consolidada">10.2.4 Tabela consolidada<a class="headerlink" href="#1024-tabela-consolidada" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">Código</th>
+<th style="text-align: left;">Histórias</th>
+<th style="text-align: center;">Valor</th>
+<th style="text-align: center;">Esforço técnico</th>
+<th style="text-align: left;">Destino</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;"><a href="../8-requisitos/#rf01">RF01</a></td>
+<td style="text-align: left;">HU-01</td>
+<td style="text-align: center;">4</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: left;">MVP</td>
+</tr>
+<tr>
+<td style="text-align: center;"><a href="../8-requisitos/#rf02">RF02</a></td>
+<td style="text-align: left;">HU-01</td>
+<td style="text-align: center;">4</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: left;">MVP</td>
+</tr>
+<tr>
+<td style="text-align: center;"><a href="../8-requisitos/#rf03">RF03</a></td>
+<td style="text-align: left;">HU-01</td>
+<td style="text-align: center;">4</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: left;">MVP</td>
+</tr>
+<tr>
+<td style="text-align: center;"><a href="../8-requisitos/#rf04">RF04</a></td>
+<td style="text-align: left;">HU-01</td>
+<td style="text-align: center;">4</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: left;">MVP</td>
+</tr>
+<tr>
+<td style="text-align: center;"><a href="../8-requisitos/#rf05">RF05</a></td>
+<td style="text-align: left;">HU-02</td>
+<td style="text-align: center;">4</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: left;">MVP</td>
+</tr>
+<tr>
+<td style="text-align: center;"><a href="../8-requisitos/#rf06">RF06</a></td>
+<td style="text-align: left;">HU-02</td>
+<td style="text-align: center;">4</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: left;">MVP</td>
+</tr>
+<tr>
+<td style="text-align: center;"><a href="../8-requisitos/#rf07">RF07</a></td>
+<td style="text-align: left;">HU-02</td>
+<td style="text-align: center;">4</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: left;">MVP</td>
+</tr>
+<tr>
+<td style="text-align: center;"><a href="../8-requisitos/#rf08">RF08</a></td>
+<td style="text-align: left;">HU-02</td>
+<td style="text-align: center;">4</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: left;">MVP</td>
+</tr>
+<tr>
+<td style="text-align: center;"><a href="../8-requisitos/#rf09">RF09</a></td>
+<td style="text-align: left;">HU-03</td>
+<td style="text-align: center;">4</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: left;">MVP</td>
+</tr>
+<tr>
+<td style="text-align: center;"><a href="../8-requisitos/#rf10">RF10</a></td>
+<td style="text-align: left;">HU-03</td>
+<td style="text-align: center;">4</td>
+<td style="text-align: center;">3</td>
+<td style="text-align: left;">Incremento 2</td>
+</tr>
+<tr>
+<td style="text-align: center;"><a href="../8-requisitos/#rf11">RF11</a></td>
+<td style="text-align: left;">HU-07</td>
+<td style="text-align: center;">4</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: left;">MVP</td>
+</tr>
+<tr>
+<td style="text-align: center;"><a href="../8-requisitos/#rf12">RF12</a></td>
+<td style="text-align: left;">HU-07</td>
+<td style="text-align: center;">4</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: left;">MVP</td>
+</tr>
+<tr>
+<td style="text-align: center;"><a href="../8-requisitos/#rf13">RF13</a></td>
+<td style="text-align: left;">HU-08</td>
+<td style="text-align: center;">4</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: left;">MVP</td>
+</tr>
+<tr>
+<td style="text-align: center;"><a href="../8-requisitos/#rf14">RF14</a></td>
+<td style="text-align: left;">HU-07, HU-08</td>
+<td style="text-align: center;">4</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: left;">MVP</td>
+</tr>
+<tr>
+<td style="text-align: center;"><a href="../8-requisitos/#rf15">RF15</a></td>
+<td style="text-align: left;">HU-07, HU-08</td>
+<td style="text-align: center;">4</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: left;">MVP</td>
+</tr>
+<tr>
+<td style="text-align: center;"><a href="../8-requisitos/#rf16">RF16</a></td>
+<td style="text-align: left;">HU-09</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">3</td>
+<td style="text-align: left;">Incremento 3</td>
+</tr>
+<tr>
+<td style="text-align: center;"><a href="../8-requisitos/#rf17">RF17</a></td>
+<td style="text-align: left;">HU-09</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">3</td>
+<td style="text-align: left;">Posterior</td>
+</tr>
+<tr>
+<td style="text-align: center;"><a href="../8-requisitos/#rf18">RF18</a></td>
+<td style="text-align: left;">HU-12</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">3</td>
+<td style="text-align: left;">Posterior</td>
+</tr>
+<tr>
+<td style="text-align: center;"><a href="../8-requisitos/#rf19">RF19</a></td>
+<td style="text-align: left;">HU-10</td>
+<td style="text-align: center;">4</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: left;">Incremento 3</td>
+</tr>
+<tr>
+<td style="text-align: center;"><a href="../8-requisitos/#rf20">RF20</a></td>
+<td style="text-align: left;">HU-06</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: left;">Posterior</td>
+</tr>
+<tr>
+<td style="text-align: center;"><a href="../8-requisitos/#rf21">RF21</a></td>
+<td style="text-align: left;">HU-06</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: left;">Posterior</td>
+</tr>
+<tr>
+<td style="text-align: center;"><a href="../8-requisitos/#rf22">RF22</a></td>
+<td style="text-align: left;">HU-06, HU-08</td>
+<td style="text-align: center;">4</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: left;">MVP</td>
+</tr>
+<tr>
+<td style="text-align: center;"><a href="../8-requisitos/#rf23">RF23</a></td>
+<td style="text-align: left;">HU-07, HU-08</td>
+<td style="text-align: center;">4</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: left;">MVP</td>
+</tr>
+<tr>
+<td style="text-align: center;"><a href="../8-requisitos/#rf24">RF24</a></td>
+<td style="text-align: left;">HU-06, HU-07</td>
+<td style="text-align: center;">4</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: left;">MVP</td>
+</tr>
+<tr>
+<td style="text-align: center;"><a href="../8-requisitos/#rf25">RF25</a></td>
+<td style="text-align: left;">HU-07</td>
+<td style="text-align: center;">4</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: left;">MVP</td>
+</tr>
+<tr>
+<td style="text-align: center;"><a href="../8-requisitos/#rf26">RF26</a></td>
+<td style="text-align: left;">HU-15</td>
+<td style="text-align: center;">4 🔧</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: left;">MVP</td>
+</tr>
+<tr>
+<td style="text-align: center;"><a href="../8-requisitos/#rf27">RF27</a></td>
+<td style="text-align: left;">HU-15</td>
+<td style="text-align: center;">4 🔧</td>
+<td style="text-align: center;">3</td>
+<td style="text-align: left;">MVP</td>
+</tr>
+<tr>
+<td style="text-align: center;"><a href="../8-requisitos/#rf28">RF28</a></td>
+<td style="text-align: left;">HU-11</td>
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: left;">Posterior</td>
+</tr>
+<tr>
+<td style="text-align: center;"><a href="../8-requisitos/#rf29">RF29</a></td>
+<td style="text-align: left;">HU-11</td>
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: left;">Posterior</td>
+</tr>
+<tr>
+<td style="text-align: center;"><a href="../8-requisitos/#rf30">RF30</a></td>
+<td style="text-align: left;">HU-11</td>
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: left;">Posterior</td>
+</tr>
+<tr>
+<td style="text-align: center;"><a href="../8-requisitos/#rf31">RF31</a></td>
+<td style="text-align: left;">HU-14</td>
+<td style="text-align: center;">4</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: left;">MVP</td>
+</tr>
+<tr>
+<td style="text-align: center;"><a href="../8-requisitos/#rf32">RF32</a></td>
+<td style="text-align: left;">HU-04</td>
+<td style="text-align: center;">4</td>
+<td style="text-align: center;">3</td>
+<td style="text-align: left;">Incremento 2</td>
+</tr>
+<tr>
+<td style="text-align: center;"><a href="../8-requisitos/#rf33">RF33</a></td>
+<td style="text-align: left;">HU-04</td>
+<td style="text-align: center;">4</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: left;">Incremento 2</td>
+</tr>
+<tr>
+<td style="text-align: center;"><a href="../8-requisitos/#rf34">RF34</a></td>
+<td style="text-align: left;">HU-04</td>
+<td style="text-align: center;">4</td>
+<td style="text-align: center;">3</td>
+<td style="text-align: left;">Incremento 2</td>
+</tr>
+<tr>
+<td style="text-align: center;"><a href="../8-requisitos/#rf35">RF35</a></td>
+<td style="text-align: left;">HU-05</td>
+<td style="text-align: center;">4</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: left;">MVP</td>
+</tr>
+<tr>
+<td style="text-align: center;"><a href="../8-requisitos/#rf36">RF36</a></td>
+<td style="text-align: left;">HU-05</td>
+<td style="text-align: center;">4</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: left;">MVP</td>
+</tr>
+<tr>
+<td style="text-align: center;"><a href="../8-requisitos/#rf37">RF37</a></td>
+<td style="text-align: left;">HU-05</td>
+<td style="text-align: center;">4</td>
+<td style="text-align: center;">3</td>
+<td style="text-align: left;">MVP</td>
+</tr>
+<tr>
+<td style="text-align: center;"><a href="../8-requisitos/#rf38">RF38</a></td>
+<td style="text-align: left;">HU-13</td>
+<td style="text-align: center;">4</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: left;">MVP</td>
+</tr>
+<tr>
+<td style="text-align: center;"><a href="../8-requisitos/#rf39">RF39</a></td>
+<td style="text-align: left;">HU-05</td>
+<td style="text-align: center;">4</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: left;">MVP</td>
+</tr>
+</tbody>
+</table>
+<h3 id="1025-matriz-4-4">10.2.5 Matriz 4 × 4<a class="headerlink" href="#1025-matriz-4-4" title="Permanent link">&para;</a></h3>
+<p>Linhas: valor de negócio. Colunas: esforço técnico. Em negrito, os requisitos do MVP.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">Valor  Esforço</th>
+<th style="text-align: left;">1</th>
+<th style="text-align: left;">2</th>
+<th style="text-align: left;">3</th>
+<th style="text-align: left;">4</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;"><strong>4</strong></td>
+<td style="text-align: left;"><strong>RF01</strong>, <strong>RF02</strong>, <strong>RF03</strong>, <strong>RF05</strong>, <strong>RF06</strong>, <strong>RF09</strong>, <strong>RF12</strong>, <strong>RF13</strong>, RF19, <strong>RF23</strong>, <strong>RF24</strong>, <strong>RF26</strong> 🔧, <strong>RF35</strong>, <strong>RF38</strong>, <strong>RF39</strong></td>
+<td style="text-align: left;"><strong>RF04</strong>, <strong>RF07</strong>, <strong>RF08</strong>, <strong>RF11</strong>, <strong>RF14</strong>, <strong>RF15</strong>, <strong>RF22</strong>, <strong>RF25</strong>, <strong>RF31</strong>, RF33, <strong>RF36</strong></td>
+<td style="text-align: left;">RF10, <strong>RF27</strong> 🔧, RF32, RF34, <strong>RF37</strong></td>
+<td style="text-align: left;">—</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>3</strong></td>
+<td style="text-align: left;">RF29</td>
+<td style="text-align: left;">RF28, RF30</td>
+<td style="text-align: left;">—</td>
+<td style="text-align: left;">—</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>2</strong></td>
+<td style="text-align: left;">RF21</td>
+<td style="text-align: left;">RF20</td>
+<td style="text-align: left;">RF16, RF17, RF18</td>
+<td style="text-align: left;">—</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>1</strong></td>
+<td style="text-align: left;">—</td>
+<td style="text-align: left;">—</td>
+<td style="text-align: left;">—</td>
+<td style="text-align: left;">—</td>
+</tr>
+</tbody>
+</table>
+<p>Candidatos ao MVP pela regra da matriz: valor 4 com esforço 1 ou 2, e valor 3 com esforço 1, ponderados pelas dependências, pelo fluxo mínimo completo e pelos riscos. Requisito de valor alto e esforço alto é reduzido, dividido ou adiado, nunca descartado. O símbolo 🔧 marca valor ainda em conferência com o Instituto.</p>
+<h3 id="1026-mvp-e-incrementos">10.2.6 MVP e incrementos<a class="headerlink" href="#1026-mvp-e-incrementos" title="Permanent link">&para;</a></h3>
+<p>O MVP é o primeiro recorte utilizável pelo Instituto: cadastrar o instrumento e o projeto, desdobrar requisitos e metas, dar responsável e prazo a cada meta, ser avisado dos vencimentos, registrar aditivos, receber inscrições por link, QR Code ou presencialmente, atender pedidos dos titulares dos dados e gerar a prestação de contas com justificativas. Na validação, o Instituto definiu parcerias e metas como a entrega prioritária, apontou as inscrições como o que "facilitaria para todas as equipes" e confirmou tentar o relatório e a planilha já no MVP.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Incremento</th>
+<th style="text-align: left;">Épicos e histórias</th>
+<th style="text-align: left;">Requisitos funcionais</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>MVP</strong></td>
+<td style="text-align: left;">Requisito e meta: HU-01, HU-02, HU-14 · Relatório: HU-05, HU-13 · Pessoas: HU-07, HU-08, HU-15 · Atividade: cadastro da atividade (parte da HU-03)</td>
+<td style="text-align: left;">RF01 a RF09, RF11 a RF15, RF22 a RF27, RF31, RF35 a RF39</td>
+</tr>
+<tr>
+<td style="text-align: left;">Incremento 2</td>
+<td style="text-align: left;">Atividade: comprovações por modalidade (restante da HU-03) · Evidência: HU-04</td>
+<td style="text-align: left;">RF10, RF32 a RF34</td>
+</tr>
+<tr>
+<td style="text-align: left;">Incremento 3</td>
+<td style="text-align: left;">Presença em campo: HU-10 e o registro on-line da HU-09</td>
+<td style="text-align: left;">RF16, RF19</td>
+</tr>
+<tr>
+<td style="text-align: left;">Posterior</td>
+<td style="text-align: left;">Presença em campo: registro sem conexão e sincronização (HU-09, HU-12) · Pessoas: HU-06 · Requisito e meta: HU-11</td>
+<td style="text-align: left;">RF17, RF18, RF20, RF21, RF28 a RF30</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Justificativas do recorte.</strong></p>
+<ul>
+<li><strong>Fluxo mínimo completo.</strong> O MVP fecha dois ciclos: do cadastro do instrumento à emissão do relatório, e da criação da atividade à lista de inscritos, com os controles de dados pessoais que a inscrição exige.</li>
+<li><strong>Inscrições no MVP (HU-07, HU-08).</strong> Valor 4 e esforço 1 ou 2 em todos os requisitos; o Instituto disse que elas "seriam excelentes" para acompanhar inscritos e metas em todas as equipes.</li>
+<li><strong>RF09 (cadastrar atividade), da HU-03.</strong> Entra no MVP por dependência, porque toda inscrição é feita em uma atividade. As comprovações por modalidade (RF10) ficam para o incremento 2, com as evidências; a HU-03 é dividida no refinamento.</li>
+<li><strong>HU-15 no MVP, valor 4 🔧.</strong> Com as inscrições, o sistema passa a guardar dados pessoais de participantes, e o atendimento aos direitos do titular é obrigação legal desde o primeiro dado. O RF27 (excluir ou anonimizar, esforço 3) entra por essa obrigação.</li>
+<li><strong>RF37 (relatório em PDF), valor 4 e esforço 3.</strong> Entra por proposta da equipe confirmada pelo Instituto, em forma reduzida: no MVP o PDF reproduz o relatório do RF36 sem as miniaturas de evidências, que chegam com o incremento 2.</li>
+<li><strong>RF36 (relatório de execução).</strong> No MVP o relatório traz metas, indicadores pactuados, situação registrada e justificativas; o índice de comprovações chega com a evidência (incremento 2) e o atingido calculado, com o RF28 (HU-11).</li>
+<li><strong>HU-05 e HU-13 em recorte parcial.</strong> Os critérios que dependem de evidência ou de presença (índice e miniaturas de evidências, bloqueio por rascunho de evidência, exportação de presenças) são atendidos nos incrementos seguintes; as duas histórias são divididas no refinamento antes da construção, como a HU-09 (registro on-line e registro sem conexão).</li>
+<li><strong>Evidências no incremento 2.</strong> O Instituto ordenou as evidências logo depois do MVP; o esforço delas (RF32 e RF34 com esforço 3) não cabe na primeira entrega.</li>
+<li><strong>HU-10 (lançamento fora do prazo).</strong> Foi apresentada e validada junto com evidências, mas corrige presenças já registradas; por isso acompanha o registro de presença no incremento 3.</li>
+<li><strong>RF16 (registro on-line de presença), valor 2.</strong> Sobe para o incremento 3 por dependência: a HU-10, de valor 4, corrige presenças registradas por ele. O registro sem conexão (RF17) e a sincronização (RF18) ficam para depois.</li>
+<li><strong>HU-11 (progresso e risco), valor 3.</strong> Fica para o fim porque o cálculo (RF28) depende de presenças e evidências registradas; antes disso o painel mostraria números enganosos. O RF29, candidato pela matriz, só tem efeito junto com o RF28.</li>
+</ul>
+<h3 id="1027-requisitos-nao-funcionais-no-mvp">10.2.7 Requisitos não funcionais no MVP<a class="headerlink" href="#1027-requisitos-nao-funcionais-no-mvp" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Classe</th>
+<th style="text-align: left;">Requisitos não funcionais</th>
+<th style="text-align: left;">Motivo</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Obrigatórios para o MVP</td>
+<td style="text-align: left;"><a href="../8-requisitos/#rnf03">RNF03</a>, <a href="../8-requisitos/#rnf04">RNF04</a>, <a href="../8-requisitos/#rnf16">RNF16</a>, <a href="../8-requisitos/#rnf17">RNF17</a>, <a href="../8-requisitos/#rnf18">RNF18</a></td>
+<td style="text-align: left;">Valem para todo o produto desde a primeira entrega: acesso autenticado por perfil, conforme os perfis levantados com o Instituto (8.5.1), compatibilidade, pilha tecnológica e cópia de segurança</td>
+</tr>
+<tr>
+<td style="text-align: left;">Associados a RFs do MVP</td>
+<td style="text-align: left;"><a href="../8-requisitos/#rnf01">RNF01</a>, <a href="../8-requisitos/#rnf02">RNF02</a>, <a href="../8-requisitos/#rnf05">RNF05</a>, <a href="../8-requisitos/#rnf06">RNF06</a>, <a href="../8-requisitos/#rnf07">RNF07</a>, <a href="../8-requisitos/#rnf08">RNF08</a>, <a href="../8-requisitos/#rnf11">RNF11</a>, <a href="../8-requisitos/#rnf12">RNF12</a>, <a href="../8-requisitos/#rnf13">RNF13</a>, <a href="../8-requisitos/#rnf15">RNF15</a></td>
+<td style="text-align: left;">Integridade das metas, auditoria, minimização de dados e prazo de exclusão, guarda e integridade dos relatórios, desempenho do painel de prazos, da inscrição pública e da geração de relatórios, usabilidade da inscrição em celular</td>
+</tr>
+<tr>
+<td style="text-align: left;">Evolutivos</td>
+<td style="text-align: left;"><a href="../8-requisitos/#rnf09">RNF09</a>, <a href="../8-requisitos/#rnf10">RNF10</a>, <a href="../8-requisitos/#rnf14">RNF14</a></td>
+<td style="text-align: left;">Entram com os incrementos de evidência e de operação sem conexão</td>
+</tr>
+<tr>
+<td style="text-align: left;">Não aplicáveis</td>
+<td style="text-align: left;">—</td>
+<td style="text-align: left;">Nenhum requisito não funcional foi descartado</td>
+</tr>
+</tbody>
+</table>
+<h3 id="1028-validacao-com-o-instituto">10.2.8 Validação com o Instituto<a class="headerlink" href="#1028-validacao-com-o-instituto" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Item</th>
+<th style="text-align: left;">Registro</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Data e formato</td>
+<td style="text-align: left;">28/09/2026, 16h, reunião online com gravação autorizada</td>
+</tr>
+<tr>
+<td style="text-align: left;">Participantes do Instituto</td>
+<td style="text-align: left;">Clara Novaes, diretora pedagógica; Maria Eduarda</td>
+</tr>
+<tr>
+<td style="text-align: left;">Participantes da equipe</td>
+<td style="text-align: left;">Vinicius Vieira, Rodrigo Henrique Donato, Lucas de Paula Leal, Caio Martins; Daniel Batista 🔧</td>
+</tr>
+<tr>
+<td style="text-align: left;">Apresentado</td>
+<td style="text-align: left;">Quinze histórias em quatro jornadas, com os requisitos e as regras de negócio de cada uma, e a escala de valor de 4 a 1</td>
+</tr>
+<tr>
+<td style="text-align: left;">Aprovado para o MVP</td>
+<td style="text-align: left;">Parcerias e metas (HU-01, HU-02, HU-14); inscrições públicas e assistidas (HU-07, HU-08); prestação de contas com relatório e planilha (HU-05, HU-13), se couberem na capacidade</td>
+</tr>
+<tr>
+<td style="text-align: left;">Adiado</td>
+<td style="text-align: left;">Evidências para o incremento 2; registro de presença para o incremento 3; registro sem conexão, histórico de participação e painel de risco para depois</td>
+</tr>
+<tr>
+<td style="text-align: left;">Ajustes pedidos</td>
+<td style="text-align: left;">Aviso de vencimento automático com 30 dias de antecedência e aviso manual na própria meta, enviado primeiro por e-mail; encerramento de projeto restrito à coordenação da execução, sem bloqueio por evidência antiga que não pode ser recuperada; trava do relatório por falta de justificativa mantida, com notificação à direção sem parar as demais áreas; correção fora do prazo sem aprovação; modalidades de atividade criadas pelo próprio Instituto</td>
+</tr>
+<tr>
+<td style="text-align: left;">Confirmado sem ajuste</td>
+<td style="text-align: left;">Meta sem parâmetros fica em rascunho; aditivo gera nova versão e preserva a original; alteração em registro já publicado exige justificativa</td>
+</tr>
+<tr>
+<td style="text-align: left;">Pedido novo</td>
+<td style="text-align: left;">Registrar a alteração do período de execução e atualizar os prazos que dependem dele, a especificar</td>
+</tr>
+<tr>
+<td style="text-align: left;">Divergências e pendências</td>
+<td style="text-align: left;">A ordem dos incrementos vai à conferência do Instituto: as inscrições foram confirmadas para o MVP às 01:03 e, na ordem final, o campo ficou depois das evidências; a equipe manteve as inscrições no MVP e posicionou por dependência o RF09 e a HU-15 no MVP e a HU-10 e o RF16 no incremento 3; a HU-15 não foi votada e seu valor vai à conferência; a repetição do aviso depois dos 30 dias está a definir; a trava do relatório sobre pagamentos depende da área financeira</td>
+</tr>
+</tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Voltar para o topo
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Rodapé" >
+        
+          
+          <a href="../9-dor-dod/" class="md-footer__link md-footer__link--prev" aria-label="Anterior: 9. DoR e DoD">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Anterior
+              </span>
+              <div class="md-ellipsis">
+                9. DoR e DoD
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../b1-bpmn-processo-atual/" class="md-footer__link md-footer__link--next" aria-label="Próximo: B1 · Modelo do processo atual (BPMN)">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Próximo
+              </span>
+              <div class="md-ellipsis">
+                B1 · Modelo do processo atual (BPMN)
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Equipe CyberSetor · Engenharia de Software · FCTE/UnB · 2026.2
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.tabs", "navigation.tabs.sticky", "navigation.indexes", "navigation.instant", "navigation.tracking", "navigation.sections", "navigation.top", "navigation.footer", "content.action.edit", "content.code.copy", "toc.follow", "search.suggest", "search.highlight"], "search": "../../assets/javascripts/workers/search.f8cc74c7.min.js", "translations": {"clipboard.copied": "Copiado para \u00e1rea de transfer\u00eancia", "clipboard.copy": "Copiar para \u00e1rea de transfer\u00eancia", "search.result.more.one": "mais 1 nesta p\u00e1gina", "search.result.more.other": "# mais nesta p\u00e1gina", "search.result.none": "Nenhum documento encontrado", "search.result.one": "1 documento encontrado", "search.result.other": "# documentos encontrados", "search.result.placeholder": "Digite para iniciar a busca", "search.result.term.missing": "Ausente", "select.version": "Selecione a vers\u00e3o"}}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.c8b220af.min.js"></script>
+      
+    
+  </body>
+</html>

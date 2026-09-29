@@ -1,0 +1,3696 @@
+
+<!doctype html>
+<html lang="pt" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Visão de Produto e Projeto — Requisitos de Software (FGA0313) · T02 · 2026.2 · FCTE/UnB">
+      
+      
+        <meta name="author" content="Equipe CyberSetor">
+      
+      
+        <link rel="canonical" href="https://mdsreq-fga-unb.github.io/REQ-2026.2-T02-CyberSetor/requisitos/8-requisitos/">
+      
+      
+        <link rel="prev" href="../../visao/7-equipe-e-cliente/">
+      
+      
+        <link rel="next" href="../9-dor-dod/">
+      
+      
+      <link rel="icon" href="../../assets/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.9">
+    
+    
+      
+        <title>8. Requisitos de software - CyberSetor · Instituto No Setor</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.4af4bdda.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="deep-purple" data-md-color-accent="purple">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#8-requisitos-de-software" class="md-skip">
+          Pular para conteúdo
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Cabeçalho">
+    <a href="../.." title="CyberSetor · Instituto No Setor" class="md-header__button md-logo" aria-label="CyberSetor · Instituto No Setor" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            CyberSetor · Instituto No Setor
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              8. Requisitos de software
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="deep-purple" data-md-color-accent="purple"  aria-label="Alternar para o modo escuro"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Alternar para o modo escuro" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="deep-purple" data-md-color-accent="purple"  aria-label="Alternar para o modo claro"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Alternar para o modo claro" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Buscar" placeholder="Buscar" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Pesquisar">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Limpar" aria-label="Limpar" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Inicializando busca
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/mdsreq-fga-unb/REQ-2026.2-T02-CyberSetor" title="Ir para repositório" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8M97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    mdsreq-fga-unb/REQ-2026.2-T02-CyberSetor
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+    
+      
+<nav class="md-tabs" aria-label="Abas" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+    
+  
+  Início
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../visao/" class="md-tabs__link">
+          
+  
+    
+  
+  Documento de Visão
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="./" class="md-tabs__link">
+          
+  
+    
+  
+  Requisitos
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../gestao/processo-scrumxp/" class="md-tabs__link">
+          
+  
+    
+  
+  Gestão do projeto
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../entregas/unidade-1/" class="md-tabs__link">
+          
+  
+    
+  
+  Entregas
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../licoes-aprendidas/unidade-1/" class="md-tabs__link">
+          
+  
+    
+  
+  Lições aprendidas
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../referencias/" class="md-tabs__link">
+        
+  
+    
+  
+  Referências
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navegação" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="CyberSetor · Instituto No Setor" class="md-nav__button md-logo" aria-label="CyberSetor · Instituto No Setor" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    CyberSetor · Instituto No Setor
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/mdsreq-fga-unb/REQ-2026.2-T02-CyberSetor" title="Ir para repositório" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8M97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    mdsreq-fga-unb/REQ-2026.2-T02-CyberSetor
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Início
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../visao/" class="md-nav__link ">
+              
+  
+  <span class="md-ellipsis">
+    Documento de Visão
+    
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_2" id="__nav_2_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            Documento de Visão
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../visao/1-cenario-atual/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    1. Cenário atual do cliente e do negócio
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../visao/2-solucao-proposta/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    2. Solução proposta
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../visao/3-intervencao-social/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    3. Intervenção social
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../visao/4-estrategia-esw/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    4. Estratégias de engenharia de software
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../visao/5-engenharia-requisitos/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    5. Engenharia de requisitos
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../visao/6-cronograma/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    6. Cronograma e entregas
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../visao/7-equipe-e-cliente/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    7. Interação entre equipe e cliente
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Requisitos
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            Requisitos
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    8. Requisitos de software
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    8. Requisitos de software
+    
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Índice">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Índice
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#historico-de-versoes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Histórico de Versões
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#81-introducao-metodologica" class="md-nav__link">
+    <span class="md-ellipsis">
+      8.1 Introdução Metodológica
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#82-lista-de-requisitos-funcionais-rfs" class="md-nav__link">
+    <span class="md-ellipsis">
+      8.2 Lista de Requisitos Funcionais (RFs)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="8.2 Lista de Requisitos Funcionais (RFs)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#cp1-gestao-de-projetos-e-metas" class="md-nav__link">
+    <span class="md-ellipsis">
+      CP1 — Gestão de Projetos e Metas
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cp2-gestao-de-atividades" class="md-nav__link">
+    <span class="md-ellipsis">
+      CP2 — Gestão de Atividades
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cp3-inscricao-de-participantes" class="md-nav__link">
+    <span class="md-ellipsis">
+      CP3 — Inscrição de Participantes
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cp4-registro-de-participacao-em-campo" class="md-nav__link">
+    <span class="md-ellipsis">
+      CP4 — Registro de Participação em Campo
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cp5-cadastro-e-historico-de-pessoas" class="md-nav__link">
+    <span class="md-ellipsis">
+      CP5 — Cadastro e Histórico de Pessoas
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cp6-acompanhamento-automatico-de-metas" class="md-nav__link">
+    <span class="md-ellipsis">
+      CP6 — Acompanhamento Automático de Metas
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cp7-repositorio-de-evidencias-e-documentacao" class="md-nav__link">
+    <span class="md-ellipsis">
+      CP7 — Repositório de Evidências e Documentação
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cp8-relatorios-e-exportacao-de-dados" class="md-nav__link">
+    <span class="md-ellipsis">
+      CP8 — Relatórios e Exportação de Dados
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#83-lista-de-requisitos-nao-funcionais-rnfs" class="md-nav__link">
+    <span class="md-ellipsis">
+      8.3 Lista de Requisitos Não Funcionais (RNFs)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="8.3 Lista de Requisitos Não Funcionais (RNFs)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#confiabilidade-e-integridade" class="md-nav__link">
+    <span class="md-ellipsis">
+      Confiabilidade e Integridade
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#seguranca-e-privacidade" class="md-nav__link">
+    <span class="md-ellipsis">
+      Segurança e Privacidade
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#conformidade-legal-mrosc" class="md-nav__link">
+    <span class="md-ellipsis">
+      Conformidade Legal (MROSC)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#desempenho-e-eficiencia" class="md-nav__link">
+    <span class="md-ellipsis">
+      Desempenho e Eficiência
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#usabilidade-portabilidade-e-restricoes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Usabilidade, Portabilidade e Restrições
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#84-matriz-de-rastreabilidade-bidirecional" class="md-nav__link">
+    <span class="md-ellipsis">
+      8.4 Matriz de Rastreabilidade Bidirecional
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="8.4 Matriz de Rastreabilidade Bidirecional">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#841-matriz-de-rastreabilidade-dos-requisitos-funcionais-rfs" class="md-nav__link">
+    <span class="md-ellipsis">
+      8.4.1 Matriz de Rastreabilidade dos Requisitos Funcionais (RFs)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#842-matriz-de-rastreabilidade-dos-requisitos-nao-funcionais-rnfs" class="md-nav__link">
+    <span class="md-ellipsis">
+      8.4.2 Matriz de Rastreabilidade dos Requisitos Não Funcionais (RNFs)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#843-sintese-de-cobertura" class="md-nav__link">
+    <span class="md-ellipsis">
+      8.4.3 Síntese de Cobertura
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#85-notas-de-dominio-e-perguntas-chave-operacionais" class="md-nav__link">
+    <span class="md-ellipsis">
+      8.5 Notas de Domínio e Perguntas-Chave Operacionais
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="8.5 Notas de Domínio e Perguntas-Chave Operacionais">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#851-perfis-de-acesso-e-permissoes-cp1-e-transversal" class="md-nav__link">
+    <span class="md-ellipsis">
+      8.5.1 Perfis de Acesso e Permissões (CP1 e Transversal)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#852-campo-presenca-e-evidencias-cp2-cp4-e-cp7" class="md-nav__link">
+    <span class="md-ellipsis">
+      8.5.2 Campo, Presença e Evidências (CP2, CP4 e CP7)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#853-apuracao-de-metas-e-relatorios-mrosc-cp6-e-cp8" class="md-nav__link">
+    <span class="md-ellipsis">
+      8.5.3 Apuração de Metas e Relatórios MROSC (CP6 e CP8)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#854-inscricao-pessoas-e-lgpd-cp3-e-cp5" class="md-nav__link">
+    <span class="md-ellipsis">
+      8.5.4 Inscrição, Pessoas e LGPD (CP3 e CP5)
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#86-pontos-em-aberto-e-auditoria-de-lacunas" class="md-nav__link">
+    <span class="md-ellipsis">
+      8.6 Pontos em Aberto e Auditoria de Lacunas
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#87-regras-de-negocio" class="md-nav__link">
+    <span class="md-ellipsis">
+      8.7 Regras de Negócio
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../9-dor-dod/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    9. DoR e DoD
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../10-backlog/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    10. Backlog de produto
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../b1-bpmn-processo-atual/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    B1 · Modelo do processo atual (BPMN)
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Gestão do projeto
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            Gestão do projeto
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../gestao/processo-scrumxp/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Processo e ritos (ScrumXP)
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../gestao/matriz-competencias/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Matriz de competências e stack
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../gestao/boas-praticas-github/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Boas práticas no GitHub
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_4" >
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../gestao/atas/" class="md-nav__link ">
+              
+  
+  <span class="md-ellipsis">
+    Atas de reunião
+    
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_4_4" id="__nav_4_4_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_4">
+            <span class="md-nav__icon md-icon"></span>
+            Atas de reunião
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../gestao/atas/2026-08-27-reuniao-equipe/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    27/08/2026 — Equipe
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../gestao/atas/2026-09-01-reuniao-equipe/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    01/09/2026 — Equipe
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../gestao/atas/2026-09-08-reuniao-presencial-instituto/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    08/09/2026 — Instituto (presencial)
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../gestao/atas/2026-09-08-sprint-planning/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    08/09/2026 — Sprint Planning
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../gestao/atas/2026-09-15-reuniao-alinhamento-instituto/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    15/09/2026 — Instituto (alinhamento)
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../gestao/atas/2026-09-21-reuniao-presencial-instituto/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    21/09/2026 — Instituto (presencial)
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../gestao/atas/2026-09-21-reuniao-equipe/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    21/09/2026 — Equipe (alinhamento)
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../gestao/atas/2026-09-22-sprint-review-retrospectiva/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    22/09/2026 — Sprint Review e Retrospectiva
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../gestao/atas/2026-09-23-sprint-planning/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    23/09/2026 — Sprint Planning
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_4_5" id="__nav_4_5_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Planos de sprint
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_5">
+            <span class="md-nav__icon md-icon"></span>
+            Planos de sprint
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../gestao/sprints/sprint-1/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Sprint 1 (Planejamento)
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../gestao/sprints/tarefas-sprint-1/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Sprint 1 (Acompanhamento de Tarefas)
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../gestao/sprints/sprint-2/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Sprint 2 (Planejamento)
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../gestao/sprints/tarefas-sprint-2/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Sprint 2 (Acompanhamento de Tarefas)
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Entregas
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            Entregas
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../entregas/unidade-1/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Unidade 1
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../entregas/debitos-u1/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Débitos e Feedbacks (U1)
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../entregas/unidade-2/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Unidade 2
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../entregas/atividade-3/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Atividade 3: ajuste da lista de requisitos
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Lições aprendidas
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            Lições aprendidas
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../licoes-aprendidas/unidade-1/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Unidade 1
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../referencias/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Referências
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Índice">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Índice
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#historico-de-versoes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Histórico de Versões
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#81-introducao-metodologica" class="md-nav__link">
+    <span class="md-ellipsis">
+      8.1 Introdução Metodológica
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#82-lista-de-requisitos-funcionais-rfs" class="md-nav__link">
+    <span class="md-ellipsis">
+      8.2 Lista de Requisitos Funcionais (RFs)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="8.2 Lista de Requisitos Funcionais (RFs)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#cp1-gestao-de-projetos-e-metas" class="md-nav__link">
+    <span class="md-ellipsis">
+      CP1 — Gestão de Projetos e Metas
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cp2-gestao-de-atividades" class="md-nav__link">
+    <span class="md-ellipsis">
+      CP2 — Gestão de Atividades
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cp3-inscricao-de-participantes" class="md-nav__link">
+    <span class="md-ellipsis">
+      CP3 — Inscrição de Participantes
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cp4-registro-de-participacao-em-campo" class="md-nav__link">
+    <span class="md-ellipsis">
+      CP4 — Registro de Participação em Campo
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cp5-cadastro-e-historico-de-pessoas" class="md-nav__link">
+    <span class="md-ellipsis">
+      CP5 — Cadastro e Histórico de Pessoas
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cp6-acompanhamento-automatico-de-metas" class="md-nav__link">
+    <span class="md-ellipsis">
+      CP6 — Acompanhamento Automático de Metas
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cp7-repositorio-de-evidencias-e-documentacao" class="md-nav__link">
+    <span class="md-ellipsis">
+      CP7 — Repositório de Evidências e Documentação
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cp8-relatorios-e-exportacao-de-dados" class="md-nav__link">
+    <span class="md-ellipsis">
+      CP8 — Relatórios e Exportação de Dados
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#83-lista-de-requisitos-nao-funcionais-rnfs" class="md-nav__link">
+    <span class="md-ellipsis">
+      8.3 Lista de Requisitos Não Funcionais (RNFs)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="8.3 Lista de Requisitos Não Funcionais (RNFs)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#confiabilidade-e-integridade" class="md-nav__link">
+    <span class="md-ellipsis">
+      Confiabilidade e Integridade
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#seguranca-e-privacidade" class="md-nav__link">
+    <span class="md-ellipsis">
+      Segurança e Privacidade
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#conformidade-legal-mrosc" class="md-nav__link">
+    <span class="md-ellipsis">
+      Conformidade Legal (MROSC)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#desempenho-e-eficiencia" class="md-nav__link">
+    <span class="md-ellipsis">
+      Desempenho e Eficiência
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#usabilidade-portabilidade-e-restricoes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Usabilidade, Portabilidade e Restrições
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#84-matriz-de-rastreabilidade-bidirecional" class="md-nav__link">
+    <span class="md-ellipsis">
+      8.4 Matriz de Rastreabilidade Bidirecional
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="8.4 Matriz de Rastreabilidade Bidirecional">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#841-matriz-de-rastreabilidade-dos-requisitos-funcionais-rfs" class="md-nav__link">
+    <span class="md-ellipsis">
+      8.4.1 Matriz de Rastreabilidade dos Requisitos Funcionais (RFs)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#842-matriz-de-rastreabilidade-dos-requisitos-nao-funcionais-rnfs" class="md-nav__link">
+    <span class="md-ellipsis">
+      8.4.2 Matriz de Rastreabilidade dos Requisitos Não Funcionais (RNFs)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#843-sintese-de-cobertura" class="md-nav__link">
+    <span class="md-ellipsis">
+      8.4.3 Síntese de Cobertura
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#85-notas-de-dominio-e-perguntas-chave-operacionais" class="md-nav__link">
+    <span class="md-ellipsis">
+      8.5 Notas de Domínio e Perguntas-Chave Operacionais
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="8.5 Notas de Domínio e Perguntas-Chave Operacionais">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#851-perfis-de-acesso-e-permissoes-cp1-e-transversal" class="md-nav__link">
+    <span class="md-ellipsis">
+      8.5.1 Perfis de Acesso e Permissões (CP1 e Transversal)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#852-campo-presenca-e-evidencias-cp2-cp4-e-cp7" class="md-nav__link">
+    <span class="md-ellipsis">
+      8.5.2 Campo, Presença e Evidências (CP2, CP4 e CP7)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#853-apuracao-de-metas-e-relatorios-mrosc-cp6-e-cp8" class="md-nav__link">
+    <span class="md-ellipsis">
+      8.5.3 Apuração de Metas e Relatórios MROSC (CP6 e CP8)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#854-inscricao-pessoas-e-lgpd-cp3-e-cp5" class="md-nav__link">
+    <span class="md-ellipsis">
+      8.5.4 Inscrição, Pessoas e LGPD (CP3 e CP5)
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#86-pontos-em-aberto-e-auditoria-de-lacunas" class="md-nav__link">
+    <span class="md-ellipsis">
+      8.6 Pontos em Aberto e Auditoria de Lacunas
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#87-regras-de-negocio" class="md-nav__link">
+    <span class="md-ellipsis">
+      8.7 Regras de Negócio
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+    <a href="https://github.com/mdsreq-fga-unb/REQ-2026.2-T02-CyberSetor/edit/main/docs/requisitos/8-requisitos.md" title="Editar esta página" class="md-content__button md-icon">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4zm10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1z"/></svg>
+    </a>
+  
+  
+
+
+<h1 id="8-requisitos-de-software">8. Requisitos de Software<a class="headerlink" href="#8-requisitos-de-software" title="Permanent link">&para;</a></h1>
+<h2 id="historico-de-versoes">Histórico de Versões<a class="headerlink" href="#historico-de-versoes" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">Data</th>
+<th style="text-align: center;">Versão</th>
+<th style="text-align: left;">Descrição</th>
+<th style="text-align: left;">Autor(es)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">19/09/2026</td>
+<td style="text-align: center;">1.0</td>
+<td style="text-align: left;">Primeira versão do catálogo de requisitos</td>
+<td style="text-align: left;">Rodrigo Henrique e Vinicius Vieira</td>
+</tr>
+<tr>
+<td style="text-align: center;">19/09/2026</td>
+<td style="text-align: center;">1.1</td>
+<td style="text-align: left;">Requisitos de CP3 e CP5 e perguntas-chave</td>
+<td style="text-align: left;">Maria Eduarda Marques e Daniel Batista</td>
+</tr>
+<tr>
+<td style="text-align: center;">20/09/2026</td>
+<td style="text-align: center;">1.2</td>
+<td style="text-align: left;">Requisitos de CP2, CP4 e CP7 e registro sem conexão</td>
+<td style="text-align: left;">Caio Flávio e Lucas Leal</td>
+</tr>
+<tr>
+<td style="text-align: center;">20/09/2026</td>
+<td style="text-align: center;">1.3</td>
+<td style="text-align: left;">Requisitos de CP6 e CP8 e regras de prestação de contas</td>
+<td style="text-align: left;">Caio Flávio, Lucas Leal e Vinicius Vieira</td>
+</tr>
+<tr>
+<td style="text-align: center;">20/09/2026</td>
+<td style="text-align: center;">1.4</td>
+<td style="text-align: left;">Refinamento da CP1, notas de domínio e matriz dos gargalos</td>
+<td style="text-align: left;">Rodrigo Henrique e Vinicius Vieira</td>
+</tr>
+<tr>
+<td style="text-align: center;">21/09/2026</td>
+<td style="text-align: center;">1.5</td>
+<td style="text-align: left;">RNFs consolidados sob FURPS+ e Sommerville</td>
+<td style="text-align: left;">Maria Eduarda Marques e Vinicius Vieira</td>
+</tr>
+<tr>
+<td style="text-align: center;">21/09/2026</td>
+<td style="text-align: center;">1.6</td>
+<td style="text-align: left;">Matriz de rastreabilidade bidirecional e auditoria de lacunas</td>
+<td style="text-align: left;">Maria Eduarda Marques e Daniel Batista</td>
+</tr>
+<tr>
+<td style="text-align: center;">21/09/2026</td>
+<td style="text-align: center;">2.0</td>
+<td style="text-align: left;">Catálogo unificado (RF01 a RF37, RNF01 a RNF18), notas de domínio e matriz de rastreabilidade</td>
+<td style="text-align: left;">Equipe CyberSetor</td>
+</tr>
+<tr>
+<td style="text-align: center;">21/09/2026</td>
+<td style="text-align: center;">2.1</td>
+<td style="text-align: left;">Âncoras restauradas; tecnologia retirada dos requisitos; regras de negócio em subseção própria; rastreabilidade sem dados de sprint; valores iniciais marcados com 🔧</td>
+<td style="text-align: left;">Equipe CyberSetor</td>
+</tr>
+<tr>
+<td style="text-align: center;">27/09/2026</td>
+<td style="text-align: center;">2.2</td>
+<td style="text-align: left;">RF01 e RF04 divididos; numeração contínua RF01 a RF39; redação de CP1, CP6 e CP8; matriz de rastreabilidade e regras de negócio sincronizadas</td>
+<td style="text-align: left;">Daniel Batista e Rodrigo Henrique</td>
+</tr>
+<tr>
+<td style="text-align: center;">28/09/2026</td>
+<td style="text-align: center;">2.3</td>
+<td style="text-align: left;">Redação de CP2, CP4 e CP7; vínculo da atividade às metas (RF09); participante não inscrito na chamada (RF16); preparação da lista para uso sem conexão (RF17); descarte de rascunho (RF33)</td>
+<td style="text-align: left;">Caio Martins e Lucas Leal</td>
+</tr>
+<tr>
+<td style="text-align: center;">29/09/2026</td>
+<td style="text-align: center;">2.4</td>
+<td style="text-align: left;">Aviso de vencimento com 30 dias e por e-mail (RF08, RN-03); modalidades criadas pelo Instituto (RF09, RF10); correção fora do prazo sem aprovação (RF19); trava do relatório com notificação à direção (RF35); encerramento do projeto (RN-11); justificativa para alterar registro concluído (RN-13); CP3, CP5 e RF20 reescritos; ator genérico em CP1, RF29 a RF31 e RF36; RN-07 revista; matriz pelas histórias HU-01 a HU-15; tabela de códigos provisórios retirada</td>
+<td style="text-align: left;">Vinicius Vieira e Maria Eduarda Marques</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="81-introducao-metodologica">8.1 Introdução Metodológica<a class="headerlink" href="#81-introducao-metodologica" title="Permanent link">&para;</a></h2>
+<p>A especificação de requisitos do sistema CyberSetor orienta-se pela abordagem ágil ScrumXP combinada aos preceitos da Engenharia de Requisitos contemporânea. A declaração e a taxonomia seguem as diretrizes metodológicas da disciplina (Marsicano, 2026), com requisitos funcionais orientados à ação e requisitos não funcionais fundamentados no modelo <strong>FURPS+</strong> e na taxonomia de <strong>Ian Sommerville</strong>.</p>
+<p>A governança do catálogo adota:
+- <strong>Identificadores unívocos:</strong> Códigos prefixados (<code>RFxx</code> e <code>RNFxx</code>; <code>RN-xx</code> para regras de negócio) em sequência única e contínua, acompanhados de âncoras explícitas para permitir rastreamento direto a partir de issues, histórias de usuário e matrizes. Os RFs seguem rigorosamente a ordem das Características de Produto (CP1 a CP8).
+- <strong>Padronização verbal:</strong> Todo requisito funcional é expresso no formato <strong>Verbo no Infinitivo + Objeto Direto</strong>, definindo uma única ação verificável, sem ambiguidades de escopo.
+- <strong>Critérios verificáveis:</strong> Todo requisito não funcional estabelece uma métrica quantitativa numérica, passível de verificação objetiva por testes automatizados, auditoria de código ou inspeção determinística.
+- <strong>Valores iniciais:</strong> O símbolo 🔧 marca parâmetro adotado como valor inicial, sem fonte normativa ou medição que o fixe; permanece válido para verificação até ser confirmado com o Instituto ou recalibrado no piloto.</p>
+<hr />
+<h2 id="82-lista-de-requisitos-funcionais-rfs">8.2 Lista de Requisitos Funcionais (RFs)<a class="headerlink" href="#82-lista-de-requisitos-funcionais-rfs" title="Permanent link">&para;</a></h2>
+<h3 id="cp1-gestao-de-projetos-e-metas">CP1 — Gestão de Projetos e Metas<a class="headerlink" href="#cp1-gestao-de-projetos-e-metas" title="Permanent link">&para;</a></h3>
+<p><a id="rf01"></a></p>
+<h4 id="rf01-cadastrar-instrumento-convocatorio-e-parceria">RF01 — Cadastrar instrumento convocatório e parceria<a class="headerlink" href="#rf01-cadastrar-instrumento-convocatorio-e-parceria" title="Permanent link">&para;</a></h4>
+<ul>
+<li><strong>Descrição:</strong> Permitir ao usuário autorizado cadastrar os instrumentos de parceria com o poder público, com tipo, órgão concedente, número do processo, valor global e vigência.</li>
+<li><strong>Rastreabilidade:</strong> CP1 | OE01 | BPMN G01 | MROSC (Lei 13.019/2014, art. 16 e 42)</li>
+</ul>
+<p><a id="rf02"></a></p>
+<h4 id="rf02-anexar-documento-formal-homologado-de-parceria">RF02 — Anexar documento formal homologado de parceria<a class="headerlink" href="#rf02-anexar-documento-formal-homologado-de-parceria" title="Permanent link">&para;</a></h4>
+<ul>
+<li><strong>Descrição:</strong> Permitir ao usuário autorizado anexar ao instrumento, em PDF, o documento formal que o celebra.</li>
+<li><strong>Rastreabilidade:</strong> CP1 | OE01 | BPMN G01 | MROSC (Lei 13.019/2014, art. 16 e 42)</li>
+</ul>
+<p><a id="rf03"></a></p>
+<h4 id="rf03-cadastrar-projeto-operacional">RF03 — Cadastrar projeto operacional<a class="headerlink" href="#rf03-cadastrar-projeto-operacional" title="Permanent link">&para;</a></h4>
+<ul>
+<li><strong>Descrição:</strong> Permitir ao usuário autorizado cadastrar os projetos de um instrumento ativo, com código, título, coordenador e cronograma.</li>
+<li><strong>Rastreabilidade:</strong> CP1 | OE01 | BPMN G01</li>
+</ul>
+<p><a id="rf04"></a></p>
+<h4 id="rf04-desdobrar-requisitos-contratuais-e-metas">RF04 — Desdobrar requisitos contratuais e metas<a class="headerlink" href="#rf04-desdobrar-requisitos-contratuais-e-metas" title="Permanent link">&para;</a></h4>
+<ul>
+<li><strong>Descrição:</strong> Permitir ao usuário autorizado desdobrar o plano de trabalho em metas vinculadas aos requisitos do instrumento, registrando para cada meta origem, indicador, parâmetro planejado, período e frequência de apuração e forma de comprovação.</li>
+<li><strong>Rastreabilidade:</strong> CP1 | OE01, OE04 | BPMN G01 | MROSC (Lei 13.019/2014, art. 22 e 42) | RN-01, RN-02</li>
+</ul>
+<p><a id="rf05"></a></p>
+<h4 id="rf05-atribuir-responsavel-e-setor-executor-a-meta">RF05 — Atribuir responsável e setor executor a meta<a class="headerlink" href="#rf05-atribuir-responsavel-e-setor-executor-a-meta" title="Permanent link">&para;</a></h4>
+<ul>
+<li><strong>Descrição:</strong> Permitir ao usuário autorizado atribuir a cada meta um responsável e o setor executor.</li>
+<li><strong>Rastreabilidade:</strong> CP1 | OE01, OE04 | BPMN G02 | Ata de 08/09, decisão 3</li>
+</ul>
+<p><a id="rf06"></a></p>
+<h4 id="rf06-fixar-prazo-fatal-e-status-de-meta">RF06 — Fixar prazo fatal e status de meta<a class="headerlink" href="#rf06-fixar-prazo-fatal-e-status-de-meta" title="Permanent link">&para;</a></h4>
+<ul>
+<li><strong>Descrição:</strong> Permitir ao usuário autorizado definir o prazo da meta e registrar sua situação: pendente, em andamento ou concluída.</li>
+<li><strong>Rastreabilidade:</strong> CP1 | OE01, OE04 | BPMN G02</li>
+</ul>
+<p><a id="rf07"></a></p>
+<h4 id="rf07-exibir-linha-do-tempo-e-painel-de-prazos-de-metas">RF07 — Exibir linha do tempo e painel de prazos de metas<a class="headerlink" href="#rf07-exibir-linha-do-tempo-e-painel-de-prazos-de-metas" title="Permanent link">&para;</a></h4>
+<ul>
+<li><strong>Descrição:</strong> Permitir ao usuário autorizado consultar a linha do tempo do projeto, com a vigência do instrumento, os prazos das metas e os requisitos que cada meta atende.</li>
+<li><strong>Rastreabilidade:</strong> CP1 | OE01, OE04 | BPMN G01, G02</li>
+</ul>
+<p><a id="rf08"></a></p>
+<h4 id="rf08-emitir-alertas-de-proximidade-e-pendencias-de-metas">RF08 — Emitir alertas de proximidade e pendências de metas<a class="headerlink" href="#rf08-emitir-alertas-de-proximidade-e-pendencias-de-metas" title="Permanent link">&para;</a></h4>
+<ul>
+<li><strong>Descrição:</strong> Alertar os usuários autorizados, no painel do projeto e por e-mail, sobre as metas que atingirem a antecedência de alerta, vencidas sem comprovação ou sem responsável atribuído.</li>
+<li><strong>Rastreabilidade:</strong> CP1 | OE04 | BPMN G02 | RN-03</li>
+</ul>
+<hr />
+<h3 id="cp2-gestao-de-atividades">CP2 — Gestão de Atividades<a class="headerlink" href="#cp2-gestao-de-atividades" title="Permanent link">&para;</a></h3>
+<p><a id="rf09"></a></p>
+<h4 id="rf09-cadastrar-atividade-por-modalidade-de-objeto">RF09 — Cadastrar atividade por modalidade de objeto<a class="headerlink" href="#rf09-cadastrar-atividade-por-modalidade-de-objeto" title="Permanent link">&para;</a></h4>
+<ul>
+<li><strong>Descrição:</strong> Permitir ao usuário autorizado cadastrar uma atividade vinculada a um projeto e a uma ou mais metas, classificada em uma das modalidades de atividade criadas pelo Instituto.</li>
+<li><strong>Rastreabilidade:</strong> CP2 | OE01, OE04 | BPMN G03</li>
+</ul>
+<p><a id="rf10"></a></p>
+<h4 id="rf10-parametrizar-exigencia-de-comprovacao-de-presenca">RF10 — Parametrizar exigência de comprovação de presença<a class="headerlink" href="#rf10-parametrizar-exigencia-de-comprovacao-de-presenca" title="Permanent link">&para;</a></h4>
+<ul>
+<li><strong>Descrição:</strong> Permitir ao usuário autorizado configurar, por instrumento e para cada modalidade de atividade criada pelo Instituto, quais comprovações são obrigatórias, opcionais ou condicionais.</li>
+<li><strong>Rastreabilidade:</strong> CP2 | OE01, OE04 | Seção 3.3.6 | BPMN G03 | RN-04</li>
+</ul>
+<hr />
+<h3 id="cp3-inscricao-de-participantes">CP3 — Inscrição de Participantes<a class="headerlink" href="#cp3-inscricao-de-participantes" title="Permanent link">&para;</a></h3>
+<p><a id="rf11"></a></p>
+<h4 id="rf11-disponibilizar-formulario-publico-de-inscricao">RF11 — Disponibilizar formulário público de inscrição<a class="headerlink" href="#rf11-disponibilizar-formulario-publico-de-inscricao" title="Permanent link">&para;</a></h4>
+<ul>
+<li><strong>Descrição:</strong> Permitir ao interessado se inscrever em uma atividade por formulário público no celular, sem criar conta nem senha.</li>
+<li><strong>Rastreabilidade:</strong> CP3 | OE02 | BPMN G03, G04 | RN-05, RN-06</li>
+</ul>
+<p><a id="rf12"></a></p>
+<h4 id="rf12-gerar-link-e-qr-code-de-inscricao">RF12 — Gerar link e QR Code de inscrição<a class="headerlink" href="#rf12-gerar-link-e-qr-code-de-inscricao" title="Permanent link">&para;</a></h4>
+<ul>
+<li><strong>Descrição:</strong> Permitir ao usuário autorizado gerar, para cada atividade, o link e o QR Code do formulário público de inscrição.</li>
+<li><strong>Rastreabilidade:</strong> CP3 | OE02</li>
+</ul>
+<p><a id="rf13"></a></p>
+<h4 id="rf13-registrar-inscricao-presencial-assistida">RF13 — Registrar inscrição presencial assistida<a class="headerlink" href="#rf13-registrar-inscricao-presencial-assistida" title="Permanent link">&para;</a></h4>
+<ul>
+<li><strong>Descrição:</strong> Permitir ao usuário autorizado inscrever presencialmente, em nome da pessoa, quem não tem celular ou conexão.</li>
+<li><strong>Rastreabilidade:</strong> CP3 | OE02 | Seção 3.3.10 | RN-05, RN-06</li>
+</ul>
+<p><a id="rf14"></a></p>
+<h4 id="rf14-limitar-vagas-da-atividade">RF14 — Limitar vagas da atividade<a class="headerlink" href="#rf14-limitar-vagas-da-atividade" title="Permanent link">&para;</a></h4>
+<ul>
+<li><strong>Descrição:</strong> Encerrar as inscrições confirmadas de uma atividade quando o número de vagas for atingido.</li>
+<li><strong>Rastreabilidade:</strong> CP3 | OE01, OE02</li>
+</ul>
+<p><a id="rf15"></a></p>
+<h4 id="rf15-registrar-lista-de-espera">RF15 — Registrar lista de espera<a class="headerlink" href="#rf15-registrar-lista-de-espera" title="Permanent link">&para;</a></h4>
+<ul>
+<li><strong>Descrição:</strong> Registrar as inscrições feitas depois de esgotadas as vagas numa lista de espera, na ordem de chegada.</li>
+<li><strong>Rastreabilidade:</strong> CP3 | OE01, OE02</li>
+</ul>
+<hr />
+<h3 id="cp4-registro-de-participacao-em-campo">CP4 — Registro de Participação em Campo<a class="headerlink" href="#cp4-registro-de-participacao-em-campo" title="Permanent link">&para;</a></h3>
+<p><a id="rf16"></a></p>
+<h4 id="rf16-registrar-frequencia-em-dispositivo-movel">RF16 — Registrar frequência em dispositivo móvel<a class="headerlink" href="#rf16-registrar-frequencia-em-dispositivo-movel" title="Permanent link">&para;</a></h4>
+<ul>
+<li><strong>Descrição:</strong> Permitir ao educador registrar a frequência dos participantes no dispositivo móvel, individualmente ou em lote, bem como realizar a inclusão avulsa de participantes não inscritos com dados mínimos de identificação durante a chamada.</li>
+<li><strong>Rastreabilidade:</strong> CP4 | OE03, OE04 | BPMN G03</li>
+</ul>
+<p><a id="rf17"></a></p>
+<h4 id="rf17-operar-registro-de-presenca-em-modo-offline">RF17 — Operar registro de presença em modo offline<a class="headerlink" href="#rf17-operar-registro-de-presenca-em-modo-offline" title="Permanent link">&para;</a></h4>
+<ul>
+<li><strong>Descrição:</strong> Permitir ao educador carregar previamente no dispositivo a lista de participantes da atividade enquanto conectado e realizar o registro de presenças sem conexão com a internet, indicando na tela a confirmação de salvamento local.</li>
+<li><strong>Rastreabilidade:</strong> CP4 | OE03, OE04 | Seção 3.3.3 | BPMN G03</li>
+</ul>
+<p><a id="rf18"></a></p>
+<h4 id="rf18-sincronizar-presencas-com-reconciliacao-idempotente">RF18 — Sincronizar presenças com reconciliação idempotente<a class="headerlink" href="#rf18-sincronizar-presencas-com-reconciliacao-idempotente" title="Permanent link">&para;</a></h4>
+<ul>
+<li><strong>Descrição:</strong> Enviar automaticamente os registros de presença salvos no dispositivo assim que a conectividade for restabelecida, assegurando a reconciliação dos dados sem duplicidade de registros.</li>
+<li><strong>Rastreabilidade:</strong> CP4 | OE03, OE04 | Seção 3.3.3 | BPMN G03</li>
+</ul>
+<p><a id="rf19"></a></p>
+<h4 id="rf19-registrar-lancamento-extemporaneo-com-justificativa">RF19 — Registrar lançamento extemporâneo com justificativa<a class="headerlink" href="#rf19-registrar-lancamento-extemporaneo-com-justificativa" title="Permanent link">&para;</a></h4>
+<ul>
+<li><strong>Descrição:</strong> Permitir ao usuário autorizado lançar ou corrigir a frequência de uma atividade depois da data de sua realização, com justificativa obrigatória e sem depender de aprovação.</li>
+<li><strong>Rastreabilidade:</strong> CP4 | OE03, OE04 | Seção 3.3.8 | BPMN G03 | RN-13</li>
+</ul>
+<p><a id="rf20"></a></p>
+<h4 id="rf20-apurar-carga-horaria-de-participantes-e-facilitadores">RF20 — Apurar carga horária de participantes e facilitadores<a class="headerlink" href="#rf20-apurar-carga-horaria-de-participantes-e-facilitadores" title="Permanent link">&para;</a></h4>
+<ul>
+<li><strong>Descrição:</strong> Calcular a carga horária acumulada de cada participante e de cada facilitador a partir das presenças confirmadas.</li>
+<li><strong>Rastreabilidade:</strong> CP4 | OE03, OE04 | BPMN G03</li>
+</ul>
+<hr />
+<h3 id="cp5-cadastro-e-historico-de-pessoas">CP5 — Cadastro e Histórico de Pessoas<a class="headerlink" href="#cp5-cadastro-e-historico-de-pessoas" title="Permanent link">&para;</a></h3>
+<p><a id="rf21"></a></p>
+<h4 id="rf21-consultar-historico-de-participacao">RF21 — Consultar histórico de participação<a class="headerlink" href="#rf21-consultar-historico-de-participacao" title="Permanent link">&para;</a></h4>
+<ul>
+<li><strong>Descrição:</strong> Permitir ao usuário autorizado consultar a ficha de uma pessoa, com as atividades e os projetos de que participou.</li>
+<li><strong>Rastreabilidade:</strong> CP5 | OE01 | BPMN G04</li>
+</ul>
+<p><a id="rf22"></a></p>
+<h4 id="rf22-alertar-cadastro-duplicado">RF22 — Alertar cadastro duplicado<a class="headerlink" href="#rf22-alertar-cadastro-duplicado" title="Permanent link">&para;</a></h4>
+<ul>
+<li><strong>Descrição:</strong> Alertar quem cadastra uma pessoa quando nome e telefone coincidirem com os de alguém já registrado, oferecendo o reaproveitamento do registro.</li>
+<li><strong>Rastreabilidade:</strong> CP5 | OE01 | BPMN G04</li>
+</ul>
+<p><a id="rf23"></a></p>
+<h4 id="rf23-registrar-aviso-de-tratamento-de-dados-na-inscricao">RF23 — Registrar aviso de tratamento de dados na inscrição<a class="headerlink" href="#rf23-registrar-aviso-de-tratamento-de-dados-na-inscricao" title="Permanent link">&para;</a></h4>
+<ul>
+<li><strong>Descrição:</strong> Registrar, em cada inscrição, a versão do aviso de tratamento de dados apresentada a quem se inscreve, com data e hora.</li>
+<li><strong>Rastreabilidade:</strong> CP5 | OE01 | BPMN G04 | LGPD, arts. 7º, 8º, 9º e 14 | Seção 2.6 | RN-05, RN-06</li>
+</ul>
+<p><a id="rf24"></a></p>
+<h4 id="rf24-registrar-autorizacao-de-contato">RF24 — Registrar autorização de contato<a class="headerlink" href="#rf24-registrar-autorizacao-de-contato" title="Permanent link">&para;</a></h4>
+<ul>
+<li><strong>Descrição:</strong> Registrar a autorização opcional para receber comunicados de novas atividades e, a pedido da pessoa, sua revogação, com data e canal.</li>
+<li><strong>Rastreabilidade:</strong> CP5 | OE01 | BPMN G04 | Seção 3.3.5 | LGPD, art. 8º, §5º | RN-05</li>
+</ul>
+<p><a id="rf25"></a></p>
+<h4 id="rf25-registrar-autorizacao-de-uso-de-imagem">RF25 — Registrar autorização de uso de imagem<a class="headerlink" href="#rf25-registrar-autorizacao-de-uso-de-imagem" title="Permanent link">&para;</a></h4>
+<ul>
+<li><strong>Descrição:</strong> Registrar, de forma separada e opcional, a autorização ou a recusa de uso de imagem e, a pedido da pessoa, sua revogação, sem que a recusa impeça a participação.</li>
+<li><strong>Rastreabilidade:</strong> CP5 | OE01 | Seção 3.3.4 | LGPD, arts. 7º e 8º, §5º | RN-05, RN-12</li>
+</ul>
+<p><a id="rf26"></a></p>
+<h4 id="rf26-corrigir-dados-a-pedido-do-titular">RF26 — Corrigir dados a pedido do titular<a class="headerlink" href="#rf26-corrigir-dados-a-pedido-do-titular" title="Permanent link">&para;</a></h4>
+<ul>
+<li><strong>Descrição:</strong> Permitir ao usuário autorizado corrigir os dados de uma pessoa a pedido dela, com a justificativa registrada.</li>
+<li><strong>Rastreabilidade:</strong> CP5 | OE01 | Seção 3.3.9 | LGPD, art. 18, III</li>
+</ul>
+<p><a id="rf27"></a></p>
+<h4 id="rf27-excluir-ou-anonimizar-dados-de-pessoa">RF27 — Excluir ou anonimizar dados de pessoa<a class="headerlink" href="#rf27-excluir-ou-anonimizar-dados-de-pessoa" title="Permanent link">&para;</a></h4>
+<ul>
+<li><strong>Descrição:</strong> Permitir ao usuário autorizado excluir ou anonimizar os dados de uma pessoa, a pedido dela ou ao término da finalidade, conforme a regra de guarda.</li>
+<li><strong>Rastreabilidade:</strong> CP5 | OE01 | Seção 3.3.9 | LGPD, art. 16, I, e art. 18, IV e VI | RN-07</li>
+</ul>
+<hr />
+<h3 id="cp6-acompanhamento-automatico-de-metas">CP6 — Acompanhamento Automático de Metas<a class="headerlink" href="#cp6-acompanhamento-automatico-de-metas" title="Permanent link">&para;</a></h3>
+<p><a id="rf28"></a></p>
+<h4 id="rf28-calcular-progresso-fisico-de-metas-automaticamente">RF28 — Calcular progresso físico de metas automaticamente<a class="headerlink" href="#rf28-calcular-progresso-fisico-de-metas-automaticamente" title="Permanent link">&para;</a></h4>
+<ul>
+<li><strong>Descrição:</strong> Calcular automaticamente o progresso quantitativo e o percentual de atingimento de cada meta contratual imediatamente após a validação de presenças em atividades ou a homologação de comprovações.</li>
+<li><strong>Rastreabilidade:</strong> CP6 | OE01, OE04 | BPMN G05 | RN-08</li>
+</ul>
+<p><a id="rf29"></a></p>
+<h4 id="rf29-parametrizar-apuracao-de-metas-por-acumulo-continuo-ou-marco-de-entrega">RF29 — Parametrizar apuração de metas por acúmulo contínuo ou marco de entrega<a class="headerlink" href="#rf29-parametrizar-apuracao-de-metas-por-acumulo-continuo-ou-marco-de-entrega" title="Permanent link">&para;</a></h4>
+<ul>
+<li><strong>Descrição:</strong> Permitir ao usuário autorizado definir, para cada meta, o tipo de apuração: cumulativa ou por marco.</li>
+<li><strong>Rastreabilidade:</strong> CP6 | OE04 | Seção 2.3 | BPMN G05</li>
+</ul>
+<p><a id="rf30"></a></p>
+<h4 id="rf30-emitir-alertas-de-risco-de-inexecucao">RF30 — Emitir alertas de risco de inexecução<a class="headerlink" href="#rf30-emitir-alertas-de-risco-de-inexecucao" title="Permanent link">&para;</a></h4>
+<ul>
+<li><strong>Descrição:</strong> Alertar os usuários autorizados, no painel do projeto, quando o percentual realizado de uma meta estiver 20 pontos percentuais ou mais abaixo da proporção já decorrida do período de apuração 🔧.</li>
+<li><strong>Rastreabilidade:</strong> CP6 | OE04 | BPMN G05</li>
+</ul>
+<p><a id="rf31"></a></p>
+<h4 id="rf31-versionar-metas-por-termo-aditivo">RF31 — Versionar metas por Termo Aditivo<a class="headerlink" href="#rf31-versionar-metas-por-termo-aditivo" title="Permanent link">&para;</a></h4>
+<ul>
+<li><strong>Descrição:</strong> Permitir ao usuário autorizado registrar termo aditivo ou apostila como nova versão do plano de trabalho, com o comparativo entre previsto, reprogramado e realizado.</li>
+<li><strong>Rastreabilidade:</strong> CP6 | OE04 | BPMN G05 | Lei 13.019/2014, art. 55 e 57 | RN-09, RN-13</li>
+</ul>
+<hr />
+<h3 id="cp7-repositorio-de-evidencias-e-documentacao">CP7 — Repositório de Evidências e Documentação<a class="headerlink" href="#cp7-repositorio-de-evidencias-e-documentacao" title="Permanent link">&para;</a></h3>
+<p><a id="rf32"></a></p>
+<h4 id="rf32-anexar-evidencias-documentais-e-fotograficas">RF32 — Anexar evidências documentais e fotográficas<a class="headerlink" href="#rf32-anexar-evidencias-documentais-e-fotograficas" title="Permanent link">&para;</a></h4>
+<ul>
+<li><strong>Descrição:</strong> Permitir ao usuário autorizado anexar arquivos comprobatórios de execução da atividade, registrando automaticamente autor, data e hora e, mediante permissão concedida no dispositivo, as coordenadas geográficas.</li>
+<li><strong>Rastreabilidade:</strong> CP7 | OE05, OE06 | BPMN G03 | RN-10</li>
+</ul>
+<p><a id="rf33"></a></p>
+<h4 id="rf33-vincular-evidencia-a-meta-contratual">RF33 — Vincular evidência a meta contratual<a class="headerlink" href="#rf33-vincular-evidencia-a-meta-contratual" title="Permanent link">&para;</a></h4>
+<ul>
+<li><strong>Descrição:</strong> Permitir ao usuário autorizado vincular o arquivo comprobatório a uma atividade executada e a uma ou mais metas contratuais, possibilitando o descarte de rascunhos para liberar o encerramento da atividade.</li>
+<li><strong>Rastreabilidade:</strong> CP7 | OE05, OE06 | BPMN G03 | RN-10, RN-11, RN-13</li>
+</ul>
+<p><a id="rf34"></a></p>
+<h4 id="rf34-segregar-acesso-a-fotos-de-beneficiarios-vulneraveis">RF34 — Segregar acesso a fotos de beneficiários vulneráveis<a class="headerlink" href="#rf34-segregar-acesso-a-fotos-de-beneficiarios-vulneraveis" title="Permanent link">&para;</a></h4>
+<ul>
+<li><strong>Descrição:</strong> Restringir a visualização de imagens comprobatórias aos perfis autorizados e exibir, durante a captura no dispositivo, orientações de enquadramento para salvaguardar a identificação visual de participantes.</li>
+<li><strong>Rastreabilidade:</strong> CP7 | OE05, OE06 | Seção 3.3.4 | LGPD art. 7º, I, e art. 14 | RN-12</li>
+</ul>
+<hr />
+<h3 id="cp8-relatorios-e-exportacao-de-dados">CP8 — Relatórios e Exportação de Dados<a class="headerlink" href="#cp8-relatorios-e-exportacao-de-dados" title="Permanent link">&para;</a></h3>
+<p><a id="rf35"></a></p>
+<h4 id="rf35-exigir-justificativa-previa-para-metas-nao-atingidas">RF35 — Exigir justificativa prévia para metas não atingidas<a class="headerlink" href="#rf35-exigir-justificativa-previa-para-metas-nao-atingidas" title="Permanent link">&para;</a></h4>
+<ul>
+<li><strong>Descrição:</strong> Impedir a finalização do relatório de execução do objeto enquanto houver meta não atingida sem justificativa registrada, notificando a direção sem bloquear os demais registros do projeto.</li>
+<li><strong>Rastreabilidade:</strong> CP8 | OE04, OE06 | BPMN G06 | Lei 13.019/2014, art. 64, §1º | RN-11</li>
+</ul>
+<p><a id="rf36"></a></p>
+<h4 id="rf36-emitir-relatorio-de-execucao-do-objeto">RF36 — Emitir Relatório de Execução do Objeto<a class="headerlink" href="#rf36-emitir-relatorio-de-execucao-do-objeto" title="Permanent link">&para;</a></h4>
+<ul>
+<li><strong>Descrição:</strong> Permitir ao usuário autorizado compilar o relatório de execução do objeto de um período, com metas previstas e realizadas, justificativas e o índice das comprovações agrupado por meta e em ordem cronológica.</li>
+<li><strong>Rastreabilidade:</strong> CP8 | OE04, OE06 | BPMN G06 | Lei 13.019/2014, art. 63 a 66</li>
+</ul>
+<p><a id="rf37"></a></p>
+<h4 id="rf37-gerar-relatorio-diagramado-em-pdf">RF37 — Gerar relatório diagramado em PDF<a class="headerlink" href="#rf37-gerar-relatorio-diagramado-em-pdf" title="Permanent link">&para;</a></h4>
+<ul>
+<li><strong>Descrição:</strong> Compilar e disponibilizar para download o Relatório de Execução do Objeto diagramado em formato PDF padronizado, contendo cabeçalho institucional, sumário executivo, tabelas de metas, justificativas e miniaturas de evidências.</li>
+<li><strong>Rastreabilidade:</strong> CP8 | OE06 | Seção 2.4</li>
+</ul>
+<p><a id="rf38"></a></p>
+<h4 id="rf38-exportar-dados-analiticos-e-consolidados-em-planilha-aberta">RF38 — Exportar dados analíticos e consolidados em planilha aberta<a class="headerlink" href="#rf38-exportar-dados-analiticos-e-consolidados-em-planilha-aberta" title="Permanent link">&para;</a></h4>
+<ul>
+<li><strong>Descrição:</strong> Permitir ao usuário exportar os dados do projeto em formato tabular aberto (CSV), selecionando entre a visualização analítica detalhada de chamadas e a visão consolidada de metas.</li>
+<li><strong>Rastreabilidade:</strong> CP8 | OE06 | Lei 13.019/2014, art. 64</li>
+</ul>
+<p><a id="rf39"></a></p>
+<h4 id="rf39-registrar-trilha-de-auditoria-das-operacoes-de-prestacao-de-contas">RF39 — Registrar trilha de auditoria das operações de prestação de contas<a class="headerlink" href="#rf39-registrar-trilha-de-auditoria-das-operacoes-de-prestacao-de-contas" title="Permanent link">&para;</a></h4>
+<ul>
+<li><strong>Descrição:</strong> Registrar em trilha de auditoria permanente qualquer retificação de dados, inserção de justificativas ou emissão de relatórios oficiais, persistindo identificação do usuário, carimbo de data/hora e valores alterados.</li>
+<li><strong>Rastreabilidade:</strong> CP8 | OE04 | BPMN G06</li>
+</ul>
+<hr />
+<h2 id="83-lista-de-requisitos-nao-funcionais-rnfs">8.3 Lista de Requisitos Não Funcionais (RNFs)<a class="headerlink" href="#83-lista-de-requisitos-nao-funcionais-rnfs" title="Permanent link">&para;</a></h2>
+<h3 id="confiabilidade-e-integridade">Confiabilidade e Integridade<a class="headerlink" href="#confiabilidade-e-integridade" title="Permanent link">&para;</a></h3>
+<p><a id="rnf01"></a></p>
+<h4 id="rnf01-integridade-transacional-dos-dados">RNF01 — Integridade transacional dos dados<a class="headerlink" href="#rnf01-integridade-transacional-dos-dados" title="Permanent link">&para;</a></h4>
+<ul>
+<li><strong>Classificação FURPS+:</strong> Confiabilidade (Reliability)</li>
+<li><strong>Classificação Sommerville:</strong> Requisito de Produto (Confiabilidade)</li>
+<li><strong>Descrição:</strong> O sistema deve garantir que operações compostas sejam concluídas por inteiro ou revertidas por inteiro, sem deixar registros parciais em caso de falha.</li>
+<li><strong>Métrica Verificável:</strong> 100% de reversão automática em operações compostas que falham e 0 registros órfãos ou inconsistentes após os testes de integração.</li>
+</ul>
+<p><a id="rnf02"></a></p>
+<h4 id="rnf02-auditabilidade-das-alteracoes">RNF02 — Auditabilidade das alterações<a class="headerlink" href="#rnf02-auditabilidade-das-alteracoes" title="Permanent link">&para;</a></h4>
+<ul>
+<li><strong>Classificação FURPS+:</strong> Confiabilidade (Reliability) / Segurança (Security)</li>
+<li><strong>Classificação Sommerville:</strong> Requisito de Produto (Segurança e integridade)</li>
+<li><strong>Descrição:</strong> O sistema deve registrar em trilha de auditoria permanente toda criação, alteração ou exclusão lógica de dados, com autor, data/hora, valores anteriores e posteriores e justificativa.</li>
+<li><strong>Métrica Verificável:</strong> 100% das operações de escrita com registro de auditoria e 0 comandos de alteração ou exclusão permitidos sobre a trilha, mesmo para o perfil administrador, em teste de rotas.</li>
+</ul>
+<p><a id="rnf08"></a></p>
+<h4 id="rnf08-integridade-de-relatorios-fechados">RNF08 — Integridade de relatórios fechados<a class="headerlink" href="#rnf08-integridade-de-relatorios-fechados" title="Permanent link">&para;</a></h4>
+<ul>
+<li><strong>Classificação FURPS+:</strong> Confiabilidade (Reliability) / Segurança (Security)</li>
+<li><strong>Classificação Sommerville:</strong> Requisito de Produto (Integridade)</li>
+<li><strong>Descrição:</strong> O sistema deve garantir que o relatório finalizado reflita exatamente o estado dos dados no fechamento do ciclo e impedir alteração posterior sem rastro.</li>
+<li><strong>Métrica Verificável:</strong> 100% de correspondência entre a verificação de integridade do arquivo gerado e o registro gravado na base de dados, e 0 alterações diretas sobre o período fechado.</li>
+</ul>
+<p><a id="rnf09"></a></p>
+<h4 id="rnf09-resiliencia-offline-e-sincronizacao-sem-duplicidade">RNF09 — Resiliência offline e sincronização sem duplicidade<a class="headerlink" href="#rnf09-resiliencia-offline-e-sincronizacao-sem-duplicidade" title="Permanent link">&para;</a></h4>
+<ul>
+<li><strong>Classificação FURPS+:</strong> Confiabilidade (Reliability) / Usabilidade (Usability)</li>
+<li><strong>Classificação Sommerville:</strong> Requisito de Produto (Confiabilidade e resiliência)</li>
+<li><strong>Descrição:</strong> O registro de presenças e evidências em campo deve continuar funcionando sem conexão, reter os dados no aparelho mesmo após fechar o navegador ou reiniciar o dispositivo e, ao restabelecer a rede, sincronizar sem perder nem duplicar registros.</li>
+<li><strong>Métrica Verificável:</strong> 0% de perda de registros após corte simulado de conexão e recarga da página; 0 presenças duplicadas após 5 submissões idênticas do mesmo lote em testes ponta a ponta.</li>
+</ul>
+<p><a id="rnf18"></a></p>
+<h4 id="rnf18-copia-de-seguranca-e-recuperacao-de-dados">RNF18 — Cópia de segurança e recuperação de dados<a class="headerlink" href="#rnf18-copia-de-seguranca-e-recuperacao-de-dados" title="Permanent link">&para;</a></h4>
+<ul>
+<li><strong>Classificação FURPS+:</strong> Confiabilidade (Reliability)</li>
+<li><strong>Classificação Sommerville:</strong> Requisito Organizacional (Operacional)</li>
+<li><strong>Descrição:</strong> O sistema deve manter rotinas automatizadas de cópia de segurança do banco de dados, com retenção externa ao servidor de produção, e suportar processo documentado de restauração.</li>
+<li><strong>Métrica Verificável:</strong> Perda máxima aceitável de 6 horas de dados (RPO) e restabelecimento operacional em até 8 horas (RTO), metas iniciais 🔧 ainda não medidas, com ao menos um ensaio prático de restauração em banco descartável registrado antes da homologação e repetido periodicamente.</li>
+</ul>
+<hr />
+<h3 id="seguranca-e-privacidade">Segurança e Privacidade<a class="headerlink" href="#seguranca-e-privacidade" title="Permanent link">&para;</a></h3>
+<p><a id="rnf03"></a></p>
+<h4 id="rnf03-seguranca-das-comunicacoes-e-das-sessoes">RNF03 — Segurança das comunicações e das sessões<a class="headerlink" href="#rnf03-seguranca-das-comunicacoes-e-das-sessoes" title="Permanent link">&para;</a></h4>
+<ul>
+<li><strong>Classificação FURPS+:</strong> Funcionalidade / Segurança (Security)</li>
+<li><strong>Classificação Sommerville:</strong> Requisito de Produto (Segurança)</li>
+<li><strong>Descrição:</strong> O sistema deve proteger as comunicações em trânsito, rejeitar requisições sem credenciais válidas e limitar a duração das sessões, inclusive a inatividade em aparelhos pessoais.</li>
+<li><strong>Métrica Verificável:</strong> 100% do tráfego sob conexão cifrada; 100% de rejeição de requisições sem credenciais válidas; sessão expirada em até 8 h contínuas e em até 30 min de inatividade (valores iniciais 🔧, a confirmar no trabalho de campo); sessão revogável pelo administrador em caso de perda do aparelho.</li>
+</ul>
+<p><a id="rnf04"></a></p>
+<h4 id="rnf04-controle-de-acesso-por-perfil">RNF04 — Controle de acesso por perfil<a class="headerlink" href="#rnf04-controle-de-acesso-por-perfil" title="Permanent link">&para;</a></h4>
+<ul>
+<li><strong>Classificação FURPS+:</strong> Funcionalidade / Segurança (Security)</li>
+<li><strong>Classificação Sommerville:</strong> Requisito de Produto (Segurança)</li>
+<li><strong>Descrição:</strong> O sistema deve restringir cada operação e cada dado ao perfil autorizado, conforme a matriz de perfis da seção 8.5.1.</li>
+<li><strong>Métrica Verificável:</strong> 100% de bloqueio de requisições de escopo insuficiente e 0 acessos a dados nominais pelo perfil administrativo-financeiro em testes automatizados de rotas.</li>
+</ul>
+<p><a id="rnf05"></a></p>
+<h4 id="rnf05-minimizacao-de-dados-pessoais">RNF05 — Minimização de dados pessoais<a class="headerlink" href="#rnf05-minimizacao-de-dados-pessoais" title="Permanent link">&para;</a></h4>
+<ul>
+<li><strong>Classificação FURPS+:</strong> Restrição de Design (+) / Segurança (Security)</li>
+<li><strong>Classificação Sommerville:</strong> Requisito Externo (Legislativo)</li>
+<li><strong>Descrição:</strong> O cadastro deve conter apenas identificação, contato e consentimentos, sem campos estruturados de dado pessoal sensível (LGPD, art. 5º, II).</li>
+<li><strong>Métrica Verificável:</strong> 0 campos estruturados de dado sensível no esquema do banco de dados (revisão formal de esquema).</li>
+</ul>
+<p><a id="rnf06"></a></p>
+<h4 id="rnf06-prazo-de-atendimento-a-exclusao-de-dados">RNF06 — Prazo de atendimento à exclusão de dados<a class="headerlink" href="#rnf06-prazo-de-atendimento-a-exclusao-de-dados" title="Permanent link">&para;</a></h4>
+<ul>
+<li><strong>Classificação FURPS+:</strong> Funcionalidade / Requisito Legal (+)</li>
+<li><strong>Classificação Sommerville:</strong> Requisito Externo (Legislativo)</li>
+<li><strong>Descrição:</strong> O sistema deve executar a exclusão ou anonimização solicitada pelo titular no prazo definido pelo Instituto, com registro auditável (LGPD, art. 18).</li>
+<li><strong>Métrica Verificável:</strong> 100% das solicitações atendidas em até 72 horas (valor inicial 🔧; a LGPD não fixa prazo para a eliminação e prevê 15 dias apenas para a resposta ao pedido de acesso, art. 19), medido pelo intervalo entre o protocolo e a efetivação na trilha de auditoria.</li>
+</ul>
+<p><a id="rnf10"></a></p>
+<h4 id="rnf10-descarte-de-dados-pessoais-no-aparelho">RNF10 — Descarte de dados pessoais no aparelho<a class="headerlink" href="#rnf10-descarte-de-dados-pessoais-no-aparelho" title="Permanent link">&para;</a></h4>
+<ul>
+<li><strong>Classificação FURPS+:</strong> Segurança (Security)</li>
+<li><strong>Classificação Sommerville:</strong> Requisito de Produto (Segurança)</li>
+<li><strong>Descrição:</strong> O sistema deve descartar os dados pessoais mantidos temporariamente no armazenamento local de dispositivos móveis pessoais imediatamente após a confirmação da sincronização com o servidor.</li>
+<li><strong>Métrica Verificável:</strong> 0 registros nominais de participantes remanescentes no armazenamento local do dispositivo após a confirmação de envio em testes automatizados.</li>
+</ul>
+<hr />
+<h3 id="conformidade-legal-mrosc">Conformidade Legal (MROSC)<a class="headerlink" href="#conformidade-legal-mrosc" title="Permanent link">&para;</a></h3>
+<p><a id="rnf07"></a></p>
+<h4 id="rnf07-retencao-documental-decenal">RNF07 — Retenção documental decenal<a class="headerlink" href="#rnf07-retencao-documental-decenal" title="Permanent link">&para;</a></h4>
+<ul>
+<li><strong>Classificação FURPS+:</strong> Suportabilidade (Supportability) / Requisito Legal (+)</li>
+<li><strong>Classificação Sommerville:</strong> Requisito Externo (Legislativo)</li>
+<li><strong>Descrição:</strong> O sistema deve assegurar a guarda ininterrupta e a integridade de relatórios homologados, listas de chamada e evidências pelo prazo legal (Lei 13.019/2014, art. 68).</li>
+<li><strong>Métrica Verificável:</strong> Retenção configurada para no mínimo 10 anos a partir do dia útil seguinte à prestação de contas, com redundância de armazenamento e política de ciclo de vida ativa.</li>
+</ul>
+<hr />
+<h3 id="desempenho-e-eficiencia">Desempenho e Eficiência<a class="headerlink" href="#desempenho-e-eficiencia" title="Permanent link">&para;</a></h3>
+<p><a id="rnf11"></a></p>
+<h4 id="rnf11-desempenho-das-consultas-agregadas">RNF11 — Desempenho das consultas agregadas<a class="headerlink" href="#rnf11-desempenho-das-consultas-agregadas" title="Permanent link">&para;</a></h4>
+<ul>
+<li><strong>Classificação FURPS+:</strong> Desempenho (Performance)</li>
+<li><strong>Classificação Sommerville:</strong> Requisito de Produto (Eficiência)</li>
+<li><strong>Descrição:</strong> As consultas aos painéis de acompanhamento e listagens de projetos devem responder com agilidade sob picos de acesso concorrente.</li>
+<li><strong>Métrica Verificável:</strong> Tempo de resposta inferior a 800 ms no percentil 95 (p95) sob carga de 50 requisições concorrentes por segundo, mantendo consumo de CPU do servidor abaixo de 75% (valores iniciais 🔧, a recalibrar com a carga observada no piloto).</li>
+</ul>
+<p><a id="rnf12"></a></p>
+<h4 id="rnf12-desempenho-da-inscricao-publica">RNF12 — Desempenho da inscrição pública<a class="headerlink" href="#rnf12-desempenho-da-inscricao-publica" title="Permanent link">&para;</a></h4>
+<ul>
+<li><strong>Classificação FURPS+:</strong> Desempenho (Performance)</li>
+<li><strong>Classificação Sommerville:</strong> Requisito de Produto (Eficiência)</li>
+<li><strong>Descrição:</strong> O formulário público de inscrição deve carregar rapidamente em navegadores móveis sob redes móveis com largura de banda restrita.</li>
+<li><strong>Métrica Verificável:</strong> First Contentful Paint (FCP) inferior a 2,5 s em perfil simulado de rede 4G lenta, medido por auditoria automatizada de desempenho na integração contínua.</li>
+</ul>
+<p><a id="rnf13"></a></p>
+<h4 id="rnf13-desempenho-da-geracao-de-relatorios">RNF13 — Desempenho da geração de relatórios<a class="headerlink" href="#rnf13-desempenho-da-geracao-de-relatorios" title="Permanent link">&para;</a></h4>
+<ul>
+<li><strong>Classificação FURPS+:</strong> Desempenho (Performance)</li>
+<li><strong>Classificação Sommerville:</strong> Requisito de Produto (Eficiência)</li>
+<li><strong>Descrição:</strong> A compilação e renderização do relatório oficial em PDF deve ocorrer de maneira assíncrona e performática, mesmo contendo elevado volume de imagens.</li>
+<li><strong>Métrica Verificável:</strong> Arquivo PDF de até 50 páginas e 100 miniaturas disponível para download em menos de 5 segundos no percentil 95 (p95) em testes de carga (valores iniciais 🔧).</li>
+</ul>
+<p><a id="rnf14"></a></p>
+<h4 id="rnf14-eficiencia-no-envio-de-evidencias">RNF14 — Eficiência no envio de evidências<a class="headerlink" href="#rnf14-eficiencia-no-envio-de-evidencias" title="Permanent link">&para;</a></h4>
+<ul>
+<li><strong>Classificação FURPS+:</strong> Desempenho (Performance)</li>
+<li><strong>Classificação Sommerville:</strong> Requisito de Produto (Eficiência)</li>
+<li><strong>Descrição:</strong> O cliente web deve comprimir fotos localmente antes do envio, otimizando o consumo da franquia de dados móveis do educador de campo.</li>
+<li><strong>Métrica Verificável:</strong> Redução média mínima de 60% no peso das imagens de alta resolução e tempo de transmissão por imagem inferior a 4 s em conexão 4G padrão (valores iniciais 🔧).</li>
+</ul>
+<hr />
+<h3 id="usabilidade-portabilidade-e-restricoes">Usabilidade, Portabilidade e Restrições<a class="headerlink" href="#usabilidade-portabilidade-e-restricoes" title="Permanent link">&para;</a></h3>
+<p><a id="rnf15"></a></p>
+<h4 id="rnf15-usabilidade-movel-e-inclusiva">RNF15 — Usabilidade móvel e inclusiva<a class="headerlink" href="#rnf15-usabilidade-movel-e-inclusiva" title="Permanent link">&para;</a></h4>
+<ul>
+<li><strong>Classificação FURPS+:</strong> Usabilidade (Usability)</li>
+<li><strong>Classificação Sommerville:</strong> Requisito de Produto (Usabilidade)</li>
+<li><strong>Descrição:</strong> As telas de campo e de inscrição pública devem ser ergonomicamente confortáveis em telas compactas, legíveis sob luz solar direta e acessíveis a pessoas com baixo letramento digital.</li>
+<li><strong>Métrica Verificável:</strong> Áreas de toque de no mínimo 48x48 px; inexistência de rolagem horizontal a partir de 360 px de largura; conformidade com 100% dos critérios WCAG 2.1 nível AA aplicáveis; inscrição concluída em até 5 telas e 3 min por ao menos 4 de 5 pessoas do público-alvo em testes de usabilidade.</li>
+</ul>
+<p><a id="rnf16"></a></p>
+<h4 id="rnf16-compatibilidade-entre-navegadores-e-dispositivos">RNF16 — Compatibilidade entre navegadores e dispositivos<a class="headerlink" href="#rnf16-compatibilidade-entre-navegadores-e-dispositivos" title="Permanent link">&para;</a></h4>
+<ul>
+<li><strong>Classificação FURPS+:</strong> Suportabilidade (Supportability)</li>
+<li><strong>Classificação Sommerville:</strong> Requisito de Produto (Portabilidade)</li>
+<li><strong>Descrição:</strong> O frontend deve garantir equivalência visual e operacional em dispositivos móveis e desktops nos navegadores modernos.</li>
+<li><strong>Métrica Verificável:</strong> 0 quebras de layout ou falhas de script entre 360 px e 1920 px nas duas versões estáveis mais recentes de Chromium, Firefox e WebKit/Safari (versões mínimas 🔧), em testes de regressão visual.</li>
+</ul>
+<p><a id="rnf17"></a></p>
+<h4 id="rnf17-restricao-tecnologica-e-qualidade-de-codigo">RNF17 — Restrição tecnológica e qualidade de código<a class="headerlink" href="#rnf17-restricao-tecnologica-e-qualidade-de-codigo" title="Permanent link">&para;</a></h4>
+<ul>
+<li><strong>Classificação FURPS+:</strong> Restrição de Implementação (+)</li>
+<li><strong>Classificação Sommerville:</strong> Requisito Organizacional (Implementação)</li>
+<li><strong>Descrição:</strong> A solução deve seguir rigorosamente a pilha tecnológica homologada no Documento de Visão, com compilação estrita e análise estática automatizada.</li>
+<li><strong>Métrica Verificável:</strong> 0 erros de tipagem TypeScript no modo estrito (<code>strict: true</code>), 0 avisos no linter e 100% de sucesso no build de produção no GitHub Actions.</li>
+</ul>
+<hr />
+<h2 id="84-matriz-de-rastreabilidade-bidirecional">8.4 Matriz de Rastreabilidade Bidirecional<a class="headerlink" href="#84-matriz-de-rastreabilidade-bidirecional" title="Permanent link">&para;</a></h2>
+<p>A rastreabilidade estabelece o vínculo bidirecional entre os problemas diagnosticados no fluxo atual (BPMN G01 a G06), os Objetivos Específicos (OEs), as Características de Produto (CP1 a CP8), os requisitos especificados e as histórias de usuário da seção 10, com os critérios de aceitação que verificam cada requisito. A história de cada requisito funcional é indicada só nesta matriz.</p>
+<h3 id="841-matriz-de-rastreabilidade-dos-requisitos-funcionais-rfs">8.4.1 Matriz de Rastreabilidade dos Requisitos Funcionais (RFs)<a class="headerlink" href="#841-matriz-de-rastreabilidade-dos-requisitos-funcionais-rfs" title="Permanent link">&para;</a></h3>
+<h4 id="cp1-gestao-de-projetos-e-metas-oe01-oe04">CP1 — Gestão de Projetos e Metas (OE01; OE04)<a class="headerlink" href="#cp1-gestao-de-projetos-e-metas-oe01-oe04" title="Permanent link">&para;</a></h4>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Requisito</th>
+<th style="text-align: left;">Nome</th>
+<th style="text-align: center;">Gargalo BPMN</th>
+<th style="text-align: left;">Norma / Mitigação</th>
+<th style="text-align: left;">História derivada</th>
+<th style="text-align: center;">Cobertura</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>RF01</strong></td>
+<td style="text-align: left;">Cadastrar instrumento convocatório e parceria</td>
+<td style="text-align: center;">G01</td>
+<td style="text-align: left;">MROSC art. 16 e 42</td>
+<td style="text-align: left;">HU-01 (pré-condição do CA-01.1)</td>
+<td style="text-align: center;">Parcial</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>RF02</strong></td>
+<td style="text-align: left;">Anexar documento formal homologado de parceria</td>
+<td style="text-align: center;">G01</td>
+<td style="text-align: left;">MROSC art. 16 e 42</td>
+<td style="text-align: left;">HU-01 (pré-condição do CA-01.1)</td>
+<td style="text-align: center;">Parcial</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>RF03</strong></td>
+<td style="text-align: left;">Cadastrar projeto operacional</td>
+<td style="text-align: center;">G01</td>
+<td style="text-align: left;">—</td>
+<td style="text-align: left;">HU-01 (pré-condição do CA-01.1)</td>
+<td style="text-align: center;">Parcial</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>RF04</strong></td>
+<td style="text-align: left;">Desdobrar requisitos contratuais e metas</td>
+<td style="text-align: center;">G01</td>
+<td style="text-align: left;">MROSC art. 22 e 42; RN-01, RN-02</td>
+<td style="text-align: left;">HU-01 (CA-01.1 a CA-01.3)</td>
+<td style="text-align: center;">Total</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>RF05</strong></td>
+<td style="text-align: left;">Atribuir responsável e setor executor a meta</td>
+<td style="text-align: center;">G02</td>
+<td style="text-align: left;">Decisão 3 da ata de 08/09</td>
+<td style="text-align: left;">HU-02 (CA-02.1)</td>
+<td style="text-align: center;">Total</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>RF06</strong></td>
+<td style="text-align: left;">Fixar prazo fatal e status de meta</td>
+<td style="text-align: center;">G02</td>
+<td style="text-align: left;">—</td>
+<td style="text-align: left;">HU-02 (CA-02.1, CA-02.4)</td>
+<td style="text-align: center;">Total</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>RF07</strong></td>
+<td style="text-align: left;">Exibir linha do tempo e painel de prazos de metas</td>
+<td style="text-align: center;">G01, G02</td>
+<td style="text-align: left;">—</td>
+<td style="text-align: left;">HU-02 (CA-02.1)</td>
+<td style="text-align: center;">Total</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>RF08</strong></td>
+<td style="text-align: left;">Emitir alertas de proximidade e pendências de metas</td>
+<td style="text-align: center;">G02</td>
+<td style="text-align: left;">RN-03</td>
+<td style="text-align: left;">HU-02 (CA-02.2, CA-02.3)</td>
+<td style="text-align: center;">Total</td>
+</tr>
+</tbody>
+</table>
+<h4 id="cp2-gestao-de-atividades-oe01-oe04-oe06">CP2 — Gestão de Atividades (OE01; OE04, OE06)<a class="headerlink" href="#cp2-gestao-de-atividades-oe01-oe04-oe06" title="Permanent link">&para;</a></h4>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Requisito</th>
+<th style="text-align: left;">Nome</th>
+<th style="text-align: center;">Gargalo BPMN</th>
+<th style="text-align: left;">Norma / Mitigação</th>
+<th style="text-align: left;">História derivada</th>
+<th style="text-align: center;">Cobertura</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>RF09</strong></td>
+<td style="text-align: left;">Cadastrar atividade por modalidade de objeto</td>
+<td style="text-align: center;">G03</td>
+<td style="text-align: left;">Seção 3.3.6</td>
+<td style="text-align: left;">HU-03 (CA-03.1)</td>
+<td style="text-align: center;">Total</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>RF10</strong></td>
+<td style="text-align: left;">Parametrizar exigência de comprovação de presença</td>
+<td style="text-align: center;">G03</td>
+<td style="text-align: left;">Seção 3.3.6; RN-04</td>
+<td style="text-align: left;">HU-03 (CA-03.2 a CA-03.4)</td>
+<td style="text-align: center;">Total</td>
+</tr>
+</tbody>
+</table>
+<h4 id="cp3-inscricao-de-participantes-oe02-oe01">CP3 — Inscrição de Participantes (OE02; OE01)<a class="headerlink" href="#cp3-inscricao-de-participantes-oe02-oe01" title="Permanent link">&para;</a></h4>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Requisito</th>
+<th style="text-align: left;">Nome</th>
+<th style="text-align: center;">Gargalo BPMN</th>
+<th style="text-align: left;">Norma / Mitigação</th>
+<th style="text-align: left;">História derivada</th>
+<th style="text-align: center;">Cobertura</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>RF11</strong></td>
+<td style="text-align: left;">Disponibilizar formulário público de inscrição</td>
+<td style="text-align: center;">G03, G04</td>
+<td style="text-align: left;">RN-05, RN-06</td>
+<td style="text-align: left;">HU-07 (CA-07.1, CA-07.2, CA-07.5)</td>
+<td style="text-align: center;">Total</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>RF12</strong></td>
+<td style="text-align: left;">Gerar link e QR Code de inscrição</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: left;">—</td>
+<td style="text-align: left;">HU-07 (CA-07.1)</td>
+<td style="text-align: center;">Total</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>RF13</strong></td>
+<td style="text-align: left;">Registrar inscrição presencial assistida</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: left;">Seção 3.3.10; RN-05, RN-06</td>
+<td style="text-align: left;">HU-08 (CA-08.1)</td>
+<td style="text-align: center;">Total</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>RF14</strong></td>
+<td style="text-align: left;">Limitar vagas da atividade</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: left;">—</td>
+<td style="text-align: left;">HU-07 (CA-07.3); HU-08 (CA-08.2)</td>
+<td style="text-align: center;">Total</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>RF15</strong></td>
+<td style="text-align: left;">Registrar lista de espera</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: left;">—</td>
+<td style="text-align: left;">HU-07 (CA-07.3); HU-08 (CA-08.2)</td>
+<td style="text-align: center;">Total</td>
+</tr>
+</tbody>
+</table>
+<h4 id="cp4-registro-de-participacao-em-campo-oe03-oe04">CP4 — Registro de Participação em Campo (OE03; OE04)<a class="headerlink" href="#cp4-registro-de-participacao-em-campo-oe03-oe04" title="Permanent link">&para;</a></h4>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Requisito</th>
+<th style="text-align: left;">Nome</th>
+<th style="text-align: center;">Gargalo BPMN</th>
+<th style="text-align: left;">Norma / Mitigação</th>
+<th style="text-align: left;">História derivada</th>
+<th style="text-align: center;">Cobertura</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>RF16</strong></td>
+<td style="text-align: left;">Registrar frequência em dispositivo móvel</td>
+<td style="text-align: center;">G03</td>
+<td style="text-align: left;">—</td>
+<td style="text-align: left;">HU-09 (CA-09.2, CA-09.5)</td>
+<td style="text-align: center;">Total</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>RF17</strong></td>
+<td style="text-align: left;">Operar registro de presença em modo offline</td>
+<td style="text-align: center;">G03</td>
+<td style="text-align: left;">Seção 3.3.3</td>
+<td style="text-align: left;">HU-09 (CA-09.1, CA-09.3, CA-09.4)</td>
+<td style="text-align: center;">Total</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>RF18</strong></td>
+<td style="text-align: left;">Sincronizar presenças com reconciliação idempotente</td>
+<td style="text-align: center;">G03</td>
+<td style="text-align: left;">Seção 3.3.3</td>
+<td style="text-align: left;">HU-12 (CA-12.1 a CA-12.5)</td>
+<td style="text-align: center;">Total</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>RF19</strong></td>
+<td style="text-align: left;">Registrar lançamento extemporâneo com justificativa</td>
+<td style="text-align: center;">G03</td>
+<td style="text-align: left;">Seção 3.3.8; RN-13</td>
+<td style="text-align: left;">HU-10 (CA-10.1 a CA-10.4)</td>
+<td style="text-align: center;">Total</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>RF20</strong></td>
+<td style="text-align: left;">Apurar carga horária de participantes e facilitadores</td>
+<td style="text-align: center;">G03</td>
+<td style="text-align: left;">—</td>
+<td style="text-align: left;">HU-06 (CA-06.6)</td>
+<td style="text-align: center;">Total</td>
+</tr>
+</tbody>
+</table>
+<h4 id="cp5-cadastro-e-historico-de-pessoas-oe01-oe03-oe06">CP5 — Cadastro e Histórico de Pessoas (OE01; OE03, OE06)<a class="headerlink" href="#cp5-cadastro-e-historico-de-pessoas-oe01-oe03-oe06" title="Permanent link">&para;</a></h4>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Requisito</th>
+<th style="text-align: left;">Nome</th>
+<th style="text-align: center;">Gargalo BPMN</th>
+<th style="text-align: left;">Norma / Mitigação</th>
+<th style="text-align: left;">História derivada</th>
+<th style="text-align: center;">Cobertura</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>RF21</strong></td>
+<td style="text-align: left;">Consultar histórico de participação</td>
+<td style="text-align: center;">G04</td>
+<td style="text-align: left;">—</td>
+<td style="text-align: left;">HU-06 (CA-06.1, CA-06.5)</td>
+<td style="text-align: center;">Total</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>RF22</strong></td>
+<td style="text-align: left;">Alertar cadastro duplicado</td>
+<td style="text-align: center;">G04</td>
+<td style="text-align: left;">—</td>
+<td style="text-align: left;">HU-06 (CA-06.2); HU-08 (CA-08.3)</td>
+<td style="text-align: center;">Total</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>RF23</strong></td>
+<td style="text-align: left;">Registrar aviso de tratamento de dados na inscrição</td>
+<td style="text-align: center;">G04</td>
+<td style="text-align: left;">LGPD art. 7º, 8º, 9º e 14; Seção 2.6; RN-05, RN-06</td>
+<td style="text-align: left;">HU-07 (CA-07.4); HU-08 (CA-08.4)</td>
+<td style="text-align: center;">Total</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>RF24</strong></td>
+<td style="text-align: left;">Registrar autorização de contato</td>
+<td style="text-align: center;">G04</td>
+<td style="text-align: left;">Seção 3.3.5; LGPD art. 8º, §5º; RN-05</td>
+<td style="text-align: left;">HU-06 (CA-06.4); HU-07 (CA-07.6)</td>
+<td style="text-align: center;">Total</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>RF25</strong></td>
+<td style="text-align: left;">Registrar autorização de uso de imagem</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: left;">Seção 3.3.4; LGPD art. 7º e 8º, §5º; RN-05, RN-12</td>
+<td style="text-align: left;">HU-07 (CA-07.6)</td>
+<td style="text-align: center;">Parcial</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>RF26</strong></td>
+<td style="text-align: left;">Corrigir dados a pedido do titular</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: left;">Seção 3.3.9; LGPD art. 18, III</td>
+<td style="text-align: left;">HU-15 (CA-15.1)</td>
+<td style="text-align: center;">Total</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>RF27</strong></td>
+<td style="text-align: left;">Excluir ou anonimizar dados de pessoa</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: left;">Seção 3.3.9; LGPD art. 16, I, e 18, IV e VI; RN-07</td>
+<td style="text-align: left;">HU-15 (CA-15.2 a CA-15.4)</td>
+<td style="text-align: center;">Total</td>
+</tr>
+</tbody>
+</table>
+<h4 id="cp6-acompanhamento-automatico-de-metas-oe04-oe01">CP6 — Acompanhamento Automático de Metas (OE04; OE01)<a class="headerlink" href="#cp6-acompanhamento-automatico-de-metas-oe04-oe01" title="Permanent link">&para;</a></h4>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Requisito</th>
+<th style="text-align: left;">Nome</th>
+<th style="text-align: center;">Gargalo BPMN</th>
+<th style="text-align: left;">Norma / Mitigação</th>
+<th style="text-align: left;">História derivada</th>
+<th style="text-align: center;">Cobertura</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>RF28</strong></td>
+<td style="text-align: left;">Calcular progresso físico de metas automaticamente</td>
+<td style="text-align: center;">G05</td>
+<td style="text-align: left;">RN-08</td>
+<td style="text-align: left;">HU-11 (CA-11.1, CA-11.2); HU-05 (CA-05.1)</td>
+<td style="text-align: center;">Total</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>RF29</strong></td>
+<td style="text-align: left;">Parametrizar apuração de metas por acúmulo contínuo ou marco de entrega</td>
+<td style="text-align: center;">G05</td>
+<td style="text-align: left;">Seção 2.3</td>
+<td style="text-align: left;">HU-11 (CA-11.3)</td>
+<td style="text-align: center;">Total</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>RF30</strong></td>
+<td style="text-align: left;">Emitir alertas de risco de inexecução</td>
+<td style="text-align: center;">G05</td>
+<td style="text-align: left;">—</td>
+<td style="text-align: left;">HU-11 (CA-11.4)</td>
+<td style="text-align: center;">Total</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>RF31</strong></td>
+<td style="text-align: left;">Versionar metas por Termo Aditivo</td>
+<td style="text-align: center;">G05</td>
+<td style="text-align: left;">MROSC art. 55 e 57; RN-09, RN-13</td>
+<td style="text-align: left;">HU-14 (CA-14.1 a CA-14.3)</td>
+<td style="text-align: center;">Total</td>
+</tr>
+</tbody>
+</table>
+<h4 id="cp7-repositorio-de-evidencias-e-documentacao-oe05-oe06">CP7 — Repositório de Evidências e Documentação (OE05; OE06)<a class="headerlink" href="#cp7-repositorio-de-evidencias-e-documentacao-oe05-oe06" title="Permanent link">&para;</a></h4>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Requisito</th>
+<th style="text-align: left;">Nome</th>
+<th style="text-align: center;">Gargalo BPMN</th>
+<th style="text-align: left;">Norma / Mitigação</th>
+<th style="text-align: left;">História derivada</th>
+<th style="text-align: center;">Cobertura</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>RF32</strong></td>
+<td style="text-align: left;">Anexar evidências documentais e fotográficas</td>
+<td style="text-align: center;">G03</td>
+<td style="text-align: left;">RN-10</td>
+<td style="text-align: left;">HU-04 (CA-04.1)</td>
+<td style="text-align: center;">Total</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>RF33</strong></td>
+<td style="text-align: left;">Vincular evidência a meta contratual</td>
+<td style="text-align: center;">G03</td>
+<td style="text-align: left;">RN-10, RN-11, RN-13</td>
+<td style="text-align: left;">HU-04 (CA-04.1 a CA-04.4)</td>
+<td style="text-align: center;">Total</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>RF34</strong></td>
+<td style="text-align: left;">Segregar acesso a fotos de beneficiários vulneráveis</td>
+<td style="text-align: center;">G03</td>
+<td style="text-align: left;">Seção 3.3.4; LGPD art. 7º, I, e 14; RN-12</td>
+<td style="text-align: left;">HU-04 (CA-04.5)</td>
+<td style="text-align: center;">Total</td>
+</tr>
+</tbody>
+</table>
+<h4 id="cp8-relatorios-e-exportacao-de-dados-oe06-oe04-oe05">CP8 — Relatórios e Exportação de Dados (OE06; OE04, OE05)<a class="headerlink" href="#cp8-relatorios-e-exportacao-de-dados-oe06-oe04-oe05" title="Permanent link">&para;</a></h4>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Requisito</th>
+<th style="text-align: left;">Nome</th>
+<th style="text-align: center;">Gargalo BPMN</th>
+<th style="text-align: left;">Norma / Mitigação</th>
+<th style="text-align: left;">História derivada</th>
+<th style="text-align: center;">Cobertura</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>RF35</strong></td>
+<td style="text-align: left;">Exigir justificativa prévia para metas não atingidas</td>
+<td style="text-align: center;">G06</td>
+<td style="text-align: left;">MROSC art. 64, §1º; RN-11</td>
+<td style="text-align: left;">HU-05 (CA-05.2)</td>
+<td style="text-align: center;">Total</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>RF36</strong></td>
+<td style="text-align: left;">Emitir Relatório de Execução do Objeto</td>
+<td style="text-align: center;">G06</td>
+<td style="text-align: left;">MROSC art. 63 a 66</td>
+<td style="text-align: left;">HU-05 (CA-05.1, CA-05.5)</td>
+<td style="text-align: center;">Total</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>RF37</strong></td>
+<td style="text-align: left;">Gerar relatório diagramado em PDF</td>
+<td style="text-align: center;">G06</td>
+<td style="text-align: left;">Seção 2.4</td>
+<td style="text-align: left;">HU-05 (CA-05.3)</td>
+<td style="text-align: center;">Total</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>RF38</strong></td>
+<td style="text-align: left;">Exportar dados analíticos e consolidados em planilha aberta</td>
+<td style="text-align: center;">G06</td>
+<td style="text-align: left;">MROSC art. 64</td>
+<td style="text-align: left;">HU-13 (CA-13.1 a CA-13.4)</td>
+<td style="text-align: center;">Total</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>RF39</strong></td>
+<td style="text-align: left;">Registrar trilha de auditoria das operações de prestação de contas</td>
+<td style="text-align: center;">G06</td>
+<td style="text-align: left;">—</td>
+<td style="text-align: left;">HU-05 (CA-05.4)</td>
+<td style="text-align: center;">Total</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3 id="842-matriz-de-rastreabilidade-dos-requisitos-nao-funcionais-rnfs">8.4.2 Matriz de Rastreabilidade dos Requisitos Não Funcionais (RNFs)<a class="headerlink" href="#842-matriz-de-rastreabilidade-dos-requisitos-nao-funcionais-rnfs" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">RNF</th>
+<th style="text-align: left;">Propriedade de Qualidade</th>
+<th style="text-align: left;">Origem (Decisão, Risco Ético ou Norma)</th>
+<th style="text-align: left;">Requisitos Funcionais Relacionados</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>RNF01</strong></td>
+<td style="text-align: left;">Integridade transacional dos dados</td>
+<td style="text-align: left;">HU-01 (CA-01.3)</td>
+<td style="text-align: left;">RF04, RF18</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>RNF02</strong></td>
+<td style="text-align: left;">Auditabilidade das alterações</td>
+<td style="text-align: left;">Seção 3.3.9</td>
+<td style="text-align: left;">RF19, RF26, RF31, RF33, RF39</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>RNF03</strong></td>
+<td style="text-align: left;">Segurança das comunicações e das sessões</td>
+<td style="text-align: left;">Seções 3.3.1 e 3.3.2</td>
+<td style="text-align: left;"><em>Transversal (Todos os RFs)</em></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>RNF04</strong></td>
+<td style="text-align: left;">Controle de acesso por perfil</td>
+<td style="text-align: left;">Seção 3.5 (visibilidade por perfil); matriz da seção 8.5.1</td>
+<td style="text-align: left;">RF34, RF21 a RF27</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>RNF05</strong></td>
+<td style="text-align: left;">Minimização de dados pessoais</td>
+<td style="text-align: left;">LGPD art. 5º, II; Restrição HU-06</td>
+<td style="text-align: left;">RF11, RF13, RF21</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>RNF06</strong></td>
+<td style="text-align: left;">Prazo de atendimento à exclusão de dados</td>
+<td style="text-align: left;">LGPD art. 18</td>
+<td style="text-align: left;">RF27</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>RNF07</strong></td>
+<td style="text-align: left;">Retenção documental decenal</td>
+<td style="text-align: left;">MROSC art. 68</td>
+<td style="text-align: left;">RF32, RF36</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>RNF08</strong></td>
+<td style="text-align: left;">Integridade de relatórios fechados</td>
+<td style="text-align: left;">MROSC art. 63 a 66</td>
+<td style="text-align: left;">RF35, RF36, RF37</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>RNF09</strong></td>
+<td style="text-align: left;">Resiliência offline e sincronização sem duplicidade</td>
+<td style="text-align: left;">Seção 3.3.3</td>
+<td style="text-align: left;">RF16 a RF19, RF32</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>RNF10</strong></td>
+<td style="text-align: left;">Descarte de dados pessoais no aparelho</td>
+<td style="text-align: left;">Seções 3.3.1 e 3.3.2</td>
+<td style="text-align: left;">RF17, RF32</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>RNF11</strong></td>
+<td style="text-align: left;">Desempenho das consultas agregadas</td>
+<td style="text-align: left;">OE04</td>
+<td style="text-align: left;">RF07, RF08, RF28</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>RNF12</strong></td>
+<td style="text-align: left;">Desempenho da inscrição pública</td>
+<td style="text-align: left;">OE02</td>
+<td style="text-align: left;">RF11, RF12</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>RNF13</strong></td>
+<td style="text-align: left;">Desempenho da geração de relatórios</td>
+<td style="text-align: left;">OE06</td>
+<td style="text-align: left;">RF36, RF37</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>RNF14</strong></td>
+<td style="text-align: left;">Eficiência no envio de evidências</td>
+<td style="text-align: left;">Seção 3.3.1</td>
+<td style="text-align: left;">RF32</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>RNF15</strong></td>
+<td style="text-align: left;">Usabilidade móvel e inclusiva</td>
+<td style="text-align: left;">Seção 3.3.10</td>
+<td style="text-align: left;">RF11, RF13, RF16</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>RNF16</strong></td>
+<td style="text-align: left;">Compatibilidade entre navegadores e dispositivos</td>
+<td style="text-align: left;">Seção 2.4</td>
+<td style="text-align: left;"><em>Transversal (Todos os RFs)</em></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>RNF17</strong></td>
+<td style="text-align: left;">Restrição tecnológica e qualidade de código</td>
+<td style="text-align: left;">Seção 2.4</td>
+<td style="text-align: left;"><em>Transversal (Todos os RFs)</em></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>RNF18</strong></td>
+<td style="text-align: left;">Cópia de segurança e recuperação de dados</td>
+<td style="text-align: left;">Seção 2.6</td>
+<td style="text-align: left;"><em>Transversal (Todos os RFs)</em></td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3 id="843-sintese-de-cobertura">8.4.3 Síntese de Cobertura<a class="headerlink" href="#843-sintese-de-cobertura" title="Permanent link">&para;</a></h3>
+<h4 id="cobertura-dos-gargalos-do-modelo-bpmn-b1">Cobertura dos Gargalos do Modelo BPMN (B1)<a class="headerlink" href="#cobertura-dos-gargalos-do-modelo-bpmn-b1" title="Permanent link">&para;</a></h4>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">Gargalo</th>
+<th style="text-align: left;">Descrição do Gargalo do Processo Atual</th>
+<th style="text-align: left;">Requisitos Cobertos</th>
+<th style="text-align: center;">Situação</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;"><strong>G01</strong></td>
+<td style="text-align: left;">Destrinchamento manual de editais e instrumentos</td>
+<td style="text-align: left;">RF01, RF02, RF03, RF04</td>
+<td style="text-align: center;"><strong>Total</strong></td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>G02</strong></td>
+<td style="text-align: left;">Demandas e prazos descentralizados sem responsável</td>
+<td style="text-align: left;">RF05, RF06, RF07, RF08</td>
+<td style="text-align: center;"><strong>Parcial</strong></td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>G03</strong></td>
+<td style="text-align: left;">Listas em papel, chamadas manuais e fotos dispersas</td>
+<td style="text-align: left;">RF09 a RF20, RF32 a RF34</td>
+<td style="text-align: center;"><strong>Total</strong></td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>G04</strong></td>
+<td style="text-align: left;">Dados pessoais desprotegidos em celulares (LGPD)</td>
+<td style="text-align: left;">RF11, RF21 a RF27</td>
+<td style="text-align: center;"><strong>Total</strong></td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>G05</strong></td>
+<td style="text-align: left;">Ausência de visão unificada para a Presidência</td>
+<td style="text-align: left;">RF28 a RF31</td>
+<td style="text-align: center;"><strong>Parcial</strong></td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>G06</strong></td>
+<td style="text-align: left;">Risco de glosa e insegurança na prestação de contas</td>
+<td style="text-align: left;">RF35 a RF39</td>
+<td style="text-align: center;"><strong>Total</strong></td>
+</tr>
+</tbody>
+</table>
+<p>G02: o controle interno de chamados não tem RF. G05: o painel da Presidência não tem RF.</p>
+<h4 id="cobertura-das-caracteristicas-de-produto-cps-e-objetivos-especificos-oes">Cobertura das Características de Produto (CPs) e Objetivos Específicos (OEs)<a class="headerlink" href="#cobertura-das-caracteristicas-de-produto-cps-e-objetivos-especificos-oes" title="Permanent link">&para;</a></h4>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">CP</th>
+<th style="text-align: left;">Nome da Característica</th>
+<th style="text-align: center;">Requisitos</th>
+<th style="text-align: left;">Objetivos Específicos</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;"><strong>CP1</strong></td>
+<td style="text-align: left;">Gestão de projetos e metas</td>
+<td style="text-align: center;">RF01 a RF08</td>
+<td style="text-align: left;">OE01; OE04</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>CP2</strong></td>
+<td style="text-align: left;">Gestão de atividades</td>
+<td style="text-align: center;">RF09, RF10</td>
+<td style="text-align: left;">OE01; OE04, OE06</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>CP3</strong></td>
+<td style="text-align: left;">Inscrição de participantes</td>
+<td style="text-align: center;">RF11 a RF15</td>
+<td style="text-align: left;">OE02; OE01</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>CP4</strong></td>
+<td style="text-align: left;">Registro de participação em campo</td>
+<td style="text-align: center;">RF16 a RF20</td>
+<td style="text-align: left;">OE03; OE04</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>CP5</strong></td>
+<td style="text-align: left;">Cadastro e histórico de pessoas</td>
+<td style="text-align: center;">RF21 a RF27</td>
+<td style="text-align: left;">OE01; OE03, OE06</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>CP6</strong></td>
+<td style="text-align: left;">Acompanhamento automático de metas</td>
+<td style="text-align: center;">RF28 a RF31</td>
+<td style="text-align: left;">OE04; OE01</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>CP7</strong></td>
+<td style="text-align: left;">Repositório de evidências e documentação</td>
+<td style="text-align: center;">RF32 a RF34</td>
+<td style="text-align: left;">OE05; OE06</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>CP8</strong></td>
+<td style="text-align: left;">Relatórios e exportação de dados</td>
+<td style="text-align: center;">RF35 a RF39</td>
+<td style="text-align: left;">OE06; OE04, OE05</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="85-notas-de-dominio-e-perguntas-chave-operacionais">8.5 Notas de Domínio e Perguntas-Chave Operacionais<a class="headerlink" href="#85-notas-de-dominio-e-perguntas-chave-operacionais" title="Permanent link">&para;</a></h2>
+<h3 id="851-perfis-de-acesso-e-permissoes-cp1-e-transversal">8.5.1 Perfis de Acesso e Permissões (CP1 e Transversal)<a class="headerlink" href="#851-perfis-de-acesso-e-permissoes-cp1-e-transversal" title="Permanent link">&para;</a></h3>
+<p>Responde à divisão operacional de responsabilidades entre quem cria, edita ou apenas audita (base de atendimento ao RNF04):</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Perfil de Usuário</th>
+<th style="text-align: left;">Instrumentos, Projetos e Metas</th>
+<th style="text-align: left;">Dados Nominais de Participantes</th>
+<th style="text-align: left;">Presença e Evidências</th>
+<th style="text-align: left;">Relatórios Oficiais</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>Presidência e Gestão de Projetos</strong></td>
+<td style="text-align: left;">Cria, edita e reprograma</td>
+<td style="text-align: left;">Sem acesso à base cadastral completa</td>
+<td style="text-align: left;">Consulta consolidados</td>
+<td style="text-align: left;">Gera e emite</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Núcleo Pedagógico e Educadores</strong></td>
+<td style="text-align: left;">Consulta itens de suas atividades</td>
+<td style="text-align: left;">Acessa fichas para mediação pedagógica</td>
+<td style="text-align: left;">Registra e retifica</td>
+<td style="text-align: left;">Consulta</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Administrativo-Financeiro</strong></td>
+<td style="text-align: left;">Consulta</td>
+<td style="text-align: left;">Bloqueado (apenas totais numéricos)</td>
+<td style="text-align: left;">Consulta consolidados</td>
+<td style="text-align: left;">Consulta</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Órgão Concedente e Auditoria</strong></td>
+<td style="text-align: left;">Sem acesso direto</td>
+<td style="text-align: left;">Sem acesso à base de pessoas</td>
+<td style="text-align: left;">Evidências vinculadas à prestação</td>
+<td style="text-align: left;">Acesso restrito ao período de análise</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><strong>Encerramento do projeto:</strong> só a coordenação da equipe de execução encerra o projeto, depois de ver as comprovações pendentes (RN-11).</li>
+<li><strong>Trava do relatório:</strong> a liberação do relatório retido por meta sem justificativa é pedida à direção ou à coordenação responsável, que é notificada (RF35).</li>
+<li><strong>Campos obrigatórios do instrumento:</strong> Tipo de instrumento, órgão concedente, número do processo administrativo, valor global (R$), datas de celebração e de vigência, com anexo obrigatório do documento formal homologado em PDF (RF02).</li>
+<li><strong>Tratamento de metas descritivas:</strong> Caso a meta seja qualitativa ou atrelada a marcos (<em>milestones</em>), o parâmetro quantitativo é facultativo e a forma documental de comprovação passa a ser o critério de verificação mandatório (RF04).</li>
+</ul>
+<h3 id="852-campo-presenca-e-evidencias-cp2-cp4-e-cp7">8.5.2 Campo, Presença e Evidências (CP2, CP4 e CP7)<a class="headerlink" href="#852-campo-presenca-e-evidencias-cp2-cp4-e-cp7" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Reconciliação e Unicidade Offline:</strong> Cada marcação de presença gerada no cliente recebe identificador imutável e vincula-se à chave composta lógica <code>(participante_id, oficina_sessao_id, data_evento)</code>. O backend processa o lote com semântica de <em>Append-Only</em>, evitando duplicidades mesmo sob retransmissões repetidas de sincronização.</li>
+<li><strong>Exigência Comprobatória por Modalidade:</strong></li>
+<li><em>Oficina continuada formativa:</em> Exige diário de classe digital com chamadas nominais auditáveis e carga horária apurada.</li>
+<li><em>Evento aberto ou Ação de acolhimento no SCS:</em> Exige fotografias panorâmicas georreferenciadas, contagem estimativa agregada de público e relatório simplificado do facilitador, dispensando exigência de CPF para preservar a inclusão.</li>
+<li><strong>Lançamentos Extemporâneos:</strong> O sistema não bloqueia o envio tardio caso o educador fique impossibilitado de lançar no dia, mas submete o registro como extemporâneo (RF19), exigindo justificativa textual e retendo carimbo de data/hora para auditoria da coordenação pedagógica.</li>
+</ul>
+<h3 id="853-apuracao-de-metas-e-relatorios-mrosc-cp6-e-cp8">8.5.3 Apuração de Metas e Relatórios MROSC (CP6 e CP8)<a class="headerlink" href="#853-apuracao-de-metas-e-relatorios-mrosc-cp6-e-cp8" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Cálculo de Metas Não Lineares:</strong></li>
+<li><em>Metas quantitativas cumulativas:</em> Percentual aferido pela razão contínua entre volume realizado (soma de presenças ou horas) e o volume pactuado.</li>
+<li><em>Metas de marco único (milestones):</em> Percentual binário (0% enquanto pendente e 100% após a anexação e homologação da evidência formal pelo analista).</li>
+<li><strong>Tratamento de Termos Aditivos:</strong> O sistema não sobrescreve os dados pactuados originalmente. Ao aprovar um Termo Aditivo, cria-se uma versão incremental do plano de trabalho, permitindo que o Relatório de Execução do Objeto apresente uma tabela comparativa com colunas dedicadas: <em>Meta Pactuada Original</em>, <em>Alteração (TA nº)</em>, <em>Meta Vigente Reprogramada</em> e <em>Percentual Cumprido</em>.</li>
+</ul>
+<h3 id="854-inscricao-pessoas-e-lgpd-cp3-e-cp5">8.5.4 Inscrição, Pessoas e LGPD (CP3 e CP5)<a class="headerlink" href="#854-inscricao-pessoas-e-lgpd-cp3-e-cp5" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Dados Mínimos Coletados:</strong> Nome, telefone, data de nascimento (ou faixa etária) e consentimentos. CPF apenas quando o instrumento da parceria expressamente exigir. Nenhum dado sensível estruturado (RNF05).</li>
+<li><strong>Consentimento de Menores de Idade:</strong> Para participantes com menos de 18 anos, o formulário registra os dados do responsável legal, que concede o consentimento formal nos termos do art. 14 da LGPD.</li>
+<li><strong>Independência da Autorização de Imagem:</strong> A autorização para registro e divulgação de fotografias institucionais é colhida de forma separada e opcional (RF25). A eventual recusa pelo titular jamais condiciona ou impede sua inscrição ou participação na atividade.</li>
+</ul>
+<hr />
+<h2 id="86-pontos-em-aberto-e-auditoria-de-lacunas">8.6 Pontos em Aberto e Auditoria de Lacunas<a class="headerlink" href="#86-pontos-em-aberto-e-auditoria-de-lacunas" title="Permanent link">&para;</a></h2>
+<ol>
+<li><strong>Escopo dos Gargalos G02 e G05:</strong> O controle interno de ordens de serviço/chamados (G02) e o painel estratégico consolidado da Presidência (G05) permanecem mapeados como oportunidades no BPMN, sem requisito funcional.</li>
+<li><strong>Parâmetros de Sessão e Campo (RNF03):</strong> Manter sob observação durante os testes de campo se o encerramento automático por inatividade em 30 minutos não trará fricção operacional aos educadores durante oficinas de longa duração.</li>
+<li><strong>Hipóteses a validar com o Instituto:</strong> Fluxo de consentimento de responsáveis por menores (LGPD art. 14) e nível de visualização da Presidência sobre dados cadastrais individualizados.</li>
+<li><strong>Trava do relatório por pendência administrativo-financeira (RF35) 🔧:</strong> aplicação da exigência de justificativa a pendências da área administrativo-financeira, a confirmar com essa área; a solução não inclui controle financeiro.</li>
+<li><strong>Exportação integral dos dados (CP8):</strong> a exportação de todos os dados registrados e dos arquivos anexados, prevista na seção 2, não tem requisito funcional próprio; o RF38 cobre a exportação de dados de execução de um projeto.</li>
+<li><strong>Alteração do período de execução:</strong> registro da alteração do período de execução do instrumento e atualização dos prazos que dependem dele, relacionado ao RF31 e à RN-09, a especificar.</li>
+<li><strong>Valores iniciais 🔧:</strong> configuração inicial de comprovações (RF10), anexo do instrumento (RF02), limiar de risco de meta (RF30), sessão e inatividade (RNF03), prazo de exclusão (RNF06), latências e carga (RNF11, RNF13, RNF14), versões de navegador (RNF16) e RPO/RTO (RNF18) são parâmetros adotados sem fonte que os fixe; confirmação com o Instituto e com a equipe antes da verificação.</li>
+</ol>
+<hr />
+<h2 id="87-regras-de-negocio">8.7 Regras de Negócio<a class="headerlink" href="#87-regras-de-negocio" title="Permanent link">&para;</a></h2>
+<p>Regras que condicionam o comportamento descrito nos requisitos funcionais. Cada regra tem origem declarada; o símbolo 🔧 marca valor inicial pendente de confirmação (seção 8.1).</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">ID</th>
+<th style="text-align: left;">Regra</th>
+<th style="text-align: left;">Origem</th>
+<th style="text-align: center;">Requisitos relacionados</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;"><a id="rn-01"></a><strong>RN-01</strong></td>
+<td style="text-align: left;">Requisito do instrumento e meta do plano de trabalho são registros distintos, relacionados entre si: uma meta pode atender a mais de um requisito e um requisito pode exigir mais de uma meta.</td>
+<td style="text-align: left;">Seção 2.3 (CP1); Lei 13.019/2014, art. 22</td>
+<td style="text-align: center;">RF04, RF07</td>
+</tr>
+<tr>
+<td style="text-align: center;"><a id="rn-02"></a><strong>RN-02</strong></td>
+<td style="text-align: left;">Meta sem indicador, forma de verificação ou prazo permanece como rascunho e não entra na apuração nem no relatório.</td>
+<td style="text-align: left;">Lei 13.019/2014, art. 22, II e III</td>
+<td style="text-align: center;">RF04, RF28</td>
+</tr>
+<tr>
+<td style="text-align: center;"><a id="rn-03"></a><strong>RN-03</strong></td>
+<td style="text-align: left;">O alerta de vencimento de meta é emitido automaticamente 30 dias antes do prazo, e o usuário autorizado pode registrar na própria meta avisos adicionais; os alertas são enviados por e-mail.</td>
+<td style="text-align: left;">Validação com o Instituto em 28/09/2026</td>
+<td style="text-align: center;">RF08</td>
+</tr>
+<tr>
+<td style="text-align: center;"><a id="rn-04"></a><strong>RN-04</strong></td>
+<td style="text-align: left;">As comprovações exigidas de uma atividade são configuradas por instrumento e modalidade, e a atividade guarda a versão vigente no momento do cadastro. Configuração inicial 🔧: chamada nominal com assiduidade para oficinas formativas contínuas; contagem agregada e anônima, sem CPF, para ações de acolhimento e eventos de rua.</td>
+<td style="text-align: left;">Seção 3.3.6; Seção 2.6</td>
+<td style="text-align: center;">RF09, RF10, RF33</td>
+</tr>
+<tr>
+<td style="text-align: center;"><a id="rn-05"></a><strong>RN-05</strong></td>
+<td style="text-align: left;">A inscrição não é condicionada a consentimento para os dados exigidos pela execução da parceria e pela prestação de contas; o consentimento é registrado apenas para contato e uso de imagem.</td>
+<td style="text-align: left;">LGPD, art. 7º, I e II; Seção 2.6</td>
+<td style="text-align: center;">RF23, RF24, RF25</td>
+</tr>
+<tr>
+<td style="text-align: center;"><a id="rn-06"></a><strong>RN-06</strong></td>
+<td style="text-align: left;">Para pessoa menor de idade, o registro de inscrição identifica o responsável legal.</td>
+<td style="text-align: left;">LGPD, art. 14</td>
+<td style="text-align: center;">RF23</td>
+</tr>
+<tr>
+<td style="text-align: center;"><a id="rn-07"></a><strong>RN-07</strong></td>
+<td style="text-align: left;">Ao término da finalidade ou a pedido do titular, registro sob guarda legal é preservado com acesso restrito até o fim do prazo de guarda; dado que compõe total já reportado a financiador permanece só como agregado; os demais dados pessoais são eliminados.</td>
+<td style="text-align: left;">LGPD, art. 16, I; Lei 13.019/2014, art. 68</td>
+<td style="text-align: center;">RF27, RNF07</td>
+</tr>
+<tr>
+<td style="text-align: center;"><a id="rn-08"></a><strong>RN-08</strong></td>
+<td style="text-align: left;">O progresso de uma meta é apurado exclusivamente pela regra de apuração e pelas fontes definidas na própria meta, e o sistema exibe os registros que compõem o valor apurado.</td>
+<td style="text-align: left;">Seção 2.3 (CP6)</td>
+<td style="text-align: center;">RF28, RF29</td>
+</tr>
+<tr>
+<td style="text-align: center;"><a id="rn-09"></a><strong>RN-09</strong></td>
+<td style="text-align: left;">Repactuação por termo aditivo ou apostila gera nova versão do plano de trabalho, preservando a pactuação original e seus resultados.</td>
+<td style="text-align: left;">Lei 13.019/2014, art. 57</td>
+<td style="text-align: center;">RF31</td>
+</tr>
+<tr>
+<td style="text-align: center;"><a id="rn-10"></a><strong>RN-10</strong></td>
+<td style="text-align: left;">Arquivo anexado é rascunho até ser vinculado a uma atividade e a pelo menos uma meta; rascunho não compõe o índice de comprovações.</td>
+<td style="text-align: left;">Seção 2.3 (relatório com índice de evidências por meta)</td>
+<td style="text-align: center;">RF32, RF33</td>
+</tr>
+<tr>
+<td style="text-align: center;"><a id="rn-11"></a><strong>RN-11</strong></td>
+<td style="text-align: left;">O encerramento de uma atividade e a geração do relatório final exigem que não haja rascunho pendente de vinculação ou descarte. Comprovação que não pode mais ser produzida não impede o encerramento do projeto: a meta sem comprovação continua visível como pendente, e só a coordenação da equipe de execução encerra o projeto.</td>
+<td style="text-align: left;">Seção 2.3; Lei 13.019/2014, arts. 63 a 66; validação com o Instituto em 28/09/2026</td>
+<td style="text-align: center;">RF33, RF35, RF36</td>
+</tr>
+<tr>
+<td style="text-align: center;"><a id="rn-12"></a><strong>RN-12</strong></td>
+<td style="text-align: left;">Imagem de prova de execução e material de divulgação são registros distintos: a prova fica restrita aos perfis de coordenação e prestação de contas, não é publicada automaticamente e só é reutilizada para divulgação com autorização registrada.</td>
+<td style="text-align: left;">Seção 3.3.4; LGPD, art. 7º, I, e art. 14</td>
+<td style="text-align: center;">RF25, RF34</td>
+</tr>
+<tr>
+<td style="text-align: center;"><a id="rn-13"></a><strong>RN-13</strong></td>
+<td style="text-align: left;">Alteração de registro já concluído (meta ou plano de trabalho, presença de atividade realizada, evidência vinculada ou relatório finalizado) exige justificativa registrada, visível às demais áreas, e não depende de aprovação.</td>
+<td style="text-align: left;">Validação com o Instituto em 28/09/2026</td>
+<td style="text-align: center;">RF19, RF31, RF33, RF39</td>
+</tr>
+</tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Voltar para o topo
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Rodapé" >
+        
+          
+          <a href="../../visao/7-equipe-e-cliente/" class="md-footer__link md-footer__link--prev" aria-label="Anterior: 7. Interação entre equipe e cliente">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Anterior
+              </span>
+              <div class="md-ellipsis">
+                7. Interação entre equipe e cliente
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../9-dor-dod/" class="md-footer__link md-footer__link--next" aria-label="Próximo: 9. DoR e DoD">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Próximo
+              </span>
+              <div class="md-ellipsis">
+                9. DoR e DoD
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Equipe CyberSetor · Engenharia de Software · FCTE/UnB · 2026.2
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.tabs", "navigation.tabs.sticky", "navigation.indexes", "navigation.instant", "navigation.tracking", "navigation.sections", "navigation.top", "navigation.footer", "content.action.edit", "content.code.copy", "toc.follow", "search.suggest", "search.highlight"], "search": "../../assets/javascripts/workers/search.f8cc74c7.min.js", "translations": {"clipboard.copied": "Copiado para \u00e1rea de transfer\u00eancia", "clipboard.copy": "Copiar para \u00e1rea de transfer\u00eancia", "search.result.more.one": "mais 1 nesta p\u00e1gina", "search.result.more.other": "# mais nesta p\u00e1gina", "search.result.none": "Nenhum documento encontrado", "search.result.one": "1 documento encontrado", "search.result.other": "# documentos encontrados", "search.result.placeholder": "Digite para iniciar a busca", "search.result.term.missing": "Ausente", "select.version": "Selecione a vers\u00e3o"}}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.c8b220af.min.js"></script>
+      
+    
+  </body>
+</html>

@@ -1,0 +1,2537 @@
+
+<!doctype html>
+<html lang="pt" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Visão de Produto e Projeto — Requisitos de Software (FGA0313) · T02 · 2026.2 · FCTE/UnB">
+      
+      
+        <meta name="author" content="Equipe CyberSetor">
+      
+      
+        <link rel="canonical" href="https://mdsreq-fga-unb.github.io/REQ-2026.2-T02-CyberSetor/gestao/atas/2026-09-22-sprint-review-retrospectiva/">
+      
+      
+        <link rel="prev" href="../2026-09-21-reuniao-equipe/">
+      
+      
+        <link rel="next" href="../2026-09-23-sprint-planning/">
+      
+      
+      <link rel="icon" href="../../../assets/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.9">
+    
+    
+      
+        <title>22/09/2026 — Sprint Review e Retrospectiva - CyberSetor · Instituto No Setor</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.4af4bdda.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="deep-purple" data-md-color-accent="purple">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#ata-sprint-review-1-e-retrospectiva-1-22092026" class="md-skip">
+          Pular para conteúdo
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Cabeçalho">
+    <a href="../../.." title="CyberSetor · Instituto No Setor" class="md-header__button md-logo" aria-label="CyberSetor · Instituto No Setor" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            CyberSetor · Instituto No Setor
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              22/09/2026 — Sprint Review e Retrospectiva
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="deep-purple" data-md-color-accent="purple"  aria-label="Alternar para o modo escuro"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Alternar para o modo escuro" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="deep-purple" data-md-color-accent="purple"  aria-label="Alternar para o modo claro"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Alternar para o modo claro" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Buscar" placeholder="Buscar" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Pesquisar">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Limpar" aria-label="Limpar" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Inicializando busca
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/mdsreq-fga-unb/REQ-2026.2-T02-CyberSetor" title="Ir para repositório" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8M97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    mdsreq-fga-unb/REQ-2026.2-T02-CyberSetor
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+    
+      
+<nav class="md-tabs" aria-label="Abas" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../.." class="md-tabs__link">
+        
+  
+    
+  
+  Início
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../visao/" class="md-tabs__link">
+          
+  
+    
+  
+  Documento de Visão
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../requisitos/8-requisitos/" class="md-tabs__link">
+          
+  
+    
+  
+  Requisitos
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../../processo-scrumxp/" class="md-tabs__link">
+          
+  
+    
+  
+  Gestão do projeto
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../entregas/unidade-1/" class="md-tabs__link">
+          
+  
+    
+  
+  Entregas
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../licoes-aprendidas/unidade-1/" class="md-tabs__link">
+          
+  
+    
+  
+  Lições aprendidas
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../referencias/" class="md-tabs__link">
+        
+  
+    
+  
+  Referências
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navegação" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="CyberSetor · Instituto No Setor" class="md-nav__button md-logo" aria-label="CyberSetor · Instituto No Setor" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    CyberSetor · Instituto No Setor
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/mdsreq-fga-unb/REQ-2026.2-T02-CyberSetor" title="Ir para repositório" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8M97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    mdsreq-fga-unb/REQ-2026.2-T02-CyberSetor
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Início
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../visao/" class="md-nav__link ">
+              
+  
+  <span class="md-ellipsis">
+    Documento de Visão
+    
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_2" id="__nav_2_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            Documento de Visão
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../visao/1-cenario-atual/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    1. Cenário atual do cliente e do negócio
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../visao/2-solucao-proposta/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    2. Solução proposta
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../visao/3-intervencao-social/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    3. Intervenção social
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../visao/4-estrategia-esw/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    4. Estratégias de engenharia de software
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../visao/5-engenharia-requisitos/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    5. Engenharia de requisitos
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../visao/6-cronograma/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    6. Cronograma e entregas
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../visao/7-equipe-e-cliente/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    7. Interação entre equipe e cliente
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Requisitos
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            Requisitos
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../requisitos/8-requisitos/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    8. Requisitos de software
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../requisitos/9-dor-dod/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    9. DoR e DoD
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../requisitos/10-backlog/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    10. Backlog de produto
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../requisitos/b1-bpmn-processo-atual/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    B1 · Modelo do processo atual (BPMN)
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Gestão do projeto
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            Gestão do projeto
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../processo-scrumxp/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Processo e ritos (ScrumXP)
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../matriz-competencias/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Matriz de competências e stack
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../boas-praticas-github/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Boas práticas no GitHub
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_4" checked>
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../" class="md-nav__link ">
+              
+  
+  <span class="md-ellipsis">
+    Atas de reunião
+    
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_4_4" id="__nav_4_4_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_4_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4_4">
+            <span class="md-nav__icon md-icon"></span>
+            Atas de reunião
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../2026-08-27-reuniao-equipe/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    27/08/2026 — Equipe
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../2026-09-01-reuniao-equipe/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    01/09/2026 — Equipe
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../2026-09-08-reuniao-presencial-instituto/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    08/09/2026 — Instituto (presencial)
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../2026-09-08-sprint-planning/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    08/09/2026 — Sprint Planning
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../2026-09-15-reuniao-alinhamento-instituto/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    15/09/2026 — Instituto (alinhamento)
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../2026-09-21-reuniao-presencial-instituto/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    21/09/2026 — Instituto (presencial)
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../2026-09-21-reuniao-equipe/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    21/09/2026 — Equipe (alinhamento)
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    22/09/2026 — Sprint Review e Retrospectiva
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    22/09/2026 — Sprint Review e Retrospectiva
+    
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Índice">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Índice
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#identificacao" class="md-nav__link">
+    <span class="md-ellipsis">
+      Identificação
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1-pauta" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. Pauta
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-resumo" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. Resumo
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-decisoes" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. Decisões
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-proximas-etapas" class="md-nav__link">
+    <span class="md-ellipsis">
+      4. Próximas etapas
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-detalhes-por-topico" class="md-nav__link">
+    <span class="md-ellipsis">
+      5. Detalhes por tópico
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5. Detalhes por tópico">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#sprint-review-meta-e-criterios-de-aceitacao" class="md-nav__link">
+    <span class="md-ellipsis">
+      Sprint Review: meta e critérios de aceitação
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#incremento-e-retorno-da-monitoria" class="md-nav__link">
+    <span class="md-ellipsis">
+      Incremento e retorno da monitoria
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#infraestrutura" class="md-nav__link">
+    <span class="md-ellipsis">
+      Infraestrutura
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#retrospectiva" class="md-nav__link">
+    <span class="md-ellipsis">
+      Retrospectiva
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#verificacao-em-pares-atividade-2" class="md-nav__link">
+    <span class="md-ellipsis">
+      Verificação em pares (Atividade 2)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#prazo-de-2909" class="md-nav__link">
+    <span class="md-ellipsis">
+      Prazo de 29/09
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-pendencias-e-pontos-em-aberto" class="md-nav__link">
+    <span class="md-ellipsis">
+      6. Pendências e pontos em aberto
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-insumos-para-o-documento-de-visao" class="md-nav__link">
+    <span class="md-ellipsis">
+      7. Insumos para o Documento de Visão
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#historico-de-versoes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Histórico de versões
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../2026-09-23-sprint-planning/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    23/09/2026 — Sprint Planning
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_4_5" id="__nav_4_5_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Planos de sprint
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_5">
+            <span class="md-nav__icon md-icon"></span>
+            Planos de sprint
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../sprints/sprint-1/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Sprint 1 (Planejamento)
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../sprints/tarefas-sprint-1/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Sprint 1 (Acompanhamento de Tarefas)
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../sprints/sprint-2/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Sprint 2 (Planejamento)
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../sprints/tarefas-sprint-2/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Sprint 2 (Acompanhamento de Tarefas)
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Entregas
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            Entregas
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../entregas/unidade-1/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Unidade 1
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../entregas/debitos-u1/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Débitos e Feedbacks (U1)
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../entregas/unidade-2/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Unidade 2
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../entregas/atividade-3/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Atividade 3: ajuste da lista de requisitos
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Lições aprendidas
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            Lições aprendidas
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../licoes-aprendidas/unidade-1/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Unidade 1
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../referencias/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Referências
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Índice">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Índice
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#identificacao" class="md-nav__link">
+    <span class="md-ellipsis">
+      Identificação
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1-pauta" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. Pauta
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-resumo" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. Resumo
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-decisoes" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. Decisões
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-proximas-etapas" class="md-nav__link">
+    <span class="md-ellipsis">
+      4. Próximas etapas
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-detalhes-por-topico" class="md-nav__link">
+    <span class="md-ellipsis">
+      5. Detalhes por tópico
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5. Detalhes por tópico">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#sprint-review-meta-e-criterios-de-aceitacao" class="md-nav__link">
+    <span class="md-ellipsis">
+      Sprint Review: meta e critérios de aceitação
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#incremento-e-retorno-da-monitoria" class="md-nav__link">
+    <span class="md-ellipsis">
+      Incremento e retorno da monitoria
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#infraestrutura" class="md-nav__link">
+    <span class="md-ellipsis">
+      Infraestrutura
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#retrospectiva" class="md-nav__link">
+    <span class="md-ellipsis">
+      Retrospectiva
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#verificacao-em-pares-atividade-2" class="md-nav__link">
+    <span class="md-ellipsis">
+      Verificação em pares (Atividade 2)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#prazo-de-2909" class="md-nav__link">
+    <span class="md-ellipsis">
+      Prazo de 29/09
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-pendencias-e-pontos-em-aberto" class="md-nav__link">
+    <span class="md-ellipsis">
+      6. Pendências e pontos em aberto
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-insumos-para-o-documento-de-visao" class="md-nav__link">
+    <span class="md-ellipsis">
+      7. Insumos para o Documento de Visão
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#historico-de-versoes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Histórico de versões
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+    <a href="https://github.com/mdsreq-fga-unb/REQ-2026.2-T02-CyberSetor/edit/main/docs/gestao/atas/2026-09-22-sprint-review-retrospectiva.md" title="Editar esta página" class="md-content__button md-icon">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4zm10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1z"/></svg>
+    </a>
+  
+  
+
+
+<h1 id="ata-sprint-review-1-e-retrospectiva-1-22092026">Ata — Sprint Review 1 e Retrospectiva 1 — 22/09/2026<a class="headerlink" href="#ata-sprint-review-1-e-retrospectiva-1-22092026" title="Permanent link">&para;</a></h1>
+<p>Reunião de encerramento da Sprint 1, realizada na noite de 22/09/2026 e conduzida por Vinicius Vieira como Scrum Master, com a Sprint Review, a Retrospectiva e a divisão do trabalho da verificação em pares da SevenSpecs. O Sprint Planning 2 foi adiado para 23/09, para contar com a Product Owner.</p>
+<h2 id="identificacao">Identificação<a class="headerlink" href="#identificacao" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Campo</th>
+<th>Registro</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Código</strong></td>
+<td>ATA-2026-09-22</td>
+</tr>
+<tr>
+<td><strong>Tipo</strong></td>
+<td>Sprint Review 1 e Retrospectiva 1 (o Sprint Planning 2 foi adiado para 23/09)</td>
+</tr>
+<tr>
+<td><strong>Data</strong></td>
+<td>22/09/2026 (terça-feira)</td>
+</tr>
+<tr>
+<td><strong>Horário</strong></td>
+<td>20:52 – término não registrado · duração não registrada</td>
+</tr>
+<tr>
+<td><strong>Local / plataforma</strong></td>
+<td>Google Meet</td>
+</tr>
+<tr>
+<td><strong>Formato</strong></td>
+<td>Remoto</td>
+</tr>
+<tr>
+<td><strong>Participantes — CyberSetor</strong></td>
+<td>Vinicius Vieira, Rodrigo Henrique Donato, Daniel Batista, Caio Martins, Lucas de Paula Leal</td>
+</tr>
+<tr>
+<td><strong>Participantes — externos</strong></td>
+<td>Não se aplica</td>
+</tr>
+<tr>
+<td><strong>Ausentes justificados</strong></td>
+<td>Maria Eduarda Marques (aviso prévio)</td>
+</tr>
+<tr>
+<td><strong>Condução</strong></td>
+<td>Vinicius Vieira (Scrum Master)</td>
+</tr>
+<tr>
+<td><strong>Registro (relator)</strong></td>
+<td>Vinicius Vieira</td>
+</tr>
+<tr>
+<td><strong>Gravação</strong></td>
+<td>Não · anotações automáticas da reunião (arquivo no Drive restrito da equipe)</td>
+</tr>
+<tr>
+<td><strong>Transcrição automática</strong></td>
+<td>Sim · arquivo no Drive restrito da equipe</td>
+</tr>
+<tr>
+<td><strong>Documentos vistos</strong></td>
+<td>Site do projeto (seção 8 v2.1, síntese da Unidade 2, acompanhamento da Sprint 1); quadro "CyberSetor - Board"; planilha de verificação em pares da SevenSpecs; formulários de issue do repositório</td>
+</tr>
+<tr>
+<td><strong>Documentos entregues</strong></td>
+<td>Roteiro de condução da reunião (interno)</td>
+</tr>
+<tr>
+<td><strong>Técnicas de ER aplicadas</strong></td>
+<td>Não se aplica (revisão de processo e planejamento)</td>
+</tr>
+<tr>
+<td><strong>Sprint</strong></td>
+<td>Sprint 1 (08/09 – 22/09/2026)</td>
+</tr>
+<tr>
+<td><strong>Documentos relacionados</strong></td>
+<td><a href="../../sprints/sprint-1/">Plano da Sprint 1</a> v7.0 · <a href="../2026-09-08-sprint-planning/">ATA-2026-09-08-SP (Sprint Planning)</a> · <a href="../2026-09-23-sprint-planning/">ATA-2026-09-23-SP (Sprint Planning 2)</a> · Atividades 2, 3 e 4 do Aprender</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="1-pauta">1. Pauta<a class="headerlink" href="#1-pauta" title="Permanent link">&para;</a></h2>
+<ol>
+<li>Sprint Review 1: meta da Sprint, critérios de aceitação (CAS-01 a CAS-08), incremento entregue, retorno da monitoria, situação das issues.</li>
+<li>Retrospectiva 1: o que funcionou, o que não funcionou, ações.</li>
+<li>Verificação em pares (Atividade 2 do Aprender): divisão do trabalho e prazo.</li>
+<li>Sprint Planning 2 (adiado).</li>
+</ol>
+<hr />
+<h2 id="2-resumo">2. Resumo<a class="headerlink" href="#2-resumo" title="Permanent link">&para;</a></h2>
+<p>A reunião encerrou a Sprint 1 com a avaliação de que a meta foi <strong>parcialmente atingida</strong>: a lista de requisitos foi consolidada e publicada e o Product Backlog foi estruturado no quadro do projeto, mas o refinamento completo e a priorização item a item não couberam na sprint, tomada pelas demandas da Unidade 1, pelas reuniões com o Instituto e pelas atividades da disciplina. A Retrospectiva registrou comunicação e engajamento como pontos fortes, e o volume de pull requests sem revisão formal registrada, a subestimação da carga da disciplina e a falta de tempo para estudo individual como pontos a corrigir. A equipe dividiu a verificação em pares da SevenSpecs em três frentes e adiou o Sprint Planning 2 para 23/09, para contar com a Product Owner.</p>
+<ul>
+<li><strong>Review:</strong> meta parcial; seção 8 v2.1, síntese da U2 e quadro reorganizado apresentados; issues concluídas fechadas; itens não concluídos transferidos para a Sprint 2.</li>
+<li><strong>Retrospectiva:</strong> comunicação boa; revisão de PR sem registro formal; carga subestimada; reuniões recorrentes com link fixo; issues maiores por dupla.</li>
+<li><strong>Requisitos:</strong> RF01 e RF04 serão divididos em até três partes; tabelas 8.2 e 8.3 reorganizadas; Definition of Ready e Definition of Done formalizadas no início da Sprint 2.</li>
+<li><strong>Cliente:</strong> reunião de validação com o Instituto proposta para quinta-feira, 24/09; contato por Maria Eduarda Marques na manhã de 23/09.</li>
+<li><strong>Atividade em pares:</strong> três frentes; planilha compartilhada; fechamento interno em 23/09 e entrega até 24/09, 12h.</li>
+</ul>
+<hr />
+<h2 id="3-decisoes">3. Decisões<a class="headerlink" href="#3-decisoes" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Decisão</th>
+<th>Justificativa</th>
+<th>Impacto</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>D1</td>
+<td>A meta da Sprint 1 foi <strong>parcialmente atingida</strong>: backlog estruturado e lista de requisitos publicada; refinamento e priorização item a item transferidos para a Sprint 2</td>
+<td>O refinamento previsto para 15/09 e a segunda semana foram ocupados pelas reuniões com o Instituto (15/09 e 21/09), pelas issues da Unidade 1, pelos dojos e pela consolidação da seção 8</td>
+<td>Plano da Sprint 2; seção 11 (lições aprendidas)</td>
+</tr>
+<tr>
+<td>D2</td>
+<td>Duplas de trabalho da Sprint 2: <strong>Daniel Batista e Rodrigo Henrique</strong>; <strong>Lucas de Paula Leal e Caio Martins</strong>; Vinicius Vieira e Maria Eduarda Marques (SM e PO)</td>
+<td>Redistribuir o esforço e manter par de revisão entre duplas</td>
+<td>Quadro do projeto; plano da Sprint 2; seção 7.1</td>
+</tr>
+<tr>
+<td>D3</td>
+<td>Comprovação dos ritos da Sprint 1 para a disciplina: capturas do WhatsApp Web para as dailies e links das atas publicadas no site para as reuniões</td>
+<td>Exigência de evidência dos ritos</td>
+<td>Seção 5 do Documento de Visão; página de processo</td>
+</tr>
+<tr>
+<td>D4</td>
+<td>Reunião de validação com o Instituto proposta para <strong>quinta-feira, 24/09</strong>, online; Maria Eduarda Marques faz o contato na manhã de 23/09</td>
+<td>Cadência semanal de validação sem compromisso fixo na agenda; Atividades 3 e 4 exigem validação com o cliente até 29/09</td>
+<td>Seção 7.2; Atividades 3 e 4</td>
+</tr>
+<tr>
+<td>D5</td>
+<td>Requisitos funcionais extensos são divididos em <strong>no máximo duas ou três partes</strong>; RF01 e RF04 são os primeiros</td>
+<td>Retorno da monitoria (21/09): cada RF com uma única capacidade</td>
+<td>Seção 8.2, matriz 8.4, tabela 8.7</td>
+</tr>
+<tr>
+<td>D6</td>
+<td>Definition of Ready e Definition of Done são formalizadas <strong>no início da Sprint 2</strong> e publicadas na seção 9. DoR exige ator explícito, vínculo a requisitos e regras, critérios em lista e classificação MoSCoW; DoD de código exige testes automatizados na integração contínua e demonstração na Review</td>
+<td>Três versões conviviam (ritos, plano da Sprint 1, site); histórias da Sprint 2 precisam de critério de entrada</td>
+<td>Seção 9; página de processo aponta para ela</td>
+</tr>
+<tr>
+<td>D7</td>
+<td>Reunião recorrente no Google Agenda com link fixo do Google Meet, criada por Vinicius Vieira</td>
+<td>Garantir que os encontros ocorram independentemente da presença de quem convoca</td>
+<td>Página de processo (ritos)</td>
+</tr>
+<tr>
+<td>D8</td>
+<td>Issues da Sprint 2 serão <strong>maiores e mais densas, por dupla</strong>, em vez de várias tarefas fragmentadas</td>
+<td>Volume de PRs abertos simultaneamente e custo de revisão na Sprint 1</td>
+<td>Quadro do projeto; formulários de issue</td>
+</tr>
+<tr>
+<td>D9</td>
+<td>Sprint Planning 2 adiado para <strong>23/09/2026</strong>, horário por enquete no grupo</td>
+<td>Presença da Product Owner</td>
+<td>Calendário da Sprint 2 (mantém 22/09 – 06/10)</td>
+</tr>
+<tr>
+<td>D10</td>
+<td>Fluxo de pull request: revisão <strong>registrada</strong> (comentário e aprovação) por integrante da outra dupla antes do merge, com aviso no grupo</td>
+<td>Na Sprint 1 as revisões ocorreram sem registro formal</td>
+<td>Página "Boas práticas no GitHub"</td>
+</tr>
+<tr>
+<td>D11</td>
+<td>As tabelas das seções 8.2 e 8.3 serão reorganizadas em tabelas menores, para leitura dos requisitos, critérios e pontos em aberto</td>
+<td>Retorno da monitoria sobre navegação da lista</td>
+<td>Seção 8</td>
+</tr>
+<tr>
+<td>D12</td>
+<td>Verificação em pares da SevenSpecs em três frentes: Daniel e Rodrigo; Vinicius e Maria Eduarda; Lucas e Caio. Cada frente confere os apontamentos pré-levantados no site publicado, reescreve com as próprias palavras e consolida na planilha definitiva. Fechamento interno em 23/09; entrega até 24/09, 12h</td>
+<td>Prazo da Atividade 2 e participação de todos</td>
+<td>Atividade 2 do Aprender</td>
+</tr>
+<tr>
+<td>D13</td>
+<td>Meta da Sprint 2 (rascunho a lapidar no Planning): refinamento completo dos requisitos, priorização item a item por MoSCoW e conclusão das histórias de usuário com critérios de aceitação vinculados, até 29/09</td>
+<td>Atividades 3 e 4 do Aprender</td>
+<td>Plano da Sprint 2</td>
+</tr>
+<tr>
+<td>D14</td>
+<td>Tarefas concluídas na Sprint 1 fechadas na Review: agendamento das entrevistas com a Diretoria de Projetos e com a área Administrativo-Financeira; glossário (descartado); estrutura do Product Backlog no quadro; esqueleto da matriz de rastreabilidade; as sete tarefas de elaboração, consolidação e publicação da lista de requisitos e da matriz de rastreabilidade</td>
+<td>Entregas publicadas no site ou superadas</td>
+<td>Quadro do projeto</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Itens que envolvem a Product Owner.</strong> Ausente desta reunião, Maria Eduarda Marques retomou no Sprint Planning de 23/09 os itens que a envolvem: as duplas foram confirmadas com ela presente (D2 desta ata; D3 da <a href="../2026-09-23-sprint-planning/">ata de 23/09</a>); o contato com o Instituto, que não havia sido feito, ficou com ela para 24/09, com a validação em 24/09 ou 28/09 (D4 desta ata; D10 e A6 da ata de 23/09); e a atualização do Rich Picture e do mapa de stakeholders seguiu com ela e Daniel Batista (A8 desta ata; A16 da ata de 23/09).</p>
+<hr />
+<h2 id="4-proximas-etapas">4. Próximas etapas<a class="headerlink" href="#4-proximas-etapas" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Ação</th>
+<th>Responsável</th>
+<th>Prazo</th>
+<th>Situação</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>A1</td>
+<td>Enquete no grupo para o horário do Sprint Planning 2</td>
+<td>Vinicius Vieira</td>
+<td>23/09 manhã</td>
+<td>Pendente</td>
+</tr>
+<tr>
+<td>A2</td>
+<td>Contato com o Instituto para a reunião de validação de quinta-feira, 24/09</td>
+<td>Maria Eduarda Marques</td>
+<td>23/09 manhã</td>
+<td>Pendente</td>
+</tr>
+<tr>
+<td>A3</td>
+<td>Reunião recorrente no Google Agenda com link fixo do Meet</td>
+<td>Vinicius Vieira</td>
+<td>23/09</td>
+<td>Pendente</td>
+</tr>
+<tr>
+<td>A4</td>
+<td>Verificação em pares: conferir e consolidar os apontamentos da frente na planilha compartilhada</td>
+<td>as três duplas (D12)</td>
+<td>23/09, 21h</td>
+<td>Pendente</td>
+</tr>
+<tr>
+<td>A5</td>
+<td>Envio da verificação em pares no canal que a monitoria indicar</td>
+<td>Vinicius Vieira</td>
+<td>24/09, 11h</td>
+<td>Pendente</td>
+</tr>
+<tr>
+<td>A6</td>
+<td>Dividir RF01 e RF04 em até três requisitos cada</td>
+<td>equipe (dono a definir no Planning)</td>
+<td>Sprint 2</td>
+<td>Pendente</td>
+</tr>
+<tr>
+<td>A7</td>
+<td>Reorganizar as tabelas das seções 8.2 e 8.3</td>
+<td>equipe (dono a definir no Planning)</td>
+<td>Sprint 2</td>
+<td>Pendente</td>
+</tr>
+<tr>
+<td>A8</td>
+<td>Atualizar o mapa de stakeholders e a área de captação de recursos (B2)</td>
+<td>Daniel Batista e Maria Eduarda Marques</td>
+<td>Sprint 2</td>
+<td>Pendente</td>
+</tr>
+<tr>
+<td>A9</td>
+<td>Redigir DoR e DoD a partir do material existente e publicar na seção 9</td>
+<td>equipe (dono a definir no Planning)</td>
+<td>início da Sprint 2</td>
+<td>Pendente</td>
+</tr>
+<tr>
+<td>A10</td>
+<td>Reunir as evidências dos ritos da Sprint 1 (capturas das dailies, links das atas)</td>
+<td>Vinicius Vieira e Maria Eduarda Marques</td>
+<td>Sprint 2</td>
+<td>Pendente</td>
+</tr>
+<tr>
+<td>A11</td>
+<td>Enviar as dailies atrasadas e a do dia no grupo</td>
+<td>todos</td>
+<td>23/09</td>
+<td>Pendente</td>
+</tr>
+<tr>
+<td>A12</td>
+<td>Dojo de Lucas: exercício e PR</td>
+<td>Lucas de Paula Leal</td>
+<td>a combinar</td>
+<td>Pendente</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="5-detalhes-por-topico">5. Detalhes por tópico<a class="headerlink" href="#5-detalhes-por-topico" title="Permanent link">&para;</a></h2>
+<h3 id="sprint-review-meta-e-criterios-de-aceitacao">Sprint Review: meta e critérios de aceitação<a class="headerlink" href="#sprint-review-meta-e-criterios-de-aceitacao" title="Permanent link">&para;</a></h3>
+<p>A meta da Sprint 1 previa Product Backlog estruturado no quadro, histórias com critérios de aceitação e priorização por MoSCoW. O quadro foi estruturado e reorganizado (views por sprint, por pessoa, de rastreabilidade, de priorização, de revisão pendente e das issues do docente; campos de valor de negócio, esforço técnico e MVP; automações nativas; formulários de issue). A lista de requisitos foi publicada (seção 8 v2.1: RF01–RF37, RNF01–RNF18, regras RN-01 a RN-12, matriz 8.4). A priorização item a item não ocorreu. A representação do processo atual (B1) foi publicada; a matriz de rastreabilidade foi integrada à seção 8.4; o glossário foi descartado porque o vocabulário do Instituto está nas seções 1, 2 e 8; a entrevista com a área Administrativo-Financeira ocorreu em 15/09.</p>
+<h3 id="incremento-e-retorno-da-monitoria">Incremento e retorno da monitoria<a class="headerlink" href="#incremento-e-retorno-da-monitoria" title="Permanent link">&para;</a></h3>
+<p>A monitora apontou requisitos longos misturando comportamento, regra e implementação, tecnologia dentro de requisitos, planejamento dentro da rastreabilidade e métricas sem origem. A versão 2.1 da seção 8 retirou tecnologia e planejamento, encurtou dez requisitos e reuniu na 8.8 as regras que eles pressupunham. Ficam para a Sprint 2 a divisão de RF01 e RF04 (D5), a reorganização das tabelas (D11) e a origem dos valores iniciais marcados 🔧 (por exemplo, sete dias corridos para o alerta de vencimento), a confirmar com o Instituto.</p>
+<h3 id="infraestrutura">Infraestrutura<a class="headerlink" href="#infraestrutura" title="Permanent link">&para;</a></h3>
+<p>Vinicius Vieira apresentou a topologia prevista para o produto: servidor privado virtual com PostgreSQL, Redis, API e frontend, gerenciados pelo Coolify, com cópias de segurança automatizadas e armazenamento externo compatível com S3 (Backblaze, dentro do limite gratuito de 10 GB, ou conta pessoal de Vinicius de forma temporária). O acesso ao servidor será compartilhado com cuidado para não interromper o serviço.</p>
+<h3 id="retrospectiva">Retrospectiva<a class="headerlink" href="#retrospectiva" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Funcionou:</strong> comunicação e engajamento no grupo; entrega da lista de requisitos no prazo; atendimento às exigências do docente na Unidade 1; presença nas reuniões com o Instituto.</li>
+<li><strong>Não funcionou:</strong> subestimação da carga da disciplina, que consumiu o tempo de estudo individual e dos dojos; cerca de vinte pull requests abertos ao mesmo tempo, sem aviso aos revisores e sem registro formal de revisão; refinamento não realizado; ausência de compromisso fixo de validação com o Instituto na agenda; indisponibilidades pontuais que afetaram a condução de reuniões.</li>
+<li><strong>Ações:</strong> D7 (reunião recorrente), D8 (issues maiores por dupla), D10 (revisão registrada), rotina semanal de contato com a monitoria para destravar pendências, dailies em dia.</li>
+</ul>
+<h3 id="verificacao-em-pares-atividade-2">Verificação em pares (Atividade 2)<a class="headerlink" href="#verificacao-em-pares-atividade-2" title="Permanent link">&para;</a></h3>
+<p>A equipe usará a planilha compartilhada criada por Rodrigo Henrique, no formato pedido pelo docente (código, tipo, problema, explicação, ajuste). Os apontamentos pré-levantados servem de ponto de partida; cada frente confere no site da SevenSpecs, reescreve com as próprias palavras e consolida. Prazo da atividade: 24/09, 12h; fechamento interno em 23/09 para margem.</p>
+<h3 id="prazo-de-2909">Prazo de 29/09<a class="headerlink" href="#prazo-de-2909" title="Permanent link">&para;</a></h3>
+<p>As Atividades 3 e 4 do Aprender exigem, até 29/09, a lista ajustada e validada e a definição do MVP com avaliação de valor de negócio feita com o cliente. A equipe avaliou que definir o MVP apenas a partir dos requisitos é difícil e que uma reunião online com o Instituto para apresentar a proposta e obter aprovação é necessária (D4).</p>
+<hr />
+<h2 id="6-pendencias-e-pontos-em-aberto">6. Pendências e pontos em aberto<a class="headerlink" href="#6-pendencias-e-pontos-em-aberto" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Pendência</th>
+<th>Depende de</th>
+<th>Encaminhamento</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>P1</td>
+<td>Horário do Sprint Planning 2</td>
+<td>enquete (A1)</td>
+<td>23/09</td>
+</tr>
+<tr>
+<td>P2</td>
+<td>Confirmação da reunião de validação de 24/09 pelo Instituto</td>
+<td>Maria Eduarda ↔ Instituto</td>
+<td>A2</td>
+</tr>
+<tr>
+<td>P3</td>
+<td>Canal de entrega da verificação em pares (Aprender ou monitoria)</td>
+<td>Camila Careli</td>
+<td>perguntar no grupo em 23/09</td>
+</tr>
+<tr>
+<td>P4</td>
+<td>Propostas marcadas com 🔧 acumuladas (critérios CA-02.2, CA-03.3, CA-04.3 do plano da Sprint 1; valores iniciais da seção 8)</td>
+<td>refinamento da Sprint 2 e validação com o Instituto</td>
+<td>Planning e reunião de 24/09</td>
+</tr>
+<tr>
+<td>P5</td>
+<td>Grafia e área de "Fran / Franci" na ata de 15/09 e na seção 1.1; correções da ata de 15/09</td>
+<td>Vinicius, Daniel e Caio</td>
+<td>não tratado nesta reunião; decidir no Planning</td>
+</tr>
+<tr>
+<td>P6</td>
+<td>Dojo de Lucas e fechamento das tarefas dos dois dojos</td>
+<td>Lucas</td>
+<td>A12</td>
+</tr>
+<tr>
+<td>P7</td>
+<td>Situação da tarefa B1 (representação do processo atual) no quadro: publicada, ainda "Em Revisão"</td>
+<td>Scrum Master</td>
+<td>fechar após a ata</td>
+</tr>
+<tr>
+<td>P8</td>
+<td>Histórias HU-01 a HU-06: critérios no formato antigo, sem vínculo a RF/RNF/RN</td>
+<td>Sprint 2</td>
+<td>reescrever sob a DoR (D6)</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="7-insumos-para-o-documento-de-visao">7. Insumos para o Documento de Visão<a class="headerlink" href="#7-insumos-para-o-documento-de-visao" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Achado desta reunião</th>
+<th>Entra em</th>
+<th>Situação</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Definition of Ready e Definition of Done (D6)</td>
+<td>9. DoR e DoD</td>
+<td>a redigir</td>
+</tr>
+<tr>
+<td>Lições da Sprint 1 (retrospectiva)</td>
+<td>11. Lições aprendidas (Unidade 2)</td>
+<td>a redigir</td>
+</tr>
+<tr>
+<td>Reunião de validação semanal com o Instituto; reunião de 24/09</td>
+<td>7.2 Comunicação e validação</td>
+<td>a redigir após a reunião</td>
+</tr>
+<tr>
+<td>Divisão de RF01 e RF04; reorganização das tabelas 8.2 e 8.3</td>
+<td>8. Requisitos de software</td>
+<td>a redigir</td>
+</tr>
+<tr>
+<td>Evidências dos ritos (dailies, atas)</td>
+<td>5. Engenharia de requisitos; página de processo</td>
+<td>a reunir</td>
+</tr>
+<tr>
+<td>Duplas e fluxo de revisão registrada (D2, D10)</td>
+<td>7.1 Composição da equipe; Boas práticas no GitHub</td>
+<td>a redigir</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="historico-de-versoes">Histórico de versões<a class="headerlink" href="#historico-de-versoes" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Versão</th>
+<th>Data</th>
+<th>Autor</th>
+<th>Descrição</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0.1</td>
+<td>22/09/2026</td>
+<td>Vinicius Vieira</td>
+<td>Rascunho a partir das anotações automáticas da reunião; horário de término, link da transcrição e confirmação de Maria Eduarda pendentes</td>
+</tr>
+<tr>
+<td>1.0</td>
+<td>29/09/2026</td>
+<td>Vinicius Vieira e Caio Martins</td>
+<td>Revisão para publicação: leitura por segundo integrante, conferência com as anotações da reunião, retirada de referências internas</td>
+</tr>
+</tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Voltar para o topo
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Rodapé" >
+        
+          
+          <a href="../2026-09-21-reuniao-equipe/" class="md-footer__link md-footer__link--prev" aria-label="Anterior: 21/09/2026 — Equipe (alinhamento)">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Anterior
+              </span>
+              <div class="md-ellipsis">
+                21/09/2026 — Equipe (alinhamento)
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../2026-09-23-sprint-planning/" class="md-footer__link md-footer__link--next" aria-label="Próximo: 23/09/2026 — Sprint Planning">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Próximo
+              </span>
+              <div class="md-ellipsis">
+                23/09/2026 — Sprint Planning
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Equipe CyberSetor · Engenharia de Software · FCTE/UnB · 2026.2
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "../../..", "features": ["navigation.tabs", "navigation.tabs.sticky", "navigation.indexes", "navigation.instant", "navigation.tracking", "navigation.sections", "navigation.top", "navigation.footer", "content.action.edit", "content.code.copy", "toc.follow", "search.suggest", "search.highlight"], "search": "../../../assets/javascripts/workers/search.f8cc74c7.min.js", "translations": {"clipboard.copied": "Copiado para \u00e1rea de transfer\u00eancia", "clipboard.copy": "Copiar para \u00e1rea de transfer\u00eancia", "search.result.more.one": "mais 1 nesta p\u00e1gina", "search.result.more.other": "# mais nesta p\u00e1gina", "search.result.none": "Nenhum documento encontrado", "search.result.one": "1 documento encontrado", "search.result.other": "# documentos encontrados", "search.result.placeholder": "Digite para iniciar a busca", "search.result.term.missing": "Ausente", "select.version": "Selecione a vers\u00e3o"}}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.c8b220af.min.js"></script>
+      
+    
+  </body>
+</html>
