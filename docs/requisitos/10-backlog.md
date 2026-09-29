@@ -360,25 +360,25 @@ O **esforço técnico** de cada requisito é a média das três notas, arredonda
 | [RF06](8-requisitos.md#rf06) | HU-02 | 4 | 1 | MVP |
 | [RF07](8-requisitos.md#rf07) | HU-02 | 4 | 2 | MVP |
 | [RF08](8-requisitos.md#rf08) | HU-02 | 4 | 2 | MVP |
-| [RF09](8-requisitos.md#rf09) | HU-03 | 4 | 1 | Incremento 2 |
+| [RF09](8-requisitos.md#rf09) | HU-03 | 4 | 1 | MVP |
 | [RF10](8-requisitos.md#rf10) | HU-03 | 4 | 3 | Incremento 2 |
-| [RF11](8-requisitos.md#rf11) | HU-07 | 4 | 2 | Incremento 3 |
-| [RF12](8-requisitos.md#rf12) | HU-07 | 4 | 1 | Incremento 3 |
-| [RF13](8-requisitos.md#rf13) | HU-08 | 4 | 1 | Incremento 3 |
-| [RF14](8-requisitos.md#rf14) | HU-07, HU-08 | 4 | 2 | Incremento 3 |
-| [RF15](8-requisitos.md#rf15) | HU-07, HU-08 | 4 | 2 | Incremento 3 |
+| [RF11](8-requisitos.md#rf11) | HU-07 | 4 | 2 | MVP |
+| [RF12](8-requisitos.md#rf12) | HU-07 | 4 | 1 | MVP |
+| [RF13](8-requisitos.md#rf13) | HU-08 | 4 | 1 | MVP |
+| [RF14](8-requisitos.md#rf14) | HU-07, HU-08 | 4 | 2 | MVP |
+| [RF15](8-requisitos.md#rf15) | HU-07, HU-08 | 4 | 2 | MVP |
 | [RF16](8-requisitos.md#rf16) | HU-09 | 2 | 3 | Incremento 3 |
 | [RF17](8-requisitos.md#rf17) | HU-09 | 2 | 3 | Posterior |
 | [RF18](8-requisitos.md#rf18) | HU-12 | 2 | 3 | Posterior |
 | [RF19](8-requisitos.md#rf19) | HU-10 | 4 | 1 | Incremento 3 |
 | [RF20](8-requisitos.md#rf20) | HU-06 | 2 | 2 | Posterior |
 | [RF21](8-requisitos.md#rf21) | HU-06 | 2 | 1 | Posterior |
-| [RF22](8-requisitos.md#rf22) | HU-06, HU-08 | 4 | 2 | Incremento 3 |
-| [RF23](8-requisitos.md#rf23) | HU-07, HU-08 | 4 | 1 | Incremento 3 |
-| [RF24](8-requisitos.md#rf24) | HU-06, HU-07 | 4 | 1 | Incremento 3 |
-| [RF25](8-requisitos.md#rf25) | HU-07 | 4 | 2 | Incremento 3 |
-| [RF26](8-requisitos.md#rf26) | HU-15 | 4 🔧 | 1 | Incremento 2 |
-| [RF27](8-requisitos.md#rf27) | HU-15 | 4 🔧 | 3 | Incremento 2 |
+| [RF22](8-requisitos.md#rf22) | HU-06, HU-08 | 4 | 2 | MVP |
+| [RF23](8-requisitos.md#rf23) | HU-07, HU-08 | 4 | 1 | MVP |
+| [RF24](8-requisitos.md#rf24) | HU-06, HU-07 | 4 | 1 | MVP |
+| [RF25](8-requisitos.md#rf25) | HU-07 | 4 | 2 | MVP |
+| [RF26](8-requisitos.md#rf26) | HU-15 | 4 🔧 | 1 | MVP |
+| [RF27](8-requisitos.md#rf27) | HU-15 | 4 🔧 | 3 | MVP |
 | [RF28](8-requisitos.md#rf28) | HU-11 | 3 | 2 | Posterior |
 | [RF29](8-requisitos.md#rf29) | HU-11 | 3 | 1 | Posterior |
 | [RF30](8-requisitos.md#rf30) | HU-11 | 3 | 2 | Posterior |
@@ -398,7 +398,7 @@ Linhas: valor de negócio. Colunas: esforço técnico. Em negrito, os requisitos
 
 | Valor \ Esforço | 1 | 2 | 3 | 4 |
 | :---: | :--- | :--- | :--- | :--- |
-| **4** | **RF01**, **RF02**, **RF03**, **RF05**, **RF06**, RF09, RF12, RF13, RF19, RF23, RF24, RF26 🔧, **RF35**, **RF38**, **RF39** | **RF04**, **RF07**, **RF08**, RF11, RF14, RF15, RF22, RF25, **RF31**, RF33, **RF36** | RF10, RF27 🔧, RF32, RF34, **RF37** | — |
+| **4** | **RF01**, **RF02**, **RF03**, **RF05**, **RF06**, **RF09**, **RF12**, **RF13**, RF19, **RF23**, **RF24**, **RF26** 🔧, **RF35**, **RF38**, **RF39** | **RF04**, **RF07**, **RF08**, **RF11**, **RF14**, **RF15**, **RF22**, **RF25**, **RF31**, RF33, **RF36** | RF10, **RF27** 🔧, RF32, RF34, **RF37** | — |
 | **3** | RF29 | RF28, RF30 | — | — |
 | **2** | RF21 | RF20 | RF16, RF17, RF18 | — |
 | **1** | — | — | — | — |
@@ -408,23 +408,25 @@ Candidatos ao MVP pela regra da matriz: valor 4 com esforço 1 ou 2, e valor 3 c
 
 ### 10.2.6 MVP e incrementos
 
-O MVP é o primeiro recorte utilizável pelo Instituto: cadastrar o instrumento e o projeto, desdobrar requisitos e metas, dar responsável e prazo a cada meta, ser avisado dos vencimentos, registrar aditivos e gerar a prestação de contas com justificativas. Na validação, o Instituto definiu parcerias e metas como a entrega prioritária, com o relatório e a planilha tentados já no MVP.
+O MVP é o primeiro recorte utilizável pelo Instituto: cadastrar o instrumento e o projeto, desdobrar requisitos e metas, dar responsável e prazo a cada meta, ser avisado dos vencimentos, registrar aditivos, receber inscrições por link, QR Code ou presencialmente, atender pedidos dos titulares dos dados e gerar a prestação de contas com justificativas. Na validação, o Instituto definiu parcerias e metas como a entrega prioritária, apontou as inscrições como o que "facilitaria para todas as equipes" e confirmou tentar o relatório e a planilha já no MVP.
 
 | Incremento | Épicos e histórias | Requisitos funcionais |
 | :--- | :--- | :--- |
-| **MVP** | Requisito e meta: HU-01, HU-02, HU-14 · Relatório: HU-05, HU-13 | RF01 a RF08, RF31, RF35 a RF39 |
-| Incremento 2 | Atividade: HU-03 · Evidência: HU-04 · Pessoas: HU-15 | RF09, RF10, RF26, RF27, RF32 a RF34 |
-| Incremento 3 | Pessoas: HU-07, HU-08 · Presença em campo: HU-10 e o registro on-line da HU-09 | RF11 a RF15, RF16, RF19, RF22 a RF25 |
+| **MVP** | Requisito e meta: HU-01, HU-02, HU-14 · Relatório: HU-05, HU-13 · Pessoas: HU-07, HU-08, HU-15 · Atividade: cadastro da atividade (parte da HU-03) | RF01 a RF09, RF11 a RF15, RF22 a RF27, RF31, RF35 a RF39 |
+| Incremento 2 | Atividade: comprovações por modalidade (restante da HU-03) · Evidência: HU-04 | RF10, RF32 a RF34 |
+| Incremento 3 | Presença em campo: HU-10 e o registro on-line da HU-09 | RF16, RF19 |
 | Posterior | Presença em campo: registro sem conexão e sincronização (HU-09, HU-12) · Pessoas: HU-06 · Requisito e meta: HU-11 | RF17, RF18, RF20, RF21, RF28 a RF30 |
 
 **Justificativas do recorte.**
 
-- **Fluxo mínimo completo.** Os catorze requisitos do MVP formam um ciclo fechado, do cadastro do instrumento à emissão do relatório, sem depender de atividade, presença ou evidência.
+- **Fluxo mínimo completo.** O MVP fecha dois ciclos: do cadastro do instrumento à emissão do relatório, e da criação da atividade à lista de inscritos, com os controles de dados pessoais que a inscrição exige.
+- **Inscrições no MVP (HU-07, HU-08).** Valor 4 e esforço 1 ou 2 em todos os requisitos; o Instituto disse que elas "seriam excelentes" para acompanhar inscritos e metas em todas as equipes.
+- **RF09 (cadastrar atividade), da HU-03.** Entra no MVP por dependência, porque toda inscrição é feita em uma atividade. As comprovações por modalidade (RF10) ficam para o incremento 2, com as evidências; a HU-03 é dividida no refinamento.
+- **HU-15 no MVP, valor 4 🔧.** Com as inscrições, o sistema passa a guardar dados pessoais de participantes, e o atendimento aos direitos do titular é obrigação legal desde o primeiro dado. O RF27 (excluir ou anonimizar, esforço 3) entra por essa obrigação.
 - **RF37 (relatório em PDF), valor 4 e esforço 3.** Entra por proposta da equipe confirmada pelo Instituto, em forma reduzida: no MVP o PDF reproduz o relatório do RF36 sem as miniaturas de evidências, que chegam com o incremento 2.
 - **RF36 (relatório de execução).** No MVP o relatório traz metas, indicadores pactuados, situação registrada e justificativas; o índice de comprovações chega com a evidência (incremento 2) e o atingido calculado, com o RF28 (HU-11).
-- **HU-05 e HU-13 em recorte parcial.** Os critérios que dependem de evidência ou de presença (índice e miniaturas de evidências, bloqueio por rascunho de evidência, exportação de atividades e presenças) são atendidos nos incrementos seguintes; as duas histórias são divididas no refinamento antes da construção, como a HU-09 (registro on-line e registro sem conexão).
-- **Requisitos de valor 4 e esforço baixo fora do MVP** (RF09, RF12, RF13, RF19, RF23, RF24, RF26 e outros): o Instituto ordenou evidências logo depois do MVP e o campo em seguida; além disso, inscrição e presença dependem da atividade (RF09), que chega no incremento 2.
-- **HU-15 no incremento 2.** É obrigação legal e fica pronta antes de o sistema receber o cadastro de participantes, que chega com as inscrições no incremento 3. O RF26 (retificar dados) tem esforço 1 e pode ser antecipado ao MVP para os dados da própria equipe.
+- **HU-05 e HU-13 em recorte parcial.** Os critérios que dependem de evidência ou de presença (índice e miniaturas de evidências, bloqueio por rascunho de evidência, exportação de presenças) são atendidos nos incrementos seguintes; as duas histórias são divididas no refinamento antes da construção, como a HU-09 (registro on-line e registro sem conexão).
+- **Evidências no incremento 2.** O Instituto ordenou as evidências logo depois do MVP; o esforço delas (RF32 e RF34 com esforço 3) não cabe na primeira entrega.
 - **HU-10 (lançamento fora do prazo).** Foi apresentada e validada junto com evidências, mas corrige presenças já registradas; por isso acompanha o registro de presença no incremento 3.
 - **RF16 (registro on-line de presença), valor 2.** Sobe para o incremento 3 por dependência: a HU-10, de valor 4, corrige presenças registradas por ele. O registro sem conexão (RF17) e a sincronização (RF18) ficam para depois.
 - **HU-11 (progresso e risco), valor 3.** Fica para o fim porque o cálculo (RF28) depende de presenças e evidências registradas; antes disso o painel mostraria números enganosos. O RF29, candidato pela matriz, só tem efeito junto com o RF28.
@@ -434,8 +436,8 @@ O MVP é o primeiro recorte utilizável pelo Instituto: cadastrar o instrumento 
 | Classe | Requisitos não funcionais | Motivo |
 | :--- | :--- | :--- |
 | Obrigatórios para o MVP | [RNF03](8-requisitos.md#rnf03), [RNF04](8-requisitos.md#rnf04), [RNF16](8-requisitos.md#rnf16), [RNF17](8-requisitos.md#rnf17), [RNF18](8-requisitos.md#rnf18) | Valem para todo o produto desde a primeira entrega: acesso autenticado por perfil, conforme os perfis levantados com o Instituto (8.5.1), compatibilidade, pilha tecnológica e cópia de segurança |
-| Associados a RFs do MVP | [RNF01](8-requisitos.md#rnf01), [RNF05](8-requisitos.md#rnf05), [RNF02](8-requisitos.md#rnf02), [RNF07](8-requisitos.md#rnf07), [RNF08](8-requisitos.md#rnf08), [RNF11](8-requisitos.md#rnf11), [RNF13](8-requisitos.md#rnf13) | Integridade das metas, minimização de dados na exportação, auditoria, guarda e integridade dos relatórios, desempenho do painel de prazos e da geração de relatórios |
-| Evolutivos | [RNF06](8-requisitos.md#rnf06), [RNF09](8-requisitos.md#rnf09), [RNF10](8-requisitos.md#rnf10), [RNF12](8-requisitos.md#rnf12), [RNF14](8-requisitos.md#rnf14), [RNF15](8-requisitos.md#rnf15) | Entram com os incrementos de evidência, inscrição, presença e operação sem conexão |
+| Associados a RFs do MVP | [RNF01](8-requisitos.md#rnf01), [RNF02](8-requisitos.md#rnf02), [RNF05](8-requisitos.md#rnf05), [RNF06](8-requisitos.md#rnf06), [RNF07](8-requisitos.md#rnf07), [RNF08](8-requisitos.md#rnf08), [RNF11](8-requisitos.md#rnf11), [RNF12](8-requisitos.md#rnf12), [RNF13](8-requisitos.md#rnf13), [RNF15](8-requisitos.md#rnf15) | Integridade das metas, auditoria, minimização de dados e prazo de exclusão, guarda e integridade dos relatórios, desempenho do painel de prazos, da inscrição pública e da geração de relatórios, usabilidade da inscrição em celular |
+| Evolutivos | [RNF09](8-requisitos.md#rnf09), [RNF10](8-requisitos.md#rnf10), [RNF14](8-requisitos.md#rnf14) | Entram com os incrementos de evidência e de operação sem conexão |
 | Não aplicáveis | — | Nenhum requisito não funcional foi descartado |
 
 ### 10.2.8 Validação com o Instituto
@@ -446,9 +448,9 @@ O MVP é o primeiro recorte utilizável pelo Instituto: cadastrar o instrumento 
 | Participantes do Instituto | Clara Novaes, diretora pedagógica; Maria Eduarda |
 | Participantes da equipe | Vinicius Vieira, Rodrigo Henrique Donato, Lucas de Paula Leal, Caio Martins; Daniel Batista 🔧 |
 | Apresentado | Quinze histórias em quatro jornadas, com os requisitos e as regras de negócio de cada uma, e a escala de valor de 4 a 1 |
-| Aprovado para o MVP | Parcerias e metas (HU-01, HU-02, HU-14) e prestação de contas com relatório e planilha (HU-05, HU-13), se couberem na capacidade |
-| Adiado | Evidências e atividades para o incremento 2; campo e inscrições para o incremento 3; registro sem conexão, histórico de participação e painel de risco para depois |
+| Aprovado para o MVP | Parcerias e metas (HU-01, HU-02, HU-14); inscrições públicas e assistidas (HU-07, HU-08); prestação de contas com relatório e planilha (HU-05, HU-13), se couberem na capacidade |
+| Adiado | Evidências para o incremento 2; registro de presença para o incremento 3; registro sem conexão, histórico de participação e painel de risco para depois |
 | Ajustes pedidos | Aviso de vencimento automático com 30 dias de antecedência e aviso manual na própria meta, enviado primeiro por e-mail; encerramento de projeto restrito à coordenação da execução, sem bloqueio por evidência antiga que não pode ser recuperada; trava do relatório por falta de justificativa mantida, com notificação à direção sem parar as demais áreas; correção fora do prazo sem aprovação; modalidades de atividade criadas pelo próprio Instituto |
 | Confirmado sem ajuste | Meta sem parâmetros fica em rascunho; aditivo gera nova versão e preserva a original; alteração em registro já publicado exige justificativa |
 | Pedido novo | Registrar a alteração do período de execução e atualizar os prazos que dependem dele, a especificar |
-| Divergências e pendências | A ordem dos incrementos vai à conferência do Instituto: as inscrições chegaram a ser indicadas para o MVP antes da ordem final; a equipe posicionou por dependência a HU-10 e o RF16 no incremento 3 e a HU-15 no incremento 2; a HU-15 não foi votada e seu valor vai à conferência; a repetição do aviso depois dos 30 dias está a definir; a trava do relatório sobre pagamentos depende da área financeira |
+| Divergências e pendências | A ordem dos incrementos vai à conferência do Instituto: as inscrições foram confirmadas para o MVP às 01:03 e, na ordem final, o campo ficou depois das evidências; a equipe manteve as inscrições no MVP e posicionou por dependência o RF09 e a HU-15 no MVP e a HU-10 e o RF16 no incremento 3; a HU-15 não foi votada e seu valor vai à conferência; a repetição do aviso depois dos 30 dias está a definir; a trava do relatório sobre pagamentos depende da área financeira |
