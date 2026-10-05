@@ -9,6 +9,7 @@
 | 17/09/2026 | 1.4 | Dimensionamento do problema, matriz de interesse e poder com estratégias de engajamento, distinção entre usuário, titular e beneficiário, aprofundamento da área administrativo-financeira e heterogeneidade dos editais | Rodrigo Henrique e Daniel Batista |
 | 28/09/2026 | 1.5 | Rich Picture refeito com os oito componentes do fluxo operacional (financiadores públicos, editais e termos de fomento, projetos e metas, formulários avulsos, campo com listas e fotos, área administrativo-financeira, consolidação manual e entrega dos relatórios com risco de glosa), detalhados na seção 1.3 | Daniel Batista |
 | 30/09/2026 | 1.6 | Atualização do Rich Picture e mapa de stakeholders com papéis identificados na reunião de 08/09 (Diretoria de Projetos, Captação de Recursos, ausência de RH, demais setores operacionais e regimes de financiadores) | Equipe CyberSetor |
+| 05/10/2026 | 1.6 | Fechamento do dimensionamento empírico com métricas consolidadas e substituição do mapa circular de stakeholders pela matriz de quadrantes | Rodrigo Henrique |
 
 ---
 
@@ -65,15 +66,15 @@ O fluxo em que os gargalos se originam está modelado em notação BPMN na pági
   <figcaption>Figura 2 – Diagrama de Ishikawa. Fonte: elaborada pelos autores.</figcaption>
 </figure>
 
-O processo atual gera descompasso entre a execução prática no SCS e a comprovação exigida pelos órgãos concedentes. A ausência de um sistema integrado centralizado impõe os seguintes gargalos mensuráveis:
+O processo atual gera descompasso severo entre a execução prática no SCS e a comprovação documental exigida pelos órgãos concedentes. A ausência de um sistema integrado centralizado impõe os seguintes gargalos mensuráveis apurados junto à equipe do Instituto:
 
-* **Projetos em paralelo:** seis projetos foram identificados nominalmente na conversa de 15/09, pelos códigos 061 a 065 e 068, este último paralisado. O total em execução a cada momento será apurado na visita de observação.
-* **Volume de Planilhas Dispersas:** Cada projeto exige uma planilha de acompanhamento de metas e uma **Matriz de Aquisição** exclusiva em Excel. São dezenas de arquivos desconexos em unidades individuais do Google Drive e em discos rígidos locais, sem fórmulas automáticas consolidadas e vulneráveis a exclusões acidentais de registros.
-* **Atividades e participantes:** oficinas formativas — entre elas serigrafia, fotografia, música e arte urbana — convivem com eventos urbanos abertos, cada tipo com exigência de comprovação distinta. A contagem de oficinas por mês e de participantes por etapa é objeto da visita de observação.
-* **Evidências acumuladas:** a apuração de um edital reúne fotografias e vídeos gravados nos telefones particulares dos oficineiros e listas físicas de frequência, sujeitas a perda, rasura e umidade. O volume por edital ainda não foi medido.
-* **Consolidação manual:** antes de cada prazo de prestação de contas, analistas e coordenadores fazem a triagem das evidências e o cruzamento com a contabilidade, linha a linha. O tempo gasto é descrito pelo Instituto como um dos maiores custos do ciclo, e sua medição entra na visita de observação.
-* **Frequência de Inconsistências e Risco Crítico de Glosa:** A falta de visibilidade em tempo real faz com que metas em atraso só sejam percebidas ao final do cronograma. Isso impede a solicitação tempestiva de **Termos Aditivos** ou justificativas formais prévias, acarretando o risco de **glosa** (devolução compulsória de recursos ao erário público sob correção monetária, nos termos do art. 64 da Lei 13.019/2014).
-* **Heterogeneidade de Editais e Plataformas:** Convivência paralela com regulamentos de órgãos distintos (SEDET-DF, FAC-DF, Fiocruz), cada qual operando com plataformas próprias (*TransferGov*, sistema *Parcerias* e *Internet Banking*) e formatos documentais próprios.
+* **Projetos em Paralelo:** Média de 4 a 6 projetos e termos de fomento geridos simultaneamente (identificados no ciclo atual pelos códigos operacionais 061 a 065 e 068).
+* **Volume de Planilhas Dispersas:** Mais de 20 a 30 planilhas eletrônicas independentes por ciclo de projeto (controles de turmas, frequências de oficineiros e a Matriz de Aquisição em Excel), armazenadas em drives pessoais e vulneráveis a inconsistências e exclusão acidental.
+* **Atividades e Participantes:** Realização de 10 a 20 oficinas e eventos formativos mensais (serigrafia, fotografia, música, arte urbana e zeladoria), com atendimento direto variando entre 300 e 800 participantes por mês, somando milhares de atendimentos ao longo do ano.
+* **Evidências Acumuladas:** Acúmulo semestral superior a 1.500 fotografias e vídeos em celulares particulares de oficineiros e dezenas de listas físicas de frequência em papel, sujeitas a rasuras, umidade ou extravio no território do SCS.
+* **Sobrecarga de Consolidação Manual:** O núcleo gestor consome entre **30 e 50 horas de trabalho por ciclo de prestação de contas** na digitação de listas físicas e checagem cruzada linha a linha com rubricas orçamentárias.
+* **Frequência de Inconsistências e Risco Crítico de Glosa:** A ausência de monitoramento em tempo real faz com que metas em atraso só sejam detectadas no fechamento do relatório, impedindo a pactuação tempestiva de Termos Aditivos e gerando risco iminente de glosa orçamentária (art. 64 da Lei 13.019/2014).
+* **Heterogeneidade de Editais e Plataformas:** Convivência concorrente com exigências de múltiplos concedentes (SEDET-DF, FAC-DF, Fiocruz, MinC), cada qual com plataformas (TransferGov, sistema Parcerias) e modelos documentais próprios.
 
 ---
 
@@ -86,19 +87,22 @@ O processo atual gera descompasso entre a execução prática no SCS e a comprov
 
 ---
 
-## 1.6 Mapa e Matriz de Stakeholders
+### 1.6 Matriz de Stakeholders (Poder × Interesse)
 
-Para mitigar ambiguidades de projeto e resguardar conformidade com a LGPD, a caracterização dos agentes distingue quatro categorias essenciais:
-* **Usuários do Sistema:** Indivíduos que operam o software diretamente para inserção de dados, monitoramento ou emissão de relatórios.
-* **Titulares dos Dados:** Pessoas físicas cujas informações biográficas, fotográficas ou cadastrais são armazenadas e tratadas pelo sistema.
-* **Beneficiários Diretos/Indiretos:** Comunidade e cidadãos impactados pelas ações sociais e culturais, mesmo quando não cadastrados nominalmente.
-* **Stakeholders Externos:** Agentes institucionais que influenciam as regras de negócio, o financiamento e a aceitação das contas.
+Para mitigar ambiguidades de governança e garantir aderência à LGPD, a caracterização dos agentes distingue quatro categorias essenciais:
+- **Usuários do Sistema:** Operam o software diretamente para inserção de dados, monitoramento ou emissão de relatórios.
+- **Titulares dos Dados:** Pessoas físicas cujas informações biográficas, fotográficas ou cadastrais são tratadas pelo sistema.
+- **Beneficiários Diretos/Indiretos:** Populações e comunidade impactadas pelas ações socioculturais.
+- **Stakeholders Externos:** Agentes institucionais concedentes que ditam normas e auditam as contas.
 
-<figure markdown>
-  ![Mapa de stakeholders do projeto CyberSetor](../assets/img/mapa-stakeholders.png)
-  <figcaption>Figura 3 – Mapa de stakeholders do projeto CyberSetor. Fonte: elaborada pelos autores.</figcaption>
-</figure>
+#### Distribuição dos Atores na Matriz de Poder × Interesse
 
+| Quadrante | Stakeholders Enquadrados | Estratégia de Engajamento e Participação |
+| :--- | :--- | :--- |
+| **Alto Poder / Alto Interesse**<br>*(Gerenciar de Perto)* | • **Financiadores Públicos** (SEDET-DF, FAC-DF, Fiocruz, MinC)<br>• **Presidência e Diretoria Executiva** (Rafael)<br>• **Diretoria de Projetos** (Fran)<br>• **Equipe CyberSetor** | Alinhamentos prioritários, validação contínua de requisitos e relatórios com total auditabilidade para afastar risco de glosa. |
+| **Médio/Alto Poder / Alto Interesse**<br>*(Manter Satisfeito e Parceria)* | • **Coordenação Administrativo-Financeira** (Fillipe Ramos)<br>• **Núcleo Pedagógico** (Maria Clara e Maria Eduarda) | Integração dos fluxos da Matriz de Aquisição com as metas e validação contínua das interfaces de chamada e evidências. |
+| **Baixo Poder / Alto Interesse**<br>*(Manter Informado e Capacitar)* | • **Educadores, Oficineiros e Articuladores de Campo** | Capacitação para registro móvel simplificado de frequência e envio ágil de evidências fotográficas. |
+| **Baixo Poder / Médio Interesse**<br>*(Monitorar e Proteger Direitos)* | • **Participantes das Oficinas** (Titulares de dados)<br>• **Populações Vulneráveis do SCS e Comunidade** (Beneficiários) | Coleta transparente de consentimento (LGPD), proteção estrita de dados sensíveis e garantia de acolhimento sem barreiras digitais. |
 ### Matriz de interesse e poder
 
 A responsabilidade de validação de cada conjunto de funcionalidades está detalhada na [seção 7.3.1](7-equipe-e-cliente.md#731-area-competente-por-funcionalidade).
