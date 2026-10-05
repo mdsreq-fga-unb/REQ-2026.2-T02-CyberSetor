@@ -58,6 +58,7 @@ O produto apoia o Instituto Cultural e Social No Setor a registrar cada informa�
 
 - :material-magnify: **[Cenário atual](visao/1-cenario-atual.md)** · quem é o cliente, qual é o problema e quem são os stakeholders
 - :material-lightbulb-on: **[Solução proposta](visao/2-solucao-proposta.md)** · objetivos, características, tecnologias e viabilidade
+- :material-format-list-checks: **[Requisitos](requisitos/8-requisitos.md)** · requisitos funcionais e não funcionais, DoR, DoD e backlog
 - :material-account-group: **[Processo e ritos](gestao/processo-scrumxp.md)** · como a equipe trabalha com ScrumXP
 - :material-calendar-check: **[Entregas](entregas/unidade-1.md)** · o que foi entregue em cada unidade
 
