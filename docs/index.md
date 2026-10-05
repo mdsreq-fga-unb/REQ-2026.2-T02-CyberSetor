@@ -8,9 +8,15 @@
 
 ## Sobre este site
 
-Este site reúne o **Documento de Visão de Produto e Projeto** da equipe CyberSetor e o registro do processo de trabalho da equipe. As entregas da disciplina são publicadas aqui, conforme o plano de ensino. A numeração das seções segue o template da disciplina (v8).
+Este site reúne o **Documento de Visão de Produto e Projeto** da equipe CyberSetor, a especificação de requisitos e o registro do processo de trabalho. A numeração das seções segue o template da disciplina (v8).
 
-O Instituto Cultural e Social No Setor é uma organização da sociedade civil sediada no Setor Comercial Sul, em Brasília, que constrói projetos culturais, sociais e formativos e presta contas a financiadores das metas pactuadas em editais. O produto em construção reúne em um fluxo único o ciclo de projeto e meta, atividade, inscrição, presença, evidência e relatório de prestação de contas, para que cada informação seja registrada uma vez, na origem, e alimente automaticamente os indicadores e os relatórios.
+O produto apoia o Instituto Cultural e Social No Setor a registrar cada informação uma vez, na origem, do projeto e da meta até o relatório de prestação de contas. Cliente, problema e solução estão detalhados nas seções [1](visao/1-cenario-atual.md) e [2](visao/2-solucao-proposta.md).
+
+??? note "Histórico de versões"
+
+    | Data | Versão | Descrição | Autor |
+    |---|---|---|---|
+    | 05/10/2026 | 1.1 | Apresentação resumida com remissão às seções 1 e 2; atalho para os requisitos na navegação | Maria Eduarda Marques |
 
 ## Equipe
 
