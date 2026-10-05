@@ -1,5 +1,9 @@
 # Processo e ritos (ScrumXP)
 
+| Data | Versão | Descrição | Autor |
+|---|---|---|---|
+| 05/10/2026 | 1.1 | Registro dos ritos das Sprints 1 e 2 com remissão às atas | Maria Eduarda Marques |
+
 A equipe CyberSetor adota o **ScrumXP**: o framework Scrum para o gerenciamento do trabalho e as práticas técnicas do eXtreme Programming para a engenharia. Esta página registra como o processo funciona na prática. A fundamentação da escolha está na seção 4 do Documento de Visão.
 
 ## Papéis e cerimônias
@@ -46,6 +50,16 @@ Critérios de aceitação:
 ```
 
 Cada história é aberta pelo formulário de história do repositório, que pede a história nesse formato, as características de produto e os objetivos específicos em caixas de marcação (seções 2.3 e 2.2), os RFs, RNFs e regras de negócio que a condicionam, os critérios de aceitação em lista e as dependências. No quadro do projeto, características e objetivos ficam em campos de seleção múltipla com os mesmos títulos.
+
+## Registro dos ritos
+
+| Sprint | Rito | Data | Registro |
+|---|---|---|---|
+| Sprint 1 | Sprint Planning | 08/09/2026 | [Ata](atas/2026-09-08-sprint-planning.md) |
+| Sprint 1 | Sprint Review e Retrospectiva | 22/09/2026 | [Ata](atas/2026-09-22-sprint-review-retrospectiva.md) |
+| Sprint 2 | Sprint Planning | 23/09/2026 | [Ata](atas/2026-09-23-sprint-planning.md) |
+
+As reuniões com o Instituto que alimentam a validação estão no [índice de atas](atas/index.md#interacoes-com-o-cliente).
 
 ## Práticas de XP
 
