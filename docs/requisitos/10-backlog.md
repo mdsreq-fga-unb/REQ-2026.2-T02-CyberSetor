@@ -7,6 +7,7 @@
 | 27/09/2026 | 1.0 | Estruturação inicial da seção e registro da avaliação de esforço técnico dos requisitos de CP1, CP6 e CP8 | Daniel Batista e Rodrigo Henrique |
 | 28/09/2026 | 1.1 | Adição da avaliação de esforço técnico dos requisitos de CP2, CP4 e CP7 | Caio Martins e Lucas Leal |
 | 29/09/2026 | 2.0 | Backlog geral com as quinze histórias e seus critérios de aceitação; valor de negócio validado com o Instituto; avaliação técnica dos requisitos de CP3, de CP5 e do RF20; tabela consolidada, matriz 4 × 4, MVP, incrementos, requisitos não funcionais do MVP e registro da validação; seção organizada em 10.1 e 10.2, como no template | Vinicius Vieira e Maria Eduarda Marques |
+| 05/10/2026 | 2.1 | Inclusão de âncoras HTML unívocas para as histórias de usuário (HU-01 a HU-15) para rastreabilidade direta a partir do catálogo | Rodrigo Henrique |
 
 ---
 
@@ -34,6 +35,7 @@ Quinze histórias de usuário, uma capacidade cada, organizadas em épicos. Cada
 | Pessoas | **HU-08** Inscrever presencialmente pessoa sem celular | [RF13](8-requisitos.md#rf13), [RF14](8-requisitos.md#rf14), [RF15](8-requisitos.md#rf15), [RF22](8-requisitos.md#rf22), [RF23](8-requisitos.md#rf23) |
 | Pessoas | **HU-15** Atender pedido do titular para corrigir, excluir ou anonimizar dados | [RF26](8-requisitos.md#rf26), [RF27](8-requisitos.md#rf27) |
 
+<a id="hu-01"></a>
 ??? note "HU-01 · Cadastrar requisitos e metas com parâmetros de aferição"
     Como Diretora de Projetos, quero cadastrar os requisitos do instrumento e as metas do plano de trabalho de um projeto, com os parâmetros de aferição de cada meta, para saber exatamente o que precisa ser comprovado, como e quando.
 
@@ -45,6 +47,7 @@ Quinze histórias de usuário, uma capacidade cada, organizadas em épicos. Cada
 
     **Requisitos não funcionais e regras de negócio:** RNF01, RNF02; RN-01, RN-02
 
+<a id="hu-02"></a>
 ??? note "HU-02 · Atribuir responsável e prazo a meta e acompanhar vencimentos"
     Como responsável de área do Instituto, quero atribuir responsável, setor e prazo a cada meta e acompanhar os vencimentos no painel do projeto, para saber com quem está cada demanda e agir antes de o prazo expirar.
 
@@ -57,6 +60,7 @@ Quinze histórias de usuário, uma capacidade cada, organizadas em épicos. Cada
 
     **Requisitos não funcionais e regras de negócio:** RNF11; RN-03
 
+<a id="hu-11"></a>
 ??? note "HU-11 · Acompanhar progresso e risco de meta"
     Como coordenadora de projeto, quero acompanhar o progresso de cada meta e ser avisada quando o ritmo estiver abaixo do planejado, para agir antes do fim do prazo em vez de descobrir na prestação de contas.
 
@@ -69,6 +73,7 @@ Quinze histórias de usuário, uma capacidade cada, organizadas em épicos. Cada
 
     **Requisitos não funcionais e regras de negócio:** RNF11; RN-08
 
+<a id="hu-14"></a>
 ??? note "HU-14 · Registrar termo aditivo como nova versão do plano"
     Como Diretora de Projetos, quero registrar um termo aditivo ou apostila como nova versão do plano de trabalho, para acompanhar as metas repactuadas sem perder o que foi pactuado originalmente.
 
@@ -80,6 +85,7 @@ Quinze histórias de usuário, uma capacidade cada, organizadas em épicos. Cada
 
     **Requisitos não funcionais e regras de negócio:** RNF02; RN-09
 
+<a id="hu-05"></a>
 ??? note "HU-05 · Gerar relatório de execução do objeto"
     Como Diretora de Projetos, quero gerar o relatório de execução do objeto de um projeto para um período, com metas previstas confrontadas aos resultados e às evidências vinculadas, para prestar contas sem montagem manual.
 
@@ -93,6 +99,7 @@ Quinze histórias de usuário, uma capacidade cada, organizadas em épicos. Cada
 
     **Requisitos não funcionais e regras de negócio:** RNF02, RNF07, RNF08, RNF13; RN-08, RN-11
 
+<a id="hu-13"></a>
 ??? note "HU-13 · Exportar dados do projeto em planilha aberta"
     Como Diretora de Projetos, quero exportar os dados de execução do projeto em planilha aberta, para permitir conferências internas e auditorias externas independentes e não depender do sistema para preservar a informação.
 
@@ -105,6 +112,7 @@ Quinze histórias de usuário, uma capacidade cada, organizadas em épicos. Cada
 
     **Requisitos não funcionais e regras de negócio:** RNF02, RNF05
 
+<a id="hu-03"></a>
 ??? note "HU-03 · Cadastrar atividade por modalidade de objeto"
     Como coordenador pedagógico, quero cadastrar uma atividade vinculada a um projeto e a uma modalidade de objeto, para que o sistema indique quais comprovações serão exigidas dessa atividade.
 
@@ -117,6 +125,7 @@ Quinze histórias de usuário, uma capacidade cada, organizadas em épicos. Cada
 
     **Requisitos não funcionais e regras de negócio:** RN-04
 
+<a id="hu-04"></a>
 ??? note "HU-04 · Vincular evidência a atividade e meta"
     Como educador, quero anexar uma evidência a uma atividade e vinculá-la a uma ou mais metas, para que a comprovação já nasça organizada por meta.
 
@@ -130,6 +139,7 @@ Quinze histórias de usuário, uma capacidade cada, organizadas em épicos. Cada
 
     **Requisitos não funcionais e regras de negócio:** RNF07, RNF09, RNF14; RN-10, RN-11, RN-12
 
+<a id="hu-09"></a>
 ??? note "HU-09 · Registrar presença em campo sem conexão"
     Como educador em campo, quero registrar a presença dos participantes no meu celular mesmo sem internet, para que o registro nasça digital no local da atividade e não volte para o papel.
 
@@ -143,6 +153,7 @@ Quinze histórias de usuário, uma capacidade cada, organizadas em épicos. Cada
 
     **Requisitos não funcionais e regras de negócio:** RNF09, RNF15
 
+<a id="hu-10"></a>
 ??? note "HU-10 · Lançar ou corrigir presença fora do prazo com justificativa"
     Como coordenador autorizado, quero lançar ou corrigir uma presença depois da data da atividade, informando a justificativa, para manter o registro correto sem apagar o que foi registrado antes.
 
@@ -155,6 +166,7 @@ Quinze histórias de usuário, uma capacidade cada, organizadas em épicos. Cada
 
     **Requisitos não funcionais e regras de negócio:** RNF02, RNF04
 
+<a id="hu-12"></a>
 ??? note "HU-12 · Sincronizar presenças sem duplicidade"
     Como educador, quero que as presenças registradas sem conexão sejam enviadas assim que o celular voltar a ter internet, sem duplicar nem perder registros, para confiar no resultado da chamada.
 
@@ -168,6 +180,7 @@ Quinze histórias de usuário, uma capacidade cada, organizadas em épicos. Cada
 
     **Requisitos não funcionais e regras de negócio:** RNF01, RNF03, RNF09, RNF10
 
+<a id="hu-06"></a>
 ??? note "HU-06 · Consultar histórico de participação de pessoa"
     Como integrante do núcleo pedagógico, quero consultar o histórico de participação e a carga horária acumulada de uma pessoa em diferentes projetos, para convidá-la a atividades compatíveis com seu perfil, respeitando a autorização de contato que ela registrou.
 
@@ -181,6 +194,7 @@ Quinze histórias de usuário, uma capacidade cada, organizadas em épicos. Cada
 
     **Requisitos não funcionais e regras de negócio:** RNF04, RNF05
 
+<a id="hu-07"></a>
 ??? note "HU-07 · Inscrever-se em atividade por link ou QR Code"
     Como pessoa interessada em uma atividade do Instituto, quero me inscrever por um link ou QR Code no celular, sem criar conta, para garantir minha vaga sem depender de a equipe transcrever meus dados.
 
@@ -195,6 +209,7 @@ Quinze histórias de usuário, uma capacidade cada, organizadas em épicos. Cada
 
     **Requisitos não funcionais e regras de negócio:** RNF05, RNF12, RNF15; RN-05, RN-06
 
+<a id="hu-08"></a>
 ??? note "HU-08 · Inscrever presencialmente pessoa sem celular"
     Como coordenador ou educador, quero inscrever presencialmente uma pessoa que não tem celular ou conexão, para que ela participe nas mesmas condições de quem se inscreve pelo link.
 
@@ -207,6 +222,7 @@ Quinze histórias de usuário, uma capacidade cada, organizadas em épicos. Cada
 
     **Requisitos não funcionais e regras de negócio:** RNF05, RNF15; RN-05, RN-06
 
+<a id="hu-15"></a>
 ??? note "HU-15 · Atender pedido do titular para corrigir, excluir ou anonimizar dados"
     Como integrante do núcleo pedagógico, quero atender o pedido de uma pessoa para corrigir, excluir ou anonimizar seus dados, para cumprir os direitos do titular sem comprometer a prestação de contas.
 
