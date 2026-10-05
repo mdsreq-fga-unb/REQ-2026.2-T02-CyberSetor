@@ -15,6 +15,7 @@ Este histórico é o do Documento de Visão como um todo. Cada seção traz, no 
 | 15/09/2026 | 1.4 | Solução proposta revista quanto a dados pessoais, custo, topologia e cópia de segurança; processo de validação e critérios de aceitação em lista | Equipe CyberSetor |
 | 17/09/2026 | 1.5 | Riscos da intervenção social aprofundados; calendário alinhado ao plano de sprint e aos prazos da Unidade 2; cadência de validação semanal; correções de coerência, de base legal e de nomenclatura em todas as seções | Equipe CyberSetor |
 | 29/09/2026 | 1.6 | Definition of Ready, com os critérios INVEST, e Definition of Done na seção 9; processo de validação ligado a elas | Equipe CyberSetor |
+| 05/10/2026 | 1.7 | Revisão editorial: correção de sintaxe Markdown no sumário e padronização executiva das descrições das seções | Rodrigo Henrique |
 
 ## Sumário
 
@@ -22,13 +23,13 @@ Este histórico é o do Documento de Visão como um todo. Cada seção traz, no 
 |---|---|
 | [1. Cenário atual do cliente e do negócio](1-cenario-atual.md) | Identificação do cliente, contexto, Rich Picture, problema, desafios, stakeholders e segmentação |
 | [2. Solução proposta](2-solucao-proposta.md) | Objetivo geral, objetivos específicos, características, tecnologias, análise competitiva, viabilidade e benefícios |
-| [3. Intervenção social](3-intervencao-social.md) | Impactos pretendidos, princípios, riscos da intervenção e suas mitigações |
-| [4. Estratégias de engenharia de software](4-estrategia-esw.md) | Estratégia priorizada, quadro comparativo e justificativa |
-| [5. Engenharia de requisitos](5-engenharia-requisitos.md) | Atividades e técnicas de ER no ScrumXP |
-| [6. Cronograma e entregas](6-cronograma.md) | Planejamento temporal do projeto |
-| [7. Interação entre equipe e cliente](7-equipe-e-cliente.md) | Composição da equipe, comunicação e validação |
-| [8. Requisitos de software](../requisitos/8-requisitos.md) | Unidade 2 |
-| [9. DoR e DoD](../requisitos/9-dor-dod.md) | Critérios para uma história entrar na sprint e para um item ser dado como concluído |
-| [10. Backlog de produto](../requisitos/10-backlog.md) | Unidade 2 |
-| [11. Lições aprendidas](../licoes-aprendidas/unidade-1.md) | Por unidade, após cada retrospectiva |
+| [3. Intervenção social](3-intervencao-social.md) | Impactos pretendidos, princípios, riscos da intervenção e suas mitigações operacionais |
+| [4. Estratégias de engenharia de software](4-estrategia-esw.md) | Estratégia priorizada, abordagem, ciclo de vida, processo ScrumXP e justificativas |
+| [5. Engenharia de requisitos](5-engenharia-requisitos.md) | Atividades, técnicas aplicadas e mapeamento de ER nas fases do ScrumXP |
+| [6. Cronograma e entregas](6-cronograma.md) | Planeamento temporal, dependências, escopo do MVP e validações |
+| [7. Interação entre equipe e cliente](7-equipe-e-cliente.md) | Composição da equipa, responsabilidades, cadência de comunicação e fluxo de validação |
+| [8. Requisitos de software](../requisitos/8-requisitos.md) | Catálogo unificado de Requisitos Funcionais, Não Funcionais e Regras de Negócio |
+| [9. DoR e DoD](../requisitos/9-dor-dod.md) | Critérios de prontidão (Ready) e conclusão (Done) para as histórias de utilizador |
+| [10. Backlog de produto](../requisitos/10-backlog.md) | Histórias de utilizador, priorização técnica vs. valor e definição do MVP |
+| [11. Lições aprendidas](../licoes-aprendidas/unidade-1.md) | Retrospectivas e aprendizados consolidados por ciclo letivo |
 | [12. Referências bibliográficas](../referencias.md) | Fontes citadas no documento |
