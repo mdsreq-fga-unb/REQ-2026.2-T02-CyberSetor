@@ -66,6 +66,30 @@ A documentação detalhada (Documento de Visão de Produto e Projeto, Engenharia
 
 ---
 
+## 🔀 Como contribuir
+
+Este repositório guarda a documentação e o código do produto em linhas separadas:
+
+| Branch | Conteúdo |
+|---|---|
+| `main` | Documentação publicada no site |
+| `docs-homologacao` | Documentação revisada, antes da publicação |
+| `api-develop` → `api` | API: integração → produção |
+| `web-develop` → `web` | Front: integração → produção |
+
+Todo conteúdo entra por pull request revisado por integrante de outra dupla. Documentação: branch `docs/<assunto>` a partir da `docs-homologacao`. Código: `feat/api/HU-xx-<assunto>` ou `feat/web/HU-xx-<assunto>` a partir da branch de integração do componente. Para conferir o site localmente:
+
+```bash
+python -m venv .venv && source .venv/bin/activate
+pip install -r requirements.txt
+mkdocs serve          # pré-visualização em http://127.0.0.1:8000
+mkdocs build --strict # o mesmo teste que roda no CI
+```
+
+Branches, mensagens de commit, revisão, pontos de publicação e workflows estão em **[Boas práticas no GitHub](https://mdsreq-fga-unb.github.io/REQ-2026.2-T02-CyberSetor/gestao/boas-praticas-github/)** ([fonte](docs/gestao/boas-praticas-github.md)).
+
+---
+
 ## 👥 Equipe
 
 | | Integrante | Matrícula | GitHub | Papel |
