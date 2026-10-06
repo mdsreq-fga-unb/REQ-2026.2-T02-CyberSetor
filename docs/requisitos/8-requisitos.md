@@ -16,8 +16,7 @@
 | 27/09/2026 | 2.2 | RF01 e RF04 divididos; numeração contínua RF01 a RF39; redação de CP1, CP6 e CP8; matriz de rastreabilidade e regras de negócio sincronizadas | Daniel Batista e Rodrigo Henrique |
 | 28/09/2026 | 2.3 | Redação de CP2, CP4 e CP7; vínculo da atividade às metas (RF09); participante não inscrito na chamada (RF16); preparação da lista para uso sem conexão (RF17); descarte de rascunho (RF33) | Caio Martins e Lucas Leal |
 | 29/09/2026 | 2.4 | Aviso de vencimento com 30 dias e por e-mail (RF08, RN-03); modalidades criadas pelo Instituto (RF09, RF10); correção fora do prazo sem aprovação (RF19); trava do relatório com notificação à direção (RF35); encerramento do projeto (RN-11); justificativa para alterar registro concluído (RN-13); CP3, CP5 e RF20 reescritos; ator genérico em CP1, RF29 a RF31 e RF36; RN-07 revista; matriz pelas histórias HU-01 a HU-15; tabela de códigos provisórios retirada | Vinicius Vieira e Maria Eduarda Marques |
-| 05/10/2026 | 2.5 | Reestruturação das seções 8.2 e 8.3 em tabelas canônicas compactas com âncoras preservadas e links diretos para a seção 10 | Rodrigo Henrique |
-| 06/10/2026 | 2.6 | Ajustes pontuais pós-revisão do PR #78: restauração de termos normativos (RF20, RF28), minimização e salvamento local (RF09, RF16, RF17), reprogramação e proteção de imagem (RF31, RF34), atores autorizados e métricas estritas de RNF (RNF02, RNF03, RNF06, RNF07, RNF15) | Rodrigo Henrique |
+| 05/10/2026 | 2.5 | Seções 8.2 e 8.3 em tabelas por característica de produto e por categoria de RNF, com âncoras preservadas e ligação direta às histórias da seção 10 | Rodrigo Henrique |
 
 ---
 
@@ -145,7 +144,7 @@ A governança do catálogo adota:
 | Identificador | Requisito | Classificação (FURPS+ / Sommerville) | Descrição | Métrica Verificável |
 | :---: | :--- | :--- | :--- | :--- |
 | <a id="rnf15"></a>**RNF15** | Usabilidade móvel e inclusiva | Usabilidade / Requisito de Produto | Disponibilizar interface legível sob luz solar, ergonômica ao toque e acessível a usuários com menor letramento digital. | Alvos de toque de no mínimo 48x48 px; sem rolagem horizontal a partir de 360 px; 100% dos critérios aplicáveis da WCAG 2.1 nível AA; registro de presença por turma concluído em até 3 min; fluxo concluído em até 5 telas por 4 de 5 pessoas. |
-| <a id="rnf16"></a>**RNF16** | Compatibilidade entre navegadores e dispositivos | Suportabilidade / Requisito de Produto | Garantir equivalência operacional e visual em desktops e dispositivos móveis nos principais navegadores web. | 0 quebras de layout ou erros de script entre 360 px e 1920 px nas duas versões estáveis mais recentes de Chromium, Firefox e WebKit 🔧. |
+| <a id="rnf16"></a>**RNF16** | Compatibilidade entre navegadores e dispositivos | Suportabilidade / Requisito de Produto | Garantir equivalência operacional e visual em desktops e dispositivos móveis nos principais navegadores web. | 0 quebras de layout ou erros de script entre 360 px e 1920 px nas duas versões estáveis mais recentes de Chromium, Firefox e WebKit 🔧, em testes de regressão visual. |
 | <a id="rnf17"></a>**RNF17** | Restrição tecnológica e qualidade de código | Restrição de Implementação / Requisito Organizacional | Seguir as diretrizes da arquitetura homologada com tipagem estrita e validação estática no pipeline de CI. | 0 erros de tipagem no TypeScript estrito (`strict: true`), 0 avisos no linter e 100% de sucesso no build de produção. |
 
 ---
