@@ -29,7 +29,7 @@ Este histórico é o do Documento de Visão como um todo. Cada seção traz, no 
 | [6. Cronograma e entregas](6-cronograma.md) | Planejamento temporal, dependências, escopo do MVP e validações |
 | [7. Interação entre equipe e cliente](7-equipe-e-cliente.md) | Composição da equipe, responsabilidades, cadência de comunicação e fluxo de validação |
 | [8. Requisitos de software](../requisitos/8-requisitos.md) | Catálogo unificado de Requisitos Funcionais, Não Funcionais e Regras de Negócio |
-| [9. DoR e DoD](../requisitos/9-dor-dod.md) | Critérios de prontidão (Ready) e conclusão (Done) para as histórias de usuário |
+| [9. DoR e DoD](../requisitos/9-dor-dod.md) | Critérios de prontidão das histórias (Ready) e de conclusão dos itens de documentação e de código (Done) |
 | [10. Backlog de produto](../requisitos/10-backlog.md) | Histórias de usuário, priorização técnica vs. valor e definição do MVP |
-| [11. Lições aprendidas](../licoes-aprendidas/unidade-1.md) | Retrospectivas e aprendizados consolidados por ciclo letivo |
+| [11. Lições aprendidas](../licoes-aprendidas/unidade-1.md) | Lições e ações de melhoria registradas por unidade, a partir das retrospectivas |
 | [12. Referências bibliográficas](../referencias.md) | Fontes citadas no documento |

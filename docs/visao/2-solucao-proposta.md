@@ -127,6 +127,7 @@ A proposta é considerada viável, portanto, desde que quatro condições sejam 
 ## 2.7 Benefícios Esperados
 
 **Benefícios para o cliente (Instituto No Setor)**
+
 * Recuperação do tempo hoje consumido na transposição manual de dados entre planilhas, que passa a ser aplicado nas atividades de campo.
 * O acompanhamento das metas deixa de acontecer apenas ao final do ciclo e passa a ser contínuo, o que permite identificar riscos de descumprimento enquanto ainda há prazo para agir.
 * A confiabilidade dos números reportados aos financiadores tende a aumentar, porque as etapas de recontagem e transcrição — origem mais frequente dos erros — deixam de ser necessárias no fluxo previsto. 
@@ -134,6 +135,7 @@ A proposta é considerada viável, portanto, desde que quatro condições sejam 
 * Em prazo mais longo, a organização passa a dispor de memória institucional das ações realizadas, fortalecendo a elaboração de novas propostas de captação, e mantém autonomia total sobre seus dados.
 
 **Benefícios para os usuários (Participantes, Educadores e Diretores)**
+
 * **Para os participantes:** A inscrição passa a ser feita por link ou código QR, sem deslocamento prévio nem preenchimento de formulários em papel. O registro presencial pela coordenação é preservado para assegurar inclusão, e o registro de participação em campo torna-se rápido e sem interrupções.
 * **Para os educadores/oficineiros:** A lista de presença em papel é substituída pelo registro no próprio telefone. Fotografias e relatos passam a ser enviados já vinculados à atividade, sem depender de repasse por WhatsApp. A carga horária conduzida por pessoa fica registrada automaticamente.
-* **Para a coordenação e diretorias:** Capacidade de enxergar a execução consolidada dos projetos em tempo real e de gerar relatórios pontuais para envio aos financiadores sem trabalho braçal.
+* **Para a coordenação e diretorias:** Capacidade de enxergar a execução consolidada dos projetos em tempo real e de gerar relatórios pontuais para envio aos financiadores sem compilação manual.
