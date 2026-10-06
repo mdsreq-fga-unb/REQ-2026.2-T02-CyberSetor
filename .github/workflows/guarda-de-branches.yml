@@ -1,0 +1,54 @@
+name: guarda-de-branches
+
+# Confere, em todo pull request da linha da documentação, se a combinação de
+# origem e destino está na tabela de branches da página "Boas práticas no
+# GitHub" e se o pull request para a main ou para a docs-homologacao não traz
+# código (api/ ou web/). As linhas da API e do front, sem história comum com a
+# main, têm a própria guarda. Sem filtro de caminhos, para poder ser exigido no
+# merge. O nome da branch de origem chega por variável de ambiente, nunca
+# interpolado direto no script.
+
+on:
+  pull_request:
+    types: [opened, edited, reopened, synchronize]
+
+permissions:
+  contents: read
+  pull-requests: read
+
+jobs:
+  guarda:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Conferir origem e destino
+        env:
+          ORIGEM: ${{ github.head_ref }}
+          DESTINO: ${{ github.base_ref }}
+        run: |
+          echo "Origem:  $ORIGEM"
+          echo "Destino: $DESTINO"
+          case "$DESTINO" in
+            main)
+              [[ "$ORIGEM" == "docs-homologacao" || "$ORIGEM" == fix/* || "$ORIGEM" == chore/* ]] && exit 0 ;;
+            docs-homologacao)
+              [[ "$ORIGEM" == docs/* || "$ORIGEM" == "main" ]] && exit 0 ;;
+            *)
+              echo "Destino fora das branches protegidas da documentação; sem restrição de origem."
+              exit 0 ;;
+          esac
+          echo "::error title=Combinação não permitida::Pull request de '$ORIGEM' para '$DESTINO' não está na tabela de branches (Boas práticas no GitHub)."
+          exit 1
+
+      - name: Conferir que não há código no pull request
+        if: github.base_ref == 'main' || github.base_ref == 'docs-homologacao'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PR: ${{ github.event.pull_request.number }}
+        run: |
+          codigo=$(gh api "repos/$GITHUB_REPOSITORY/pulls/$PR/files" --paginate --jq '.[].filename' | grep -E '^(api|web)/' || true)
+          if [ -n "$codigo" ]; then
+            echo "::error title=Código na linha da documentação::Arquivos de api/ ou web/ pertencem às linhas da API e do front:"
+            echo "$codigo"
+            exit 1
+          fi
+          echo "Nenhum arquivo de código."
