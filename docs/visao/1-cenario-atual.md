@@ -69,7 +69,7 @@ O fluxo em que os gargalos se originam está modelado em notação BPMN na pági
 O processo atual gera descompasso severo entre a execução prática no SCS e a comprovação documental exigida pelos órgãos concedentes. A ausência de um sistema integrado centralizado impõe os seguintes gargalos mensuráveis (estimativas informadas pela coordenação do Instituto em reuniões de elicitação):
 
 - **Projetos em Paralelo:** Média de 4 a 6 projetos e termos de fomento geridos simultaneamente (identificados no ciclo atual pelos códigos operacionais 061 a 065 e 068).
-- **Volume de Planilhas Dispersas:** Mais de 20 a 30 planilhas eletrônicas independentes por ciclo de projeto (controles de turmas, frequências de oficineiros e a Matriz de Aquisição em Excel), armazenadas em drives pessoais e vulneráveis a inconsistências e exclusão acidental.
+- **Volume de Planilhas Dispersas:** 20 a 30 planilhas eletrônicas independentes por ciclo de projeto (controles de turmas, frequências de oficineiros e a Matriz de Aquisição em Excel), armazenadas em drives pessoais e vulneráveis a inconsistências e exclusão acidental.
 - **Atividades e Participantes:** Realização de 10 a 20 oficinas e eventos formativos mensais (serigrafia, fotografia, música, arte urbana e zeladoria), com atendimento direto variando entre 300 e 800 participantes por mês, somando milhares de atendimentos ao longo do ano.
 - **Evidências Acumuladas:** Acúmulo semestral superior a 1.500 fotografias e vídeos em celulares particulares de oficineiros e dezenas de listas físicas de frequência em papel, sujeitas a rasuras, umidade ou extravio no território do SCS.
 - **Sobrecarga de Consolidação Manual:** O núcleo gestor consome entre 30 e 50 horas de trabalho por ciclo de prestação de contas na digitação de listas físicas e checagem cruzada linha a linha com rubricas orçamentárias.
@@ -102,15 +102,17 @@ Para mitigar ambiguidades de governança e garantir aderência à LGPD, a caract
 
 ### 1.6.1 Matriz de Interesse e Poder
 
+A área do Instituto que valida cada conjunto de funcionalidades está na [seção 7.3.1](7-equipe-e-cliente.md#731-area-competente-por-funcionalidade).
+
 | Stakeholder | Quadrante (Poder / Interesse) | Estratégia de Engajamento e Participação |
 | :--- | :--- | :--- |
 | **Financiadores Públicos** (SEDET-DF, FAC-DF, Fiocruz, MinC) | Alto / Alto *(Gerenciar de perto)* | Alinhamentos prioritários, validação contínua de requisitos e relatórios com total auditabilidade para afastar risco de glosa. |
-| **Presidência e Diretoria Executiva** (Rafael) | Alto / Alto *(Gerenciar de perto)* | Envolvimento em decisões arquiteturais críticas e validação do escopo financeiro. |
-| **Diretoria de Projetos** (Fran) | Alto / Alto *(Gerenciar de perto)* | Validação primária do modelo de metas, indicadores e parâmetros de aferição. |
+| **Presidência e Diretoria Executiva** (Rafael) | Alto / Alto *(Gerenciar de perto)* | Validação das prioridades do produto e do painel gerencial. |
+| **Diretoria de Projetos e Captação de Recursos** (Fran) | Alto / Alto *(Gerenciar de perto)* | Validação primária do modelo de metas, indicadores e parâmetros de aferição. |
 | **Equipe CyberSetor** | Alto / Alto *(Gerenciar de perto)* | Condução da engenharia de requisitos e entregas funcionais quinzenais. |
-| **Coordenação Administrativo-Financeira** (Fillipe Ramos) | Médio / Alto *(Manter satisfeito)* | Integração dos fluxos da Matriz de Aquisição com as metas e aprovação de relatórios do objeto. |
+| **Coordenação Administrativo-Financeira** (Fillipe Ramos) | Médio / Alto *(Manter satisfeito)* | Integração dos fluxos da Matriz de Aquisição com as metas e aprovação de relatórios do objeto; a coordenação acumula a gestão de pessoal, na ausência de setor de RH. |
 | **Núcleo Pedagógico** (Maria Clara e Maria Eduarda) | Médio / Alto *(Manter satisfeito)* | Validação contínua das interfaces de campo, controle de atividades e repositório de evidências. |
-| **Educadores, Oficineiros e Articuladores de Campo** | Baixo / Alto *(Manter informado)* | Capacitação para registro móvel simplificado de frequência e envio ágil de evidências fotográficas. |
+| **Educadores, oficineiros e demais setores operacionais** (marcenaria, lavanderia, oficina de estilografia, atendimento de rua) | Baixo / Alto *(Manter informado)* | Capacitação para registro móvel simplificado de frequência e envio ágil de evidências fotográficas. |
 | **Participantes das Oficinas** (Titulares de dados) | Baixo / Médio *(Monitorar)* | Coleta transparente de consentimento (LGPD) e garantia de direitos de retificação/exclusão. |
 | **Populações Vulneráveis e Comunidade** (Beneficiários) | Baixo / Baixo *(Monitorar)* | Proteção estrita de dados sensíveis e garantia de acolhimento sem barreiras digitais (dados agregados). |
 
