@@ -9,6 +9,7 @@
 | 17/09/2026 | 1.4 | Papel do cliente na validação e na ordenação do backlog declarado na 7.1; retrospectiva registrada ao fim de cada sprint; papel do Product Owner interno unificado com a delimitação já publicada; compromisso de treinamento remetido à seção 6.4; cadência de validação registrada como semanal; reunião de 15/09 nas interações realizadas; tabela de áreas competentes sem coluna de andamento | Vinicius Vieira |
 | 29/09/2026 | 1.5 | Parágrafo que liga a entrada das histórias na sprint e a conclusão dos itens à seção 9 | Vinicius Vieira e Maria Eduarda Marques |
 | 05/10/2026 | 1.6 | Revisão editorial: aplicação de espaçamentos e formatação em tópicos estruturados para maior fluidez de leitura, preservando a íntegra das validações e argumentações | Rodrigo Henrique |
+| 06/10/2026 | 1.7 | Daily no próprio dia, até o fim do dia, em vez de até as 12h | Vinicius Vieira |
 
 ## 7.1 Composição da Equipe
 
@@ -58,7 +59,7 @@ O Product Owner interno é a mitigação para duas limitações conhecidas: a de
 
 **Reuniões e frequência**
 
-- **Daily assíncrona:** todo dia útil, até as 12h, no grupo *Dailys*, com o que foi feito, o que será feito e os impedimentos. Impedimento declarado é resolvido ou escalado pelo Scrum Master em até 24 horas.
+- **Daily assíncrona:** todo dia útil, no próprio dia, até o fim do dia, no grupo *Dailys*, com o que foi feito, o que será feito e os impedimentos. Impedimento declarado é resolvido ou escalado pelo Scrum Master em até 24 horas.
 - **Sprint Planning:** na primeira terça-feira de cada sprint, cerca de uma hora, no Google Meet.
 - **Refinamento do backlog:** semanal, cerca de trinta minutos, no Google Meet. É onde a Engenharia de Requisitos acontece no dia a dia.
 - **Sprint Review:** na última terça-feira de cada sprint, cerca de uma hora, com o incremento demonstrado e o retorno incorporado ao backlog. Quando o Instituto não puder estar presente, a avaliação é provisória e a confirmação fica para a validação semanal seguinte (§7.3).
