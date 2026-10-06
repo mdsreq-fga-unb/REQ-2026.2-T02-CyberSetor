@@ -4,6 +4,7 @@
 |---|---|---|---|
 | 03/09/2026 | 1.0 | Registro inicial das decisões técnicas e método da matriz de competências | Equipe CyberSetor |
 | 28/09/2026 | 1.1 | Explicitação do histórico de consolidação (pendência da Sprint 0 sanada no início da Sprint 1) | Daniel Batista |
+| 06/10/2026 | 1.2 | Dojos de nivelamento registrados como realizados, com o conteúdo de cada um | Vinicius Vieira |
 
 A pilha tecnológica citada na seção 2.4 do Documento de Visão não foi escolhida por preferência. Foi decidida a partir de uma matriz de competências preenchida pela equipe entre 02/09 e 03/09/2026 e consolidada integralmente no início da Sprint 1.
 
@@ -33,8 +34,8 @@ Com isso, cada decisão de camada seguiu uma de duas regras. Onde havia domínio
 
 O levantamento mostrou domínio consolidado nas camadas fundamentais, como TypeScript, React, PostgreSQL, controle de versão, contêineres e integração contínua, e apontou lacunas em ferramentas específicas, entre elas o mapeamento objeto-relacional e o armazenamento local para funcionamento sem conexão. Também mostrou que o conhecimento está concentrado em poucas pessoas, o que orienta a programação em pares desde a Sprint 1 e a distribuição de frentes por afinidade técnica.
 
-## Dojos programados
+## Dojos de nivelamento
 
-Sessões de 30 a 60 minutos, conduzidas pelos integrantes com maior experiência e gravadas no Google Meet, antes do início do desenvolvimento: Prisma e migrações · TanStack Query · shadcn/ui · Dexie e IndexedDB · NestJS.
+Dois dojos, gravados no Google Meet, em 10/09/2026, no início da Sprint 1: um de processo, com os critérios INVEST, o formato das histórias de usuário e os critérios de aceitação, aplicado ao refinamento das histórias reais do backlog; e um técnico, com uma fatia vertical completa em NestJS e Prisma e demonstrações de Next.js, Dexie, TanStack Query e shadcn/ui. O aprofundamento das ferramentas com lacuna continua em programação em par durante a construção.
 
-A planilha completa fica no Drive da equipe. Esta página resume o método e as decisões, sem os níveis individuais.
+Esta página resume o método e as decisões, sem os níveis individuais de cada integrante.

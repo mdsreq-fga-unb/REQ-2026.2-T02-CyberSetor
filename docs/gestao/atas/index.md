@@ -41,4 +41,4 @@ Esta política trata do **material de registro do projeto** — o que a equipe g
 | Citação de fala ou mensagem do cliente | Este site | Público | Com ciência do Instituto, registrada |
 | Dado pessoal de participante das atividades | No sistema em construção, não nos registros do projeto | Conforme o perfil de acesso definido para o sistema | **Não se publica** neste site, nem em ata, nem em extrato de documento do cliente |
 
-**Atas com o cliente.** São publicadas depois de conferidas pelo Instituto; enquanto a conferência não ocorre, a ata permanece em versão preliminar, e é essa versão que o site exibe.
+**Atas com o cliente.** São publicadas depois de conferidas pelo Instituto; enquanto a conferência não ocorre, a ata permanece em versão preliminar, fora do site.
