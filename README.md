@@ -3,7 +3,11 @@
 > Sistema integrado de gestão operacional, registro de atividades e apuração contínua de metas para o **Instituto Cultural e Social No Setor**.
 
 <p align="center">
-  <img src="./docs/assets/img/InstitutoNoSetor.png" alt="Logo do Instituto No Setor" style="background-color: white; padding: 10px; border-radius: 8px;" />
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="./docs/assets/img/InstitutoNoSetor-Dark.png">
+    <source media="(prefers-color-scheme: light)" srcset="./docs/assets/img/InstitutoNoSetor.png">
+    <img alt="Logo do Instituto No Setor" src="./docs/assets/img/InstitutoNoSetor.png" width="260">
+  </picture>
 </p>
 
 ---
