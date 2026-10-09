@@ -5,6 +5,7 @@
 | 06/09/2026 | 1.0 | Branches curtas a partir da `main`, Conventional Commits, pull request revisado e integração contínua | Vinicius Vieira |
 | 09/09/2026 | 1.1 | Verificação e publicação do site separadas por workflow | Vinicius Vieira |
 | 05/10/2026 | 2.0 | Branches por componente: documentação na `main` com homologação, API e web em linhas próprias; congelamento e marcação das entregas; controles da equipe na ausência de proteção de branch | Vinicius Vieira |
+| 07/10/2026 | 2.1 | Título de commit sem acentos; *rebase* para conflitos, sem *squash*; prazo de 24 horas para revisão de pull request | Maria Eduarda Marques |
 
 Acordo de trabalho da equipe para este repositório. O objetivo é que o histórico de commits e de pull requests seja a evidência do processo, e que ninguém dependa de memória para saber como contribuir.
 
@@ -73,12 +74,12 @@ Nas entregas com produto (Unidades 3 e 4), as pontas de `api` e `web` recebem a 
 
 ## Mensagens de commit
 
-Padrão Conventional Commits 1.0.0: `tipo(escopo): descrição`, com tipo obrigatório, escopo opcional e descrição no imperativo, em minúsculas, com até 72 caracteres.
+Padrão Conventional Commits 1.0.0: `tipo(escopo): descrição`, com tipo obrigatório, escopo opcional e descrição no imperativo, em minúsculas, com até 72 caracteres e sem acentos no título.
 
 ```
-docs(visao): migra seção 2 solução proposta
+docs(visao): migra secao 2 solucao proposta
 chore(ci): adiciona workflow de deploy do MkDocs
-fix(nav): corrige caminho da página de atas
+fix(nav): corrige caminho da pagina de atas
 ```
 
 Tipos usados: `docs`, `feat`, `fix`, `test`, `refactor`, `chore`, `ci`. Escopos da documentação: `visao`, `requisitos`, `gestao`, `entregas`, `assets`, `ci`, `nav`; do código, o módulo alterado (por exemplo, `feat(metas): …`).
@@ -97,7 +98,9 @@ Co-authored-by: Nome Sobrenome <email-da-conta@exemplo.com>
 
 Toda mudança entra por pull request; edição feita pela interface web direto na `main` é push sem revisão e não é usada. O corpo segue o modelo do repositório: o que mudou, qual seção do template é afetada, confirmação de que o build passou e quem revisa.
 
-A revisão é registrada no próprio pull request: um integrante de outra dupla aprova antes do merge, e o autor não faz merge sem essa aprovação. O merge é feito pelo botão do pull request, com o método *merge commit*, que preserva os commits de cada pessoa e as linhas de coautoria. Merge local seguido de push não deixa o registro da revisão.
+A revisão é registrada no próprio pull request: um integrante de outra dupla aprova antes do merge, e o autor não faz merge sem essa aprovação. O merge é feito pelo botão do pull request, com o método *merge commit*, que preserva os commits de cada pessoa e as linhas de coautoria. Merge local seguido de push não deixa o registro da revisão. *Squash* não é usado. Conflito com a branch de destino se resolve com *rebase* da branch de trabalho sobre ela, antes do merge.
+
+Quem é pedido como revisor tem até 24 horas para revisar. Passado o prazo, o autor avisa no grupo da equipe, e a revisão pode ser repassada a outro integrante de outra dupla.
 
 ## Integração contínua
 
