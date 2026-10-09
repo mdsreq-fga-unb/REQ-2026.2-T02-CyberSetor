@@ -27,6 +27,7 @@ Registro das reuniões da equipe e das interações com o cliente. Desde 27/08/2
 | [08/09/2026](2026-09-08-reuniao-presencial-instituto.md) | Presencial, na sede do Instituto | Aprofundamento das questões em aberto: estrutura organizacional, ciclo do projeto financiado e dores confirmadas |
 | [15/09/2026](2026-09-15-reuniao-alinhamento-instituto.md) | Videoconferência | Levantamento com coordenação administrativo-financeira, de execução e núcleo pedagógico: rotina administrativa, matriz de aquisição, separação de acesso por área (LGPD), infraestrutura com VPS/backup 6h e demandas de painel e comprovação em campo |
 | [21/09/2026](2026-09-21-reuniao-presencial-instituto.md) | Presencial, na sede do Instituto | Imersão operacional e análise prática de projetos reais com Franci, Rafael, Maria Eduarda e Maria Clara: apresentação do fluxo de trabalho por Franci, centralidade e fragilidade da Matriz de Aquisição, gargalos no Google Drive e visão de dashboard da Presidência |
+| [28/09/2026](2026-09-28-validacao-mvp-instituto.md) | Videoconferência | Validação do MVP e priorização por MoSCoW com Maria Clara Novaes (diretora pedagógica) e Maria Eduarda (Duda — Núcleo Pedagógico): parcerias e metas como base do MVP, inscrições públicas e assistidas no MVP, evidências no segundo incremento, aviso de vencimento com 30 dias |
 
 ## Política de registro, acesso e publicação
 
