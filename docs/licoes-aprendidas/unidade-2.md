@@ -20,7 +20,7 @@ Durante as Sprints 1 e 2, período dedicado à elicitação detalhada, modelagem
 - *Ação de melhoria:* Na retrospectiva de encerramento da Sprint 2, a equipe flexibilizou o horário limite formal para o envio da daily até o término do dia útil — preservando o preenchimento obrigatório do campo de impedimentos — e complementou a comunicação assíncrona com sincronizações verbais curtas ao término das aulas presenciais.
 - *Responsável:* Vinicius Vieira (Scrum Master) e integrantes da equipe.
 - *Prazo:* Ao longo da Sprint 3.
-- *Indicador da ação:* Atingimento de taxa de envio de ao menos 75% dos relatos dentro do dia útil durante a Sprint 3 e 100% dos impedimentos sinalizados tratados em até 24 horas.
+- *Indicador da ação:* Atingimento de taxa de envio de ao menos 80% dos relatos dentro do dia útil durante a Sprint 3 e 100% dos impedimentos sinalizados tratados em até 24 horas.
 
 **Revisão cruzada entre pares e qualidade dos requisitos**
 
