@@ -1,0 +1,58 @@
+name: ci-api
+
+# Integração contínua da linha da API: lint, testes e build em todo pull
+# request para api-develop e api, e no push a essas branches. Enquanto api/
+# não tiver package.json, o job só registra que ainda não há código; assim a
+# verificação existe desde o primeiro commit e pode ser exigida no merge.
+
+on:
+  pull_request:
+    branches: [api-develop, api]
+  push:
+    branches: [api-develop, api]
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Há código?
+        id: codigo
+        run: |
+          if [ -f api/package.json ]; then
+            echo "existe=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "existe=false" >> "$GITHUB_OUTPUT"
+            echo "::notice title=Sem código::api/package.json ainda não existe; lint, testes e build ficam para o esqueleto da API."
+          fi
+
+      - uses: actions/setup-node@v4
+        if: steps.codigo.outputs.existe == 'true'
+        with:
+          node-version: 22
+
+      - name: Instalar dependências
+        if: steps.codigo.outputs.existe == 'true'
+        working-directory: api
+        run: |
+          corepack enable
+          pnpm install --frozen-lockfile
+
+      - name: Lint
+        if: steps.codigo.outputs.existe == 'true'
+        working-directory: api
+        run: pnpm lint
+
+      - name: Testes
+        if: steps.codigo.outputs.existe == 'true'
+        working-directory: api
+        run: pnpm test
+
+      - name: Build
+        if: steps.codigo.outputs.existe == 'true'
+        working-directory: api
+        run: pnpm build

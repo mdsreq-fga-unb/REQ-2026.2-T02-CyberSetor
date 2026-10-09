@@ -1,0 +1,34 @@
+name: guarda-api
+
+# Confere, em todo pull request da linha da API, se a combinação de origem e
+# destino está na tabela de branches da página "Boas práticas no GitHub". O nome
+# da branch de origem chega por variável de ambiente, nunca interpolado direto
+# no script.
+
+on:
+  pull_request:
+    types: [opened, edited, reopened, synchronize]
+    branches: [api-develop, api]
+
+permissions:
+  contents: read
+
+jobs:
+  guarda:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Conferir origem e destino
+        env:
+          ORIGEM: ${{ github.head_ref }}
+          DESTINO: ${{ github.base_ref }}
+        run: |
+          echo "Origem:  $ORIGEM"
+          echo "Destino: $DESTINO"
+          case "$DESTINO" in
+            api)
+              [[ "$ORIGEM" == "api-develop" || "$ORIGEM" == fix/api-* ]] && exit 0 ;;
+            api-develop)
+              [[ "$ORIGEM" == feat/api/* || "$ORIGEM" == test/api/* || "$ORIGEM" == refactor/api/* || "$ORIGEM" == chore/api/* || "$ORIGEM" == "api" ]] && exit 0 ;;
+          esac
+          echo "::error title=Combinação não permitida::Pull request de '$ORIGEM' para '$DESTINO' não está na tabela de branches (Boas práticas no GitHub)."
+          exit 1

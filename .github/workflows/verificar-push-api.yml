@@ -1,0 +1,37 @@
+name: verificar-push-api
+
+# api-develop e api só recebem conteúdo por pull request revisado. Sem proteção
+# de branch disponível para a equipe, um push direto não é impedido; este
+# workflow o torna visível: falha quando o commit que chegou à branch não
+# pertence a nenhum pull request integrado. O primeiro commit de cada linha,
+# que a cria, é a única exceção prevista.
+
+on:
+  push:
+    branches: [api-develop, api]
+
+permissions:
+  contents: read
+  pull-requests: read
+
+jobs:
+  verificar:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Conferir se o commit veio de pull request
+        env:
+          GH_TOKEN: ${{ github.token }}
+          SHA: ${{ github.sha }}
+          AUTOR: ${{ github.actor }}
+          ANTES: ${{ github.event.before }}
+        run: |
+          if [ "$ANTES" = "0000000000000000000000000000000000000000" ]; then
+            echo "Criação da branch $GITHUB_REF_NAME; nada a conferir."
+            exit 0
+          fi
+          prs=$(gh api "repos/$GITHUB_REPOSITORY/commits/$SHA/pulls" --jq '[.[] | select(.merged_at != null) | .number] | join(",")')
+          if [ -z "$prs" ]; then
+            echo "::error title=Push direto em $GITHUB_REF_NAME::O commit $SHA, enviado por $AUTOR, não pertence a pull request integrado. Abrir pull request que corrija ou confirme a mudança."
+            exit 1
+          fi
+          echo "Commit $SHA integrado pelo pull request #$prs."
