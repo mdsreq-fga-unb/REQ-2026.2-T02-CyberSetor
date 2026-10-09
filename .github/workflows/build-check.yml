@@ -1,9 +1,12 @@
 name: build-check
 
-# Verifica se o site compila sem avisos. Roda em pull request para qualquer
-# branch e também em push nas branches de trabalho, para que um erro apareça
-# antes da abertura do PR. A branch main não entra aqui: nela o deploy-docs
-# executa a mesma verificação antes de publicar.
+# Verifica se o site compila sem avisos. Roda em pull request para a main e
+# para a docs-homologacao, e também em push nas branches de trabalho da
+# documentação e na docs-homologacao, para que um erro apareça antes da abertura
+# do PR. A branch main não entra no push: nela o deploy-docs executa a mesma
+# verificação antes de publicar. Sem filtro de caminhos, para servir de
+# verificação exigida. O site compilado fica como artefato "site" para a revisão.
+# As linhas da API e do front têm integração contínua própria.
 #
 # As páginas de acompanhamento do nav (entregas/debitos-u1.md e
 # gestao/sprints/tarefas-sprint-N.md) não estão versionadas: são geradas por .github/scripts/fetch_issues.py. Sem
@@ -66,3 +69,10 @@ jobs:
 
       - name: Compilar o site em modo estrito
         run: mkdocs build --strict
+
+      - name: Guardar o site compilado para a revisão
+        uses: actions/upload-artifact@v4
+        with:
+          name: site
+          path: site/
+          retention-days: 7

@@ -1,39 +1,75 @@
 name: deploy-docs
 
-# Publica o site no GitHub Pages. Executa na branch main, quando houver
-# atualização nas issues e a cada seis horas: mudanças de Status e Sprint no
-# quadro do projeto não geram evento no repositório, e as páginas de
-# acompanhamento são lidas do quadro.
+# Publica o site no GitHub Pages a partir da main. Gatilhos:
+# - push na main que altere a documentação ou a sua geração (filtro de
+#   caminhos abaixo); merge só de código não republica o site;
+# - atualização nas issues e a cada seis horas: mudanças de Status e Sprint no
+#   quadro do projeto não geram evento no repositório, e as páginas de
+#   acompanhamento são lidas do quadro;
+# - execução manual, com a versão a publicar (branch, tag ou commit; padrão main).
+#   Quando a versão é uma tag de entrega (uN-AAAA-MM-DD), o commit publicado na
+#   gh-pages recebe a tag uN-AAAA-MM-DD-pages: parte das páginas é gerada na hora
+#   a partir do quadro, e a tag da main sozinha não reproduz o site entregue.
+#
+# Congelamento: com a variável de repositório DEPLOY_FREEZE igual a "true", só a
+# execução manual publica; push na main, eventos de issue e a agenda são
+# ignorados, e o job aviso-congelamento registra o motivo no log.
 
 on:
   push:
     branches:
       - main
+    paths:
+      - 'docs/**'
+      - 'mkdocs.yml'
+      - 'requirements.txt'
+      - '.github/scripts/**'
+      - '.github/workflows/deploy-docs.yml'
   issues:
     types: [opened, edited, closed, reopened, labeled, unlabeled, assigned, unassigned]
   schedule:
-    - cron: "0 */6 * * *"
+    # Fora do minuto zero, horário de maior fila das execuções agendadas.
+    - cron: "17 */6 * * *"
   workflow_dispatch:
+    inputs:
+      versao:
+        description: "Branch, tag ou commit a publicar (tag de entrega: uN-AAAA-MM-DD)"
+        required: true
+        default: main
+        type: string
 
 permissions:
   contents: write
   issues: read
   repository-projects: read
 
-concurrency:
-  group: deploy-docs
-  cancel-in-progress: false
-
 jobs:
-  deploy:
+  aviso-congelamento:
+    if: vars.DEPLOY_FREEZE == 'true' && github.event_name != 'workflow_dispatch'
     runs-on: ubuntu-latest
     steps:
+      - name: Registrar publicação suspensa
+        run: echo "::warning title=Deploy congelado::DEPLOY_FREEZE=true. Evento ${{ github.event_name }} ignorado; o site publicado não foi alterado."
+
+  deploy:
+    if: vars.DEPLOY_FREEZE != 'true' || github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    # Concorrência no job, não no workflow: uma execução congelada (só aviso)
+    # não pode ocupar a fila nem substituir uma publicação pendente.
+    concurrency:
+      group: deploy-docs
+      cancel-in-progress: false
+    steps:
       - uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.versao || github.ref }}
 
       - name: Identificar o que está sendo publicado
+        env:
+          VERSAO: ${{ inputs.versao }}
         run: |
-          echo "Branch:  ${{ github.ref_name }}"
-          echo "Commit:  ${{ github.sha }}"
+          echo "Versão:  ${VERSAO:-$GITHUB_REF_NAME}"
+          echo "Commit:  $(git rev-parse HEAD)"
 
       - name: Configurar credenciais do git
         run: |
@@ -72,3 +108,22 @@ jobs:
 
       - name: Publicar no GitHub Pages
         run: mkdocs gh-deploy --force
+
+      - name: Marcar o commit publicado da entrega
+        if: github.event_name == 'workflow_dispatch'
+        env:
+          VERSAO: ${{ inputs.versao }}
+        run: |
+          if [[ "$VERSAO" =~ ^u[0-9]+-[0-9]{4}-[0-9]{2}-[0-9]{2}$ ]]; then
+            # Execução repetida com a mesma tag: a marcação da primeira
+            # publicação é mantida, e a execução não falha por isso.
+            if git ls-remote --exit-code --tags origin "refs/tags/${VERSAO}-pages" >/dev/null; then
+              echo "::warning title=Tag já existente::${VERSAO}-pages já marca uma publicação anterior; nenhuma marcação nova."
+              exit 0
+            fi
+            git fetch origin gh-pages
+            git tag "${VERSAO}-pages" origin/gh-pages
+            git push origin "${VERSAO}-pages"
+          else
+            echo "Versão $VERSAO não é tag de entrega; nenhuma marcação."
+          fi

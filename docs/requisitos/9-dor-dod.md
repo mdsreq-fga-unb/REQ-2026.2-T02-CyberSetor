@@ -6,6 +6,7 @@
 | :---: | :---: | :--- | :--- |
 | 29/09/2026 | 1.0 | Definition of Ready das histórias de usuário, com os critérios INVEST, e Definition of Done dos itens de documentação de requisitos e de código | Vinicius Vieira e Maria Eduarda Marques |
 | 05/10/2026 | 1.1 | Critério Testável da DoR limitado às ambiguidades identificadas na revisão | Maria Eduarda Marques |
+| 05/10/2026 | 1.2 | Conclusão do item na branch de integração do seu tipo: `docs-homologacao` para documentação, `api-develop` ou `web-develop` para código; demonstração no ambiente de homologação | Vinicius Vieira |
 
 ---
 
@@ -29,13 +30,13 @@ Uma história de usuário está pronta quando:
 
 ## 9.2 Definition of Done (DoD)
 
-A DoD tem uma versão para cada tipo de item. Antes de aprovar o pull request, quem revisa confere o conteúdo contra os itens da DoD; o item fica concluído quando o pull request aprovado é integrado à `main` e publicado.
+A DoD tem uma versão para cada tipo de item. Antes de aprovar o pull request, quem revisa confere o conteúdo contra os itens da DoD; o item fica concluído quando o pull request aprovado é integrado à branch de integração do seu tipo, descrita em [Boas práticas no GitHub](../gestao/boas-praticas-github.md#branches).
 
 ### 9.2.1 Itens de documentação de requisitos
 
 Um item de documentação de requisitos está concluído quando:
 
-1. **Está publicado no site**, integrado à `main` por pull request, com a geração do site em modo estrito (`mkdocs build --strict`) sem erro.
+1. **Está integrado à `docs-homologacao`** por pull request, com a geração do site em modo estrito (`mkdocs build --strict`) sem erro; vai ao site no ponto de publicação seguinte.
 2. **Foi revisado por outra dupla:** o pull request tem revisão aprovada, com registro, de integrante de outra dupla.
 3. **Está rastreável:** todo requisito funcional declarado ou alterado tem característica de produto, objetivo específico, história de usuário e, quando houver, as regras de negócio que o condicionam; todo requisito não funcional tem origem e requisitos relacionados na matriz de rastreabilidade.
 4. **Não traz solução nem planejamento no requisito funcional:** a descrição não cita tecnologia nem informação de planejamento.
@@ -45,10 +46,10 @@ Um item de documentação de requisitos está concluído quando:
 
 Um item de código está concluído quando:
 
-1. **Está integrado à `main`** por pull request revisado e aprovado por integrante de outra dupla.
+1. **Está integrado à `api-develop` ou à `web-develop`** por pull request revisado e aprovado por integrante de outra dupla.
 2. **Atende aos critérios de aceitação** da história de usuário.
 3. **Passa nos testes automatizados** na integração contínua.
 4. **Não degrada os requisitos não funcionais** associados à história, conferidos pela forma de verificação de cada um na [seção 8.3](8-requisitos.md#83-lista-de-requisitos-nao-funcionais-rnfs), inclusive os padrões de codificação da restrição tecnológica ([RNF17](8-requisitos.md#rnf17)).
 5. **Tem a documentação de uso e a da API atualizadas**, quando aplicável.
 6. **Incorpora o retorno do Instituto** sobre o item, quando houver, ou o registra no Product Backlog.
-7. **Pode ser demonstrado na Sprint Review**, em funcionamento no ambiente publicado.
+7. **Pode ser demonstrado na Sprint Review**, em funcionamento no ambiente de homologação.

@@ -1,0 +1,34 @@
+name: verificar-push
+
+# A main e a docs-homologacao só recebem conteúdo por pull request revisado. Sem
+# proteção de branch disponível para a equipe, um push direto não é impedido;
+# este workflow o torna visível: falha quando o commit que chegou à branch não
+# pertence a nenhum pull request integrado. Execução em vermelho no histórico do
+# Actions é o sinal para a equipe abrir um pull request de correção.
+
+on:
+  push:
+    branches:
+      - main
+      - docs-homologacao
+
+permissions:
+  contents: read
+  pull-requests: read
+
+jobs:
+  verificar:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Conferir se o commit veio de pull request
+        env:
+          GH_TOKEN: ${{ github.token }}
+          SHA: ${{ github.sha }}
+          AUTOR: ${{ github.actor }}
+        run: |
+          prs=$(gh api "repos/$GITHUB_REPOSITORY/commits/$SHA/pulls" --jq '[.[] | select(.merged_at != null) | .number] | join(",")')
+          if [ -z "$prs" ]; then
+            echo "::error title=Push direto em $GITHUB_REF_NAME::O commit $SHA, enviado por $AUTOR, não pertence a pull request integrado. Abrir pull request que corrija ou confirme a mudança."
+            exit 1
+          fi
+          echo "Commit $SHA integrado pelo pull request #$prs."
