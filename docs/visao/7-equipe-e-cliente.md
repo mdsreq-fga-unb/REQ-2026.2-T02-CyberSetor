@@ -8,22 +8,23 @@
 | 15/09/2026 | 1.3 | Processo de validação reestruturado em torno das conversas com o Instituto; Definition of Ready e Definition of Done remetidas à seção 9; política de gravações e transcrições | Caio Martins |
 | 17/09/2026 | 1.4 | Papel do cliente na validação e na ordenação do backlog declarado na 7.1; retrospectiva registrada ao fim de cada sprint; papel do Product Owner interno unificado com a delimitação já publicada; compromisso de treinamento remetido à seção 6.4; cadência de validação registrada como semanal; reunião de 15/09 nas interações realizadas; tabela de áreas competentes sem coluna de andamento | Vinicius Vieira |
 | 29/09/2026 | 1.5 | Parágrafo que liga a entrada das histórias na sprint e a conclusão dos itens à seção 9 | Vinicius Vieira e Maria Eduarda Marques |
+| 07/10/2026 | 1.6 | Especificação dos papéis de Engenharia de Requisitos de cada integrante na composição da equipe e remoção de menções operacionais genéricas | Daniel Batista e Maria Eduarda Marques |
 
 ## 7.1 Composição da Equipe
 
-A equipe é formada por seis estudantes. Todos compõem o Time de Desenvolvimento, que estima, seleciona o que cabe na sprint, constrói e testa. Dois papéis do Scrum estão designados: o Product Owner interno e o Scrum Master.
+A equipe é formada por seis estudantes de Engenharia de Software. Todos atuam ativamente como engenheiros de requisitos e desenvolvedores, assumindo responsabilidades de condução e orquestração nas seis atividades de Engenharia de Requisitos (elicitação, análise, declaração, representação, verificação e validação, organização e atualização), integradas aos papéis ágeis do ScrumXP (Product Owner interno e Scrum Master).
 
 !!! note "Duas pessoas chamadas Maria Eduarda"
     **Maria Eduarda Marques** é a integrante da equipe e Product Owner interno. **Maria Eduarda, do núcleo pedagógico**, é uma das representantes do Instituto, e vem sempre com essa identificação institucional; seu sobrenome não é registrado porque a equipe não o tem confirmado.
 
 | Integrante | Matrícula | GitHub | Papel | Responsabilidades |
 |---|---|---|---|---|
-| Maria Eduarda Denis Duarte Marques | 232014502 | [@mariadenis](https://github.com/mariadenis) | Líder da equipe · Product Owner interno | Contato com o Instituto; mantém o entendimento do cliente entre as validações; propõe a ordenação do Product Backlog a partir do valor indicado pelo Instituto; Dupla A (seção 1) |
-| Vinicius Angelo de Brito Vieira | 190118059 | [@viniciusvieira00](https://github.com/viniciusvieira00) | Scrum Master | Facilita as cerimônias; remove impedimentos; zela pelo processo, pelos prazos e pela infraestrutura do repositório e do site; Dupla B (seção 2) |
-| Rodrigo Henrique Donato de Souza | 241012374 | [@Fofodoido](https://github.com/Fofodoido) | Time de Desenvolvimento | Análise competitiva e intervenção social; diagramas e representações visuais; Dupla B (seções 2 e 3) |
-| Lucas de Paula Leal | 232004480 | [@lucaspaulaleal](https://github.com/lucaspaulaleal) | Time de Desenvolvimento | Relator das reuniões e guarda das transcrições; estratégia de engenharia de software; Dupla C (seções 4 a 6) |
-| Daniel da Silva Batista | 231011201 | [@daniboycam](https://github.com/daniboycam) | Time de Desenvolvimento | Cenário atual, Rich Picture e mapa de stakeholders; Dupla A (seção 1) |
-| Caio Flávio de Lima Martins Junior | 231011168 | [@caioflmjr](https://github.com/caioflmjr) | Time de Desenvolvimento | Engenharia de requisitos e cronograma; frente de operação sem conexão e infraestrutura no desenvolvimento; Dupla C (seções 4 a 6) |
+| Maria Eduarda Denis Duarte Marques | 232014502 | [@mariadenis](https://github.com/mariadenis) | Líder da equipe · Product Owner interno · Elicitação e Descoberta | Condução da interlocução, agendamento e elicitação contínua com o Instituto; gestão e ordenação do Product Backlog com base no valor de negócio validado com o cliente; declaração e validação de requisitos. |
+| Vinicius Angelo de Brito Vieira | 190118059 | [@viniciusvieira00](https://github.com/viniciusvieira00) | Scrum Master · Organização e Atualização · Análise e Consenso | Facilitação das cerimônias ágeis; remoção de impedimentos; gestão e organização do Product Backlog e rastreabilidade; orquestração da verificação e revisão por pares; análise documental e consenso de regras de negócio. |
+| Rodrigo Henrique Donato de Souza | 241012374 | [@Fofodoido](https://github.com/Fofodoido) | Engenharia de Requisitos: Representação · Análise e Consenso | Condução da modelagem de processos de negócio na notação BPMN; análise de consenso e intervenção social; análise de consistência de regras e documentos do Instituto; declaração e verificação de requisitos. |
+| Lucas de Paula Leal | 232004480 | [@lucaspaulaleal](https://github.com/lucaspaulaleal) | Engenharia de Requisitos: Elicitação e Descoberta · Declaração | Apoio e registro técnico das sessões de elicitação e entrevistas; consolidação de evidências; declaração de histórias de usuário e critérios de aceitação; análise de estratégias de engenharia de software e verificação. |
+| Daniel da Silva Batista | 231011201 | [@daniboycam](https://github.com/daniboycam) | Engenharia de Requisitos: Representação · Análise de Negócio | Elaboração e evolução dos modelos visuais de representação sistêmica (Rich Picture e Mapa de Stakeholders); análise do cenário atual do negócio e fluxos operacionais; declaração e verificação de requisitos. |
+| Caio Flávio de Lima Martins Junior | 231011168 | [@caioflmjr](https://github.com/caioflmjr) | Engenharia de Requisitos: Declaração · Organização e Rastreabilidade | Estruturação e declaração de requisitos (histórias de usuário, critérios de aceitação, DoR e DoD); manutenção da rastreabilidade e cronograma de requisitos; especificação de requisitos não funcionais e verificação. |
 
 ### 7.1.1 Responsabilidades por atividade de Engenharia de Requisitos
 
