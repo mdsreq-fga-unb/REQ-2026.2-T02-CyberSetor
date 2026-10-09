@@ -1,6 +1,10 @@
 # 12. Referências bibliográficas
 
-Relação das fontes citadas no Documento de Visão de Produto e Projeto. Referências sobre plataformas concorrentes sustentam as afirmações da seção 2.5 e foram conferidas nas datas indicadas.
+| Data | Versão | Descrição | Autor |
+|---|---|---|---|
+| 05/10/2026 | 1.1 | Inclusão das fontes citadas nas seções 1, 2, 3 e 8 (legislação, taxonomias de requisitos não funcionais e acessibilidade); fontes agrupadas por tema | Maria Eduarda Marques |
+
+Fontes citadas no site, com data de acesso para as consultadas on-line.
 
 ## Disciplina
 
@@ -16,11 +20,27 @@ INSTITUTO CULTURAL E SOCIAL NO SETOR. **Apresentação institucional.** Brasíli
 
 INSTITUTO CULTURAL E SOCIAL NO SETOR. **Site institucional.** Disponível em: https://www.nosetor.com.br. Acesso em: 6 set. 2026.
 
-## Processo e gestão do projeto
+## Legislação e normas
 
-SCHWABER, K.; SUTHERLAND, J. **The Scrum Guide.** 2020. Disponível em: https://scrumguides.org/docs/scrumguide/v2020/2020-Scrum-Guide-US.pdf. Acesso em: 28 set. 2026.
+BRASIL. **Lei nº 8.069, de 13 de julho de 1990.** Dispõe sobre o Estatuto da Criança e do Adolescente. Disponível em: https://www.planalto.gov.br/ccivil_03/leis/l8069.htm. Acesso em: 5 out. 2026.
+
+BRASIL. **Lei nº 13.019, de 31 de julho de 2014.** Estabelece o regime jurídico das parcerias entre a administração pública e as organizações da sociedade civil (Marco Regulatório das Organizações da Sociedade Civil). Disponível em: https://www.planalto.gov.br/ccivil_03/_ato2011-2014/2014/lei/l13019.htm. Acesso em: 5 out. 2026.
+
+BRASIL. **Lei nº 13.709, de 14 de agosto de 2018.** Lei Geral de Proteção de Dados Pessoais (LGPD). Disponível em: https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2018/lei/l13709.htm. Acesso em: 5 out. 2026.
+
+W3C. **Web Content Accessibility Guidelines (WCAG) 2.1.** W3C Recommendation, 2018. Disponível em: https://www.w3.org/TR/WCAG21/. Acesso em: 5 out. 2026.
+
+## Requisitos de software
+
+GRADY, R. B. **Practical Software Metrics for Project Management and Process Improvement.** Englewood Cliffs: Prentice Hall, 1992.
+
+SOMMERVILLE, I. **Engenharia de Software.** 10. ed. São Paulo: Pearson Education do Brasil, 2018.
 
 WAKE, B. **INVEST in Good Stories, and SMART Tasks.** XP123, 17 ago. 2003. Disponível em: https://xp123.com/invest-in-good-stories-and-smart-tasks/. Acesso em: 29 set. 2026.
+
+## Processo e priorização
+
+SCHWABER, K.; SUTHERLAND, J. **The Scrum Guide.** 2020. Disponível em: https://scrumguides.org/docs/scrumguide/v2020/2020-Scrum-Guide-US.pdf. Acesso em: 28 set. 2026.
 
 CLEGG, D.; BARKER, R. **Case Method Fast-Track: A RAD Approach.** Wokingham: Addison-Wesley, 1994.
 

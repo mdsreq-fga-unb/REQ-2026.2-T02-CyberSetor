@@ -8,9 +8,15 @@
 
 ## Sobre este site
 
-Este site reúne o **Documento de Visão de Produto e Projeto** da equipe CyberSetor e o registro do processo de trabalho da equipe. As entregas da disciplina são publicadas aqui, conforme o plano de ensino. A numeração das seções segue o template da disciplina (v8).
+Este site reúne o **Documento de Visão de Produto e Projeto** da equipe CyberSetor, a especificação de requisitos e o registro do processo de trabalho. A numeração das seções segue o template da disciplina (v8).
 
-O Instituto Cultural e Social No Setor é uma organização da sociedade civil sediada no Setor Comercial Sul, em Brasília, que constrói projetos culturais, sociais e formativos e presta contas a financiadores das metas pactuadas em editais. O produto em construção reúne em um fluxo único o ciclo de projeto e meta, atividade, inscrição, presença, evidência e relatório de prestação de contas, para que cada informação seja registrada uma vez, na origem, e alimente automaticamente os indicadores e os relatórios.
+O produto apoia o Instituto Cultural e Social No Setor a registrar cada informação uma vez, na origem, do projeto e da meta até o relatório de prestação de contas. Cliente, problema e solução estão detalhados nas seções [1](visao/1-cenario-atual.md) e [2](visao/2-solucao-proposta.md).
+
+??? note "Histórico de versões"
+
+    | Data | Versão | Descrição | Autor |
+    |---|---|---|---|
+    | 05/10/2026 | 1.1 | Apresentação resumida com remissão às seções 1 e 2; atalho para os requisitos na navegação | Maria Eduarda Marques |
 
 ## Equipe
 
@@ -52,6 +58,7 @@ O Instituto Cultural e Social No Setor é uma organização da sociedade civil s
 
 - :material-magnify: **[Cenário atual](visao/1-cenario-atual.md)** · quem é o cliente, qual é o problema e quem são os stakeholders
 - :material-lightbulb-on: **[Solução proposta](visao/2-solucao-proposta.md)** · objetivos, características, tecnologias e viabilidade
+- :material-format-list-checks: **[Requisitos](requisitos/8-requisitos.md)** · requisitos funcionais e não funcionais, DoR, DoD e backlog
 - :material-account-group: **[Processo e ritos](gestao/processo-scrumxp.md)** · como a equipe trabalha com ScrumXP
 - :material-calendar-check: **[Entregas](entregas/unidade-1.md)** · o que foi entregue em cada unidade
 
