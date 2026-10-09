@@ -1,5 +1,10 @@
 # Processo e ritos (ScrumXP)
 
+| Data | Versão | Descrição | Autor |
+|---|---|---|---|
+| 05/10/2026 | 1.1 | Registro dos ritos das Sprints 1 e 2 com remissão às atas | Maria Eduarda Marques |
+| 06/10/2026 | 1.2 | Daily no próprio dia, até o fim do dia, em vez de até as 12h | Vinicius Vieira |
+
 A equipe CyberSetor adota o **ScrumXP**: o framework Scrum para o gerenciamento do trabalho e as práticas técnicas do eXtreme Programming para a engenharia. Esta página registra como o processo funciona na prática. A fundamentação da escolha está na seção 4 do Documento de Visão.
 
 ## Papéis e cerimônias
@@ -21,7 +26,7 @@ A equipe é formada por seis estudantes com grades e compromissos distintos. Uma
 🚧 Impedimento: o que está me travando, ou "nenhum"
 ```
 
-**Regras:** todo dia útil até as 12h, inclusive sem avanço (escreve-se "sem avanço") · impedimento é campo obrigatório · quem depende de outra pessoa a marca · o grupo *Dailys* é exclusivo para dailies; discussão vai para o grupo *Geral* e decisão vira ata · impedimento declarado é resolvido ou escalado pelo Scrum Master em até 24 horas.
+**Regras:** todo dia útil, no próprio dia, até o fim do dia, inclusive sem avanço (escreve-se "sem avanço") · impedimento é campo obrigatório · quem depende de outra pessoa a marca · o grupo *Dailys* é exclusivo para dailies; discussão vai para o grupo *Geral* e decisão vira ata · impedimento declarado é resolvido ou escalado pelo Scrum Master em até 24 horas.
 
 ## Artefatos
 
@@ -46,6 +51,16 @@ Critérios de aceitação:
 ```
 
 Cada história é aberta pelo formulário de história do repositório, que pede a história nesse formato, as características de produto e os objetivos específicos em caixas de marcação (seções 2.3 e 2.2), os RFs, RNFs e regras de negócio que a condicionam, os critérios de aceitação em lista e as dependências. No quadro do projeto, características e objetivos ficam em campos de seleção múltipla com os mesmos títulos.
+
+## Registro dos ritos
+
+| Sprint | Rito | Data | Registro |
+|---|---|---|---|
+| Sprint 1 | Sprint Planning | 08/09/2026 | [Ata](atas/2026-09-08-sprint-planning.md) |
+| Sprint 1 | Sprint Review e Retrospectiva | 22/09/2026 | [Ata](atas/2026-09-22-sprint-review-retrospectiva.md) |
+| Sprint 2 | Sprint Planning | 23/09/2026 | [Ata](atas/2026-09-23-sprint-planning.md) |
+
+As reuniões com o Instituto que alimentam a validação estão no [índice de atas](atas/index.md#interacoes-com-o-cliente).
 
 ## Práticas de XP
 
