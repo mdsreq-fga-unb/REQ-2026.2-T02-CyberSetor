@@ -1,0 +1,58 @@
+name: ci-web
+
+# Integração contínua da linha do front: lint, testes e build em todo pull
+# request para web-develop e web, e no push a essas branches. Enquanto web/
+# não tiver package.json, o job só registra que ainda não há código; assim a
+# verificação existe desde o primeiro commit e pode ser exigida no merge.
+
+on:
+  pull_request:
+    branches: [web-develop, web]
+  push:
+    branches: [web-develop, web]
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Há código?
+        id: codigo
+        run: |
+          if [ -f web/package.json ]; then
+            echo "existe=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "existe=false" >> "$GITHUB_OUTPUT"
+            echo "::notice title=Sem código::web/package.json ainda não existe; lint, testes e build ficam para o esqueleto do front."
+          fi
+
+      - uses: actions/setup-node@v4
+        if: steps.codigo.outputs.existe == 'true'
+        with:
+          node-version: 22
+
+      - name: Instalar dependências
+        if: steps.codigo.outputs.existe == 'true'
+        working-directory: web
+        run: |
+          corepack enable
+          pnpm install --frozen-lockfile
+
+      - name: Lint
+        if: steps.codigo.outputs.existe == 'true'
+        working-directory: web
+        run: pnpm lint
+
+      - name: Testes
+        if: steps.codigo.outputs.existe == 'true'
+        working-directory: web
+        run: pnpm test
+
+      - name: Build
+        if: steps.codigo.outputs.existe == 'true'
+        working-directory: web
+        run: pnpm build

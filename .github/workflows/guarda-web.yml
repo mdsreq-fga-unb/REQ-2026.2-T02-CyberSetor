@@ -1,0 +1,34 @@
+name: guarda-web
+
+# Confere, em todo pull request da linha do front, se a combinação de origem e
+# destino está na tabela de branches da página "Boas práticas no GitHub". O nome
+# da branch de origem chega por variável de ambiente, nunca interpolado direto
+# no script.
+
+on:
+  pull_request:
+    types: [opened, edited, reopened, synchronize]
+    branches: [web-develop, web]
+
+permissions:
+  contents: read
+
+jobs:
+  guarda:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Conferir origem e destino
+        env:
+          ORIGEM: ${{ github.head_ref }}
+          DESTINO: ${{ github.base_ref }}
+        run: |
+          echo "Origem:  $ORIGEM"
+          echo "Destino: $DESTINO"
+          case "$DESTINO" in
+            web)
+              [[ "$ORIGEM" == "web-develop" || "$ORIGEM" == fix/web-* ]] && exit 0 ;;
+            web-develop)
+              [[ "$ORIGEM" == feat/web/* || "$ORIGEM" == test/web/* || "$ORIGEM" == refactor/web/* || "$ORIGEM" == chore/web/* || "$ORIGEM" == "web" ]] && exit 0 ;;
+          esac
+          echo "::error title=Combinação não permitida::Pull request de '$ORIGEM' para '$DESTINO' não está na tabela de branches (Boas práticas no GitHub)."
+          exit 1
