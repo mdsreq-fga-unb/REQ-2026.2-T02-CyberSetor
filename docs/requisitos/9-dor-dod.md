@@ -5,6 +5,7 @@
 | Data | Versão | Descrição | Autor(es) |
 | :---: | :---: | :--- | :--- |
 | 29/09/2026 | 1.0 | Definition of Ready das histórias de usuário, com os critérios INVEST, e Definition of Done dos itens de documentação de requisitos e de código | Vinicius Vieira e Maria Eduarda Marques |
+| 05/10/2026 | 1.1 | Critério Testável da DoR limitado às ambiguidades identificadas na revisão | Maria Eduarda Marques |
 
 ---
 
@@ -21,7 +22,7 @@ Uma história de usuário está pronta quando:
 3. **Valiosa (V):** tem valor claro para um perfil do Instituto, com o ator explícito na própria história (*Como …, quero … para …*), e valor de negócio validado com o Instituto, na escala MoSCoW pontuada de 4 a 1, com a justificativa registrada na [seção 10](10-backlog.md).
 4. **Estimável (E):** a equipe avaliou esforço, complexidade e lacuna de capacidade dos requisitos funcionais da história ([seção 10](10-backlog.md)); incerteza grande leva a dividir a história ou a investigar antes.
 5. **Pequena (S):** cabe em uma sprint; a que não cabe é dividida antes de entrar.
-6. **Testável (T):** tem critérios de aceitação em lista, cada um verificável e sem ambiguidade para quem desenvolve.
+6. **Testável (T):** tem critérios de aceitação em lista, cada um verificável e sem ambiguidade identificada na revisão por quem desenvolve.
 7. **Vinculada aos requisitos:** a pelo menos um requisito funcional da [seção 8](8-requisitos.md) e aos requisitos não funcionais e às regras de negócio que a condicionam.
 8. **Sem decisão externa pendente** que impeça o desenvolvimento: valor inicial marcado com 🔧 tem responsável e prazo registrados na história.
 9. **Com a interface esboçada e ligada à história**, quando envolve tela nova ou alterada.
