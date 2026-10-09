@@ -30,9 +30,9 @@ O sistema unifica a cadeia de dados das atividades socioculturais realizadas no 
 - [x] **Vídeo de apresentação:** [Apresentação no YouTube (14m 57s)](https://youtu.be/EMGWe0XiE70).
 
 ### Unidade 2 – Elicitação e Modelagem de Requisitos
-- [ ] Elicitação, técnicas de análise e consenso.
-- [ ] Declaração e representação de requisitos (Histórias de Usuário e BPMN).
-- [ ] Priorização, DoR/DoD e definição do MVP.
+- [x] Elicitação, técnicas de análise e consenso.
+- [x] Declaração e representação de requisitos (Histórias de Usuário e BPMN).
+- [x] Priorização, DoR/DoD e definição do MVP.
 - [ ] Vídeo de apresentação da Unidade 2.
 
 ### Unidade 3 – Construção do MVP e Validação Incremental
