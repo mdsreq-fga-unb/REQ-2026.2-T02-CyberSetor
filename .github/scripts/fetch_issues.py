@@ -20,7 +20,7 @@ REPO_FULL = os.environ.get("GITHUB_REPOSITORY", "mdsreq-fga-unb/REQ-2026.2-T02-C
 TOKEN = os.environ.get("GITHUB_TOKEN")
 FEEDBACK_FILE = "docs/entregas/debitos-u1.md"
 SPRINT_FILE = "docs/gestao/sprints/tarefas-sprint-{n}.md"
-SPRINTS = [1, 2]  # páginas geradas; acrescentar aqui e no nav do mkdocs.yml a cada sprint
+SPRINTS = [1, 2, 3]  # páginas geradas; acrescentar aqui e no nav do mkdocs.yml a cada sprint
 PROFESSOR = "marsicanogeorge"
 
 if not TOKEN:
