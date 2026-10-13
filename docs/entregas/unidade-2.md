@@ -7,6 +7,7 @@
 | 21/09/2026 | 1.2 | Consolidação final da Seção 8 com a Matriz Bidirecional e publicação unificada | Rodrigo Henrique e Vinicius Vieira |
 | 21/09/2026 | 1.3 | Status e checklist alinhados à versão 2.1 da Seção 8: âncoras restauradas e valores iniciais marcados | Equipe CyberSetor |
 | 08/10/2026 | 1.4 | Atualização para catálogo RF01–RF39 e RNF01–RNF18, checklist concluído, validação integral com o Instituto e estrutura de apresentação em vídeo | Rodrigo Henrique |
+| 13/10/2026 | 2.0 | Incorporação do vídeo de apresentação | Rodrigo Henrique |
 
 ---
 
@@ -30,8 +31,6 @@ A entrega da Unidade 2 consolida a especificação formal de requisitos de softw
 </div>
 
 - **Link direto para a gravação:** [Apresentação da Unidade 2 — YouTube](https://youtu.be/xnJX9y0gKkI)
-
-*(Nota: o link e o identificador do vídeo serão atualizados após a publicação da gravação definitiva).*
 
 ---
 
