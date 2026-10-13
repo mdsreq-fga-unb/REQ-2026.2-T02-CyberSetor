@@ -1,0 +1,1831 @@
+
+<!doctype html>
+<html lang="pt" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Visão de Produto e Projeto — Requisitos de Software (FGA0313) · T02 · 2026.2 · FCTE/UnB">
+      
+      
+        <meta name="author" content="Equipe CyberSetor">
+      
+      
+        <link rel="canonical" href="https://mdsreq-fga-unb.github.io/REQ-2026.2-T02-CyberSetor/gestao/boas-praticas-github/">
+      
+      
+        <link rel="prev" href="../processo-scrumxp/">
+      
+      
+        <link rel="next" href="../matriz-competencias/">
+      
+      
+      <link rel="icon" href="../../assets/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.9">
+    
+    
+      
+        <title>Boas práticas no GitHub - CyberSetor · Instituto No Setor</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.4af4bdda.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Montserrat";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#boas-praticas-no-github" class="md-skip">
+          Pular para conteúdo
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Cabeçalho">
+    <a href="../.." title="CyberSetor · Instituto No Setor" class="md-header__button md-logo" aria-label="CyberSetor · Instituto No Setor" data-md-component="logo">
+      
+  <img src="../../assets/logo.svg" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            CyberSetor · Instituto No Setor
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Boas práticas no GitHub
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom"  aria-label="Alternar para o modo escuro"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Alternar para o modo escuro" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="custom" data-md-color-accent="custom"  aria-label="Alternar para o modo claro"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Alternar para o modo claro" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Buscar" placeholder="Buscar" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Pesquisar">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="Compartilhar" aria-label="Compartilhar" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91s2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="Limpar" aria-label="Limpar" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Inicializando busca
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/mdsreq-fga-unb/REQ-2026.2-T02-CyberSetor" title="Ir para repositório" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8M97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    mdsreq-fga-unb/REQ-2026.2-T02-CyberSetor
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+    
+      
+<nav class="md-tabs" aria-label="Abas" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+    
+  
+  Início
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../visao/" class="md-tabs__link">
+          
+  
+    
+  
+  Visão do Produto
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../processo-scrumxp/" class="md-tabs__link">
+          
+  
+    
+  
+  Gestão do projeto
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../entregas/unidade-1/" class="md-tabs__link">
+          
+  
+    
+  
+  Entregas
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../referencias/" class="md-tabs__link">
+        
+  
+    
+  
+  Referências
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navegação" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="CyberSetor · Instituto No Setor" class="md-nav__button md-logo" aria-label="CyberSetor · Instituto No Setor" data-md-component="logo">
+      
+  <img src="../../assets/logo.svg" alt="logo">
+
+    </a>
+    CyberSetor · Instituto No Setor
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/mdsreq-fga-unb/REQ-2026.2-T02-CyberSetor" title="Ir para repositório" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8M97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    mdsreq-fga-unb/REQ-2026.2-T02-CyberSetor
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Início
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../../visao/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Visão do Produto
+    
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Gestão do projeto
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            Gestão do projeto
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../processo-scrumxp/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Processo e ritos (ScrumXP)
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Boas práticas no GitHub
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    Boas práticas no GitHub
+    
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Índice">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Índice
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#onde-as-coisas-vivem" class="md-nav__link">
+    <span class="md-ellipsis">
+      Onde as coisas vivem
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#branches" class="md-nav__link">
+    <span class="md-ellipsis">
+      Branches
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Branches">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#documentacao" class="md-nav__link">
+    <span class="md-ellipsis">
+      Documentação
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#codigo" class="md-nav__link">
+    <span class="md-ellipsis">
+      Código
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#correcoes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Correções
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#issues" class="md-nav__link">
+    <span class="md-ellipsis">
+      Issues
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#pontos-de-publicacao-e-congelamento" class="md-nav__link">
+    <span class="md-ellipsis">
+      Pontos de publicação e congelamento
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#mensagens-de-commit" class="md-nav__link">
+    <span class="md-ellipsis">
+      Mensagens de commit
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#pull-requests" class="md-nav__link">
+    <span class="md-ellipsis">
+      Pull requests
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#integracao-continua" class="md-nav__link">
+    <span class="md-ellipsis">
+      Integração contínua
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#antes-de-abrir-o-pr" class="md-nav__link">
+    <span class="md-ellipsis">
+      Antes de abrir o PR
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#contribuicao-individual" class="md-nav__link">
+    <span class="md-ellipsis">
+      Contribuição individual
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#referencias" class="md-nav__link">
+    <span class="md-ellipsis">
+      Referências
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../matriz-competencias/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Matriz de competências e stack
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../dailies/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Registro das dailies
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_5" >
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../atas/" class="md-nav__link ">
+              
+  
+  <span class="md-ellipsis">
+    Reuniões
+    
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_3_5" id="__nav_3_5_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_5">
+            <span class="md-nav__icon md-icon"></span>
+            Reuniões
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../atas/2026-09-08-reuniao-presencial-instituto/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Com o Instituto
+    
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../atas/2026-08-27-reuniao-equipe/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Equipe
+    
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../atas/2026-09-08-sprint-planning/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Cerimônias ScrumXP
+    
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_6" id="__nav_3_6_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Sprints
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_6">
+            <span class="md-nav__icon md-icon"></span>
+            Sprints
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../sprints/sprint-1/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Sprint 1
+    
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../sprints/sprint-2/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Sprint 2
+    
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../sprints/sprint-3/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Sprint 3
+    
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../../entregas/unidade-1/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Entregas
+    
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../referencias/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Referências
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Índice">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Índice
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#onde-as-coisas-vivem" class="md-nav__link">
+    <span class="md-ellipsis">
+      Onde as coisas vivem
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#branches" class="md-nav__link">
+    <span class="md-ellipsis">
+      Branches
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Branches">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#documentacao" class="md-nav__link">
+    <span class="md-ellipsis">
+      Documentação
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#codigo" class="md-nav__link">
+    <span class="md-ellipsis">
+      Código
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#correcoes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Correções
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#issues" class="md-nav__link">
+    <span class="md-ellipsis">
+      Issues
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#pontos-de-publicacao-e-congelamento" class="md-nav__link">
+    <span class="md-ellipsis">
+      Pontos de publicação e congelamento
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#mensagens-de-commit" class="md-nav__link">
+    <span class="md-ellipsis">
+      Mensagens de commit
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#pull-requests" class="md-nav__link">
+    <span class="md-ellipsis">
+      Pull requests
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#integracao-continua" class="md-nav__link">
+    <span class="md-ellipsis">
+      Integração contínua
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#antes-de-abrir-o-pr" class="md-nav__link">
+    <span class="md-ellipsis">
+      Antes de abrir o PR
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#contribuicao-individual" class="md-nav__link">
+    <span class="md-ellipsis">
+      Contribuição individual
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#referencias" class="md-nav__link">
+    <span class="md-ellipsis">
+      Referências
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+    <a href="https://github.com/mdsreq-fga-unb/REQ-2026.2-T02-CyberSetor/edit/main/docs/gestao/boas-praticas-github.md" title="Editar esta página" class="md-content__button md-icon">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4zm10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1z"/></svg>
+    </a>
+  
+  
+
+
+<h1 id="boas-praticas-no-github">Boas práticas no GitHub<a class="headerlink" href="#boas-praticas-no-github" title="Permanent link">&para;</a></h1>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">Data</th>
+<th style="text-align: center;">Versão</th>
+<th style="text-align: left;">Descrição</th>
+<th style="text-align: left;">Autor</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">06/09/2026</td>
+<td style="text-align: center;">1.0</td>
+<td style="text-align: left;">Branches curtas a partir da <code>main</code>, Conventional Commits, pull request revisado e integração contínua</td>
+<td style="text-align: left;">Vinicius Vieira</td>
+</tr>
+<tr>
+<td style="text-align: center;">09/09/2026</td>
+<td style="text-align: center;">1.1</td>
+<td style="text-align: left;">Verificação e publicação do site separadas por workflow</td>
+<td style="text-align: left;">Vinicius Vieira</td>
+</tr>
+<tr>
+<td style="text-align: center;">05/10/2026</td>
+<td style="text-align: center;">2.0</td>
+<td style="text-align: left;">Branches por componente: documentação na <code>main</code> com homologação, API e web em linhas próprias; congelamento e marcação das entregas; controles da equipe na ausência de proteção de branch</td>
+<td style="text-align: left;">Vinicius Vieira</td>
+</tr>
+<tr>
+<td style="text-align: center;">07/10/2026</td>
+<td style="text-align: center;">2.1</td>
+<td style="text-align: left;">Título de commit sem acentos; <em>rebase</em> para conflitos, sem <em>squash</em>; prazo de 24 horas para revisão de pull request</td>
+<td style="text-align: left;">Maria Eduarda Marques</td>
+</tr>
+</tbody>
+</table>
+<p>Acordo de trabalho da equipe para este repositório. O objetivo é que o histórico de commits e de pull requests seja a evidência do processo, e que ninguém dependa de memória para saber como contribuir.</p>
+<h2 id="onde-as-coisas-vivem">Onde as coisas vivem<a class="headerlink" href="#onde-as-coisas-vivem" title="Permanent link">&para;</a></h2>
+<p>A entrega da disciplina é este site, publicado pelo GitHub Pages a partir da pasta <code>docs/</code> da <code>main</code>. Link para artefato externo não é aceito como entrega, e imagens ficam versionadas em <code>docs/assets/</code>. O código do produto fica neste mesmo repositório, em linhas próprias da API e do front.</p>
+<h2 id="branches">Branches<a class="headerlink" href="#branches" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Branch</th>
+<th>Conteúdo</th>
+<th>Recebe pull request de</th>
+<th>Publica</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>main</code> (padrão)</td>
+<td>Documentação, configuração do repositório e README</td>
+<td><code>docs-homologacao</code>, <code>fix/&lt;assunto&gt;</code>, <code>chore/&lt;assunto&gt;</code></td>
+<td>Site no GitHub Pages</td>
+</tr>
+<tr>
+<td><code>docs-homologacao</code></td>
+<td>Documentação revisada, ainda não publicada</td>
+<td><code>docs/&lt;assunto&gt;</code>, <code>main</code></td>
+<td>Nada</td>
+</tr>
+<tr>
+<td><code>api-develop</code></td>
+<td>API em integração</td>
+<td><code>feat/api/HU-xx-&lt;assunto&gt;</code>, <code>test/api/&lt;assunto&gt;</code>, <code>refactor/api/&lt;assunto&gt;</code>, <code>chore/api/&lt;assunto&gt;</code>, <code>api</code></td>
+<td>Homologação da API</td>
+</tr>
+<tr>
+<td><code>api</code></td>
+<td>API em produção</td>
+<td><code>api-develop</code>, <code>fix/api-&lt;assunto&gt;</code></td>
+<td>Produção da API</td>
+</tr>
+<tr>
+<td><code>web-develop</code></td>
+<td>Front em integração</td>
+<td><code>feat/web/HU-xx-&lt;assunto&gt;</code>, <code>test/web/&lt;assunto&gt;</code>, <code>refactor/web/&lt;assunto&gt;</code>, <code>chore/web/&lt;assunto&gt;</code>, <code>web</code></td>
+<td>Prévia do front</td>
+</tr>
+<tr>
+<td><code>web</code></td>
+<td>Front em produção</td>
+<td><code>web-develop</code>, <code>fix/web-&lt;assunto&gt;</code></td>
+<td>Produção do front</td>
+</tr>
+</tbody>
+</table>
+<p>As linhas da API e do front não têm história comum com a <code>main</code> nem entre si: só contêm o próprio código e a própria configuração de integração contínua. Por isso não existe pull request de código para a documentação, da documentação para o código ou entre API e front. As seis branches da tabela não se apagam; as de trabalho são curtas e apagadas depois do merge. Não há branch por ambiente além das de produção da tabela: endereços e segredos de cada ambiente ficam na configuração da hospedagem.</p>
+<p>O repositório não tem proteção de branch, que depende de permissão de administrador da organização. O acordo da equipe cobre essa ausência, com quatro controles ao seu alcance:</p>
+<ul>
+<li><strong>Nenhum push direto</strong> nas seis branches da tabela; todo conteúdo entra pelo botão de merge do pull request, depois da aprovação.</li>
+<li><strong><code>guarda-de-branches</code>:</strong> confere, em todo pull request, se a combinação de origem e destino está na tabela. Combinação fora dela fica com a verificação em vermelho e não é integrada.</li>
+<li><strong><code>verificar-push</code>:</strong> falha quando chega à <code>main</code> ou à <code>docs-homologacao</code> um commit que não pertence a pull request integrado. A falha é o sinal para abrir um pull request que corrija ou confirme a mudança.</li>
+<li><strong>Configuração do repositório:</strong> só o método <em>merge commit</em> habilitado e branch de trabalho apagada automaticamente depois do merge.</li>
+</ul>
+<h3 id="documentacao">Documentação<a class="headerlink" href="#documentacao" title="Permanent link">&para;</a></h3>
+<ol>
+<li>Partir da homologação atualizada: <code>git switch docs-homologacao &amp;&amp; git pull &amp;&amp; git switch -c docs/&lt;assunto&gt;</code>.</li>
+<li>Commitar em fatias, com <code>mkdocs build --strict</code> passando antes do push.</li>
+<li>Abrir o pull request com base <code>docs-homologacao</code> e <code>Refs #N</code> no corpo.</li>
+<li>Aguardar a aprovação de um integrante de outra dupla, que confere o site compilado: pelo artefato <code>site</code> do <code>build-check</code> ou com <code>mkdocs serve</code> na própria máquina.</li>
+<li>Fazer o merge pelo pull request e apagar a branch.</li>
+</ol>
+<h3 id="codigo">Código<a class="headerlink" href="#codigo" title="Permanent link">&para;</a></h3>
+<p>A branch de trabalho sai da branch de integração do componente (<code>api-develop</code> ou <code>web-develop</code>) e volta para ela em pull request, com a verificação de código aprovada e a revisão de um integrante de outra dupla. O nome leva o componente (<code>feat/api/HU-01-cadastro-de-meta</code>) e a história. O ciclo é de dias, não de semanas: história grande se divide em mais de um pull request. A ida para produção é um pull request de <code>api-develop</code> para <code>api</code> (ou de <code>web-develop</code> para <code>web</code>), revisado como os demais.</p>
+<h3 id="correcoes">Correções<a class="headerlink" href="#correcoes" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Onde está o erro</th>
+<th>Branch</th>
+<th>Pull request para</th>
+<th>Em seguida</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Site publicado</td>
+<td><code>fix/&lt;assunto&gt;</code>, a partir da <code>main</code></td>
+<td><code>main</code></td>
+<td>Pull request <code>main</code> → <code>docs-homologacao</code></td>
+</tr>
+<tr>
+<td>API em produção</td>
+<td><code>fix/api-&lt;assunto&gt;</code>, a partir de <code>api</code></td>
+<td><code>api</code></td>
+<td>Pull request <code>api</code> → <code>api-develop</code></td>
+</tr>
+<tr>
+<td>Front em produção</td>
+<td><code>fix/web-&lt;assunto&gt;</code>, a partir de <code>web</code></td>
+<td><code>web</code></td>
+<td>Pull request <code>web</code> → <code>web-develop</code></td>
+</tr>
+</tbody>
+</table>
+<p>O passo seguinte evita que a correção se perca na próxima publicação. Mudança de configuração do repositório (<code>chore/&lt;assunto&gt;</code> na <code>main</code>) também é levada à <code>docs-homologacao</code> do mesmo jeito.</p>
+<h3 id="issues">Issues<a class="headerlink" href="#issues" title="Permanent link">&para;</a></h3>
+<p>O GitHub só fecha issue por palavra-chave em pull request para a branch padrão. Pull requests para <code>docs-homologacao</code> e para as linhas de código usam <code>Refs #N</code>; a issue é fechada ao ir para Done no quadro do projeto. O pull request consolidado <code>docs-homologacao</code> → <code>main</code> pode listar <code>Closes #N</code> das issues de documentação que entrega. Issue aberta pelo professor não é fechada pela equipe.</p>
+<h2 id="pontos-de-publicacao-e-congelamento">Pontos de publicação e congelamento<a class="headerlink" href="#pontos-de-publicacao-e-congelamento" title="Permanent link">&para;</a></h2>
+<p>Pelo Plano de Ensino (§9.1), a entrega deve estar no GitHub Pages até o início da aula de apresentações, e alteração no site depois desse horário torna a entrega atrasada, com desconto de 20% por dia. Por isso a documentação vai ao ar em pontos de publicação planejados:</p>
+<ol>
+<li>Antes de cada prazo, a variável de repositório <code>DEPLOY_FREEZE</code> passa a <code>true</code>. Congelado, o <code>deploy-docs</code> só publica por execução manual; push na <code>main</code>, eventos de issue e a agenda são ignorados, com aviso no log.</li>
+<li>Um pull request consolidado leva a <code>docs-homologacao</code> para a <code>main</code>, revisado como qualquer outro e integrado por <em>merge commit</em>.</li>
+<li>O commit da <code>main</code> recebe a tag da entrega no formato <code>uN-AAAA-MM-DD</code> (por exemplo, <code>u2-2026-10-13</code>).</li>
+<li>O <code>deploy-docs</code> é executado à mão com essa tag no campo <code>versao</code>. Ele publica exatamente a versão marcada e marca o commit publicado na <code>gh-pages</code> com a tag <code>uN-AAAA-MM-DD-pages</code>, porque parte das páginas é gerada no momento da publicação a partir do quadro.</li>
+<li>Depois de conferir o site no ar, o <code>deploy-docs</code> é desativado até o fim da avaliação; nenhuma publicação acontece nesse período.</li>
+<li>Encerrada a avaliação, o workflow é reativado e <code>DEPLOY_FREEZE</code> volta a <code>false</code>.</li>
+</ol>
+<p>Nas entregas com produto (Unidades 3 e 4), as pontas de <code>api</code> e <code>web</code> recebem a mesma tag da entrega, e o site indica o endereço do produto, como pede o §9.2.</p>
+<h2 id="mensagens-de-commit">Mensagens de commit<a class="headerlink" href="#mensagens-de-commit" title="Permanent link">&para;</a></h2>
+<p>Padrão Conventional Commits 1.0.0: <code>tipo(escopo): descrição</code>, com tipo obrigatório, escopo opcional e descrição no imperativo, em minúsculas, com até 72 caracteres e sem acentos no título.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>docs(visao): migra secao 2 solucao proposta
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>chore(ci): adiciona workflow de deploy do MkDocs
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>fix(nav): corrige caminho da pagina de atas
+</code></pre></div>
+<p>Tipos usados: <code>docs</code>, <code>feat</code>, <code>fix</code>, <code>test</code>, <code>refactor</code>, <code>chore</code>, <code>ci</code>. Escopos da documentação: <code>visao</code>, <code>requisitos</code>, <code>gestao</code>, <code>entregas</code>, <code>assets</code>, <code>ci</code>, <code>nav</code>; do código, o módulo alterado (por exemplo, <code>feat(metas): …</code>).</p>
+<p>Um commit por fatia com propósito único: uma seção do documento por commit, nunca "atualiza docs". Todo commit passa no build sozinho.</p>
+<p>Coautoria vai no fim da mensagem, separada do título por uma linha em branco:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>feat: registra presença em atividade
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>Co-authored-by: Nome Sobrenome &lt;email-da-conta@exemplo.com&gt;
+</code></pre></div>
+<h2 id="pull-requests">Pull requests<a class="headerlink" href="#pull-requests" title="Permanent link">&para;</a></h2>
+<p>Toda mudança entra por pull request; edição feita pela interface web direto na <code>main</code> é push sem revisão e não é usada. O corpo segue o modelo do repositório: o que mudou, qual seção do template é afetada, confirmação de que o build passou e quem revisa.</p>
+<p>A revisão é registrada no próprio pull request: um integrante de outra dupla aprova antes do merge, e o autor não faz merge sem essa aprovação. O merge é feito pelo botão do pull request, com o método <em>merge commit</em>, que preserva os commits de cada pessoa e as linhas de coautoria. Merge local seguido de push não deixa o registro da revisão. <em>Squash</em> não é usado. Conflito com a branch de destino se resolve com <em>rebase</em> da branch de trabalho sobre ela, antes do merge.</p>
+<p>Quem é pedido como revisor tem até 24 horas para revisar. Passado o prazo, o autor avisa no grupo da equipe, e a revisão pode ser repassada a outro integrante de outra dupla.</p>
+<h2 id="integracao-continua">Integração contínua<a class="headerlink" href="#integracao-continua" title="Permanent link">&para;</a></h2>
+<p>Workflows da linha da documentação, cada um com um alvo declarado:</p>
+<table>
+<thead>
+<tr>
+<th>Workflow</th>
+<th>Quando roda</th>
+<th>O que faz</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>build-check</code></td>
+<td>Pull request para <code>main</code> ou <code>docs-homologacao</code>; push em <code>docs/</code>, <code>chore/</code>, <code>fix/</code> e <code>docs-homologacao</code></td>
+<td>Gera as páginas de acompanhamento a partir das issues e do quadro, confere se foram geradas, executa <code>mkdocs build --strict</code> e guarda o site compilado como artefato <code>site</code> para a revisão. Não publica</td>
+</tr>
+<tr>
+<td><code>guarda-de-branches</code></td>
+<td>Todo pull request</td>
+<td>Confere a combinação de origem e destino com a tabela de branches e se o pull request para a <code>main</code> ou a <code>docs-homologacao</code> não traz código</td>
+</tr>
+<tr>
+<td><code>verificar-push</code></td>
+<td>Push na <code>main</code> e na <code>docs-homologacao</code></td>
+<td>Falha quando o commit recebido não pertence a pull request integrado</td>
+</tr>
+<tr>
+<td><code>deploy-docs</code></td>
+<td>Push na <code>main</code> que altere <code>docs/</code>, <code>mkdocs.yml</code>, <code>requirements.txt</code>, <code>.github/scripts/</code> ou o próprio workflow; eventos de issue; a cada seis horas; execução manual com a versão a publicar</td>
+<td>Gera as páginas de acompanhamento, repete o build estrito e publica o site na branch <code>gh-pages</code>. Com <code>DEPLOY_FREEZE</code> igual a <code>true</code>, só a execução manual publica</td>
+</tr>
+</tbody>
+</table>
+<p>Nenhum deles tem filtro de caminhos no gatilho de pull request, para poderem ser exigidos no merge. Situação e sprint das páginas de acompanhamento vêm do quadro do projeto, cuja mudança não gera evento no repositório; por isso o <code>deploy-docs</code> também roda em eventos de issue e na agenda. As linhas da API e do front têm a própria integração contínua e o próprio deploy, sem efeito sobre o site.</p>
+<h2 id="antes-de-abrir-o-pr">Antes de abrir o PR<a class="headerlink" href="#antes-de-abrir-o-pr" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>python<span class="w"> </span>-m<span class="w"> </span>venv<span class="w"> </span>.venv<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="nb">source</span><span class="w"> </span>.venv/bin/activate
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>pip<span class="w"> </span>install<span class="w"> </span>-r<span class="w"> </span>requirements.txt
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="nv">GITHUB_TOKEN</span><span class="o">=</span><span class="k">$(</span>gh<span class="w"> </span>auth<span class="w"> </span>token<span class="k">)</span><span class="w"> </span>python<span class="w"> </span>.github/scripts/fetch_issues.py<span class="w">  </span><span class="c1"># páginas geradas do quadro (tarefas por sprint, débitos); exige gh autenticado com acesso ao projeto</span>
+<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>mkdocs<span class="w"> </span>serve<span class="w">          </span><span class="c1"># pré-visualização em http://127.0.0.1:8000</span>
+<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>mkdocs<span class="w"> </span>build<span class="w"> </span>--strict<span class="w"> </span><span class="c1"># o mesmo teste que roda no CI</span>
+</code></pre></div>
+<h2 id="contribuicao-individual">Contribuição individual<a class="headerlink" href="#contribuicao-individual" title="Permanent link">&para;</a></h2>
+<p>Cada integrante commita com a própria conta, com <code>user.email</code> ligado a ela, as seções que escreveu e o código que implementou. Assim o histórico mostra quem fez o quê dentro da equipe.</p>
+<h2 id="referencias">Referências<a class="headerlink" href="#referencias" title="Permanent link">&para;</a></h2>
+<p>CONVENTIONAL COMMITS. <strong>Conventional Commits 1.0.0.</strong> Disponível em: https://www.conventionalcommits.org/en/v1.0.0/. Acesso em: 5 set. 2026.</p>
+<p>DORA. <strong>Capabilities: trunk-based development.</strong> Disponível em: https://dora.dev/capabilities/trunk-based-development/. Acesso em: 25 set. 2026.</p>
+<p>DRIESSEN, V. <strong>A successful Git branching model.</strong> Nota de reflexão de 5 mar. 2020. Disponível em: https://nvie.com/posts/a-successful-git-branching-model/. Acesso em: 25 set. 2026.</p>
+<p>FOWLER, M. <strong>Patterns for Managing Source Code Branches.</strong> 28 maio 2020. Disponível em: https://martinfowler.com/articles/branching-patterns.html. Acesso em: 25 set. 2026.</p>
+<p>GIT. <strong>git-switch: --orphan.</strong> Disponível em: https://git-scm.com/docs/git-switch. Acesso em: 5 out. 2026.</p>
+<p>GITHUB. <strong>About merge methods on GitHub.</strong> Disponível em: https://docs.github.com/en/repositories/configuring-branches-and-merges-in-your-repository/configuring-pull-request-merges/about-merge-methods-on-github. Acesso em: 25 set. 2026.</p>
+<p>GITHUB. <strong>Creating a commit with multiple authors.</strong> Disponível em: https://docs.github.com/en/pull-requests/committing-changes-to-your-project/creating-and-editing-commits/creating-a-commit-with-multiple-authors. Acesso em: 25 set. 2026.</p>
+<p>GITHUB. <strong>Linking a pull request to an issue.</strong> Disponível em: https://docs.github.com/en/issues/tracking-your-work-with-issues/using-issues/linking-a-pull-request-to-an-issue. Acesso em: 5 out. 2026.</p>
+<p>GITHUB. <strong>Events that trigger workflows.</strong> Disponível em: https://docs.github.com/en/actions/reference/workflows-and-actions/events-that-trigger-workflows. Acesso em: 25 set. 2026.</p>
+<p>GITHUB. <strong>GitHub flow.</strong> Disponível em: https://docs.github.com/en/get-started/using-github/github-flow. Acesso em: 25 set. 2026.</p>
+<p>GITHUB. <strong>Workflow syntax for GitHub Actions.</strong> Disponível em: https://docs.github.com/en/actions/reference/workflows-and-actions/workflow-syntax. Acesso em: 25 set. 2026.</p>
+<p>HAMMANT, P. <strong>Trunk Based Development.</strong> Disponível em: https://trunkbaseddevelopment.com/. Acesso em: 25 set. 2026.</p>
+<p>SQUIDFUNK. <strong>Material for MkDocs: Publishing your site.</strong> Disponível em: https://squidfunk.github.io/mkdocs-material/publishing-your-site/. Acesso em: 5 set. 2026.</p>
+<p>UNIVERSIDADE DE BRASÍLIA. Faculdade de Ciências e Tecnologias em Engenharia. <strong>Plano de Ensino: FGA0313 Requisitos de Software, Turma 02, 2026.2.</strong> Brasília: FCTE/UnB, 2026.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Voltar para o topo
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Rodapé" >
+        
+          
+          <a href="../processo-scrumxp/" class="md-footer__link md-footer__link--prev" aria-label="Anterior: Processo e ritos (ScrumXP)">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Anterior
+              </span>
+              <div class="md-ellipsis">
+                Processo e ritos (ScrumXP)
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../matriz-competencias/" class="md-footer__link md-footer__link--next" aria-label="Próximo: Matriz de competências e stack">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Próximo
+              </span>
+              <div class="md-ellipsis">
+                Matriz de competências e stack
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      © 2026 Equipe CyberSetor · FCTE/UnB
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+      <div class="md-progress" data-md-component="progress" role="progressbar"></div>
+    
+    
+    <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.tabs", "navigation.tabs.sticky", "navigation.indexes", "navigation.instant", "navigation.instant.prefetch", "navigation.instant.progress", "navigation.tracking", "navigation.sections", "navigation.top", "navigation.prune", "navigation.footer", "content.action.edit", "content.code.copy", "toc.follow", "search.suggest", "search.highlight", "search.share", "content.tooltips"], "search": "../../assets/javascripts/workers/search.f8cc74c7.min.js", "translations": {"clipboard.copied": "Copiado para \u00e1rea de transfer\u00eancia", "clipboard.copy": "Copiar para \u00e1rea de transfer\u00eancia", "search.result.more.one": "mais 1 nesta p\u00e1gina", "search.result.more.other": "# mais nesta p\u00e1gina", "search.result.none": "Nenhum documento encontrado", "search.result.one": "1 documento encontrado", "search.result.other": "# documentos encontrados", "search.result.placeholder": "Digite para iniciar a busca", "search.result.term.missing": "Ausente", "select.version": "Selecione a vers\u00e3o"}}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.c8b220af.min.js"></script>
+      
+    
+  </body>
+</html>

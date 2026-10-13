@@ -1,0 +1,2771 @@
+
+<!doctype html>
+<html lang="pt" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Visão de Produto e Projeto — Requisitos de Software (FGA0313) · T02 · 2026.2 · FCTE/UnB">
+      
+      
+        <meta name="author" content="Equipe CyberSetor">
+      
+      
+        <link rel="canonical" href="https://mdsreq-fga-unb.github.io/REQ-2026.2-T02-CyberSetor/gestao/sprints/sprint-3/">
+      
+      
+        <link rel="prev" href="../tarefas-sprint-2/">
+      
+      
+        <link rel="next" href="../tarefas-sprint-3/">
+      
+      
+      <link rel="icon" href="../../../assets/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.9">
+    
+    
+      
+        <title>Plano da Sprint 3 - CyberSetor · Instituto No Setor</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.4af4bdda.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Montserrat";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#plano-da-sprint-3-projeto-cybersetor" class="md-skip">
+          Pular para conteúdo
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Cabeçalho">
+    <a href="../../.." title="CyberSetor · Instituto No Setor" class="md-header__button md-logo" aria-label="CyberSetor · Instituto No Setor" data-md-component="logo">
+      
+  <img src="../../../assets/logo.svg" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            CyberSetor · Instituto No Setor
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Plano da Sprint 3
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom"  aria-label="Alternar para o modo escuro"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Alternar para o modo escuro" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="custom" data-md-color-accent="custom"  aria-label="Alternar para o modo claro"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Alternar para o modo claro" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Buscar" placeholder="Buscar" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Pesquisar">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="Compartilhar" aria-label="Compartilhar" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91s2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="Limpar" aria-label="Limpar" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Inicializando busca
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/mdsreq-fga-unb/REQ-2026.2-T02-CyberSetor" title="Ir para repositório" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8M97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    mdsreq-fga-unb/REQ-2026.2-T02-CyberSetor
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+    
+      
+<nav class="md-tabs" aria-label="Abas" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../.." class="md-tabs__link">
+        
+  
+    
+  
+  Início
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../visao/" class="md-tabs__link">
+          
+  
+    
+  
+  Visão do Produto
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../../processo-scrumxp/" class="md-tabs__link">
+          
+  
+    
+  
+  Gestão do projeto
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../entregas/unidade-1/" class="md-tabs__link">
+          
+  
+    
+  
+  Entregas
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../referencias/" class="md-tabs__link">
+        
+  
+    
+  
+  Referências
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navegação" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="CyberSetor · Instituto No Setor" class="md-nav__button md-logo" aria-label="CyberSetor · Instituto No Setor" data-md-component="logo">
+      
+  <img src="../../../assets/logo.svg" alt="logo">
+
+    </a>
+    CyberSetor · Instituto No Setor
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/mdsreq-fga-unb/REQ-2026.2-T02-CyberSetor" title="Ir para repositório" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8M97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    mdsreq-fga-unb/REQ-2026.2-T02-CyberSetor
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Início
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../../../visao/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Visão do Produto
+    
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Gestão do projeto
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            Gestão do projeto
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../processo-scrumxp/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Processo e ritos (ScrumXP)
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../boas-praticas-github/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Boas práticas no GitHub
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../matriz-competencias/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Matriz de competências e stack
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../dailies/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Registro das dailies
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_5" >
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../atas/" class="md-nav__link ">
+              
+  
+  <span class="md-ellipsis">
+    Reuniões
+    
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_3_5" id="__nav_3_5_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_5">
+            <span class="md-nav__icon md-icon"></span>
+            Reuniões
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../../atas/2026-09-08-reuniao-presencial-instituto/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Com o Instituto
+    
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../../atas/2026-08-27-reuniao-equipe/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Equipe
+    
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../../atas/2026-09-08-sprint-planning/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Cerimônias ScrumXP
+    
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_6" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3_6" id="__nav_3_6_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Sprints
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_6_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3_6">
+            <span class="md-nav__icon md-icon"></span>
+            Sprints
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../sprint-1/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Sprint 1
+    
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../sprint-2/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Sprint 2
+    
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_6_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3_6_3" id="__nav_3_6_3_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Sprint 3
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_3_6_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3_6_3">
+            <span class="md-nav__icon md-icon"></span>
+            Sprint 3
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Plano da Sprint 3
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    Plano da Sprint 3
+    
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Índice">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Índice
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-objetivo-e-escopo-do-documento" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. Objetivo e escopo do documento
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-referencias" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. Referências
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. Referências">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21-base-de-elaboracao-deste-plano" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.1 Base de elaboração deste plano
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#22-referencial-teorico" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.2 Referencial teórico
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#23-convencoes-deste-documento" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.3 Convenções deste documento
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-contexto" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. Contexto
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-definicao-da-sprint" class="md-nav__link">
+    <span class="md-ellipsis">
+      4. Definição da Sprint
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. Definição da Sprint">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#41-periodo-e-cadencia" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.1 Período e cadência
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#42-meta-da-sprint" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.2 Meta da Sprint
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-capacidade-da-equipe" class="md-nav__link">
+    <span class="md-ellipsis">
+      5. Capacidade da equipe
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5. Capacidade da equipe">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#51-calendario-detalhado-da-sprint" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.1 Calendário detalhado da Sprint
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#52-perfil-da-equipe-para-os-produtos-de-trabalho-desta-sprint" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.2 Perfil da equipe para os produtos de trabalho desta Sprint
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-product-backlog-e-sprint-backlog" class="md-nav__link">
+    <span class="md-ellipsis">
+      6. Product Backlog e Sprint Backlog
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6. Product Backlog e Sprint Backlog">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#61-historias-selecionadas-para-a-sprint" class="md-nav__link">
+    <span class="md-ellipsis">
+      6.1 Histórias selecionadas para a sprint
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#62-sprint-backlog" class="md-nav__link">
+    <span class="md-ellipsis">
+      6.2 Sprint Backlog
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-priorizacao" class="md-nav__link">
+    <span class="md-ellipsis">
+      7. Priorização
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="7. Priorização">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#71-dois-horizontes" class="md-nav__link">
+    <span class="md-ellipsis">
+      7.1 Dois horizontes
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#72-aplicacao-nesta-sprint-horizonte-a" class="md-nav__link">
+    <span class="md-ellipsis">
+      7.2 Aplicação nesta sprint (horizonte A)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#73-ordem-de-construcao-horizonte-b" class="md-nav__link">
+    <span class="md-ellipsis">
+      7.3 Ordem de construção (horizonte B)
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-alocacao-de-responsabilidades" class="md-nav__link">
+    <span class="md-ellipsis">
+      8. Alocação de responsabilidades
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#9-registro-de-riscos" class="md-nav__link">
+    <span class="md-ellipsis">
+      9. Registro de riscos
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#10-criterios-de-aceitacao-da-sprint" class="md-nav__link">
+    <span class="md-ellipsis">
+      10. Critérios de aceitação da Sprint
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#11-encaminhamentos-posteriores-ao-planning" class="md-nav__link">
+    <span class="md-ellipsis">
+      11. Encaminhamentos posteriores ao Planning
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#anexo-a-plano-de-execucao" class="md-nav__link">
+    <span class="md-ellipsis">
+      Anexo A — Plano de execução
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#controle-de-versoes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Controle de versões
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tarefas-sprint-3/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Tarefas da Sprint 3
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../../../entregas/unidade-1/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Entregas
+    
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../referencias/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Referências
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Índice">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Índice
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-objetivo-e-escopo-do-documento" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. Objetivo e escopo do documento
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-referencias" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. Referências
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. Referências">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21-base-de-elaboracao-deste-plano" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.1 Base de elaboração deste plano
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#22-referencial-teorico" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.2 Referencial teórico
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#23-convencoes-deste-documento" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.3 Convenções deste documento
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-contexto" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. Contexto
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-definicao-da-sprint" class="md-nav__link">
+    <span class="md-ellipsis">
+      4. Definição da Sprint
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. Definição da Sprint">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#41-periodo-e-cadencia" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.1 Período e cadência
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#42-meta-da-sprint" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.2 Meta da Sprint
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-capacidade-da-equipe" class="md-nav__link">
+    <span class="md-ellipsis">
+      5. Capacidade da equipe
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5. Capacidade da equipe">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#51-calendario-detalhado-da-sprint" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.1 Calendário detalhado da Sprint
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#52-perfil-da-equipe-para-os-produtos-de-trabalho-desta-sprint" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.2 Perfil da equipe para os produtos de trabalho desta Sprint
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-product-backlog-e-sprint-backlog" class="md-nav__link">
+    <span class="md-ellipsis">
+      6. Product Backlog e Sprint Backlog
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6. Product Backlog e Sprint Backlog">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#61-historias-selecionadas-para-a-sprint" class="md-nav__link">
+    <span class="md-ellipsis">
+      6.1 Histórias selecionadas para a sprint
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#62-sprint-backlog" class="md-nav__link">
+    <span class="md-ellipsis">
+      6.2 Sprint Backlog
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-priorizacao" class="md-nav__link">
+    <span class="md-ellipsis">
+      7. Priorização
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="7. Priorização">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#71-dois-horizontes" class="md-nav__link">
+    <span class="md-ellipsis">
+      7.1 Dois horizontes
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#72-aplicacao-nesta-sprint-horizonte-a" class="md-nav__link">
+    <span class="md-ellipsis">
+      7.2 Aplicação nesta sprint (horizonte A)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#73-ordem-de-construcao-horizonte-b" class="md-nav__link">
+    <span class="md-ellipsis">
+      7.3 Ordem de construção (horizonte B)
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-alocacao-de-responsabilidades" class="md-nav__link">
+    <span class="md-ellipsis">
+      8. Alocação de responsabilidades
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#9-registro-de-riscos" class="md-nav__link">
+    <span class="md-ellipsis">
+      9. Registro de riscos
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#10-criterios-de-aceitacao-da-sprint" class="md-nav__link">
+    <span class="md-ellipsis">
+      10. Critérios de aceitação da Sprint
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#11-encaminhamentos-posteriores-ao-planning" class="md-nav__link">
+    <span class="md-ellipsis">
+      11. Encaminhamentos posteriores ao Planning
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#anexo-a-plano-de-execucao" class="md-nav__link">
+    <span class="md-ellipsis">
+      Anexo A — Plano de execução
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#controle-de-versoes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Controle de versões
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+    <a href="https://github.com/mdsreq-fga-unb/REQ-2026.2-T02-CyberSetor/edit/main/docs/gestao/sprints/sprint-3.md" title="Editar esta página" class="md-content__button md-icon">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4zm10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1z"/></svg>
+    </a>
+  
+  
+
+
+<h1 id="plano-da-sprint-3-projeto-cybersetor">Plano da Sprint 3 — Projeto CyberSetor<a class="headerlink" href="#plano-da-sprint-3-projeto-cybersetor" title="Permanent link">&para;</a></h1>
+<p><strong>Documento de planejamento e priorização da Sprint 3</strong></p>
+<table>
+<thead>
+<tr>
+<th>Campo</th>
+<th>Conteúdo</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Código do documento</strong></td>
+<td>C25</td>
+</tr>
+<tr>
+<td><strong>Versão</strong></td>
+<td>1.0</td>
+</tr>
+<tr>
+<td><strong>Data de emissão</strong></td>
+<td>9 de outubro de 2026</td>
+</tr>
+<tr>
+<td><strong>Projeto</strong></td>
+<td>CyberSetor — sistema de gestão do ciclo de projetos financiados</td>
+</tr>
+<tr>
+<td><strong>Cliente</strong></td>
+<td>Instituto Cultural e Social No Setor</td>
+</tr>
+<tr>
+<td><strong>Disciplina</strong></td>
+<td>FGA0313 — Requisitos de Software · Turma 02 · 2026.2 · FCTE/UnB</td>
+</tr>
+<tr>
+<td><strong>Docente</strong></td>
+<td>Prof. George Marsicano</td>
+</tr>
+<tr>
+<td><strong>Sprint</strong></td>
+<td>Sprint 3</td>
+</tr>
+<tr>
+<td><strong>Período da Sprint</strong></td>
+<td>06/10/2026 (terça-feira) a 20/10/2026 (terça-feira) — 2 semanas</td>
+</tr>
+<tr>
+<td><strong>Elaboração</strong></td>
+<td>Vinicius Angelo de Brito Vieira (Scrum Master)</td>
+</tr>
+<tr>
+<td><strong>Product Owner</strong></td>
+<td>Maria Eduarda Denis Duarte Marques</td>
+</tr>
+<tr>
+<td><strong>Situação</strong></td>
+<td>Emitido com o deliberado na Sprint Planning de 07/10/2026 e nos encaminhamentos de 08/10 e 09/10</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="1-objetivo-e-escopo-do-documento">1. Objetivo e escopo do documento<a class="headerlink" href="#1-objetivo-e-escopo-do-documento" title="Permanent link">&para;</a></h2>
+<p>Este documento estabelece o planejamento da Sprint 3: período, meta, capacidade, Sprint Backlog, priorização, alocação por dupla, riscos e critérios de aceitação da sprint. É a primeira sprint de construção do produto e contém a entrega da Unidade 2, em 13/10.</p>
+<p><strong>Não integram o escopo deste documento:</strong> os requisitos declarados (<a href="../../../requisitos/8-requisitos/">seção 8</a>); a DoR e a DoD (<a href="../../../requisitos/9-dor-dod/">seção 9</a>); o backlog do produto, a priorização e o MVP (<a href="../../../requisitos/10-backlog/">seção 10</a>); o fluxo de branches e de publicação (<a href="../../boas-praticas-github/">Boas práticas no GitHub</a>); a situação corrente de cada item, que fica no quadro do projeto.</p>
+<hr />
+<h2 id="2-referencias">2. Referências<a class="headerlink" href="#2-referencias" title="Permanent link">&para;</a></h2>
+<h3 id="21-base-de-elaboracao-deste-plano">2.1 Base de elaboração deste plano<a class="headerlink" href="#21-base-de-elaboracao-deste-plano" title="Permanent link">&para;</a></h3>
+<p>Ata da Sprint Review 2 e Retrospectiva 2 (06/10/2026); ata da Sprint Planning 3 (07/10/2026); ata da reunião de validação do MVP com o Instituto (08/10/2026); <a href="../sprint-2/">plano da Sprint 2</a> (C24); Plano de Ensino da disciplina (entrega da Unidade 2 em 13/10; §9.1 e §9.2 sobre publicação e endereço do produto).</p>
+<h3 id="22-referencial-teorico">2.2 Referencial teórico<a class="headerlink" href="#22-referencial-teorico" title="Permanent link">&para;</a></h3>
+<p>MARSICANO, G. <strong>Requisitos de Software: Comunicação é tudo!</strong> v1.1 draft. Brasília: FCTE/UnB, 2026. §5.3 (atividades de Engenharia de Requisitos); cap. 9 (declaração de requisitos por nível de abstração).</p>
+<p>SCHWABER, K.; SUTHERLAND, J. <strong>The Scrum Guide</strong>. 2020. — Sprint Goal, Sprint Backlog, Definition of Done e itens não concluídos.</p>
+<p>BECK, K. <strong>Extreme Programming Explained: Embrace Change.</strong> 2. ed. Addison-Wesley, 2004. — fatias pequenas, integração contínua e programação em pares.</p>
+<h3 id="23-convencoes-deste-documento">2.3 Convenções deste documento<a class="headerlink" href="#23-convencoes-deste-documento" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Marca</th>
+<th>Significado</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>🟩</td>
+<td>Fato confirmado junto ao cliente ou à equipe</td>
+</tr>
+<tr>
+<td>🟨</td>
+<td>Hipótese ainda não validada</td>
+</tr>
+<tr>
+<td>🔧</td>
+<td>Proposta sujeita a deliberação da equipe</td>
+</tr>
+</tbody>
+</table>
+<p>Itens sem marcação constituem decisão registrada em ata.</p>
+<hr />
+<h2 id="3-contexto">3. Contexto<a class="headerlink" href="#3-contexto" title="Permanent link">&para;</a></h2>
+<p>A Sprint 2 terminou com a meta <strong>parcialmente atingida</strong>: a lista de requisitos foi ajustada, a matriz 4 × 4 preenchida e a DoR e a DoD publicadas, mas a validação do MVP com o Instituto dependia da conferência da ata de 28/09. Em 08/10 o Instituto confirmou, capacidade por capacidade, o recorte da primeira entrega: parcerias e metas, inscrições e prestação de contas, com o relatório sem fotos nem comprovações até o incremento seguinte.</p>
+<p>A Unidade 2 da disciplina é entregue em 13/10, dentro desta sprint, e pelo Plano de Ensino a codificação começa depois de definidos os requisitos do MVP. Por isso a sprint tem duas partes, em ordem de prioridade: fechar e publicar a Unidade 2; preparar a base técnica e iniciar as histórias do MVP.</p>
+<p>O fluxo de branches por componente e os pontos de publicação do site, em vigor desde 09/10, estão na página <a href="../../boas-praticas-github/">Boas práticas no GitHub</a>; este plano só os pressupõe.</p>
+<hr />
+<h2 id="4-definicao-da-sprint">4. Definição da Sprint<a class="headerlink" href="#4-definicao-da-sprint" title="Permanent link">&para;</a></h2>
+<h3 id="41-periodo-e-cadencia">4.1 Período e cadência<a class="headerlink" href="#41-periodo-e-cadencia" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Parâmetro</th>
+<th>Definição</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Início</td>
+<td>06/10/2026 (terça-feira)</td>
+</tr>
+<tr>
+<td>Encerramento</td>
+<td>20/10/2026 (terça-feira)</td>
+</tr>
+<tr>
+<td>Duração</td>
+<td>2 semanas</td>
+</tr>
+<tr>
+<td>Ancoragem</td>
+<td>Terças-feiras</td>
+</tr>
+<tr>
+<td>Reunião de Planning</td>
+<td>07/10/2026 (quarta-feira), 21h30</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Exceções à cadência:</strong> o Planning ocorreu um dia depois do início, como na Sprint 2; o período da sprint não muda. A Review e a Retrospectiva da Sprint 2 foram em 06/10 e o Planning em 07/10, em reuniões separadas, por limite de horário da equipe.</p>
+<p><strong>Eventos externos no período:</strong> atividade em sala sobre declaração de requisitos (08/10); provas de integrantes (08/10); feriado nacional (12/10); entrega da Unidade 2 (13/10, 8h) e aula de apresentação; alinhamento técnico com o Instituto (15/10); Sprint Review 3 e Retrospectiva 3 (20/10); revisão da primeira entrega com o Instituto, prevista para cerca de 21/10.</p>
+<h3 id="42-meta-da-sprint">4.2 Meta da Sprint<a class="headerlink" href="#42-meta-da-sprint" title="Permanent link">&para;</a></h3>
+<blockquote>
+<p><strong>Sprint Goal (aprovado em 07/10):</strong> <em>"Ao final da Sprint 3, a Unidade 2 está publicada no site na versão marcada, antes da aula de 13/10, com o MVP confirmado pelo Instituto; e a base técnica está pronta para a construção: ambiente local definido, linhas da API e do front criadas e as histórias do MVP iniciadas."</em></p>
+</blockquote>
+<p><strong>Fundamentação do recorte.</strong> A primeira parte da meta é verificável pela tag <code>u2-2026-10-13</code> na <code>main</code> e pelo site publicado a partir dela; a confirmação do MVP, pela ata de 08/10. A segunda parte é verificável pelas linhas de código com integração contínua verde, pelo ambiente local documentado e pelas sub-issues de construção abertas e iniciadas nas histórias do MVP.</p>
+<p><strong>Exclusões explícitas do escopo da Sprint:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Item excluído</th>
+<th>Justificativa</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Histórias fora do MVP (HU-03 além do cadastro da atividade, HU-04, HU-06, HU-09 a HU-12)</td>
+<td>Incrementos 2, 3 e posteriores, na ordem confirmada pelo Instituto em 28/09 e 08/10</td>
+</tr>
+<tr>
+<td>Evidências e comprovações no relatório</td>
+<td>Incremento 2; o relatório da primeira entrega sai sem fotos (decisão de 08/10)</td>
+</tr>
+<tr>
+<td>Geração automática de tags e histórico de versões</td>
+<td>Apresentada no Planning sem origem declarada nem pull request; fica como proposta a avaliar (§11)</td>
+</tr>
+<tr>
+<td>Lacunas novas trazidas pelos documentos-modelo do Instituto (elegibilidade, certificação, dados nominais, prorrogação de ofício)</td>
+<td>Vão ao Instituto por escrito antes de virar requisito; a seção 8 recebe nesta sprint só o que já está decidido</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="5-capacidade-da-equipe">5. Capacidade da equipe<a class="headerlink" href="#5-capacidade-da-equipe" title="Permanent link">&para;</a></h2>
+<h3 id="51-calendario-detalhado-da-sprint">5.1 Calendário detalhado da Sprint<a class="headerlink" href="#51-calendario-detalhado-da-sprint" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Data</th>
+<th>Dia</th>
+<th>Natureza</th>
+<th>Capacidade produtiva</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>06/10</td>
+<td>terça</td>
+<td>Sprint Review 2 e Retrospectiva 2</td>
+<td>Nula — cerimônia</td>
+</tr>
+<tr>
+<td>07/10</td>
+<td>quarta</td>
+<td>Preparação da atividade de sala; Sprint Planning 3 à noite</td>
+<td>Reduzida</td>
+</tr>
+<tr>
+<td>08/10</td>
+<td>quinta</td>
+<td>Provas de integrantes; atividade em sala; reunião de confirmação do MVP com o Instituto</td>
+<td>Reduzida</td>
+</tr>
+<tr>
+<td>09/10</td>
+<td>sexta</td>
+<td>Integração dos pull requests da Sprint 2; fluxo de branches e linhas de código</td>
+<td>Reduzida</td>
+</tr>
+<tr>
+<td>10/10 e 11/10</td>
+<td>fim de semana</td>
+<td>Pull requests da Unidade 2, se necessário</td>
+<td>Não contada</td>
+</tr>
+<tr>
+<td>12/10</td>
+<td>segunda</td>
+<td>Feriado; prazo interno dos pull requests da Unidade 2 (20h)</td>
+<td>Não contada</td>
+</tr>
+<tr>
+<td>13/10</td>
+<td>terça</td>
+<td>Publicação da Unidade 2 antes das 8h; aula de apresentação</td>
+<td>Reduzida</td>
+</tr>
+<tr>
+<td>14/10</td>
+<td>quarta</td>
+<td>Base técnica: esqueletos e ambiente local</td>
+<td>Plena</td>
+</tr>
+<tr>
+<td>15/10</td>
+<td>quinta</td>
+<td>Alinhamento técnico com o Instituto; base técnica</td>
+<td>Reduzida</td>
+</tr>
+<tr>
+<td>16/10</td>
+<td>sexta</td>
+<td>Primeiro ambiente de teste; sub-issues das histórias</td>
+<td>Plena</td>
+</tr>
+<tr>
+<td>19/10</td>
+<td>segunda</td>
+<td>Produção</td>
+<td>Plena</td>
+</tr>
+<tr>
+<td>20/10</td>
+<td>terça</td>
+<td>Sprint Review 3 e Retrospectiva 3</td>
+<td>Nula — cerimônia</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Síntese:</strong> 10 dias úteis no período; 3 de capacidade plena (14/10, 16/10 e 19/10), 5 reduzidos e 2 de cerimônia. <strong>Até 13/10 não há dia pleno:</strong> a entrega da Unidade 2 se faz em dias reduzidos, no fim de semana e no feriado.</p>
+<p><strong>Consequência para o dimensionamento.</strong> Os itens <em>Must</em> da Unidade 2 concentram-se antes de 13/10, com prazo interno em 12/10, 20h, para a revisão e o pull request consolidado. A base técnica e o início das histórias ficam para os três dias plenos da segunda semana; o que não couber vai para a Sprint 4, com registro (ata de 07/10, D10).</p>
+<h3 id="52-perfil-da-equipe-para-os-produtos-de-trabalho-desta-sprint">5.2 Perfil da equipe para os produtos de trabalho desta Sprint<a class="headerlink" href="#52-perfil-da-equipe-para-os-produtos-de-trabalho-desta-sprint" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Integrante</th>
+<th>Papel</th>
+<th>Foco nesta Sprint</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Vinicius Vieira</td>
+<td>Scrum Master · dupla com Lucas</td>
+<td>Integração e publicação da Unidade 2; fluxo de branches e base técnica; épicos Pessoas e Presença em campo</td>
+</tr>
+<tr>
+<td>Lucas de Paula Leal</td>
+<td>Dupla com Vinicius</td>
+<td>Dojo pendente; épicos Pessoas e Presença em campo; aba Entregas da revisão editorial; seção 4 com Caio</td>
+</tr>
+<tr>
+<td>Maria Eduarda Marques</td>
+<td>Product Owner · dupla com Caio</td>
+<td>Atas e conferência com o Instituto; alinhamento técnico de 15/10; épicos Relatório e Atividade</td>
+</tr>
+<tr>
+<td>Caio Martins</td>
+<td>Dupla com Maria Eduarda</td>
+<td>Seção 4 (apontamentos do docente); alcance do MVP no cronograma; épicos Relatório e Atividade</td>
+</tr>
+<tr>
+<td>Daniel Batista</td>
+<td>Dupla com Rodrigo</td>
+<td>Épicos Requisito e meta e Evidência; primeira fatia vertical (HU-01); lições aprendidas e papéis de ER já publicados</td>
+</tr>
+<tr>
+<td>Rodrigo Henrique Donato</td>
+<td>Dupla com Daniel</td>
+<td>Síntese de entregas e checklist da Unidade 2; épicos Requisito e meta e Evidência</td>
+</tr>
+</tbody>
+</table>
+<p>Referência de capacidade: cerca de 2 horas por dia por integrante 🟨, como na Sprint 2. Caio e Maria Eduarda tiveram provas em 08/10.</p>
+<hr />
+<h2 id="6-product-backlog-e-sprint-backlog">6. Product Backlog e Sprint Backlog<a class="headerlink" href="#6-product-backlog-e-sprint-backlog" title="Permanent link">&para;</a></h2>
+<h3 id="61-historias-selecionadas-para-a-sprint">6.1 Histórias selecionadas para a sprint<a class="headerlink" href="#61-historias-selecionadas-para-a-sprint" title="Permanent link">&para;</a></h3>
+<p>O Product Backlog (épicos, histórias, priorização e MVP) está na <a href="../../../requisitos/10-backlog/">seção 10</a>; a situação de cada item, no quadro do projeto. Esta sprint seleciona as oito histórias da primeira entrega (seção 10.2.6): HU-01, HU-02 e HU-14; HU-05 e HU-13, em recorte parcial; HU-07, HU-08 e HU-15; mais o cadastro da atividade, parte da HU-03. As demais continuam no Product Backlog, sem sprint.</p>
+<p>"Iniciada", para a meta, significa: história conferida contra a DoR pela dupla dona do épico, dividida se preciso, com as sub-issues de construção abertas e a primeira fatia vertical em andamento. As duplas e os épicos de cada uma estão na seção 8.</p>
+<h3 id="62-sprint-backlog">6.2 Sprint Backlog<a class="headerlink" href="#62-sprint-backlog" title="Permanent link">&para;</a></h3>
+<p><strong>Parte A — Entrega da Unidade 2</strong> (pull request aprovado até 12/10, 20h)</p>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>Item</th>
+<th>Atividade de ER</th>
+<th>Responsáveis</th>
+<th>MoSCoW</th>
+<th>Prazo</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>U01</td>
+<td>Integrar os pull requests aprovados da Sprint 2 e publicar a Unidade 2 na versão marcada: pull request consolidado da homologação, tag <code>u2-2026-10-13</code> e execução manual da publicação antes da aula</td>
+<td>Organização e atualização</td>
+<td>Vinicius</td>
+<td>Must</td>
+<td>13/10, 8h</td>
+</tr>
+<tr>
+<td>U02</td>
+<td>Seção 4: responder aos apontamentos do docente sobre a abordagem ágil, o OpenUP, o quadro comparativo e o ScrumXP, com comentário na issue do docente</td>
+<td>Verificação e validação</td>
+<td>Caio e Lucas</td>
+<td>Must</td>
+<td>12/10</td>
+</tr>
+<tr>
+<td>U03</td>
+<td>Síntese de entregas da Unidade 2: catálogo, situação, checklist, rastreamento das Atividades 2 a 4 e vídeo</td>
+<td>Organização e atualização</td>
+<td>Rodrigo</td>
+<td>Must</td>
+<td>12/10</td>
+</tr>
+<tr>
+<td>U04</td>
+<td>Atas de 28/09 e 08/10 conferidas pelo Instituto; correções da ata de 08/10 publicadas</td>
+<td>Organização e atualização</td>
+<td>Maria Eduarda</td>
+<td>Must</td>
+<td>12/10</td>
+</tr>
+<tr>
+<td>U05</td>
+<td>Vídeo da Unidade 2: exigência conferida no Plano de Ensino; roteiro, gravação com os seis integrantes e publicação</td>
+<td>Não se aplica</td>
+<td>Equipe</td>
+<td>Must</td>
+<td>12/10</td>
+</tr>
+<tr>
+<td>U06</td>
+<td>Checklist da Unidade 2 no README, com o link do vídeo</td>
+<td>Organização e atualização</td>
+<td>Rodrigo</td>
+<td>Must</td>
+<td>12/10</td>
+</tr>
+<tr>
+<td>U07</td>
+<td>Alcance do MVP no cronograma (seção 6.3) alinhado à seção 10 e à confirmação de 08/10</td>
+<td>Verificação e validação</td>
+<td>Caio</td>
+<td>Must</td>
+<td>12/10</td>
+</tr>
+<tr>
+<td>U08</td>
+<td>Revisão editorial: pull request das seções 1, 2, 3, 5 e 7 e das páginas de apoio integrado à homologação; abas Requisitos e Entregas</td>
+<td>Organização e atualização</td>
+<td>Equipe revisa; Daniel (Requisitos) e Lucas (Entregas)</td>
+<td>Should</td>
+<td>12/10</td>
+</tr>
+<tr>
+<td>U09</td>
+<td>Seção 10: registro da confirmação de 08/10 na 10.2.8; seção 8: só os ajustes já decididos da Atividade 3</td>
+<td>Organização e atualização</td>
+<td>Vinicius</td>
+<td>Should</td>
+<td>12/10</td>
+</tr>
+<tr>
+<td>U10</td>
+<td>Comentários nas issues do docente com a localização de cada ajuste, depois da publicação</td>
+<td>Organização e atualização</td>
+<td>Vinicius; Caio e Lucas (seção 4)</td>
+<td>Should</td>
+<td>13/10</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Parte B — Base técnica e construção</strong> (de 13/10 a 20/10)</p>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>Item</th>
+<th>Atividade de ER</th>
+<th>Responsáveis</th>
+<th>MoSCoW</th>
+<th>Prazo</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>B01</td>
+<td>Linhas <code>api-develop</code>/<code>api</code> e <code>web-develop</code>/<code>web</code> criadas, com integração contínua e guarda de branches próprias</td>
+<td>Não se aplica</td>
+<td>Vinicius</td>
+<td>Must</td>
+<td>09/10 (concluído)</td>
+</tr>
+<tr>
+<td>B02</td>
+<td>Esqueleto da API: NestJS, Prisma e PostgreSQL; lint, testes e build na integração contínua; migração inicial de instrumento, projeto, requisito e meta</td>
+<td>Não se aplica</td>
+<td>Vinicius; dupla a definir no refinamento</td>
+<td>Should</td>
+<td>16/10</td>
+</tr>
+<tr>
+<td>B03</td>
+<td>Esqueleto do front: Next.js, TanStack Query e shadcn/ui; lint, testes e build; leiaute base usável em celular</td>
+<td>Não se aplica</td>
+<td>Vinicius; dupla a definir no refinamento</td>
+<td>Should</td>
+<td>16/10</td>
+</tr>
+<tr>
+<td>B04</td>
+<td>Autenticação e perfis de acesso por departamento e função, com testes</td>
+<td>Não se aplica</td>
+<td>Vinicius; dupla a definir no refinamento</td>
+<td>Should</td>
+<td>20/10</td>
+</tr>
+<tr>
+<td>B05</td>
+<td>Ambiente local por Compose; homologação da API e do front publicada; endereço no site; backup com teste de restauração</td>
+<td>Não se aplica</td>
+<td>Vinicius</td>
+<td>Should</td>
+<td>20/10</td>
+</tr>
+<tr>
+<td>H01</td>
+<td>Histórias da primeira entrega conferidas contra a DoR pela dupla dona, divididas onde preciso (HU-05, HU-13 e o cadastro da atividade da HU-03), com as sub-issues de construção abertas</td>
+<td>Declaração</td>
+<td>duplas donas</td>
+<td>Must</td>
+<td>13/10</td>
+</tr>
+<tr>
+<td>H02</td>
+<td>Primeira fatia vertical da HU-01 (cadastrar instrumento, projeto e meta) em andamento na API e no front</td>
+<td>Declaração</td>
+<td>Daniel e Rodrigo</td>
+<td>Should</td>
+<td>20/10</td>
+</tr>
+<tr>
+<td>H03</td>
+<td>Primeira fatia vertical da HU-07 (inscrição por link) em andamento</td>
+<td>Declaração</td>
+<td>Vinicius e Lucas</td>
+<td>Could</td>
+<td>20/10</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Parte C — Pendências que continuam</strong></p>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>Item</th>
+<th>Atividade de ER</th>
+<th>Responsáveis</th>
+<th>MoSCoW</th>
+<th>Prazo</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>P01</td>
+<td>Dojo pendente da Sprint 1: pull request e fechamento dos registros dos dojos</td>
+<td>Organização e atualização</td>
+<td>Lucas, com apoio de Vinicius</td>
+<td>Should</td>
+<td>16/10</td>
+</tr>
+<tr>
+<td>P02</td>
+<td>Plano da Sprint 3 publicado</td>
+<td>Organização e atualização</td>
+<td>Vinicius</td>
+<td>Must</td>
+<td>12/10</td>
+</tr>
+<tr>
+<td>P03</td>
+<td>Alinhamento técnico com o Instituto (15/10): tabelas, campos de inscrição, perfis de acesso; perguntas dos documentos-modelo por escrito</td>
+<td>Elicitação e descoberta</td>
+<td>Vinicius, Daniel e Maria Eduarda</td>
+<td>Should</td>
+<td>15/10</td>
+</tr>
+<tr>
+<td>P04</td>
+<td>Preparação da Review 3 e da revisão da primeira entrega com o Instituto</td>
+<td>Organização e atualização</td>
+<td>Vinicius e Maria Eduarda</td>
+<td>Should</td>
+<td>20/10</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="7-priorizacao">7. Priorização<a class="headerlink" href="#7-priorizacao" title="Permanent link">&para;</a></h2>
+<h3 id="71-dois-horizontes">7.1 Dois horizontes<a class="headerlink" href="#71-dois-horizontes" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Horizonte</th>
+<th>Pergunta</th>
+<th>Objeto</th>
+<th>Escala</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>A — trabalho da Sprint 3</strong></td>
+<td>O item é indispensável para a meta da sprint?</td>
+<td>Itens do Sprint Backlog (§6.2)</td>
+<td>MoSCoW</td>
+</tr>
+<tr>
+<td><strong>B — produto e MVP</strong></td>
+<td>O requisito é indispensável no primeiro recorte utilizável pelo Instituto?</td>
+<td>Cada requisito funcional</td>
+<td>Definido na Sprint 2 (seção 10.2.6) e confirmado pelo Instituto em 08/10</td>
+</tr>
+</tbody>
+</table>
+<h3 id="72-aplicacao-nesta-sprint-horizonte-a">7.2 Aplicação nesta sprint (horizonte A)<a class="headerlink" href="#72-aplicacao-nesta-sprint-horizonte-a" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Must:</strong> U01 a U07, B01, H01 e P02 — o que a entrega da Unidade 2 exige e o que a meta nomeia como "histórias iniciadas".</li>
+<li><strong>Should:</strong> U08 a U10, B02 a B05, H02, P01, P03 e P04 — a base técnica e a primeira fatia, nos três dias plenos da segunda semana.</li>
+<li><strong>Could:</strong> H03 — primeira a descer se a sprint apertar.</li>
+</ul>
+<p><strong>Verificação de capacidade.</strong> A primeira semana tem só dias reduzidos e a entrega da Unidade 2 ocupa toda ela; a proporção de <em>Must</em> sobre o esforço fica acima de 60% até 13/10 e abaixo depois. Se a Unidade 2 apertar, fatia-se o <em>Must</em>: a revisão editorial entra pelo que já está aprovado (U08) e o restante fica para a homologação seguinte; o vídeo segue o modelo da Unidade 1 sem roteiro novo. Se a base técnica apertar, B04 e B05 vão para a Sprint 4 com registro no quadro e comunicação ao Instituto (ata de 07/10, D10).</p>
+<h3 id="73-ordem-de-construcao-horizonte-b">7.3 Ordem de construção (horizonte B)<a class="headerlink" href="#73-ordem-de-construcao-horizonte-b" title="Permanent link">&para;</a></h3>
+<p>A ordem é a da seção 10.2.6, confirmada pelo Instituto em 08/10. Dentro de cada história, a primeira fatia é vertical: API e tela juntas para um critério de aceitação, antes de ampliar. A autenticação e os perfis (B04) precedem qualquer tela com dados de pessoas.</p>
+<hr />
+<h2 id="8-alocacao-de-responsabilidades">8. Alocação de responsabilidades<a class="headerlink" href="#8-alocacao-de-responsabilidades" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Dupla</th>
+<th>Integrantes</th>
+<th>Itens</th>
+<th>Fundamento da alocação</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Pessoas, Presença em campo e coordenação</strong></td>
+<td>Vinicius Vieira · Lucas de Paula Leal</td>
+<td>U01, U09, U10, B01 a B05, H03, P01 a P04; U02 e U08 (Lucas)</td>
+<td>Scrum Master responde pela integração, pela publicação e pela infraestrutura; Lucas conclui o dojo e a aba Entregas</td>
+</tr>
+<tr>
+<td><strong>Relatório, Atividade e interlocução</strong></td>
+<td>Maria Eduarda Marques · Caio Martins</td>
+<td>U04, P03 (Maria Eduarda); U02, U07 (Caio); H01 nos seus épicos</td>
+<td>Product Owner conduz a conferência com o Instituto; Caio responde pela seção 4 e pelo cronograma</td>
+</tr>
+<tr>
+<td><strong>Requisito e meta, Evidência</strong></td>
+<td>Daniel Batista · Rodrigo Henrique Donato</td>
+<td>U03, U06 (Rodrigo); U08 aba Requisitos (Daniel); H01 nos seus épicos; H02</td>
+<td>Donos do primeiro épico da construção; primeira fatia vertical na HU-01</td>
+</tr>
+<tr>
+<td><strong>Equipe</strong></td>
+<td>—</td>
+<td>U05; revisão de pull request em até 24 horas por integrante de outra dupla, com aviso no grupo</td>
+<td>Decisões de 06/10 e 07/10</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="9-registro-de-riscos">9. Registro de riscos<a class="headerlink" href="#9-registro-de-riscos" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>Risco</th>
+<th>Prob.</th>
+<th>Impacto</th>
+<th>Mitigação</th>
+<th>Responsável</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>R01</td>
+<td>Publicação depois das 8h de 13/10 conta como entrega atrasada (Plano de Ensino, §9.1)</td>
+<td>Média</td>
+<td>Alto</td>
+<td>Prazo interno em 12/10, 20h; congelamento do deploy ativo; publicação manual com a tag na noite de 12/10 e conferência do site</td>
+<td>Vinicius</td>
+</tr>
+<tr>
+<td>R02</td>
+<td>Atas de 28/09 e 08/10 sem conferência do Instituto até a entrega</td>
+<td>Alta</td>
+<td>Médio</td>
+<td>Mensagens de conferência enviadas em 09/10; as atas seguem no site como preliminares, com a situação no histórico; a evidência da validação está também na seção 10.2.8</td>
+<td>Maria Eduarda</td>
+</tr>
+<tr>
+<td>R03</td>
+<td>Capacidade reduzida na primeira semana (provas, feriado, aula)</td>
+<td>Alta</td>
+<td>Alto</td>
+<td><em>Must</em> da Unidade 2 fatiado (§7.2); base técnica só na segunda semana</td>
+<td>Vinicius</td>
+</tr>
+<tr>
+<td>R04</td>
+<td>Decisões da base técnica (gerenciador de pacotes, lint, Compose) sem fechamento, atrasando os esqueletos</td>
+<td>Média</td>
+<td>Médio</td>
+<td>Propostas registradas na tarefa de base técnica; fechamento por mensagem até 13/10, sem reunião</td>
+<td>Vinicius</td>
+</tr>
+<tr>
+<td>R05</td>
+<td>Exigência do vídeo da Unidade 2 não confirmada no Plano de Ensino</td>
+<td>Média</td>
+<td>Baixo</td>
+<td>Conferir antes de gravar; se não exigido, o item cai</td>
+<td>Equipe</td>
+</tr>
+<tr>
+<td>R06</td>
+<td>Sem permissão de administrador no repositório: proteção de branch e método de merge único indisponíveis</td>
+<td>Alta</td>
+<td>Médio</td>
+<td>Guarda de branches, verificação de push e acordo de trabalho publicados; <em>squash</em> desabilitado pela interface</td>
+<td>Vinicius</td>
+</tr>
+<tr>
+<td>R07</td>
+<td>Dojo pendente atrasa a entrada de Lucas na construção</td>
+<td>Média</td>
+<td>Médio</td>
+<td>Sessão de apoio marcada; dojo concluído até 16/10</td>
+<td>Lucas e Vinicius</td>
+</tr>
+<tr>
+<td>R08</td>
+<td>Dados pessoais em capturas, atas ou documentos do Instituto</td>
+<td>Média</td>
+<td>Alto</td>
+<td>Revisão de dados sensíveis antes de publicar; documentos-modelo do Instituto não se publicam</td>
+<td>Maria Eduarda e Vinicius</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="10-criterios-de-aceitacao-da-sprint">10. Critérios de aceitação da Sprint<a class="headerlink" href="#10-criterios-de-aceitacao-da-sprint" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>Critério</th>
+<th>Verificação</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>CAS-01</td>
+<td>Unidade 2 publicada a partir da tag <code>u2-2026-10-13</code> antes das 8h de 13/10</td>
+<td>Tag na <code>main</code>, tag <code>-pages</code> na publicação e site no ar</td>
+</tr>
+<tr>
+<td>CAS-02</td>
+<td>MVP confirmado pelo Instituto, com ata enviada para conferência e registro na seção 10.2.8</td>
+<td>Ata de 08/10 e seção 10</td>
+</tr>
+<tr>
+<td>CAS-03</td>
+<td>Seção 4 respondida ao docente, com comentário na issue dele</td>
+<td>Seção 4 e issue</td>
+</tr>
+<tr>
+<td>CAS-04</td>
+<td>Linhas da API e do front com integração contínua verde e esqueletos com lint, testes e build passando</td>
+<td>Execuções no Actions</td>
+</tr>
+<tr>
+<td>CAS-05</td>
+<td>As oito histórias da primeira entrega conferidas contra a DoR, com sub-issues de construção abertas</td>
+<td>Quadro do projeto</td>
+</tr>
+<tr>
+<td>CAS-06</td>
+<td>Primeiro ambiente de teste no ar, com o endereço registrado no site</td>
+<td>Página de processo e mensagem no grupo</td>
+</tr>
+<tr>
+<td>CAS-07</td>
+<td>Adesão às dailies no próprio dia igual ou acima de 80% na sprint</td>
+<td>Registro das dailies</td>
+</tr>
+<tr>
+<td>CAS-08</td>
+<td>Nenhum pull request sem revisão por mais de 24 horas sem aviso no grupo</td>
+<td>Histórico dos pull requests</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="11-encaminhamentos-posteriores-ao-planning">11. Encaminhamentos posteriores ao Planning<a class="headerlink" href="#11-encaminhamentos-posteriores-ao-planning" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Tema</th>
+<th>Encaminhamento</th>
+<th>Situação</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Segundo épico de cada dupla (ata de 07/10, P2)</td>
+<td>Daniel e Rodrigo: Evidência, pela ligação da evidência à meta; Caio e Maria Eduarda: Atividade; Vinicius e Lucas: Presença em campo, pela ligação da inscrição à presença</td>
+<td>Definido em 09/10</td>
+</tr>
+<tr>
+<td>Confirmação do MVP pelo Instituto (ata de 07/10, A4)</td>
+<td>Reunião de 08/10 com o núcleo pedagógico: oito capacidades confirmadas; alinhamento técnico em 15/10; revisão da primeira entrega por volta de 21/10</td>
+<td>Feito em 08/10</td>
+</tr>
+<tr>
+<td>Fluxo de branches e publicação (ata de 07/10, D3)</td>
+<td>Em vigor desde 09/10: <code>docs-homologacao</code>, congelamento do deploy, tag da Unidade 1, linhas da API e do front</td>
+<td>Feito em 09/10</td>
+</tr>
+<tr>
+<td>Tags de entrega automáticas (ata de 07/10, D4)</td>
+<td>Sem origem declarada nem pull request; tratada como proposta a avaliar depois da Unidade 2, fora desta sprint</td>
+<td>Proposta</td>
+</tr>
+<tr>
+<td>Sub-tarefas da base técnica (ata de 07/10, D9)</td>
+<td>Cinco sub-tarefas abertas, uma concluída (linhas de código); donos por dupla definidos no refinamento</td>
+<td>Abertas em 09/10</td>
+</tr>
+<tr>
+<td>Ajustes restantes da lista de requisitos (Atividade 3)</td>
+<td>Só o já decidido entra antes de 13/10; lacunas dos documentos-modelo vão ao Instituto por escrito</td>
+<td>🔧 A confirmar</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="anexo-a-plano-de-execucao">Anexo A — Plano de execução<a class="headerlink" href="#anexo-a-plano-de-execucao" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Data</th>
+<th>Atividade</th>
+<th>Responsáveis</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>09/10</td>
+<td>Integração dos pull requests da Sprint 2; fluxo de branches em vigor; linhas de código; sub-tarefas e quadro na Sprint 3; pull request da revisão editorial</td>
+<td>Vinicius</td>
+</tr>
+<tr>
+<td>10/10 a 12/10</td>
+<td>Pull requests da Unidade 2 para a homologação: seção 4, síntese, README, cronograma, atas corrigidas, seção 10; vídeo; revisão em até 24 horas</td>
+<td>duplas</td>
+</tr>
+<tr>
+<td>12/10, 20h</td>
+<td>Pull request consolidado da homologação para a <code>main</code>; tag <code>u2-2026-10-13</code>; publicação manual e conferência</td>
+<td>Vinicius</td>
+</tr>
+<tr>
+<td>13/10</td>
+<td>Aula de apresentação; comentários nas issues do docente; fechamento das decisões da base técnica</td>
+<td>equipe; Vinicius</td>
+</tr>
+<tr>
+<td>14/10</td>
+<td>Esqueletos da API e do front; ambiente local</td>
+<td>Vinicius; duplas</td>
+</tr>
+<tr>
+<td>15/10</td>
+<td>Alinhamento técnico com o Instituto</td>
+<td>Vinicius, Daniel e Maria Eduarda</td>
+</tr>
+<tr>
+<td>16/10 e 19/10</td>
+<td>Autenticação e perfis; primeiro ambiente de teste; primeira fatia da HU-01; dojo</td>
+<td>duplas</td>
+</tr>
+<tr>
+<td>20/10</td>
+<td>Sprint Review 3 e Retrospectiva 3; Planning 4</td>
+<td>equipe</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="controle-de-versoes">Controle de versões<a class="headerlink" href="#controle-de-versoes" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Versão</th>
+<th>Data</th>
+<th>Alteração</th>
+<th>Responsável</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1.0</td>
+<td>09/10/2026</td>
+<td>Emissão com o deliberado na Sprint Planning de 07/10 e nos encaminhamentos de 08/10 (confirmação do MVP) e 09/10 (fluxo de branches, linhas de código, segundo épico de cada dupla): meta, calendário, Sprint Backlog em três partes, priorização, alocação, riscos e critérios de aceitação</td>
+<td>Vinicius</td>
+</tr>
+</tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Voltar para o topo
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Rodapé" >
+        
+          
+          <a href="../tarefas-sprint-2/" class="md-footer__link md-footer__link--prev" aria-label="Anterior: Tarefas da Sprint 2">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Anterior
+              </span>
+              <div class="md-ellipsis">
+                Tarefas da Sprint 2
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../tarefas-sprint-3/" class="md-footer__link md-footer__link--next" aria-label="Próximo: Tarefas da Sprint 3">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Próximo
+              </span>
+              <div class="md-ellipsis">
+                Tarefas da Sprint 3
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      © 2026 Equipe CyberSetor · FCTE/UnB
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+      <div class="md-progress" data-md-component="progress" role="progressbar"></div>
+    
+    
+    <script id="__config" type="application/json">{"base": "../../..", "features": ["navigation.tabs", "navigation.tabs.sticky", "navigation.indexes", "navigation.instant", "navigation.instant.prefetch", "navigation.instant.progress", "navigation.tracking", "navigation.sections", "navigation.top", "navigation.prune", "navigation.footer", "content.action.edit", "content.code.copy", "toc.follow", "search.suggest", "search.highlight", "search.share", "content.tooltips"], "search": "../../../assets/javascripts/workers/search.f8cc74c7.min.js", "translations": {"clipboard.copied": "Copiado para \u00e1rea de transfer\u00eancia", "clipboard.copy": "Copiar para \u00e1rea de transfer\u00eancia", "search.result.more.one": "mais 1 nesta p\u00e1gina", "search.result.more.other": "# mais nesta p\u00e1gina", "search.result.none": "Nenhum documento encontrado", "search.result.one": "1 documento encontrado", "search.result.other": "# documentos encontrados", "search.result.placeholder": "Digite para iniciar a busca", "search.result.term.missing": "Ausente", "select.version": "Selecione a vers\u00e3o"}}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.c8b220af.min.js"></script>
+      
+    
+  </body>
+</html>
