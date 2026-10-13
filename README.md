@@ -82,6 +82,7 @@ Todo conteúdo entra por pull request revisado por integrante de outra dupla. Do
 ```bash
 python -m venv .venv && source .venv/bin/activate
 pip install -r requirements.txt
+GITHUB_TOKEN=$(gh auth token) python .github/scripts/fetch_issues.py  # páginas geradas do quadro (tarefas por sprint, débitos); exige gh autenticado com acesso ao projeto
 mkdocs serve          # pré-visualização em http://127.0.0.1:8000
 mkdocs build --strict # o mesmo teste que roda no CI
 ```

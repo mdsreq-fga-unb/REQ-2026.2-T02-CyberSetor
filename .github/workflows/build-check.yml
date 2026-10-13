@@ -59,7 +59,7 @@ jobs:
       - name: Conferir páginas geradas
         run: |
           faltou=0
-          for pagina in docs/entregas/debitos-u1.md docs/gestao/sprints/tarefas-sprint-1.md docs/gestao/sprints/tarefas-sprint-2.md; do
+          for pagina in docs/entregas/debitos-u1.md docs/gestao/sprints/tarefas-sprint-1.md docs/gestao/sprints/tarefas-sprint-2.md docs/gestao/sprints/tarefas-sprint-3.md; do
             if [ ! -s "$pagina" ]; then
               echo "::error file=$pagina::Página gerada ausente ou vazia. O gerador de issues não produziu o arquivo (token ou permissão de leitura de issues?)."
               faltou=1

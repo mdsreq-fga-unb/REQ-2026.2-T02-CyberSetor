@@ -1,1 +1,320 @@
-/* Estilos adicionais do site CyberSetor. */
+/* Estilos adicionais do site CyberSetor.
+   Fontes: Material for MkDocs › Customization (Content area width; Custom colors;
+   Extending the theme). */
+
+/* ---- Paleta: grafite com destaque azul, nos dois esquemas ---- */
+/* Com "primary: custom" o tema usa a cor primária também nos links e no item
+   ativo do menu; com o grafite isso apagaria os links no esquema escuro.
+   Por isso os links recebem a cor de destaque explicitamente. */
+[data-md-color-scheme="default"] {
+  --md-primary-fg-color: #31353d;
+  --md-primary-fg-color--light: #4a4f5a;
+  --md-primary-fg-color--dark: #22252b;
+  --md-accent-fg-color: #0270d7;
+  --md-accent-fg-color--transparent: rgba(2, 112, 215, 0.1);
+  --md-typeset-a-color: #0270d7;
+  --md-default-bg-color: #f7f7f7;
+}
+
+[data-md-color-scheme="slate"] {
+  --md-primary-fg-color: #31353d;
+  --md-primary-fg-color--light: #4a4f5a;
+  --md-primary-fg-color--dark: #16181c;
+  --md-accent-fg-color: #4da3ff;
+  --md-accent-fg-color--transparent: rgba(77, 163, 255, 0.1);
+  --md-typeset-a-color: #6fb3ff;
+  --md-default-bg-color: #202121;
+  --md-code-bg-color: #2a2c30;
+}
+
+.md-nav__link--active,
+.md-nav__link:focus,
+.md-nav__link:hover {
+  color: var(--md-typeset-a-color);
+}
+
+.md-nav__item--section > .md-nav__link {
+  color: var(--md-default-fg-color--light);
+}
+
+/* ---- Legibilidade: texto, títulos e menus com mais contraste e peso ----
+   O tema desenha o h1 em peso 300 e o texto secundário com 54% de opacidade;
+   com Montserrat isso fica fino. Valores abaixo mantêm contraste acima de
+   7:1 (WCAG AAA) nos dois esquemas. */
+[data-md-color-scheme="default"] {
+  --md-default-fg-color: #1c1f24;
+  --md-default-fg-color--light: rgba(28, 31, 36, 0.78);
+  --md-default-fg-color--lighter: rgba(28, 31, 36, 0.5);
+  --md-typeset-color: #1c1f24;
+}
+
+[data-md-color-scheme="slate"] {
+  --md-default-fg-color: #f2f3f5;
+  --md-default-fg-color--light: rgba(242, 243, 245, 0.8);
+  --md-default-fg-color--lighter: rgba(242, 243, 245, 0.5);
+  --md-typeset-color: #f2f3f5;
+}
+
+.md-typeset h1 {
+  font-weight: 600;
+  color: var(--md-default-fg-color);
+}
+
+.md-typeset h2 {
+  font-weight: 600;
+  color: var(--md-default-fg-color);
+}
+
+.md-typeset h3,
+.md-typeset h4 {
+  font-weight: 600;
+}
+
+.md-typeset {
+  font-weight: 400;
+}
+
+.md-typeset table:not([class]) {
+  font-size: 0.72rem;
+}
+
+.md-typeset table:not([class]) th {
+  font-weight: 700;
+  color: var(--md-default-fg-color);
+}
+
+.md-nav__link,
+.md-nav__title {
+  color: var(--md-default-fg-color--light);
+}
+
+.md-tabs__link {
+  opacity: 0.85;
+}
+
+.md-tabs__link--active,
+.md-tabs__link:hover {
+  opacity: 1;
+}
+
+/* ---- Área de conteúdo mais larga (padrão do tema: cerca de 61rem) ---- */
+.md-grid {
+  max-width: 1440px;
+}
+
+/* ---- Página inicial ---- */
+.cs-section {
+  padding: 3rem 1rem;
+  text-align: center;
+  background: #202121;
+  color: #f0f1f3;
+}
+
+.cs-section--alt {
+  background: #1d2026;
+}
+
+.cs-inner {
+  max-width: 64rem;
+  margin: 0 auto;
+}
+
+.cs-section__title {
+  font-size: 1.6rem;
+  font-weight: 700;
+  margin: 0 0 0.75rem;
+  color: #ffffff;
+}
+
+.cs-section__text {
+  font-size: 0.95rem;
+  line-height: 1.65;
+  color: #c3c8d1;
+  max-width: 48rem;
+  margin: 0 auto 0.9rem;
+}
+
+.cs-hero {
+  background: linear-gradient(180deg, #3a3f51 0%, #1d2026 100%);
+  padding: 4rem 1rem 3.5rem;
+}
+
+.cs-hero__logo {
+  width: 5.6rem;
+  height: 5.6rem;
+  border-radius: 1rem;
+  margin: 0 auto 1rem;
+  display: block;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+}
+
+.md-header__button.md-logo img {
+  height: 1.5rem;
+  width: 1.5rem;
+  border-radius: 0.3rem;
+}
+
+.cs-hero__title {
+  font-size: 2.6rem;
+  font-weight: 700;
+  line-height: 1.15;
+  margin: 0 0 1rem;
+  color: #ffffff;
+}
+
+.cs-hero__text {
+  font-size: 1.05rem;
+  line-height: 1.6;
+  color: #cfd3da;
+  max-width: 44rem;
+  margin: 0 auto 1.75rem;
+}
+
+.cs-hero__meta {
+  margin: 1.75rem 0 0;
+  font-size: 0.75rem;
+  color: #a9afb9;
+}
+
+.cs-btn {
+  display: inline-block;
+  margin: 0.25rem 0.4rem;
+  padding: 0.7rem 1.6rem;
+  border: 2px solid #ffffff;
+  border-radius: 0.3rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: #ffffff;
+  transition: background-color 0.15s ease, border-color 0.15s ease;
+}
+
+.cs-btn:hover,
+.cs-btn:focus {
+  background-color: rgba(255, 255, 255, 0.12);
+  color: #ffffff;
+}
+
+.cs-btn--primary {
+  background-color: #0270d7;
+  border-color: #0270d7;
+}
+
+.cs-btn--primary:hover,
+.cs-btn--primary:focus {
+  background-color: #0a5fb0;
+  border-color: #0a5fb0;
+}
+
+.cs-grid {
+  display: grid;
+  gap: 0.9rem;
+  margin-top: 1.5rem;
+}
+
+.cs-grid--equipe {
+  grid-template-columns: repeat(auto-fit, minmax(9.5rem, 1fr));
+}
+
+.cs-grid--entregas {
+  grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr));
+}
+
+.cs-grid--nav {
+  grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+}
+
+.cs-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 1.25rem 0.9rem 1.1rem;
+  border-radius: 0.6rem;
+  background: #272b33;
+  color: #f0f1f3;
+  text-decoration: none;
+  transition: transform 0.15s ease, background 0.15s ease;
+}
+
+a.cs-card:hover,
+a.cs-card:focus {
+  background: #31353d;
+  transform: translateY(-2px);
+  color: #ffffff;
+}
+
+.cs-card--nav {
+  align-items: flex-start;
+  text-align: left;
+  border-left: 3px solid #0270d7;
+}
+
+.cs-card__avatar {
+  width: 5.25rem;
+  height: 5.25rem;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid #3a3f51;
+  margin-bottom: 0.35rem;
+}
+
+.cs-card__nome {
+  font-size: 0.9rem;
+  line-height: 1.25;
+}
+
+.cs-card__sub {
+  font-size: 0.72rem;
+  color: #a9afb9;
+}
+
+.cs-card__papel {
+  font-size: 0.72rem;
+  line-height: 1.4;
+  color: #cfd3da;
+}
+
+.cs-card__etiqueta {
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 0.15rem 0.6rem;
+  border-radius: 1rem;
+  background: #3a3f51;
+  color: #cfd3da;
+  margin-bottom: 0.25rem;
+}
+
+.cs-card__etiqueta--ok {
+  background: #1f6f3f;
+  color: #e6f7ec;
+}
+
+.cs-card__etiqueta--andamento {
+  background: #0270d7;
+  color: #ffffff;
+}
+
+/* Esquema claro: as seções da página inicial mantêm a identidade escura do destaque. */
+
+@media screen and (max-width: 44.9375em) {
+  .cs-section {
+    padding: 2rem 1rem;
+  }
+
+  .cs-hero {
+    padding: 2.5rem 1rem 2.25rem;
+  }
+
+  .cs-hero__title {
+    font-size: 1.9rem;
+  }
+
+  .cs-hero__text {
+    font-size: 0.95rem;
+  }
+}

@@ -1,0 +1,137 @@
+{#
+  Página inicial: destaque com o nome do projeto, descrição e dois atalhos;
+  cartões da equipe; sobre o site; entregas por unidade; navegação.
+  O bloco de conteúdo Markdown fica vazio nesta página; o rodapé do tema
+  continua. Estrutura baseada na documentação do Material for MkDocs
+  (Customization › Extending the theme › Overriding blocks).
+#}
+{% extends "main.html" %}
+
+{% block tabs %}
+  {{ super() }}
+
+  <section class="cs-section cs-hero">
+    <div class="cs-inner">
+      <img class="cs-hero__logo" src="{{ 'assets/logo.svg' | url }}" alt="" width="112" height="112">
+      <h1 class="cs-hero__title">CyberSetor</h1>
+      <p class="cs-hero__text">
+        Sistema de gestão do ciclo de projetos financiados do Instituto Cultural e Social No Setor:
+        requisito e meta, atividade, inscrição, presença, evidência e relatório de prestação de contas,
+        com cada informação registrada uma vez, na origem.
+      </p>
+      <div class="cs-hero__actions">
+        <a class="cs-btn cs-btn--primary" href="{{ 'visao/' | url }}">Ver a Visão do Produto</a>
+        <a class="cs-btn" href="{{ 'requisitos/8-requisitos/' | url }}">Requisitos de software</a>
+      </div>
+      <p class="cs-hero__meta">
+        Requisitos de Software (FGA0313) · Turma 02 · 2026.2 · FCTE/UnB · Prof. George Marsicano Corrêa
+      </p>
+    </div>
+  </section>
+
+  <section class="cs-section cs-section--alt">
+    <div class="cs-inner">
+      <h2 class="cs-section__title">Equipe</h2>
+      <p class="cs-section__text">Seis estudantes, todos engenheiros de requisitos; os papéis de cada um estão na seção 7 da Visão do Produto.</p>
+      <div class="cs-grid cs-grid--equipe">
+        {% set equipe = [
+          ("mariadenis", "Maria Eduarda Marques", "232014502", "Líder · Product Owner interno · Elicitação e descoberta"),
+          ("viniciusvieira00", "Vinicius Vieira", "190118059", "Scrum Master · Organização e atualização · Análise"),
+          ("Fofodoido", "Rodrigo Henrique Donato", "241012374", "Representação (BPMN) · Análise e consenso"),
+          ("lucaspaulaleal", "Lucas de Paula Leal", "232004480", "Elicitação e descoberta · Declaração"),
+          ("daniboycam", "Daniel Batista", "231011201", "Representação (Rich Picture e stakeholders) · Análise"),
+          ("caioflmjr", "Caio Martins", "231011168", "Declaração · Organização e rastreabilidade")
+        ] %}
+        {% for login, nome, matricula, papel in equipe %}
+        <a class="cs-card cs-card--pessoa" href="https://github.com/{{ login }}" title="@{{ login }} no GitHub">
+          <img class="cs-card__avatar" src="https://github.com/{{ login }}.png?size=160" alt="{{ nome }}" loading="lazy">
+          <strong class="cs-card__nome">{{ nome }}</strong>
+          <span class="cs-card__sub">{{ matricula }}</span>
+          <span class="cs-card__papel">{{ papel }}</span>
+        </a>
+        {% endfor %}
+      </div>
+    </div>
+  </section>
+
+  <section class="cs-section">
+    <div class="cs-inner">
+      <h2 class="cs-section__title">Sobre este site</h2>
+      <p class="cs-section__text">
+        Reúne o Documento de Visão de Produto e Projeto, a especificação de requisitos e o registro do processo de trabalho da equipe.
+        As entregas da disciplina são publicadas aqui, conforme o Plano de Ensino; a numeração das seções segue o template da disciplina.
+      </p>
+      <p class="cs-section__text">
+        O produto apoia o Instituto Cultural e Social No Setor a registrar cada informação uma vez, na origem, do projeto e da meta
+        até o relatório de prestação de contas. Cliente, problema e solução estão nas seções 1 e 2 da Visão do Produto.
+      </p>
+    </div>
+  </section>
+
+  <section class="cs-section cs-section--alt">
+    <div class="cs-inner">
+      <h2 class="cs-section__title">Entregas por unidade</h2>
+      <div class="cs-grid cs-grid--entregas">
+        <a class="cs-card cs-card--entrega" href="{{ 'entregas/unidade-1/' | url }}">
+          <span class="cs-card__etiqueta cs-card__etiqueta--ok">Entregue</span>
+          <strong class="cs-card__nome">Unidade 1</strong>
+          <span class="cs-card__sub">08/09/2026</span>
+          <span class="cs-card__papel">Projeto aprovado; Visão de Produto e Projeto (seções 1 a 7); site; vídeo</span>
+        </a>
+        <a class="cs-card cs-card--entrega" href="{{ 'entregas/unidade-2/' | url }}">
+          <span class="cs-card__etiqueta cs-card__etiqueta--andamento">Em andamento</span>
+          <strong class="cs-card__nome">Unidade 2</strong>
+          <span class="cs-card__sub">13/10/2026</span>
+          <span class="cs-card__papel">Requisitos (seção 8); DoR e DoD (seção 9); backlog, priorização e MVP (seção 10)</span>
+        </a>
+        <div class="cs-card cs-card--entrega">
+          <span class="cs-card__etiqueta">Prevista</span>
+          <strong class="cs-card__nome">Unidade 3</strong>
+          <span class="cs-card__sub">17/11/2026</span>
+          <span class="cs-card__papel">Desenvolvimento e validação do incremento</span>
+        </div>
+        <div class="cs-card cs-card--entrega">
+          <span class="cs-card__etiqueta">Prevista</span>
+          <strong class="cs-card__nome">Unidade 4</strong>
+          <span class="cs-card__sub">01 a 08/12/2026</span>
+          <span class="cs-card__papel">Entrega final do produto</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="cs-section">
+    <div class="cs-inner">
+      <h2 class="cs-section__title">Por onde começar</h2>
+      <div class="cs-grid cs-grid--nav">
+        <a class="cs-card cs-card--nav" href="{{ 'visao/1-cenario-atual/' | url }}">
+          <strong class="cs-card__nome">1. Cenário atual</strong>
+          <span class="cs-card__papel">Quem é o cliente, qual é o problema e quem são os stakeholders</span>
+        </a>
+        <a class="cs-card cs-card--nav" href="{{ 'visao/2-solucao-proposta/' | url }}">
+          <strong class="cs-card__nome">2. Solução proposta</strong>
+          <span class="cs-card__papel">Objetivos, características, tecnologias e viabilidade</span>
+        </a>
+        <a class="cs-card cs-card--nav" href="{{ 'requisitos/8-requisitos/' | url }}">
+          <strong class="cs-card__nome">8. Requisitos de software</strong>
+          <span class="cs-card__papel">Requisitos funcionais, não funcionais, regras de negócio e rastreabilidade</span>
+        </a>
+        <a class="cs-card cs-card--nav" href="{{ 'requisitos/10-backlog/' | url }}">
+          <strong class="cs-card__nome">10. Backlog e MVP</strong>
+          <span class="cs-card__papel">Histórias de usuário, priorização e o recorte da primeira entrega</span>
+        </a>
+        <a class="cs-card cs-card--nav" href="{{ 'gestao/processo-scrumxp/' | url }}">
+          <strong class="cs-card__nome">Processo e ritos</strong>
+          <span class="cs-card__papel">Como a equipe trabalha com ScrumXP</span>
+        </a>
+        <a class="cs-card cs-card--nav" href="{{ 'gestao/atas/' | url }}">
+          <strong class="cs-card__nome">Reuniões</strong>
+          <span class="cs-card__papel">Atas com o Instituto, da equipe e das cerimônias</span>
+        </a>
+      </div>
+    </div>
+  </section>
+{% endblock %}
+
+{# A página inicial não tem conteúdo Markdown exibido; o rodapé do tema continua. #}
+{% block container %}{% endblock %}
