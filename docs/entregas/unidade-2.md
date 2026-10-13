@@ -26,7 +26,7 @@ A entrega da Unidade 2 consolida a especificação formal de requisitos de softw
 ## 2. Apresentação da Unidade 2
 
 <div style="text-align: center; margin: 1.5em 0;">
-  <iframe width="100%" height="450" src="https://youtu.be/xnJX9y0gKkI" title="Apresentação da Unidade 2 - CyberSetor" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+  <iframe width="100%" height="450" src="https://www.youtube.com/embed/xnJX9y0gKkI" title="Apresentação da Unidade 2 - CyberSetor" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 </div>
 
 - **Link direto para a gravação:** [Apresentação da Unidade 2 — YouTube](https://youtu.be/xnJX9y0gKkI)
