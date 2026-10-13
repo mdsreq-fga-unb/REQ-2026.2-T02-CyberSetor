@@ -2,6 +2,14 @@
 
 > Sistema integrado de gestão operacional, registro de atividades e apuração contínua de metas para o **Instituto Cultural e Social No Setor**.
 
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="./docs/assets/img/InstitutoNoSetor-Dark.png">
+    <source media="(prefers-color-scheme: light)" srcset="./docs/assets/img/InstitutoNoSetor.png">
+    <img alt="Logo do Instituto No Setor" src="./docs/assets/img/InstitutoNoSetor.png" width="260">
+  </picture>
+</p>
+
 ---
 
 ## 📌 Sobre o Projeto
@@ -30,10 +38,10 @@ O sistema unifica a cadeia de dados das atividades socioculturais realizadas no 
 - [x] **Vídeo de apresentação:** [Apresentação no YouTube (14m 57s)](https://youtu.be/EMGWe0XiE70).
 
 ### Unidade 2 – Elicitação e Modelagem de Requisitos
-- [ ] Elicitação, técnicas de análise e consenso.
-- [ ] Declaração e representação de requisitos (Histórias de Usuário e BPMN).
-- [ ] Priorização, DoR/DoD e definição do MVP.
-- [ ] Vídeo de apresentação da Unidade 2.
+- [x] Elicitação, técnicas de análise e consenso.
+- [x] Declaração e representação de requisitos (Histórias de Usuário e BPMN).
+- [x] Priorização, DoR/DoD e definição do MVP.
+- [x] **Vídeo de apresentação:** [Apresentação no YouTube (14m 53s)](https://youtu.be/xnJX9y0gKkI).
 
 ### Unidade 3 – Construção do MVP e Validação Incremental
 - [ ] Desenvolvimento incremental do MVP.
