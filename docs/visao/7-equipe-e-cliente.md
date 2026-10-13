@@ -8,7 +8,9 @@
 | 15/09/2026 | 1.3 | Processo de validação reestruturado em torno das conversas com o Instituto; Definition of Ready e Definition of Done remetidas à seção 9; política de gravações e transcrições | Caio Martins |
 | 17/09/2026 | 1.4 | Papel do cliente na validação e na ordenação do backlog declarado na 7.1; retrospectiva registrada ao fim de cada sprint; papel do Product Owner interno unificado com a delimitação já publicada; compromisso de treinamento remetido à seção 6.4; cadência de validação registrada como semanal; reunião de 15/09 nas interações realizadas; tabela de áreas competentes sem coluna de andamento | Vinicius Vieira |
 | 29/09/2026 | 1.5 | Parágrafo que liga a entrada das histórias na sprint e a conclusão dos itens à seção 9 | Vinicius Vieira e Maria Eduarda Marques |
-| 07/10/2026 | 1.6 | Especificação dos papéis de Engenharia de Requisitos de cada integrante na composição da equipe e remoção de menções operacionais genéricas | Daniel Batista e Maria Eduarda Marques |
+| 05/10/2026 | 1.6 | Revisão editorial: aplicação de espaçamentos e formatação em tópicos estruturados para maior fluidez de leitura, preservando a íntegra das validações e argumentações | Rodrigo Henrique |
+| 06/10/2026 | 1.7 | Daily no próprio dia, até o fim do dia, em vez de até as 12h | Vinicius Vieira |
+| 07/10/2026 | 1.8 | Especificação dos papéis de Engenharia de Requisitos de cada integrante na composição da equipe e remoção de menções operacionais genéricas | Daniel Batista e Maria Eduarda Marques |
 
 ## 7.1 Composição da Equipe
 
@@ -58,7 +60,7 @@ O Product Owner interno é a mitigação para duas limitações conhecidas: a de
 
 **Reuniões e frequência**
 
-- **Daily assíncrona:** todo dia útil, até as 12h, no grupo *Dailys*, com o que foi feito, o que será feito e os impedimentos. Impedimento declarado é resolvido ou escalado pelo Scrum Master em até 24 horas.
+- **Daily assíncrona:** todo dia útil, no próprio dia, até o fim do dia, no grupo *Dailys*, com o que foi feito, o que será feito e os impedimentos. Impedimento declarado é resolvido ou escalado pelo Scrum Master em até 24 horas.
 - **Sprint Planning:** na primeira terça-feira de cada sprint, cerca de uma hora, no Google Meet.
 - **Refinamento do backlog:** semanal, cerca de trinta minutos, no Google Meet. É onde a Engenharia de Requisitos acontece no dia a dia.
 - **Sprint Review:** na última terça-feira de cada sprint, cerca de uma hora, com o incremento demonstrado e o retorno incorporado ao backlog. Quando o Instituto não puder estar presente, a avaliação é provisória e a confirmação fica para a validação semanal seguinte (§7.3).
@@ -89,7 +91,7 @@ A validação dos requisitos e da solução é um processo contínuo e centrado 
 4. **Registro em ata e refinamento contínuo:** os apontamentos e acordos estabelecidos nas conversas de validação são formalmente sintetizados em ata de reunião, alimentando o refinamento imediato do Product Backlog e o planejamento das sprints seguintes.
 5. **Papel do Product Owner interno:** não valida o trabalho da equipe em nome do cliente; destrava dúvidas operacionais no intervalo entre as conversas de validação. Decisão de domínio, regra de prestação de contas ou alteração de escopo é confirmada com as representantes do Instituto — o alcance dessa avaliação provisória está delimitado no parágrafo seguinte.
 
-**Quando o Instituto não participar.** O Product Owner interno existe para que o trabalho não pare enquanto uma resposta do Instituto não chega: é a mitigação declarada em §7.1 para a ausência de cliente presente. Seu alcance é delimitado — a avaliação feita pelo Product Owner interno é **provisória**: mantém o trabalho em andamento, mas **não confirma regra de domínio nem substitui a validação do cliente**. Um item avaliado apenas por essa via permanece marcado como *pendente de validação externa* até ser confirmado pela área competente do Instituto. Quando a contingência assíncrona for usada — envio do material com prazo de resposta —, é o **registro escrito da resposta** que converte a avaliação provisória em validação.
+**Quando o Instituto não participar:** O Product Owner interno existe para que o trabalho não pare enquanto uma resposta do Instituto não chega: é a mitigação declarada em §7.1 para a ausência de cliente presente. Seu alcance é delimitado — a avaliação feita pelo Product Owner interno é **provisória**: mantém o trabalho em andamento, mas **não confirma regra de domínio nem substitui a validação do cliente**. Um item avaliado apenas por essa via permanece marcado como *pendente de validação externa* até ser confirmado pela área competente do Instituto. Quando a contingência assíncrona for usada — envio do material com prazo de resposta —, é o **registro escrito da resposta** que converte a avaliação provisória em validação.
 
 A entrada de cada história de usuário em uma sprint e a conclusão de cada item seguem a Definition of Ready e a Definition of Done da [seção 9](../requisitos/9-dor-dod.md).
 

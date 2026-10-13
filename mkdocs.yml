@@ -5,12 +5,17 @@ site_url: https://mdsreq-fga-unb.github.io/REQ-2026.2-T02-CyberSetor/
 repo_url: https://github.com/mdsreq-fga-unb/REQ-2026.2-T02-CyberSetor
 repo_name: mdsreq-fga-unb/REQ-2026.2-T02-CyberSetor
 edit_uri: edit/main/docs/
-copyright: Equipe CyberSetor · Engenharia de Software · FCTE/UnB · 2026.2
+copyright: © 2026 Equipe CyberSetor · FCTE/UnB
 
 theme:
   name: material
+  custom_dir: overrides
   language: pt-BR
+  font:
+    text: Montserrat
+    code: Roboto Mono
   favicon: assets/favicon.png
+  logo: assets/logo.svg
   icon:
     repo: fontawesome/brands/github
   features:
@@ -18,27 +23,32 @@ theme:
     - navigation.tabs.sticky
     - navigation.indexes
     - navigation.instant
+    - navigation.instant.prefetch
+    - navigation.instant.progress
     - navigation.tracking
     - navigation.sections
     - navigation.top
+    - navigation.prune
     - navigation.footer
     - content.action.edit
     - content.code.copy
     - toc.follow
     - search.suggest
     - search.highlight
+    - search.share
+    - content.tooltips
   palette:
     - media: "(prefers-color-scheme: light)"
       scheme: default
-      primary: deep purple
-      accent: purple
+      primary: custom
+      accent: custom
       toggle:
         icon: material/weather-night
         name: Alternar para o modo escuro
     - media: "(prefers-color-scheme: dark)"
       scheme: slate
-      primary: deep purple
-      accent: purple
+      primary: custom
+      accent: custom
       toggle:
         icon: material/weather-sunny
         name: Alternar para o modo claro
@@ -59,6 +69,13 @@ markdown_extensions:
   - pymdownx.caret
   - pymdownx.mark
   - pymdownx.tilde
+  - pymdownx.betterem:
+      smart_enable: all
+  - pymdownx.smartsymbols
+  - pymdownx.keys
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.inlinehilite
   - pymdownx.tabbed:
       alternate_style: true
   - pymdownx.snippets
@@ -80,7 +97,7 @@ exclude_docs: |
 
 nav:
   - Início: index.md
-  - Documento de Visão:
+  - Visão do Produto:
       - Sumário e versões: visao/index.md
       - 1. Cenário atual do cliente e do negócio: visao/1-cenario-atual.md
       - 2. Solução proposta: visao/2-solucao-proposta.md
@@ -89,43 +106,50 @@ nav:
       - 5. Engenharia de requisitos: visao/5-engenharia-requisitos.md
       - 6. Cronograma e entregas: visao/6-cronograma.md
       - 7. Interação entre equipe e cliente: visao/7-equipe-e-cliente.md
-  - Requisitos:
       - 8. Requisitos de software: requisitos/8-requisitos.md
       - 9. DoR e DoD: requisitos/9-dor-dod.md
       - 10. Backlog de produto: requisitos/10-backlog.md
-      - B1 · Modelo do processo atual (BPMN): requisitos/b1-bpmn-processo-atual.md
+      - 11. Lições aprendidas:
+          - Unidade 1: licoes-aprendidas/unidade-1.md
+          - Unidade 2: licoes-aprendidas/unidade-2.md
+      - Anexo B1 · Modelo do processo atual (BPMN): requisitos/b1-bpmn-processo-atual.md
   - Gestão do projeto:
       - Processo e ritos (ScrumXP): gestao/processo-scrumxp.md
-      - Matriz de competências e stack: gestao/matriz-competencias.md
       - Boas práticas no GitHub: gestao/boas-praticas-github.md
+      - Matriz de competências e stack: gestao/matriz-competencias.md
       - Registro das dailies: gestao/dailies.md
-      - Atas de reunião:
+      - Reuniões:
           - gestao/atas/index.md
-          - 27/08/2026 — Equipe: gestao/atas/2026-08-27-reuniao-equipe.md
-          - 01/09/2026 — Equipe: gestao/atas/2026-09-01-reuniao-equipe.md
-          - 08/09/2026 — Instituto (presencial): gestao/atas/2026-09-08-reuniao-presencial-instituto.md
-          - 08/09/2026 — Sprint Planning: gestao/atas/2026-09-08-sprint-planning.md
-          - 15/09/2026 — Instituto (alinhamento): gestao/atas/2026-09-15-reuniao-alinhamento-instituto.md
-          - 15/09/2026 — Equipe: gestao/atas/2026-09-15-reuniao-equipe.md
-          - 21/09/2026 — Instituto (presencial): gestao/atas/2026-09-21-reuniao-presencial-instituto.md
-          - 21/09/2026 — Equipe (alinhamento): gestao/atas/2026-09-21-reuniao-equipe.md
-          - 22/09/2026 — Sprint Review e Retrospectiva: gestao/atas/2026-09-22-sprint-review-retrospectiva.md
-          - 23/09/2026 — Sprint Planning: gestao/atas/2026-09-23-sprint-planning.md
-          - 28/09/2026 — Instituto (validação do MVP): gestao/atas/2026-09-28-validacao-mvp-instituto.md
-          - 06/10/2026 — Sprint Review e Retrospectiva: gestao/atas/2026-10-06-sprint-review-retrospectiva.md
-          - 07/10/2026 — Sprint Planning: gestao/atas/2026-10-07-sprint-planning.md
-          - 08/10/2026 — Instituto (validação do MVP): gestao/atas/2026-10-08-validacao-mvp-instituto.md
-      - Planos de sprint:
-          - Sprint 1 (Planejamento): gestao/sprints/sprint-1.md
-          - Sprint 1 (Acompanhamento de Tarefas): gestao/sprints/tarefas-sprint-1.md
-          - Sprint 2 (Planejamento): gestao/sprints/sprint-2.md
-          - Sprint 2 (Acompanhamento de Tarefas): gestao/sprints/tarefas-sprint-2.md
+          - Com o Instituto:
+              - 08/09 · Presencial: gestao/atas/2026-09-08-reuniao-presencial-instituto.md
+              - 15/09 · Alinhamento: gestao/atas/2026-09-15-reuniao-alinhamento-instituto.md
+              - 21/09 · Presencial: gestao/atas/2026-09-21-reuniao-presencial-instituto.md
+              - 28/09 · Validação do MVP: gestao/atas/2026-09-28-validacao-mvp-instituto.md
+              - 08/10 · Validação do MVP: gestao/atas/2026-10-08-validacao-mvp-instituto.md
+          - Equipe:
+              - 27/08 · Equipe: gestao/atas/2026-08-27-reuniao-equipe.md
+              - 01/09 · Equipe: gestao/atas/2026-09-01-reuniao-equipe.md
+              - 15/09 · Equipe: gestao/atas/2026-09-15-reuniao-equipe.md
+              - 21/09 · Alinhamento: gestao/atas/2026-09-21-reuniao-equipe.md
+          - Cerimônias ScrumXP:
+              - 08/09 · Sprint Planning 1: gestao/atas/2026-09-08-sprint-planning.md
+              - 22/09 · Review e Retrospectiva 1: gestao/atas/2026-09-22-sprint-review-retrospectiva.md
+              - 23/09 · Sprint Planning 2: gestao/atas/2026-09-23-sprint-planning.md
+              - 06/10 · Review e Retrospectiva 2: gestao/atas/2026-10-06-sprint-review-retrospectiva.md
+              - 07/10 · Sprint Planning 3: gestao/atas/2026-10-07-sprint-planning.md
+      - Sprints:
+          - Sprint 1:
+              - Plano da Sprint 1: gestao/sprints/sprint-1.md
+              - Tarefas da Sprint 1: gestao/sprints/tarefas-sprint-1.md
+          - Sprint 2:
+              - Plano da Sprint 2: gestao/sprints/sprint-2.md
+              - Tarefas da Sprint 2: gestao/sprints/tarefas-sprint-2.md
+          - Sprint 3:
+              - Plano da Sprint 3: gestao/sprints/sprint-3.md
+              - Tarefas da Sprint 3: gestao/sprints/tarefas-sprint-3.md
   - Entregas:
       - Unidade 1: entregas/unidade-1.md
-      - Débitos e Feedbacks (U1): entregas/debitos-u1.md
+      - Débitos e feedbacks da Unidade 1: entregas/debitos-u1.md
       - Unidade 2: entregas/unidade-2.md
       - "Atividade 3: ajuste da lista de requisitos": entregas/atividade-3.md
-  - Lições aprendidas:
-      - Unidade 1: licoes-aprendidas/unidade-1.md
-      - Unidade 2: licoes-aprendidas/unidade-2.md
   - Referências: referencias.md
