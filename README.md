@@ -41,7 +41,7 @@ O sistema unifica a cadeia de dados das atividades socioculturais realizadas no 
 - [x] Elicitação, técnicas de análise e consenso.
 - [x] Declaração e representação de requisitos (Histórias de Usuário e BPMN).
 - [x] Priorização, DoR/DoD e definição do MVP.
-- [ ] Vídeo de apresentação da Unidade 2.
+- [x] **Vídeo de apresentação:** [Apresentação no YouTube (14m 53s)](https://youtu.be/xnJX9y0gKkI).
 
 ### Unidade 3 – Construção do MVP e Validação Incremental
 - [ ] Desenvolvimento incremental do MVP.
