@@ -132,7 +132,7 @@ Conforme registrado por Marsicano (2026, §5.4.1), os sete valores fundamentais 
 
 > **Risco Mapeado:** O XP preconiza a presença integral do cliente (*On-site Customer*). Contudo, os representantes da organização possuem agendas concorridas e equipe reduzida.
 
-> **Estratégia de Mitigação:** A equipe definiu um membro no papel de **Product Owner Interno**, encarregado de canalizar dúvidas, organizar pautas enxutas e assegurar comunicação assíncrona entre as reuniões semanais de validação, resguardando o tempo do parceiro.
+> **Estratégia de Mitigação:** A equipe definiu um membro no papel de **Product Owner Interno**, encarregado de canalizar dúvidas, organizar pautas enxutas e assegurar comunicação assíncrona entre as reuniões quinzenais de validação ao final de cada sprint, resguardando o tempo do parceiro.
 
 ### Análise de Alternativas Descartadas
 
