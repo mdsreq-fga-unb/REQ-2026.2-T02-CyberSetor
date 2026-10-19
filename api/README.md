@@ -44,18 +44,46 @@ Migrações só acrescentam e são commitadas junto com o schema; `prisma db pus
 ```bash
 corepack enable
 pnpm install --frozen-lockfile
-cp .env.example .env              # valores nas instruções privadas da equipe
+cp .env.example .env              # preencha JWT_SECRET e SEED_ADMIN_PASSWORD
 pnpm db:up
 pnpm db:deploy                    # ou pnpm db:migrate, ao evoluir o schema
+pnpm seed:admin                   # cria o administrador inicial, uma única vez
 pnpm dev
 ```
+
+Gere o `JWT_SECRET` com `openssl rand -base64 48`. Depois de trazer uma mudança no `schema.prisma` sem mudança no lockfile, rode `pnpm db:generate`: nesse caso o `pnpm install` não regera o cliente.
 
 - `GET /v1/health` — verificação de saúde da API e do banco (`503` se o banco não responde).
 - `GET /docs` — contrato OpenAPI gerado do código (`/docs-json` para o JSON).
 
 Para os testes de ponta a ponta, crie um `.env.test` apontando para um banco **descartável** (a suíte limpa as tabelas a cada caso) e aplique as migrações nele: `DATABASE_URL=<url de teste> pnpm db:deploy`.
 
-O `.env`, o `.env.test` e o cliente gerado não são versionados. O `.env.example` traz só os nomes. O `prisma.config.ts` carrega o `.env` por conta própria (o Prisma 7 não faz isso) e aceita `DATABASE_URL` ausente, para que `pnpm install` e `pnpm db:generate` funcionem num clone limpo e no CI; só os comandos que tocam o banco exigem a variável.
+O `.env`, o `.env.test` e o cliente gerado não são versionados. O `.env.example` traz os valores de desenvolvimento local e deixa vazios só os segredos. O `prisma.config.ts` carrega o `.env` por conta própria (o Prisma 7 não faz isso) e aceita `DATABASE_URL` ausente, para que `pnpm install` e `pnpm db:generate` funcionem num clone limpo e no CI; só os comandos que tocam o banco exigem a variável.
+
+## Variáveis de ambiente
+
+| Variável                         | Padrão        | Uso                                                                  |
+| -------------------------------- | ------------- | -------------------------------------------------------------------- |
+| `NODE_ENV`                       | `development` | `production` em homologação e produção (cookie `__Host-` e `Secure`) |
+| `PORT`                           | `3001`        | porta da API                                                         |
+| `CORS_ORIGIN`                    | vazio         | origem exata do front, ex.: `http://localhost:3000`                  |
+| `DATABASE_URL`                   | —             | obrigatória                                                          |
+| `JWT_SECRET`                     | —             | obrigatória, 32 caracteres ou mais                                   |
+| `ACCESS_TOKEN_TTL_MINUTES`       | `15`          | validade do token de acesso                                          |
+| `SESSION_IDLE_TIMEOUT_MINUTES`   | `30`          | encerramento por inatividade                                         |
+| `SESSION_ABSOLUTE_TIMEOUT_HOURS` | `8`           | duração máxima da sessão                                             |
+| `SEED_ADMIN_NAME/EMAIL/PASSWORD` | —             | só para `pnpm seed:admin`; senha temporária de 15 a 64 caracteres    |
+
+Variável vazia vale como ausente: a opcional cai no padrão e a obrigatória reprova a inicialização.
+
+## Autenticação e autorização
+
+- **Login** em `POST /v1/auth/login` devolve o token de acesso, enviado em `Authorization: Bearer`, e grava o refresh num cookie `HttpOnly; SameSite=Strict`. O front guarda o token só em memória.
+- **Renovação e saída** em `POST /v1/auth/refresh` e `POST /v1/auth/logout`, com o cabeçalho `X-CSRF: 1` e `credentials: 'include'` no front. Front e API usam o mesmo nome de host (`localhost` nos dois, nunca `127.0.0.1` de um lado só).
+- **Toda rota exige login.** `@Public()` libera a rota; `@Profiles(Perfil.X, ...)` restringe aos perfis listados e registra o acesso negado na trilha. O perfil é lido do banco a cada requisição.
+- **Senha temporária**: enquanto `deveTrocarSenha` estiver ativo, só `GET /v1/auth/session` e `POST /v1/auth/password` respondem; o resto devolve `403 PASSWORD_CHANGE_REQUIRED`.
+- **Contas** em `/v1/accounts`, só para `ADMINISTRACAO_SISTEMA`: criar, listar, mudar perfil, desativar, reativar e redefinir senha temporária. Nenhuma operação deixa o sistema sem administrador ativo (`409 LAST_ADMIN`).
+- **Proteções do login** em `src/auth/login-protection.ts`: 20 tentativas por minuto por IP e bloqueio de 15 minutos após 10 falhas consecutivas.
 
 ## Convenções
 
@@ -64,6 +92,7 @@ O `.env`, o `.env.test` e o cliente gerado não são versionados. O `.env.exampl
 - **Correlação**: toda resposta devolve `x-correlation-id`; o cliente pode enviar o seu para rastrear o mesmo fluxo entre front e API.
 - **Validação na borda**: `ValidationPipe` global com `whitelist` e `forbidNonWhitelisted`; DTOs com `class-validator`. Campo desconhecido é `400`.
 - **Variáveis de ambiente** declaradas e validadas em `src/config/env.validation.ts`; variável nova entra lá e no `.env.example`.
+- **Idioma**: nomes técnicos (pastas, classes, métodos, variáveis de ambiente, códigos de erro e de ação da trilha) em inglês; domínio do Prisma e mensagens ao usuário em português.
 - **Dados**: modelos em português no singular; tabelas e colunas em `snake_case` por `@map`; `criado_em`/`atualizado_em`; `versao` com bloqueio otimista nas entidades de cadastro; toda relação com `onDelete: Restrict`; `instrumento_id` de projeto e requisito é imutável depois de criado.
 - **Módulos por capacidade de negócio** (`src/<capacidade>/`), com controller, casos de uso e persistência dentro do módulo; importação entre módulos só por serviço exportado. `PrismaService` é global.
 - **Módulos ES**: importações relativas levam a extensão `.js` (`./app.module.js`), exigência do NestJS 12, que publica apenas ESM.
