@@ -2,11 +2,13 @@ import { Module } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { APP_GUARD } from '@nestjs/core';
 import { JwtModule } from '@nestjs/jwt';
+import { ThrottlerModule } from '@nestjs/throttler';
 import { AccountsModule } from '../accounts/accounts.module.js';
 import type { EnvironmentVariables } from '../config/env.validation.js';
 import { AuthController } from './auth.controller.js';
 import { AuthGuard } from './auth.guard.js';
 import { AuthService } from './auth.service.js';
+import { LOGIN_ATTEMPTS_PER_MINUTE_PER_IP } from './login-protection.js';
 import { ProfilesGuard } from './profiles.guard.js';
 import { SessionCookieService } from './session-cookie.service.js';
 import { SessionService } from './session.service.js';
@@ -14,6 +16,7 @@ import { SessionService } from './session.service.js';
 @Module({
   imports: [
     AccountsModule,
+    ThrottlerModule.forRoot([{ ttl: 60_000, limit: LOGIN_ATTEMPTS_PER_MINUTE_PER_IP }]),
     JwtModule.registerAsync({
       inject: [ConfigService],
       useFactory: (config: ConfigService<EnvironmentVariables, true>) => ({

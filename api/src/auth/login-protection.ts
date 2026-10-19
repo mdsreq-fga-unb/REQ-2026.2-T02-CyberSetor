@@ -1,0 +1,1 @@
+export const LOGIN_ATTEMPTS_PER_MINUTE_PER_IP = 20;

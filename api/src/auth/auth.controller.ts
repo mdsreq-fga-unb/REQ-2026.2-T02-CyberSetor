@@ -17,8 +17,10 @@ import {
   ApiNoContentResponse,
   ApiOkResponse,
   ApiTags,
+  ApiTooManyRequestsResponse,
   ApiUnauthorizedResponse,
 } from '@nestjs/swagger';
+import { ThrottlerGuard } from '@nestjs/throttler';
 import type { Request, Response } from 'express';
 import { AccessResponse, ChangePasswordDto, LoginDto, SessionResponse } from './auth.dto.js';
 import { AuthService, type AccessGrant } from './auth.service.js';
@@ -42,9 +44,11 @@ export class AuthController {
 
   @Post('login')
   @Public()
+  @UseGuards(ThrottlerGuard)
   @HttpCode(HttpStatus.OK)
   @ApiOkResponse({ type: AccessResponse, description: 'Define o cookie de renovacao' })
   @ApiUnauthorizedResponse({ description: 'E-mail ou senha incorretos' })
+  @ApiTooManyRequestsResponse({ description: 'Limite de tentativas por IP' })
   async login(
     @Body() body: LoginDto,
     @Res({ passthrough: true }) res: Response,
@@ -101,6 +105,7 @@ export class AuthController {
   }
 
   @Post('password')
+  @UseGuards(ThrottlerGuard)
   @HttpCode(HttpStatus.NO_CONTENT)
   @AllowPendingPasswordChange()
   @ApiBearerAuth()
