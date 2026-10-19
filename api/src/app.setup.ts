@@ -1,11 +1,13 @@
 import { INestApplication, ValidationPipe } from '@nestjs/common';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import cookieParser from 'cookie-parser';
 import { HttpExceptionFilter } from './common/filters/http-exception.filter.js';
 
 export const API_PREFIX = 'v1';
 
 export function setupApp(app: INestApplication, opcoes: { corsOrigin: string }): void {
   app.setGlobalPrefix(API_PREFIX);
+  app.use(cookieParser());
   app.useGlobalPipes(
     new ValidationPipe({
       whitelist: true,
@@ -31,6 +33,8 @@ export function setupApp(app: INestApplication, opcoes: { corsOrigin: string }):
       .setTitle('CyberSetor — API')
       .setDescription('Ciclo do projeto financiado do Instituto Cultural e Social No Setor')
       .setVersion(API_PREFIX)
+      .addBearerAuth()
+      .addCookieAuth('session')
       .build(),
   );
   SwaggerModule.setup('docs', app, documento);
