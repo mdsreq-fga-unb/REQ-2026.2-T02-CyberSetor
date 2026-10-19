@@ -6,6 +6,7 @@ import { PasswordService } from '../accounts/password.service.js';
 import { AuditTrailService } from '../audit/audit-trail.service.js';
 import { AutorTipo } from '../generated/prisma/enums.js';
 import { PrismaService } from '../prisma/prisma.service.js';
+import { LOCKOUT_MINUTES, LOCKOUT_THRESHOLD } from './login-protection.js';
 import { SessionService, type IssuedSession, type ValidSession } from './session.service.js';
 
 export interface AccessGrant {
@@ -34,12 +35,13 @@ export class AuthService implements OnModuleInit {
     const usuario = await this.prisma.usuario.findUnique({
       where: { emailLogin: normalizeEmail(email) },
     });
+    const locked = usuario?.bloqueadoAte != null && usuario.bloqueadoAte.getTime() > Date.now();
     const passwordMatches = await this.passwords.verify(
-      usuario?.senhaHash ?? this.dummyHash,
+      usuario && !locked ? usuario.senhaHash : this.dummyHash,
       password,
     );
 
-    if (!usuario || !passwordMatches || !usuario.ativo) {
+    if (!usuario || locked || !passwordMatches || !usuario.ativo) {
       await this.audit.record({
         autorTipo: AutorTipo.PUBLICO,
         acao: 'LOGIN_FAILED',
@@ -47,6 +49,9 @@ export class AuthService implements OnModuleInit {
         entidadeId: usuario?.id ?? null,
         correlationId,
       });
+      if (usuario && !locked && !passwordMatches) {
+        await this.registerFailure(usuario.id, correlationId);
+      }
       return null;
     }
 
@@ -54,6 +59,8 @@ export class AuthService implements OnModuleInit {
       where: { id: usuario.id },
       data: {
         ultimoAcessoEm: new Date(),
+        falhasLogin: 0,
+        bloqueadoAte: null,
         ...(this.passwords.needsRehash(usuario.senhaHash)
           ? { senhaHash: await this.passwords.hash(password) }
           : {}),
@@ -150,6 +157,29 @@ export class AuthService implements OnModuleInit {
         },
         tx,
       );
+    });
+  }
+
+  private async registerFailure(usuarioId: string, correlationId: string): Promise<void> {
+    const { falhasLogin } = await this.prisma.usuario.update({
+      where: { id: usuarioId },
+      data: { falhasLogin: { increment: 1 } },
+      select: { falhasLogin: true },
+    });
+    if (falhasLogin < LOCKOUT_THRESHOLD) return;
+
+    const bloqueadoAte = new Date(Date.now() + LOCKOUT_MINUTES * 60_000);
+    await this.prisma.usuario.update({
+      where: { id: usuarioId },
+      data: { falhasLogin: 0, bloqueadoAte },
+    });
+    await this.audit.record({
+      autorTipo: AutorTipo.SISTEMA,
+      acao: 'ACCOUNT_LOCKED',
+      entidade: 'usuario',
+      entidadeId: usuarioId,
+      depois: { bloqueadoAte: bloqueadoAte.toISOString() },
+      correlationId,
     });
   }
 

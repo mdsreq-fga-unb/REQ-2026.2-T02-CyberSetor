@@ -175,6 +175,8 @@ model Usuario {
   ativo           Boolean   @default(true)
   deveTrocarSenha Boolean   @default(true) @map("deve_trocar_senha")
   ultimoAcessoEm  DateTime? @map("ultimo_acesso_em") @db.Timestamptz(3)
+  falhasLogin     Int       @default(0) @map("falhas_login")
+  bloqueadoAte    DateTime? @map("bloqueado_ate") @db.Timestamptz(3)
   criadoEm        DateTime  @default(now()) @map("criado_em") @db.Timestamptz(3)
   atualizadoEm    DateTime  @updatedAt @map("atualizado_em") @db.Timestamptz(3)
 
