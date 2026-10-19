@@ -1,0 +1,225 @@
+generator client {
+  provider     = "prisma-client"
+  output       = "../src/generated/prisma"
+  moduleFormat = "esm"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum TipoInstrumento {
+  EDITAL
+  EMENDA
+  PARCERIA
+}
+
+enum OrigemMeta {
+  EDITAL
+  PROJETO
+  INSTITUTO
+}
+
+enum ModalidadeAfericao {
+  QUANTITATIVA
+  QUALITATIVA
+}
+
+enum Perfil {
+  PRESIDENCIA_GESTAO
+  NUCLEO_PEDAGOGICO
+  ADMINISTRATIVO_FINANCEIRO
+  CONCEDENTE_AUDITORIA
+  ADMINISTRACAO_SISTEMA
+}
+
+enum AutorTipo {
+  USUARIO
+  SISTEMA
+  PUBLICO
+}
+
+model Instrumento {
+  id              String          @id @default(uuid()) @db.Uuid
+  versao          Int             @default(1)
+  tipo            TipoInstrumento
+  orgaoConcedente String          @map("orgao_concedente")
+  numeroProcesso  String          @map("numero_processo")
+  valorGlobal     Decimal         @map("valor_global") @db.Decimal(14, 2)
+  dataCelebracao  DateTime        @map("data_celebracao") @db.Date
+  vigenciaInicio  DateTime        @map("vigencia_inicio") @db.Date
+  vigenciaFim     DateTime        @map("vigencia_fim") @db.Date
+  ativo           Boolean         @default(true)
+  criadoEm        DateTime        @default(now()) @map("criado_em") @db.Timestamptz(3)
+  atualizadoEm    DateTime        @updatedAt @map("atualizado_em") @db.Timestamptz(3)
+
+  projetos   Projeto[]
+  requisitos RequisitoInstrumento[]
+
+  @@index([numeroProcesso])
+  @@map("instrumento")
+}
+
+model Projeto {
+  id            String   @id @default(uuid()) @db.Uuid
+  versao        Int      @default(1)
+  instrumentoId String   @map("instrumento_id") @db.Uuid
+  coordenadorId String   @map("coordenador_id") @db.Uuid
+  codigo        String
+  titulo        String
+  inicio        DateTime @db.Date
+  fim           DateTime @db.Date
+  criadoEm      DateTime @default(now()) @map("criado_em") @db.Timestamptz(3)
+  atualizadoEm  DateTime @updatedAt @map("atualizado_em") @db.Timestamptz(3)
+
+  instrumento Instrumento @relation(fields: [instrumentoId], references: [id], onDelete: Restrict)
+  coordenador Usuario     @relation(fields: [coordenadorId], references: [id], onDelete: Restrict)
+  metas       Meta[]
+
+  @@unique([instrumentoId, codigo])
+  @@index([coordenadorId])
+  @@map("projeto")
+}
+
+model RequisitoInstrumento {
+  id            String   @id @default(uuid()) @db.Uuid
+  versao        Int      @default(1)
+  instrumentoId String   @map("instrumento_id") @db.Uuid
+  descricao     String
+  referencia    String?
+  criadoEm      DateTime @default(now()) @map("criado_em") @db.Timestamptz(3)
+  atualizadoEm  DateTime @updatedAt @map("atualizado_em") @db.Timestamptz(3)
+
+  instrumento Instrumento    @relation(fields: [instrumentoId], references: [id], onDelete: Restrict)
+  metas       MetaRequisito[]
+
+  @@index([instrumentoId])
+  @@map("requisito_instrumento")
+}
+
+model Meta {
+  id                 String              @id @default(uuid()) @db.Uuid
+  versao             Int                 @default(1)
+  projetoId          String              @map("projeto_id") @db.Uuid
+  ordem              Int
+  origem             OrigemMeta
+  objetivo           String
+  descricao          String
+  indicador          String?
+  modalidadeAfericao ModalidadeAfericao? @map("modalidade_afericao")
+  parametroPlanejado String?             @map("parametro_planejado")
+  unidade            String?
+  periodoInicio      DateTime?           @map("periodo_inicio") @db.Date
+  periodoFim         DateTime?           @map("periodo_fim") @db.Date
+  frequenciaApuracao String?             @map("frequencia_apuracao")
+  formaComprovacao   String?             @map("forma_comprovacao")
+  resultadoEsperado  String?             @map("resultado_esperado")
+  criadoEm           DateTime            @default(now()) @map("criado_em") @db.Timestamptz(3)
+  atualizadoEm       DateTime            @updatedAt @map("atualizado_em") @db.Timestamptz(3)
+
+  projeto    Projeto         @relation(fields: [projetoId], references: [id], onDelete: Restrict)
+  requisitos MetaRequisito[]
+
+  @@index([projetoId])
+  @@map("meta")
+}
+
+model MetaRequisito {
+  metaId      String   @map("meta_id") @db.Uuid
+  requisitoId String   @map("requisito_id") @db.Uuid
+  criadoEm    DateTime @default(now()) @map("criado_em") @db.Timestamptz(3)
+
+  meta      Meta                 @relation(fields: [metaId], references: [id], onDelete: Restrict)
+  requisito RequisitoInstrumento @relation(fields: [requisitoId], references: [id], onDelete: Restrict)
+
+  @@id([metaId, requisitoId])
+  @@index([requisitoId])
+  @@map("meta_requisito")
+}
+
+model Setor {
+  id           String   @id @default(uuid()) @db.Uuid
+  nome         String   @unique
+  ativo        Boolean  @default(true)
+  criadoEm     DateTime @default(now()) @map("criado_em") @db.Timestamptz(3)
+  atualizadoEm DateTime @updatedAt @map("atualizado_em") @db.Timestamptz(3)
+
+  pessoas Pessoa[]
+
+  @@map("setor")
+}
+
+model Pessoa {
+  id           String   @id @default(uuid()) @db.Uuid
+  setorId      String?  @map("setor_id") @db.Uuid
+  nome         String
+  cpf          String?  @unique @db.VarChar(11)
+  telefone     String?
+  emailContato String?  @map("email_contato")
+  criadoEm     DateTime @default(now()) @map("criado_em") @db.Timestamptz(3)
+  atualizadoEm DateTime @updatedAt @map("atualizado_em") @db.Timestamptz(3)
+
+  setor   Setor?   @relation(fields: [setorId], references: [id], onDelete: Restrict)
+  usuario Usuario?
+
+  @@index([setorId])
+  @@map("pessoa")
+}
+
+model Usuario {
+  id              String    @id @default(uuid()) @db.Uuid
+  pessoaId        String    @unique @map("pessoa_id") @db.Uuid
+  emailLogin      String    @unique @map("email_login")
+  senhaHash       String    @map("senha_hash")
+  perfil          Perfil
+  ativo           Boolean   @default(true)
+  deveTrocarSenha Boolean   @default(true) @map("deve_trocar_senha")
+  ultimoAcessoEm  DateTime? @map("ultimo_acesso_em") @db.Timestamptz(3)
+  criadoEm        DateTime  @default(now()) @map("criado_em") @db.Timestamptz(3)
+  atualizadoEm    DateTime  @updatedAt @map("atualizado_em") @db.Timestamptz(3)
+
+  pessoa              Pessoa            @relation(fields: [pessoaId], references: [id], onDelete: Restrict)
+  projetosCoordenados Projeto[]
+  sessoes             Sessao[]
+  eventos             TrilhaAuditoria[] @relation("autor")
+  previas             TrilhaAuditoria[] @relation("previa")
+
+  @@map("usuario")
+}
+
+model Sessao {
+  id          String    @id @default(uuid()) @db.Uuid
+  usuarioId   String    @map("usuario_id") @db.Uuid
+  tokenHash   String    @unique @map("token_hash")
+  expiraEm    DateTime  @map("expira_em") @db.Timestamptz(3)
+  ultimoUsoEm DateTime  @default(now()) @map("ultimo_uso_em") @db.Timestamptz(3)
+  revogadaEm  DateTime? @map("revogada_em") @db.Timestamptz(3)
+  criadoEm    DateTime  @default(now()) @map("criado_em") @db.Timestamptz(3)
+
+  usuario Usuario @relation(fields: [usuarioId], references: [id], onDelete: Restrict)
+
+  @@index([usuarioId])
+  @@map("sessao")
+}
+
+model TrilhaAuditoria {
+  id               String    @id @default(uuid()) @db.Uuid
+  autorTipo        AutorTipo @map("autor_tipo")
+  usuarioId        String?   @map("usuario_id") @db.Uuid
+  contextoPreviaDe String?   @map("contexto_previa_de") @db.Uuid
+  acao             String
+  entidade         String
+  entidadeId       String?   @map("entidade_id") @db.Uuid
+  antes            Json?
+  depois           Json?
+  correlationId    String    @map("correlation_id")
+  criadoEm         DateTime  @default(now()) @map("criado_em") @db.Timestamptz(3)
+
+  usuario       Usuario? @relation("autor", fields: [usuarioId], references: [id], onDelete: Restrict)
+  administrador Usuario? @relation("previa", fields: [contextoPreviaDe], references: [id], onDelete: Restrict)
+
+  @@index([entidade, entidadeId])
+  @@index([usuarioId])
+  @@index([criadoEm])
+  @@map("trilha_auditoria")
+}
