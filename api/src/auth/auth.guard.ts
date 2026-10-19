@@ -1,6 +1,8 @@
 import { CanActivate, ExecutionContext, Injectable, UnauthorizedException } from '@nestjs/common';
+import { Reflector } from '@nestjs/core';
 import { JwtService } from '@nestjs/jwt';
 import type { AuthenticatedRequest } from './authenticated-user.js';
+import { IS_PUBLIC_KEY } from './decorators.js';
 import { SessionService } from './session.service.js';
 
 interface AccessTokenPayload {
@@ -11,11 +13,18 @@ interface AccessTokenPayload {
 @Injectable()
 export class AuthGuard implements CanActivate {
   constructor(
+    private readonly reflector: Reflector,
     private readonly jwt: JwtService,
     private readonly sessions: SessionService,
   ) {}
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
+    const isPublic = this.reflector.getAllAndOverride<boolean>(IS_PUBLIC_KEY, [
+      context.getHandler(),
+      context.getClass(),
+    ]);
+    if (isPublic) return true;
+
     const req = context.switchToHttp().getRequest<AuthenticatedRequest>();
     const token = this.extractBearer(req.headers.authorization);
     if (!token) throw new UnauthorizedException('Credenciais ausentes.');

@@ -21,10 +21,10 @@ import {
 } from '@nestjs/swagger';
 import type { Request, Response } from 'express';
 import { AccessResponse, LoginDto, SessionResponse } from './auth.dto.js';
-import { AuthGuard } from './auth.guard.js';
 import { AuthService, type AccessGrant } from './auth.service.js';
 import { CurrentUser } from './authenticated-user.js';
 import { CsrfGuard } from './csrf.guard.js';
+import { Public } from './decorators.js';
 import { SessionCookieService } from './session-cookie.service.js';
 import type { ValidSession } from './session.service.js';
 
@@ -41,6 +41,7 @@ export class AuthController {
   ) {}
 
   @Post('login')
+  @Public()
   @HttpCode(HttpStatus.OK)
   @ApiOkResponse({ type: AccessResponse, description: 'Define o cookie de renovacao' })
   @ApiUnauthorizedResponse({ description: 'E-mail ou senha incorretos' })
@@ -54,6 +55,7 @@ export class AuthController {
   }
 
   @Post('refresh')
+  @Public()
   @HttpCode(HttpStatus.OK)
   @UseGuards(CsrfGuard)
   @ApiCookieAuth()
@@ -74,6 +76,7 @@ export class AuthController {
   }
 
   @Post('logout')
+  @Public()
   @HttpCode(HttpStatus.NO_CONTENT)
   @UseGuards(CsrfGuard)
   @ApiCookieAuth()
@@ -86,7 +89,6 @@ export class AuthController {
   }
 
   @Get('session')
-  @UseGuards(AuthGuard)
   @ApiBearerAuth()
   @ApiOkResponse({ type: SessionResponse })
   session(@CurrentUser() user: ValidSession): SessionResponse {

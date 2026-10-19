@@ -1,11 +1,13 @@
 import { Module } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
+import { APP_GUARD } from '@nestjs/core';
 import { JwtModule } from '@nestjs/jwt';
 import { AccountsModule } from '../accounts/accounts.module.js';
 import type { EnvironmentVariables } from '../config/env.validation.js';
 import { AuthController } from './auth.controller.js';
 import { AuthGuard } from './auth.guard.js';
 import { AuthService } from './auth.service.js';
+import { ProfilesGuard } from './profiles.guard.js';
 import { SessionCookieService } from './session-cookie.service.js';
 import { SessionService } from './session.service.js';
 
@@ -25,7 +27,13 @@ import { SessionService } from './session.service.js';
     }),
   ],
   controllers: [AuthController],
-  providers: [AuthService, SessionService, SessionCookieService, AuthGuard],
+  providers: [
+    AuthService,
+    SessionService,
+    SessionCookieService,
+    { provide: APP_GUARD, useClass: AuthGuard },
+    { provide: APP_GUARD, useClass: ProfilesGuard },
+  ],
   exports: [SessionService],
 })
 export class AuthModule {}
