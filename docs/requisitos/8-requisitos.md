@@ -18,6 +18,7 @@
 | 29/09/2026 | 2.4 | Aviso de vencimento com 30 dias e por e-mail (RF08, RN-03); modalidades criadas pelo Instituto (RF09, RF10); correção fora do prazo sem aprovação (RF19); trava do relatório com notificação à direção (RF35); encerramento do projeto (RN-11); justificativa para alterar registro concluído (RN-13); CP3, CP5 e RF20 reescritos; ator genérico em CP1, RF29 a RF31 e RF36; RN-07 revista; matriz pelas histórias HU-01 a HU-15; tabela de códigos provisórios retirada | Vinicius Vieira e Maria Eduarda Marques |
 | 05/10/2026 | 2.5 | Seções 8.2 e 8.3 em tabelas por característica de produto e por categoria de RNF, com âncoras preservadas e ligação direta às histórias da seção 10 | Rodrigo Henrique |
 | 05/10/2026 | 2.6 | Padronização verbal descrita como redução de ambiguidades, sem garantir sua ausência | Maria Eduarda Marques |
+| 19/10/2026 | 2.7 | Matriz dos requisitos não funcionais: RF09 ligado a RNF02, RNF04 e RNF15 | Maria Eduarda Marques |
 
 ---
 
@@ -234,9 +235,9 @@ A rastreabilidade estabelece o vínculo bidirecional entre os problemas diagnost
 | RNF | Propriedade de Qualidade | Origem (Decisão, Risco Ético ou Norma) | Requisitos Funcionais Relacionados |
 | :--- | :--- | :--- | :--- |
 | **RNF01** | Integridade transacional dos dados | HU-01 (CA-01.3) | RF04, RF18 |
-| **RNF02** | Auditabilidade das alterações | Seção 3.3.9 | RF19, RF26, RF31, RF33, RF39 |
+| **RNF02** | Auditabilidade das alterações | Seção 3.3.9 | RF09, RF19, RF26, RF31, RF33, RF39 |
 | **RNF03** | Segurança das comunicações e das sessões | Seções 3.3.1 e 3.3.2 | *Transversal (Todos os RFs)* |
-| **RNF04** | Controle de acesso por perfil | Seção 3.5 (visibilidade por perfil); matriz da seção 8.5.1 | RF34, RF21 a RF27 |
+| **RNF04** | Controle de acesso por perfil | Seção 3.5 (visibilidade por perfil); matriz da seção 8.5.1 | RF09, RF21 a RF27, RF34 |
 | **RNF05** | Minimização de dados pessoais | LGPD art. 5º, II; Restrição HU-06 | RF11, RF13, RF21 |
 | **RNF06** | Prazo de atendimento à exclusão de dados | LGPD art. 18 | RF27 |
 | **RNF07** | Retenção documental decenal | MROSC art. 68 | RF32, RF36 |
@@ -247,7 +248,7 @@ A rastreabilidade estabelece o vínculo bidirecional entre os problemas diagnost
 | **RNF12** | Desempenho da inscrição pública | OE02 | RF11, RF12 |
 | **RNF13** | Desempenho da geração de relatórios | OE06 | RF36, RF37 |
 | **RNF14** | Eficiência no envio de evidências | Seção 3.3.1 | RF32 |
-| **RNF15** | Usabilidade móvel e inclusiva | Seção 3.3.10 | RF11, RF13, RF16 |
+| **RNF15** | Usabilidade móvel e inclusiva | Seção 3.3.10 | RF09, RF11, RF13, RF16 |
 | **RNF16** | Compatibilidade entre navegadores e dispositivos | Seção 2.4 | *Transversal (Todos os RFs)* |
 | **RNF17** | Restrição tecnológica e qualidade de código | Seção 2.4 | *Transversal (Todos os RFs)* |
 | **RNF18** | Cópia de segurança e recuperação de dados | Seção 2.6 | *Transversal (Todos os RFs)* |
