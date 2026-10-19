@@ -8,6 +8,9 @@ export const ARGON2_OPTIONS = {
   parallelism: 1,
 } as const;
 
+export const PASSWORD_MIN_LENGTH = 15;
+export const PASSWORD_MAX_LENGTH = 64;
+
 @Injectable()
 export class PasswordService {
   hash(password: string): Promise<string> {

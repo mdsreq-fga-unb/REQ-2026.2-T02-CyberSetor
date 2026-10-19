@@ -29,7 +29,8 @@
     "db:migrate:create": "prisma migrate dev --create-only",
     "db:deploy": "prisma migrate deploy",
     "db:status": "prisma migrate status",
-    "db:reset": "prisma migrate reset"
+    "db:reset": "prisma migrate reset",
+    "seed:admin": "pnpm build && node --env-file-if-exists=.env dist/seed-admin.js"
   },
   "dependencies": {
     "@nestjs/common": "~12.1.3",
