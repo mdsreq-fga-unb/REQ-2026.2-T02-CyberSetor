@@ -1,8 +1,14 @@
-import { CanActivate, ExecutionContext, Injectable, UnauthorizedException } from '@nestjs/common';
+import {
+  CanActivate,
+  ExecutionContext,
+  ForbiddenException,
+  Injectable,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
 import { JwtService } from '@nestjs/jwt';
 import type { AuthenticatedRequest } from './authenticated-user.js';
-import { IS_PUBLIC_KEY } from './decorators.js';
+import { ALLOW_PENDING_PASSWORD_CHANGE_KEY, IS_PUBLIC_KEY } from './decorators.js';
 import { SessionService } from './session.service.js';
 
 interface AccessTokenPayload {
@@ -19,11 +25,8 @@ export class AuthGuard implements CanActivate {
   ) {}
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
-    const isPublic = this.reflector.getAllAndOverride<boolean>(IS_PUBLIC_KEY, [
-      context.getHandler(),
-      context.getClass(),
-    ]);
-    if (isPublic) return true;
+    const targets = [context.getHandler(), context.getClass()];
+    if (this.reflector.getAllAndOverride<boolean>(IS_PUBLIC_KEY, targets)) return true;
 
     const req = context.switchToHttp().getRequest<AuthenticatedRequest>();
     const token = this.extractBearer(req.headers.authorization);
@@ -42,6 +45,16 @@ export class AuthGuard implements CanActivate {
     const session = await this.sessions.validateAccess(payload.sid);
     if (!session || session.usuarioId !== payload.sub) {
       throw new UnauthorizedException('Sessao encerrada. Entre novamente.');
+    }
+
+    if (
+      session.deveTrocarSenha &&
+      !this.reflector.getAllAndOverride<boolean>(ALLOW_PENDING_PASSWORD_CHANGE_KEY, targets)
+    ) {
+      throw new ForbiddenException({
+        code: 'PASSWORD_CHANGE_REQUIRED',
+        message: 'Troque a senha temporaria antes de continuar.',
+      });
     }
 
     req.user = session;

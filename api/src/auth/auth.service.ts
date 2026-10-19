@@ -1,4 +1,4 @@
-import { Injectable, OnModuleInit } from '@nestjs/common';
+import { BadRequestException, Injectable, OnModuleInit } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { randomBytes } from 'node:crypto';
 import { normalizeEmail } from '../accounts/email.js';
@@ -108,6 +108,48 @@ export class AuthService implements OnModuleInit {
       entidade: 'usuario',
       entidadeId: usuarioId,
       correlationId,
+    });
+  }
+
+  async changePassword(
+    session: ValidSession,
+    currentPassword: string,
+    newPassword: string,
+    correlationId: string,
+  ): Promise<void> {
+    if (currentPassword === newPassword) {
+      throw new BadRequestException('A nova senha precisa ser diferente da atual.');
+    }
+    const usuario = await this.prisma.usuario.findUniqueOrThrow({
+      where: { id: session.usuarioId },
+    });
+    if (!(await this.passwords.verify(usuario.senhaHash, currentPassword))) {
+      throw new BadRequestException('Senha atual incorreta.');
+    }
+
+    const senhaHash = await this.passwords.hash(newPassword);
+    await this.prisma.$transaction(async (tx) => {
+      await tx.usuario.update({
+        where: { id: usuario.id },
+        data: { senhaHash, deveTrocarSenha: false },
+      });
+      await tx.sessao.updateMany({
+        where: { usuarioId: usuario.id, revogadaEm: null, id: { not: session.sessionId } },
+        data: { revogadaEm: new Date() },
+      });
+      await this.audit.record(
+        {
+          autorTipo: AutorTipo.USUARIO,
+          usuarioId: usuario.id,
+          acao: 'PASSWORD_CHANGED',
+          entidade: 'usuario',
+          entidadeId: usuario.id,
+          antes: { deveTrocarSenha: usuario.deveTrocarSenha },
+          depois: { deveTrocarSenha: false },
+          correlationId,
+        },
+        tx,
+      );
     });
   }
 

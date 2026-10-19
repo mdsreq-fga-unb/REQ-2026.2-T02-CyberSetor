@@ -20,11 +20,11 @@ import {
   ApiUnauthorizedResponse,
 } from '@nestjs/swagger';
 import type { Request, Response } from 'express';
-import { AccessResponse, LoginDto, SessionResponse } from './auth.dto.js';
+import { AccessResponse, ChangePasswordDto, LoginDto, SessionResponse } from './auth.dto.js';
 import { AuthService, type AccessGrant } from './auth.service.js';
 import { CurrentUser } from './authenticated-user.js';
 import { CsrfGuard } from './csrf.guard.js';
-import { Public } from './decorators.js';
+import { AllowPendingPasswordChange, Public } from './decorators.js';
 import { SessionCookieService } from './session-cookie.service.js';
 import type { ValidSession } from './session.service.js';
 
@@ -89,6 +89,7 @@ export class AuthController {
   }
 
   @Get('session')
+  @AllowPendingPasswordChange()
   @ApiBearerAuth()
   @ApiOkResponse({ type: SessionResponse })
   session(@CurrentUser() user: ValidSession): SessionResponse {
@@ -97,6 +98,19 @@ export class AuthController {
       perfil: user.perfil,
       deveTrocarSenha: user.deveTrocarSenha,
     };
+  }
+
+  @Post('password')
+  @HttpCode(HttpStatus.NO_CONTENT)
+  @AllowPendingPasswordChange()
+  @ApiBearerAuth()
+  @ApiNoContentResponse({ description: 'Senha trocada; as outras sessoes sao revogadas' })
+  async changePassword(
+    @CurrentUser() user: ValidSession,
+    @Body() body: ChangePasswordDto,
+    @Res({ passthrough: true }) res: Response,
+  ): Promise<void> {
+    await this.auth.changePassword(user, body.senhaAtual, body.novaSenha, correlationIdOf(res));
   }
 
   private respond(res: Response, grant: AccessGrant): AccessResponse {
