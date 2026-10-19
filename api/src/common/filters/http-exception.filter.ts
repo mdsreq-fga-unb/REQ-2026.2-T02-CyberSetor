@@ -23,6 +23,7 @@ const CODIGO_POR_STATUS: Partial<Record<number, string>> = {
   [HttpStatus.CONFLICT]: 'CONFLICT',
   [HttpStatus.UNPROCESSABLE_ENTITY]: 'UNPROCESSABLE',
   [HttpStatus.TOO_MANY_REQUESTS]: 'RATE_LIMITED',
+  [HttpStatus.SERVICE_UNAVAILABLE]: 'SERVICE_UNAVAILABLE',
 };
 
 const LIMIAR_ERRO_DO_SERVIDOR: number = HttpStatus.INTERNAL_SERVER_ERROR;
