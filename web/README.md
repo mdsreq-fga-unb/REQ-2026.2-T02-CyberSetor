@@ -76,7 +76,9 @@ A homologação roda no Coolify a partir da `web-develop`, com a imagem do `Dock
 
 - **Imagem:** saída `standalone` do Next.js, Node 24, usuário sem privilégio e verificação de saúde em `GET /entrar`.
 - **`NEXT_PUBLIC_API_URL`:** entra no build e fica embutida no JavaScript enviado ao navegador. No Coolify, marque a variável como disponível no build. Trocar o endereço da API exige novo build; sem a variável, o build falha.
-- **Domínio:** subdomínio do mesmo domínio da API, pelo cookie `SameSite=Strict`.
+- **Domínio:** subdomínio do mesmo domínio da API, pelo cookie `SameSite=Strict`; a API precisa de `CORS_ORIGIN` com a origem exata do front (`https://cybersetor-web.netvitae.org`).
+- **Coolify:** _Ports Exposes_ `3000`, sem _Ports Mappings_; a verificação de saúde é a do `Dockerfile`, e a do painel do Coolify fica desligada, porque a imagem não tem `curl` nem `wget`.
+- **Arquivos públicos:** a imagem não copia `public/`, que ainda não existe; ao criá-la, acrescente `COPY --from=build /app/public ./public` no estágio final.
 
 Para conferir a imagem localmente:
 
@@ -85,7 +87,7 @@ docker build --build-arg NEXT_PUBLIC_API_URL=http://127.0.0.1:3101/v1 -t cyberse
 docker run --rm -p 127.0.0.1:3100:3000 cybersetor-web
 ```
 
-Com a API em `127.0.0.1:3101` e `CORS_ORIGIN=http://127.0.0.1:3100`, o front em `http://127.0.0.1:3100` entra e renova a sessão pelo cookie.
+Com a API em `127.0.0.1:3101` e `CORS_ORIGIN=http://127.0.0.1:3100`, o front em `http://127.0.0.1:3100` entra e renova a sessão pelo cookie. Com a API em `NODE_ENV=production`, o cookie é `Secure`: Chrome e Firefox o aceitam em `127.0.0.1`; para conferir em outro navegador, rode a API em desenvolvimento.
 
 ## Convenções
 
