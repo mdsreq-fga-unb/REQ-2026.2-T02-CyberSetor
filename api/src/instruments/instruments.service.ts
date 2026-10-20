@@ -130,6 +130,16 @@ export class InstrumentsService {
       const before = toResponse(current);
       const merged = { ...before, ...changes };
       validate(merged);
+      const normalized = {
+        ...merged,
+        valorGlobal: new Prisma.Decimal(merged.valorGlobal).toFixed(2),
+      };
+      if (FIELDS.every((field) => normalized[field] === before[field])) {
+        return {
+          instrumento: before,
+          numeroProcessoRepetido: await this.processUsedElsewhere(tx, current),
+        };
+      }
 
       const updated = await tx.instrumento.updateMany({
         where: { id, versao },

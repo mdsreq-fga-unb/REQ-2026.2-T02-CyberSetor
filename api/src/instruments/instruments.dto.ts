@@ -54,7 +54,9 @@ export class CreateInstrumentDto {
   vigenciaFim!: string;
 }
 
-export class UpdateInstrumentDto extends PartialType(CreateInstrumentDto) {
+export class UpdateInstrumentDto extends PartialType(CreateInstrumentDto, {
+  skipNullProperties: false,
+}) {
   @ApiProperty({ description: 'Versão lida; edição sobre versão antiga é recusada com 409' })
   @IsInt()
   @Min(1)
