@@ -18,11 +18,11 @@ export class HealthController {
 
   @Get()
   @ApiOkResponse({ type: HealthResponse, description: 'API e banco no ar' })
-  @ApiServiceUnavailableResponse({ description: 'Banco de dados indisponivel' })
+  @ApiServiceUnavailableResponse({ description: 'Banco de dados indisponível' })
   async check(): Promise<HealthResponse> {
     const bancoOk = await this.prisma.verificarConexao();
     if (!bancoOk) {
-      throw new ServiceUnavailableException('Banco de dados indisponivel.');
+      throw new ServiceUnavailableException('Banco de dados indisponível.');
     }
     return {
       status: 'ok',

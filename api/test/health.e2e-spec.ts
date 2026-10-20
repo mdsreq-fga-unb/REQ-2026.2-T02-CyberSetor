@@ -49,6 +49,33 @@ describe('API (e2e)', () => {
     expect(body.details).toEqual({});
   });
 
+  it('JSON malformado responde 400 no envelope de erro com o correlation id', async () => {
+    const res = await request(app.getHttpServer())
+      .post('/v1/health')
+      .set('Content-Type', 'application/json')
+      .send('{')
+      .expect(400);
+
+    const body = res.body as ErrorEnvelope;
+    expect(body.correlationId.length).toBeGreaterThan(0);
+    expect(res.headers['x-correlation-id']).toBe(body.correlationId);
+  });
+
+  it('rota fora do prefixo devolve o correlation id no cabecalho', async () => {
+    const res = await request(app.getHttpServer()).get('/nao-existe').expect(404);
+
+    expect(res.headers['x-correlation-id']).toMatch(/^[\w-]{1,128}$/);
+  });
+
+  it('correlation id recebido fora do formato e substituido', async () => {
+    const res = await request(app.getHttpServer())
+      .get('/v1/health')
+      .set('x-correlation-id', 'id com espacos [forjado]')
+      .expect(200);
+
+    expect(res.headers['x-correlation-id']).not.toBe('id com espacos [forjado]');
+  });
+
   it('GET /docs-json publica o contrato OpenAPI com a rota de saude', async () => {
     const res = await request(app.getHttpServer()).get('/docs-json').expect(200);
 

@@ -77,10 +77,10 @@ export class HttpExceptionFilter implements ExceptionFilter {
       if (typeof body === 'string') return body;
       const msg = (body as { message?: unknown }).message;
       if (typeof msg === 'string') return msg;
-      if (Array.isArray(msg)) return 'Dados invalidos.';
+      if (Array.isArray(msg)) return 'Dados inválidos.';
       return exception.message;
     }
-    return 'Erro na requisicao.';
+    return 'Erro na requisição.';
   }
 
   private detalhesDeValidacao(exception: unknown): Record<string, unknown> {
