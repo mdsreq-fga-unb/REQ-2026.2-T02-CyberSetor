@@ -1,12 +1,12 @@
 name: ci-api
 
 # Integração contínua da linha da API: formatação, lint, tipos, testes unitários,
-# testes de ponta a ponta e build em todo pull request para api-develop e api, e
-# no push a essas branches. A versão do Node vem de api/.nvmrc e a do pnpm do
-# campo packageManager de api/package.json (lido pelo pnpm/action-setup), para
-# que o CI e a máquina de cada integrante usem o mesmo ambiente. Os testes de
-# ponta a ponta correm contra um PostgreSQL real, com as migrações aplicadas
-# pelo Prisma antes da suíte.
+# migrações, testes de ponta a ponta, build e imagem de implantação em todo pull
+# request para api-develop e api, e no push a essas branches. A versão do Node
+# vem de api/.nvmrc e a do pnpm do campo packageManager de api/package.json
+# (lido pelo pnpm/action-setup), para que o CI e a máquina de cada integrante
+# usem o mesmo ambiente. Os testes de ponta a ponta correm contra um PostgreSQL
+# real, com as migrações aplicadas pelo Prisma antes da suíte.
 
 on:
   pull_request:
@@ -89,6 +89,19 @@ jobs:
         if: steps.codigo.outputs.existe == 'true'
         run: pnpm test
 
+      - name: Migração aplicada sem alteração
+        if: steps.codigo.outputs.existe == 'true' && github.event_name == 'pull_request'
+        env:
+          BASE_REF: ${{ github.base_ref }}
+        run: |
+          git fetch --depth=1 origin "$BASE_REF"
+          alteradas=$(git diff --name-only --diff-filter=MDR FETCH_HEAD HEAD -- prisma/migrations)
+          if [ -n "$alteradas" ]; then
+            echo "::error title=Migração alterada::migração já integrada não se edita nem se apaga; crie uma nova."
+            echo "$alteradas"
+            exit 1
+          fi
+
       - name: Migrações no banco de teste
         if: steps.codigo.outputs.existe == 'true'
         run: pnpm db:deploy
@@ -104,3 +117,17 @@ jobs:
       - name: Build
         if: steps.codigo.outputs.existe == 'true'
         run: pnpm build
+
+  imagem:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Imagem de implantação
+        run: |
+          if [ -f api/Dockerfile ]; then
+            docker build api
+          else
+            echo "::notice title=Sem Dockerfile::api/Dockerfile ainda não existe."
+          fi
