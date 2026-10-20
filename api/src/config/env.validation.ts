@@ -1,5 +1,5 @@
 import { plainToInstance } from 'class-transformer';
-import { IsInt, IsOptional, IsString, Max, Min, validateSync } from 'class-validator';
+import { IsInt, IsOptional, IsString, IsUrl, Max, Min, validateSync } from 'class-validator';
 
 export class EnvironmentVariables {
   @IsOptional()
@@ -11,6 +11,9 @@ export class EnvironmentVariables {
   @IsOptional()
   @IsString()
   CORS_ORIGIN: string = '';
+
+  @IsUrl({ protocols: ['postgresql', 'postgres'], require_tld: false, require_protocol: true })
+  DATABASE_URL!: string;
 }
 
 export function validateEnv(config: Record<string, unknown>): EnvironmentVariables {

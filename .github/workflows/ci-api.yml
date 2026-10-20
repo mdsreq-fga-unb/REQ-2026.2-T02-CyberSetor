@@ -4,7 +4,9 @@ name: ci-api
 # testes de ponta a ponta e build em todo pull request para api-develop e api, e
 # no push a essas branches. A versão do Node vem de api/.nvmrc e a do pnpm do
 # campo packageManager de api/package.json (lido pelo pnpm/action-setup), para
-# que o CI e a máquina de cada integrante usem o mesmo ambiente.
+# que o CI e a máquina de cada integrante usem o mesmo ambiente. Os testes de
+# ponta a ponta correm contra um PostgreSQL real, com as migrações aplicadas
+# pelo Prisma antes da suíte.
 
 on:
   pull_request:
@@ -26,6 +28,22 @@ jobs:
     defaults:
       run:
         working-directory: api
+    services:
+      postgres:
+        image: postgres:18
+        env:
+          POSTGRES_USER: cybersetor
+          POSTGRES_PASSWORD: cybersetor
+          POSTGRES_DB: cybersetor_test
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U cybersetor -d cybersetor_test"
+          --health-interval 5s
+          --health-timeout 3s
+          --health-retries 10
+    env:
+      DATABASE_URL: postgresql://cybersetor:cybersetor@localhost:5432/cybersetor_test
     steps:
       - uses: actions/checkout@v4
 
@@ -70,6 +88,10 @@ jobs:
       - name: Testes unitários
         if: steps.codigo.outputs.existe == 'true'
         run: pnpm test
+
+      - name: Migrações no banco de teste
+        if: steps.codigo.outputs.existe == 'true'
+        run: pnpm db:deploy
 
       - name: Testes de ponta a ponta
         if: steps.codigo.outputs.existe == 'true'
