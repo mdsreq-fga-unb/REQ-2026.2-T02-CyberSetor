@@ -4,6 +4,7 @@
 |---|---|---|---|
 | 05/10/2026 | 1.1 | Registro dos ritos das Sprints 1 e 2 com remissão às atas | Maria Eduarda Marques |
 | 06/10/2026 | 1.2 | Daily no próprio dia, até o fim do dia, em vez de até as 12h | Vinicius Vieira |
+| 19/10/2026 | 1.3 | Equipe atual de cinco integrantes | Maria Eduarda Marques |
 
 A equipe CyberSetor adota o **ScrumXP**: o framework Scrum para o gerenciamento do trabalho e as práticas técnicas do eXtreme Programming para a engenharia. Esta página registra como o processo funciona na prática. A fundamentação da escolha está na seção 4 do Documento de Visão.
 
@@ -15,7 +16,7 @@ Sprints de duas semanas, ancoradas nas terças-feiras. A Sprint 0 (18/08 a 08/09
 
 ## Por que a daily é assíncrona
 
-A equipe é formada por seis estudantes com grades e compromissos distintos. Uma daily síncrona diária não se sustentaria. O que a cerimônia precisa entregar é **compromisso** e **visibilidade de impedimentos**, dois dos sete valores da Engenharia de Requisitos adotados pela disciplina. Uma daily escrita, no mesmo lugar, todo dia, entrega isso de forma mais confiável. É uma adaptação consciente do rito ao contexto.
+A equipe é formada por cinco estudantes com grades e compromissos distintos. Uma daily síncrona diária não se sustentaria. O que a cerimônia precisa entregar é **compromisso** e **visibilidade de impedimentos**, dois dos sete valores da Engenharia de Requisitos adotados pela disciplina. Uma daily escrita, no mesmo lugar, todo dia, entrega isso de forma mais confiável. É uma adaptação consciente do rito ao contexto.
 
 ### Molde da daily
 
