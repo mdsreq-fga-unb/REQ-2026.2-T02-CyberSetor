@@ -1,6 +1,6 @@
 import { ApiStatus } from '@/components/api-status';
 
-export default function HomePage() {
+export function HomeView() {
   return (
     <>
       <div className="flex flex-col gap-2">
