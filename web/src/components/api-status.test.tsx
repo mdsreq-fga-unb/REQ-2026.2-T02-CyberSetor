@@ -26,10 +26,10 @@ describe('ApiStatus', () => {
 
     renderWithQuery();
 
-    expect(await screen.findByText('API conectada; banco disponivel')).toBeInTheDocument();
+    expect(await screen.findByText('API conectada; banco disponível')).toBeInTheDocument();
   });
 
-  it('mostra a API indisponivel quando a saude falha', async () => {
+  it('mostra o banco indisponivel quando a saude responde 503', async () => {
     vi.stubGlobal(
       'fetch',
       vi.fn().mockResolvedValue(
@@ -41,6 +41,14 @@ describe('ApiStatus', () => {
 
     renderWithQuery();
 
-    expect(await screen.findByText('API indisponivel')).toBeInTheDocument();
+    expect(await screen.findByText('API conectada; banco indisponível')).toBeInTheDocument();
+  });
+
+  it('mostra a API indisponivel quando a requisicao nao chega', async () => {
+    vi.stubGlobal('fetch', vi.fn().mockRejectedValue(new TypeError('Failed to fetch')));
+
+    renderWithQuery();
+
+    expect(await screen.findByText('API indisponível')).toBeInTheDocument();
   });
 });
