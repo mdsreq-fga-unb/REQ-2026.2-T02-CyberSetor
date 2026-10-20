@@ -18,6 +18,17 @@ describe('validateEnv', () => {
     });
   });
 
+  it.each(['1', 'loopback, linklocal, uniquelocal', '10.0.0.0/8'])(
+    'aceita TRUST_PROXY no formato do Express: %s',
+    (value) => {
+      expect(validateEnv({ ...required, TRUST_PROXY: value }).TRUST_PROXY).toBe(value);
+    },
+  );
+
+  it.each(['true', 'loopback; rm -rf', '*'])('recusa TRUST_PROXY fora do formato: %s', (value) => {
+    expect(() => validateEnv({ ...required, TRUST_PROXY: value })).toThrow('TRUST_PROXY');
+  });
+
   it('trata variavel vazia como ausente', () => {
     const env = validateEnv({ ...required, PORT: '', NODE_ENV: '', ACCESS_TOKEN_TTL_MINUTES: '' });
 

@@ -5,11 +5,15 @@ import {
   IsOptional,
   IsString,
   IsUrl,
+  Matches,
   Max,
   Min,
   MinLength,
   validateSync,
 } from 'class-validator';
+
+const PROXY_ITEM = String.raw`(?:loopback|linklocal|uniquelocal|[0-9a-fA-F.:]+(?:/\d{1,3})?)`;
+const TRUST_PROXY_FORMAT = new RegExp(String.raw`^(?:\d+|${PROXY_ITEM}(?:\s*,\s*${PROXY_ITEM})*)$`);
 
 export enum NodeEnv {
   DEVELOPMENT = 'development',
@@ -53,6 +57,10 @@ export class EnvironmentVariables {
   @IsInt()
   @Min(1)
   SESSION_ABSOLUTE_TIMEOUT_HOURS: number = 8;
+
+  @IsOptional()
+  @Matches(TRUST_PROXY_FORMAT)
+  TRUST_PROXY?: string;
 }
 
 export function validateEnv(config: Record<string, unknown>): EnvironmentVariables {
