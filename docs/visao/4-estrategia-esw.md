@@ -64,9 +64,9 @@ O **ScrumXP** adotado pelo projeto é um **processo adaptado pela equipe**, que 
      - Assegurar a integração contínua (*Continuous Integration*) e a refatoração constante do código.
 
 3. **Revisão e Validação com o Cliente (Sprint Review)**
-   - **Objetivo:** Demonstrar o incremento funcional construído e validar o cumprimento dos critérios de aceitação em cadência quinzenal estabelecida com o Instituto.
+   - **Objetivo:** Demonstrar o incremento funcional construído e validar com o Instituto o cumprimento dos critérios de aceitação ao final de cada sprint.
    - **Atividades:**
-     - Apresentar o software em funcionamento às lideranças e educadores da organização ao final de cada sprint de duas semanas, conforme o calendário de validação da seção 6.5.
+     - Apresentar o software em funcionamento às lideranças e educadores da organização na Sprint Review, ao final de cada sprint; quando o Instituto não puder estar presente, a avaliação fica provisória até a validação semanal seguinte, conforme a seção 7.
      - Coletar feedbacks e percepções de usabilidade dos usuários de forma contínua.
      - Repriorizar e refinar o Product Backlog com base no retorno obtido.
 
@@ -96,17 +96,17 @@ A tabela a seguir compara o **OpenUP** (processo ágil baseado em arquitetura do
 
 | Critério | OpenUP (Open Unified Process) | ScrumXP (Scrum + Extreme Programming) |
 |---|---|---|
-| **Foco Principal** | Estabilidade arquitetural progressiva, controle sistemático de riscos e governança orientada a casos de uso. | Ritmo sustentável, valor funcional entregue em ciclos curtos e feedback contínuo baseado em estórias de usuário. |
+| **Foco Principal** | Estabilidade arquitetural progressiva, controle sistemático de riscos e governança orientada a casos de uso. | Ritmo sustentável, valor funcional entregue em ciclos curtos e feedback contínuo baseado em histórias de usuário. |
 | **Estrutura de Fases** | Quatro fases estruturadas (Iniciação, Elaboração, Construção e Transição), executadas de forma iterativa e incremental com iterações curtas cobrindo todas as disciplinas. | Ciclos iterativos e incrementais curtos (sprints de 2 semanas) guiados pelo Product Backlog e cerimônias ágeis. |
 | **Foco em Arquitetura** | Arquitetura executável progressivamente estabelecida e validada ao longo das iterações da fase de Elaboração, visando mitigar os principais riscos técnicos. | Arquitetura mínima evolutiva que se estabelece incrementalmente a cada sprint, apoiada por refatoração contínua e testes automatizados. |
-| **Flexibilidade de Requisitos** | Requisitos são refinados iterativamente ao longo das fases; casos de uso e especificações suplementares são detalhados conforme o ciclo avança. | Backlog dinâmico repriorizado a cada sprint com base em estórias de usuário e feedback direto do cliente. |
+| **Flexibilidade de Requisitos** | Requisitos são refinados iterativamente ao longo das fases; casos de uso e especificações suplementares são detalhados conforme o ciclo avança. | Backlog dinâmico repriorizado a cada sprint com base em histórias de usuário e feedback direto do cliente. |
 | **Práticas Técnicas de Engenharia** | Prescreve orientações conceituais de análise e projeto orientados a objetos e casos de uso, sem detalhar rotinas diárias de codificação em pares. | Práticas prescritivas e contínuas de engenharia integradas ao dia a dia (Pair Programming, CI, TDD e Testes de Aceitação). |
 | **Documentação de Requisitos** | Estruturada e formal por fase, centrada em Casos de Uso, Modelo de Dados e Arquitetura Executável. | Viva, enxuta e rastreável: Histórias de Usuário, critérios de aceitação objetivos e protótipos de baixa fidelidade. |
 | **Colaboração com o Cliente** | Contínua ao longo de todas as iterações, complementada por marcos formais de avaliação de objetivos no encerramento de cada fase. | Contínua e direta ao final de cada sprint quinzenal, mediada pela demonstração de software em funcionamento. |
 | **Curva de Aprendizado da Equipe** | Moderada a alta: requer disciplina prévia em modelagem de casos de uso e gestão formal das disciplinas do processo unificado. | Baixa a moderada: alinhada à dinâmica acadêmica quinzenal e acelerada pelo pareamento técnico diário. |
-| **Aplicação no Contexto do Projeto** | Demanda governança disciplinada e dedicação inicial substancial à modelagem de casos de uso e validação arquitetural na Elaboração, exigindo maior esforço formal para um time de seis estudantes. | Adequa-se à dinâmica de iterações curtas com prazos acadêmicos fixos, nivelando o conhecimento técnico da equipe pelas práticas prescritivas do XP. |
+| **Aplicação no Contexto do Projeto** | Demanda governança disciplinada e dedicação inicial substancial à modelagem de casos de uso e validação arquitetural na Elaboração, exigindo maior esforço formal para um time de cinco estudantes. | Adequa-se à dinâmica de iterações curtas com prazos acadêmicos fixos, nivelando o conhecimento técnico da equipe pelas práticas prescritivas do XP. |
 
-> **Síntese da Comparação:** Embora o OpenUP seja um processo ágil disciplinado e robusto para governança baseada em arquitetura e casos de uso, sua adoção demandaria um esforço prévio de modelagem e ritos formais que não se ajustam com tanta fluidez à capacidade produtiva de uma equipe de seis estudantes em ambiente acadêmico. O processo adaptado ScrumXP provê a agilidade gerencial necessária com menor sobrecarga documental inicial, assegurando rigor técnico por meio das práticas prescritivas do XP.
+> **Síntese da Comparação:** Embora o OpenUP seja um processo ágil disciplinado e robusto para governança baseada em arquitetura e casos de uso, sua adoção demandaria um esforço prévio de modelagem e ritos formais que não se ajustam com tanta fluidez à capacidade produtiva de uma equipe de cinco estudantes em ambiente acadêmico. O processo adaptado ScrumXP provê a agilidade gerencial necessária com menor sobrecarga documental inicial, assegurando rigor técnico por meio das práticas prescritivas do XP.
 
 ---
 
@@ -133,7 +133,7 @@ Conforme registrado por Marsicano (2026, §5.4.1), os sete valores fundamentais 
 
 > **Risco Mapeado:** O XP preconiza a presença integral do cliente (*On-site Customer*). Contudo, os representantes da organização possuem agendas concorridas e equipe reduzida.
 
-> **Estratégia de Mitigação:** A equipe definiu um membro no papel de **Product Owner Interno**, encarregado de canalizar dúvidas, organizar pautas enxutas e assegurar comunicação assíncrona entre as reuniões quinzenais de validação ao final de cada sprint, resguardando o tempo do parceiro.
+> **Estratégia de Mitigação:** A equipe definiu um membro no papel de **Product Owner Interno**, encarregado de canalizar dúvidas, organizar pautas enxutas e assegurar comunicação assíncrona entre as validações semanais e as Sprint Reviews ao final de cada sprint, resguardando o tempo do parceiro.
 
 ### Análise de Alternativas Descartadas
 
