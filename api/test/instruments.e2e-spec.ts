@@ -176,7 +176,74 @@ describe('Instrumentos de parceria (e2e)', () => {
     for (const perfil of [Perfil.CONCEDENTE_AUDITORIA, Perfil.ADMINISTRACAO_SISTEMA]) {
       await as(perfil).get('/v1/instruments').expect(403);
       await as(perfil).get(`/v1/instruments/${instrumento.id}`).expect(403);
+      await as(perfil).post('/v1/instruments', VALID).expect(403);
+      await as(perfil).patch(`/v1/instruments/${instrumento.id}`, { versao: 1 }).expect(403);
     }
+    expect(await prisma.instrumento.count()).toBe(1);
+  });
+
+  it('conflito de versao nao grava nada', async () => {
+    const { instrumento } = await created();
+    const path = `/v1/instruments/${instrumento.id}`;
+    await as(Perfil.PRESIDENCIA_GESTAO).patch(path, { versao: 1, vigenciaFim: '2027-06-30' });
+
+    await as(Perfil.PRESIDENCIA_GESTAO)
+      .patch(path, { versao: 1, orgaoConcedente: 'Outro órgão' })
+      .expect(409);
+
+    const row = await prisma.instrumento.findUniqueOrThrow({ where: { id: instrumento.id } });
+    expect(row).toMatchObject({ versao: 2, orgaoConcedente: VALID.orgaoConcedente });
+    expect(
+      await prisma.trilhaAuditoria.count({
+        where: { entidadeId: instrumento.id, acao: 'INSTRUMENT_UPDATED' },
+      }),
+    ).toBe(1);
+  });
+
+  it.each([
+    ['tipo', { tipo: null }],
+    ['orgao', { orgaoConcedente: null }],
+    ['processo', { numeroProcesso: null }],
+    ['valor', { valorGlobal: null }],
+    ['data', { vigenciaFim: null }],
+  ])('campo nulo na edicao (%s) e recusado com 400', async (_campo, body) => {
+    const { instrumento } = await created();
+
+    await as(Perfil.PRESIDENCIA_GESTAO)
+      .patch(`/v1/instruments/${instrumento.id}`, { versao: 1, ...body })
+      .expect(400);
+  });
+
+  it('edicao sem mudanca nao sobe a versao nem grava trilha', async () => {
+    const { instrumento } = await created();
+    const path = `/v1/instruments/${instrumento.id}`;
+
+    const soVersao = await as(Perfil.PRESIDENCIA_GESTAO).patch(path, { versao: 1 }).expect(200);
+    const mesmosValores = await as(Perfil.PRESIDENCIA_GESTAO)
+      .patch(path, { versao: 1, valorGlobal: '150000.50', vigenciaFim: VALID.vigenciaFim })
+      .expect(200);
+
+    expect((soVersao.body as SavedBody).instrumento.versao).toBe(1);
+    expect((mesmosValores.body as SavedBody).instrumento.versao).toBe(1);
+    expect(
+      await prisma.trilhaAuditoria.count({
+        where: { entidadeId: instrumento.id, acao: 'INSTRUMENT_UPDATED' },
+      }),
+    ).toBe(0);
+  });
+
+  it('edicao avisa quando o novo numero de processo ja e usado', async () => {
+    await created();
+    const { instrumento } = await created({ ...VALID, numeroProcesso: '00150-2/2026' });
+
+    const res = await as(Perfil.PRESIDENCIA_GESTAO)
+      .patch(`/v1/instruments/${instrumento.id}`, {
+        versao: 1,
+        numeroProcesso: VALID.numeroProcesso,
+      })
+      .expect(200);
+
+    expect((res.body as SavedBody).numeroProcessoRepetido).toBe(true);
   });
 
   it('filtra por ativo e devolve 404 para instrumento inexistente', async () => {
