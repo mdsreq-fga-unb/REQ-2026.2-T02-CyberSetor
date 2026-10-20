@@ -8,3 +8,5 @@ next-env.d.ts
 !.env.example
 Dockerfile
 .dockerignore
+.vitest-attachments
+**/__screenshots__
