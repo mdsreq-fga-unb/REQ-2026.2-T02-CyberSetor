@@ -1,8 +1,8 @@
 name: ci-web
 
-# Integração contínua da linha do front: formatação, lint, tipos, testes e
-# build em todo pull request para web-develop e web, e no push a essas
-# branches. A versão do Node vem de web/.nvmrc e a do pnpm do campo
+# Integração contínua da linha do front: formatação, lint, tipos, testes,
+# build e imagem de implantação em todo pull request para web-develop e web, e
+# no push a essas branches. A versão do Node vem de web/.nvmrc e a do pnpm do campo
 # packageManager de web/package.json (lido pelo pnpm/action-setup), para que o
 # CI e a máquina de cada integrante usem o mesmo ambiente.
 
@@ -74,3 +74,17 @@ jobs:
       - name: Build
         if: steps.codigo.outputs.existe == 'true'
         run: pnpm build
+
+  imagem:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Imagem de implantação
+        run: |
+          if [ -f web/Dockerfile ]; then
+            docker build --build-arg NEXT_PUBLIC_API_URL=https://api.example.test/v1 web
+          else
+            echo "::notice title=Sem Dockerfile::web/Dockerfile ainda não existe."
+          fi
