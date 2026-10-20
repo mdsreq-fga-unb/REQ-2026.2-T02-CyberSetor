@@ -1,4 +1,5 @@
 FROM node:24-slim AS build
+RUN apt-get update -y && apt-get install -y --no-install-recommends openssl && rm -rf /var/lib/apt/lists/*
 WORKDIR /app
 RUN corepack enable
 COPY package.json pnpm-lock.yaml pnpm-workspace.yaml prisma.config.ts ./
@@ -8,6 +9,7 @@ COPY . .
 RUN pnpm build
 
 FROM node:24-slim AS runtime
+RUN apt-get update -y && apt-get install -y --no-install-recommends openssl && rm -rf /var/lib/apt/lists/*
 ENV NODE_ENV=production
 WORKDIR /app
 COPY --from=build --chown=node:node /app/package.json /app/prisma.config.ts ./
