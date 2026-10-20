@@ -46,6 +46,8 @@ jobs:
       DATABASE_URL: postgresql://cybersetor:cybersetor@localhost:5432/cybersetor_test
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
 
       - name: Há código?
         id: codigo
@@ -91,11 +93,8 @@ jobs:
 
       - name: Migração aplicada sem alteração
         if: steps.codigo.outputs.existe == 'true' && github.event_name == 'pull_request'
-        env:
-          BASE_REF: ${{ github.base_ref }}
         run: |
-          git fetch --depth=1 origin "$BASE_REF"
-          alteradas=$(git diff --name-only --diff-filter=MDR FETCH_HEAD HEAD -- prisma/migrations)
+          alteradas=$(git diff --name-only --diff-filter=MDR HEAD^1 HEAD -- prisma/migrations)
           if [ -n "$alteradas" ]; then
             echo "::error title=Migração alterada::migração já integrada não se edita nem se apaga; crie uma nova."
             echo "$alteradas"
@@ -121,13 +120,41 @@ jobs:
   imagem:
     runs-on: ubuntu-latest
     timeout-minutes: 15
+    services:
+      postgres:
+        image: postgres:18
+        env:
+          POSTGRES_USER: cybersetor
+          POSTGRES_PASSWORD: cybersetor
+          POSTGRES_DB: cybersetor_imagem
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U cybersetor -d cybersetor_imagem"
+          --health-interval 5s
+          --health-timeout 3s
+          --health-retries 10
     steps:
       - uses: actions/checkout@v4
 
       - name: Imagem de implantação
         run: |
-          if [ -f api/Dockerfile ]; then
-            docker build api
-          else
+          if [ ! -f api/Dockerfile ]; then
             echo "::notice title=Sem Dockerfile::api/Dockerfile ainda não existe."
+            exit 0
           fi
+          docker build -t api-ci api
+          docker run -d --name api-ci --network host \
+            -e NODE_ENV=production \
+            -e DATABASE_URL=postgresql://cybersetor:cybersetor@localhost:5432/cybersetor_imagem \
+            -e JWT_SECRET="$(openssl rand -base64 48)" \
+            api-ci
+          for _ in $(seq 1 40); do
+            estado=$(docker inspect --format '{{.State.Health.Status}}' api-ci)
+            [ "$estado" = healthy ] && exit 0
+            [ "$(docker inspect --format '{{.State.Running}}' api-ci)" = false ] && break
+            sleep 3
+          done
+          docker logs api-ci
+          echo "::error title=Imagem::a API não ficou saudável (estado: $estado)."
+          exit 1
