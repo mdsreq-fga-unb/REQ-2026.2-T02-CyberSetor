@@ -14,7 +14,7 @@
     "start": "node dist/main",
     "fmt": "prettier --write .",
     "fmt:check": "prettier --check .",
-    "lint": "eslint .",
+    "lint": "eslint . --max-warnings 0",
     "typecheck": "tsc --noEmit -p tsconfig.json",
     "test": "vitest run",
     "test:watch": "vitest",
