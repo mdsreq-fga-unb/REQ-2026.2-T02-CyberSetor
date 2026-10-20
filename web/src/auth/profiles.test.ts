@@ -29,6 +29,13 @@ describe('perfis de acesso', () => {
     expect(hrefs.includes('/contas')).toBe(perfil === 'ADMINISTRACAO_SISTEMA');
   });
 
+  it.each(PERFIS)('instrumentos segue a matriz da secao 8.5.1: %s', (perfil) => {
+    const hrefs = navigationFor(perfil, NAVIGATION).map((item) => item.href);
+    expect(hrefs.includes('/instrumentos')).toBe(
+      ['PRESIDENCIA_GESTAO', 'NUCLEO_PEDAGOGICO', 'ADMINISTRATIVO_FINANCEIRO'].includes(perfil),
+    );
+  });
+
   it('item restrito so aparece para os perfis autorizados', () => {
     const items = [
       { href: '/a', label: 'A' },
