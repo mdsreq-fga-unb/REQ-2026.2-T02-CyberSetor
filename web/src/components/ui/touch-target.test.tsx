@@ -1,6 +1,7 @@
 import { render, screen } from '@testing-library/react';
 import { Button } from './button';
 import { Dialog, DialogContent, DialogTitle } from './dialog';
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem } from './dropdown-menu';
 import { Input } from './input';
 import { NativeSelect, NativeSelectOption } from './native-select';
 import { Sheet, SheetContent, SheetTitle } from './sheet';
@@ -55,5 +56,16 @@ describe('alvos de toque de 48 px (RNF15)', () => {
       </NativeSelect>,
     );
     expect(screen.getByRole('combobox', { name: 'Perfil' })).toHaveClass('h-12');
+  });
+
+  it('o item de menu tem 48 px de altura', async () => {
+    render(
+      <DropdownMenu defaultOpen>
+        <DropdownMenuContent>
+          <DropdownMenuItem>Mudar perfil</DropdownMenuItem>
+        </DropdownMenuContent>
+      </DropdownMenu>,
+    );
+    expect(await screen.findByRole('menuitem', { name: 'Mudar perfil' })).toHaveClass('min-h-12');
   });
 });
