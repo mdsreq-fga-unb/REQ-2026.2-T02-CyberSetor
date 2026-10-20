@@ -7,6 +7,7 @@
 | 15/09/2026 | 1.2 | Ajuste de validação na Sprint 1: alinhamento contínuo com a coordenação | Equipe CyberSetor |
 | 17/09/2026 | 1.3 | Calendário alinhado ao plano da Sprint 1; dependências entre as características, alcance do MVP, sprint de estabilização e momentos de validação | Vinicius Vieira |
 | 17/09/2026 | 1.4 | Prazos da Unidade 2 e workshop de 21/09 incorporados; calendário reorganizado em período, objetivo e entrega de fechamento | Equipe CyberSetor |
+| 19/10/2026 | 1.5 | Equipe atual de cinco integrantes | Maria Eduarda Marques |
 
 ## 6.1 Calendário vigente
 
@@ -48,7 +49,7 @@ CP1 projetos e metas → CP2 atividades → CP5 pessoas → CP3 inscrição · C
 
 ## 6.3 Alcance do MVP e o que fica fora
 
-Construir as oito características, mais operação sem conexão, sincronização, autenticação, cálculo de metas e exportação, é mais do que seis estudantes com dedicação parcial entregam em três sprints. O recorte é feito por critério: **entra na hipótese de MVP o necessário para percorrer uma vez, com dados do Instituto, o ciclo que origina o problema** — instrumento → projeto → meta → atividade → pessoa/participação → evidência → progresso → exportação para prestação de contas. Uma capacidade é obrigatória só se sua ausência impede esse percurso, viola condição legal ou torna o registro não confiável.
+Construir as oito características, mais operação sem conexão, sincronização, autenticação, cálculo de metas e exportação, é mais do que cinco estudantes com dedicação parcial entregam em três sprints. O recorte é feito por critério: **entra na hipótese de MVP o necessário para percorrer uma vez, com dados do Instituto, o ciclo que origina o problema** — instrumento → projeto → meta → atividade → pessoa/participação → evidência → progresso → exportação para prestação de contas. Uma capacidade é obrigatória só se sua ausência impede esse percurso, viola condição legal ou torna o registro não confiável.
 
 Ficam fora da hipótese ou condicionados, até a priorização da seção 10 na Unidade 2:
 

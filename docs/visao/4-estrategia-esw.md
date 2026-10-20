@@ -8,6 +8,7 @@
 | 07/09/2026 | 1.3 | Adequação da classificação do Ciclo de Vida | Equipe CyberSetor |
 | 17/09/2026 | 1.4 | Cadência de validação com o Instituto alinhada à seção 7.2 | Equipe CyberSetor |
 | 05/10/2026 | 1.5 | Revisão editorial: formatação direta, preservando toda a fundamentação teórica, citações e quadros comparativos | Rodrigo Henrique |
+| 19/10/2026 | 1.6 | Equipe atual de cinco integrantes | Maria Eduarda Marques |
 
 A partir do cenário diagnosticado na Seção 1 e da solução proposta na Seção 2, a equipe CyberSetor estabeleceu as decisões de estratégia de engenharia de software para o atendimento ao Instituto No Setor nas três camadas metodológicas distinguidas pelo referencial da disciplina: **abordagem**, **ciclo de vida** e **processo**.
 
@@ -29,7 +30,7 @@ A abordagem Ágil prioriza indivíduos e interações, software em funcionamento
 - **Adaptação a Requisitos Emergentes:** Permite ajustar o escopo e o nível de detalhamento dos requisitos conforme novas necessidades emergem da convivência em campo com o parceiro, superando a rigidez da abordagem Preditiva (Dirigida por Planos).
 - **Entregas Incrementais de Valor:** Disponibiliza funcionalidades essenciais para validação precoce e contínua com a coordenação pedagógica, sem postergar a visibilidade da solução funcional para o término do semestre.
 - **Foco no Usuário de Campo:** Prioriza atender às necessidades operacionais reais (como chamada e presença em oficinas culturais e mutirões), calibrando a interface de acordo com o nível de letramento digital de quem atua na ponta.
-- **Leveza Metodológica frente à Abordagem Híbrida:** Elimina a sobrecarga de manter especificações formais pesadas em paralelo aos ritos ágeis, concentrando a capacidade técnica de uma equipe de seis membros na entrega de valor para a organização.
+- **Leveza Metodológica frente à Abordagem Híbrida:** Elimina a sobrecarga de manter especificações formais pesadas em paralelo aos ritos ágeis, concentrando a capacidade técnica de uma equipe de cinco membros na entrega de valor para a organização.
   
 ### Ciclo de Vida: Ágil
 O Ciclo de Vida Ágil estrutura o desenvolvimento em ciclos temporais curtos, regulares e de duração fixa (timeboxes/sprints quinzenais). Cada ciclo repete iterativamente todas as atividades essenciais da engenharia de software — elicitação, análise, projeto, codificação e testes —, gerando ao final de cada período um incremento funcional utilizável, testado e de valor demonstrável (MARSICANO, 2026).
@@ -140,7 +141,7 @@ A tabela a seguir consolida os critérios que justificaram o descarte formal das
 | Abordagem / Processo | Motivo Principal do Descarte |
 |---|---|
 | **Cascata (Waterfall) e Modelo V** | Pressupõem estabilidade total de requisitos desde o início e verificação formal tardia. Incompatíveis com a descoberta contínua de requisitos e as entregas parciais do semestre. |
-| **Processo Unificado Completo (RUP)** | Sobrecarga de artefatos formais, fases extensas e curva de aprendizado burocrática inviável para uma equipe de seis estudantes em ambiente universitário. |
+| **Processo Unificado Completo (RUP)** | Sobrecarga de artefatos formais, fases extensas e curva de aprendizado burocrática inviável para uma equipe de cinco estudantes em ambiente universitário. |
 | **OpenUP (Open Unified Process)** | Exige estabilização arquitetural prematura nas fases iniciais (Elaboração), momento em que o entendimento do domínio social ainda está em maturação pela equipe. |
 | **Espiral (Boehm)** | Modelo orientado a projetos de grande porte com riscos críticos (aeroespaciais, defesa), demandando especialização em análise formal de riscos e alto custo gerencial. |
 | **Feature Driven Development (FDD)** | Pressupõe equipe previamente sênior em modelagem orientada a objetos e domínio de negócio mapeado logo na largada do projeto. |
