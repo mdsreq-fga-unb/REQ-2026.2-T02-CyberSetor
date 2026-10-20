@@ -4,11 +4,24 @@ import type { InstrumentInput, Instrument, SavedInstrument } from '@/types/instr
 
 export const instrumentsKey = ['instrumentos'] as const;
 
+function fetchInstruments(): Promise<Instrument[]> {
+  return authorizedRequest<Instrument[]>('/instruments');
+}
+
 export function useInstruments() {
-  return useQuery({
-    queryKey: instrumentsKey,
-    queryFn: () => authorizedRequest<Instrument[]>('/instruments'),
-  });
+  return useQuery({ queryKey: instrumentsKey, queryFn: fetchInstruments });
+}
+
+export function useFreshInstrument() {
+  const queryClient = useQueryClient();
+  return async (id: string): Promise<Instrument | null> => {
+    const list = await queryClient.fetchQuery({
+      queryKey: instrumentsKey,
+      queryFn: fetchInstruments,
+      staleTime: 0,
+    });
+    return list.find((item) => item.id === id) ?? null;
+  };
 }
 
 export function useSaveInstrument() {

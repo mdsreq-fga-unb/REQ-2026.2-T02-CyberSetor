@@ -6,12 +6,31 @@ describe('valor e data do instrumento', () => {
     ['150000', '150000.00'],
     ['R$ 1.234,5', '1234.50'],
     ['150.000', '150000.00'],
+    ['1.000.000', '1000000.00'],
+    ['999999999999,99', '999999999999.99'],
+    ['R$\u00a01.234,56', '1234.56'],
   ])('le %s como %s', (input, expected) => {
-    expect(parseMoney(input)).toBe(expected);
+    expect(parseMoney(input)).toEqual({ value: expected });
   });
 
-  it.each(['', 'abc', '10,123', '1,2,3', '-5'])('recusa %s', (input) => {
-    expect(parseMoney(input)).toBeNull();
+  it.each([
+    ['10.50', 'formato'],
+    ['1.5', 'formato'],
+    ['.5', 'formato'],
+    ['1,5.0', 'formato'],
+    ['1.23,4', 'formato'],
+    ['abc', 'formato'],
+    ['', 'formato'],
+    ['-5', 'formato'],
+    ['0,001', 'centavos'],
+    ['9999999999999', 'dígitos'],
+    ['0', 'maior que zero'],
+    ['0,00', 'maior que zero'],
+  ])('recusa %s pelo motivo %s', (input, motivo) => {
+    const parsed = parseMoney(input);
+    expect('error' in parsed && parsed.error).toMatch(
+      motivo === 'formato' ? /formato/ : motivo === 'centavos' ? /centavos/ : new RegExp(motivo),
+    );
   });
 
   it('o valor da API volta ao campo com virgula', () => {

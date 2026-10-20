@@ -17,11 +17,24 @@ export function formatDate(value: string): string {
   return `${day}/${month}/${year}`;
 }
 
-export function parseMoney(input: string): string | null {
+export type ParsedMoney = { value: string } | { error: string };
+
+const GROUPED = /^\d{1,3}(\.\d{3})+(,\d+)?$/;
+const PLAIN = /^\d+(,\d+)?$/;
+
+export function parseMoney(input: string): ParsedMoney {
   const compact = input.replace(/\s|R\$/g, '');
-  const normalized = compact.replace(/\./g, '').replace(',', '.');
-  if (!/^\d{1,12}(\.\d{1,2})?$/.test(normalized)) return null;
-  return Number(normalized).toFixed(2);
+  if (!GROUPED.test(compact) && !PLAIN.test(compact)) {
+    return { error: 'Use o formato 150.000,00: ponto para milhar e vírgula para centavos.' };
+  }
+  const [integer, cents = ''] = compact.replace(/\./g, '').split(',');
+  if (cents.length > 2) return { error: 'Use no máximo duas casas de centavos.' };
+  if (integer.replace(/^0+(?=\d)/, '').length > 12) {
+    return { error: 'O valor tem no máximo 12 dígitos antes da vírgula.' };
+  }
+  const value = Number(`${integer}.${cents || '0'}`).toFixed(2);
+  if (Number(value) <= 0) return { error: 'Informe um valor maior que zero.' };
+  return { value };
 }
 
 export function moneyInput(value: string): string {

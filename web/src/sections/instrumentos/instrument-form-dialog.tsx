@@ -17,12 +17,12 @@ import { Field, FieldError, FieldGroup, FieldLabel } from '@/components/ui/field
 import { Input } from '@/components/ui/input';
 import { NativeSelect, NativeSelectOption } from '@/components/ui/native-select';
 import { ApiError } from '@/lib/api';
-import { useSaveInstrument } from '@/queries/instrumentos';
+import { useFreshInstrument, useSaveInstrument } from '@/queries/instrumentos';
 import type { Instrument, InstrumentType, SavedInstrument } from '@/types/instrumentos';
 import { INSTRUMENT_TYPES, moneyInput, parseMoney } from './format';
 
 const TYPES = Object.keys(INSTRUMENT_TYPES) as InstrumentType[];
-const DATE = z.string().min(1, 'Informe a data.');
+const DATE = z.string().regex(/^\d{4}-\d{2}-\d{2}$/, 'Informe a data completa.');
 const TERM = z.object({ vigenciaInicio: DATE, vigenciaFim: DATE });
 
 const schema = z
@@ -40,14 +40,11 @@ const schema = z
       .max(100, 'O número tem no máximo 100 caracteres.'),
     valorGlobal: z.string().transform((value, ctx) => {
       const parsed = parseMoney(value);
-      if (parsed === null || Number(parsed) <= 0) {
-        ctx.addIssue({
-          code: 'custom',
-          message: 'Informe um valor maior que zero, ex.: 150.000,00.',
-        });
+      if ('error' in parsed) {
+        ctx.addIssue({ code: 'custom', message: parsed.error });
         return z.NEVER;
       }
-      return parsed;
+      return parsed.value;
     }),
     dataCelebracao: DATE,
     vigenciaInicio: DATE,
@@ -141,7 +138,10 @@ export function InstrumentFormDialog({
   onSaved: (result: SavedInstrument) => void;
 }) {
   const save = useSaveInstrument();
+  const freshInstrument = useFreshInstrument();
   const [failure, setFailure] = useState<string | null>(null);
+  const [current, setCurrent] = useState<Instrument | null>(null);
+  const editing = current ?? instrument;
   const form = useForm<FormValues, unknown, z.output<typeof schema>>({
     resolver: zodResolver(schema),
     defaultValues: EMPTY,
@@ -153,19 +153,37 @@ export function InstrumentFormDialog({
 
   function close() {
     setFailure(null);
+    setCurrent(null);
     onClose();
+  }
+
+  async function reloadAfterConflict(id: string) {
+    const fresh = await freshInstrument(id).catch(() => null);
+    if (!fresh) {
+      setFailure('O instrumento não foi encontrado. Feche e confira a lista.');
+      return;
+    }
+    setCurrent(fresh);
+    form.reset(valuesOf(fresh));
+    setFailure(
+      'Outra pessoa alterou este instrumento. Os campos mostram a versão atual: refaça a sua alteração e salve de novo.',
+    );
   }
 
   async function onValid(data: z.output<typeof schema>) {
     try {
       const result = await save.mutateAsync({
-        id: instrument?.id,
-        versao: instrument?.versao,
+        id: editing?.id,
+        versao: editing?.versao,
         data,
       });
       close();
       onSaved(result);
     } catch (error) {
+      if (editing && error instanceof ApiError && error.code === 'VERSION_CONFLICT') {
+        await reloadAfterConflict(editing.id);
+        return;
+      }
       setFailure(failureOf(error));
     }
   }

@@ -52,7 +52,10 @@ export function InstrumentsView() {
   const canEdit = session?.perfil === 'PRESIDENCIA_GESTAO';
   const instruments = useInstruments();
   const pagination = usePagination(instruments.data);
-  const [form, setForm] = useState<{ instrument: Instrument | null } | null>(null);
+  const [form, setForm] = useState<{ open: boolean; instrument: Instrument | null }>({
+    open: false,
+    instrument: null,
+  });
 
   function saved({ instrumento, numeroProcessoRepetido }: SavedInstrument) {
     toast.add(
@@ -67,7 +70,7 @@ export function InstrumentsView() {
   }
 
   const createButton = canEdit && (
-    <Button onClick={() => setForm({ instrument: null })}>
+    <Button onClick={() => setForm({ open: true, instrument: null })}>
       <PlusIcon data-icon="inline-start" />
       Novo instrumento
     </Button>
@@ -147,7 +150,7 @@ export function InstrumentsView() {
                           actions={[
                             {
                               label: 'Editar instrumento',
-                              onSelect: () => setForm({ instrument }),
+                              onSelect: () => setForm({ open: true, instrument }),
                             },
                           ]}
                         />
@@ -163,9 +166,9 @@ export function InstrumentsView() {
       )}
 
       <InstrumentFormDialog
-        open={form !== null}
-        instrument={form?.instrument ?? null}
-        onClose={() => setForm(null)}
+        open={form.open}
+        instrument={form.instrument}
+        onClose={() => setForm((previous) => ({ ...previous, open: false }))}
         onSaved={saved}
       />
     </>
