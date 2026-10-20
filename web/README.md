@@ -70,6 +70,23 @@ Testes ficam ao lado do arquivo testado (`*.test.ts(x)`). Componentes do shadcn/
 - Front e API precisam estar no mesmo site: o cookie é `SameSite=Strict`.
 - Homologação e produção exigem https: sem contexto seguro o navegador não oferece `navigator.locks`, e a renovação deixa de ser única entre abas.
 
+## Implantação
+
+A homologação roda no Coolify a partir da `web-develop`, com a imagem do `Dockerfile` desta pasta.
+
+- **Imagem:** saída `standalone` do Next.js, Node 24, usuário sem privilégio e verificação de saúde em `GET /entrar`.
+- **`NEXT_PUBLIC_API_URL`:** entra no build e fica embutida no JavaScript enviado ao navegador. No Coolify, marque a variável como disponível no build. Trocar o endereço da API exige novo build; sem a variável, o build falha.
+- **Domínio:** subdomínio do mesmo domínio da API, pelo cookie `SameSite=Strict`.
+
+Para conferir a imagem localmente:
+
+```bash
+docker build --build-arg NEXT_PUBLIC_API_URL=http://127.0.0.1:3101/v1 -t cybersetor-web .
+docker run --rm -p 127.0.0.1:3100:3000 cybersetor-web
+```
+
+Com a API em `127.0.0.1:3101` e `CORS_ORIGIN=http://127.0.0.1:3100`, o front em `http://127.0.0.1:3100` entra e renova a sessão pelo cookie.
+
 ## Convenções
 
 - **API**: chamadas só por `src/lib/api.ts` e, quando autenticadas, por `authorizedRequest`.
