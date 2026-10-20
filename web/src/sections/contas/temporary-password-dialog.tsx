@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useId, useState } from 'react';
 import { Button } from '@/components/ui/button';
 import {
   Dialog,
@@ -10,36 +10,49 @@ import {
   DialogHeader,
   DialogTitle,
 } from '@/components/ui/dialog';
+import { Field, FieldLabel } from '@/components/ui/field';
+import { Input } from '@/components/ui/input';
 import type { TemporaryPasswordResult } from '@/types/contas';
 
+type CopyState = 'idle' | 'copied' | 'failed';
+
+const COPY_MESSAGE: Record<CopyState, string> = {
+  idle: '',
+  copied: 'Senha copiada.',
+  failed: 'Não foi possível copiar; selecione a senha e copie manualmente.',
+};
+
 export function TemporaryPasswordDialog({
+  open,
   result,
   title,
   onClose,
 }: {
+  open: boolean;
   result: TemporaryPasswordResult | null;
   title: string;
   onClose: () => void;
 }) {
-  const [copied, setCopied] = useState(false);
+  const passwordId = useId();
+  const [copy, setCopy] = useState<CopyState>('idle');
 
   function close() {
-    setCopied(false);
+    setCopy('idle');
     onClose();
   }
 
-  async function copy(password: string) {
+  async function copyPassword(password: string) {
     try {
       await navigator.clipboard.writeText(password);
-      setCopied(true);
+      setCopy('copied');
     } catch {
-      setCopied(false);
+      setCopy('failed');
     }
   }
 
   return (
-    <Dialog open={result !== null} onOpenChange={(open) => !open && close()}>
-      <DialogContent>
+    <Dialog open={open}>
+      <DialogContent showCloseButton={false}>
         <DialogHeader>
           <DialogTitle>{title}</DialogTitle>
           <DialogDescription>
@@ -47,17 +60,21 @@ export function TemporaryPasswordDialog({
             canal seguro. No primeiro acesso, a troca é obrigatória.
           </DialogDescription>
         </DialogHeader>
-        <p
-          aria-label="Senha temporária"
-          className="rounded-lg border bg-muted px-3 py-3 font-mono text-base break-all select-all"
-        >
-          {result?.senhaTemporaria}
-        </p>
+        <Field>
+          <FieldLabel htmlFor={passwordId}>Senha temporária</FieldLabel>
+          <Input
+            id={passwordId}
+            readOnly
+            value={result?.senhaTemporaria ?? ''}
+            className="font-mono"
+            onFocus={(event) => event.currentTarget.select()}
+          />
+        </Field>
         <p role="status" className="min-h-5 text-sm text-muted-foreground">
-          {copied ? 'Senha copiada.' : ''}
+          {COPY_MESSAGE[copy]}
         </p>
         <DialogFooter>
-          <Button variant="outline" onClick={() => result && copy(result.senhaTemporaria)}>
+          <Button variant="outline" onClick={() => result && copyPassword(result.senhaTemporaria)}>
             Copiar senha
           </Button>
           <Button onClick={close}>Concluir</Button>
