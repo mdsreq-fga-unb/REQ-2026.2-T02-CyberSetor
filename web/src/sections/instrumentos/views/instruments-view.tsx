@@ -1,13 +1,13 @@
 'use client';
 
 import { FileTextIcon, PlusIcon } from 'lucide-react';
-import { useState } from 'react';
 import { useSession } from '@/auth/hooks/use-session';
 import { ListPagination } from '@/components/list/list-pagination';
 import { ListCard, ListEmpty, ListError, TableSkeleton } from '@/components/list/list-states';
 import { RowActionsMenu } from '@/components/list/row-actions-menu';
 import { usePagination } from '@/components/list/use-pagination';
 import { PageHeader } from '@/components/page-header';
+import { useDialogState } from '@/hooks/use-dialog-state';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import {
@@ -52,10 +52,7 @@ export function InstrumentsView() {
   const canEdit = session?.perfil === 'PRESIDENCIA_GESTAO';
   const instruments = useInstruments();
   const pagination = usePagination(instruments.data);
-  const [form, setForm] = useState<{ open: boolean; instrument: Instrument | null }>({
-    open: false,
-    instrument: null,
-  });
+  const form = useDialogState<{ instrument: Instrument | null }>();
 
   function saved({ instrumento, numeroProcessoRepetido }: SavedInstrument) {
     toast.add(
@@ -70,7 +67,7 @@ export function InstrumentsView() {
   }
 
   const createButton = canEdit && (
-    <Button onClick={() => setForm({ open: true, instrument: null })}>
+    <Button onClick={() => form.show({ instrument: null })}>
       <PlusIcon data-icon="inline-start" />
       Novo instrumento
     </Button>
@@ -80,7 +77,7 @@ export function InstrumentsView() {
     <>
       <PageHeader title="Instrumentos" description={DESCRIPTION} action={createButton} />
 
-      {instruments.error ? (
+      {instruments.error && !instruments.data ? (
         <ListError message={loadFailure(instruments.error)} />
       ) : instruments.data?.length === 0 ? (
         <ListEmpty
@@ -150,7 +147,7 @@ export function InstrumentsView() {
                           actions={[
                             {
                               label: 'Editar instrumento',
-                              onSelect: () => setForm({ open: true, instrument }),
+                              onSelect: () => form.show({ instrument }),
                             },
                           ]}
                         />
@@ -167,8 +164,8 @@ export function InstrumentsView() {
 
       <InstrumentFormDialog
         open={form.open}
-        instrument={form.instrument}
-        onClose={() => setForm((previous) => ({ ...previous, open: false }))}
+        instrument={form.value?.instrument ?? null}
+        onClose={form.close}
         onSaved={saved}
       />
     </>
