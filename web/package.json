@@ -13,7 +13,7 @@
     "start": "next start",
     "fmt": "prettier --write .",
     "fmt:check": "prettier --check .",
-    "lint": "eslint .",
+    "lint": "eslint . --max-warnings 0",
     "typecheck": "next typegen && tsc --noEmit",
     "test": "vitest run",
     "test:watch": "vitest",
