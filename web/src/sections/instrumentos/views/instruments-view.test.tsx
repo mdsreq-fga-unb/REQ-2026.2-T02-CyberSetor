@@ -157,22 +157,64 @@ describe('instrumentos', () => {
     expect(
       await screen.findByText('O fim da vigência não pode ser anterior ao início.'),
     ).toBeInTheDocument();
+    expect(screen.getByText('Informe um valor maior que zero.')).toBeInTheDocument();
+    expect(calls.some((call) => call.key === 'POST /instruments')).toBe(false);
+  });
+
+  it('perfil sem consulta recebe o aviso na primeira recusa da API', async () => {
+    const calls = await signedInAs('CONCEDENTE_AUDITORIA', {
+      'GET /instruments': () => ({
+        status: 403,
+        body: { code: 'FORBIDDEN', message: 'Acesso negado.' },
+      }),
+    });
+    renderView();
+
+    expect(await screen.findByRole('alert')).toHaveTextContent(
+      'O seu perfil não consulta instrumentos.',
+    );
+    expect(calls.filter((call) => call.key === 'GET /instruments')).toHaveLength(1);
+  });
+
+  it('valor com ponto decimal e recusado no campo, sem chamar a API', async () => {
+    const calls = await signedInAs('PRESIDENCIA_GESTAO', {
+      'GET /instruments': () => ({ status: 200, body: [] }),
+    });
+    renderView();
+
+    await screen.findByText('Nenhum instrumento cadastrado');
+    fireEvent.click(screen.getAllByRole('button', { name: 'Novo instrumento' })[0]);
+    fill('Valor global (R$)', '10.50');
+    fireEvent.click(screen.getByRole('button', { name: 'Salvar instrumento' }));
+
     expect(
-      screen.getByText('Informe um valor maior que zero, ex.: 150.000,00.'),
+      await screen.findByText(
+        'Use o formato 150.000,00: ponto para milhar e vírgula para centavos.',
+      ),
     ).toBeInTheDocument();
     expect(calls.some((call) => call.key === 'POST /instruments')).toBe(false);
   });
 
-  it('edita enviando a versao lida e mostra o conflito de versao', async () => {
-    const calls = await signedInAs('PRESIDENCIA_GESTAO', {
-      'GET /instruments': () => ({ status: 200, body: [EMENDA] }),
-      [`PATCH /instruments/${EMENDA.id}`]: () => ({
-        status: 409,
-        body: {
-          code: 'VERSION_CONFLICT',
-          message: 'O instrumento foi alterado por outra pessoa. Recarregue e tente de novo.',
-        },
-      }),
+  it('depois de um conflito, mostra a versao atual e salva com ela', async () => {
+    let lista = [EMENDA];
+    const patches: unknown[] = [];
+    const patchPath = ['PATCH /instruments', EMENDA.id].join('/');
+    await signedInAs('PRESIDENCIA_GESTAO', {
+      'GET /instruments': () => ({ status: 200, body: lista }),
+      [patchPath]: (body) => {
+        patches.push(body);
+        if (patches.length === 1) {
+          lista = [{ ...EMENDA, versao: 4, orgaoConcedente: 'Secretaria de Cultura do DF' }];
+          return {
+            status: 409,
+            body: {
+              code: 'VERSION_CONFLICT',
+              message: 'O instrumento foi alterado por outra pessoa. Recarregue e tente de novo.',
+            },
+          };
+        }
+        return { status: 200, body: { instrumento: lista[0], numeroProcessoRepetido: false } };
+      },
     });
     renderView();
 
@@ -186,10 +228,19 @@ describe('instrumentos', () => {
     fill('Fim da vigência', '2027-06-30');
     fireEvent.click(screen.getByRole('button', { name: 'Salvar instrumento' }));
 
-    expect(await screen.findByRole('alert')).toHaveTextContent('alterado por outra pessoa');
-    expect(calls.find((call) => call.key.startsWith('PATCH'))?.body).toMatchObject({
-      versao: 3,
+    expect(await screen.findByRole('alert')).toHaveTextContent('Outra pessoa alterou');
+    expect(screen.getByLabelText('Órgão concedente')).toHaveValue('Secretaria de Cultura do DF');
+    expect(screen.getByLabelText('Fim da vigência')).toHaveValue('2027-03-31');
+
+    fill('Fim da vigência', '2027-06-30');
+    fireEvent.click(screen.getByRole('button', { name: 'Salvar instrumento' }));
+
+    expect(await screen.findByText('Instrumento salvo')).toBeInTheDocument();
+    expect(patches[0]).toMatchObject({ versao: 3, vigenciaFim: '2027-06-30' });
+    expect(patches[1]).toMatchObject({
+      versao: 4,
       vigenciaFim: '2027-06-30',
+      orgaoConcedente: 'Secretaria de Cultura do DF',
       valorGlobal: '150000.50',
     });
   });
