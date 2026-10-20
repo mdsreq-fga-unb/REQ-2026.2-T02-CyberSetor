@@ -14,26 +14,26 @@ Front do sistema de gestão do ciclo de projetos financiados do Instituto Cultur
 
 Os mesmos comandos rodam na máquina de cada integrante e na integração contínua da linha (`ci-web`).
 
-| Chave         | Comando            | Nota                                                                                    |
-| ------------- | ------------------ | --------------------------------------------------------------------------------------- |
-| `dev`         | `pnpm dev`         | front com recarga automática em `http://localhost:3000`                                 |
-| `fmt`         | `pnpm fmt`         | formata com Prettier (`fmt:check` só confere)                                           |
-| `lint`        | `pnpm lint`        | ESLint com as regras do Next.js                                                         |
-| `typecheck`   | `pnpm typecheck`   | gera os tipos de rota (`next typegen`) e roda `tsc --noEmit`                            |
-| `test`        | `pnpm test`        | testes de unidade e de tela (Vitest + Testing Library, jsdom), `src/**/*.test.{ts,tsx}` |
-| `test:visual` | `pnpm test:visual` | testes visuais, `src/**/*.visual.test.tsx`; exige Docker                                |
-| `build`       | `pnpm build`       | build de produção                                                                       |
-| `verify`      | `pnpm verify`      | tudo acima, na ordem; é o que se roda antes de abrir pull request                       |
+| Chave         | Comando            | Nota                                                                                                                |
+| ------------- | ------------------ | ------------------------------------------------------------------------------------------------------------------- |
+| `dev`         | `pnpm dev`         | front com recarga automática em `http://localhost:3000`                                                             |
+| `fmt`         | `pnpm fmt`         | formata com Prettier (`fmt:check` só confere)                                                                       |
+| `lint`        | `pnpm lint`        | ESLint com as regras do Next.js                                                                                     |
+| `typecheck`   | `pnpm typecheck`   | gera os tipos de rota (`next typegen`) e roda `tsc --noEmit`                                                        |
+| `test`        | `pnpm test`        | testes de unidade e de tela (Vitest + Testing Library, jsdom), `src/**/*.test.{ts,tsx}`                             |
+| `test:visual` | `pnpm test:visual` | testes visuais, `src/**/*.visual.test.tsx`; exige Docker                                                            |
+| `build`       | `pnpm build`       | build de produção                                                                                                   |
+| `verify`      | `pnpm verify`      | formatação, lint, tipos, `test` e `build`, na ordem; com `test:visual`, é o que se roda antes de abrir pull request |
 
 ## Testes visuais
 
 Comparam a tela renderizada com uma imagem de referência (`toMatchScreenshot` do Vitest em modo navegador), em 360 px e 1280 px. Ficam em `src/**/*.visual.test.tsx`.
 
-- O navegador é sempre o Chromium da imagem oficial do Playwright, na versão de `playwright` do `package.json`. O `ci-web` roda nessa imagem; `pnpm test:visual` sobe a mesma imagem em Docker (`cybersetor-playwright`, porta 3333) pelo `scripts/test-visual.sh`.
+- O navegador é sempre o Chromium da imagem oficial do Playwright, na versão de `playwright` do `package.json`. O `ci-web` roda nessa imagem; `pnpm test:visual` sobe a mesma imagem em Docker (`cybersetor-playwright-<versão>`, porta 3333) pelo `scripts/test-visual.sh`.
 - **A referência vem só do `ci-web`** (Linux amd64), como recomenda a documentação do Vitest: referência gerada em outra máquina, com outro sistema, processador ou fonte, falha no CI. Nenhum comando local grava referência (`--update=none`); a captura local vai para `.vitest-attachments/`, que não é versionada.
 - **Teste visual novo ou mudança visual intencional:**
   1. abrir o pull request com o teste e sem a imagem; o `ci-web` falha por falta de referência e publica o artefato `diferencas-visuais`;
-  2. `scripts/adopt-visual-references.sh <id da execução>` baixa o artefato e copia as capturas para `__screenshots__/`, ao lado do teste;
+  2. `scripts/adopt-visual-references.sh <id da execução>` baixa o artefato e copia para `__screenshots__/`, ao lado do teste, a captura de cada teste sem referência e a obtida de cada teste que mudou;
   3. conferir cada imagem e commitar na mesma branch; o `ci-web` seguinte compara contra elas.
 - Teste apagado ou renomeado deixa a imagem antiga em `__screenshots__/`; apague-a no mesmo commit.
 - Atualizar o `playwright` exige trocar a imagem no `ci-web.yml` na mesma versão (o job confere) e regerar as referências.
@@ -120,7 +120,7 @@ Com a API em `127.0.0.1:3101` e `CORS_ORIGIN=http://127.0.0.1:3100`, o front em 
   - carregando: cabeçalho visível, `aria-busy` na tabela e `TableSkeleton`; sem registros: `ListEmpty` com a ação de criar; erro: `ListError`;
   - criação e edição num diálogo com um só formulário por entidade, que recebe o registro na edição;
   - resultado de ação por `toast` (o `Toaster` fica em `providers.tsx`); erro de formulário fica no próprio diálogo.
-- **Paginação** (`usePagination` + `ListPagination`): 10, 25 ou 50 itens; "11–20 de 42" anunciado por `role="status"`; anterior e próxima sempre, primeira e última a partir de `lg`, itens por página a partir de `sm`; some quando tudo cabe numa página; trocar o tamanho volta à página 1 e a lista que encolhe nunca deixa a página vazia. A lista vem inteira da API e a página fica no estado da tela; paginação no servidor ou na URL entra quando o volume pedir, sem mudar o componente.
+- **Paginação** (`usePagination` + `ListPagination`): 10, 25 ou 50 itens; "11–20 de 42" anunciado por `role="status"`; anterior e próxima sempre, primeira e última a partir de `lg`, itens por página a partir de `sm`; some quando todos os registros cabem no menor tamanho de página (10); trocar o tamanho volta à página 1 e a lista que encolhe nunca deixa a página vazia. A lista vem inteira da API e a página fica no estado da tela; paginação no servidor ou na URL entra quando o volume pedir, sem mudar o componente.
 - **Idioma**: nomes técnicos em inglês; textos da interface em português.
 - **Testes** provam o que a pessoa vê (papéis e textos acessíveis), nunca a forma do código.
 - **Commits** no padrão Conventional Commits em português, um propósito por commit; pull request revisado por integrante de outra dupla.
