@@ -1,6 +1,8 @@
 import { render, screen } from '@testing-library/react';
 import { Button } from './button';
+import { Dialog, DialogContent, DialogTitle } from './dialog';
 import { Input } from './input';
+import { NativeSelect, NativeSelectOption } from './native-select';
 import { Sheet, SheetContent, SheetTitle } from './sheet';
 
 describe('alvos de toque de 48 px (RNF15)', () => {
@@ -33,5 +35,25 @@ describe('alvos de toque de 48 px (RNF15)', () => {
   it('o campo de texto tem 48 px de altura', () => {
     render(<Input aria-label="E-mail" />);
     expect(screen.getByRole('textbox', { name: 'E-mail' })).toHaveClass('h-12');
+  });
+
+  it('o botao de fechar do dialogo tem 48 px de lado', async () => {
+    render(
+      <Dialog defaultOpen>
+        <DialogContent>
+          <DialogTitle>Nova conta</DialogTitle>
+        </DialogContent>
+      </Dialog>,
+    );
+    expect(await screen.findByRole('button', { name: 'Fechar' })).toHaveClass('size-12');
+  });
+
+  it('a lista de opcoes tem 48 px de altura', () => {
+    render(
+      <NativeSelect aria-label="Perfil">
+        <NativeSelectOption value="a">A</NativeSelectOption>
+      </NativeSelect>,
+    );
+    expect(screen.getByRole('combobox', { name: 'Perfil' })).toHaveClass('h-12');
   });
 });
