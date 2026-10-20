@@ -88,7 +88,7 @@ Variável vazia vale como ausente: a opcional cai no padrão e a obrigatória re
 
 A homologação roda no Coolify a partir da `api-develop`, com a imagem do `Dockerfile` desta pasta.
 
-- **Imagem:** Node 24 e pnpm do `packageManager`, usuário sem privilégio e verificação de saúde em `GET /v1/health`.
+- **Imagem:** Node 24 e pnpm do `packageManager`, OpenSSL para o motor de migração do Prisma, usuário sem privilégio e verificação de saúde em `GET /v1/health`. O `ci-api` sobe a imagem com um PostgreSQL vazio e exige que ela fique saudável.
 - **Migração:** no start do container, `prisma migrate deploy` roda antes da API subir. Reiniciar não reaplica nada. Vale para uma réplica só.
 - **Migração que falha:** fica registrada como falha no banco e o container não sobe; reiniciar não resolve. Confira o estado do banco e rode `prisma migrate resolve` com `--rolled-back` ou `--applied`, conforme o que a migração chegou a fazer.
 - **Primeira conta:** `node dist/seed-admin.js` dentro do container, com `SEED_ADMIN_NAME`, `SEED_ADMIN_EMAIL` e `SEED_ADMIN_PASSWORD`. A senha temporária obriga a troca no primeiro acesso.
