@@ -83,8 +83,17 @@ jobs:
 
       - name: Imagem de implantação
         run: |
-          if [ -f web/Dockerfile ]; then
-            docker build --build-arg NEXT_PUBLIC_API_URL=https://api.example.test/v1 web
-          else
+          if [ ! -f web/Dockerfile ]; then
             echo "::notice title=Sem Dockerfile::web/Dockerfile ainda não existe."
+            exit 0
           fi
+          docker build --build-arg NEXT_PUBLIC_API_URL=https://api.example.test/v1 -t web-ci web
+          docker run -d --name web-ci web-ci
+          for _ in $(seq 1 30); do
+            estado=$(docker inspect --format '{{.State.Health.Status}}' web-ci)
+            [ "$estado" = healthy ] && exit 0
+            sleep 3
+          done
+          docker logs web-ci
+          echo "::error title=Imagem::o contêiner não ficou saudável em 90 s (estado: $estado)."
+          exit 1
