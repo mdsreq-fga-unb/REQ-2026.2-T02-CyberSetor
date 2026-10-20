@@ -38,7 +38,8 @@ function hashesMatch(a: string, b: string): boolean {
 function splitRefreshToken(refreshToken: string): { sessionId: string; secret: string } | null {
   const [sessionId, secret, ...rest] = refreshToken.split('.');
   if (!sessionId || !secret || rest.length > 0) return null;
-  if (!/^[0-9a-f-]{36}$/i.test(sessionId)) return null;
+  if (!/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(sessionId))
+    return null;
   return { sessionId, secret };
 }
 

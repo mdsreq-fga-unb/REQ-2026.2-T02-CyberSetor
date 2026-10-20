@@ -252,6 +252,14 @@ describe('Autenticacao (e2e)', () => {
 
       await http().post('/v1/auth/refresh').set('Cookie', cookie).set('X-CSRF', '1').expect(401);
     });
+
+    it('cookie com identificador fora do formato UUID responde 401', async () => {
+      await http()
+        .post('/v1/auth/refresh')
+        .set('Cookie', `session=${'-'.repeat(36)}.segredo`)
+        .set('X-CSRF', '1')
+        .expect(401);
+    });
   });
 
   describe('logout', () => {
