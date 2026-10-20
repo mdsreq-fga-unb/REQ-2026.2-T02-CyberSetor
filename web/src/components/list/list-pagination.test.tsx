@@ -24,6 +24,7 @@ function Shrinking() {
   return (
     <>
       <button onClick={() => setRows(ROWS.slice(0, 15))}>Encolher</button>
+      <button onClick={() => setRows(ROWS)}>Crescer</button>
       <Harness rows={rows} />
     </>
   );
@@ -76,6 +77,16 @@ describe('paginacao de lista', () => {
 
     expect(screen.getByRole('status')).toHaveTextContent('11–15 de 15');
     expect(screen.getAllByRole('listitem')).toHaveLength(5);
+  });
+
+  it('depois de encolher e crescer, fica na pagina que estava a vista', () => {
+    render(<Shrinking />);
+
+    fireEvent.click(screen.getByRole('button', { name: 'Última página' }));
+    fireEvent.click(screen.getByRole('button', { name: 'Encolher' }));
+    fireEvent.click(screen.getByRole('button', { name: 'Crescer' }));
+
+    expect(screen.getByRole('status')).toHaveTextContent('11–20 de 42');
   });
 
   it('some quando todos os registros cabem no menor tamanho de pagina', () => {

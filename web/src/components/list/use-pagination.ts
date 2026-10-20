@@ -19,6 +19,7 @@ export function usePagination<T>(
   const [pageSize, setPageSizeState] = useState(initialPageSize);
   const total = rows?.length ?? 0;
   const window = pageWindow(total, requestedPage, pageSize);
+  if (rows && requestedPage !== window.page) setRequestedPage(window.page);
 
   const pageRows = useMemo(
     () => (rows ? rows.slice((window.page - 1) * pageSize, window.page * pageSize) : []),
@@ -30,7 +31,7 @@ export function usePagination<T>(
     pageSize,
     total,
     pageRows,
-    setPage: setRequestedPage,
+    setPage: (next) => setRequestedPage(Math.min(Math.max(1, next), window.pageCount)),
     setPageSize: (next) => {
       setPageSizeState(next);
       setRequestedPage(1);
