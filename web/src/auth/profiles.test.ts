@@ -24,6 +24,11 @@ describe('perfis de acesso', () => {
     expect(navigationFor(perfil, NAVIGATION).map((item) => item.href)).toContain('/');
   });
 
+  it.each(PERFIS)('contas aparece so para a administracao do sistema: %s', (perfil) => {
+    const hrefs = navigationFor(perfil, NAVIGATION).map((item) => item.href);
+    expect(hrefs.includes('/contas')).toBe(perfil === 'ADMINISTRACAO_SISTEMA');
+  });
+
   it('item restrito so aparece para os perfis autorizados', () => {
     const items = [
       { href: '/a', label: 'A' },
