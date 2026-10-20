@@ -73,8 +73,7 @@ export async function signIn(email: string, password: string): Promise<Session> 
 }
 
 export async function signOut(): Promise<void> {
-  generation += 1;
-  setCurrent(null);
+  clearLocalSession();
   await refreshing?.catch(() => null);
   try {
     await withLock(() =>

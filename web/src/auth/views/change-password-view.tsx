@@ -11,7 +11,7 @@ import { Field, FieldError, FieldGroup, FieldLabel } from '@/components/ui/field
 import { Input } from '@/components/ui/input';
 import { ApiError } from '@/lib/api';
 import { paths } from '@/routes/paths';
-import { changePassword } from '../session';
+import { changePassword, signOut } from '../session';
 
 const schema = z
   .object({
@@ -144,6 +144,16 @@ export function ChangePasswordView() {
             <Field>
               <Button type="submit" disabled={busy}>
                 {busy ? 'Trocando…' : 'Trocar senha'}
+              </Button>
+              <Button
+                type="button"
+                variant="ghost"
+                disabled={busy}
+                onClick={() => {
+                  signOut().catch(() => null);
+                }}
+              >
+                Sair
               </Button>
             </Field>
           </FieldGroup>

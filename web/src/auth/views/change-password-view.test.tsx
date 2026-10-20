@@ -42,6 +42,17 @@ describe('troca de senha obrigatoria', () => {
     expect(screen.getByRole('heading', { level: 1, name: 'Trocar senha' })).toBeInTheDocument();
   });
 
+  it('permite sair sem trocar a senha', async () => {
+    const fetchMock = await signedIn(response(204));
+    render(<ChangePasswordView />);
+
+    fireEvent.click(screen.getByRole('button', { name: 'Sair' }));
+
+    await waitFor(() => expect(getSession()).toBeNull());
+    expect(String(fetchMock.mock.calls[1][0])).toContain('/auth/logout');
+    expect(screen.getByRole('button', { name: 'Sair' })).toHaveClass('h-12');
+  });
+
   it('pede os tres campos antes de enviar', async () => {
     const fetchMock = vi.fn();
     vi.stubGlobal('fetch', fetchMock);
