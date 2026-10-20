@@ -183,7 +183,7 @@ export function InstrumentFormDialog({
 
   return (
     <Dialog open={open} onOpenChange={(next) => !next && close()}>
-      <DialogContent className="max-h-[calc(100dvh-2rem)] overflow-y-auto sm:max-w-lg">
+      <DialogContent className="max-h-[calc(100dvh-2rem)] overflow-y-auto sm:max-w-2xl">
         <DialogHeader>
           <DialogTitle>{instrument ? 'Editar instrumento' : 'Novo instrumento'}</DialogTitle>
           <DialogDescription>
@@ -212,9 +212,11 @@ export function InstrumentFormDialog({
               inputMode: 'decimal',
               autoComplete: 'off',
             })}
-            {text('dataCelebracao', 'Data de celebração', { type: 'date' })}
-            {text('vigenciaInicio', 'Início da vigência', { type: 'date' })}
-            {text('vigenciaFim', 'Fim da vigência', { type: 'date' })}
+            <div className="grid gap-4 sm:grid-cols-3">
+              {text('dataCelebracao', 'Data de celebração', { type: 'date' })}
+              {text('vigenciaInicio', 'Início da vigência', { type: 'date' })}
+              {text('vigenciaFim', 'Fim da vigência', { type: 'date' })}
+            </div>
             {failure && (
               <p role="alert" className="text-sm text-destructive">
                 {failure}

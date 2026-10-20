@@ -1,6 +1,7 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { cleanup, fireEvent, render, screen, waitFor, within } from '@testing-library/react';
+import { cleanup, fireEvent, render, screen, within } from '@testing-library/react';
 import { clearLocalSession, signIn } from '@/auth/session';
+import { Toaster } from '@/components/ui/toast';
 import type { Instrument } from '@/types/instrumentos';
 import { InstrumentsView } from './instruments-view';
 
@@ -48,7 +49,9 @@ function renderView() {
   const client = new QueryClient({ defaultOptions: { queries: { retry: false } } });
   render(
     <QueryClientProvider client={client}>
-      <InstrumentsView />
+      <Toaster>
+        <InstrumentsView />
+      </Toaster>
     </QueryClientProvider>,
   );
 }
@@ -64,18 +67,21 @@ describe('instrumentos', () => {
     vi.unstubAllGlobals();
   });
 
-  it('lista com valor em reais e vigencia por extenso de data', async () => {
+  it('lista numa tabela com valor em reais e vigencia em datas', async () => {
     await signedInAs('ADMINISTRATIVO_FINANCEIRO', {
       'GET /instruments': () => ({ status: 200, body: [EMENDA] }),
     });
     renderView();
 
-    const item = within(await screen.findByRole('list', { name: 'Instrumentos' })).getByRole(
-      'listitem',
-    );
-    expect(item).toHaveTextContent('Emenda parlamentar · Secretaria de Cultura');
-    expect(item).toHaveTextContent('R$ 150.000,50');
-    expect(item).toHaveTextContent('vigência de 01/04/2026 a 31/03/2027');
+    const table = await screen.findByRole('table', {
+      name: 'Editais, emendas e parcerias que financiam os projetos do Instituto.',
+    });
+    const [, row] = within(table).getAllByRole('row');
+    const [instrumento, valor, vigencia, situacao] = within(row).getAllByRole('cell');
+    expect(instrumento).toHaveTextContent('Emenda parlamentar · Secretaria de Cultura');
+    expect(valor).toHaveTextContent('R$ 150.000,50');
+    expect(vigencia).toHaveTextContent('01/04/2026 a 31/03/2027');
+    expect(situacao).toHaveTextContent('Ativo');
   });
 
   it('perfil que so consulta nao ve as acoes de cadastro e edicao', async () => {
@@ -84,9 +90,9 @@ describe('instrumentos', () => {
     });
     renderView();
 
-    await screen.findByRole('list', { name: 'Instrumentos' });
+    await screen.findByRole('table');
     expect(screen.queryByRole('button', { name: 'Novo instrumento' })).not.toBeInTheDocument();
-    expect(screen.queryByRole('button', { name: /Editar/ })).not.toBeInTheDocument();
+    expect(screen.queryByRole('button', { name: /Ações do instrumento/ })).not.toBeInTheDocument();
   });
 
   it('cadastra com o valor convertido e avisa processo repetido', async () => {
@@ -99,7 +105,8 @@ describe('instrumentos', () => {
     });
     renderView();
 
-    fireEvent.click(await screen.findByRole('button', { name: 'Novo instrumento' }));
+    await screen.findByText('Nenhum instrumento cadastrado');
+    fireEvent.click(screen.getAllByRole('button', { name: 'Novo instrumento' })[0]);
     fill('Tipo', 'EMENDA');
     fill('Órgão concedente', 'Secretaria de Cultura');
     fill('Número do processo', '00150-1/2026');
@@ -109,11 +116,9 @@ describe('instrumentos', () => {
     fill('Fim da vigência', '2027-03-31');
     fireEvent.click(screen.getByRole('button', { name: 'Salvar instrumento' }));
 
-    await waitFor(() =>
-      expect(screen.getByRole('status')).toHaveTextContent(
-        'outro instrumento já usa o processo 00150-1/2026',
-      ),
-    );
+    expect(
+      await screen.findByText('Outro instrumento já usa o processo 00150-1/2026.'),
+    ).toBeInTheDocument();
     expect(calls.find((call) => call.key === 'POST /instruments')?.body).toEqual({
       tipo: 'EMENDA',
       orgaoConcedente: 'Secretaria de Cultura',
@@ -125,13 +130,24 @@ describe('instrumentos', () => {
     });
   });
 
+  it('sem instrumentos, mostra o estado vazio com a acao de cadastro', async () => {
+    await signedInAs('PRESIDENCIA_GESTAO', {
+      'GET /instruments': () => ({ status: 200, body: [] }),
+    });
+    renderView();
+
+    expect(await screen.findByText('Nenhum instrumento cadastrado')).toBeInTheDocument();
+    expect(screen.getAllByRole('button', { name: 'Novo instrumento' })).toHaveLength(2);
+  });
+
   it('vigencia invertida e valor invalido nao chamam a API', async () => {
     const calls = await signedInAs('PRESIDENCIA_GESTAO', {
       'GET /instruments': () => ({ status: 200, body: [] }),
     });
     renderView();
 
-    fireEvent.click(await screen.findByRole('button', { name: 'Novo instrumento' }));
+    await screen.findByText('Nenhum instrumento cadastrado');
+    fireEvent.click(screen.getAllByRole('button', { name: 'Novo instrumento' })[0]);
     fill('Valor global (R$)', '0');
     fill('Início da vigência', '2027-01-01');
     fill('Fim da vigência', '2026-01-01');
@@ -160,8 +176,11 @@ describe('instrumentos', () => {
     renderView();
 
     fireEvent.click(
-      await screen.findByRole('button', { name: 'Editar instrumento do processo 00150-1/2026' }),
+      await screen.findByRole('button', {
+        name: 'Ações do instrumento do processo 00150-1/2026',
+      }),
     );
+    fireEvent.click(await screen.findByRole('menuitem', { name: 'Editar instrumento' }));
     expect(await screen.findByLabelText('Valor global (R$)')).toHaveValue('150000,50');
     fill('Fim da vigência', '2027-06-30');
     fireEvent.click(screen.getByRole('button', { name: 'Salvar instrumento' }));
