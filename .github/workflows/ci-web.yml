@@ -1,8 +1,11 @@
 name: ci-web
 
-# Integração contínua da linha do front: formatação, lint, tipos, testes,
-# build e imagem de implantação em todo pull request para web-develop e web, e
-# no push a essas branches. A versão do Node vem de web/.nvmrc e a do pnpm do campo
+# Integração contínua da linha do front: formatação, lint, tipos, testes, testes
+# visuais, build e imagem de implantação em todo pull request para web-develop e
+# web, e no push a essas branches. Os testes visuais rodam na imagem oficial do
+# Playwright, na mesma versão de web/package.json; na falha, o artefato
+# diferencas-visuais traz a captura obtida e a diferença, e é dele que saem as
+# referências. A versão do Node vem de web/.nvmrc e a do pnpm do campo
 # packageManager de web/package.json (lido pelo pnpm/action-setup), para que o
 # CI e a máquina de cada integrante usem o mesmo ambiente.
 
@@ -20,6 +23,56 @@ permissions:
   contents: read
 
 jobs:
+  visual:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    container:
+      image: mcr.microsoft.com/playwright:v1.64.1-noble
+      options: --ipc=host
+    defaults:
+      run:
+        working-directory: web
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Há testes visuais?
+        id: visual
+        run: |
+          if [ -f package.json ] && grep -q '"test:visual"' package.json; then
+            echo "existe=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "existe=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - uses: pnpm/action-setup@v4
+        if: steps.visual.outputs.existe == 'true'
+        with:
+          package_json_file: web/package.json
+
+      - name: Instalar dependências
+        if: steps.visual.outputs.existe == 'true'
+        run: pnpm install --frozen-lockfile
+
+      - name: Versão do Playwright igual à da imagem
+        if: steps.visual.outputs.existe == 'true'
+        run: |
+          test "$(node -p "require('playwright/package.json').version")" = "1.64.1" || {
+            echo "::error title=Playwright::a versão em web/package.json difere da imagem do job visual."
+            exit 1
+          }
+
+      - name: Testes visuais
+        if: steps.visual.outputs.existe == 'true'
+        run: pnpm exec vitest run --project visual --update=none
+
+      - name: Diferenças encontradas
+        if: failure() && steps.visual.outputs.existe == 'true'
+        uses: actions/upload-artifact@v4
+        with:
+          name: diferencas-visuais
+          path: web/.vitest-attachments
+          if-no-files-found: ignore
+
   verify:
     runs-on: ubuntu-latest
     timeout-minutes: 15
