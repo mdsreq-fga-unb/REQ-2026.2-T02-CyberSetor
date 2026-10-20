@@ -8,6 +8,7 @@
 | 28/09/2026 | 1.1 | Adição da avaliação de esforço técnico dos requisitos de CP2, CP4 e CP7 | Caio Martins e Lucas Leal |
 | 29/09/2026 | 2.0 | Backlog geral com as quinze histórias e seus critérios de aceitação; valor de negócio validado com o Instituto; avaliação técnica dos requisitos de CP3, de CP5 e do RF20; tabela consolidada, matriz 4 × 4, MVP, incrementos, requisitos não funcionais do MVP e registro da validação; seção organizada em 10.1 e 10.2, como no template | Vinicius Vieira e Maria Eduarda Marques |
 | 05/10/2026 | 2.1 | Inclusão de âncoras HTML unívocas para as histórias de usuário (HU-01 a HU-15) para rastreabilidade direta a partir do catálogo | Rodrigo Henrique |
+| 19/10/2026 | 2.2 | HU-03: modalidade escolhida entre as cadastradas pelo Instituto, como no RF09 e na validação de 28/09; requisitos não funcionais do cadastro da atividade (RNF02, RNF04, RNF15, RNF16) | Maria Eduarda Marques |
 
 ---
 
@@ -118,12 +119,12 @@ Quinze histórias de usuário, uma capacidade cada, organizadas em épicos. Cada
 
     **Critérios de aceitação**
 
-    - CA-03.1 Ao cadastrar uma atividade em um projeto, o coordenador seleciona a meta ou as metas contratuais a que a atividade contribui e a modalidade de objeto em lista predefinida (oficina contínua, evento aberto, ação de acolhimento).
+    - CA-03.1 Ao cadastrar uma atividade em um projeto, o coordenador seleciona a meta ou as metas contratuais a que a atividade contribui e a modalidade de objeto entre as cadastradas pelo Instituto (por exemplo, oficina contínua, evento aberto, ação de acolhimento).
     - CA-03.2 Ao criar a atividade, o sistema exibe as comprovações obrigatórias, opcionais e condicionais configuradas para o instrumento e a modalidade.
     - CA-03.3 Para oficina contínua, a comprovação principal exibida é a lista de presença nominal; para ação de acolhimento, a contagem agregada de público, sem exigência de CPF.
     - CA-03.4 A atividade guarda a versão da configuração de comprovações vigente no cadastro; mudança posterior na configuração não altera atividades já criadas.
 
-    **Requisitos não funcionais e regras de negócio:** RN-04
+    **Requisitos não funcionais e regras de negócio:** RNF02, RNF04, RNF15, RNF16; RN-04
 
 <a id="hu-04"></a>
 ??? note "HU-04 · Vincular evidência a atividade e meta"
