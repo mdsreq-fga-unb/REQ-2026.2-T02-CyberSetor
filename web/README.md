@@ -4,25 +4,25 @@ Front do sistema de gestão do ciclo de projetos financiados do Instituto Cultur
 
 ## Pré-requisitos
 
-| Ferramenta | Versão                      | Como                                                                                                      |
-| ---------- | --------------------------- | --------------------------------------------------------------------------------------------------------- |
-| Node.js    | a do `.nvmrc`               | `nvm use` (ou `fnm use`)                                                                                  |
-| pnpm       | a do campo `packageManager` | `corepack enable` (baixa a versão fixada na primeira execução) ou `npm install -g pnpm@<versão do campo>` |
-| API        | linha `api-develop`         | rodando em `http://localhost:3001`, com `CORS_ORIGIN=http://localhost:3000` no `.env` da API              |
+| Ferramenta | Versão                                         | Como                                                                                                                                |
+| ---------- | ---------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------- |
+| Node.js    | a do `.nvmrc`                                  | `nvm use` (ou `fnm use`)                                                                                                            |
+| pnpm       | a do campo `packageManager`                    | `corepack enable` (baixa a versão fixada na primeira execução) ou `npm install -g pnpm@<versão do campo>`                           |
+| API        | linha `api-develop`, com autenticação e contas | rodando em `http://localhost:3001`, com `CORS_ORIGIN=http://localhost:3000` no `.env` da API e a conta criada por `pnpm seed:admin` |
 
 ## Comandos oficiais
 
 Os mesmos comandos rodam na máquina de cada integrante e na integração contínua da linha (`ci-web`).
 
-| Chave       | Comando          | Nota                                                                 |
-| ----------- | ---------------- | -------------------------------------------------------------------- |
-| `dev`       | `pnpm dev`       | front com recarga automática em `http://localhost:3000`              |
-| `fmt`       | `pnpm fmt`       | formata com Prettier (`fmt:check` só confere)                        |
-| `lint`      | `pnpm lint`      | ESLint com as regras do Next.js                                      |
-| `typecheck` | `pnpm typecheck` | gera os tipos de rota (`next typegen`) e roda `tsc --noEmit`         |
-| `test`      | `pnpm test`      | testes de componente (Vitest + Testing Library), `src/**/*.test.tsx` |
-| `build`     | `pnpm build`     | build de produção                                                    |
-| `verify`    | `pnpm verify`    | tudo acima, na ordem; é o que se roda antes de abrir pull request    |
+| Chave       | Comando          | Nota                                                              |
+| ----------- | ---------------- | ----------------------------------------------------------------- |
+| `dev`       | `pnpm dev`       | front com recarga automática em `http://localhost:3000`           |
+| `fmt`       | `pnpm fmt`       | formata com Prettier (`fmt:check` só confere)                     |
+| `lint`      | `pnpm lint`      | ESLint com as regras do Next.js                                   |
+| `typecheck` | `pnpm typecheck` | gera os tipos de rota (`next typegen`) e roda `tsc --noEmit`      |
+| `test`      | `pnpm test`      | testes (Vitest + Testing Library), `src/**/*.test.{ts,tsx}`       |
+| `build`     | `pnpm build`     | build de produção                                                 |
+| `verify`    | `pnpm verify`    | tudo acima, na ordem; é o que se roda antes de abrir pull request |
 
 ## Execução local
 
@@ -33,7 +33,7 @@ cp .env.example .env.local
 pnpm dev
 ```
 
-A página inicial mostra se a API e o banco respondem. Use o mesmo nome de host no front e na API (`localhost` nos dois): `127.0.0.1` de um lado e `localhost` do outro são sites distintos, e o cookie de sessão deixa de ser enviado.
+Entre em `/entrar` com a conta do `seed:admin` da API; no primeiro acesso, a senha temporária leva à troca de senha. Depois de entrar, a página inicial mostra se a API e o banco respondem. Use o mesmo nome de host no front e na API (`localhost` nos dois): `127.0.0.1` de um lado e `localhost` do outro são sites distintos, e o cookie de sessão deixa de ser enviado.
 
 | Variável              | Padrão                     | Uso                                                       |
 | --------------------- | -------------------------- | --------------------------------------------------------- |
@@ -52,12 +52,12 @@ src/
   components/ui/        componentes do shadcn/ui, adicionados pelo CLI local (pnpm exec shadcn add)
   components/           componentes compartilhados
   lib/                  api.ts (cliente HTTP), local-db.ts, utils.ts
-  queries/<domínio>.ts  hooks do TanStack Query
-  types/<domínio>.ts    tipos do contrato da API
+  queries/<domínio>.ts  hooks do TanStack Query (com o primeiro domínio)
+  types/<domínio>.ts    tipos do contrato da API (os de autenticação ficam em auth/types.ts)
   routes/paths.ts       todos os caminhos num lugar só
 ```
 
-Testes ficam ao lado do arquivo testado (`*.test.ts(x)`).
+Testes ficam ao lado do arquivo testado (`*.test.ts(x)`). Componentes do shadcn/ui ajustados depois do `add`, para os 48 px, os textos em português e sem cookie de preferência: `button`, `input`, `sheet` e `sidebar`; um novo `add` desses arquivos não deve sobrescrevê-los.
 
 ## Sessão
 
@@ -68,6 +68,7 @@ Testes ficam ao lado do arquivo testado (`*.test.ts(x)`).
 - Recarregar a página recupera a sessão pelo cookie, na primeira montagem de uma guarda (`useSession`).
 - As guardas (`AuthGuard`, `GuestGuard`) são experiência de uso; quem protege os dados é a API. **Páginas do `(painel)` não buscam dado sensível em Server Component:** o conteúdo do painel vai no payload do servidor mesmo para quem não tem sessão, e o dado vem do cliente por `authorizedRequest`.
 - Front e API precisam estar no mesmo site: o cookie é `SameSite=Strict`.
+- Homologação e produção exigem https: sem contexto seguro o navegador não oferece `navigator.locks`, e a renovação deixa de ser única entre abas.
 
 ## Convenções
 
