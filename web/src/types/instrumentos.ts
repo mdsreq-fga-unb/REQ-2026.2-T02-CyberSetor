@@ -1,0 +1,21 @@
+export type InstrumentType = 'EDITAL' | 'EMENDA' | 'PARCERIA';
+
+export interface Instrument {
+  id: string;
+  versao: number;
+  tipo: InstrumentType;
+  orgaoConcedente: string;
+  numeroProcesso: string;
+  valorGlobal: string;
+  dataCelebracao: string;
+  vigenciaInicio: string;
+  vigenciaFim: string;
+  ativo: boolean;
+}
+
+export type InstrumentInput = Omit<Instrument, 'id' | 'versao' | 'ativo'>;
+
+export interface SavedInstrument {
+  instrumento: Instrument;
+  numeroProcessoRepetido: boolean;
+}
