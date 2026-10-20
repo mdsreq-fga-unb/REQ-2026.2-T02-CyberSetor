@@ -57,7 +57,7 @@ src/
   routes/paths.ts       todos os caminhos num lugar só
 ```
 
-Testes ficam ao lado do arquivo testado (`*.test.ts(x)`). Componentes do shadcn/ui ajustados depois do `add`, para os 48 px, os textos em português e sem cookie de preferência: `button`, `input`, `sheet` e `sidebar`; um novo `add` desses arquivos não deve sobrescrevê-los.
+Testes ficam ao lado do arquivo testado (`*.test.ts(x)`). Componentes do shadcn/ui ajustados depois do `add`, para os 48 px, os textos em português e sem cookie de preferência: `button`, `dialog`, `input`, `native-select`, `sheet` e `sidebar`; um novo `add` desses arquivos não deve sobrescrevê-los.
 
 ## Sessão
 
