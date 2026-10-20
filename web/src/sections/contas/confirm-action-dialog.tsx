@@ -30,10 +30,12 @@ const TEXT: Record<AccountAction, { title: string; body: string; confirm: string
 };
 
 export function ConfirmActionDialog({
+  open,
   target,
   onConfirm,
   onClose,
 }: {
+  open: boolean;
   target: { account: Account; action: AccountAction } | null;
   onConfirm: (account: Account, action: AccountAction) => Promise<void>;
   onClose: () => void;
@@ -43,6 +45,7 @@ export function ConfirmActionDialog({
   const text = target ? TEXT[target.action] : TEXT.reset;
 
   function close() {
+    if (busy) return;
     setFailure(null);
     onClose();
   }
@@ -61,7 +64,7 @@ export function ConfirmActionDialog({
   }
 
   return (
-    <AlertDialog open={target !== null} onOpenChange={(open) => !open && close()}>
+    <AlertDialog open={open} onOpenChange={(next) => !next && close()}>
       <AlertDialogContent>
         <AlertDialogHeader>
           <AlertDialogTitle>{text.title}</AlertDialogTitle>

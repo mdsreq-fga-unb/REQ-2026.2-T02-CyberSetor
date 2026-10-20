@@ -148,7 +148,7 @@ describe('administracao de contas', () => {
     fireEvent.change(screen.getByLabelText('Perfil'), { target: { value: 'NUCLEO_PEDAGOGICO' } });
     fireEvent.click(screen.getByRole('button', { name: 'Criar conta' }));
 
-    expect(await screen.findByLabelText('Senha temporária')).toHaveTextContent('Temporaria-123456');
+    expect(await screen.findByLabelText('Senha temporária')).toHaveValue('Temporaria-123456');
     expect(calls.find((call) => call.key === 'POST /accounts')?.body).toEqual({
       nome: 'Bia Educadora',
       emailLogin: 'bia@instituto.org.br',
@@ -206,9 +206,7 @@ describe('administracao de contas', () => {
     fireEvent.click(await screen.findByRole('menuitem', { name: 'Redefinir senha' }));
     fireEvent.click(await screen.findByRole('button', { name: 'Redefinir senha' }));
 
-    expect(await screen.findByLabelText('Senha temporária')).toHaveTextContent(
-      'Nova-temporaria-987',
-    );
+    expect(await screen.findByLabelText('Senha temporária')).toHaveValue('Nova-temporaria-987');
   });
 
   it('avisa quando a conta desativada coordena projetos', async () => {

@@ -19,10 +19,12 @@ import type { Account } from '@/types/contas';
 import { errorMessage } from './error-message';
 
 export function ChangeProfileDialog({
+  open,
   account,
   onClose,
   onChanged,
 }: {
+  open: boolean;
   account: Account | null;
   onClose: () => void;
   onChanged: (account: Account) => void;
@@ -53,7 +55,7 @@ export function ChangeProfileDialog({
   }
 
   return (
-    <Dialog open={account !== null} onOpenChange={(open) => !open && close()}>
+    <Dialog open={open} onOpenChange={(next) => !next && !changeProfile.isPending && close()}>
       <DialogContent>
         <DialogHeader>
           <DialogTitle>Mudar perfil</DialogTitle>

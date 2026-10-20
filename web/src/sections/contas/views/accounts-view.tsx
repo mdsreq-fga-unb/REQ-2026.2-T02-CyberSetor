@@ -9,6 +9,7 @@ import { ListPagination } from '@/components/list/list-pagination';
 import { ListCard, ListEmpty, ListError, TableSkeleton } from '@/components/list/list-states';
 import { RowActionsMenu, type RowAction } from '@/components/list/row-actions-menu';
 import { usePagination } from '@/components/list/use-pagination';
+import { useDialogState } from '@/hooks/use-dialog-state';
 import { PageHeader } from '@/components/page-header';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -62,15 +63,9 @@ export function AccountsView() {
   const resetPassword = useResetPassword();
 
   const [creating, setCreating] = useState(false);
-  const [editing, setEditing] = useState<Account | null>(null);
-  const [confirming, setConfirming] = useState<{
-    account: Account;
-    action: AccountAction;
-  } | null>(null);
-  const [password, setPassword] = useState<{
-    title: string;
-    result: TemporaryPasswordResult;
-  } | null>(null);
+  const editing = useDialogState<Account>();
+  const confirming = useDialogState<{ account: Account; action: AccountAction }>();
+  const password = useDialogState<{ title: string; result: TemporaryPasswordResult }>();
 
   if (!isAdmin) {
     return (
@@ -81,12 +76,12 @@ export function AccountsView() {
   async function confirmAction(account: Account, action: AccountAction) {
     if (action === 'reset') {
       const result = await resetPassword.mutateAsync(account.id);
-      setConfirming(null);
-      setPassword({ title: 'Senha redefinida', result });
+      confirming.close();
+      password.show({ title: 'Senha redefinida', result });
       return;
     }
     const { projetosCoordenados } = await deactivate.mutateAsync(account.id);
-    setConfirming(null);
+    confirming.close();
     toast.add({
       type: 'success',
       title: `Conta de ${account.nome} desativada`,
@@ -104,7 +99,7 @@ export function AccountsView() {
       await reactivate.mutateAsync(account.id);
       toast.add({ type: 'success', title: `Conta de ${account.nome} reativada` });
     } catch (error) {
-      toast.add({ type: 'error', title: errorMessage(error) });
+      toast.add({ type: 'error', priority: 'high', title: errorMessage(error) });
     }
   }
 
@@ -113,12 +108,12 @@ export function AccountsView() {
       return [{ label: 'Reativar conta', onSelect: () => reactivateAccount(account) }];
     }
     return [
-      { label: 'Mudar perfil', onSelect: () => setEditing(account) },
-      { label: 'Redefinir senha', onSelect: () => setConfirming({ account, action: 'reset' }) },
+      { label: 'Mudar perfil', onSelect: () => editing.show(account) },
+      { label: 'Redefinir senha', onSelect: () => confirming.show({ account, action: 'reset' }) },
       {
         label: 'Desativar conta',
         destructive: true,
-        onSelect: () => setConfirming({ account, action: 'deactivate' }),
+        onSelect: () => confirming.show({ account, action: 'deactivate' }),
       },
     ];
   }
@@ -134,7 +129,7 @@ export function AccountsView() {
     <>
       <PageHeader title={TITLE} description={DESCRIPTION} action={createButton} />
 
-      {accounts.error ? (
+      {accounts.error && !accounts.data ? (
         <ListError message={errorMessage(accounts.error)} />
       ) : accounts.data?.length === 0 ? (
         <ListEmpty
@@ -203,11 +198,12 @@ export function AccountsView() {
       <CreateAccountDialog
         open={creating}
         onOpenChange={setCreating}
-        onCreated={(result) => setPassword({ title: 'Conta criada', result })}
+        onCreated={(result) => password.show({ title: 'Conta criada', result })}
       />
       <ChangeProfileDialog
-        account={editing}
-        onClose={() => setEditing(null)}
+        open={editing.open}
+        account={editing.value}
+        onClose={editing.close}
         onChanged={(account) =>
           toast.add({
             type: 'success',
@@ -217,14 +213,16 @@ export function AccountsView() {
         }
       />
       <ConfirmActionDialog
-        target={confirming}
+        open={confirming.open}
+        target={confirming.value}
         onConfirm={confirmAction}
-        onClose={() => setConfirming(null)}
+        onClose={confirming.close}
       />
       <TemporaryPasswordDialog
-        result={password?.result ?? null}
-        title={password?.title ?? ''}
-        onClose={() => setPassword(null)}
+        open={password.open}
+        result={password.value?.result ?? null}
+        title={password.value?.title ?? ''}
+        onClose={password.close}
       />
     </>
   );

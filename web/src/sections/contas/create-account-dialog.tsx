@@ -80,7 +80,10 @@ export function CreateAccountDialog({
   }
 
   return (
-    <Dialog open={open} onOpenChange={change}>
+    <Dialog
+      open={open}
+      onOpenChange={(next) => (next || !form.formState.isSubmitting) && change(next)}
+    >
       <DialogContent>
         <DialogHeader>
           <DialogTitle>Nova conta</DialogTitle>
