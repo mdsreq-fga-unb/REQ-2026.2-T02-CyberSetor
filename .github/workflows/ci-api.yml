@@ -93,6 +93,10 @@ jobs:
         if: steps.codigo.outputs.existe == 'true'
         run: pnpm db:deploy
 
+      - name: Schema sem mudança fora de migração
+        if: steps.codigo.outputs.existe == 'true'
+        run: pnpm db:check
+
       - name: Testes de ponta a ponta
         if: steps.codigo.outputs.existe == 'true'
         run: pnpm test:e2e
