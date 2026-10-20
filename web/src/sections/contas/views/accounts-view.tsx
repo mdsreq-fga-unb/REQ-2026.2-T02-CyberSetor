@@ -5,17 +5,13 @@ import { cn } from 'cn';
 import { useState } from 'react';
 import { useSession } from '@/auth/hooks/use-session';
 import { profileLabel } from '@/auth/profiles';
+import { ListPagination } from '@/components/list/list-pagination';
+import { ListCard, ListEmpty, ListError, TableSkeleton } from '@/components/list/list-states';
+import { RowActionsMenu, type RowAction } from '@/components/list/row-actions-menu';
+import { usePagination } from '@/components/list/use-pagination';
 import { PageHeader } from '@/components/page-header';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import {
-  Empty,
-  EmptyDescription,
-  EmptyHeader,
-  EmptyMedia,
-  EmptyTitle,
-} from '@/components/ui/empty';
-import { Skeleton } from '@/components/ui/skeleton';
 import {
   Table,
   TableBody,
@@ -33,7 +29,6 @@ import {
   useResetPassword,
 } from '@/queries/contas';
 import type { Account, TemporaryPasswordResult } from '@/types/contas';
-import { AccountActionsMenu } from '../account-actions-menu';
 import { statusTags } from '../account-status';
 import { ChangeProfileDialog } from '../change-profile-dialog';
 import { ConfirmActionDialog, type AccountAction } from '../confirm-action-dialog';
@@ -42,6 +37,8 @@ import { errorMessage } from '../error-message';
 import { TemporaryPasswordDialog } from '../temporary-password-dialog';
 
 const TITLE = 'Contas';
+const DESCRIPTION = 'Contas da equipe do Instituto e o perfil de acesso de cada pessoa.';
+const COLUMNS = 4;
 
 function StatusTags({ account, className }: { account: Account; className?: string }) {
   return (
@@ -54,12 +51,12 @@ function StatusTags({ account, className }: { account: Account; className?: stri
     </div>
   );
 }
-const DESCRIPTION = 'Contas da equipe do Instituto e o perfil de acesso de cada pessoa.';
 
 export function AccountsView() {
   const { session } = useSession();
   const isAdmin = session?.perfil === 'ADMINISTRACAO_SISTEMA';
   const accounts = useAccounts(isAdmin);
+  const pagination = usePagination(accounts.data);
   const deactivate = useDeactivateAccount();
   const reactivate = useReactivateAccount();
   const resetPassword = useResetPassword();
@@ -111,42 +108,44 @@ export function AccountsView() {
     }
   }
 
+  function actionsFor(account: Account): RowAction[] {
+    if (!account.ativo) {
+      return [{ label: 'Reativar conta', onSelect: () => reactivateAccount(account) }];
+    }
+    return [
+      { label: 'Mudar perfil', onSelect: () => setEditing(account) },
+      { label: 'Redefinir senha', onSelect: () => setConfirming({ account, action: 'reset' }) },
+      {
+        label: 'Desativar conta',
+        destructive: true,
+        onSelect: () => setConfirming({ account, action: 'deactivate' }),
+      },
+    ];
+  }
+
+  const createButton = (
+    <Button onClick={() => setCreating(true)}>
+      <PlusIcon data-icon="inline-start" />
+      Nova conta
+    </Button>
+  );
+
   return (
     <>
-      <PageHeader
-        title={TITLE}
-        description={DESCRIPTION}
-        action={
-          <Button onClick={() => setCreating(true)}>
-            <PlusIcon data-icon="inline-start" />
-            Nova conta
-          </Button>
-        }
-      />
+      <PageHeader title={TITLE} description={DESCRIPTION} action={createButton} />
 
-      {accounts.isPending ? (
-        <div aria-label="Carregando contas" className="flex flex-col gap-2">
-          <Skeleton className="h-12 w-full" />
-          <Skeleton className="h-16 w-full" />
-          <Skeleton className="h-16 w-full" />
-        </div>
-      ) : accounts.error ? (
-        <p role="alert" className="text-destructive">
-          {errorMessage(accounts.error)}
-        </p>
-      ) : accounts.data.length === 0 ? (
-        <Empty className="border">
-          <EmptyHeader>
-            <EmptyMedia variant="icon">
-              <UsersIcon />
-            </EmptyMedia>
-            <EmptyTitle>Nenhuma conta</EmptyTitle>
-            <EmptyDescription>Crie a conta de cada pessoa da equipe.</EmptyDescription>
-          </EmptyHeader>
-        </Empty>
+      {accounts.error ? (
+        <ListError message={errorMessage(accounts.error)} />
+      ) : accounts.data?.length === 0 ? (
+        <ListEmpty
+          icon={UsersIcon}
+          title="Nenhuma conta"
+          description="Crie a conta de cada pessoa da equipe."
+          action={createButton}
+        />
       ) : (
-        <div className="rounded-lg border">
-          <Table>
+        <ListCard>
+          <Table aria-busy={accounts.isPending}>
             <TableCaption className="sr-only">{DESCRIPTION}</TableCaption>
             <TableHeader>
               <TableRow>
@@ -165,36 +164,40 @@ export function AccountsView() {
               </TableRow>
             </TableHeader>
             <TableBody>
-              {accounts.data.map((account) => (
-                <TableRow key={account.id}>
-                  <TableCell className="px-4 py-3 whitespace-normal">
-                    <div className="flex flex-col gap-1">
-                      <span className="font-medium">{account.nome}</span>
-                      <span className="break-all text-muted-foreground">{account.emailLogin}</span>
-                      <span className="md:hidden">{profileLabel(account.perfil)}</span>
-                      <StatusTags account={account} className="md:hidden" />
-                    </div>
-                  </TableCell>
-                  <TableCell className="hidden md:table-cell">
-                    {profileLabel(account.perfil)}
-                  </TableCell>
-                  <TableCell className="hidden md:table-cell">
-                    <StatusTags account={account} />
-                  </TableCell>
-                  <TableCell className="px-4 text-right">
-                    <AccountActionsMenu
-                      account={account}
-                      onChangeProfile={() => setEditing(account)}
-                      onResetPassword={() => setConfirming({ account, action: 'reset' })}
-                      onDeactivate={() => setConfirming({ account, action: 'deactivate' })}
-                      onReactivate={() => reactivateAccount(account)}
-                    />
-                  </TableCell>
-                </TableRow>
-              ))}
+              {accounts.isPending ? (
+                <TableSkeleton columns={COLUMNS} />
+              ) : (
+                pagination.pageRows.map((account) => (
+                  <TableRow key={account.id}>
+                    <TableCell className="px-4 py-3 whitespace-normal">
+                      <div className="flex flex-col gap-1">
+                        <span className="font-medium">{account.nome}</span>
+                        <span className="break-all text-muted-foreground">
+                          {account.emailLogin}
+                        </span>
+                        <span className="md:hidden">{profileLabel(account.perfil)}</span>
+                        <StatusTags account={account} className="md:hidden" />
+                      </div>
+                    </TableCell>
+                    <TableCell className="hidden md:table-cell">
+                      {profileLabel(account.perfil)}
+                    </TableCell>
+                    <TableCell className="hidden md:table-cell">
+                      <StatusTags account={account} />
+                    </TableCell>
+                    <TableCell className="px-4 text-right">
+                      <RowActionsMenu
+                        label={`Ações de ${account.nome}`}
+                        actions={actionsFor(account)}
+                      />
+                    </TableCell>
+                  </TableRow>
+                ))
+              )}
             </TableBody>
           </Table>
-        </div>
+          <ListPagination pagination={pagination} label="Paginação das contas" />
+        </ListCard>
       )}
 
       <CreateAccountDialog

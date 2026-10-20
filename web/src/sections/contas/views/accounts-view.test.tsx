@@ -1,5 +1,5 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { cleanup, fireEvent, render, screen, within } from '@testing-library/react';
+import { cleanup, fireEvent, render, screen, waitFor, within } from '@testing-library/react';
 import { clearLocalSession, signIn } from '@/auth/session';
 import { Toaster } from '@/components/ui/toast';
 import type { Account } from '@/types/contas';
@@ -84,7 +84,8 @@ describe('administracao de contas', () => {
     });
     renderView();
 
-    const table = await screen.findByRole('table', {
+    await screen.findAllByText('Bia Educadora');
+    const table = screen.getByRole('table', {
       name: 'Contas da equipe do Instituto e o perfil de acesso de cada pessoa.',
     });
     const rows = within(table).getAllByRole('row');
@@ -93,6 +94,40 @@ describe('administracao de contas', () => {
     expect(pessoa).toHaveTextContent('Bia Educadora');
     expect(perfil).toHaveTextContent('Núcleo Pedagógico e Educadores');
     expect(situacao).toHaveTextContent('Troca de senha pendente');
+  });
+
+  it('pagina as contas de dez em dez', async () => {
+    const many = Array.from({ length: 12 }, (_, index) => ({
+      ...EDUCADORA,
+      id: `00000000-0000-4000-8000-0000000001${String(index).padStart(2, '0')}`,
+      nome: `Pessoa ${String(index + 1).padStart(2, '0')}`,
+    }));
+    await signedInAs('ADMINISTRACAO_SISTEMA', {
+      'GET /accounts': () => ({ status: 200, body: many }),
+    });
+    renderView();
+
+    const nav = await screen.findByRole('navigation', { name: 'Paginação das contas' });
+    expect(within(nav).getByRole('status')).toHaveTextContent('1–10 de 12');
+    expect(within(screen.getByRole('table')).getAllByRole('row')).toHaveLength(11);
+
+    fireEvent.click(within(nav).getByRole('button', { name: 'Próxima página' }));
+
+    expect(within(nav).getByRole('status')).toHaveTextContent('11–12 de 12');
+    expect(screen.getByText('Pessoa 12')).toBeInTheDocument();
+    expect(screen.queryByText('Pessoa 01')).not.toBeInTheDocument();
+  });
+
+  it('enquanto carrega, a tabela fica ocupada com o cabecalho visivel', async () => {
+    await signedInAs('ADMINISTRACAO_SISTEMA', {
+      'GET /accounts': () => ({ status: 200, body: [ADMIN] }),
+    });
+    renderView();
+
+    const table = screen.getByRole('table');
+    expect(table).toHaveAttribute('aria-busy', 'true');
+    expect(within(table).getByRole('columnheader', { name: 'Pessoa' })).toBeInTheDocument();
+    await waitFor(() => expect(table).toHaveAttribute('aria-busy', 'false'));
   });
 
   it('cria a conta e mostra a senha temporaria uma vez', async () => {
