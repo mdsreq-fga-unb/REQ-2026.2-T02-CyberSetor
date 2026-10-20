@@ -23,6 +23,7 @@ const CODIGO_POR_STATUS: Partial<Record<number, string>> = {
   [HttpStatus.CONFLICT]: 'CONFLICT',
   [HttpStatus.UNPROCESSABLE_ENTITY]: 'UNPROCESSABLE',
   [HttpStatus.TOO_MANY_REQUESTS]: 'RATE_LIMITED',
+  [HttpStatus.SERVICE_UNAVAILABLE]: 'SERVICE_UNAVAILABLE',
 };
 
 const LIMIAR_ERRO_DO_SERVIDOR: number = HttpStatus.INTERNAL_SERVER_ERROR;
@@ -44,7 +45,10 @@ export class HttpExceptionFilter implements ExceptionFilter {
     const ehValidacao = status === STATUS_VALIDACAO;
 
     const envelope: ErrorEnvelope = {
-      code: CODIGO_POR_STATUS[status] ?? (ehErroDoServidor ? 'INTERNAL_ERROR' : 'HTTP_ERROR'),
+      code:
+        (ehErroDoServidor ? undefined : this.codigoProprio(exception)) ??
+        CODIGO_POR_STATUS[status] ??
+        (ehErroDoServidor ? 'INTERNAL_ERROR' : 'HTTP_ERROR'),
       message: ehErroDoServidor ? 'Erro interno. Tente novamente.' : this.mensagemDe(exception),
       correlationId,
       details: ehValidacao ? this.detalhesDeValidacao(exception) : {},
@@ -58,6 +62,13 @@ export class HttpExceptionFilter implements ExceptionFilter {
     }
 
     res.status(status).json(envelope);
+  }
+
+  private codigoProprio(exception: unknown): string | undefined {
+    if (!(exception instanceof HttpException)) return undefined;
+    const body = exception.getResponse();
+    const code = typeof body === 'object' ? (body as { code?: unknown }).code : undefined;
+    return typeof code === 'string' ? code : undefined;
   }
 
   private mensagemDe(exception: unknown): string {

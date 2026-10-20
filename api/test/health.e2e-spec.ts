@@ -5,6 +5,7 @@ import type { App } from 'supertest/types.js';
 import { AppModule } from '../src/app.module.js';
 import { setupApp } from '../src/app.setup.js';
 import type { ErrorEnvelope } from '../src/common/filters/http-exception.filter.js';
+import { PrismaService } from '../src/prisma/prisma.service.js';
 
 describe('API (e2e)', () => {
   let app: INestApplication<App>;
@@ -28,6 +29,14 @@ describe('API (e2e)', () => {
 
     expect(res.body).toMatchObject({ status: 'ok' });
     expect(res.headers['x-correlation-id']).toBe('teste-123');
+  });
+
+  it('GET /v1/health responde 503 com SERVICE_UNAVAILABLE quando o banco nao responde', async () => {
+    vi.spyOn(app.get(PrismaService), 'verificarConexao').mockResolvedValueOnce(false);
+
+    const res = await request(app.getHttpServer()).get('/v1/health').expect(503);
+
+    expect(res.body).toMatchObject({ code: 'SERVICE_UNAVAILABLE', details: {} });
   });
 
   it('rota inexistente responde 404 no envelope de erro', async () => {

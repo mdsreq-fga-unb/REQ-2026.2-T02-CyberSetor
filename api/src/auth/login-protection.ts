@@ -1,0 +1,3 @@
+export const LOGIN_ATTEMPTS_PER_MINUTE_PER_IP = 20;
+export const LOCKOUT_THRESHOLD = 10;
+export const LOCKOUT_MINUTES = 15;
