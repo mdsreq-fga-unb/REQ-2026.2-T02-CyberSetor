@@ -16,7 +16,7 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: 'CyberSetor',
-  description: 'Gestao do ciclo de projetos financiados do Instituto Cultural e Social No Setor',
+  description: 'Gestão do ciclo de projetos financiados do Instituto Cultural e Social No Setor',
 };
 
 export default function RootLayout({ children }: LayoutProps<'/'>) {

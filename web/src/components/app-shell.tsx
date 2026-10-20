@@ -2,20 +2,21 @@
 
 import { MenuIcon } from 'lucide-react';
 import Link from 'next/link';
-import type { ReactNode } from 'react';
+import { type ReactNode, useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
 import { Sheet, SheetContent, SheetTitle, SheetTrigger } from '@/components/ui/sheet';
 
-export const NAV_ITEMS = [{ href: '/', label: 'Inicio' }] as const;
+export const NAV_ITEMS = [{ href: '/', label: 'Início' }] as const;
 
-function NavLinks({ className }: { className?: string }) {
+function NavLinks({ className, onNavigate }: { className?: string; onNavigate?: () => void }) {
   return (
-    <nav aria-label="Navegacao principal" className={className}>
+    <nav aria-label="Navegação principal" className={className}>
       {NAV_ITEMS.map((item) => (
         <Link
           key={item.href}
           href={item.href}
+          onClick={onNavigate}
           className="rounded-md px-3 py-2 text-sm font-medium hover:bg-muted"
         >
           {item.label}
@@ -26,11 +27,13 @@ function NavLinks({ className }: { className?: string }) {
 }
 
 export function AppShell({ children }: { children: ReactNode }) {
+  const [menuOpen, setMenuOpen] = useState(false);
+
   return (
     <div className="flex min-h-full flex-1 flex-col">
       <header className="sticky top-0 z-40 border-b bg-background">
         <div className="mx-auto flex h-14 w-full max-w-6xl items-center gap-4 px-4">
-          <Sheet>
+          <Sheet open={menuOpen} onOpenChange={setMenuOpen}>
             <SheetTrigger
               render={
                 <Button variant="ghost" size="icon" className="md:hidden" aria-label="Abrir menu" />
@@ -41,7 +44,7 @@ export function AppShell({ children }: { children: ReactNode }) {
             <SheetContent side="left" className="p-4">
               <SheetTitle>CyberSetor</SheetTitle>
               <Separator />
-              <NavLinks className="flex flex-col gap-1" />
+              <NavLinks className="flex flex-col gap-1" onNavigate={() => setMenuOpen(false)} />
             </SheetContent>
           </Sheet>
           <Link href="/" className="font-semibold">

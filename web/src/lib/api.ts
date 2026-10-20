@@ -41,7 +41,7 @@ export async function apiRequest<T>(path: string, options: ApiRequestOptions = {
     throw new ApiError(
       response.status,
       error?.code ?? 'HTTP_ERROR',
-      error?.message ?? 'Falha na comunicacao com a API.',
+      error?.message ?? 'Falha na comunicação com a API.',
     );
   }
   if (response.status === 204) return undefined as T;
