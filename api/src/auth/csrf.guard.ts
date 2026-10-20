@@ -8,7 +8,7 @@ export class CsrfGuard implements CanActivate {
   canActivate(context: ExecutionContext): boolean {
     const req = context.switchToHttp().getRequest<Request>();
     if (req.header(CSRF_HEADER) !== '1') {
-      throw new ForbiddenException('Cabecalho X-CSRF ausente.');
+      throw new ForbiddenException('Cabeçalho X-CSRF ausente.');
     }
     return true;
   }

@@ -74,7 +74,7 @@ export class AuthController {
     const grant = refreshToken ? await this.auth.refresh(refreshToken, correlationIdOf(res)) : null;
     if (!grant) {
       this.cookie.clear(res);
-      throw new UnauthorizedException('Sessao encerrada. Entre novamente.');
+      throw new UnauthorizedException('Sessão encerrada. Entre novamente.');
     }
     return this.respond(res, grant);
   }

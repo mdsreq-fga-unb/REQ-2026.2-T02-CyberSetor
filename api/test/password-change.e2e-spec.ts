@@ -87,7 +87,7 @@ describe('Troca obrigatoria de senha (e2e)', () => {
       .expect(403);
     expect(blocked.body).toMatchObject({
       code: 'PASSWORD_CHANGE_REQUIRED',
-      message: 'Troque a senha temporaria antes de continuar.',
+      message: 'Troque a senha temporária antes de continuar.',
     });
   });
 

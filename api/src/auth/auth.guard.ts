@@ -36,15 +36,15 @@ export class AuthGuard implements CanActivate {
     try {
       payload = await this.jwt.verifyAsync<AccessTokenPayload>(token);
     } catch {
-      throw new UnauthorizedException('Credenciais invalidas ou expiradas.');
+      throw new UnauthorizedException('Credenciais inválidas ou expiradas.');
     }
     if (typeof payload.sid !== 'string' || typeof payload.sub !== 'string') {
-      throw new UnauthorizedException('Credenciais invalidas ou expiradas.');
+      throw new UnauthorizedException('Credenciais inválidas ou expiradas.');
     }
 
     const session = await this.sessions.validateAccess(payload.sid);
     if (!session || session.usuarioId !== payload.sub) {
-      throw new UnauthorizedException('Sessao encerrada. Entre novamente.');
+      throw new UnauthorizedException('Sessão encerrada. Entre novamente.');
     }
 
     if (
@@ -53,7 +53,7 @@ export class AuthGuard implements CanActivate {
     ) {
       throw new ForbiddenException({
         code: 'PASSWORD_CHANGE_REQUIRED',
-        message: 'Troque a senha temporaria antes de continuar.',
+        message: 'Troque a senha temporária antes de continuar.',
       });
     }
 

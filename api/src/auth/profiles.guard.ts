@@ -35,6 +35,6 @@ export class ProfilesGuard implements CanActivate {
       },
       correlationId: String(http.getResponse<Response>().locals.correlationId ?? ''),
     });
-    throw new ForbiddenException('Perfil sem permissao para esta operacao.');
+    throw new ForbiddenException('Perfil sem permissão para esta operação.');
   }
 }

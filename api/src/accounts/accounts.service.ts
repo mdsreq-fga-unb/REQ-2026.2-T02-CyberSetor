@@ -65,7 +65,7 @@ export class AccountsService {
 
     const conta = await this.prisma.$transaction(async (tx) => {
       if (await tx.usuario.findUnique({ where: { emailLogin }, select: { id: true } })) {
-        throw new ConflictException('Ja existe conta com este e-mail.');
+        throw new ConflictException('Já existe conta com este e-mail.');
       }
       const pessoa = await tx.pessoa.create({ data: { nome: data.nome } });
       const usuario = await tx.usuario.create({
@@ -216,7 +216,7 @@ export class AccountsService {
 
   private async findOrFail(tx: Prisma.TransactionClient, id: string): Promise<AccountRow> {
     const conta = await tx.usuario.findUnique({ where: { id }, select: ACCOUNT_SELECT });
-    if (!conta) throw new NotFoundException('Conta nao encontrada.');
+    if (!conta) throw new NotFoundException('Conta não encontrada.');
     return conta;
   }
 
@@ -228,7 +228,7 @@ export class AccountsService {
     if (others === 0) {
       throw new ConflictException({
         code: 'LAST_ADMIN',
-        message: 'A operacao deixaria o sistema sem administrador ativo.',
+        message: 'A operação deixaria o sistema sem administrador ativo.',
       });
     }
   }
