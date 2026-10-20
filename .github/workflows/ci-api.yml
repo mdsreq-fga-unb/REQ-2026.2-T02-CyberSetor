@@ -1,9 +1,10 @@
 name: ci-api
 
-# Integração contínua da linha da API: lint, testes e build em todo pull
-# request para api-develop e api, e no push a essas branches. Enquanto api/
-# não tiver package.json, o job só registra que ainda não há código; assim a
-# verificação existe desde o primeiro commit e pode ser exigida no merge.
+# Integração contínua da linha da API: formatação, lint, tipos, testes unitários,
+# testes de ponta a ponta e build em todo pull request para api-develop e api, e
+# no push a essas branches. A versão do Node vem de api/.nvmrc e a do pnpm do
+# campo packageManager de api/package.json (lido pelo pnpm/action-setup), para
+# que o CI e a máquina de cada integrante usem o mesmo ambiente.
 
 on:
   pull_request:
@@ -11,48 +12,69 @@ on:
   push:
     branches: [api-develop, api]
 
+concurrency:
+  group: ci-api-${{ github.ref }}
+  cancel-in-progress: true
+
 permissions:
   contents: read
 
 jobs:
-  build:
+  verify:
     runs-on: ubuntu-latest
+    timeout-minutes: 15
+    defaults:
+      run:
+        working-directory: api
     steps:
       - uses: actions/checkout@v4
 
       - name: Há código?
         id: codigo
         run: |
-          if [ -f api/package.json ]; then
+          if [ -f package.json ]; then
             echo "existe=true" >> "$GITHUB_OUTPUT"
           else
             echo "existe=false" >> "$GITHUB_OUTPUT"
-            echo "::notice title=Sem código::api/package.json ainda não existe; lint, testes e build ficam para o esqueleto da API."
+            echo "::notice title=Sem código::api/package.json ainda não existe; a verificação fica para o esqueleto da API."
           fi
+
+      - uses: pnpm/action-setup@v4
+        if: steps.codigo.outputs.existe == 'true'
+        with:
+          package_json_file: api/package.json
 
       - uses: actions/setup-node@v4
         if: steps.codigo.outputs.existe == 'true'
         with:
-          node-version: 22
+          node-version-file: api/.nvmrc
+          cache: pnpm
+          cache-dependency-path: api/pnpm-lock.yaml
 
       - name: Instalar dependências
         if: steps.codigo.outputs.existe == 'true'
-        working-directory: api
-        run: |
-          corepack enable
-          pnpm install --frozen-lockfile
+        run: pnpm install --frozen-lockfile
+
+      - name: Formatação
+        if: steps.codigo.outputs.existe == 'true'
+        run: pnpm fmt:check
 
       - name: Lint
         if: steps.codigo.outputs.existe == 'true'
-        working-directory: api
         run: pnpm lint
 
-      - name: Testes
+      - name: Tipos
         if: steps.codigo.outputs.existe == 'true'
-        working-directory: api
+        run: pnpm typecheck
+
+      - name: Testes unitários
+        if: steps.codigo.outputs.existe == 'true'
         run: pnpm test
+
+      - name: Testes de ponta a ponta
+        if: steps.codigo.outputs.existe == 'true'
+        run: pnpm test:e2e
 
       - name: Build
         if: steps.codigo.outputs.existe == 'true'
-        working-directory: api
         run: pnpm build
