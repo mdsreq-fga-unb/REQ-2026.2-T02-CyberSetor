@@ -1,12 +1,31 @@
 'use client';
 
-import { PlusIcon } from 'lucide-react';
+import { PlusIcon, UsersIcon } from 'lucide-react';
+import { cn } from 'cn';
 import { useState } from 'react';
 import { useSession } from '@/auth/hooks/use-session';
 import { profileLabel } from '@/auth/profiles';
+import { PageHeader } from '@/components/page-header';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
+import {
+  Empty,
+  EmptyDescription,
+  EmptyHeader,
+  EmptyMedia,
+  EmptyTitle,
+} from '@/components/ui/empty';
 import { Skeleton } from '@/components/ui/skeleton';
+import {
+  Table,
+  TableBody,
+  TableCaption,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from '@/components/ui/table';
+import { toast } from '@/components/ui/toast';
 import {
   useAccounts,
   useDeactivateAccount,
@@ -14,12 +33,28 @@ import {
   useResetPassword,
 } from '@/queries/contas';
 import type { Account, TemporaryPasswordResult } from '@/types/contas';
+import { AccountActionsMenu } from '../account-actions-menu';
 import { statusTags } from '../account-status';
 import { ChangeProfileDialog } from '../change-profile-dialog';
 import { ConfirmActionDialog, type AccountAction } from '../confirm-action-dialog';
 import { CreateAccountDialog } from '../create-account-dialog';
 import { errorMessage } from '../error-message';
 import { TemporaryPasswordDialog } from '../temporary-password-dialog';
+
+const TITLE = 'Contas';
+
+function StatusTags({ account, className }: { account: Account; className?: string }) {
+  return (
+    <div className={cn('flex flex-wrap gap-1', className)}>
+      {statusTags(account).map((tag) => (
+        <Badge key={tag.label} variant={tag.tone}>
+          {tag.label}
+        </Badge>
+      ))}
+    </div>
+  );
+}
+const DESCRIPTION = 'Contas da equipe do Instituto e o perfil de acesso de cada pessoa.';
 
 export function AccountsView() {
   const { session } = useSession();
@@ -39,14 +74,10 @@ export function AccountsView() {
     title: string;
     result: TemporaryPasswordResult;
   } | null>(null);
-  const [notice, setNotice] = useState<string | null>(null);
 
   if (!isAdmin) {
     return (
-      <div className="flex flex-col gap-2">
-        <h1 className="text-2xl font-semibold">Contas</h1>
-        <p className="text-muted-foreground">Só a administração do sistema gerencia contas.</p>
-      </div>
+      <PageHeader title={TITLE} description="Só a administração do sistema gerencia contas." />
     );
   }
 
@@ -59,108 +90,111 @@ export function AccountsView() {
     }
     const { projetosCoordenados } = await deactivate.mutateAsync(account.id);
     setConfirming(null);
-    setNotice(
-      projetosCoordenados > 0
-        ? `Conta de ${account.nome} desativada. Ela coordena ${projetosCoordenados} ${
-            projetosCoordenados === 1 ? 'projeto' : 'projetos'
-          }: reatribua a coordenação.`
-        : `Conta de ${account.nome} desativada.`,
-    );
+    toast.add({
+      type: 'success',
+      title: `Conta de ${account.nome} desativada`,
+      description:
+        projetosCoordenados > 0
+          ? `Ela coordena ${projetosCoordenados} ${
+              projetosCoordenados === 1 ? 'projeto' : 'projetos'
+            }: reatribua a coordenação.`
+          : undefined,
+    });
   }
 
   async function reactivateAccount(account: Account) {
-    setNotice(null);
     try {
       await reactivate.mutateAsync(account.id);
-      setNotice(`Conta de ${account.nome} reativada.`);
+      toast.add({ type: 'success', title: `Conta de ${account.nome} reativada` });
     } catch (error) {
-      setNotice(errorMessage(error));
+      toast.add({ type: 'error', title: errorMessage(error) });
     }
   }
 
   return (
     <>
-      <div className="flex flex-wrap items-end justify-between gap-4">
-        <div className="flex flex-col gap-2">
-          <h1 className="text-2xl font-semibold">Contas</h1>
-          <p className="text-muted-foreground">
-            Contas da equipe do Instituto e o perfil de acesso de cada pessoa.
-          </p>
-        </div>
-        <Button onClick={() => setCreating(true)}>
-          <PlusIcon data-icon="inline-start" />
-          Nova conta
-        </Button>
-      </div>
-
-      <p role="status" className="min-h-5 text-sm">
-        {notice ?? ''}
-      </p>
+      <PageHeader
+        title={TITLE}
+        description={DESCRIPTION}
+        action={
+          <Button onClick={() => setCreating(true)}>
+            <PlusIcon data-icon="inline-start" />
+            Nova conta
+          </Button>
+        }
+      />
 
       {accounts.isPending ? (
-        <div aria-label="Carregando contas" className="flex flex-col gap-3">
-          <Skeleton className="h-28 w-full" />
-          <Skeleton className="h-28 w-full" />
+        <div aria-label="Carregando contas" className="flex flex-col gap-2">
+          <Skeleton className="h-12 w-full" />
+          <Skeleton className="h-16 w-full" />
+          <Skeleton className="h-16 w-full" />
         </div>
       ) : accounts.error ? (
         <p role="alert" className="text-destructive">
           {errorMessage(accounts.error)}
         </p>
+      ) : accounts.data.length === 0 ? (
+        <Empty className="border">
+          <EmptyHeader>
+            <EmptyMedia variant="icon">
+              <UsersIcon />
+            </EmptyMedia>
+            <EmptyTitle>Nenhuma conta</EmptyTitle>
+            <EmptyDescription>Crie a conta de cada pessoa da equipe.</EmptyDescription>
+          </EmptyHeader>
+        </Empty>
       ) : (
-        <ul aria-label="Contas" className="flex flex-col gap-3">
-          {accounts.data.map((account) => (
-            <li key={account.id} className="flex flex-col gap-3 rounded-lg border p-4">
-              <div className="flex flex-col gap-1">
-                <p className="font-medium">{account.nome}</p>
-                <p className="text-sm break-all text-muted-foreground">{account.emailLogin}</p>
-                <p className="text-sm">{profileLabel(account.perfil)}</p>
-                <div className="flex flex-wrap gap-2">
-                  {statusTags(account).map((tag) => (
-                    <Badge key={tag.label} variant={tag.tone}>
-                      {tag.label}
-                    </Badge>
-                  ))}
-                </div>
-              </div>
-              <div className="flex flex-wrap gap-2">
-                {account.ativo ? (
-                  <>
-                    <Button
-                      variant="outline"
-                      aria-label={`Mudar perfil de ${account.nome}`}
-                      onClick={() => setEditing(account)}
-                    >
-                      Mudar perfil
-                    </Button>
-                    <Button
-                      variant="outline"
-                      aria-label={`Redefinir senha de ${account.nome}`}
-                      onClick={() => setConfirming({ account, action: 'reset' })}
-                    >
-                      Redefinir senha
-                    </Button>
-                    <Button
-                      variant="outline"
-                      aria-label={`Desativar conta de ${account.nome}`}
-                      onClick={() => setConfirming({ account, action: 'deactivate' })}
-                    >
-                      Desativar
-                    </Button>
-                  </>
-                ) : (
-                  <Button
-                    variant="outline"
-                    aria-label={`Reativar conta de ${account.nome}`}
-                    disabled={reactivate.isPending}
-                    onClick={() => reactivateAccount(account)}
-                  >
-                    Reativar
-                  </Button>
-                )}
-              </div>
-            </li>
-          ))}
-        </ul>
+        <div className="rounded-lg border">
+          <Table>
+            <TableCaption className="sr-only">{DESCRIPTION}</TableCaption>
+            <TableHeader>
+              <TableRow>
+                <TableHead scope="col" className="px-4">
+                  Pessoa
+                </TableHead>
+                <TableHead scope="col" className="hidden md:table-cell">
+                  Perfil
+                </TableHead>
+                <TableHead scope="col" className="hidden md:table-cell">
+                  Situação
+                </TableHead>
+                <TableHead scope="col" className="w-16 px-4">
+                  <span className="sr-only">Ações</span>
+                </TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {accounts.data.map((account) => (
+                <TableRow key={account.id}>
+                  <TableCell className="px-4 py-3 whitespace-normal">
+                    <div className="flex flex-col gap-1">
+                      <span className="font-medium">{account.nome}</span>
+                      <span className="break-all text-muted-foreground">{account.emailLogin}</span>
+                      <span className="md:hidden">{profileLabel(account.perfil)}</span>
+                      <StatusTags account={account} className="md:hidden" />
+                    </div>
+                  </TableCell>
+                  <TableCell className="hidden md:table-cell">
+                    {profileLabel(account.perfil)}
+                  </TableCell>
+                  <TableCell className="hidden md:table-cell">
+                    <StatusTags account={account} />
+                  </TableCell>
+                  <TableCell className="px-4 text-right">
+                    <AccountActionsMenu
+                      account={account}
+                      onChangeProfile={() => setEditing(account)}
+                      onResetPassword={() => setConfirming({ account, action: 'reset' })}
+                      onDeactivate={() => setConfirming({ account, action: 'deactivate' })}
+                      onReactivate={() => reactivateAccount(account)}
+                    />
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </div>
       )}
 
       <CreateAccountDialog
@@ -168,7 +202,17 @@ export function AccountsView() {
         onOpenChange={setCreating}
         onCreated={(result) => setPassword({ title: 'Conta criada', result })}
       />
-      <ChangeProfileDialog account={editing} onClose={() => setEditing(null)} />
+      <ChangeProfileDialog
+        account={editing}
+        onClose={() => setEditing(null)}
+        onChanged={(account) =>
+          toast.add({
+            type: 'success',
+            title: `Perfil de ${account.nome} alterado`,
+            description: 'Vale a partir da próxima ação da pessoa.',
+          })
+        }
+      />
       <ConfirmActionDialog
         target={confirming}
         onConfirm={confirmAction}

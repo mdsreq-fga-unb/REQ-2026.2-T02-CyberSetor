@@ -21,9 +21,11 @@ import { errorMessage } from './error-message';
 export function ChangeProfileDialog({
   account,
   onClose,
+  onChanged,
 }: {
   account: Account | null;
   onClose: () => void;
+  onChanged: (account: Account) => void;
 }) {
   const changeProfile = useChangeProfile();
   const [chosen, setChosen] = useState<Perfil | null>(null);
@@ -42,8 +44,9 @@ export function ChangeProfileDialog({
     if (perfil === account.perfil) return close();
     setFailure(null);
     try {
-      await changeProfile.mutateAsync({ id: account.id, perfil });
+      const updated = await changeProfile.mutateAsync({ id: account.id, perfil });
       close();
+      onChanged(updated);
     } catch (error) {
       setFailure(errorMessage(error));
     }

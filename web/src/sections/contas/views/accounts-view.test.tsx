@@ -1,6 +1,7 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { cleanup, fireEvent, render, screen, waitFor, within } from '@testing-library/react';
+import { cleanup, fireEvent, render, screen, within } from '@testing-library/react';
 import { clearLocalSession, signIn } from '@/auth/session';
+import { Toaster } from '@/components/ui/toast';
 import type { Account } from '@/types/contas';
 import { AccountsView } from './accounts-view';
 
@@ -55,7 +56,9 @@ function renderView() {
   const client = new QueryClient({ defaultOptions: { queries: { retry: false } } });
   render(
     <QueryClientProvider client={client}>
-      <AccountsView />
+      <Toaster>
+        <AccountsView />
+      </Toaster>
     </QueryClientProvider>,
   );
 }
@@ -75,18 +78,21 @@ describe('administracao de contas', () => {
     expect(calls.map((call) => call.key)).toEqual(['POST /auth/login']);
   });
 
-  it('lista as contas com perfil e situacao', async () => {
+  it('lista as contas numa tabela com perfil e situacao', async () => {
     await signedInAs('ADMINISTRACAO_SISTEMA', {
       'GET /accounts': () => ({ status: 200, body: [ADMIN, EDUCADORA] }),
     });
     renderView();
 
-    const items = within(await screen.findByRole('list', { name: 'Contas' })).getAllByRole(
-      'listitem',
-    );
-    expect(items).toHaveLength(2);
-    expect(within(items[1]).getByText('Núcleo Pedagógico e Educadores')).toBeInTheDocument();
-    expect(within(items[1]).getByText('Troca de senha pendente')).toBeInTheDocument();
+    const table = await screen.findByRole('table', {
+      name: 'Contas da equipe do Instituto e o perfil de acesso de cada pessoa.',
+    });
+    const rows = within(table).getAllByRole('row');
+    expect(rows).toHaveLength(3);
+    const [pessoa, perfil, situacao] = within(rows[2]).getAllByRole('cell');
+    expect(pessoa).toHaveTextContent('Bia Educadora');
+    expect(perfil).toHaveTextContent('Núcleo Pedagógico e Educadores');
+    expect(situacao).toHaveTextContent('Troca de senha pendente');
   });
 
   it('cria a conta e mostra a senha temporaria uma vez', async () => {
@@ -142,9 +148,8 @@ describe('administracao de contas', () => {
     });
     renderView();
 
-    fireEvent.click(
-      await screen.findByRole('button', { name: 'Desativar conta de Ana Administradora' }),
-    );
+    fireEvent.click(await screen.findByRole('button', { name: 'Ações de Ana Administradora' }));
+    fireEvent.click(await screen.findByRole('menuitem', { name: 'Desativar conta' }));
     fireEvent.click(await screen.findByRole('button', { name: 'Desativar conta' }));
 
     expect(await screen.findByRole('alert')).toHaveTextContent(
@@ -162,9 +167,8 @@ describe('administracao de contas', () => {
     });
     renderView();
 
-    fireEvent.click(
-      await screen.findByRole('button', { name: 'Redefinir senha de Bia Educadora' }),
-    );
+    fireEvent.click(await screen.findByRole('button', { name: 'Ações de Bia Educadora' }));
+    fireEvent.click(await screen.findByRole('menuitem', { name: 'Redefinir senha' }));
     fireEvent.click(await screen.findByRole('button', { name: 'Redefinir senha' }));
 
     expect(await screen.findByLabelText('Senha temporária')).toHaveTextContent(
@@ -182,15 +186,12 @@ describe('administracao de contas', () => {
     });
     renderView();
 
-    fireEvent.click(
-      await screen.findByRole('button', { name: 'Desativar conta de Bia Educadora' }),
-    );
+    fireEvent.click(await screen.findByRole('button', { name: 'Ações de Bia Educadora' }));
+    fireEvent.click(await screen.findByRole('menuitem', { name: 'Desativar conta' }));
     fireEvent.click(await screen.findByRole('button', { name: 'Desativar conta' }));
 
-    await waitFor(() =>
-      expect(screen.getByRole('status')).toHaveTextContent(
-        'Ela coordena 2 projetos: reatribua a coordenação.',
-      ),
-    );
+    expect(
+      await screen.findByText('Ela coordena 2 projetos: reatribua a coordenação.'),
+    ).toBeInTheDocument();
   });
 });
