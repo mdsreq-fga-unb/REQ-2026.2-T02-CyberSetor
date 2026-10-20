@@ -3,6 +3,7 @@
 | Data | Versão | Descrição | Autor |
 |---|---|---|---|
 | 05/10/2026 | 1.1 | Inclusão das fontes citadas nas seções 1, 2, 3 e 8 (legislação, taxonomias de requisitos não funcionais e acessibilidade); fontes agrupadas por tema | Maria Eduarda Marques |
+| 15/10/2026 | 1.2 | Inclusão das fontes do Manifesto Ágil e Extreme Programming citadas na seção 4 | Caio Martins |
 
 Fontes citadas no site, com data de acesso para as consultadas on-line.
 
@@ -39,6 +40,10 @@ SOMMERVILLE, I. **Engenharia de Software.** 10. ed. São Paulo: Pearson Educatio
 WAKE, B. **INVEST in Good Stories, and SMART Tasks.** XP123, 17 ago. 2003. Disponível em: https://xp123.com/invest-in-good-stories-and-smart-tasks/. Acesso em: 29 set. 2026.
 
 ## Processo e priorização
+
+BECK, K. et al. **Manifesto for Agile Software Development.** 2001. Disponível em: https://agilemanifesto.org/. Acesso em: 13 out. 2026.
+
+BECK, K.; ANDRES, C. **Extreme Programming Explained: Embrace Change.** 2. ed. Boston: Addison-Wesley, 2004.
 
 SCHWABER, K.; SUTHERLAND, J. **The Scrum Guide.** 2020. Disponível em: https://scrumguides.org/docs/scrumguide/v2020/2020-Scrum-Guide-US.pdf. Acesso em: 28 set. 2026.
 
