@@ -14,15 +14,29 @@ Front do sistema de gestão do ciclo de projetos financiados do Instituto Cultur
 
 Os mesmos comandos rodam na máquina de cada integrante e na integração contínua da linha (`ci-web`).
 
-| Chave       | Comando          | Nota                                                              |
-| ----------- | ---------------- | ----------------------------------------------------------------- |
-| `dev`       | `pnpm dev`       | front com recarga automática em `http://localhost:3000`           |
-| `fmt`       | `pnpm fmt`       | formata com Prettier (`fmt:check` só confere)                     |
-| `lint`      | `pnpm lint`      | ESLint com as regras do Next.js                                   |
-| `typecheck` | `pnpm typecheck` | gera os tipos de rota (`next typegen`) e roda `tsc --noEmit`      |
-| `test`      | `pnpm test`      | testes (Vitest + Testing Library), `src/**/*.test.{ts,tsx}`       |
-| `build`     | `pnpm build`     | build de produção                                                 |
-| `verify`    | `pnpm verify`    | tudo acima, na ordem; é o que se roda antes de abrir pull request |
+| Chave         | Comando            | Nota                                                                                    |
+| ------------- | ------------------ | --------------------------------------------------------------------------------------- |
+| `dev`         | `pnpm dev`         | front com recarga automática em `http://localhost:3000`                                 |
+| `fmt`         | `pnpm fmt`         | formata com Prettier (`fmt:check` só confere)                                           |
+| `lint`        | `pnpm lint`        | ESLint com as regras do Next.js                                                         |
+| `typecheck`   | `pnpm typecheck`   | gera os tipos de rota (`next typegen`) e roda `tsc --noEmit`                            |
+| `test`        | `pnpm test`        | testes de unidade e de tela (Vitest + Testing Library, jsdom), `src/**/*.test.{ts,tsx}` |
+| `test:visual` | `pnpm test:visual` | testes visuais, `src/**/*.visual.test.tsx`; exige Docker                                |
+| `build`       | `pnpm build`       | build de produção                                                                       |
+| `verify`      | `pnpm verify`      | tudo acima, na ordem; é o que se roda antes de abrir pull request                       |
+
+## Testes visuais
+
+Comparam a tela renderizada com uma imagem de referência (`toMatchScreenshot` do Vitest em modo navegador), em 360 px e 1280 px. Ficam em `src/**/*.visual.test.tsx`.
+
+- O navegador é sempre o Chromium da imagem oficial do Playwright, na versão de `playwright` do `package.json`. O `ci-web` roda nessa imagem; `pnpm test:visual` sobe a mesma imagem em Docker (`cybersetor-playwright`, porta 3333) pelo `scripts/test-visual.sh`.
+- **A referência vem só do `ci-web`** (Linux amd64), como recomenda a documentação do Vitest: referência gerada em outra máquina, com outro sistema, processador ou fonte, falha no CI. Nenhum comando local grava referência (`--update=none`); a captura local vai para `.vitest-attachments/`, que não é versionada.
+- **Teste visual novo ou mudança visual intencional:**
+  1. abrir o pull request com o teste e sem a imagem; o `ci-web` falha por falta de referência e publica o artefato `diferencas-visuais`;
+  2. `scripts/adopt-visual-references.sh <id da execução>` baixa o artefato e copia as capturas para `__screenshots__/`, ao lado do teste;
+  3. conferir cada imagem e commitar na mesma branch; o `ci-web` seguinte compara contra elas.
+- Teste apagado ou renomeado deixa a imagem antiga em `__screenshots__/`; apague-a no mesmo commit.
+- Atualizar o `playwright` exige trocar a imagem no `ci-web.yml` na mesma versão (o job confere) e regerar as referências.
 
 ## Execução local
 
@@ -50,6 +64,7 @@ src/
   layouts/dashboard/    menu lateral por perfil, cabeçalho e Sair
   sections/<domínio>/   telas de cada domínio (views/ + componentes)
   components/ui/        componentes do shadcn/ui, adicionados pelo CLI local (pnpm exec shadcn add)
+  components/list/      lista: paginação, estados e menu de ações da linha
   components/           componentes compartilhados
   lib/                  api.ts (cliente HTTP), local-db.ts, utils.ts
   queries/<domínio>.ts  hooks do TanStack Query (com o primeiro domínio)
@@ -98,16 +113,14 @@ Com a API em `127.0.0.1:3101` e `CORS_ORIGIN=http://127.0.0.1:3100`, o front em 
 - **Alvos de toque** de 48 px no botão padrão, no campo e no menu (RNF15); as variantes menores (`xs`, `sm`) são só para uso denso em desktop.
 - **Banco local** (`src/lib/local-db.ts`, Dexie) existe sem tabelas; a fila sem conexão (RF17, RF18) está fora do MVP.
 - **Celular primeiro**: toda tela funciona em 360 px sem rolagem horizontal (RNF15).
-- **Telas de lista** (modelo: `sections/contas`):
+- **Telas de lista** (modelo: `sections/contas`), com os componentes de `src/components/list`:
   - `PageHeader` com título, descrição e a ação principal;
-  - `Table` do shadcn/ui com `caption` e `th scope="col"`; abaixo de `md`, as colunas secundárias saem e o conteúdo delas vai para a primeira célula, para a ação da linha caber na tela;
-  - ações da linha num `DropdownMenu` com botão de ícone e `aria-label` "Ações de …"; a ação destrutiva fica separada, com `variant="destructive"` e confirmação em `AlertDialog`;
-  - `Skeleton` no carregamento, `Empty` sem registros e erro em `role="alert"`;
+  - `ListCard` com a `Table` do shadcn/ui (`caption` e `th scope="col"`) e a `ListPagination` no rodapé; abaixo de `md`, as colunas secundárias saem e o conteúdo delas vai para a primeira célula, para a ação da linha caber na tela;
+  - `RowActionsMenu`: ações da linha num menu com botão de ícone e rótulo "Ações de …"; ação destrutiva separada e em vermelho, sempre com confirmação em `AlertDialog`;
+  - carregando: cabeçalho visível, `aria-busy` na tabela e `TableSkeleton`; sem registros: `ListEmpty` com a ação de criar; erro: `ListError`;
   - criação e edição num diálogo com um só formulário por entidade, que recebe o registro na edição;
   - resultado de ação por `toast` (o `Toaster` fica em `providers.tsx`); erro de formulário fica no próprio diálogo.
-
-  Até cerca de 100 linhas a lista vem inteira da API, sem paginação; ordenação, filtros e abas por situação entram com o TanStack Table, seguindo o guia de Data Table do shadcn/ui, quando a lista pedir.
-
+- **Paginação** (`usePagination` + `ListPagination`): 10, 25 ou 50 itens; "11–20 de 42" anunciado por `role="status"`; anterior e próxima sempre, primeira e última a partir de `lg`, itens por página a partir de `sm`; some quando tudo cabe numa página; trocar o tamanho volta à página 1 e a lista que encolhe nunca deixa a página vazia. A lista vem inteira da API e a página fica no estado da tela; paginação no servidor ou na URL entra quando o volume pedir, sem mudar o componente.
 - **Idioma**: nomes técnicos em inglês; textos da interface em português.
 - **Testes** provam o que a pessoa vê (papéis e textos acessíveis), nunca a forma do código.
 - **Commits** no padrão Conventional Commits em português, um propósito por commit; pull request revisado por integrante de outra dupla.
