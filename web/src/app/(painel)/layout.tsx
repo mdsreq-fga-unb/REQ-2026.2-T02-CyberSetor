@@ -1,11 +1,11 @@
 import type { ReactNode } from 'react';
 import { AuthGuard } from '@/auth/guards/auth-guard';
-import { AppShell } from '@/components/app-shell';
+import { DashboardLayout } from '@/layouts/dashboard/dashboard-layout';
 
 export default function DashboardGroupLayout({ children }: { children: ReactNode }) {
   return (
     <AuthGuard>
-      <AppShell>{children}</AppShell>
+      <DashboardLayout>{children}</DashboardLayout>
     </AuthGuard>
   );
 }
