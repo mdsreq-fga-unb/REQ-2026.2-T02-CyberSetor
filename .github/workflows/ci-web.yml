@@ -49,6 +49,11 @@ jobs:
         with:
           package_json_file: web/package.json
 
+      - uses: actions/setup-node@v4
+        if: steps.visual.outputs.existe == 'true'
+        with:
+          node-version-file: web/.nvmrc
+
       - name: Instalar dependências
         if: steps.visual.outputs.existe == 'true'
         run: pnpm install --frozen-lockfile
@@ -71,7 +76,8 @@ jobs:
         with:
           name: diferencas-visuais
           path: web/.vitest-attachments
-          if-no-files-found: ignore
+          include-hidden-files: true
+          if-no-files-found: warn
 
   verify:
     runs-on: ubuntu-latest
