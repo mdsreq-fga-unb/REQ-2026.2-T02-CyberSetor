@@ -44,35 +44,37 @@ Migrações só acrescentam e são commitadas junto com o schema; `prisma db pus
 ```bash
 corepack enable
 pnpm install --frozen-lockfile
-cp .env.example .env              # preencha JWT_SECRET e SEED_ADMIN_PASSWORD
+cp .env.example .env              # valores de desenvolvimento; com a 5432 ocupada, troque a porta
 pnpm db:up
 pnpm db:deploy                    # ou pnpm db:migrate, ao evoluir o schema
 pnpm seed:admin                   # cria o administrador inicial, uma única vez
 pnpm dev
 ```
 
-Gere o `JWT_SECRET` com `openssl rand -base64 48`. Depois de trazer uma mudança no `schema.prisma` sem mudança no lockfile, rode `pnpm db:generate`: nesse caso o `pnpm install` não regera o cliente.
+O `JWT_SECRET` e a senha do seed do exemplo valem só para desenvolvimento local; em homologação e produção, gere o segredo com `openssl rand -base64 48`. Depois de trazer uma mudança no `schema.prisma` sem mudança no lockfile, rode `pnpm db:generate`: nesse caso o `pnpm install` não regera o cliente.
 
 - `GET /v1/health` — verificação de saúde da API e do banco (`503` se o banco não responde).
 - `GET /docs` — contrato OpenAPI gerado do código (`/docs-json` para o JSON).
 
 Para os testes de ponta a ponta, crie um `.env.test` apontando para um banco **descartável** (a suíte limpa as tabelas a cada caso) e aplique as migrações nele: `DATABASE_URL=<url de teste> pnpm db:deploy`.
 
-O `.env`, o `.env.test` e o cliente gerado não são versionados. O `.env.example` traz os valores de desenvolvimento local e deixa vazios só os segredos. O `prisma.config.ts` carrega o `.env` por conta própria (o Prisma 7 não faz isso) e aceita `DATABASE_URL` ausente, para que `pnpm install` e `pnpm db:generate` funcionem num clone limpo e no CI; só os comandos que tocam o banco exigem a variável.
+O `.env`, o `.env.test` e o cliente gerado não são versionados. O `.env.example` traz todos os valores de desenvolvimento local, para o projeto subir sem ajuste. O `prisma.config.ts` carrega o `.env` por conta própria (o Prisma 7 não faz isso) e aceita `DATABASE_URL` ausente, para que `pnpm install` e `pnpm db:generate` funcionem num clone limpo e no CI; só os comandos que tocam o banco exigem a variável.
 
 ## Variáveis de ambiente
 
-| Variável                         | Padrão        | Uso                                                                  |
-| -------------------------------- | ------------- | -------------------------------------------------------------------- |
-| `NODE_ENV`                       | `development` | `production` em homologação e produção (cookie `__Host-` e `Secure`) |
-| `PORT`                           | `3001`        | porta da API                                                         |
-| `CORS_ORIGIN`                    | vazio         | origem exata do front, ex.: `http://localhost:3000`                  |
-| `DATABASE_URL`                   | —             | obrigatória                                                          |
-| `JWT_SECRET`                     | —             | obrigatória, 32 caracteres ou mais                                   |
-| `ACCESS_TOKEN_TTL_MINUTES`       | `15`          | validade do token de acesso                                          |
-| `SESSION_IDLE_TIMEOUT_MINUTES`   | `30`          | encerramento por inatividade                                         |
-| `SESSION_ABSOLUTE_TIMEOUT_HOURS` | `8`           | duração máxima da sessão                                             |
-| `SEED_ADMIN_NAME/EMAIL/PASSWORD` | —             | só para `pnpm seed:admin`; senha temporária de 15 a 64 caracteres    |
+| Variável                         | Padrão               | Uso                                                                  |
+| -------------------------------- | -------------------- | -------------------------------------------------------------------- |
+| `NODE_ENV`                       | `development`        | `production` em homologação e produção (cookie `__Host-` e `Secure`) |
+| `PORT`                           | `3001`               | porta da API                                                         |
+| `CORS_ORIGIN`                    | vazio                | origem exata do front, ex.: `http://localhost:3000`                  |
+| `DATABASE_URL`                   | —                    | obrigatória                                                          |
+| `JWT_SECRET`                     | —                    | obrigatória, 32 caracteres ou mais                                   |
+| `ACCESS_TOKEN_TTL_MINUTES`       | `15`                 | validade do token de acesso                                          |
+| `SESSION_IDLE_TIMEOUT_MINUTES`   | `30`                 | encerramento por inatividade                                         |
+| `SESSION_ABSOLUTE_TIMEOUT_HOURS` | `8`                  | duração máxima da sessão                                             |
+| `SEED_ADMIN_NAME/EMAIL/PASSWORD` | —                    | só para `pnpm seed:admin`; senha temporária de 15 a 64 caracteres    |
+| `POSTGRES_USER/PASSWORD/DB/PORT` | `cybersetor`, `5432` | Compose local; a porta acompanha a da `DATABASE_URL`                 |
+| `REDIS_PORT`                     | `6379`               | Compose local                                                        |
 
 Variável vazia vale como ausente: a opcional cai no padrão e a obrigatória reprova a inicialização.
 
