@@ -95,7 +95,7 @@ export function InstrumentsView() {
                 <TableHead scope="col" className="px-4">
                   Instrumento
                 </TableHead>
-                <TableHead scope="col" className="hidden text-right md:table-cell">
+                <TableHead scope="col" className="hidden px-4 text-right md:table-cell">
                   Valor global
                 </TableHead>
                 <TableHead scope="col" className="hidden md:table-cell">
@@ -133,7 +133,7 @@ export function InstrumentsView() {
                         </span>
                       </div>
                     </TableCell>
-                    <TableCell className="hidden text-right tabular-nums md:table-cell">
+                    <TableCell className="hidden px-4 text-right tabular-nums md:table-cell">
                       {formatMoney(instrument.valorGlobal)}
                     </TableCell>
                     <TableCell className="hidden md:table-cell">{term(instrument)}</TableCell>
