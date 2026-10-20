@@ -3,6 +3,7 @@
 | Data | Versão | Descrição | Autor |
 |---|---|---|---|
 | 06/10/2026 | 1.0 | Adesão às dailies das Sprints 1 e 2 | Vinicius Vieira |
+| 19/10/2026 | 1.1 | Adesão calculada pelo número de integrantes de cada sprint | Maria Eduarda Marques |
 
 A daily é assíncrona e escrita, no molde da página [Processo e ritos](processo-scrumxp.md): o que foi feito, o que vem a seguir e o impedimento. Ela acontece num canal exclusivo da comunidade da equipe no aplicativo de mensagens. O canal é interno e não é publicado, porque os relatos citam impedimentos pessoais e pessoas do Instituto.
 
@@ -13,4 +14,4 @@ Esta página registra a adesão por sprint, contada a partir da exportação do 
 | Sprint 1 | 08/09 a 22/09/2026 | 11 | 47 | 38 | 58% |
 | Sprint 2 | 23/09 a 05/10/2026 | 9 | 39 | 25 | 46% |
 
-Adesão é o número de relatos no próprio dia dividido pelos dias úteis multiplicados pelos seis integrantes. Relatos enviados em dia posterior ao declarado contam como registro do rito, mas não como adesão.
+Adesão é o número de relatos no próprio dia dividido pelos dias úteis multiplicados pelo número de integrantes da sprint: seis nas Sprints 1 e 2, cinco a partir da Sprint 3. Relatos enviados em dia posterior ao declarado contam como registro do rito, mas não como adesão.

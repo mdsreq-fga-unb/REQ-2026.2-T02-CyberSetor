@@ -11,10 +11,11 @@
 | 05/10/2026 | 1.6 | Revisão editorial: aplicação de espaçamentos e formatação em tópicos estruturados para maior fluidez de leitura, preservando a íntegra das validações e argumentações | Rodrigo Henrique |
 | 06/10/2026 | 1.7 | Daily no próprio dia, até o fim do dia, em vez de até as 12h | Vinicius Vieira |
 | 07/10/2026 | 1.8 | Especificação dos papéis de Engenharia de Requisitos de cada integrante na composição da equipe e remoção de menções operacionais genéricas | Daniel Batista e Maria Eduarda Marques |
+| 19/10/2026 | 1.9 | Composição da equipe atualizada para cinco integrantes | Maria Eduarda Marques |
 
 ## 7.1 Composição da Equipe
 
-A equipe é formada por seis estudantes de Engenharia de Software. Todos atuam ativamente como engenheiros de requisitos e desenvolvedores, assumindo responsabilidades de condução e orquestração nas seis atividades de Engenharia de Requisitos (elicitação, análise, declaração, representação, verificação e validação, organização e atualização), integradas aos papéis ágeis do ScrumXP (Product Owner interno e Scrum Master).
+A equipe é formada por cinco estudantes de Engenharia de Software. Todos atuam ativamente como engenheiros de requisitos e desenvolvedores, assumindo responsabilidades de condução e orquestração nas seis atividades de Engenharia de Requisitos (elicitação, análise, declaração, representação, verificação e validação, organização e atualização), integradas aos papéis ágeis do ScrumXP (Product Owner interno e Scrum Master).
 
 !!! note "Duas pessoas chamadas Maria Eduarda"
     **Maria Eduarda Marques** é a integrante da equipe e Product Owner interno. **Maria Eduarda, do núcleo pedagógico**, é uma das representantes do Instituto, e vem sempre com essa identificação institucional; seu sobrenome não é registrado porque a equipe não o tem confirmado.
@@ -24,13 +25,12 @@ A equipe é formada por seis estudantes de Engenharia de Software. Todos atuam a
 | Maria Eduarda Denis Duarte Marques | 232014502 | [@mariadenis](https://github.com/mariadenis) | Líder da equipe · Product Owner interno · Elicitação e Descoberta | Condução da interlocução, agendamento e elicitação contínua com o Instituto; gestão e ordenação do Product Backlog com base no valor de negócio validado com o cliente; declaração e validação de requisitos. |
 | Vinicius Angelo de Brito Vieira | 190118059 | [@viniciusvieira00](https://github.com/viniciusvieira00) | Scrum Master · Organização e Atualização · Análise e Consenso | Facilitação das cerimônias ágeis; remoção de impedimentos; gestão e organização do Product Backlog e rastreabilidade; orquestração da verificação e revisão por pares; análise documental e consenso de regras de negócio. |
 | Rodrigo Henrique Donato de Souza | 241012374 | [@Fofodoido](https://github.com/Fofodoido) | Engenharia de Requisitos: Representação · Análise e Consenso | Condução da modelagem de processos de negócio na notação BPMN; análise de consenso e intervenção social; análise de consistência de regras e documentos do Instituto; declaração e verificação de requisitos. |
-| Lucas de Paula Leal | 232004480 | [@lucaspaulaleal](https://github.com/lucaspaulaleal) | Engenharia de Requisitos: Elicitação e Descoberta · Declaração | Apoio e registro técnico das sessões de elicitação e entrevistas; consolidação de evidências; declaração de histórias de usuário e critérios de aceitação; análise de estratégias de engenharia de software e verificação. |
 | Daniel da Silva Batista | 231011201 | [@daniboycam](https://github.com/daniboycam) | Engenharia de Requisitos: Representação · Análise de Negócio | Elaboração e evolução dos modelos visuais de representação sistêmica (Rich Picture e Mapa de Stakeholders); análise do cenário atual do negócio e fluxos operacionais; declaração e verificação de requisitos. |
 | Caio Flávio de Lima Martins Junior | 231011168 | [@caioflmjr](https://github.com/caioflmjr) | Engenharia de Requisitos: Declaração · Organização e Rastreabilidade | Estruturação e declaração de requisitos (histórias de usuário, critérios de aceitação, DoR e DoD); manutenção da rastreabilidade e cronograma de requisitos; especificação de requisitos não funcionais e verificação. |
 
 ### 7.1.1 Responsabilidades por atividade de Engenharia de Requisitos
 
-**Todos os seis integrantes atuam como engenheiros de requisitos.** As seis atividades de Engenharia de Requisitos não são etapas lineares com donos exclusivos: são práticas iterativas e entrelaçadas, que ocorrem em paralelo, se retroalimentam e são revisitadas ao longo do projeto. A equipe participa de todas.
+**Todos os cinco integrantes atuam como engenheiros de requisitos.** As seis atividades de Engenharia de Requisitos não são etapas lineares com donos exclusivos: são práticas iterativas e entrelaçadas, que ocorrem em paralelo, se retroalimentam e são revisitadas ao longo do projeto. A equipe participa de todas.
 
 O que a tabela abaixo registra é **quem conduz cada atividade e responde por sua evidência** — o papel de orquestração descrito no livro-texto, em que o engenheiro de software coordena a atividade sem atuar sozinho, apoiado pela contribuição dos demais. A coluna não é lista de exclusividade: ninguém está impedido de participar de uma atividade por não constar dela, e quem consta não a executa sozinho.
 

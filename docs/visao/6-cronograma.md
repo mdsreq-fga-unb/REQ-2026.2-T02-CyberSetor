@@ -8,6 +8,7 @@
 | 17/09/2026 | 1.3 | Calendário alinhado ao plano da Sprint 1; dependências entre as características, alcance do MVP, sprint de estabilização e momentos de validação | Vinicius Vieira |
 | 17/09/2026 | 1.4 | Prazos da Unidade 2 e workshop de 21/09 incorporados; calendário reorganizado em período, objetivo e entrega de fechamento | Equipe CyberSetor |
 | 13/10/2026 | 1.5 | Alcance do MVP e incrementos posteriores alinhados à seção 10.2.6 e à validação com o Instituto em 28/09 | Caio Martins |
+| 19/10/2026 | 1.6 | Equipe atual de cinco integrantes | Maria Eduarda Marques |
 
 ## 6.1 Calendário vigente
 
@@ -49,7 +50,7 @@ CP1 projetos e metas → CP2 atividades → CP5 pessoas → CP3 inscrição · C
 
 ## 6.3 Alcance do MVP e o que fica fora
 
-Construir as oito características completas, acrescidas de operação sem conexão, sincronização assíncrona, cálculo preditivo e múltiplos relatórios customizados, excede a capacidade produtiva de seis estudantes com dedicação parcial ao longo de três sprints de desenvolvimento. Por isso, o recorte foi estabelecido por critério de fluxo mínimo completo: **o MVP percorre uma vez, com dados reais do Instituto, o ciclo nuclear que resolve o problema central de prestação de contas e controle institucional**.
+Construir as oito características completas, acrescidas de operação sem conexão, sincronização assíncrona, cálculo preditivo e múltiplos relatórios customizados, excede a capacidade produtiva de cinco estudantes com dedicação parcial ao longo de três sprints de desenvolvimento. Por isso, o recorte foi estabelecido por critério de fluxo mínimo completo: **o MVP percorre uma vez, com dados reais do Instituto, o ciclo nuclear que resolve o problema central de prestação de contas e controle institucional**.
 
 O recorte definitivo do MVP foi pactuado no refinamento da Sprint 2, validado com a liderança do Instituto No Setor em reunião em 28/09/2026 e publicado na [seção 10.2.6](../requisitos/10-backlog.md#1026-mvp-e-incrementos). Ele compreende:
 
