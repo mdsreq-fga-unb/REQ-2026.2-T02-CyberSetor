@@ -2,7 +2,7 @@
 set -euo pipefail
 
 VERSION=$(node -p "require('playwright/package.json').version")
-NAME=cybersetor-playwright
+NAME="cybersetor-playwright-$VERSION"
 PORT=${PLAYWRIGHT_PORT:-3333}
 
 if ! docker ps --format '{{.Names}}' | grep -qx "$NAME"; then
