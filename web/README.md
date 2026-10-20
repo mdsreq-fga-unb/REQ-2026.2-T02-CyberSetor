@@ -57,7 +57,7 @@ src/
   routes/paths.ts       todos os caminhos num lugar só
 ```
 
-Testes ficam ao lado do arquivo testado (`*.test.ts(x)`). Componentes do shadcn/ui ajustados depois do `add`, para os 48 px, os textos em português e sem cookie de preferência: `button`, `dialog`, `input`, `native-select`, `sheet` e `sidebar`; um novo `add` desses arquivos não deve sobrescrevê-los.
+Testes ficam ao lado do arquivo testado (`*.test.ts(x)`). Componentes do shadcn/ui ajustados depois do `add`, para os 48 px, os textos em português e sem cookie de preferência: `button`, `dialog`, `dropdown-menu`, `input`, `native-select`, `sheet`, `sidebar` e `toast`; um novo `add` desses arquivos não deve sobrescrevê-los.
 
 ## Sessão
 
@@ -98,6 +98,16 @@ Com a API em `127.0.0.1:3101` e `CORS_ORIGIN=http://127.0.0.1:3100`, o front em 
 - **Alvos de toque** de 48 px no botão padrão, no campo e no menu (RNF15); as variantes menores (`xs`, `sm`) são só para uso denso em desktop.
 - **Banco local** (`src/lib/local-db.ts`, Dexie) existe sem tabelas; a fila sem conexão (RF17, RF18) está fora do MVP.
 - **Celular primeiro**: toda tela funciona em 360 px sem rolagem horizontal (RNF15).
+- **Telas de lista** (modelo: `sections/contas`):
+  - `PageHeader` com título, descrição e a ação principal;
+  - `Table` do shadcn/ui com `caption` e `th scope="col"`; abaixo de `md`, as colunas secundárias saem e o conteúdo delas vai para a primeira célula, para a ação da linha caber na tela;
+  - ações da linha num `DropdownMenu` com botão de ícone e `aria-label` "Ações de …"; a ação destrutiva fica separada, com `variant="destructive"` e confirmação em `AlertDialog`;
+  - `Skeleton` no carregamento, `Empty` sem registros e erro em `role="alert"`;
+  - criação e edição num diálogo com um só formulário por entidade, que recebe o registro na edição;
+  - resultado de ação por `toast` (o `Toaster` fica em `providers.tsx`); erro de formulário fica no próprio diálogo.
+
+  Até cerca de 100 linhas a lista vem inteira da API, sem paginação; ordenação, filtros e abas por situação entram com o TanStack Table, seguindo o guia de Data Table do shadcn/ui, quando a lista pedir.
+
 - **Idioma**: nomes técnicos em inglês; textos da interface em português.
 - **Testes** provam o que a pessoa vê (papéis e textos acessíveis), nunca a forma do código.
 - **Commits** no padrão Conventional Commits em português, um propósito por commit; pull request revisado por integrante de outra dupla.
