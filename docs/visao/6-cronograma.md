@@ -7,7 +7,8 @@
 | 15/09/2026 | 1.2 | Ajuste de validação na Sprint 1: alinhamento contínuo com a coordenação | Equipe CyberSetor |
 | 17/09/2026 | 1.3 | Calendário alinhado ao plano da Sprint 1; dependências entre as características, alcance do MVP, sprint de estabilização e momentos de validação | Vinicius Vieira |
 | 17/09/2026 | 1.4 | Prazos da Unidade 2 e workshop de 21/09 incorporados; calendário reorganizado em período, objetivo e entrega de fechamento | Equipe CyberSetor |
-| 19/10/2026 | 1.5 | Equipe atual de cinco integrantes | Maria Eduarda Marques |
+| 13/10/2026 | 1.5 | Alcance do MVP e incrementos posteriores alinhados à seção 10.2.6 | Caio Martins |
+| 19/10/2026 | 1.6 | Equipe atual de cinco integrantes | Maria Eduarda Marques |
 
 ## 6.1 Calendário vigente
 
@@ -49,17 +50,23 @@ CP1 projetos e metas → CP2 atividades → CP5 pessoas → CP3 inscrição · C
 
 ## 6.3 Alcance do MVP e o que fica fora
 
-Construir as oito características, mais operação sem conexão, sincronização, autenticação, cálculo de metas e exportação, é mais do que cinco estudantes com dedicação parcial entregam em três sprints. O recorte é feito por critério: **entra na hipótese de MVP o necessário para percorrer uma vez, com dados do Instituto, o ciclo que origina o problema** — instrumento → projeto → meta → atividade → pessoa/participação → evidência → progresso → exportação para prestação de contas. Uma capacidade é obrigatória só se sua ausência impede esse percurso, viola condição legal ou torna o registro não confiável.
+Construir as oito características completas, acrescidas de operação sem conexão, sincronização assíncrona, cálculo preditivo e múltiplos relatórios customizados, excede a capacidade produtiva de cinco estudantes com dedicação parcial ao longo de três sprints de desenvolvimento. Por isso, o recorte foi estabelecido por critério de fluxo mínimo completo: **o MVP percorre uma vez, com dados reais do Instituto, o ciclo nuclear que resolve o problema central de prestação de contas e controle institucional**.
 
-Ficam fora da hipótese ou condicionados, até a priorização da seção 10 na Unidade 2:
+O recorte do MVP está na [seção 10.2.6](../requisitos/10-backlog.md#1026-mvp-e-incrementos), com o valor de negócio atribuído pelo Instituto e o recorte confirmado com ele (seção 10.2.8). Ele compreende:
 
-- sinalização preditiva de metas em risco (parte da CP6): entra o cálculo explicável do progresso; alerta preditivo é desejável;
-- reprodução fiel do formulário de cada financiador (parte da CP8): entra o relatório em formato próprio com exportação tabular e índice de evidências; o adaptador específico depende dos modelos reais ainda não recebidos;
-- lista de espera e inscrição feita pela coordenação (parte da CP3): entram após a inscrição básica funcionar;
-- painel consolidado para a presidência, abertura de chamados e comprovação com coordenadas, capacidades levantadas com o Instituto que dependem de validação com a direção e de priorização, e não integram a hipótese atual;
-- integrações de mensagens (WhatsApp, SMS) e qualquer módulo financeiro, fora desta versão por decisão registrada na seção 2.
+1. **Parcerias e Metas (CP1 / HU-01, HU-02, HU-14):** Cadastro de instrumentos, projetos, vinculação de metas contratuais, responsáveis e acompanhamento de vencimentos, além do versionamento de aditivos.
+2. **Atividades (CP2 / parte da HU-03):** Cadastro de atividades associadas às metas dos projetos.
+3. **Inscrições e Titulares (CP3, CP5 / HU-07, HU-08, HU-15):** Inscrições públicas e assistidas, base única de participantes com minimização de dados e atendimento a direitos de exclusão e anonimização (LGPD).
+4. **Prestação de Contas (CP8 / HU-05, HU-13):** Relatório de execução do objeto com as metas, a situação registrada e as justificativas obrigatórias, em PDF ainda sem as miniaturas de evidências, e exportação dos dados do projeto em planilha aberta.
 
-O recorte definitivo é resultado da priorização por MoSCoW e da matriz de valor de negócio × esforço técnico na Sprint 2, com validação do Instituto e alinhamento com o docente; até lá, o que esta seção descreve é **hipótese de MVP**.
+### O que fica para os incrementos posteriores
+
+Em conformidade com a matriz de valor de negócio × esforço técnico da seção 10.2.5, as capacidades que não integram o MVP seguem a ordem confirmada pelo Instituto; a sprint de cada incremento é definida no Planning:
+
+- **Incremento 2:** Repositório de comprovações e vinculação de evidências a atividades e metas (CP7 / HU-04: RF32 a RF34), configuração das comprovações por modalidade (RF10 da HU-03) e exibição do índice/miniaturas de evidências no relatório PDF (RF37).
+- **Incremento 3:** Registro de participação em campo on-line (CP4 / RF16 da HU-09) e lançamento ou retificação de presença fora do prazo com justificativa auditável (HU-10 / RF19).
+- **Evoluções posteriores:** Operação sem conexão e sincronização offline (CP4 / RF17 da HU-09 e HU-12 / RF18), progresso calculado e risco de meta (CP6 / HU-11: RF28 a RF30) e histórico de participação de pessoas (CP5 / HU-06: RF20 e RF21).
+- **Fora do escopo desta versão:** Integração com serviços de mensagens proprietários (WhatsApp, SMS), módulos financeiro-contábeis próprios e adaptadores específicos para leiautes arbitrários de múltiplos financiadores externos.
 
 ## 6.4 Estabilização, implantação e transferência
 
