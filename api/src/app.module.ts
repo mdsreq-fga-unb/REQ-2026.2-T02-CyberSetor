@@ -5,6 +5,7 @@ import { AuditModule } from './audit/audit.module.js';
 import { AuthModule } from './auth/auth.module.js';
 import { validateEnv } from './config/env.validation.js';
 import { HealthModule } from './health/health.module.js';
+import { InstrumentsModule } from './instruments/instruments.module.js';
 import { PrismaModule } from './prisma/prisma.module.js';
 
 @Module({
@@ -19,6 +20,7 @@ import { PrismaModule } from './prisma/prisma.module.js';
     AuditModule,
     AccountsModule,
     AuthModule,
+    InstrumentsModule,
   ],
 })
 export class AppModule {}
