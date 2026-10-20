@@ -1,26 +1,15 @@
 'use client';
 
-import { EllipsisVerticalIcon, FileTextIcon, PlusIcon } from 'lucide-react';
+import { FileTextIcon, PlusIcon } from 'lucide-react';
 import { useState } from 'react';
 import { useSession } from '@/auth/hooks/use-session';
+import { ListPagination } from '@/components/list/list-pagination';
+import { ListCard, ListEmpty, ListError, TableSkeleton } from '@/components/list/list-states';
+import { RowActionsMenu } from '@/components/list/row-actions-menu';
+import { usePagination } from '@/components/list/use-pagination';
 import { PageHeader } from '@/components/page-header';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
-import {
-  Empty,
-  EmptyContent,
-  EmptyDescription,
-  EmptyHeader,
-  EmptyMedia,
-  EmptyTitle,
-} from '@/components/ui/empty';
-import { Skeleton } from '@/components/ui/skeleton';
 import {
   Table,
   TableBody,
@@ -62,6 +51,7 @@ export function InstrumentsView() {
   const { session } = useSession();
   const canEdit = session?.perfil === 'PRESIDENCIA_GESTAO';
   const instruments = useInstruments();
+  const pagination = usePagination(instruments.data);
   const [form, setForm] = useState<{ instrument: Instrument | null } | null>(null);
 
   function saved({ instrumento, numeroProcessoRepetido }: SavedInstrument) {
@@ -87,32 +77,18 @@ export function InstrumentsView() {
     <>
       <PageHeader title="Instrumentos" description={DESCRIPTION} action={createButton} />
 
-      {instruments.isPending ? (
-        <div aria-label="Carregando instrumentos" className="flex flex-col gap-2">
-          <Skeleton className="h-12 w-full" />
-          <Skeleton className="h-16 w-full" />
-          <Skeleton className="h-16 w-full" />
-        </div>
-      ) : instruments.error ? (
-        <p role="alert" className="text-destructive">
-          {loadFailure(instruments.error)}
-        </p>
-      ) : instruments.data.length === 0 ? (
-        <Empty className="border">
-          <EmptyHeader>
-            <EmptyMedia variant="icon">
-              <FileTextIcon />
-            </EmptyMedia>
-            <EmptyTitle>Nenhum instrumento cadastrado</EmptyTitle>
-            <EmptyDescription>
-              Cadastre o edital, a emenda ou a parceria que financia cada projeto.
-            </EmptyDescription>
-          </EmptyHeader>
-          {createButton && <EmptyContent>{createButton}</EmptyContent>}
-        </Empty>
+      {instruments.error ? (
+        <ListError message={loadFailure(instruments.error)} />
+      ) : instruments.data?.length === 0 ? (
+        <ListEmpty
+          icon={FileTextIcon}
+          title="Nenhum instrumento cadastrado"
+          description="Cadastre o edital, a emenda ou a parceria que financia cada projeto."
+          action={createButton || undefined}
+        />
       ) : (
-        <div className="rounded-lg border">
-          <Table>
+        <ListCard>
+          <Table aria-busy={instruments.isPending}>
             <TableCaption className="sr-only">{DESCRIPTION}</TableCaption>
             <TableHeader>
               <TableRow>
@@ -136,58 +112,54 @@ export function InstrumentsView() {
               </TableRow>
             </TableHeader>
             <TableBody>
-              {instruments.data.map((instrument) => (
-                <TableRow key={instrument.id}>
-                  <TableCell className="px-4 py-3 whitespace-normal">
-                    <div className="flex flex-col gap-1">
-                      <span className="font-medium">
-                        {INSTRUMENT_TYPES[instrument.tipo]} · {instrument.orgaoConcedente}
-                      </span>
-                      <span className="break-all text-muted-foreground">
-                        Processo {instrument.numeroProcesso}
-                      </span>
-                      <span className="md:hidden">
-                        {formatMoney(instrument.valorGlobal)} · {term(instrument)}
-                      </span>
-                      <span className="md:hidden">
-                        <StatusBadge instrument={instrument} />
-                      </span>
-                    </div>
-                  </TableCell>
-                  <TableCell className="hidden text-right tabular-nums md:table-cell">
-                    {formatMoney(instrument.valorGlobal)}
-                  </TableCell>
-                  <TableCell className="hidden md:table-cell">{term(instrument)}</TableCell>
-                  <TableCell className="hidden md:table-cell">
-                    <StatusBadge instrument={instrument} />
-                  </TableCell>
-                  {canEdit && (
-                    <TableCell className="px-4 text-right">
-                      <DropdownMenu>
-                        <DropdownMenuTrigger
-                          render={
-                            <Button
-                              variant="ghost"
-                              size="icon"
-                              aria-label={`Ações do instrumento do processo ${instrument.numeroProcesso}`}
-                            />
-                          }
-                        >
-                          <EllipsisVerticalIcon />
-                        </DropdownMenuTrigger>
-                        <DropdownMenuContent align="end" className="min-w-56">
-                          <DropdownMenuItem onClick={() => setForm({ instrument })}>
-                            Editar instrumento
-                          </DropdownMenuItem>
-                        </DropdownMenuContent>
-                      </DropdownMenu>
+              {instruments.isPending ? (
+                <TableSkeleton columns={canEdit ? 5 : 4} />
+              ) : (
+                pagination.pageRows.map((instrument) => (
+                  <TableRow key={instrument.id}>
+                    <TableCell className="px-4 py-3 whitespace-normal">
+                      <div className="flex flex-col gap-1">
+                        <span className="font-medium">
+                          {INSTRUMENT_TYPES[instrument.tipo]} · {instrument.orgaoConcedente}
+                        </span>
+                        <span className="break-all text-muted-foreground">
+                          Processo {instrument.numeroProcesso}
+                        </span>
+                        <span className="md:hidden">
+                          {formatMoney(instrument.valorGlobal)} · {term(instrument)}
+                        </span>
+                        <span className="md:hidden">
+                          <StatusBadge instrument={instrument} />
+                        </span>
+                      </div>
                     </TableCell>
-                  )}
-                </TableRow>
-              ))}
+                    <TableCell className="hidden text-right tabular-nums md:table-cell">
+                      {formatMoney(instrument.valorGlobal)}
+                    </TableCell>
+                    <TableCell className="hidden md:table-cell">{term(instrument)}</TableCell>
+                    <TableCell className="hidden md:table-cell">
+                      <StatusBadge instrument={instrument} />
+                    </TableCell>
+                    {canEdit && (
+                      <TableCell className="px-4 text-right">
+                        <RowActionsMenu
+                          label={`Ações do instrumento do processo ${instrument.numeroProcesso}`}
+                          actions={[
+                            {
+                              label: 'Editar instrumento',
+                              onSelect: () => setForm({ instrument }),
+                            },
+                          ]}
+                        />
+                      </TableCell>
+                    )}
+                  </TableRow>
+                ))
+              )}
             </TableBody>
           </Table>
-        </div>
+          <ListPagination pagination={pagination} label="Paginação dos instrumentos" />
+        </ListCard>
       )}
 
       <InstrumentFormDialog

@@ -73,7 +73,8 @@ describe('instrumentos', () => {
     });
     renderView();
 
-    const table = await screen.findByRole('table', {
+    await screen.findAllByText(/Secretaria de Cultura/);
+    const table = screen.getByRole('table', {
       name: 'Editais, emendas e parcerias que financiam os projetos do Instituto.',
     });
     const [, row] = within(table).getAllByRole('row');
@@ -90,7 +91,7 @@ describe('instrumentos', () => {
     });
     renderView();
 
-    await screen.findByRole('table');
+    await screen.findAllByText(/Secretaria de Cultura/);
     expect(screen.queryByRole('button', { name: 'Novo instrumento' })).not.toBeInTheDocument();
     expect(screen.queryByRole('button', { name: /Ações do instrumento/ })).not.toBeInTheDocument();
   });
