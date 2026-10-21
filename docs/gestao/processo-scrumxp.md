@@ -62,7 +62,7 @@ Cada história é aberta pelo formulário de história do repositório, que pede
 | Homologação | [cybersetor-web.netvitae.org](https://cybersetor-web.netvitae.org) · API e documentação em [cybersetor-api.netvitae.org/docs](https://cybersetor-api.netvitae.org/docs) | linhas `web-develop` e `api-develop` |
 | Produção | publicada na estabilização ([seção 6.4](../visao/6-cronograma.md#64-estabilizacao-implantacao-e-transferencia)) | linhas `web` e `api` |
 
-O acesso à homologação é por conta criada pela administração do sistema, sem cadastro aberto, e ela guarda apenas dados de teste, sem dados reais de participantes.
+O acesso à homologação é por conta criada pela administração do sistema, sem cadastro aberto. Ela guarda dados de teste e, nas validações com o Instituto, dados reais minimizados de um projeto ([seção 6.5](../visao/6-cronograma.md#65-validacao-com-dados-reais)).
 
 ## Registro dos ritos
 
