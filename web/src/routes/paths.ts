@@ -7,5 +7,6 @@ export const paths = {
     root: '/',
     accounts: '/contas',
     instruments: '/instrumentos',
+    modalities: '/modalidades',
   },
 } as const;
