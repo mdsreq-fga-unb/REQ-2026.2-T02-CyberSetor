@@ -20,6 +20,7 @@ Registro das reuniões da equipe e das interações com o cliente. Desde 27/08/2
 | [23/09/2026](2026-09-23-sprint-planning.md) | Sprint Planning da Sprint 2 | Meta da Sprint 2 com lista ajustada, matriz 4 × 4, MVP validado com o Instituto e DoR e DoD publicadas; sete épicos e quinze histórias; painel gerencial como *Should* |
 | [06/10/2026](2026-10-06-sprint-review-retrospectiva.md) | Sprint Review e Retrospectiva da Sprint 2 | Meta da Sprint 2 parcialmente atingida, com a conferência da validação do MVP pendente; *merge commit* e *rebase*; revisão de pull request em até 24 horas; daily até o fim do dia; reorganização do site |
 | [07/10/2026](2026-10-07-sprint-planning.md) | Sprint Planning da Sprint 3 | Meta da Sprint 3 com a Unidade 2 publicada antes de 13/10, MVP confirmado e base técnica pronta; branch de homologação da documentação; novas duplas, com dois épicos cada |
+| [20/10/2026](2026-10-20-sprint-review-retrospectiva-planning.md) | Sprint Review e Retrospectiva da Sprint 3 e Sprint Planning da Sprint 4 | Meta da Sprint 3 atingida; histórias com um ator e um resultado; pull requests de até 1.000 linhas e revisão em até 24 horas; meta da Sprint 4 com o MVP completo em homologação até 03/11 |
 
 ## Interações com o cliente
 
