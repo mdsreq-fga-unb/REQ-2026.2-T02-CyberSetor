@@ -60,6 +60,18 @@ model Instrumento {
   @@map("instrumento")
 }
 
+model Modalidade {
+  id           String   @id @default(uuid()) @db.Uuid
+  versao       Int      @default(1)
+  nome         String   @unique
+  descricao    String?
+  ativo        Boolean  @default(true)
+  criadoEm     DateTime @default(now()) @map("criado_em") @db.Timestamptz(3)
+  atualizadoEm DateTime @updatedAt @map("atualizado_em") @db.Timestamptz(3)
+
+  @@map("modalidade")
+}
+
 model Projeto {
   id            String   @id @default(uuid()) @db.Uuid
   versao        Int      @default(1)
