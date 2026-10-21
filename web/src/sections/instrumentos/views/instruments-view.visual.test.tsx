@@ -5,6 +5,8 @@ import { clearLocalSession, signIn } from '@/auth/session';
 import type { Instrument, InstrumentType } from '@/types/instrumentos';
 import { InstrumentsView } from './instruments-view';
 
+vi.mock('next/navigation', () => ({ useRouter: () => ({ push: vi.fn() }) }));
+
 const TYPES: InstrumentType[] = ['EDITAL', 'EMENDA', 'PARCERIA'];
 
 const INSTRUMENTS: Instrument[] = Array.from({ length: 12 }, (_, index) => ({
