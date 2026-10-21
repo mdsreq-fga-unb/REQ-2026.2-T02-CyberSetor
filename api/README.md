@@ -85,6 +85,7 @@ Variável vazia vale como ausente: a opcional cai no padrão e a obrigatória re
 - **Toda rota exige login.** `@Public()` libera a rota; `@Profiles(Perfil.X, ...)` restringe aos perfis listados e registra o acesso negado na trilha. O perfil é lido do banco a cada requisição.
 - **Senha temporária**: enquanto `deveTrocarSenha` estiver ativo, só `GET /v1/auth/session` e `POST /v1/auth/password` respondem; o resto devolve `403 PASSWORD_CHANGE_REQUIRED`.
 - **Contas** em `/v1/accounts`, só para `ADMINISTRACAO_SISTEMA`: criar, listar, mudar perfil, desativar, reativar e redefinir senha temporária. Nenhuma operação deixa o sistema sem administrador ativo (`409 LAST_ADMIN`).
+- **Instrumentos** em `/v1/instruments`: `PRESIDENCIA_GESTAO` cadastra e edita; `NUCLEO_PEDAGOGICO` e `ADMINISTRATIVO_FINANCEIRO` consultam. Valor em reais como texto: na entrada, até 12 dígitos e duas casas com ponto (`"150000.5"`); na resposta, sempre com duas casas (`"150000.50"`). Datas como `AAAA-MM-DD`. A edição envia a `versao` lida e só os campos que mudam; campo nulo é `400`, versão antiga é `409 VERSION_CONFLICT` e edição sem mudança não sobe a versão.
 - **Proteções do login** em `src/auth/login-protection.ts`: 20 tentativas por minuto por IP e bloqueio de 15 minutos após 10 falhas consecutivas.
 
 ## Convenções
