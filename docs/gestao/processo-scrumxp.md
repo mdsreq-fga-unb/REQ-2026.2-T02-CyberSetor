@@ -5,6 +5,7 @@
 | 05/10/2026 | 1.1 | Registro dos ritos das Sprints 1 e 2 com remissão às atas | Maria Eduarda Marques |
 | 06/10/2026 | 1.2 | Daily no próprio dia, até o fim do dia, em vez de até as 12h | Vinicius Vieira |
 | 19/10/2026 | 1.3 | Equipe atual de cinco integrantes | Maria Eduarda Marques |
+| 21/10/2026 | 1.4 | Registro dos ritos das Sprints 2 a 4 | Maria Eduarda Marques |
 
 A equipe CyberSetor adota o **ScrumXP**: o framework Scrum para o gerenciamento do trabalho e as práticas técnicas do eXtreme Programming para a engenharia. Esta página registra como o processo funciona na prática. A fundamentação da escolha está na seção 4 do Documento de Visão.
 
@@ -60,6 +61,10 @@ Cada história é aberta pelo formulário de história do repositório, que pede
 | Sprint 1 | Sprint Planning | 08/09/2026 | [Ata](atas/2026-09-08-sprint-planning.md) |
 | Sprint 1 | Sprint Review e Retrospectiva | 22/09/2026 | [Ata](atas/2026-09-22-sprint-review-retrospectiva.md) |
 | Sprint 2 | Sprint Planning | 23/09/2026 | [Ata](atas/2026-09-23-sprint-planning.md) |
+| Sprint 2 | Sprint Review e Retrospectiva | 06/10/2026 | [Ata](atas/2026-10-06-sprint-review-retrospectiva.md) |
+| Sprint 3 | Sprint Planning | 07/10/2026 | [Ata](atas/2026-10-07-sprint-planning.md) |
+| Sprint 3 | Sprint Review e Retrospectiva | 20/10/2026 | [Ata](atas/2026-10-20-sprint-review-retrospectiva-planning.md) |
+| Sprint 4 | Sprint Planning | 20/10/2026 | [Ata](atas/2026-10-20-sprint-review-retrospectiva-planning.md) |
 
 As reuniões com o Instituto que alimentam a validação estão no [índice de atas](atas/index.md#interacoes-com-o-cliente).
 
