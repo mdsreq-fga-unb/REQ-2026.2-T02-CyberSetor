@@ -30,7 +30,6 @@ import {
 } from './modalities.dto.js';
 import { ModalitiesService } from './modalities.service.js';
 
-// HU-03a: o coordenador pedagógico cadastra as modalidades; a gestão também, por organizar a execução.
 const WRITERS = [Perfil.NUCLEO_PEDAGOGICO, Perfil.PRESIDENCIA_GESTAO];
 const READERS = [...WRITERS, Perfil.ADMINISTRATIVO_FINANCEIRO];
 

@@ -46,26 +46,28 @@ export class ModalitiesService {
   }
 
   async create(data: CreateModalityDto, actor: Actor): Promise<ModalityResponse> {
-    return this.prisma.$transaction(async (tx) => {
-      await this.assertNameFree(tx, data.nome);
-      const row = await tx.modalidade.create({
-        data: { nome: data.nome, descricao: emptyToNull(data.descricao) ?? null },
-      });
-      const modalidade = toResponse(row);
-      await this.audit.record(
-        {
-          autorTipo: AutorTipo.USUARIO,
-          usuarioId: actor.usuarioId,
-          acao: 'MODALITY_CREATED',
-          entidade: 'modalidade',
-          entidadeId: row.id,
-          depois: { nome: modalidade.nome, descricao: modalidade.descricao, ativo: true },
-          correlationId: actor.correlationId,
-        },
-        tx,
-      );
-      return modalidade;
-    });
+    return this.withNameConflict(() =>
+      this.prisma.$transaction(async (tx) => {
+        await this.assertNameFree(tx, data.nome);
+        const row = await tx.modalidade.create({
+          data: { nome: data.nome, descricao: emptyToNull(data.descricao) ?? null },
+        });
+        const modalidade = toResponse(row);
+        await this.audit.record(
+          {
+            autorTipo: AutorTipo.USUARIO,
+            usuarioId: actor.usuarioId,
+            acao: 'MODALITY_CREATED',
+            entidade: 'modalidade',
+            entidadeId: row.id,
+            depois: { nome: modalidade.nome, descricao: modalidade.descricao, ativo: true },
+            correlationId: actor.correlationId,
+          },
+          tx,
+        );
+        return modalidade;
+      }),
+    );
   }
 
   async update(
@@ -73,46 +75,48 @@ export class ModalitiesService {
     { versao, ...changes }: UpdateModalityDto,
     actor: Actor,
   ): Promise<ModalityResponse> {
-    return this.prisma.$transaction(async (tx) => {
-      const current = await tx.modalidade.findUnique({ where: { id } });
-      if (!current) throw new NotFoundException('Modalidade não encontrada.');
-      if (current.versao !== versao) throw this.versionConflict();
+    return this.withNameConflict(() =>
+      this.prisma.$transaction(async (tx) => {
+        const current = await tx.modalidade.findUnique({ where: { id } });
+        if (!current) throw new NotFoundException('Modalidade não encontrada.');
+        if (current.versao !== versao) throw this.versionConflict();
 
-      const before = toResponse(current);
-      const next = {
-        nome: changes.nome ?? before.nome,
-        descricao:
-          changes.descricao === undefined
-            ? before.descricao
-            : (emptyToNull(changes.descricao) ?? null),
-        ativo: changes.ativo ?? before.ativo,
-      };
-      const changed = FIELDS.filter((field) => next[field] !== before[field]);
-      if (changed.length === 0) return before;
-      if (changed.includes('nome')) await this.assertNameFree(tx, next.nome, id);
+        const before = toResponse(current);
+        const next = {
+          nome: changes.nome ?? before.nome,
+          descricao:
+            changes.descricao === undefined
+              ? before.descricao
+              : (emptyToNull(changes.descricao) ?? null),
+          ativo: changes.ativo ?? before.ativo,
+        };
+        const changed = FIELDS.filter((field) => next[field] !== before[field]);
+        if (changed.length === 0) return before;
+        if (changed.includes('nome')) await this.assertNameFree(tx, next.nome, id);
 
-      const updated = await tx.modalidade.updateMany({
-        where: { id, versao },
-        data: { ...next, versao: { increment: 1 } },
-      });
-      if (updated.count === 0) throw this.versionConflict();
+        const updated = await tx.modalidade.updateMany({
+          where: { id, versao },
+          data: { ...next, versao: { increment: 1 } },
+        });
+        if (updated.count === 0) throw this.versionConflict();
 
-      const modalidade = toResponse(await tx.modalidade.findUniqueOrThrow({ where: { id } }));
-      await this.audit.record(
-        {
-          autorTipo: AutorTipo.USUARIO,
-          usuarioId: actor.usuarioId,
-          acao: 'MODALITY_UPDATED',
-          entidade: 'modalidade',
-          entidadeId: id,
-          antes: Object.fromEntries(changed.map((field) => [field, before[field]])),
-          depois: Object.fromEntries(changed.map((field) => [field, modalidade[field]])),
-          correlationId: actor.correlationId,
-        },
-        tx,
-      );
-      return modalidade;
-    });
+        const modalidade = toResponse(await tx.modalidade.findUniqueOrThrow({ where: { id } }));
+        await this.audit.record(
+          {
+            autorTipo: AutorTipo.USUARIO,
+            usuarioId: actor.usuarioId,
+            acao: 'MODALITY_UPDATED',
+            entidade: 'modalidade',
+            entidadeId: id,
+            antes: Object.fromEntries(changed.map((field) => [field, before[field]])),
+            depois: Object.fromEntries(changed.map((field) => [field, modalidade[field]])),
+            correlationId: actor.correlationId,
+          },
+          tx,
+        );
+        return modalidade;
+      }),
+    );
   }
 
   private async assertNameFree(
@@ -127,6 +131,17 @@ export class ModalitiesService {
       },
     });
     if (taken > 0) throw new ConflictException('Já existe modalidade com este nome.');
+  }
+
+  private async withNameConflict<T>(run: () => Promise<T>): Promise<T> {
+    try {
+      return await run();
+    } catch (error) {
+      if (error instanceof Prisma.PrismaClientKnownRequestError && error.code === 'P2002') {
+        throw new ConflictException('Já existe modalidade com este nome.');
+      }
+      throw error;
+    }
   }
 
   private versionConflict(): ConflictException {
