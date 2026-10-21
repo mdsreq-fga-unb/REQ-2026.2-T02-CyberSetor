@@ -80,7 +80,11 @@ export class EnvironmentVariables {
 }
 
 export function validateEnv(config: Record<string, unknown>): EnvironmentVariables {
-  const filled = Object.fromEntries(Object.entries(config).filter(([, value]) => value !== ''));
+  const filled = Object.fromEntries(
+    Object.entries(config).filter(
+      ([, value]) => !(typeof value === 'string' && value.trim() === ''),
+    ),
+  );
   const validated = plainToInstance(EnvironmentVariables, filled, {
     enableImplicitConversion: true,
   });

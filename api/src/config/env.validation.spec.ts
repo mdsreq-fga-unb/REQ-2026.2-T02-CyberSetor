@@ -41,6 +41,10 @@ describe('validateEnv', () => {
     expect(() => validateEnv({ ...required, TRUST_PROXY: value })).toThrow('TRUST_PROXY');
   });
 
+  it('trata TRUST_PROXY so com espacos como ausente', () => {
+    expect(validateEnv({ ...required, TRUST_PROXY: '   ' }).TRUST_PROXY).toBeUndefined();
+  });
+
   it('trata variavel vazia como ausente', () => {
     const env = validateEnv({ ...required, PORT: '', NODE_ENV: '', ACCESS_TOKEN_TTL_MINUTES: '' });
 
