@@ -6,18 +6,19 @@
 | 06/10/2026 | 1.2 | Daily no próprio dia, até o fim do dia, em vez de até as 12h | Vinicius Vieira |
 | 19/10/2026 | 1.3 | Equipe atual de cinco integrantes | Maria Eduarda Marques |
 | 21/10/2026 | 1.4 | Registro dos ritos das Sprints 2 a 4 | Maria Eduarda Marques |
+| 21/10/2026 | 1.5 | Daily presencial às terças e quintas e escrita nos demais dias úteis; ambientes do produto com os endereços de homologação | Vinicius Vieira |
 
 A equipe CyberSetor adota o **ScrumXP**: o framework Scrum para o gerenciamento do trabalho e as práticas técnicas do eXtreme Programming para a engenharia. Esta página registra como o processo funciona na prática. A fundamentação da escolha está na seção 4 do Documento de Visão.
 
 ## Papéis e cerimônias
 
-A composição da equipe, os papéis e o papel do cliente estão na [seção 7.1 do Documento de Visão](../visao/7-equipe-e-cliente.md); a cadência das cerimônias, com frequência, duração e formato, está na [seção 7.2](../visao/7-equipe-e-cliente.md#72-comunicacao). Esta página registra o que é próprio da operação da equipe: por que a daily é assíncrona, quais artefatos sustentam o processo, quais práticas de XP estão em uso e como a equipe se comunica.
+A composição da equipe, os papéis e o papel do cliente estão na [seção 7.1 do Documento de Visão](../visao/7-equipe-e-cliente.md); a cadência das cerimônias, com frequência, duração e formato, está na [seção 7.2](../visao/7-equipe-e-cliente.md#72-comunicacao). Esta página registra o que é próprio da operação da equipe: como a daily acontece, quais artefatos sustentam o processo, quais práticas de XP estão em uso e como a equipe se comunica.
 
 Sprints de duas semanas, ancoradas nas terças-feiras. A Sprint 0 (18/08 a 08/09) é excepcional, com três semanas, por ser de descoberta e formação da equipe.
 
-## Por que a daily é assíncrona
+## Como a daily acontece
 
-A equipe é formada por cinco estudantes com grades e compromissos distintos. Uma daily síncrona diária não se sustentaria. O que a cerimônia precisa entregar é **compromisso** e **visibilidade de impedimentos**, dois dos sete valores da Engenharia de Requisitos adotados pela disciplina. Uma daily escrita, no mesmo lugar, todo dia, entrega isso de forma mais confiável. É uma adaptação consciente do rito ao contexto.
+A equipe é formada por cinco estudantes com grades e compromissos distintos, e uma daily síncrona todos os dias não se sustentaria. Às terças e quintas, dias de aula e da reunião da equipe, a daily é presencial. Nos demais dias úteis, ela é escrita, no grupo *Dailys*. O que a cerimônia precisa entregar é **compromisso** e **visibilidade de impedimentos**, dois dos sete valores da Engenharia de Requisitos adotados pela disciplina; a forma escrita, no mesmo lugar, entrega isso nos dias sem encontro. É uma adaptação consciente do rito ao contexto. A adesão por sprint está no [registro das dailies](dailies.md).
 
 ### Molde da daily
 
@@ -28,7 +29,7 @@ A equipe é formada por cinco estudantes com grades e compromissos distintos. Um
 🚧 Impedimento: o que está me travando, ou "nenhum"
 ```
 
-**Regras:** todo dia útil, no próprio dia, até o fim do dia, inclusive sem avanço (escreve-se "sem avanço") · impedimento é campo obrigatório · quem depende de outra pessoa a marca · o grupo *Dailys* é exclusivo para dailies; discussão vai para o grupo *Geral* e decisão vira ata · impedimento declarado é resolvido ou escalado pelo Scrum Master em até 24 horas.
+**Regras:** nos dias úteis sem encontro presencial, no próprio dia, até o fim do dia, inclusive sem avanço (escreve-se "sem avanço") · impedimento é campo obrigatório · quem depende de outra pessoa a marca · o grupo *Dailys* é exclusivo para dailies; discussão vai para o grupo *Geral* e decisão vira ata · impedimento declarado é resolvido ou escalado pelo Scrum Master em até 24 horas.
 
 ## Artefatos
 
@@ -53,6 +54,15 @@ Critérios de aceitação:
 ```
 
 Cada história é aberta pelo formulário de história do repositório, que pede a história nesse formato, as características de produto e os objetivos específicos em caixas de marcação (seções 2.3 e 2.2), os RFs, RNFs e regras de negócio que a condicionam, os critérios de aceitação em lista e as dependências. No quadro do projeto, características e objetivos ficam em campos de seleção múltipla com os mesmos títulos.
+
+## Ambientes do produto
+
+| Ambiente | Endereço | Origem |
+|---|---|---|
+| Homologação | [cybersetor-web.netvitae.org](https://cybersetor-web.netvitae.org) · API e documentação em [cybersetor-api.netvitae.org/docs](https://cybersetor-api.netvitae.org/docs) | linhas `web-develop` e `api-develop` |
+| Produção | publicada na estabilização ([seção 6.4](../visao/6-cronograma.md#64-estabilizacao-implantacao-e-transferencia)) | linhas `web` e `api` |
+
+O acesso à homologação é por conta criada pela administração do sistema, sem cadastro aberto, e ela guarda apenas dados de teste, sem dados reais de participantes.
 
 ## Registro dos ritos
 

@@ -12,6 +12,7 @@
 | 06/10/2026 | 1.7 | Daily no próprio dia, até o fim do dia, em vez de até as 12h | Vinicius Vieira |
 | 07/10/2026 | 1.8 | Especificação dos papéis de Engenharia de Requisitos de cada integrante na composição da equipe e remoção de menções operacionais genéricas | Daniel Batista e Maria Eduarda Marques |
 | 19/10/2026 | 1.9 | Composição da equipe atualizada para cinco integrantes | Maria Eduarda Marques |
+| 21/10/2026 | 1.10 | Daily presencial às terças e quintas e escrita nos demais dias úteis | Vinicius Vieira |
 
 ## 7.1 Composição da Equipe
 
@@ -53,14 +54,14 @@ O Product Owner interno é a mitigação para duas limitações conhecidas: a de
 
 **Ferramentas**
 
-- **WhatsApp:** comunidade *CyberSetor - Requisitos*, com três grupos: *Avisos*, para comunicados; *CyberSetor - Geral*, para discussão e decisões; e *Dailys*, exclusivo para a daily assíncrona. É também o canal de mensagens com as representantes do Instituto.
+- **WhatsApp:** comunidade *CyberSetor - Requisitos*, com três grupos: *Avisos*, para comunicados; *CyberSetor - Geral*, para discussão e decisões; e *Dailys*, exclusivo para a daily escrita. É também o canal de mensagens com as representantes do Instituto.
 - **Google Meet:** todas as reuniões da equipe e as videochamadas com o Instituto, com gravação e ata gerada automaticamente. Gravações e transcrições brutas funcionam exclusivamente como apoio interno restrito no Google Drive; o registro oficial é a ata sintética elaborada pelo relator, revisada para controle de dados sensíveis (LGPD) e publicada neste site — ver a [política de registro, acesso e publicação](../gestao/atas/index.md#politica-de-registro-acesso-e-publicacao).
 - **GitHub:** repositório do projeto, Product Backlog e Sprint Backlog no GitHub Projects e Issues, feedback do professor por issues e publicação deste site.
 - **Google Docs:** rascunho colaborativo do documento. A entrega é o site; o rascunho não substitui a publicação.
 
 **Reuniões e frequência**
 
-- **Daily assíncrona:** todo dia útil, no próprio dia, até o fim do dia, no grupo *Dailys*, com o que foi feito, o que será feito e os impedimentos. Impedimento declarado é resolvido ou escalado pelo Scrum Master em até 24 horas.
+- **Daily:** presencial às terças e quintas, na aula ou na reunião da equipe; nos demais dias úteis, escrita no grupo *Dailys*, no próprio dia, até o fim do dia, com o que foi feito, o que será feito e os impedimentos. Impedimento declarado é resolvido ou escalado pelo Scrum Master em até 24 horas.
 - **Sprint Planning:** na primeira terça-feira de cada sprint, cerca de uma hora, no Google Meet.
 - **Refinamento do backlog:** semanal, cerca de trinta minutos, no Google Meet. É onde a Engenharia de Requisitos acontece no dia a dia.
 - **Sprint Review:** na última terça-feira de cada sprint, cerca de uma hora, com o incremento demonstrado e o retorno incorporado ao backlog. Quando o Instituto não puder estar presente, a avaliação é provisória e a confirmação fica para a validação semanal seguinte (§7.3).

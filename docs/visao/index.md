@@ -17,6 +17,7 @@ Este histórico é o do Documento de Visão como um todo. Cada seção traz, no 
 | 29/09/2026 | 1.6 | Definition of Ready, com os critérios INVEST, e Definition of Done na seção 9; processo de validação ligado a elas | Equipe CyberSetor |
 | 05/10/2026 | 1.7 | Revisão editorial: correção de sintaxe Markdown no sumário e padronização executiva das descrições das seções | Rodrigo Henrique |
 | 20/10/2026 | 1.8 | Histórias derivadas dos requisitos funcionais, com uma história dona por requisito; requisitos de contas, modalidades e formulário de inscrição; pontos em aberto revistos contra as validações; MVP concluído na Sprint 4 | Equipe CyberSetor |
+| 21/10/2026 | 1.9 | Daily presencial às terças e quintas e escrita nos demais dias úteis (seção 7.2) | Vinicius Vieira |
 
 ## Sumário
 
