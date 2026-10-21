@@ -9,6 +9,7 @@
 | 17/09/2026 | 1.4 | Prazos da Unidade 2 e workshop de 21/09 incorporados; calendário reorganizado em período, objetivo e entrega de fechamento | Equipe CyberSetor |
 | 13/10/2026 | 1.5 | Alcance do MVP e incrementos posteriores alinhados à seção 10.2.6 | Caio Martins |
 | 19/10/2026 | 1.6 | Equipe atual de cinco integrantes | Maria Eduarda Marques |
+| 20/10/2026 | 1.7 | Sprints 4 e 5 alinhadas ao MVP e aos incrementos da seção 10.2.6: MVP concluído na Sprint 4, evidências e presença em campo na Sprint 5; checkpoint de 29/10 até a inscrição; alcance do MVP com as histórias da seção 10.1 | Equipe CyberSetor |
 
 ## 6.1 Calendário vigente
 
@@ -20,52 +21,53 @@ O projeto é organizado em sprints de **duas semanas, ancoradas nas terças-feir
 | **1** | 08/09 – 22/09 | Elicitar, analisar e declarar os requisitos | Lista de requisitos funcionais e não funcionais |
 | **2** | 22/09 – 06/10 | Validar os requisitos, priorizar e recortar o MVP | Backlog priorizado, MVP e acordos de pronto e de concluído |
 | **3** | 06/10 – 20/10 | Construir a primeira fatia vertical do produto | Instrumento, projeto, meta e atividade em uso, com acesso por perfil |
-| **4** | 20/10 – 03/11 | Tratar pessoas, participação e evidências | Registro em campo e evidência vinculada à meta |
-| **5** | 03/11 – 17/11 | Apurar progresso de metas e prestação de contas | Unidade 3: progresso calculado e relatório exportável |
+| **4** | 20/10 – 03/11 | Concluir o MVP: inscrições, titulares dos dados e relatório | MVP completo em homologação |
+| **5** | 03/11 – 17/11 | Evidências e presença em campo (incrementos 2 e 3) | Unidade 3: relatório com evidências e presença registrada em campo |
 | **6 · Estabilização** | 17/11 – 01/12 | Corrigir, implantar, treinar e transferir, sem funcionalidade nova | Produto implantado e equipe do Instituto treinada |
 | **Margem** | 01/12 – 08/12 | Absorver contingência e encerrar, sem escopo novo | Unidade 4: aceite e transferência |
 
 Uma sprint encerra e a seguinte inicia na mesma terça-feira porque esse dia é ocupado pelos ritos — Review, Retrospectiva e Planning —, e não pela produção: o plano da Sprint 1 atribui a ele capacidade produtiva zero. As datas coincidem por isso, sem que nenhum dia de trabalho seja contado duas vezes.
 
-O planejamento é atualizado ao fim de cada sprint, na Retrospectiva. As Sprints 1 e 2 seguem o que a Sprint Planning de 08/09 deliberou; as seguintes são planejamento, a confirmar na Retrospectiva de 22/09, e não compromisso já validado pelo Instituto.
+O planejamento é atualizado ao fim de cada sprint, na Retrospectiva. As Sprints 1 e 2 seguem o que a Sprint Planning de 08/09 deliberou; as seguintes são planejamento, revisto a cada Retrospectiva, e não compromisso já validado pelo Instituto.
 
 ## 6.2 Dependências entre as características de produto
 
-A ordem das sprints de construção segue a dependência de dados entre as características da seção 2.3, e não a ordem em que aparecem naquela tabela:
+As sprints de construção respeitam a dependência de dados entre as características da seção 2.3, e não a ordem em que aparecem naquela tabela; quando uma característica entra antes de outra de que depende, entra com os dados já existentes, como explicam os itens abaixo:
 
 ```text
 CP1 projetos e metas → CP2 atividades → CP5 pessoas → CP3 inscrição · CP4 participação em campo → CP7 evidências → CP6 progresso de metas → CP8 relatório e exportação
 ```
 
-- **CP5 antes de CP3 e CP4.** Inscrição, presença e contagem de participantes únicos dependem de uma base de pessoas com alerta de duplicidade e registro de consentimento. Por isso a Sprint 4 começa por CP5, e não termina nela.
-- **Dados reais antes do relatório.** CP6 e CP8 só fazem sentido sobre metas, atividades e evidências verdadeiras. O checkpoint de 29/10 existe para que a Sprint 5 parta de dados validados, e não de massa de teste.
+- **Pessoas junto da inscrição.** Inscrição, presença e contagem de participantes únicos dependem da base de pessoas, do aviso de cadastro repetido e do registro de consentimento; por isso a CP5 entra na Sprint 4 com a CP3, e a presença em campo (CP4) vem depois.
+- **Relatório em duas etapas.** No MVP, o relatório sai com metas, situação registrada e justificativas, sobre os dados do checkpoint de 29/10; as evidências entram na Sprint 5, e o progresso calculado (CP6) depende de presença e evidência registradas.
 - **Condições transversais, não acabamento.** Autenticação e perfis, controle de acesso por área, auditoria, cópia de segurança e restauração acompanham cada incremento desde a Sprint 3; não ficam para a Sprint 6.
 
 | Sprint | Características cobertas | Condição de saída |
 |---|---|---|
 | 3 | CP1, CP2 · autenticação e perfis | percurso instrumento → projeto → meta → atividade demonstrado com rastreabilidade |
-| 4 | CP5, CP3, CP4, CP7 | ensaio de campo sem perda nem duplicidade; checkpoint com dados reais realizado |
-| 5 | CP6, CP8 | progresso e relatório reproduzíveis sobre os dados do checkpoint |
+| 4 | CP1, CP3, CP5, CP6, CP8 | MVP completo em homologação; checkpoint com dados reais realizado |
+| 5 | CP2, CP4, CP7 | evidências vinculadas às metas e presença on-line, com o relatório trazendo as evidências |
 | 6 | nenhuma nova | produto implantado, restauração testada, pessoas treinadas, transferência ensaiada |
 
 ## 6.3 Alcance do MVP e o que fica fora
 
 Construir as oito características completas, acrescidas de operação sem conexão, sincronização assíncrona, cálculo preditivo e múltiplos relatórios customizados, excede a capacidade produtiva de cinco estudantes com dedicação parcial ao longo de três sprints de desenvolvimento. Por isso, o recorte foi estabelecido por critério de fluxo mínimo completo: **o MVP percorre uma vez, com dados reais do Instituto, o ciclo nuclear que resolve o problema central de prestação de contas e controle institucional**.
 
-O recorte do MVP está na [seção 10.2.6](../requisitos/10-backlog.md#1026-mvp-e-incrementos), com o valor de negócio atribuído pelo Instituto e o recorte confirmado com ele (seção 10.2.8). Ele compreende:
+O recorte do MVP está na [seção 10.2.6](../requisitos/10-backlog.md#1026-mvp-e-incrementos), com o valor de negócio atribuído pelo Instituto (seção 10.2.8). Ele compreende:
 
-1. **Parcerias e Metas (CP1 / HU-01, HU-02, HU-14):** Cadastro de instrumentos, projetos, vinculação de metas contratuais, responsáveis e acompanhamento de vencimentos, além do versionamento de aditivos.
-2. **Atividades (CP2 / parte da HU-03):** Cadastro de atividades associadas às metas dos projetos.
-3. **Inscrições e Titulares (CP3, CP5 / HU-07, HU-08, HU-15):** Inscrições públicas e assistidas, base única de participantes com minimização de dados e atendimento a direitos de exclusão e anonimização (LGPD).
-4. **Prestação de Contas (CP8 / HU-05, HU-13):** Relatório de execução do objeto com as metas, a situação registrada e as justificativas obrigatórias, em PDF ainda sem as miniaturas de evidências, e exportação dos dados do projeto em planilha aberta.
+1. **Parcerias e Metas (CP1, CP6 / HU-01a, HU-01b, HU-02a, HU-02b, HU-14):** Cadastro de instrumentos, projetos, vinculação de metas contratuais, responsáveis e acompanhamento de vencimentos, além do versionamento de aditivos.
+2. **Atividades (CP2 / HU-03a):** Cadastro das modalidades e das atividades associadas às metas dos projetos.
+3. **Inscrições e Titulares (CP3, CP5 / HU-07a, HU-07b, HU-07c, HU-08, HU-15a, HU-15b):** Inscrições públicas, com formulário configurável, e assistidas, base única de participantes com minimização de dados e atendimento a direitos de correção, exclusão e anonimização (LGPD).
+4. **Prestação de Contas (CP8 / HU-05a, HU-05b, HU-13):** Relatório de execução do objeto com as metas, a situação registrada e as justificativas obrigatórias, em PDF, e exportação dos dados do projeto em planilha aberta.
+5. **Contas e perfis (CP1 / HU-16):** administração das contas da equipe do Instituto e dos perfis de acesso.
 
 ### O que fica para os incrementos posteriores
 
-Em conformidade com a matriz de valor de negócio × esforço técnico da seção 10.2.5, as capacidades que não integram o MVP seguem a ordem confirmada pelo Instituto; a sprint de cada incremento é definida no Planning:
+Em conformidade com a matriz de valor de negócio × esforço técnico da seção 10.2.5, as capacidades que não integram o MVP seguem a ordem confirmada pelo Instituto, nas sprints da tabela da 6.2, salvo as evoluções posteriores:
 
-- **Incremento 2:** Repositório de comprovações e vinculação de evidências a atividades e metas (CP7 / HU-04: RF32 a RF34), configuração das comprovações por modalidade (RF10 da HU-03) e exibição do índice/miniaturas de evidências no relatório PDF (RF37).
-- **Incremento 3:** Registro de participação em campo on-line (CP4 / RF16 da HU-09) e lançamento ou retificação de presença fora do prazo com justificativa auditável (HU-10 / RF19).
-- **Evoluções posteriores:** Operação sem conexão e sincronização offline (CP4 / RF17 da HU-09 e HU-12 / RF18), progresso calculado e risco de meta (CP6 / HU-11: RF28 a RF30) e histórico de participação de pessoas (CP5 / HU-06: RF20 e RF21).
+- **Incremento 2:** Repositório de comprovações e vinculação de evidências a atividades e metas (CP7 / HU-04a, HU-04b: RF32 a RF34), configuração das comprovações por modalidade (HU-03b: RF10); as evidências passam a compor o relatório e o PDF (RF36 e RF37).
+- **Incremento 3:** Registro de participação em campo on-line (CP4 / HU-09a: RF16) e lançamento ou retificação de presença fora do prazo com justificativa auditável (HU-10 / RF19).
+- **Evoluções posteriores, fora das sprints da disciplina, salvo folga:** Operação sem conexão e sincronização offline (CP4 / HU-09b: RF17 e HU-12: RF18), progresso calculado e risco de meta (CP6 / HU-11: RF28 a RF30) e histórico de participação de pessoas (CP5 / HU-06: RF20 e RF21).
 - **Fora do escopo desta versão:** Integração com serviços de mensagens proprietários (WhatsApp, SMS), módulos financeiro-contábeis próprios e adaptadores específicos para leiautes arbitrários de múltiplos financiadores externos.
 
 ## 6.4 Estabilização, implantação e transferência
@@ -88,8 +90,8 @@ A validação não se concentra na última sprint. Há cinco momentos, cada um c
 
 1. **Sprint 1 (21/09):** workshop de requisitos com a coordenação do Instituto, para apresentar a lista de requisitos, explicar o método de priorização e resolver divergências antes da entrega de 22/09.
 2. **Sprint 2 (cerca de 29/09):** modelo de meta e esboço de relatório sobre um projeto real, com a Diretoria de Projetos e o núcleo pedagógico — prevista na ata de 08/09.
-3. **Sprint 4 (até 29/10):** checkpoint com um projeto real e dados minimizados, percorrendo meta → atividade → participação → evidência, antes da sprint de relatório.
-4. **Sprint 5 (17/11):** Sprint Review do progresso de metas e do relatório sobre os dados do checkpoint.
+3. **Sprint 4 (até 29/10):** checkpoint com um projeto real e dados minimizados, percorrendo meta → atividade → inscrição, antes de o relatório do MVP ser concluído.
+4. **Sprint 5 (17/11):** Sprint Review do relatório com evidências e da presença registrada em campo.
 5. **Sprint 6:** validação final em uso real pelas áreas competentes, durante o treinamento.
 
 Cada momento é registrado em ata e na seção 7.2 apenas depois de realizado; intenção e convite não contam como validação.

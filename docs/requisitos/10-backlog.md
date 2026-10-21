@@ -9,6 +9,7 @@
 | 29/09/2026 | 2.0 | Backlog geral com as quinze histórias e seus critérios de aceitação; valor de negócio validado com o Instituto; avaliação técnica dos requisitos de CP3, de CP5 e do RF20; tabela consolidada, matriz 4 × 4, MVP, incrementos, requisitos não funcionais do MVP e registro da validação; seção organizada em 10.1 e 10.2, como no template | Vinicius Vieira e Maria Eduarda Marques |
 | 05/10/2026 | 2.1 | Inclusão de âncoras HTML unívocas para as histórias de usuário (HU-01 a HU-15) para rastreabilidade direta a partir do catálogo | Rodrigo Henrique |
 | 19/10/2026 | 2.2 | HU-03: modalidade escolhida entre as cadastradas pelo Instituto, como no RF09 e na validação de 28/09; requisitos não funcionais do cadastro da atividade (RNF02, RNF04, RNF15, RNF16) | Maria Eduarda Marques |
+| 20/10/2026 | 2.3 | Histórias derivadas dos requisitos funcionais por regras explícitas: quinze histórias passam a vinte e cinco, cada requisito com uma única história; critérios de aceitação ampliados para cobrir o texto dos requisitos; administração de contas (RF40), cadastro de modalidades (RF41) e configuração do formulário de inscrição (RF42); personas ligadas aos perfis; correspondência entre as histórias validadas e as derivadas; avaliação técnica de RF40 a RF42; requisitos não funcionais de todo o produto na Definition of Done | Equipe CyberSetor |
 
 ---
 
@@ -16,50 +17,108 @@ O backlog de produto reúne as histórias de usuário que derivam dos requisitos
 
 ## 10.1 Backlog geral
 
-Quinze histórias de usuário, uma capacidade cada, organizadas em épicos. Cada história atende à [Definition of Ready](9-dor-dod.md) antes de entrar em uma sprint; os critérios de aceitação de cada uma estão no quadro recolhível abaixo da tabela.
+As histórias derivam dos requisitos funcionais da [seção 8](8-requisitos.md) por quatro regras:
 
-| Épico | História | Requisitos funcionais |
-| :--- | :--- | :--- |
-| Requisito e meta | **HU-01** Cadastrar requisitos e metas com parâmetros de aferição | [RF01](8-requisitos.md#rf01), [RF02](8-requisitos.md#rf02), [RF03](8-requisitos.md#rf03), [RF04](8-requisitos.md#rf04) |
-| Requisito e meta | **HU-02** Atribuir responsável e prazo a meta e acompanhar vencimentos | [RF05](8-requisitos.md#rf05), [RF06](8-requisitos.md#rf06), [RF07](8-requisitos.md#rf07), [RF08](8-requisitos.md#rf08) |
-| Requisito e meta | **HU-11** Acompanhar progresso e risco de meta | [RF28](8-requisitos.md#rf28), [RF29](8-requisitos.md#rf29), [RF30](8-requisitos.md#rf30) |
-| Requisito e meta | **HU-14** Registrar termo aditivo como nova versão do plano | [RF31](8-requisitos.md#rf31) |
-| Relatório | **HU-05** Gerar relatório de execução do objeto | [RF35](8-requisitos.md#rf35), [RF36](8-requisitos.md#rf36), [RF37](8-requisitos.md#rf37), [RF39](8-requisitos.md#rf39) |
-| Relatório | **HU-13** Exportar dados do projeto em planilha aberta | [RF38](8-requisitos.md#rf38) |
-| Atividade | **HU-03** Cadastrar atividade por modalidade de objeto | [RF09](8-requisitos.md#rf09), [RF10](8-requisitos.md#rf10) |
-| Evidência | **HU-04** Vincular evidência a atividade e meta | [RF32](8-requisitos.md#rf32), [RF33](8-requisitos.md#rf33), [RF34](8-requisitos.md#rf34) |
-| Presença em campo | **HU-09** Registrar presença em campo sem conexão | [RF16](8-requisitos.md#rf16), [RF17](8-requisitos.md#rf17) |
-| Presença em campo | **HU-10** Lançar ou corrigir presença fora do prazo com justificativa | [RF19](8-requisitos.md#rf19) |
-| Presença em campo | **HU-12** Sincronizar presenças sem duplicidade | [RF18](8-requisitos.md#rf18) |
-| Pessoas | **HU-06** Consultar histórico de participação de pessoa | [RF20](8-requisitos.md#rf20), [RF21](8-requisitos.md#rf21), [RF22](8-requisitos.md#rf22), [RF24](8-requisitos.md#rf24) |
-| Pessoas | **HU-07** Inscrever-se em atividade por link ou QR Code | [RF11](8-requisitos.md#rf11), [RF12](8-requisitos.md#rf12), [RF14](8-requisitos.md#rf14), [RF15](8-requisitos.md#rf15), [RF23](8-requisitos.md#rf23), [RF24](8-requisitos.md#rf24), [RF25](8-requisitos.md#rf25) |
-| Pessoas | **HU-08** Inscrever presencialmente pessoa sem celular | [RF13](8-requisitos.md#rf13), [RF14](8-requisitos.md#rf14), [RF15](8-requisitos.md#rf15), [RF22](8-requisitos.md#rf22), [RF23](8-requisitos.md#rf23) |
-| Pessoas | **HU-15** Atender pedido do titular para corrigir, excluir ou anonimizar dados | [RF26](8-requisitos.md#rf26), [RF27](8-requisitos.md#rf27) |
+1. Cada história tem um ator e um resultado que ele observa, e cabe em uma sprint.
+2. Cada requisito funcional pertence a uma única história, onde é construído e aceito; outras histórias podem depender dele.
+3. Um requisito vira história própria quando tem ator diferente ou critério de aceitação próprio; requisito de esforço técnico 3 ou 4 é candidato a história própria.
+4. Os requisitos não funcionais e as regras de negócio de cada história são os que a [matriz 8.4.2](8-requisitos.md#842-matriz-de-rastreabilidade-dos-requisitos-nao-funcionais-rnfs) e a [seção 8.7](8-requisitos.md#87-regras-de-negocio) ligam aos seus requisitos funcionais; os que valem para todo o produto ficam fora das linhas: RNF03, RNF16 e RNF17 fazem parte da [Definition of Done](9-dor-dod.md), e RNF18 é verificado no ambiente, como descreve a [seção 6.4](../visao/6-cronograma.md#64-estabilizacao-implantacao-e-transferencia).
+
+Uma história dividida mantém o número e recebe uma letra (HU-01a, HU-01b). Cada história atende à [Definition of Ready](9-dor-dod.md) antes de entrar em uma sprint; os critérios de aceitação estão no quadro recolhível abaixo da tabela.
+
+| Épico | História | Requisitos funcionais | Depende de |
+| :--- | :--- | :--- | :--- |
+| Requisito e meta | **HU-01a** Cadastrar instrumento, documento formal e projeto | [RF01](8-requisitos.md#rf01), [RF02](8-requisitos.md#rf02), [RF03](8-requisitos.md#rf03) | — |
+| Requisito e meta | **HU-01b** Desdobrar requisitos do instrumento e metas com parâmetros de aferição | [RF04](8-requisitos.md#rf04) | HU-01a |
+| Requisito e meta | **HU-02a** Atribuir responsável, setor, prazo e situação a meta | [RF05](8-requisitos.md#rf05), [RF06](8-requisitos.md#rf06) | HU-01b |
+| Requisito e meta | **HU-02b** Acompanhar prazos no painel e receber avisos de vencimento | [RF07](8-requisitos.md#rf07), [RF08](8-requisitos.md#rf08) | HU-02a |
+| Requisito e meta | **HU-14** Registrar termo aditivo ou mudança de período como nova versão do plano | [RF31](8-requisitos.md#rf31) | HU-01b |
+| Requisito e meta | **HU-11** Acompanhar progresso e risco de meta | [RF28](8-requisitos.md#rf28), [RF29](8-requisitos.md#rf29), [RF30](8-requisitos.md#rf30) | HU-04a, HU-09a |
+| Atividade | **HU-03a** Cadastrar modalidades e atividades ligadas a metas | [RF09](8-requisitos.md#rf09), [RF41](8-requisitos.md#rf41) | HU-01b |
+| Atividade | **HU-03b** Ver as comprovações exigidas pela modalidade | [RF10](8-requisitos.md#rf10) | HU-03a |
+| Evidência | **HU-04a** Anexar evidência e vincular a atividade e meta | [RF32](8-requisitos.md#rf32), [RF33](8-requisitos.md#rf33) | HU-03a, HU-03b |
+| Evidência | **HU-04b** Restringir e orientar fotos de beneficiários | [RF34](8-requisitos.md#rf34) | HU-04a |
+| Presença em campo | **HU-09a** Registrar presença em campo | [RF16](8-requisitos.md#rf16) | HU-07c |
+| Presença em campo | **HU-09b** Registrar presença sem conexão | [RF17](8-requisitos.md#rf17) | HU-09a |
+| Presença em campo | **HU-10** Lançar ou corrigir presença fora do prazo com justificativa | [RF19](8-requisitos.md#rf19) | HU-09a |
+| Presença em campo | **HU-12** Sincronizar presenças sem duplicidade | [RF18](8-requisitos.md#rf18) | HU-09b |
+| Pessoas | **HU-07a** Inscrever-se em atividade pelo formulário público | [RF11](8-requisitos.md#rf11), [RF23](8-requisitos.md#rf23), [RF24](8-requisitos.md#rf24), [RF25](8-requisitos.md#rf25) | HU-03a |
+| Pessoas | **HU-07b** Abrir a inscrição: configurar o formulário e gerar link e QR Code | [RF12](8-requisitos.md#rf12), [RF42](8-requisitos.md#rf42) | HU-03a |
+| Pessoas | **HU-07c** Saber se conseguiu a vaga ou a posição na lista de espera | [RF14](8-requisitos.md#rf14), [RF15](8-requisitos.md#rf15) | HU-07a |
+| Pessoas | **HU-08** Inscrever presencialmente pessoa sem celular | [RF13](8-requisitos.md#rf13), [RF22](8-requisitos.md#rf22) | HU-07a, HU-07b, HU-07c |
+| Pessoas | **HU-06** Consultar histórico e carga horária de pessoa | [RF20](8-requisitos.md#rf20), [RF21](8-requisitos.md#rf21) | HU-07a, HU-09a |
+| Pessoas | **HU-15a** Corrigir dados a pedido do titular | [RF26](8-requisitos.md#rf26) | HU-07a |
+| Pessoas | **HU-15b** Excluir ou anonimizar dados a pedido do titular | [RF27](8-requisitos.md#rf27) | HU-07a |
+| Pessoas | **HU-16** Administrar contas e perfis da equipe do Instituto | [RF40](8-requisitos.md#rf40) | — |
+| Relatório | **HU-05a** Gerar relatório de execução com justificativa obrigatória | [RF35](8-requisitos.md#rf35), [RF36](8-requisitos.md#rf36), [RF39](8-requisitos.md#rf39) | HU-02a, HU-14; HU-04a para o índice de evidências |
+| Relatório | **HU-05b** Baixar o relatório em PDF diagramado | [RF37](8-requisitos.md#rf37) | HU-05a; HU-04a para as miniaturas |
+| Relatório | **HU-13** Exportar dados do projeto em planilha aberta | [RF38](8-requisitos.md#rf38) | HU-02a; HU-09a para as presenças |
+
+Personas das histórias e perfis da [seção 8.5.1](8-requisitos.md#851-perfis-de-acesso-e-permissoes-cp1-e-transversal): Diretora de Projetos, responsável de área e coordenadora de projeto atuam no perfil Presidência e Gestão de Projetos; coordenador pedagógico, coordenador autorizado, educador e integrante do núcleo pedagógico, no perfil Núcleo Pedagógico e Educadores; a pessoa interessada usa o formulário público, sem conta; a administração do sistema tem perfil próprio 🔧. As histórias de uso por perfil dependem da HU-16, que não é repetida na coluna de dependências.
 
 <a id="hu-01"></a>
-??? note "HU-01 · Cadastrar requisitos e metas com parâmetros de aferição"
+<a id="hu-01a"></a>
+??? note "HU-01a · Cadastrar instrumento, documento formal e projeto"
+    Como Diretora de Projetos, quero cadastrar o instrumento de parceria, anexar o documento que o formaliza e cadastrar os projetos dele, para reunir num só lugar a base de cada prestação de contas.
+
+    **Critérios de aceitação**
+
+    - CA-01a.1 O instrumento é cadastrado com tipo (edital, emenda ou parceria), órgão concedente, número do processo, valor global e datas de celebração e de vigência; um número de processo já usado em outro instrumento é aceito 🔧.
+    - CA-01a.2 O documento formal que celebra o instrumento, em PDF ou DOCX, fica anexado a ele e pode ser aberto por quem tem acesso ao instrumento.
+    - CA-01a.3 O projeto é cadastrado em um instrumento ativo, com código único dentro do instrumento 🔧, título, coordenador e cronograma de execução.
+
+    **Requisitos não funcionais e regras de negócio:** RNF02
+
+<a id="hu-01b"></a>
+??? note "HU-01b · Desdobrar requisitos do instrumento e metas com parâmetros de aferição"
     Como Diretora de Projetos, quero cadastrar os requisitos do instrumento e as metas do plano de trabalho de um projeto, com os parâmetros de aferição de cada meta, para saber exatamente o que precisa ser comprovado, como e quando.
 
     **Critérios de aceitação**
 
-    - CA-01.1 Em um projeto vinculado a um instrumento (edital, emenda ou parceria), a Diretora de Projetos cadastra requisitos do instrumento e metas como registros distintos e relaciona cada meta a um ou mais requisitos.
-    - CA-01.2 Cada meta registra origem, indicador, modalidade de aferição, parâmetro planejado, período e frequência de apuração e forma de comprovação.
-    - CA-01.3 Meta sem indicador, forma de verificação ou prazo fica como rascunho, é identificada como tal na lista de metas e não entra na apuração.
+    - CA-01b.1 Em um projeto vinculado a um instrumento, a Diretora de Projetos cadastra requisitos do instrumento e metas como registros distintos e relaciona cada meta a um ou mais requisitos.
+    - CA-01b.2 Cada meta registra origem, indicador, modalidade de aferição, parâmetro planejado, período e frequência de apuração e forma de comprovação.
+    - CA-01b.3 Meta sem indicador, forma de verificação ou prazo fica como rascunho, é identificada como tal na lista de metas e não entra na apuração.
 
     **Requisitos não funcionais e regras de negócio:** RNF01, RNF02; RN-01, RN-02
 
 <a id="hu-02"></a>
-??? note "HU-02 · Atribuir responsável e prazo a meta e acompanhar vencimentos"
-    Como responsável de área do Instituto, quero atribuir responsável, setor e prazo a cada meta e acompanhar os vencimentos no painel do projeto, para saber com quem está cada demanda e agir antes de o prazo expirar.
+<a id="hu-02a"></a>
+??? note "HU-02a · Atribuir responsável, setor, prazo e situação a meta"
+    Como responsável de área do Instituto, quero atribuir responsável, setor e prazo a cada meta e registrar a situação dela, para saber com quem está cada demanda.
 
     **Critérios de aceitação**
 
-    - CA-02.1 Ao atribuir responsável, setor e prazo a uma meta, esses dados aparecem no painel e na linha do tempo do projeto.
-    - CA-02.2 Meta cujo prazo esteja dentro da antecedência de alerta configurada para o instrumento, ou já vencida sem comprovação, aparece destacada no painel.
-    - CA-02.3 Meta sem responsável atribuído é sinalizada no painel do projeto.
-    - CA-02.4 A situação de cada meta (pendente, em andamento ou concluída) é exibida junto ao responsável e ao prazo.
+    - CA-02a.1 A meta registra responsável, setor executor e prazo, exibidos junto dela na lista de metas do projeto.
+    - CA-02a.2 A situação de cada meta (pendente, em andamento ou concluída) é exibida junto ao responsável e ao prazo.
 
-    **Requisitos não funcionais e regras de negócio:** RNF11; RN-03
+    **Requisitos não funcionais e regras de negócio:** RNF02
+
+<a id="hu-02b"></a>
+??? note "HU-02b · Acompanhar prazos no painel e receber avisos de vencimento"
+    Como responsável de área do Instituto, quero acompanhar os prazos no painel e na linha do tempo do projeto e ser avisado dos vencimentos, para agir antes de o prazo expirar.
+
+    **Critérios de aceitação**
+
+    - CA-02b.1 O painel e a linha do tempo do projeto mostram a vigência do instrumento, os prazos das metas com seus responsáveis e os requisitos do instrumento já atendidos.
+    - CA-02b.2 Meta cujo prazo esteja dentro da antecedência de aviso, ou já vencida sem comprovação, aparece destacada no painel.
+    - CA-02b.3 Meta sem responsável atribuído é sinalizada no painel do projeto.
+    - CA-02b.4 Os usuários autorizados recebem por e-mail o aviso de vencimento 30 dias antes do prazo e o aviso de meta vencida sem comprovação ou sem responsável; avisos adicionais podem ser registrados na própria meta.
+
+    **Requisitos não funcionais e regras de negócio:** RNF11; RN-01, RN-03
+
+<a id="hu-14"></a>
+??? note "HU-14 · Registrar termo aditivo ou mudança de período como nova versão do plano"
+    Como Diretora de Projetos, quero registrar um termo aditivo, uma apostila ou a mudança do período de execução como nova versão do plano de trabalho, para acompanhar as metas repactuadas sem perder o que foi pactuado originalmente.
+
+    **Critérios de aceitação**
+
+    - CA-14.1 O registro de termo aditivo ou apostila cria nova versão do plano de trabalho, com data e documento de origem.
+    - CA-14.2 A versão original das metas e os resultados já apurados são preservados.
+    - CA-14.3 Cada meta repactuada exibe o comparativo entre previsto original, reprogramado e realizado.
+    - CA-14.4 A mudança do período de execução por ofício, registrada com a publicação de origem e a justificativa, gera nova versão do plano e atualiza a vigência do instrumento, preservando a versão anterior.
+    - CA-14.5 Na nova versão, as metas com prazo fora da nova vigência ficam sinalizadas para revisão pelo usuário autorizado, sem mudança automática de prazo 🔧.
+
+    **Requisitos não funcionais e regras de negócio:** RNF02; RN-09, RN-13
 
 <a id="hu-11"></a>
 ??? note "HU-11 · Acompanhar progresso e risco de meta"
@@ -71,88 +130,87 @@ Quinze histórias de usuário, uma capacidade cada, organizadas em épicos. Cada
     - CA-11.2 A partir do valor exibido, a coordenadora abre os registros de presença e evidência que o compõem.
     - CA-11.3 Meta por marco (entrega única) aparece como cumprida ou não cumprida, sem percentual contínuo.
     - CA-11.4 Quando o ritmo de execução fica abaixo do critério de risco definido para a meta, a meta aparece sinalizada no painel, sem alteração do alvo.
+    - CA-11.5 O usuário autorizado define, em cada meta, se a apuração é por acúmulo contínuo ou por marco de entrega.
+    - CA-11.6 O valor apurado é recalculado logo após cada presença confirmada ou comprovação registrada.
 
-    **Requisitos não funcionais e regras de negócio:** RNF11; RN-08
-
-<a id="hu-14"></a>
-??? note "HU-14 · Registrar termo aditivo como nova versão do plano"
-    Como Diretora de Projetos, quero registrar um termo aditivo ou apostila como nova versão do plano de trabalho, para acompanhar as metas repactuadas sem perder o que foi pactuado originalmente.
-
-    **Critérios de aceitação**
-
-    - CA-14.1 O registro de termo aditivo ou apostila cria nova versão do plano de trabalho, com data e documento de origem.
-    - CA-14.2 A versão original das metas e os resultados já apurados são preservados.
-    - CA-14.3 Cada meta repactuada exibe o comparativo entre previsto original, reprogramado e realizado.
-
-    **Requisitos não funcionais e regras de negócio:** RNF02; RN-09
-
-<a id="hu-05"></a>
-??? note "HU-05 · Gerar relatório de execução do objeto"
-    Como Diretora de Projetos, quero gerar o relatório de execução do objeto de um projeto para um período, com metas previstas confrontadas aos resultados e às evidências vinculadas, para prestar contas sem montagem manual.
-
-    **Critérios de aceitação**
-
-    - CA-05.1 Ao solicitar o relatório de um período, cada meta aparece com resultado alcançado, percentual de cumprimento e índice das evidências vinculadas.
-    - CA-05.2 Meta cumprida parcialmente ou não cumprida exige justificativa registrada antes que o relatório possa ser finalizado (Lei 13.019/2014, art. 64, §1º).
-    - CA-05.3 O relatório finalizado é gerado em PDF diagramado, com as metas, as justificativas e as miniaturas das evidências com seus dados de registro.
-    - CA-05.4 Retificação feita após a finalização gera nova versão do relatório e registro na trilha de auditoria, preservando a versão anterior.
-    - CA-05.5 A geração do relatório final é bloqueada enquanto houver rascunho de evidência pendente no período, com a indicação do que falta.
-
-    **Requisitos não funcionais e regras de negócio:** RNF02, RNF07, RNF08, RNF13; RN-08, RN-11
-
-<a id="hu-13"></a>
-??? note "HU-13 · Exportar dados do projeto em planilha aberta"
-    Como Diretora de Projetos, quero exportar os dados de execução do projeto em planilha aberta, para permitir conferências internas e auditorias externas independentes e não depender do sistema para preservar a informação.
-
-    **Critérios de aceitação**
-
-    - CA-13.1 A exportação traz, em planilha aberta, as atividades, as presenças e a situação das metas do projeto no período escolhido.
-    - CA-13.2 O arquivo inclui a legenda dos campos e a data de corte dos dados.
-    - CA-13.3 Só entram os dados necessários à finalidade da exportação; dados nominais não saem para perfil sem permissão.
-    - CA-13.4 Cada exportação fica registrada na trilha de auditoria, com autor e data.
-
-    **Requisitos não funcionais e regras de negócio:** RNF02, RNF05
+    **Requisitos não funcionais e regras de negócio:** RNF11; RN-02, RN-08
 
 <a id="hu-03"></a>
-??? note "HU-03 · Cadastrar atividade por modalidade de objeto"
-    Como coordenador pedagógico, quero cadastrar uma atividade vinculada a um projeto e a uma modalidade de objeto, para que o sistema indique quais comprovações serão exigidas dessa atividade.
+<a id="hu-03a"></a>
+??? note "HU-03a · Cadastrar modalidades e atividades ligadas a metas"
+    Como coordenador pedagógico, quero cadastrar as modalidades de objeto do Instituto e cadastrar as atividades de um projeto em uma delas, ligadas às metas a que contribuem, para organizar a execução por meta.
 
     **Critérios de aceitação**
 
-    - CA-03.1 Ao cadastrar uma atividade em um projeto, o coordenador seleciona a meta ou as metas contratuais a que a atividade contribui e a modalidade de objeto entre as cadastradas pelo Instituto (por exemplo, oficina contínua, evento aberto, ação de acolhimento).
-    - CA-03.2 Ao criar a atividade, o sistema exibe as comprovações obrigatórias, opcionais e condicionais configuradas para o instrumento e a modalidade.
-    - CA-03.3 Para oficina contínua, a comprovação principal exibida é a lista de presença nominal; para ação de acolhimento, a contagem agregada de público, sem exigência de CPF.
-    - CA-03.4 A atividade guarda a versão da configuração de comprovações vigente no cadastro; mudança posterior na configuração não altera atividades já criadas.
+    - CA-03a.1 O Instituto cadastra as próprias modalidades de objeto, sem lista fixa no sistema.
+    - CA-03a.2 Ao cadastrar uma atividade em um projeto, o coordenador seleciona a meta ou as metas contratuais a que a atividade contribui e a modalidade de objeto entre as cadastradas pelo Instituto (por exemplo, oficina contínua, evento aberto, ação de acolhimento).
 
-    **Requisitos não funcionais e regras de negócio:** RNF02, RNF04, RNF15, RNF16; RN-04
+    **Requisitos não funcionais e regras de negócio:** RNF02, RNF04, RNF15; RN-04
+
+<a id="hu-03b"></a>
+??? note "HU-03b · Ver as comprovações exigidas pela modalidade"
+    Como coordenador pedagógico, quero que o sistema indique as comprovações exigidas de uma atividade pela sua modalidade, para não esquecer nenhuma prova de execução.
+
+    **Critérios de aceitação**
+
+    - CA-03b.1 O usuário autorizado configura, por instrumento e modalidade, quais comprovações são obrigatórias, opcionais ou condicionais.
+    - CA-03b.2 Ao criar a atividade, o sistema exibe as comprovações obrigatórias, opcionais e condicionais configuradas para o instrumento e a modalidade.
+    - CA-03b.3 Para oficina contínua, a comprovação principal exibida é a lista de presença nominal; para ação de acolhimento, a contagem agregada de público, sem exigência de CPF 🔧.
+    - CA-03b.4 A atividade guarda a versão da configuração de comprovações vigente no cadastro; mudança posterior na configuração não altera atividades já criadas.
+
+    **Requisitos não funcionais e regras de negócio:** RNF02; RN-04
 
 <a id="hu-04"></a>
-??? note "HU-04 · Vincular evidência a atividade e meta"
+<a id="hu-04a"></a>
+??? note "HU-04a · Anexar evidência e vincular a atividade e meta"
     Como educador, quero anexar uma evidência a uma atividade e vinculá-la a uma ou mais metas, para que a comprovação já nasça organizada por meta.
 
     **Critérios de aceitação**
 
-    - CA-04.1 Ao anexar uma evidência a uma atividade realizada, o educador informa data, local e a meta ou as metas relacionadas; autor, data e hora de envio são registrados automaticamente.
-    - CA-04.2 Ao abrir uma meta, o usuário vê as comprovações já recebidas e as pendentes, conforme a modalidade da atividade.
-    - CA-04.3 Arquivo salvo sem meta vinculada fica como rascunho, com aviso de que não compõe o índice de comprovações nem o relatório.
-    - CA-04.4 A atividade não pode ser encerrada enquanto houver rascunho pendente de vinculação ou descarte.
-    - CA-04.5 Imagem registrada como prova de execução fica visível apenas aos perfis de coordenação e prestação de contas.
+    - CA-04a.1 Ao anexar uma evidência a uma atividade realizada, o educador informa data, local e a meta ou as metas relacionadas; autor, data e hora de envio são registrados automaticamente.
+    - CA-04a.2 Quando o aparelho autoriza, a evidência registra as coordenadas geográficas do envio.
+    - CA-04a.3 Ao abrir uma meta, o usuário vê as comprovações já recebidas e as pendentes, conforme a modalidade da atividade.
+    - CA-04a.4 Arquivo salvo sem meta vinculada fica como rascunho, com aviso de que não compõe o índice de comprovações nem o relatório.
+    - CA-04a.5 A atividade não pode ser encerrada enquanto houver rascunho pendente de vinculação ou descarte.
+    - CA-04a.6 A evidência vinculada passa a compor o índice cronológico do relatório (CA-05a.1) e as miniaturas do PDF (CA-05b.1), e o rascunho pendente bloqueia a geração do relatório final (CA-05a.4).
 
-    **Requisitos não funcionais e regras de negócio:** RNF07, RNF09, RNF14; RN-10, RN-11, RN-12
+    **Requisitos não funcionais e regras de negócio:** RNF02, RNF07, RNF09, RNF10, RNF14; RN-04, RN-10, RN-11, RN-13
 
-<a id="hu-09"></a>
-??? note "HU-09 · Registrar presença em campo sem conexão"
-    Como educador em campo, quero registrar a presença dos participantes no meu celular mesmo sem internet, para que o registro nasça digital no local da atividade e não volte para o papel.
+<a id="hu-04b"></a>
+??? note "HU-04b · Restringir e orientar fotos de beneficiários"
+    Como coordenadora de projeto, quero que as fotos de prova de execução sejam vistas só por quem coordena e presta contas, e que o educador seja orientado a não identificar participantes, para proteger pessoas em situação de vulnerabilidade.
 
     **Critérios de aceitação**
 
-    - CA-09.1 Antes de ir a campo, o educador prepara a lista da atividade no celular, que guarda apenas os dados mínimos para a chamada.
-    - CA-09.2 O educador marca presença individual ou em lote dos inscritos da atividade.
-    - CA-09.3 Sem conexão, cada marcação fica salva no aparelho antes da confirmação na tela, que indica "salvo neste dispositivo", não "sincronizado".
-    - CA-09.4 As marcações salvas continuam disponíveis após fechar o navegador ou reiniciar o aparelho.
-    - CA-09.5 O educador pode incluir participante não inscrito na hora da atividade com dados mínimos de identificação, registrando sua presença na chamada.
+    - CA-04b.1 Imagem registrada como prova de execução fica visível apenas aos perfis de coordenação e prestação de contas.
+    - CA-04b.2 Ao registrar uma foto, o educador vê a orientação de enquadramento que evita identificar participantes.
+
+    **Requisitos não funcionais e regras de negócio:** RNF04; RN-12
+
+<a id="hu-09"></a>
+<a id="hu-09a"></a>
+??? note "HU-09a · Registrar presença em campo"
+    Como educador em campo, quero registrar no celular a presença dos inscritos e de quem chega sem inscrição, para que o registro nasça digital no local da atividade e não volte para o papel.
+
+    **Critérios de aceitação**
+
+    - CA-09a.1 O educador marca presença individual ou em lote dos inscritos da atividade.
+    - CA-09a.2 O educador pode incluir participante não inscrito na hora da atividade com dados mínimos de identificação, registrando sua presença na chamada; o cadastro fica marcado para regularização posterior.
+    - CA-09a.3 As presenças registradas passam a compor a exportação do projeto (CA-13.1).
 
     **Requisitos não funcionais e regras de negócio:** RNF09, RNF15
+
+<a id="hu-09b"></a>
+??? note "HU-09b · Registrar presença sem conexão"
+    Como educador em campo, quero registrar a presença dos participantes no meu celular mesmo sem internet, para não depender de sinal no local da atividade.
+
+    **Critérios de aceitação**
+
+    - CA-09b.1 Antes de ir a campo, o educador prepara a lista da atividade no celular, que guarda apenas os dados mínimos para a chamada.
+    - CA-09b.2 Sem conexão, cada marcação fica salva no aparelho antes da confirmação na tela, que indica "salvo neste dispositivo", não "sincronizado".
+    - CA-09b.3 As marcações salvas continuam disponíveis após fechar o navegador ou reiniciar o aparelho.
+
+    **Requisitos não funcionais e regras de negócio:** RNF09, RNF10
 
 <a id="hu-10"></a>
 ??? note "HU-10 · Lançar ou corrigir presença fora do prazo com justificativa"
@@ -163,9 +221,10 @@ Quinze histórias de usuário, uma capacidade cada, organizadas em épicos. Cada
     - CA-10.1 Lançamento ou correção de presença após a data da atividade exige justificativa escrita.
     - CA-10.2 Cada lançamento ou correção preserva o valor anterior, o valor novo, o autor, a data e a hora na trilha de auditoria.
     - CA-10.3 Usuário sem permissão para a atividade não consegue lançar nem corrigir presenças dela.
-    - CA-10.4 Correção em dado que compõe relatório já finalizado não altera esse relatório; a retificação segue a HU-05 (CA-05.4).
+    - CA-10.4 Correção em dado que compõe relatório já finalizado não altera esse relatório; a retificação segue a HU-05a (CA-05a.3).
+    - CA-10.5 O lançamento ou a correção com justificativa vale sem aprovação prévia.
 
-    **Requisitos não funcionais e regras de negócio:** RNF02, RNF04
+    **Requisitos não funcionais e regras de negócio:** RNF02, RNF04, RNF09; RN-13
 
 <a id="hu-12"></a>
 ??? note "HU-12 · Sincronizar presenças sem duplicidade"
@@ -179,36 +238,46 @@ Quinze histórias de usuário, uma capacidade cada, organizadas em épicos. Cada
     - CA-12.4 Registro que diverge do que já está no servidor fica visível como conflito, para tratamento pelo coordenador, sem ser descartado.
     - CA-12.5 Após a confirmação do envio, os dados nominais dos participantes deixam de ficar no aparelho, e outro usuário no mesmo aparelho não acessa a lista anterior.
 
-    **Requisitos não funcionais e regras de negócio:** RNF01, RNF03, RNF09, RNF10
-
-<a id="hu-06"></a>
-??? note "HU-06 · Consultar histórico de participação de pessoa"
-    Como integrante do núcleo pedagógico, quero consultar o histórico de participação e a carga horária acumulada de uma pessoa em diferentes projetos, para convidá-la a atividades compatíveis com seu perfil, respeitando a autorização de contato que ela registrou.
-
-    **Critérios de aceitação**
-
-    - CA-06.1 Ao abrir a ficha de uma pessoa, o núcleo pedagógico vê as atividades e os projetos de que ela participou, com datas.
-    - CA-06.2 Ao cadastrar uma pessoa com nome e telefone iguais aos de outra já cadastrada, o sistema alerta a possível duplicidade e oferece reaproveitar o registro existente.
-    - CA-06.4 Convite para nova atividade só é oferecido a quem tem autorização de contato registrada e não revogada.
-    - CA-06.5 O perfil administrativo-financeiro não acessa a ficha nominal das pessoas.
-    - CA-06.6 A ficha mostra a carga horária acumulada da pessoa, como participante ou facilitadora, a partir das presenças confirmadas.
-
-    **Requisitos não funcionais e regras de negócio:** RNF04, RNF05
+    **Requisitos não funcionais e regras de negócio:** RNF01, RNF09, RNF10
 
 <a id="hu-07"></a>
-??? note "HU-07 · Inscrever-se em atividade por link ou QR Code"
-    Como pessoa interessada em uma atividade do Instituto, quero me inscrever por um link ou QR Code no celular, sem criar conta, para garantir minha vaga sem depender de a equipe transcrever meus dados.
+<a id="hu-07a"></a>
+??? note "HU-07a · Inscrever-se em atividade pelo formulário público"
+    Como pessoa interessada em uma atividade do Instituto, quero me inscrever pelo celular, sem criar conta, para garantir minha vaga sem depender de a equipe transcrever meus dados.
 
     **Critérios de aceitação**
 
-    - CA-07.1 O formulário público da atividade abre pelo link ou pelo QR Code em navegador de celular, sem cadastro de conta ou senha.
-    - CA-07.2 Ao enviar os campos mínimos válidos, a pessoa recebe confirmação da inscrição na tela.
-    - CA-07.3 Com as vagas esgotadas, a inscrição entra na lista de espera e a pessoa é informada da posição.
-    - CA-07.4 O formulário apresenta o aviso de tratamento de dados e registra, com data e hora, a versão apresentada; para menor de idade, pede a identificação do responsável legal.
-    - CA-07.5 Envio repetido pela mesma pessoa para a mesma atividade não gera inscrição duplicada.
-    - CA-07.6 Autorização para receber comunicados e autorização de uso de imagem são opções separadas e opcionais; recusar qualquer uma não impede a inscrição.
+    - CA-07a.1 O formulário público da atividade abre em navegador de celular, sem cadastro de conta ou senha.
+    - CA-07a.2 Ao enviar os campos mínimos válidos, a pessoa recebe confirmação da inscrição na tela.
+    - CA-07a.3 O formulário apresenta o aviso de tratamento de dados e registra, com data e hora, a versão apresentada; para menor de idade, pede a identificação do responsável legal.
+    - CA-07a.4 Envio repetido pela mesma pessoa para a mesma atividade não gera inscrição duplicada.
+    - CA-07a.5 Autorização para receber comunicados e autorização de uso de imagem são opções separadas e opcionais; recusar qualquer uma não impede a inscrição.
+    - CA-07a.6 A revogação da autorização de comunicados ou de uso de imagem, pedida pela pessoa por qualquer canal, fica registrada com data e canal e não afeta a inscrição.
 
-    **Requisitos não funcionais e regras de negócio:** RNF05, RNF12, RNF15; RN-05, RN-06
+    **Requisitos não funcionais e regras de negócio:** RNF02, RNF04, RNF05, RNF12, RNF15; RN-05, RN-06, RN-12
+
+<a id="hu-07b"></a>
+??? note "HU-07b · Abrir a inscrição: configurar o formulário e gerar link e QR Code"
+    Como coordenador pedagógico, quero configurar o formulário de inscrição de uma atividade e gerar o link e o QR Code dele, para divulgar a inscrição nos canais do Instituto pedindo só os dados de que a atividade precisa.
+
+    **Critérios de aceitação**
+
+    - CA-07b.1 Ao abrir a inscrição, o coordenador define o número de vagas, os campos do formulário além dos mínimos e se o e-mail ou o CPF identifica cadastro repetido 🔧.
+    - CA-07b.2 O formulário não aceita campo estruturado de dado pessoal sensível.
+    - CA-07b.3 Para cada atividade com inscrição aberta, o coordenador gera um link e um QR Code que abrem o formulário público dela.
+
+    **Requisitos não funcionais e regras de negócio:** RNF02, RNF05, RNF12
+
+<a id="hu-07c"></a>
+??? note "HU-07c · Saber se conseguiu a vaga ou a posição na lista de espera"
+    Como pessoa interessada em uma atividade do Instituto, quero saber se consegui a vaga ou qual é minha posição na lista de espera, para me organizar.
+
+    **Critérios de aceitação**
+
+    - CA-07c.1 Com as vagas esgotadas, a inscrição entra na lista de espera e a pessoa é informada da posição.
+    - CA-07c.2 A lista de espera segue a ordem de chegada das inscrições.
+
+    **Requisitos não funcionais e regras de negócio:** —
 
 <a id="hu-08"></a>
 ??? note "HU-08 · Inscrever presencialmente pessoa sem celular"
@@ -218,23 +287,99 @@ Quinze histórias de usuário, uma capacidade cada, organizadas em épicos. Cada
 
     - CA-08.1 O coordenador inscreve a pessoa na atividade em seu nome, a partir do próprio aparelho, sem que ela precise de celular.
     - CA-08.2 A inscrição assistida respeita o limite de vagas e a lista de espera da atividade.
-    - CA-08.3 Antes de concluir, o coordenador vê o alerta de possível duplicidade e pode reaproveitar o cadastro existente.
-    - CA-08.4 O aviso de tratamento de dados apresentado à pessoa fica registrado com data, hora e autor da inscrição assistida.
+    - CA-08.3 Antes de concluir, o coordenador vê o aviso de possível cadastro repetido, pelo e-mail ou pelo CPF, conforme o campo escolhido no formulário 🔧, e pode reaproveitar o cadastro existente.
+    - CA-08.4 O aviso de tratamento de dados apresentado à pessoa fica registrado com data, hora e autor da inscrição assistida; para menor de idade, a identificação do responsável legal também é registrada.
 
-    **Requisitos não funcionais e regras de negócio:** RNF05, RNF15; RN-05, RN-06
+    **Requisitos não funcionais e regras de negócio:** RNF02, RNF04, RNF05, RNF15; RN-05, RN-06
 
-<a id="hu-15"></a>
-??? note "HU-15 · Atender pedido do titular para corrigir, excluir ou anonimizar dados"
-    Como integrante do núcleo pedagógico, quero atender o pedido de uma pessoa para corrigir, excluir ou anonimizar seus dados, para cumprir os direitos do titular sem comprometer a prestação de contas.
+<a id="hu-06"></a>
+??? note "HU-06 · Consultar histórico e carga horária de pessoa"
+    Como integrante do núcleo pedagógico, quero consultar o histórico de participação e a carga horária acumulada de uma pessoa em diferentes projetos, para convidá-la a atividades compatíveis com seu perfil, respeitando a autorização de contato que ela deu.
 
     **Critérios de aceitação**
 
-    - CA-15.1 A correção de dado a pedido do titular registra autor, data, hora e justificativa.
-    - CA-15.2 A exclusão ou anonimização é feita a pedido do titular ou ao término da finalidade.
-    - CA-15.3 Totais já reportados a financiadores e registros sob guarda legal são preservados, com o fundamento registrado por classe de dado.
-    - CA-15.4 O pedido é atendido dentro do prazo definido pelo Instituto, medido na trilha de auditoria.
+    - CA-06.1 Ao abrir a ficha de uma pessoa, o núcleo pedagógico vê as atividades e os projetos de que ela participou, com datas.
+    - CA-06.4 Convite para nova atividade só é oferecido a quem tem autorização de contato registrada e não revogada.
+    - CA-06.5 O perfil administrativo-financeiro não acessa a ficha nominal das pessoas.
+    - CA-06.6 A ficha mostra a carga horária acumulada da pessoa, como participante ou facilitadora, a partir das presenças confirmadas.
 
-    **Requisitos não funcionais e regras de negócio:** RNF02, RNF06; RN-07
+    **Requisitos não funcionais e regras de negócio:** RNF04, RNF05
+
+<a id="hu-15"></a>
+<a id="hu-15a"></a>
+??? note "HU-15a · Corrigir dados a pedido do titular"
+    Como integrante do núcleo pedagógico, quero corrigir os dados de uma pessoa a pedido dela, para cumprir o direito do titular à correção.
+
+    **Critérios de aceitação**
+
+    - CA-15a.1 A correção de dado a pedido do titular registra autor, data, hora e justificativa.
+
+    **Requisitos não funcionais e regras de negócio:** RNF02, RNF04
+
+<a id="hu-15b"></a>
+??? note "HU-15b · Excluir ou anonimizar dados a pedido do titular"
+    Como integrante do núcleo pedagógico, quero excluir ou anonimizar os dados de uma pessoa a pedido dela ou ao fim da finalidade, para cumprir os direitos do titular sem comprometer a prestação de contas.
+
+    **Critérios de aceitação**
+
+    - CA-15b.1 A exclusão ou anonimização é feita a pedido do titular ou ao término da finalidade.
+    - CA-15b.2 Totais já reportados a financiadores e registros sob guarda legal são preservados, com o fundamento registrado por classe de dado.
+    - CA-15b.3 O pedido é atendido dentro do prazo da [RNF06](8-requisitos.md#rnf06), medido na trilha de auditoria.
+
+    **Requisitos não funcionais e regras de negócio:** RNF02, RNF04, RNF06; RN-07
+
+<a id="hu-16"></a>
+??? note "HU-16 · Administrar contas e perfis da equipe do Instituto"
+    Como administrador do sistema, quero criar as contas da equipe do Instituto com o perfil de cada pessoa, desativá-las e redefinir senhas, para que cada pessoa acesse só o que o seu perfil permite.
+
+    **Critérios de aceitação**
+
+    - CA-16.1 A conta é criada com um perfil e uma senha temporária, e a pessoa troca a senha no primeiro acesso antes de usar o sistema 🔧.
+    - CA-16.2 A mudança de perfil ou a desativação vale a partir da ação seguinte da pessoa, sem esperar novo acesso 🔧.
+    - CA-16.3 Redefinir a senha gera nova senha temporária e encerra os acessos abertos da pessoa 🔧.
+    - CA-16.4 Nenhuma operação deixa o sistema sem ao menos uma conta de administração ativa.
+    - CA-16.5 Criação, mudança de perfil, desativação e redefinição de senha ficam na trilha de auditoria, sem a senha.
+
+    **Requisitos não funcionais e regras de negócio:** RNF02, RNF04
+
+<a id="hu-05"></a>
+<a id="hu-05a"></a>
+??? note "HU-05a · Gerar relatório de execução com justificativa obrigatória"
+    Como Diretora de Projetos, quero gerar o relatório de execução do objeto de um projeto para um período, com metas previstas confrontadas aos resultados e às evidências vinculadas, para prestar contas sem montagem manual.
+
+    **Critérios de aceitação**
+
+    - CA-05a.1 Ao solicitar o relatório de um período, cada meta aparece com o resultado registrado, o percentual de cumprimento sobre a meta pactuada, a justificativa e, quando houver evidência vinculada, o índice cronológico das evidências.
+    - CA-05a.2 Meta cumprida parcialmente ou não cumprida exige justificativa registrada antes que o relatório possa ser finalizado (Lei 13.019/2014, art. 64, §1º); a trava atinge só a finalização, sem impedir novos registros, e a direção é notificada.
+    - CA-05a.3 Retificação feita após a finalização gera nova versão do relatório e registro na trilha de auditoria, preservando a versão anterior.
+    - CA-05a.4 Havendo rascunho de evidência pendente no período, a geração do relatório final é bloqueada, com a indicação do que falta.
+    - CA-05a.5 A emissão de cada relatório e cada justificativa registrada ficam na trilha de auditoria, com autor, data e hora.
+
+    **Requisitos não funcionais e regras de negócio:** RNF02, RNF07, RNF08, RNF13; RN-11, RN-13
+
+<a id="hu-05b"></a>
+??? note "HU-05b · Baixar o relatório em PDF diagramado"
+    Como Diretora de Projetos, quero baixar o relatório finalizado em PDF diagramado, para entregá-lo ao financiador no formato institucional.
+
+    **Critérios de aceitação**
+
+    - CA-05b.1 O relatório finalizado é gerado em PDF diagramado, com cabeçalho institucional, sumário, as metas em tabelas, as justificativas e, quando houver evidência vinculada, as miniaturas das evidências com seus dados de registro.
+
+    **Requisitos não funcionais e regras de negócio:** RNF08, RNF13
+
+<a id="hu-13"></a>
+??? note "HU-13 · Exportar dados do projeto em planilha aberta"
+    Como Diretora de Projetos, quero exportar os dados de execução do projeto em planilha aberta, para permitir conferências internas e auditorias externas independentes e não depender do sistema para preservar a informação.
+
+    **Critérios de aceitação**
+
+    - CA-13.1 A exportação traz, em planilha aberta, nos formatos XLSX e CSV, as atividades, a situação das metas e, quando houver, as presenças do projeto no período escolhido.
+    - CA-13.2 O arquivo inclui a legenda dos campos e a data de corte dos dados.
+    - CA-13.3 Só entram os dados necessários à finalidade da exportação; dados nominais não saem para perfil sem permissão.
+    - CA-13.4 Cada exportação fica registrada na trilha de auditoria, com autor e data.
+    - CA-13.5 Ao exportar, a pessoa escolhe entre a visão analítica e a consolidada das metas.
+
+    **Requisitos não funcionais e regras de negócio:** RNF02, RNF05
 
 ## 10.2 Priorização do backlog geral e MVP
 
@@ -262,23 +407,26 @@ O **esforço técnico** de cada requisito é a média das três notas, arredonda
 
 ### 10.2.2 Avaliação de negócio com o Instituto
 
-| História | Valor | Critério | Justificativa do Instituto |
-| :--- | :---: | :--- | :--- |
-| HU-01 | 4 | Problema central | "Se vocês forem entregar só uma coisa, é isso"; perder prazos está em "grande parte dos problemas" do Instituto. |
-| HU-02 | 4 | Problema central | Perder prazos está em "grande parte dos problemas" do Instituto; aviso com 7 dias não dá tempo de refazer o que falta. |
-| HU-11 | 3 | Impacto para os usuários | A presidência quer o painel, mas ele só é confiável com o sistema abastecido de dados. |
-| HU-14 | 4 | Obrigação legal | Alterações de prazo e orçamento impostas pelo financiador precisam preservar o plano original. |
-| HU-05 | 4 | Problema central | A prestação de contas é "o maior gargalo" do Instituto; a proposta da equipe de tentar o relatório em PDF no MVP foi confirmada. |
-| HU-13 | 4 | Problema central | Exportação para conferência e auditoria proposta pela equipe e confirmada pelo Instituto no corte do MVP. |
-| HU-03 | 4 | Dependência de outra função | Complemento das parcerias e metas; as modalidades são criadas pelo próprio Instituto. |
-| HU-04 | 4 | Problema central | Comprovação "não pode passar despercebido"; entra logo depois do MVP. |
-| HU-09 | 2 | Urgência | Registro sem internet "não é um must have": as quedas são pontuais e lista e foto sobem depois. |
-| HU-10 | 4 | Obrigação legal | Justificativa obrigatória para correção fora do prazo "deveríamos ter", sem exigir aprovação. |
-| HU-12 | 2 | Urgência | Mesmo motivo da HU-09: sincronização sem conexão fica para depois. |
-| HU-06 | 2 | Impacto para os usuários | "Sonho do pedagógico", mas não é prioridade no contexto geral do Instituto. |
-| HU-07 | 4 | Abrangência de uso | "Seria excelente": facilitaria o controle de inscritos e de metas para todas as equipes. |
-| HU-08 | 4 | Abrangência de uso | Mesmo valor das inscrições por link ("seria excelente"); para a equipe, garante acesso a quem não tem celular. |
-| HU-15 | 4 🔧 | Obrigação legal | Obrigação legal (LGPD, art. 18); não foi votada na sessão e vai à conferência do Instituto. |
+O Instituto deu o valor a quatorze das quinze histórias apresentadas na validação de 28/09/2026, e a HU-15 entrou pela obrigação legal; cada história derivada na 10.1 herda o valor da original. A HU-16, de administração de contas, tem o valor proposto pela equipe, a confirmar com o Instituto 🔧.
+
+| História validada | Histórias derivadas (10.1) | Valor | Critério | Justificativa do Instituto |
+| :--- | :--- | :---: | :--- | :--- |
+| HU-01 | HU-01a, HU-01b | 4 | Problema central | "Se vocês forem entregar só uma coisa, é isso"; perder prazos está em "grande parte dos problemas" do Instituto. |
+| HU-02 | HU-02a, HU-02b | 4 | Problema central | Perder prazos está em "grande parte dos problemas" do Instituto; aviso com 7 dias não dá tempo de refazer o que falta. |
+| HU-11 | HU-11 | 3 | Impacto para os usuários | A presidência quer o painel, mas ele só é confiável com o sistema abastecido de dados. |
+| HU-14 | HU-14 | 4 | Obrigação legal | Alterações de prazo e orçamento impostas pelo financiador precisam preservar o plano original. |
+| HU-05 | HU-05a, HU-05b | 4 | Problema central | A prestação de contas é "o maior gargalo" do Instituto; a proposta da equipe de tentar o relatório em PDF no MVP foi confirmada. |
+| HU-13 | HU-13 | 4 | Problema central | Exportação para conferência e auditoria proposta pela equipe e confirmada pelo Instituto no corte do MVP. |
+| HU-03 | HU-03a, HU-03b | 4 | Dependência de outra função | Complemento das parcerias e metas; as modalidades são criadas pelo próprio Instituto. |
+| HU-04 | HU-04a, HU-04b | 4 | Problema central | Comprovação "não pode passar despercebido"; entra logo depois do MVP. |
+| HU-09 | HU-09a, HU-09b | 2 | Urgência | Registro sem internet "não é um must have": as quedas são pontuais e lista e foto sobem depois. |
+| HU-10 | HU-10 | 4 | Obrigação legal | Justificativa obrigatória para correção fora do prazo "deveríamos ter", sem exigir aprovação. |
+| HU-12 | HU-12 | 2 | Urgência | Mesmo motivo da HU-09: sincronização sem conexão fica para depois. |
+| HU-06 | HU-06 | 2 | Impacto para os usuários | "Sonho do pedagógico", mas não é prioridade no contexto geral do Instituto. |
+| HU-07 | HU-07a, HU-07b, HU-07c | 4 | Abrangência de uso | "Seria excelente": facilitaria o controle de inscritos e de metas para todas as equipes. |
+| HU-08 | HU-08 | 4 | Abrangência de uso | Mesmo valor das inscrições por link ("seria excelente"); para a equipe, garante acesso a quem não tem celular. |
+| HU-15 | HU-15a, HU-15b | 4 🔧 | Obrigação legal | Obrigação legal (LGPD, art. 18); não foi votada em 28/09 e entrou no recorte confirmado em 08/10/2026. |
+| — | HU-16 | 4 🔧 | Dependência de outra função | Sem valor atribuído pelo Instituto 🔧; as contas e os perfis são condição do acesso por perfil, que vale para todo o produto (RNF04). |
 
 ### 10.2.3 Avaliação técnica
 
@@ -305,7 +453,7 @@ O **esforço técnico** de cada requisito é a média das três notas, arredonda
 | [RF19](8-requisitos.md#rf19) | Registrar lançamento extemporâneo com justificativa | 1 | 1 | 2 | 1,3 | **1** |
 | [RF20](8-requisitos.md#rf20) | Apurar carga horária de participantes e facilitadores | 2 | 2 | 1 | 1,7 | **2** |
 | [RF21](8-requisitos.md#rf21) | Consultar histórico de participação | 2 | 1 | 1 | 1,3 | **1** |
-| [RF22](8-requisitos.md#rf22) | Alertar cadastro duplicado | 2 | 2 | 1 | 1,7 | **2** |
+| [RF22](8-requisitos.md#rf22) | Avisar cadastro repetido | 2 | 2 | 1 | 1,7 | **2** |
 | [RF23](8-requisitos.md#rf23) | Registrar aviso de tratamento de dados na inscrição | 1 | 1 | 1 | 1,0 | **1** |
 | [RF24](8-requisitos.md#rf24) | Registrar autorização de contato | 1 | 1 | 1 | 1,0 | **1** |
 | [RF25](8-requisitos.md#rf25) | Registrar autorização de uso de imagem | 2 | 2 | 1 | 1,7 | **2** |
@@ -314,7 +462,7 @@ O **esforço técnico** de cada requisito é a média das três notas, arredonda
 | [RF28](8-requisitos.md#rf28) | Calcular progresso físico de metas automaticamente | 3 | 2 | 1 | 2,0 | **2** |
 | [RF29](8-requisitos.md#rf29) | Parametrizar apuração de metas por acúmulo contínuo ou marco de entrega | 2 | 1 | 1 | 1,3 | **1** |
 | [RF30](8-requisitos.md#rf30) | Emitir alertas de risco de inexecução | 3 | 2 | 1 | 2,0 | **2** |
-| [RF31](8-requisitos.md#rf31) | Versionar metas por Termo Aditivo | 3 | 2 | 1 | 2,0 | **2** |
+| [RF31](8-requisitos.md#rf31) | Versionar o plano de trabalho | 3 | 2 | 1 | 2,0 | **2** |
 | [RF32](8-requisitos.md#rf32) | Anexar evidências documentais e fotográficas | 2 | 3 | 3 | 2,7 | **3** |
 | [RF33](8-requisitos.md#rf33) | Vincular evidência a meta contratual | 2 | 2 | 2 | 2,0 | **2** |
 | [RF34](8-requisitos.md#rf34) | Segregar acesso a fotos de beneficiários vulneráveis | 3 | 3 | 2 | 2,7 | **3** |
@@ -323,6 +471,9 @@ O **esforço técnico** de cada requisito é a média das três notas, arredonda
 | [RF37](8-requisitos.md#rf37) | Gerar relatório diagramado em PDF | 4 | 3 | 2 | 3,0 | **3** |
 | [RF38](8-requisitos.md#rf38) | Exportar dados analíticos e consolidados em planilha aberta | 2 | 1 | 1 | 1,3 | **1** |
 | [RF39](8-requisitos.md#rf39) | Registrar trilha de auditoria das operações de prestação de contas | 2 | 1 | 1 | 1,3 | **1** |
+| [RF40](8-requisitos.md#rf40) | Administrar contas e perfis de acesso | 1 | 1 | 1 | 1,0 | **1** |
+| [RF41](8-requisitos.md#rf41) | Cadastrar modalidades de objeto | 1 | 1 | 1 | 1,0 | **1** |
+| [RF42](8-requisitos.md#rf42) | Configurar o formulário de inscrição | 2 | 2 | 1 | 1,7 | **2** |
 
 ??? note "Fundamentação técnica por requisito"
     - **RF01:** CRUD administrativo padrão em Next.js e PostgreSQL (stack consolidada).
@@ -346,7 +497,7 @@ O **esforço técnico** de cada requisito é a média das três notas, arredonda
     - **RF19:** Validação de regra temporal no backend com preenchimento obrigatório de justificativa e gravação de evento na trilha de auditoria (RNF02).
     - **RF20:** Agregação sobre presenças confirmadas; depende do registro de presença.
     - **RF21:** Consulta com filtros sobre inscrições e presenças, restrita por perfil.
-    - **RF22:** Comparação de nome e telefone no ato do cadastro, com opção de reaproveitar o registro.
+    - **RF22:** Comparação do e-mail ou do CPF no ato do cadastro, conforme o campo escolhido no formulário, com opção de reaproveitar o registro.
     - **RF23:** Texto de aviso versionado e registro de ciência junto à inscrição.
     - **RF24:** Campo de autorização com data e revogação.
     - **RF25:** Autorização com revogação e efeito sobre fotos de divulgação.
@@ -362,52 +513,58 @@ O **esforço técnico** de cada requisito é a média das três notas, arredonda
     - **RF35:** Validação transacional de bloqueio de encerramento sem justificativa registrada.
     - **RF36:** Agrupamento de indicadores previstos versus realizados e ordenação cronológica do índice de evidências.
     - **RF37:** Diagramação de impressão de relatório formal em PDF com templates e ajustes de quebra de página via Puppeteer.
-    - **RF38:** Geração e download de arquivo tabular estruturado (CSV) a partir de consultas na base.
+    - **RF38:** Geração e download de arquivo tabular estruturado (XLSX e CSV) a partir de consultas na base.
     - **RF39:** Registro automático de snapshots de alterações e justificativas em tabela de log permanente.
+    - **RF40:** Cadastro de contas com perfis, desativação e regra de manter um administrador, sem integração externa.
+    - **RF41:** Cadastro simples, sem regra além da ligação com a atividade.
+    - **RF42:** Campos configuráveis por inscrição, com bloqueio de campo sensível e escolha do campo de cadastro repetido.
 
 ### 10.2.4 Tabela consolidada
 
 | Código | Histórias | Valor | Esforço técnico | Destino |
 | :---: | :--- | :---: | :---: | :--- |
-| [RF01](8-requisitos.md#rf01) | HU-01 | 4 | 1 | MVP |
-| [RF02](8-requisitos.md#rf02) | HU-01 | 4 | 1 | MVP |
-| [RF03](8-requisitos.md#rf03) | HU-01 | 4 | 1 | MVP |
-| [RF04](8-requisitos.md#rf04) | HU-01 | 4 | 2 | MVP |
-| [RF05](8-requisitos.md#rf05) | HU-02 | 4 | 1 | MVP |
-| [RF06](8-requisitos.md#rf06) | HU-02 | 4 | 1 | MVP |
-| [RF07](8-requisitos.md#rf07) | HU-02 | 4 | 2 | MVP |
-| [RF08](8-requisitos.md#rf08) | HU-02 | 4 | 2 | MVP |
-| [RF09](8-requisitos.md#rf09) | HU-03 | 4 | 1 | MVP |
-| [RF10](8-requisitos.md#rf10) | HU-03 | 4 | 3 | Incremento 2 |
-| [RF11](8-requisitos.md#rf11) | HU-07 | 4 | 2 | MVP |
-| [RF12](8-requisitos.md#rf12) | HU-07 | 4 | 1 | MVP |
+| [RF01](8-requisitos.md#rf01) | HU-01a | 4 | 1 | MVP |
+| [RF02](8-requisitos.md#rf02) | HU-01a | 4 | 1 | MVP |
+| [RF03](8-requisitos.md#rf03) | HU-01a | 4 | 1 | MVP |
+| [RF04](8-requisitos.md#rf04) | HU-01b | 4 | 2 | MVP |
+| [RF05](8-requisitos.md#rf05) | HU-02a | 4 | 1 | MVP |
+| [RF06](8-requisitos.md#rf06) | HU-02a | 4 | 1 | MVP |
+| [RF07](8-requisitos.md#rf07) | HU-02b | 4 | 2 | MVP |
+| [RF08](8-requisitos.md#rf08) | HU-02b | 4 | 2 | MVP |
+| [RF09](8-requisitos.md#rf09) | HU-03a | 4 | 1 | MVP |
+| [RF10](8-requisitos.md#rf10) | HU-03b | 4 | 3 | Incremento 2 |
+| [RF11](8-requisitos.md#rf11) | HU-07a | 4 | 2 | MVP |
+| [RF12](8-requisitos.md#rf12) | HU-07b | 4 | 1 | MVP |
 | [RF13](8-requisitos.md#rf13) | HU-08 | 4 | 1 | MVP |
-| [RF14](8-requisitos.md#rf14) | HU-07, HU-08 | 4 | 2 | MVP |
-| [RF15](8-requisitos.md#rf15) | HU-07, HU-08 | 4 | 2 | MVP |
-| [RF16](8-requisitos.md#rf16) | HU-09 | 2 | 3 | Incremento 3 |
-| [RF17](8-requisitos.md#rf17) | HU-09 | 2 | 3 | Posterior |
+| [RF14](8-requisitos.md#rf14) | HU-07c | 4 | 2 | MVP |
+| [RF15](8-requisitos.md#rf15) | HU-07c | 4 | 2 | MVP |
+| [RF16](8-requisitos.md#rf16) | HU-09a | 2 | 3 | Incremento 3 |
+| [RF17](8-requisitos.md#rf17) | HU-09b | 2 | 3 | Posterior |
 | [RF18](8-requisitos.md#rf18) | HU-12 | 2 | 3 | Posterior |
 | [RF19](8-requisitos.md#rf19) | HU-10 | 4 | 1 | Incremento 3 |
 | [RF20](8-requisitos.md#rf20) | HU-06 | 2 | 2 | Posterior |
 | [RF21](8-requisitos.md#rf21) | HU-06 | 2 | 1 | Posterior |
-| [RF22](8-requisitos.md#rf22) | HU-06, HU-08 | 4 | 2 | MVP |
-| [RF23](8-requisitos.md#rf23) | HU-07, HU-08 | 4 | 1 | MVP |
-| [RF24](8-requisitos.md#rf24) | HU-06, HU-07 | 4 | 1 | MVP |
-| [RF25](8-requisitos.md#rf25) | HU-07 | 4 | 2 | MVP |
-| [RF26](8-requisitos.md#rf26) | HU-15 | 4 🔧 | 1 | MVP |
-| [RF27](8-requisitos.md#rf27) | HU-15 | 4 🔧 | 3 | MVP |
+| [RF22](8-requisitos.md#rf22) | HU-08 | 4 | 2 | MVP |
+| [RF23](8-requisitos.md#rf23) | HU-07a | 4 | 1 | MVP |
+| [RF24](8-requisitos.md#rf24) | HU-07a | 4 | 1 | MVP |
+| [RF25](8-requisitos.md#rf25) | HU-07a | 4 | 2 | MVP |
+| [RF26](8-requisitos.md#rf26) | HU-15a | 4 🔧 | 1 | MVP |
+| [RF27](8-requisitos.md#rf27) | HU-15b | 4 🔧 | 3 | MVP |
 | [RF28](8-requisitos.md#rf28) | HU-11 | 3 | 2 | Posterior |
 | [RF29](8-requisitos.md#rf29) | HU-11 | 3 | 1 | Posterior |
 | [RF30](8-requisitos.md#rf30) | HU-11 | 3 | 2 | Posterior |
 | [RF31](8-requisitos.md#rf31) | HU-14 | 4 | 2 | MVP |
-| [RF32](8-requisitos.md#rf32) | HU-04 | 4 | 3 | Incremento 2 |
-| [RF33](8-requisitos.md#rf33) | HU-04 | 4 | 2 | Incremento 2 |
-| [RF34](8-requisitos.md#rf34) | HU-04 | 4 | 3 | Incremento 2 |
-| [RF35](8-requisitos.md#rf35) | HU-05 | 4 | 1 | MVP |
-| [RF36](8-requisitos.md#rf36) | HU-05 | 4 | 2 | MVP |
-| [RF37](8-requisitos.md#rf37) | HU-05 | 4 | 3 | MVP |
+| [RF32](8-requisitos.md#rf32) | HU-04a | 4 | 3 | Incremento 2 |
+| [RF33](8-requisitos.md#rf33) | HU-04a | 4 | 2 | Incremento 2 |
+| [RF34](8-requisitos.md#rf34) | HU-04b | 4 | 3 | Incremento 2 |
+| [RF35](8-requisitos.md#rf35) | HU-05a | 4 | 1 | MVP |
+| [RF36](8-requisitos.md#rf36) | HU-05a | 4 | 2 | MVP |
+| [RF37](8-requisitos.md#rf37) | HU-05b | 4 | 3 | MVP |
 | [RF38](8-requisitos.md#rf38) | HU-13 | 4 | 1 | MVP |
-| [RF39](8-requisitos.md#rf39) | HU-05 | 4 | 1 | MVP |
+| [RF39](8-requisitos.md#rf39) | HU-05a | 4 | 1 | MVP |
+| [RF40](8-requisitos.md#rf40) | HU-16 | 4 🔧 | 1 | MVP |
+| [RF41](8-requisitos.md#rf41) | HU-03a | 4 | 1 | MVP |
+| [RF42](8-requisitos.md#rf42) | HU-07b | 4 | 2 | MVP |
 
 ### 10.2.5 Matriz 4 × 4
 
@@ -415,7 +572,7 @@ Linhas: valor de negócio. Colunas: esforço técnico. Em negrito, os requisitos
 
 | Valor \ Esforço | 1 | 2 | 3 | 4 |
 | :---: | :--- | :--- | :--- | :--- |
-| **4** | **RF01**, **RF02**, **RF03**, **RF05**, **RF06**, **RF09**, **RF12**, **RF13**, RF19, **RF23**, **RF24**, **RF26** 🔧, **RF35**, **RF38**, **RF39** | **RF04**, **RF07**, **RF08**, **RF11**, **RF14**, **RF15**, **RF22**, **RF25**, **RF31**, RF33, **RF36** | RF10, **RF27** 🔧, RF32, RF34, **RF37** | — |
+| **4** | **RF01**, **RF02**, **RF03**, **RF05**, **RF06**, **RF09**, **RF12**, **RF13**, RF19, **RF23**, **RF24**, **RF26** 🔧, **RF35**, **RF38**, **RF39**, **RF40** 🔧, **RF41** | **RF04**, **RF07**, **RF08**, **RF11**, **RF14**, **RF15**, **RF22**, **RF25**, **RF31**, RF33, **RF36**, **RF42** | RF10, **RF27** 🔧, RF32, RF34, **RF37** | — |
 | **3** | RF29 | RF28, RF30 | — | — |
 | **2** | RF21 | RF20 | RF16, RF17, RF18 | — |
 | **1** | — | — | — | — |
@@ -429,20 +586,23 @@ O MVP é o primeiro recorte utilizável pelo Instituto: cadastrar o instrumento 
 
 | Incremento | Épicos e histórias | Requisitos funcionais |
 | :--- | :--- | :--- |
-| **MVP** | Requisito e meta: HU-01, HU-02, HU-14 · Relatório: HU-05, HU-13 · Pessoas: HU-07, HU-08, HU-15 · Atividade: cadastro da atividade (parte da HU-03) | RF01 a RF09, RF11 a RF15, RF22 a RF27, RF31, RF35 a RF39 |
-| Incremento 2 | Atividade: comprovações por modalidade (restante da HU-03) · Evidência: HU-04 | RF10, RF32 a RF34 |
-| Incremento 3 | Presença em campo: HU-10 e o registro on-line da HU-09 | RF16, RF19 |
-| Posterior | Presença em campo: registro sem conexão e sincronização (HU-09, HU-12) · Pessoas: HU-06 · Requisito e meta: HU-11 | RF17, RF18, RF20, RF21, RF28 a RF30 |
+| **MVP** | Requisito e meta: HU-01a, HU-01b, HU-02a, HU-02b, HU-14 · Atividade: HU-03a · Pessoas: HU-07a, HU-07b, HU-07c, HU-08, HU-15a, HU-15b, HU-16 · Relatório: HU-05a, HU-05b, HU-13 | RF01 a RF09, RF11 a RF15, RF22 a RF27, RF31, RF35 a RF42 |
+| Incremento 2 | Atividade: HU-03b · Evidência: HU-04a, HU-04b | RF10, RF32 a RF34 |
+| Incremento 3 | Presença em campo: HU-09a, HU-10 | RF16, RF19 |
+| Posterior | Presença em campo: HU-09b, HU-12 · Pessoas: HU-06 · Requisito e meta: HU-11 | RF17, RF18, RF20, RF21, RF28 a RF30 |
 
 **Justificativas do recorte.**
 
 - **Fluxo mínimo completo.** O MVP fecha dois ciclos: do cadastro do instrumento à emissão do relatório, e da criação da atividade à lista de inscritos, com os controles de dados pessoais que a inscrição exige.
-- **Inscrições no MVP (HU-07, HU-08).** Valor 4 e esforço 1 ou 2 em todos os requisitos; o Instituto disse que elas "seriam excelentes" para acompanhar inscritos e metas em todas as equipes.
-- **RF09 (cadastrar atividade), da HU-03.** Entra no MVP por dependência, porque toda inscrição é feita em uma atividade. As comprovações por modalidade (RF10) ficam para o incremento 2, com as evidências; a HU-03 é dividida no refinamento.
-- **HU-15 no MVP, valor 4 🔧.** Com as inscrições, o sistema passa a guardar dados pessoais de participantes, e o atendimento aos direitos do titular é obrigação legal desde o primeiro dado. O RF27 (excluir ou anonimizar, esforço 3) entra por essa obrigação.
+- **Inscrições no MVP (HU-07a, HU-07b, HU-07c e HU-08).** Valor 4 e esforço 1 ou 2 em todos os requisitos; o Instituto disse que elas "seriam excelentes" para acompanhar inscritos e metas em todas as equipes.
+- **RF09 (cadastrar atividade), da HU-03a.** Entra no MVP por dependência, porque toda inscrição é feita em uma atividade. As comprovações por modalidade (RF10) ficam para o incremento 2, com as evidências; a HU-03a cobre o cadastro e a HU-03b, as comprovações.
+- **HU-15a e HU-15b no MVP, valor 4 🔧.** Com as inscrições, o sistema passa a guardar dados pessoais de participantes, e o atendimento aos direitos do titular é obrigação legal desde o primeiro dado. O RF27 (excluir ou anonimizar, esforço 3) entra por essa obrigação.
+- **RF41 (cadastrar modalidades), da HU-03a.** Entra com o RF09, porque cada atividade é cadastrada em uma modalidade criada pelo Instituto.
+- **Configuração do formulário (RF42), da HU-07b.** Entra com as inscrições porque o campo que identifica cadastro repetido (e-mail ou CPF) é escolhido no formulário, a confirmar com o Instituto 🔧.
+- **HU-16 (contas e perfis) no MVP.** O acesso por perfil vale desde a primeira entrega e depende das contas; a história também serve às validações com o Instituto.
 - **RF37 (relatório em PDF), valor 4 e esforço 3.** Entra por proposta da equipe confirmada pelo Instituto, em forma reduzida: no MVP o PDF reproduz o relatório do RF36 sem as miniaturas de evidências, que chegam com o incremento 2.
 - **RF36 (relatório de execução).** No MVP o relatório traz metas, indicadores pactuados, situação registrada e justificativas; o índice de comprovações chega com a evidência (incremento 2) e o atingido calculado, com o RF28 (HU-11).
-- **HU-05 e HU-13 em recorte parcial.** Os critérios que dependem de evidência ou de presença (índice e miniaturas de evidências, bloqueio por rascunho de evidência, exportação de presenças) são atendidos nos incrementos seguintes; as duas histórias são divididas no refinamento antes da construção, como a HU-09 (registro on-line e registro sem conexão).
+- **Relatório e planilha com os dados existentes (HU-05a, HU-05b e HU-13).** No MVP, o relatório, o PDF e a planilha saem com metas, situação registrada e justificativas; as evidências e as presenças passam a compor esses documentos quando a HU-04a e a HU-09a são entregues, cada uma com o critério que o verifica.
 - **Evidências no incremento 2.** O Instituto ordenou as evidências logo depois do MVP; o esforço delas (RF32 e RF34 com esforço 3) não cabe na primeira entrega.
 - **HU-10 (lançamento fora do prazo).** Foi apresentada e validada junto com evidências, mas corrige presenças já registradas; por isso acompanha o registro de presença no incremento 3.
 - **RF16 (registro on-line de presença), valor 2.** Sobe para o incremento 3 por dependência: a HU-10, de valor 4, corrige presenças registradas por ele. O registro sem conexão (RF17) e a sincronização (RF18) ficam para depois.
@@ -452,12 +612,14 @@ O MVP é o primeiro recorte utilizável pelo Instituto: cadastrar o instrumento 
 
 | Classe | Requisitos não funcionais | Motivo |
 | :--- | :--- | :--- |
-| Obrigatórios para o MVP | [RNF03](8-requisitos.md#rnf03), [RNF04](8-requisitos.md#rnf04), [RNF16](8-requisitos.md#rnf16), [RNF17](8-requisitos.md#rnf17), [RNF18](8-requisitos.md#rnf18) | Valem para todo o produto desde a primeira entrega: acesso autenticado por perfil, conforme os perfis levantados com o Instituto (8.5.1), compatibilidade, pilha tecnológica e cópia de segurança |
+| Obrigatórios para o MVP | [RNF03](8-requisitos.md#rnf03), [RNF04](8-requisitos.md#rnf04), [RNF16](8-requisitos.md#rnf16), [RNF17](8-requisitos.md#rnf17), [RNF18](8-requisitos.md#rnf18) | Valem para todo o produto desde a primeira entrega: acesso autenticado por perfil, conforme os perfis levantados com o Instituto (8.5.1), compatibilidade, pilha tecnológica e cópia de segurança; RNF03, RNF16 e RNF17 fazem parte da Definition of Done dos itens de código |
 | Associados a RFs do MVP | [RNF01](8-requisitos.md#rnf01), [RNF02](8-requisitos.md#rnf02), [RNF05](8-requisitos.md#rnf05), [RNF06](8-requisitos.md#rnf06), [RNF07](8-requisitos.md#rnf07), [RNF08](8-requisitos.md#rnf08), [RNF11](8-requisitos.md#rnf11), [RNF12](8-requisitos.md#rnf12), [RNF13](8-requisitos.md#rnf13), [RNF15](8-requisitos.md#rnf15) | Integridade das metas, auditoria, minimização de dados e prazo de exclusão, guarda e integridade dos relatórios, desempenho do painel de prazos, da inscrição pública e da geração de relatórios, usabilidade da inscrição em celular |
 | Evolutivos | [RNF09](8-requisitos.md#rnf09), [RNF10](8-requisitos.md#rnf10), [RNF14](8-requisitos.md#rnf14) | Entram com os incrementos de evidência e de operação sem conexão |
 | Não aplicáveis | — | Nenhum requisito não funcional foi descartado |
 
 ### 10.2.8 Validação com o Instituto
+
+Os códigos de história são os da sessão; a correspondência com as histórias derivadas está na 10.2.2.
 
 | Item | Registro |
 | :--- | :--- |

@@ -16,6 +16,7 @@ Este histórico é o do Documento de Visão como um todo. Cada seção traz, no 
 | 17/09/2026 | 1.5 | Riscos da intervenção social aprofundados; calendário alinhado ao plano de sprint e aos prazos da Unidade 2; cadência de validação semanal; correções de coerência, de base legal e de nomenclatura em todas as seções | Equipe CyberSetor |
 | 29/09/2026 | 1.6 | Definition of Ready, com os critérios INVEST, e Definition of Done na seção 9; processo de validação ligado a elas | Equipe CyberSetor |
 | 05/10/2026 | 1.7 | Revisão editorial: correção de sintaxe Markdown no sumário e padronização executiva das descrições das seções | Rodrigo Henrique |
+| 20/10/2026 | 1.8 | Histórias derivadas dos requisitos funcionais, com uma história dona por requisito; requisitos de contas, modalidades e formulário de inscrição; pontos em aberto revistos contra as validações; MVP concluído na Sprint 4 | Equipe CyberSetor |
 
 ## Sumário
 
