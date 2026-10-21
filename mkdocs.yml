@@ -137,6 +137,7 @@ nav:
               - 23/09 · Sprint Planning 2: gestao/atas/2026-09-23-sprint-planning.md
               - 06/10 · Review e Retrospectiva 2: gestao/atas/2026-10-06-sprint-review-retrospectiva.md
               - 07/10 · Sprint Planning 3: gestao/atas/2026-10-07-sprint-planning.md
+              - 20/10 · Review, Retrospectiva 3 e Planning 4: gestao/atas/2026-10-20-sprint-review-retrospectiva-planning.md
       - Sprints:
           - Sprint 1:
               - Plano da Sprint 1: gestao/sprints/sprint-1.md
@@ -147,6 +148,9 @@ nav:
           - Sprint 3:
               - Plano da Sprint 3: gestao/sprints/sprint-3.md
               - Tarefas da Sprint 3: gestao/sprints/tarefas-sprint-3.md
+          - Sprint 4:
+              - Plano da Sprint 4: gestao/sprints/sprint-4.md
+              - Tarefas da Sprint 4: gestao/sprints/tarefas-sprint-4.md
   - Entregas:
       - Unidade 1: entregas/unidade-1.md
       - Débitos e feedbacks da Unidade 1: entregas/debitos-u1.md
