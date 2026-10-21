@@ -21,7 +21,7 @@ Reunião de encerramento da Sprint 3 e de planejamento da Sprint 4, realizada em
 | **Documentos vistos** | Quadro "CyberSetor - Board"; pull requests abertos da API, do front e da documentação; API e front em execução local; documentação interativa da API |
 | **Técnicas de ER aplicadas** | Organização e atualização do backlog (reestruturação das histórias de usuário) |
 | **Sprint** | Sprint 3 (06/10 – 20/10/2026) · Sprint 4 (20/10 – 03/11/2026) |
-| **Documentos relacionados** | [Plano da Sprint 3](../sprints/sprint-3.md) · [ATA-2026-10-07-SP (Sprint Planning 3)](2026-10-07-sprint-planning.md) · [Ata de validação do MVP de 08/10/2026](2026-10-08-validacao-mvp-instituto.md) |
+| **Documentos relacionados** | [Plano da Sprint 3](../sprints/sprint-3.md) · [Plano da Sprint 4](../sprints/sprint-4.md) · [ATA-2026-10-07-SP (Sprint Planning 3)](2026-10-07-sprint-planning.md) · [Ata de validação do MVP de 08/10/2026](2026-10-08-validacao-mvp-instituto.md) |
 
 ---
 
