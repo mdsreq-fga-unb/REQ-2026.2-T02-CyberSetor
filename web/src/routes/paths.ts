@@ -7,6 +7,7 @@ export const paths = {
     root: '/',
     accounts: '/contas',
     instruments: '/instrumentos',
+    instrument: (id: string) => `/instrumentos/${encodeURIComponent(id)}`,
     modalities: '/modalidades',
   },
 } as const;
