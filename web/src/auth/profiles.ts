@@ -1,4 +1,4 @@
-import { HouseIcon, UsersIcon, type LucideIcon } from 'lucide-react';
+import { FileTextIcon, HouseIcon, UsersIcon, type LucideIcon } from 'lucide-react';
 import { paths } from '@/routes/paths';
 import type { Perfil } from './types';
 
@@ -19,6 +19,12 @@ export interface NavItem {
 
 export const NAVIGATION: NavItem[] = [
   { href: paths.dashboard.root, label: 'Início', icon: HouseIcon },
+  {
+    href: paths.dashboard.instruments,
+    label: 'Instrumentos',
+    icon: FileTextIcon,
+    profiles: ['PRESIDENCIA_GESTAO', 'NUCLEO_PEDAGOGICO', 'ADMINISTRATIVO_FINANCEIRO'],
+  },
   {
     href: paths.dashboard.accounts,
     label: 'Contas',

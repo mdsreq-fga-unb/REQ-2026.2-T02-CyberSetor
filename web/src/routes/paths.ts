@@ -6,5 +6,6 @@ export const paths = {
   dashboard: {
     root: '/',
     accounts: '/contas',
+    instruments: '/instrumentos',
   },
 } as const;
