@@ -1,9 +1,10 @@
 'use client';
 
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useEffect, useState, type FormEvent, type ReactNode } from 'react';
-import { Controller, useForm, type Control, type ControllerRenderProps } from 'react-hook-form';
+import { useEffect, useState, type FormEvent } from 'react';
+import { useForm } from 'react-hook-form';
 import { z } from 'zod';
+import { FormField } from '@/components/form-field';
 import { Button } from '@/components/ui/button';
 import {
   Dialog,
@@ -13,7 +14,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from '@/components/ui/dialog';
-import { Field, FieldError, FieldGroup, FieldLabel } from '@/components/ui/field';
+import { FieldGroup } from '@/components/ui/field';
 import { Input } from '@/components/ui/input';
 import { NativeSelect, NativeSelectOption } from '@/components/ui/native-select';
 import { ApiError } from '@/lib/api';
@@ -87,43 +88,6 @@ function failureOf(error: unknown): string {
   if (error.status === 409 || error.status === 400) return error.message;
   if (error.status === 403) return 'Só a Presidência e Gestão de Projetos cadastra instrumentos.';
   return 'Não foi possível salvar. Tente de novo.';
-}
-
-function FormField({
-  name,
-  label,
-  control,
-  children,
-}: {
-  name: FieldName;
-  label: string;
-  control: Control<FormValues>;
-  children: (
-    props: ControllerRenderProps<FormValues, FieldName> & {
-      id: string;
-      'aria-invalid': boolean;
-      'aria-describedby': string | undefined;
-    },
-  ) => ReactNode;
-}) {
-  return (
-    <Controller
-      name={name}
-      control={control}
-      render={({ field, fieldState }) => (
-        <Field data-invalid={fieldState.invalid}>
-          <FieldLabel htmlFor={name}>{label}</FieldLabel>
-          {children({
-            ...field,
-            id: name,
-            'aria-invalid': fieldState.invalid,
-            'aria-describedby': fieldState.invalid ? `${name}-error` : undefined,
-          })}
-          {fieldState.invalid && <FieldError id={`${name}-error`} errors={[fieldState.error]} />}
-        </Field>
-      )}
-    />
-  );
 }
 
 export function InstrumentFormDialog({
