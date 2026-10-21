@@ -36,6 +36,13 @@ describe('perfis de acesso', () => {
     );
   });
 
+  it.each(PERFIS)('modalidades aparece para quem consulta ou cadastra: %s', (perfil) => {
+    const hrefs = navigationFor(perfil, NAVIGATION).map((item) => item.href);
+    expect(hrefs.includes('/modalidades')).toBe(
+      ['PRESIDENCIA_GESTAO', 'NUCLEO_PEDAGOGICO', 'ADMINISTRATIVO_FINANCEIRO'].includes(perfil),
+    );
+  });
+
   it('item restrito so aparece para os perfis autorizados', () => {
     const items = [
       { href: '/a', label: 'A' },
