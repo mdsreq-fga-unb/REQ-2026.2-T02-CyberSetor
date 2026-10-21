@@ -1,12 +1,12 @@
 name: ci-api
 
 # Integração contínua da linha da API: formatação, lint, tipos, testes unitários,
-# testes de ponta a ponta e build em todo pull request para api-develop e api, e
-# no push a essas branches. A versão do Node vem de api/.nvmrc e a do pnpm do
-# campo packageManager de api/package.json (lido pelo pnpm/action-setup), para
-# que o CI e a máquina de cada integrante usem o mesmo ambiente. Os testes de
-# ponta a ponta correm contra um PostgreSQL real, com as migrações aplicadas
-# pelo Prisma antes da suíte.
+# migrações, testes de ponta a ponta, build e imagem de implantação em todo pull
+# request para api-develop e api, e no push a essas branches. A versão do Node
+# vem de api/.nvmrc e a do pnpm do campo packageManager de api/package.json
+# (lido pelo pnpm/action-setup), para que o CI e a máquina de cada integrante
+# usem o mesmo ambiente. Os testes de ponta a ponta correm contra um PostgreSQL
+# real, com as migrações aplicadas pelo Prisma antes da suíte.
 
 on:
   pull_request:
@@ -46,6 +46,8 @@ jobs:
       DATABASE_URL: postgresql://cybersetor:cybersetor@localhost:5432/cybersetor_test
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
 
       - name: Há código?
         id: codigo
@@ -89,9 +91,23 @@ jobs:
         if: steps.codigo.outputs.existe == 'true'
         run: pnpm test
 
+      - name: Migração aplicada sem alteração
+        if: steps.codigo.outputs.existe == 'true' && github.event_name == 'pull_request'
+        run: |
+          alteradas=$(git diff --name-only --diff-filter=MDR HEAD^1 HEAD -- prisma/migrations)
+          if [ -n "$alteradas" ]; then
+            echo "::error title=Migração alterada::migração já integrada não se edita nem se apaga; crie uma nova."
+            echo "$alteradas"
+            exit 1
+          fi
+
       - name: Migrações no banco de teste
         if: steps.codigo.outputs.existe == 'true'
         run: pnpm db:deploy
+
+      - name: Schema sem mudança fora de migração
+        if: steps.codigo.outputs.existe == 'true'
+        run: pnpm db:check
 
       - name: Testes de ponta a ponta
         if: steps.codigo.outputs.existe == 'true'
@@ -100,3 +116,45 @@ jobs:
       - name: Build
         if: steps.codigo.outputs.existe == 'true'
         run: pnpm build
+
+  imagem:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    services:
+      postgres:
+        image: postgres:18
+        env:
+          POSTGRES_USER: cybersetor
+          POSTGRES_PASSWORD: cybersetor
+          POSTGRES_DB: cybersetor_imagem
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U cybersetor -d cybersetor_imagem"
+          --health-interval 5s
+          --health-timeout 3s
+          --health-retries 10
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Imagem de implantação
+        run: |
+          if [ ! -f api/Dockerfile ]; then
+            echo "::notice title=Sem Dockerfile::api/Dockerfile ainda não existe."
+            exit 0
+          fi
+          docker build -t api-ci api
+          docker run -d --name api-ci --network host \
+            -e NODE_ENV=production \
+            -e DATABASE_URL=postgresql://cybersetor:cybersetor@localhost:5432/cybersetor_imagem \
+            -e JWT_SECRET="$(openssl rand -base64 48)" \
+            api-ci
+          for _ in $(seq 1 40); do
+            estado=$(docker inspect --format '{{.State.Health.Status}}' api-ci)
+            [ "$estado" = healthy ] && exit 0
+            [ "$(docker inspect --format '{{.State.Running}}' api-ci)" = false ] && break
+            sleep 3
+          done
+          docker logs api-ci
+          echo "::error title=Imagem::a API não ficou saudável (estado: $estado)."
+          exit 1

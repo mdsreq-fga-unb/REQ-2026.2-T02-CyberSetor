@@ -29,6 +29,7 @@
     "db:migrate:create": "prisma migrate dev --create-only",
     "db:deploy": "prisma migrate deploy",
     "db:status": "prisma migrate status",
+    "db:check": "prisma migrate diff --from-config-datasource --to-schema prisma/schema.prisma --exit-code",
     "db:reset": "prisma migrate reset",
     "seed:admin": "pnpm build && node --env-file-if-exists=.env dist/seed-admin.js"
   },

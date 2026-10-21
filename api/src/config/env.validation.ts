@@ -1,3 +1,4 @@
+import { isIP } from 'node:net';
 import { plainToInstance } from 'class-transformer';
 import {
   IsEnum,
@@ -8,8 +9,27 @@ import {
   Max,
   Min,
   MinLength,
+  ValidateBy,
   validateSync,
 } from 'class-validator';
+
+const PROXY_RANGES = new Set(['loopback', 'linklocal', 'uniquelocal']);
+
+function isProxyItem(item: string): boolean {
+  if (PROXY_RANGES.has(item)) return true;
+  const [address, prefix, ...rest] = item.split('/');
+  const version = isIP(address);
+  if (version === 0 || rest.length > 0) return false;
+  if (prefix === undefined) return true;
+  return /^\d{1,3}$/.test(prefix) && Number(prefix) <= (version === 4 ? 32 : 128);
+}
+
+export function isTrustProxy(value: unknown): boolean {
+  if (typeof value !== 'string') return false;
+  const trimmed = value.trim();
+  if (/^\d+$/.test(trimmed)) return true;
+  return trimmed.split(',').every((item) => isProxyItem(item.trim()));
+}
 
 export enum NodeEnv {
   DEVELOPMENT = 'development',
@@ -53,10 +73,18 @@ export class EnvironmentVariables {
   @IsInt()
   @Min(1)
   SESSION_ABSOLUTE_TIMEOUT_HOURS: number = 8;
+
+  @IsOptional()
+  @ValidateBy({ name: 'isTrustProxy', validator: { validate: isTrustProxy } })
+  TRUST_PROXY?: string;
 }
 
 export function validateEnv(config: Record<string, unknown>): EnvironmentVariables {
-  const filled = Object.fromEntries(Object.entries(config).filter(([, value]) => value !== ''));
+  const filled = Object.fromEntries(
+    Object.entries(config).filter(
+      ([, value]) => !(typeof value === 'string' && value.trim() === ''),
+    ),
+  );
   const validated = plainToInstance(EnvironmentVariables, filled, {
     enableImplicitConversion: true,
   });

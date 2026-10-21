@@ -9,7 +9,10 @@ async function bootstrap(): Promise<void> {
   const app = await NestFactory.create(AppModule);
   const config = app.get(ConfigService<EnvironmentVariables, true>);
 
-  setupApp(app, { corsOrigin: config.get('CORS_ORIGIN', { infer: true }) });
+  setupApp(app, {
+    corsOrigin: config.get('CORS_ORIGIN', { infer: true }),
+    trustProxy: config.get('TRUST_PROXY', { infer: true }),
+  });
 
   const port = config.get('PORT', { infer: true });
   await app.listen(port);

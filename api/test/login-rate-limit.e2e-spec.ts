@@ -34,4 +34,42 @@ describe('Limite de tentativas de login por IP (e2e)', () => {
     expect(res.body).toMatchObject({ code: 'RATE_LIMITED' });
     expect(res.headers['retry-after']).toBeDefined();
   });
+
+  it('sem proxy confiavel, o X-Forwarded-For enviado pelo cliente nao troca o balde', async () => {
+    const res = await request(app.getHttpServer())
+      .post('/v1/auth/login')
+      .set('X-Forwarded-For', '203.0.113.99')
+      .send({ email: 'ninguem@instituto.test', senha: 'senha qualquer de teste' });
+
+    expect(res.status).toBe(429);
+  });
+});
+
+describe('Limite de tentativas de login atras do proxy (e2e)', () => {
+  let app: INestApplication<App>;
+
+  beforeAll(async () => {
+    const moduleRef = await Test.createTestingModule({ imports: [AppModule] }).compile();
+    app = moduleRef.createNestApplication();
+    setupApp(app, { corsOrigin: '', trustProxy: 'loopback, linklocal, uniquelocal' });
+    await app.init();
+  });
+
+  afterAll(async () => {
+    await app.close();
+  });
+
+  it('conta o limite pelo IP do cliente informado pelo proxy, e nao pelo IP do proxy', async () => {
+    const attempt = (ip: string) =>
+      request(app.getHttpServer())
+        .post('/v1/auth/login')
+        .set('X-Forwarded-For', ip)
+        .send({ email: 'ninguem@instituto.test', senha: 'senha qualquer de teste' });
+
+    for (let i = 0; i < LOGIN_ATTEMPTS_PER_MINUTE_PER_IP; i++) {
+      await attempt('203.0.113.10').expect(401);
+    }
+    await attempt('203.0.113.10').expect(429);
+    await attempt('203.0.113.20').expect(401);
+  });
 });

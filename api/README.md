@@ -36,8 +36,13 @@ Os mesmos comandos rodam na máquina de cada integrante e na integração contí
 | `db:deploy`         | `pnpm db:deploy`                          | aplica as migrações pendentes sem gerar nada; é o que o CI e a homologação executam                           |
 | `db:status`         | `pnpm db:status`                          | compara `prisma/migrations` com a tabela `_prisma_migrations` do banco                                        |
 | `db:reset`          | `pnpm db:reset`                           | apaga o banco local e reaplica todas as migrações; só em desenvolvimento, pede confirmação                    |
+| `db:check`          | `pnpm db:check`                           | falha se o `schema.prisma` mudou sem migração; o CI roda depois do `db:deploy`                                |
 
 Migrações só acrescentam e são commitadas junto com o schema; `prisma db push` não é usado em homologação nem produção.
+
+- Uma migração por pull request, gerada com `pnpm db:migrate` depois de atualizar a branch com a `api-develop`. Se duas branches mexerem no schema, a segunda refaz a migração em cima da primeira, já integrada.
+- Migração aplicada não se edita; corrige-se com outra migração. O CI recusa pull request que altere ou apague arquivo em `prisma/migrations`.
+- Mudança que remove ou renomeia coluna em uso entra em duas etapas (acrescentar, migrar o uso, remover depois), porque o rollback da implantação não desfaz o banco.
 
 ## Execução local
 
@@ -62,21 +67,44 @@ O `.env`, o `.env.test` e o cliente gerado não são versionados. O `.env.exampl
 
 ## Variáveis de ambiente
 
-| Variável                         | Padrão               | Uso                                                                  |
-| -------------------------------- | -------------------- | -------------------------------------------------------------------- |
-| `NODE_ENV`                       | `development`        | `production` em homologação e produção (cookie `__Host-` e `Secure`) |
-| `PORT`                           | `3001`               | porta da API                                                         |
-| `CORS_ORIGIN`                    | vazio                | origem exata do front, ex.: `http://localhost:3000`                  |
-| `DATABASE_URL`                   | —                    | obrigatória                                                          |
-| `JWT_SECRET`                     | —                    | obrigatória, 32 caracteres ou mais                                   |
-| `ACCESS_TOKEN_TTL_MINUTES`       | `15`                 | validade do token de acesso                                          |
-| `SESSION_IDLE_TIMEOUT_MINUTES`   | `30`                 | encerramento por inatividade                                         |
-| `SESSION_ABSOLUTE_TIMEOUT_HOURS` | `8`                  | duração máxima da sessão                                             |
-| `SEED_ADMIN_NAME/EMAIL/PASSWORD` | —                    | só para `pnpm seed:admin`; senha temporária de 15 a 64 caracteres    |
-| `POSTGRES_USER/PASSWORD/DB/PORT` | `cybersetor`, `5432` | Compose local; a porta acompanha a da `DATABASE_URL`                 |
-| `REDIS_PORT`                     | `6379`               | Compose local                                                        |
+| Variável                         | Padrão               | Uso                                                                                                                                                     |
+| -------------------------------- | -------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `NODE_ENV`                       | `development`        | `production` em homologação e produção (cookie `__Host-` e `Secure`)                                                                                    |
+| `PORT`                           | `3001`               | porta da API                                                                                                                                            |
+| `CORS_ORIGIN`                    | vazio                | origem exata do front, ex.: `http://localhost:3000`                                                                                                     |
+| `DATABASE_URL`                   | —                    | obrigatória                                                                                                                                             |
+| `JWT_SECRET`                     | —                    | obrigatória, 32 caracteres ou mais                                                                                                                      |
+| `ACCESS_TOKEN_TTL_MINUTES`       | `15`                 | validade do token de acesso                                                                                                                             |
+| `SESSION_IDLE_TIMEOUT_MINUTES`   | `30`                 | encerramento por inatividade                                                                                                                            |
+| `SESSION_ABSOLUTE_TIMEOUT_HOURS` | `8`                  | duração máxima da sessão                                                                                                                                |
+| `TRUST_PROXY`                    | vazio                | atrás de proxy reverso, de quem confiar o `X-Forwarded-For` (formato do Express: número de saltos ou `loopback, linklocal, uniquelocal`); vazio desliga |
+| `SEED_ADMIN_NAME/EMAIL/PASSWORD` | —                    | só para `pnpm seed:admin`; senha temporária de 15 a 64 caracteres                                                                                       |
+| `POSTGRES_USER/PASSWORD/DB/PORT` | `cybersetor`, `5432` | Compose local; a porta acompanha a da `DATABASE_URL`                                                                                                    |
+| `REDIS_PORT`                     | `6379`               | Compose local                                                                                                                                           |
 
 Variável vazia vale como ausente: a opcional cai no padrão e a obrigatória reprova a inicialização.
+
+## Implantação
+
+A homologação roda no Coolify a partir da `api-develop`, com a imagem do `Dockerfile` desta pasta.
+
+- **Imagem:** Node 24 e pnpm do `packageManager`, OpenSSL para o motor de migração do Prisma, usuário sem privilégio e verificação de saúde em `GET /v1/health`. O `ci-api` sobe a imagem com um PostgreSQL vazio e exige que ela fique saudável.
+- **Migração:** no start do container, `prisma migrate deploy` roda antes da API subir. Reiniciar não reaplica nada. Vale para uma réplica só.
+- **Migração que falha:** fica registrada como falha no banco e o container não sobe; reiniciar não resolve. Confira o estado do banco e rode `prisma migrate resolve` com `--rolled-back` ou `--applied`, conforme o que a migração chegou a fazer.
+- **Primeira conta:** `node dist/seed-admin.js` dentro do container, com `SEED_ADMIN_NAME`, `SEED_ADMIN_EMAIL` e `SEED_ADMIN_PASSWORD`. A senha temporária obriga a troca no primeiro acesso.
+- **Variáveis:** só no painel do Coolify, nunca no repositório.
+  - `NODE_ENV=production` liga o cookie `__Host-session` com `Secure`.
+  - `CORS_ORIGIN` é a origem exata do front.
+  - `TRUST_PROXY=loopback, linklocal, uniquelocal` faz o limite de tentativas contar o IP de quem acessa, e não o do proxy. Só vale com a API acessível apenas pelo proxy: no Coolify, porta só em _Ports Exposes_, sem _Ports Mappings_.
+  - `JWT_SECRET` é gerado com `openssl rand -base64 48`.
+- **Domínio:** o front e a API ficam em subdomínios do mesmo domínio, porque o cookie de renovação é `SameSite=Strict`.
+
+Para conferir a imagem localmente:
+
+```bash
+docker build -t cybersetor-api .
+docker run --rm -p 3101:3001 -e NODE_ENV=production -e DATABASE_URL=<url> -e JWT_SECRET=<segredo> cybersetor-api
+```
 
 ## Autenticação e autorização
 
