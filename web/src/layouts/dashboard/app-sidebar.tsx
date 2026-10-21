@@ -4,7 +4,7 @@ import { LogOutIcon } from 'lucide-react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useSession } from '@/auth/hooks/use-session';
-import { navigationFor, profileLabel } from '@/auth/profiles';
+import { isActiveItem, navigationFor, profileLabel } from '@/auth/profiles';
 import { signOut } from '@/auth/session';
 import {
   Sidebar,
@@ -53,7 +53,7 @@ export function AppSidebar() {
                   <SidebarMenuButton
                     size="lg"
                     tooltip={item.label}
-                    isActive={pathname === item.href}
+                    isActive={isActiveItem(pathname, item.href)}
                     render={
                       <Link
                         href={item.href}

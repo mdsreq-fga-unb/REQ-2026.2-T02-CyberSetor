@@ -1,4 +1,4 @@
-import { NAVIGATION, navigationFor, profileLabel } from './profiles';
+import { NAVIGATION, isActiveItem, navigationFor, profileLabel } from './profiles';
 import type { Perfil } from './types';
 
 const PERFIS: Perfil[] = [
@@ -54,5 +54,12 @@ describe('perfis de acesso', () => {
       '/a',
       '/b',
     ]);
+  });
+
+  it('o item fica marcado tambem nas paginas internas da secao', () => {
+    expect(isActiveItem('/instrumentos/abc', '/instrumentos')).toBe(true);
+    expect(isActiveItem('/instrumentos', '/instrumentos')).toBe(true);
+    expect(isActiveItem('/instrumentos-antigos', '/instrumentos')).toBe(false);
+    expect(isActiveItem('/instrumentos', '/')).toBe(false);
   });
 });

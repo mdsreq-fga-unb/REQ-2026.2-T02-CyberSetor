@@ -48,3 +48,7 @@ export function profileLabel(perfil: Perfil): string {
 export function navigationFor(perfil: Perfil, items: NavItem[] = NAVIGATION): NavItem[] {
   return items.filter((item) => !item.profiles || item.profiles.includes(perfil));
 }
+
+export function isActiveItem(pathname: string, href: string): boolean {
+  return pathname === href || (href !== paths.dashboard.root && pathname.startsWith(`${href}/`));
+}
