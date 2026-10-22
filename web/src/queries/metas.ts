@@ -1,6 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { authorizedRequest } from '@/auth/session';
-import type { Goal, GoalInput } from '@/types/metas';
+import type { EligibleOwner, Goal, GoalInput, GoalSituation } from '@/types/metas';
 
 export function goalsKey(projectId: string) {
   return ['projetos', projectId, 'metas'] as const;
@@ -39,6 +39,26 @@ export function useSaveGoal(projectId: string) {
             method: 'POST',
             body: data,
           }),
+    onSettled: () => queryClient.invalidateQueries({ queryKey: goalsKey(projectId) }),
+  });
+}
+
+export function useEligibleOwners(enabled: boolean) {
+  return useQuery({
+    queryKey: ['responsaveis-elegiveis'],
+    queryFn: () => authorizedRequest<EligibleOwner[]>('/goals/eligible-owners'),
+    enabled,
+  });
+}
+
+export function useChangeSituation(projectId: string) {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: ({ goal, situacao }: { goal: Goal; situacao: GoalSituation }) =>
+      authorizedRequest<Goal>(`/goals/${encodeURIComponent(goal.id)}/situation`, {
+        method: 'PATCH',
+        body: { versao: goal.versao, situacao },
+      }),
     onSettled: () => queryClient.invalidateQueries({ queryKey: goalsKey(projectId) }),
   });
 }

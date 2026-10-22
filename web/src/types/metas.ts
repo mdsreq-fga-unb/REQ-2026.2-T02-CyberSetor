@@ -1,4 +1,28 @@
+import type { SectorRef } from '@/types/setores';
+
 export type GoalOrigin = 'EDITAL' | 'PROJETO' | 'INSTITUTO';
+
+export type GoalSituation = 'PENDENTE' | 'EM_ANDAMENTO' | 'CONCLUIDA';
+
+export type DeadlineAlert = 'VENCENDO' | 'VENCIDA';
+
+export interface GoalOwner {
+  id: string;
+  nome: string;
+  ativo: boolean;
+}
+
+export interface GoalSector {
+  id: string;
+  nome: string;
+  ativo: boolean;
+}
+
+export interface EligibleOwner {
+  id: string;
+  nome: string;
+  setor: SectorRef | null;
+}
 
 export type MeasurementMode = 'QUANTITATIVA' | 'QUALITATIVA';
 
@@ -30,6 +54,10 @@ export interface Goal {
   requisitos: GoalRequirement[];
   rascunho: boolean;
   camposFaltantes: CompletionField[];
+  responsavel: GoalOwner | null;
+  setor: GoalSector | null;
+  situacao: GoalSituation;
+  alertaPrazo: DeadlineAlert | null;
 }
 
 export interface GoalInput {
@@ -46,4 +74,6 @@ export interface GoalInput {
   frequenciaApuracao: string;
   formaComprovacao: string;
   resultadoEsperado: string;
+  responsavelId: string | null;
+  setorId: string | null;
 }
