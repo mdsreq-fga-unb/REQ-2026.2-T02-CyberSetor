@@ -66,6 +66,7 @@ function page(instrument: Instrument, projects: Project[], extra: Record<string,
   return {
     [`GET ${BASE}`]: () => ({ status: 200, body: instrument }),
     [`GET ${BASE}/projects`]: () => ({ status: 200, body: projects }),
+    [`GET ${BASE}/requirements`]: () => ({ status: 200, body: [] }),
     'GET /projects/eligible-coordinators': () => ({ status: 200, body: [ANA, BIA] }),
     ...extra,
   };
@@ -136,9 +137,13 @@ describe('projetos do instrumento', () => {
     renderView();
 
     expect(
-      await screen.findByText('Instrumento inativo: não recebe nem altera projetos.'),
+      await screen.findByText(
+        'Instrumento inativo: não recebe nem altera requisitos nem projetos.',
+      ),
     ).toBeInTheDocument();
     await screen.findByText('Oficinas de dança');
+    await screen.findByText('Nenhum requisito neste instrumento');
+    expect(screen.queryByRole('button', { name: 'Novo requisito' })).not.toBeInTheDocument();
     expect(screen.queryByRole('button', { name: 'Novo projeto' })).not.toBeInTheDocument();
     expect(screen.queryByRole('button', { name: /Ações do projeto/ })).not.toBeInTheDocument();
   });

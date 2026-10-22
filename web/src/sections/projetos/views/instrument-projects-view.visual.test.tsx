@@ -4,6 +4,7 @@ import { render } from 'vitest-browser-react';
 import { clearLocalSession, signIn } from '@/auth/session';
 import type { Instrument } from '@/types/instrumentos';
 import type { Project } from '@/types/projetos';
+import type { Requirement } from '@/types/requisitos';
 import { InstrumentProjectsView } from './instrument-projects-view';
 
 const INSTRUMENT: Instrument = {
@@ -34,13 +35,25 @@ const PROJECTS: Project[] = Array.from({ length: 12 }, (_, index) => ({
   fim: '2026-12-15',
 }));
 
+const REQUIREMENTS: Requirement[] = [
+  ['Frequência mínima de 70% dos participantes nas oficinas', 'Termo de referência, item 24.1'],
+  ['Certificado para quem concluir a formação', null],
+  ['Relatório fotográfico de cada encontro, com data e local', 'Plano de trabalho, meta 1'],
+].map(([descricao, referencia], index) => ({
+  id: `00000000-0000-4000-8000-0000000007${String(index).padStart(2, '0')}`,
+  versao: 1,
+  instrumentoId: INSTRUMENT.id,
+  descricao: descricao as string,
+  referencia,
+}));
+
 function json(body: unknown): Response {
   return new Response(JSON.stringify(body), { status: 200 });
 }
 
 describe.each([
-  ['celular', 360, 2400],
-  ['desktop', 1280, 1100],
+  ['celular', 360, 2900],
+  ['desktop', 1280, 1400],
 ])('projetos do instrumento no %s', (device, width, height) => {
   beforeEach(async () => {
     await page.viewport(width, height);
@@ -50,6 +63,7 @@ describe.each([
         if (url.endsWith('/auth/login')) {
           return json({ accessToken: 't', perfil: 'PRESIDENCIA_GESTAO', deveTrocarSenha: false });
         }
+        if (url.endsWith('/requirements')) return json(REQUIREMENTS);
         return json(url.endsWith('/projects') ? PROJECTS : INSTRUMENT);
       }),
     );
@@ -72,6 +86,9 @@ describe.each([
     );
 
     await expect.element(screen.getByText('1–10 de 12')).toBeVisible();
+    await expect
+      .element(screen.getByText('Certificado para quem concluir a formação'))
+      .toBeVisible();
     await expect.element(screen.getByTestId('frame')).toMatchScreenshot(`projetos-${device}`);
   });
 });
