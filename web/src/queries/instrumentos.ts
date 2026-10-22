@@ -4,12 +4,23 @@ import type { InstrumentInput, Instrument, SavedInstrument } from '@/types/instr
 
 export const instrumentsKey = ['instrumentos'] as const;
 
+export function instrumentKey(id: string) {
+  return [...instrumentsKey, id] as const;
+}
+
 function fetchInstruments(): Promise<Instrument[]> {
   return authorizedRequest<Instrument[]>('/instruments');
 }
 
 export function useInstruments() {
   return useQuery({ queryKey: instrumentsKey, queryFn: fetchInstruments });
+}
+
+export function useInstrument(id: string) {
+  return useQuery({
+    queryKey: instrumentKey(id),
+    queryFn: () => authorizedRequest<Instrument>(`/instruments/${encodeURIComponent(id)}`),
+  });
 }
 
 export function useFreshInstrument() {

@@ -5,6 +5,9 @@ import { Toaster } from '@/components/ui/toast';
 import type { Instrument } from '@/types/instrumentos';
 import { InstrumentsView } from './instruments-view';
 
+const push = vi.fn();
+vi.mock('next/navigation', () => ({ useRouter: () => ({ push }) }));
+
 const EMENDA: Instrument = {
   id: '00000000-0000-4000-8000-000000000101',
   versao: 3,
@@ -85,7 +88,7 @@ describe('instrumentos', () => {
     expect(situacao).toHaveTextContent('Ativo');
   });
 
-  it('perfil que so consulta nao ve as acoes de cadastro e edicao', async () => {
+  it('perfil que so consulta nao cadastra nem edita, mas abre os projetos', async () => {
     await signedInAs('NUCLEO_PEDAGOGICO', {
       'GET /instruments': () => ({ status: 200, body: [EMENDA] }),
     });
@@ -93,7 +96,20 @@ describe('instrumentos', () => {
 
     await screen.findAllByText(/Secretaria de Cultura/);
     expect(screen.queryByRole('button', { name: 'Novo instrumento' })).not.toBeInTheDocument();
-    expect(screen.queryByRole('button', { name: /Ações do instrumento/ })).not.toBeInTheDocument();
+    expect(screen.getByRole('link', { name: /Secretaria de Cultura/ })).toHaveAttribute(
+      'href',
+      `/instrumentos/${EMENDA.id}`,
+    );
+
+    fireEvent.click(screen.getByRole('button', { name: /Ações do instrumento/ }));
+    const menu = await screen.findByRole('menu');
+    expect(
+      within(menu)
+        .getAllByRole('menuitem')
+        .map((item) => item.textContent),
+    ).toEqual(['Projetos']);
+    fireEvent.click(within(menu).getByRole('menuitem', { name: 'Projetos' }));
+    expect(push).toHaveBeenCalledWith(`/instrumentos/${EMENDA.id}`);
   });
 
   it('cadastra com o valor convertido e avisa processo repetido', async () => {
