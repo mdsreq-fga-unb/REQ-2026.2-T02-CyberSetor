@@ -5,6 +5,7 @@ import { ActivitiesModule } from './activities/activities.module.js';
 import { AuditModule } from './audit/audit.module.js';
 import { AuthModule } from './auth/auth.module.js';
 import { validateEnv } from './config/env.validation.js';
+import { GoalsModule } from './goals/goals.module.js';
 import { HealthModule } from './health/health.module.js';
 import { InstrumentsModule } from './instruments/instruments.module.js';
 import { ModalitiesModule } from './modalities/modalities.module.js';
@@ -29,6 +30,7 @@ import { RequirementsModule } from './requirements/requirements.module.js';
     ProjectsModule,
     ActivitiesModule,
     RequirementsModule,
+    GoalsModule,
   ],
 })
 export class AppModule {}
