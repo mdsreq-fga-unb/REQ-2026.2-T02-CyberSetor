@@ -43,6 +43,11 @@ describe('perfis de acesso', () => {
     );
   });
 
+  it.each(PERFIS)('setores aparece para quem consulta e para a administracao: %s', (perfil) => {
+    const hrefs = navigationFor(perfil, NAVIGATION).map((item) => item.href);
+    expect(hrefs.includes('/setores')).toBe(perfil !== 'CONCEDENTE_AUDITORIA');
+  });
+
   it('item restrito so aparece para os perfis autorizados', () => {
     const items = [
       { href: '/a', label: 'A' },
