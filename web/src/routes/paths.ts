@@ -11,5 +11,6 @@ export const paths = {
     project: (instrumentId: string, projectId: string) =>
       `/instrumentos/${encodeURIComponent(instrumentId)}/projetos/${encodeURIComponent(projectId)}`,
     modalities: '/modalidades',
+    sectors: '/setores',
   },
 } as const;
