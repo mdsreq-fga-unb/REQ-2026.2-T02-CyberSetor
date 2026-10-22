@@ -28,7 +28,7 @@ const FIELDS = [
   'vigenciaFim',
 ] as const;
 
-function toDate(value: string): Date {
+export function toDate(value: string): Date {
   const date = new Date(`${value}T00:00:00.000Z`);
   if (Number.isNaN(date.getTime()) || date.toISOString().slice(0, 10) !== value) {
     throw new BadRequestException(`Data inexistente: ${value}.`);

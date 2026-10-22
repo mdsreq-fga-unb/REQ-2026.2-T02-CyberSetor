@@ -31,7 +31,7 @@ import {
 } from './instruments.dto.js';
 import { InstrumentsService } from './instruments.service.js';
 
-const READERS = [
+export const INSTRUMENT_READERS = [
   Perfil.PRESIDENCIA_GESTAO,
   Perfil.NUCLEO_PEDAGOGICO,
   Perfil.ADMINISTRATIVO_FINANCEIRO,
@@ -48,14 +48,14 @@ export class InstrumentsController {
   constructor(private readonly instruments: InstrumentsService) {}
 
   @Get()
-  @Profiles(...READERS)
+  @Profiles(...INSTRUMENT_READERS)
   @ApiOkResponse({ type: [InstrumentResponse] })
   list(@Query() query: ListInstrumentsQuery): Promise<InstrumentResponse[]> {
     return this.instruments.list(query.ativo);
   }
 
   @Get(':id')
-  @Profiles(...READERS)
+  @Profiles(...INSTRUMENT_READERS)
   @ApiOkResponse({ type: InstrumentResponse })
   get(@Param('id', ParseUUIDPipe) id: string): Promise<InstrumentResponse> {
     return this.instruments.get(id);
