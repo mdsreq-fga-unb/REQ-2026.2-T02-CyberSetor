@@ -1,0 +1,326 @@
+'use client';
+
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useEffect, useState, type FormEvent, type ReactNode } from 'react';
+import { Controller, useForm } from 'react-hook-form';
+import { z } from 'zod';
+import { FormField } from '@/components/form-field';
+import { Button } from '@/components/ui/button';
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from '@/components/ui/dialog';
+import { FieldError, FieldGroup, FieldLegend, FieldSet } from '@/components/ui/field';
+import { Input } from '@/components/ui/input';
+import { NativeSelect, NativeSelectOption } from '@/components/ui/native-select';
+import { Textarea } from '@/components/ui/textarea';
+import { ApiError } from '@/lib/api';
+import { useFreshGoal, useSaveGoal } from '@/queries/metas';
+import type { Goal, GoalInput } from '@/types/metas';
+import type { Requirement } from '@/types/requisitos';
+import { GOAL_ORIGINS, MEASUREMENT_MODES } from './format';
+
+const DATE = /^\d{4}-\d{2}-\d{2}$/;
+
+const text = (max: number) =>
+  z
+    .string()
+    .trim()
+    .max(max, `Este campo tem no máximo ${max.toLocaleString('pt-BR')} caracteres.`);
+
+const date = z
+  .string()
+  .refine((value) => value === '' || DATE.test(value), 'Informe a data completa.')
+  .transform((value) => value || null);
+
+const schema = z
+  .object({
+    origem: z.enum(['EDITAL', 'PROJETO', 'INSTITUTO'], { error: 'Escolha a origem da meta.' }),
+    objetivo: text(500).min(1, 'Informe o objetivo.'),
+    descricao: text(2000).min(1, 'Descreva a meta.'),
+    requisitoIds: z.array(z.string()),
+    indicador: text(500),
+    modalidadeAfericao: z
+      .enum(['', 'QUANTITATIVA', 'QUALITATIVA'])
+      .transform((value) => value || null),
+    parametroPlanejado: text(100),
+    unidade: text(50),
+    periodoInicio: date,
+    periodoFim: date,
+    frequenciaApuracao: text(100),
+    formaComprovacao: text(1000),
+    resultadoEsperado: text(1000),
+  })
+  .refine(
+    (values) =>
+      !values.periodoInicio || !values.periodoFim || values.periodoFim >= values.periodoInicio,
+    {
+      path: ['periodoFim'],
+      message: 'O fim do período não pode ser anterior ao início.',
+      when: (payload) =>
+        z.object({ periodoInicio: date, periodoFim: date }).safeParse(payload.value).success,
+    },
+  );
+
+type FormValues = z.input<typeof schema>;
+type FieldName = keyof FormValues;
+type TextField = Exclude<FieldName, 'origem' | 'requisitoIds' | 'modalidadeAfericao'>;
+
+const EMPTY: FormValues = {
+  origem: '' as FormValues['origem'],
+  objetivo: '',
+  descricao: '',
+  requisitoIds: [],
+  indicador: '',
+  modalidadeAfericao: '',
+  parametroPlanejado: '',
+  unidade: '',
+  periodoInicio: '',
+  periodoFim: '',
+  frequenciaApuracao: '',
+  formaComprovacao: '',
+  resultadoEsperado: '',
+};
+
+const FIELD_BY_CODE: Partial<Record<string, FieldName>> = {
+  GOAL_REQUIREMENT_REQUIRED: 'requisitoIds',
+  REQUIREMENT_OUTSIDE_INSTRUMENT: 'requisitoIds',
+  INVALID_PERIOD: 'periodoFim',
+};
+
+function valuesOf(goal: Goal | null): FormValues {
+  if (!goal) return EMPTY;
+  return {
+    origem: goal.origem,
+    objetivo: goal.objetivo,
+    descricao: goal.descricao,
+    requisitoIds: goal.requisitos.map((requirement) => requirement.id),
+    indicador: goal.indicador ?? '',
+    modalidadeAfericao: goal.modalidadeAfericao ?? '',
+    parametroPlanejado: goal.parametroPlanejado ?? '',
+    unidade: goal.unidade ?? '',
+    periodoInicio: goal.periodoInicio ?? '',
+    periodoFim: goal.periodoFim ?? '',
+    frequenciaApuracao: goal.frequenciaApuracao ?? '',
+    formaComprovacao: goal.formaComprovacao ?? '',
+    resultadoEsperado: goal.resultadoEsperado ?? '',
+  };
+}
+
+function failureOf(error: unknown): string {
+  if (!(error instanceof ApiError)) return 'Não foi possível falar com o servidor. Tente de novo.';
+  if (error.status === 409 || error.status === 400 || error.status === 404) return error.message;
+  if (error.status === 403) return 'Só a Presidência e Gestão de Projetos cadastra metas.';
+  return 'Não foi possível salvar. Tente de novo.';
+}
+
+function Section({ title, children }: { title: string; children: ReactNode }) {
+  return (
+    <FieldSet>
+      <FieldLegend>{title}</FieldLegend>
+      {children}
+    </FieldSet>
+  );
+}
+
+export function GoalFormDialog({
+  open,
+  projectId,
+  requirements,
+  goal,
+  onClose,
+  onSaved,
+}: {
+  open: boolean;
+  projectId: string;
+  requirements: Requirement[];
+  goal: Goal | null;
+  onClose: () => void;
+  onSaved: (result: Goal) => void;
+}) {
+  const save = useSaveGoal(projectId);
+  const freshGoal = useFreshGoal(projectId);
+  const [failure, setFailure] = useState<string | null>(null);
+  const [current, setCurrent] = useState<Goal | null>(null);
+  const editing = current ?? goal;
+  const form = useForm<FormValues, unknown, z.output<typeof schema>>({
+    resolver: zodResolver(schema),
+    defaultValues: EMPTY,
+  });
+
+  useEffect(() => {
+    if (open) form.reset(valuesOf(goal));
+  }, [open, goal, form]);
+
+  function close() {
+    setFailure(null);
+    setCurrent(null);
+    onClose();
+  }
+
+  async function reloadAfterConflict(id: string) {
+    const fresh = await freshGoal(id).catch(() => null);
+    if (!fresh) {
+      setFailure('A meta não foi encontrada. Feche e confira a lista.');
+      return;
+    }
+    setCurrent(fresh);
+    form.reset(valuesOf(fresh));
+    setFailure(
+      'Outra pessoa alterou esta meta. Os campos mostram a versão atual: refaça a sua alteração e salve de novo.',
+    );
+  }
+
+  async function onValid(data: GoalInput) {
+    try {
+      const result = await save.mutateAsync({ id: editing?.id, versao: editing?.versao, data });
+      close();
+      onSaved(result);
+    } catch (error) {
+      if (editing && error instanceof ApiError && error.code === 'VERSION_CONFLICT') {
+        await reloadAfterConflict(editing.id);
+        return;
+      }
+      const field = error instanceof ApiError ? FIELD_BY_CODE[error.code] : undefined;
+      if (field && error instanceof ApiError) {
+        form.setError(field, { type: 'server', message: error.message }, { shouldFocus: true });
+        return;
+      }
+      setFailure(failureOf(error));
+    }
+  }
+
+  function onSubmit(event: FormEvent<HTMLFormElement>) {
+    setFailure(null);
+    return form.handleSubmit(onValid)(event);
+  }
+
+  const input = (name: TextField, label: string, extra: object = {}) => (
+    <FormField name={name} label={label} control={form.control}>
+      {(props) => <Input {...props} autoComplete="off" {...extra} />}
+    </FormField>
+  );
+
+  const area = (name: TextField, label: string) => (
+    <FormField name={name} label={label} control={form.control}>
+      {(props) => <Textarea {...props} />}
+    </FormField>
+  );
+
+  return (
+    <Dialog open={open} onOpenChange={(next) => !next && !form.formState.isSubmitting && close()}>
+      <DialogContent className="max-h-[calc(100dvh-2rem)] overflow-y-auto sm:max-w-2xl">
+        <DialogHeader>
+          <DialogTitle>{goal ? `Editar meta ${goal.ordem}` : 'Nova meta'}</DialogTitle>
+          <DialogDescription>
+            Sem indicador, forma de comprovação, início e fim do período, a meta fica como rascunho
+            e não entra na apuração.
+          </DialogDescription>
+        </DialogHeader>
+        <form noValidate onSubmit={onSubmit}>
+          <FieldGroup>
+            <FormField name="origem" label="Origem" control={form.control}>
+              {(props) => (
+                <NativeSelect {...props}>
+                  <NativeSelectOption value="" disabled>
+                    Escolha a origem
+                  </NativeSelectOption>
+                  {Object.entries(GOAL_ORIGINS).map(([value, label]) => (
+                    <NativeSelectOption key={value} value={value}>
+                      {label}
+                    </NativeSelectOption>
+                  ))}
+                </NativeSelect>
+              )}
+            </FormField>
+            {input('objetivo', 'Objetivo')}
+            {area('descricao', 'Descrição')}
+            <Controller
+              name="requisitoIds"
+              control={form.control}
+              render={({ field, fieldState }) => (
+                <FieldSet
+                  data-invalid={fieldState.invalid}
+                  aria-describedby={fieldState.invalid ? 'requisitoIds-error' : undefined}
+                >
+                  <FieldLegend variant="label">Requisitos do instrumento atendidos</FieldLegend>
+                  {requirements.map((requirement, index) => (
+                    <label
+                      key={requirement.id}
+                      className="flex min-h-12 items-center gap-3 rounded-lg border px-3 py-2"
+                    >
+                      <input
+                        ref={index === 0 ? field.ref : undefined}
+                        type="checkbox"
+                        className="size-5 shrink-0 accent-primary"
+                        checked={field.value.includes(requirement.id)}
+                        onChange={(event) =>
+                          field.onChange(
+                            event.target.checked
+                              ? [...field.value, requirement.id]
+                              : field.value.filter((id) => id !== requirement.id),
+                          )
+                        }
+                      />
+                      <span className="text-sm">
+                        {requirement.referencia && (
+                          <span className="font-medium">{requirement.referencia} · </span>
+                        )}
+                        {requirement.descricao}
+                      </span>
+                    </label>
+                  ))}
+                  {fieldState.invalid && (
+                    <FieldError id="requisitoIds-error" errors={[fieldState.error]} />
+                  )}
+                </FieldSet>
+              )}
+            />
+            <Section title="Aferição">
+              {input('indicador', 'Indicador')}
+              <FormField name="modalidadeAfericao" label="Modalidade" control={form.control}>
+                {(props) => (
+                  <NativeSelect {...props}>
+                    <NativeSelectOption value="">A definir</NativeSelectOption>
+                    {Object.entries(MEASUREMENT_MODES).map(([value, label]) => (
+                      <NativeSelectOption key={value} value={value}>
+                        {label}
+                      </NativeSelectOption>
+                    ))}
+                  </NativeSelect>
+                )}
+              </FormField>
+              <div className="grid gap-4 sm:grid-cols-2">
+                {input('parametroPlanejado', 'Parâmetro planejado')}
+                {input('unidade', 'Unidade')}
+              </div>
+              {input('frequenciaApuracao', 'Frequência de apuração')}
+              {area('formaComprovacao', 'Forma de comprovação')}
+            </Section>
+            <Section title="Período">
+              <div className="grid gap-4 sm:grid-cols-2">
+                {input('periodoInicio', 'Início', { type: 'date' })}
+                {input('periodoFim', 'Fim (prazo)', { type: 'date' })}
+              </div>
+            </Section>
+            {area('resultadoEsperado', 'Resultado esperado')}
+            {failure && (
+              <p role="alert" className="text-sm text-destructive">
+                {failure}
+              </p>
+            )}
+            <DialogFooter>
+              <Button type="submit" disabled={form.formState.isSubmitting}>
+                {form.formState.isSubmitting ? 'Salvando…' : 'Salvar meta'}
+              </Button>
+            </DialogFooter>
+          </FieldGroup>
+        </form>
+      </DialogContent>
+    </Dialog>
+  );
+}
