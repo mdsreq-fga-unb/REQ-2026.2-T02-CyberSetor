@@ -258,6 +258,64 @@ describe('projetos do instrumento', () => {
     expect(patches[1]).toMatchObject({ versao: 5, titulo: 'Oficinas de dança e teatro' });
   });
 
+  it('vigencia encurtada nao trava a edicao sem mudanca de data, como na API', async () => {
+    const patches: unknown[] = [];
+    await signedInAs(
+      'PRESIDENCIA_GESTAO',
+      page({ ...INSTRUMENT, vigenciaFim: '2026-10-31' }, [DANCA], {
+        [`PATCH /projects/${DANCA.id}`]: (body) => {
+          patches.push(body);
+          return { status: 200, body: { ...DANCA, versao: 3, titulo: 'Dança no SCS' } };
+        },
+      }),
+    );
+    renderView();
+
+    fireEvent.click(await screen.findByRole('button', { name: 'Ações do projeto P01' }));
+    fireEvent.click(await screen.findByRole('menuitem', { name: 'Editar projeto' }));
+    await screen.findByRole('option', { name: BIA.nome });
+    fill('Fim da execução', '2026-12-20');
+    fireEvent.click(screen.getByRole('button', { name: 'Salvar projeto' }));
+
+    expect(
+      await screen.findByText('A execução termina dentro da vigência, de 01/04/2026 a 31/10/2026.'),
+    ).toBeInTheDocument();
+    expect(patches).toHaveLength(0);
+
+    fill('Fim da execução', DANCA.fim);
+    fill('Título', 'Dança no SCS');
+    fireEvent.click(screen.getByRole('button', { name: 'Salvar projeto' }));
+
+    expect(await screen.findByText('Projeto P01 salvo')).toBeInTheDocument();
+    expect(patches[0]).toMatchObject({ versao: 2, titulo: 'Dança no SCS', fim: DANCA.fim });
+  });
+
+  it('recusa da API por vigencia alterada marca o fim quando o inicio esta dentro', async () => {
+    await signedInAs(
+      'PRESIDENCIA_GESTAO',
+      page(INSTRUMENT, [], {
+        [`POST ${BASE}/projects`]: () => ({
+          status: 400,
+          body: {
+            code: 'OUTSIDE_INSTRUMENT_TERM',
+            message: 'A execução deve ficar dentro da vigência do instrumento.',
+          },
+        }),
+      }),
+    );
+    renderView();
+
+    await openNew();
+    fillValid();
+    fireEvent.click(screen.getByRole('button', { name: 'Salvar projeto' }));
+
+    expect(
+      await screen.findByText('A execução deve ficar dentro da vigência do instrumento.'),
+    ).toBeInTheDocument();
+    expect(screen.getByLabelText('Fim da execução')).toHaveAttribute('aria-invalid', 'true');
+    expect(screen.getByLabelText('Início da execução')).toHaveAttribute('aria-invalid', 'false');
+  });
+
   it('instrumento inexistente mostra o aviso e o caminho de volta', async () => {
     await signedInAs('PRESIDENCIA_GESTAO', {});
     renderView();

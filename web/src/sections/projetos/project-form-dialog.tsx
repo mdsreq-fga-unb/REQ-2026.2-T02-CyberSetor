@@ -26,8 +26,10 @@ import { formatDate } from '../instrumentos/format';
 const DATE = z.string().regex(/^\d{4}-\d{2}-\d{2}$/, 'Informe a data completa.');
 const COORDINATION = 'contas ativas de Presidência e Gestão ou de Núcleo Pedagógico';
 
-function schemaFor(instrument: Instrument) {
+function schemaFor(instrument: Instrument, saved: Project | null) {
   const term = `${formatDate(instrument.vigenciaInicio)} a ${formatDate(instrument.vigenciaFim)}`;
+  const datesChanged = (values: { inicio: string; fim: string }) =>
+    !saved || values.inicio !== saved.inicio || values.fim !== saved.fim;
   return z
     .object({
       codigo: z
@@ -49,12 +51,12 @@ function schemaFor(instrument: Instrument) {
       message: 'O fim da execução não pode ser anterior ao início.',
       when: (payload) => z.object({ inicio: DATE, fim: DATE }).safeParse(payload.value).success,
     })
-    .refine((values) => values.inicio >= instrument.vigenciaInicio, {
+    .refine((values) => !datesChanged(values) || values.inicio >= instrument.vigenciaInicio, {
       path: ['inicio'],
       message: `A execução começa dentro da vigência, de ${term}.`,
       when: (payload) => z.object({ inicio: DATE }).safeParse(payload.value).success,
     })
-    .refine((values) => values.fim <= instrument.vigenciaFim, {
+    .refine((values) => !datesChanged(values) || values.fim <= instrument.vigenciaFim, {
       path: ['fim'],
       message: `A execução termina dentro da vigência, de ${term}.`,
       when: (payload) => z.object({ fim: DATE }).safeParse(payload.value).success,
@@ -71,8 +73,11 @@ const FIELD_BY_CODE: Partial<Record<string, FieldName>> = {
   PROJECT_CODE_TAKEN: 'codigo',
   INVALID_COORDINATOR: 'coordenadorId',
   INVALID_SCHEDULE: 'fim',
-  OUTSIDE_INSTRUMENT_TERM: 'inicio',
 };
+
+function termField(data: { inicio: string }, instrument: Instrument): FieldName {
+  return data.inicio < instrument.vigenciaInicio ? 'inicio' : 'fim';
+}
 
 function valuesOf(project: Project | null): FormValues {
   if (!project) return EMPTY;
@@ -111,7 +116,7 @@ export function ProjectFormDialog({
   const [failure, setFailure] = useState<string | null>(null);
   const [current, setCurrent] = useState<Project | null>(null);
   const editing = current ?? project;
-  const schema = useMemo(() => schemaFor(instrument), [instrument]);
+  const schema = useMemo(() => schemaFor(instrument, editing), [instrument, editing]);
   const form = useForm<FormValues, unknown, z.output<Schema>>({
     resolver: zodResolver(schema),
     defaultValues: EMPTY,
@@ -157,7 +162,12 @@ export function ProjectFormDialog({
         await reloadAfterConflict(editing.id);
         return;
       }
-      const field = error instanceof ApiError ? FIELD_BY_CODE[error.code] : undefined;
+      const field =
+        error instanceof ApiError
+          ? error.code === 'OUTSIDE_INSTRUMENT_TERM'
+            ? termField(data, instrument)
+            : FIELD_BY_CODE[error.code]
+          : undefined;
       if (field && error instanceof ApiError) {
         form.setError(field, { type: 'server', message: error.message }, { shouldFocus: true });
         return;
