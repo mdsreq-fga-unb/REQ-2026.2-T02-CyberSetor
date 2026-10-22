@@ -69,6 +69,14 @@ const BASE: Goal = {
   requisitos: REQUIREMENTS.map(({ id, referencia, descricao }) => ({ id, referencia, descricao })),
   rascunho: false,
   camposFaltantes: [],
+  responsavel: { id: '00000000-0000-4000-8000-000000000601', nome: 'Ana Pedagógica', ativo: true },
+  setor: {
+    id: '00000000-0000-4000-8000-000000000901',
+    nome: 'Coordenação Pedagógica',
+    ativo: true,
+  },
+  situacao: 'EM_ANDAMENTO',
+  alertaPrazo: 'VENCENDO',
 };
 
 const GOALS: Goal[] = [
@@ -89,6 +97,10 @@ const GOALS: Goal[] = [
     requisitos: [BASE.requisitos[0]],
     rascunho: true,
     camposFaltantes: ['indicador', 'formaComprovacao', 'periodoInicio', 'periodoFim'],
+    responsavel: null,
+    setor: null,
+    situacao: 'PENDENTE',
+    alertaPrazo: null,
   },
   {
     ...BASE,
@@ -101,6 +113,8 @@ const GOALS: Goal[] = [
     periodoInicio: '2026-06-01',
     periodoFim: '2026-07-20',
     requisitos: [BASE.requisitos[1]],
+    situacao: 'PENDENTE',
+    alertaPrazo: 'VENCIDA',
   },
 ];
 
