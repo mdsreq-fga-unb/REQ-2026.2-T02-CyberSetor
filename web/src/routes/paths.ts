@@ -8,6 +8,8 @@ export const paths = {
     accounts: '/contas',
     instruments: '/instrumentos',
     instrument: (id: string) => `/instrumentos/${encodeURIComponent(id)}`,
+    project: (instrumentId: string, projectId: string) =>
+      `/instrumentos/${encodeURIComponent(instrumentId)}/projetos/${encodeURIComponent(projectId)}`,
     modalities: '/modalidades',
   },
 } as const;

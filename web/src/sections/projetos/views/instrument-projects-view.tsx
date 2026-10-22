@@ -2,6 +2,7 @@
 
 import { ArrowLeftIcon, FolderKanbanIcon, PlusIcon } from 'lucide-react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { useSession } from '@/auth/hooks/use-session';
 import { ListPagination } from '@/components/list/list-pagination';
 import { ListCard, ListEmpty, ListError, TableSkeleton } from '@/components/list/list-states';
@@ -69,6 +70,7 @@ function InstrumentSummary({ instrument }: { instrument: Instrument }) {
 
 export function InstrumentProjectsView({ instrumentId }: { instrumentId: string }) {
   const { session } = useSession();
+  const router = useRouter();
   const instrument = useInstrument(instrumentId);
   const projects = useProjects(instrumentId);
   const pagination = usePagination(projects.data);
@@ -170,7 +172,12 @@ export function InstrumentProjectsView({ instrumentId }: { instrumentId: string 
                   <TableRow key={project.id}>
                     <TableCell className="px-4 py-3 whitespace-normal">
                       <div className="flex flex-col gap-1">
-                        <span className="font-medium">{project.codigo}</span>
+                        <Link
+                          href={paths.dashboard.project(instrumentId, project.id)}
+                          className="inline-flex min-h-12 items-center self-start font-medium underline-offset-4 hover:underline"
+                        >
+                          {project.codigo}
+                        </Link>
                         <span>{project.titulo}</span>
                         <span className="text-muted-foreground md:hidden">
                           <Coordinator project={project} />
@@ -191,6 +198,11 @@ export function InstrumentProjectsView({ instrumentId }: { instrumentId: string 
                         <RowActionsMenu
                           label={`Ações do projeto ${project.codigo}`}
                           actions={[
+                            {
+                              label: 'Metas',
+                              onSelect: () =>
+                                router.push(paths.dashboard.project(instrumentId, project.id)),
+                            },
                             { label: 'Editar projeto', onSelect: () => form.show({ project }) },
                           ]}
                         />
