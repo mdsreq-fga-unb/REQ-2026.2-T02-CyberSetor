@@ -32,13 +32,15 @@ import {
 import type { Account, TemporaryPasswordResult } from '@/types/contas';
 import { statusTags } from '../account-status';
 import { ChangeProfileDialog } from '../change-profile-dialog';
+import { ChangeSectorDialog } from '../change-sector-dialog';
 import { ConfirmActionDialog, type AccountAction } from '../confirm-action-dialog';
 import { CreateAccountDialog } from '../create-account-dialog';
 import { errorMessage } from '../error-message';
 import { TemporaryPasswordDialog } from '../temporary-password-dialog';
 
 const TITLE = 'Contas';
-const DESCRIPTION = 'Contas da equipe do Instituto e o perfil de acesso de cada pessoa.';
+const DESCRIPTION =
+  'Contas da equipe do Instituto, com o perfil de acesso e o setor de cada pessoa.';
 const COLUMNS = 4;
 
 function StatusTags({ account, className }: { account: Account; className?: string }) {
@@ -64,6 +66,7 @@ export function AccountsView() {
 
   const [creating, setCreating] = useState(false);
   const editing = useDialogState<Account>();
+  const relocating = useDialogState<Account>();
   const confirming = useDialogState<{ account: Account; action: AccountAction }>();
   const password = useDialogState<{ title: string; result: TemporaryPasswordResult }>();
 
@@ -109,6 +112,7 @@ export function AccountsView() {
     }
     return [
       { label: 'Mudar perfil', onSelect: () => editing.show(account) },
+      { label: 'Mudar setor', onSelect: () => relocating.show(account) },
       { label: 'Redefinir senha', onSelect: () => confirming.show({ account, action: 'reset' }) },
       {
         label: 'Desativar conta',
@@ -171,11 +175,21 @@ export function AccountsView() {
                           {account.emailLogin}
                         </span>
                         <span className="md:hidden">{profileLabel(account.perfil)}</span>
+                        {account.setor && (
+                          <span className="text-muted-foreground md:hidden">
+                            {account.setor.nome}
+                          </span>
+                        )}
                         <StatusTags account={account} className="md:hidden" />
                       </div>
                     </TableCell>
-                    <TableCell className="hidden md:table-cell">
-                      {profileLabel(account.perfil)}
+                    <TableCell className="hidden whitespace-normal md:table-cell">
+                      <div className="flex flex-col gap-1">
+                        <span>{profileLabel(account.perfil)}</span>
+                        {account.setor && (
+                          <span className="text-muted-foreground">{account.setor.nome}</span>
+                        )}
+                      </div>
                     </TableCell>
                     <TableCell className="hidden md:table-cell">
                       <StatusTags account={account} />
@@ -209,6 +223,19 @@ export function AccountsView() {
             type: 'success',
             title: `Perfil de ${account.nome} alterado`,
             description: 'Vale a partir da próxima ação da pessoa.',
+          })
+        }
+      />
+      <ChangeSectorDialog
+        open={relocating.open}
+        account={relocating.value}
+        onClose={relocating.close}
+        onChanged={(account) =>
+          toast.add({
+            type: 'success',
+            title: account.setor
+              ? `Setor de ${account.nome}: ${account.setor.nome}`
+              : `${account.nome} sem setor`,
           })
         }
       />

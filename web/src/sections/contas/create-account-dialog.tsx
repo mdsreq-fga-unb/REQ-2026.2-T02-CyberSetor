@@ -18,6 +18,7 @@ import { Field, FieldError, FieldGroup, FieldLabel } from '@/components/ui/field
 import { Input } from '@/components/ui/input';
 import { NativeSelect, NativeSelectOption } from '@/components/ui/native-select';
 import { useCreateAccount } from '@/queries/contas';
+import { useSectors } from '@/queries/setores';
 import type { TemporaryPasswordResult } from '@/types/contas';
 import { errorMessage } from './error-message';
 
@@ -34,11 +35,17 @@ const schema = z.object({
     .max(254, 'O e-mail tem no máximo 254 caracteres.')
     .pipe(z.email('Informe um e-mail válido.')),
   perfil: z.enum(PROFILES, 'Escolha o perfil.'),
+  setorId: z.string().transform((value) => value || undefined),
 });
 
 type CreateAccountValues = z.input<typeof schema>;
 
-const EMPTY = { nome: '', emailLogin: '', perfil: '' } as unknown as CreateAccountValues;
+const EMPTY = {
+  nome: '',
+  emailLogin: '',
+  perfil: '',
+  setorId: '',
+} as unknown as CreateAccountValues;
 
 export function CreateAccountDialog({
   open,
@@ -50,6 +57,7 @@ export function CreateAccountDialog({
   onCreated: (result: TemporaryPasswordResult) => void;
 }) {
   const createAccount = useCreateAccount();
+  const sectors = useSectors(open);
   const [failure, setFailure] = useState<string | null>(null);
   const form = useForm<CreateAccountValues, unknown, z.output<typeof schema>>({
     resolver: zodResolver(schema),
@@ -156,6 +164,27 @@ export function CreateAccountDialog({
                   {fieldState.invalid && (
                     <FieldError id="perfil-error" errors={[fieldState.error]} />
                   )}
+                </Field>
+              )}
+            />
+            <Controller
+              name="setorId"
+              control={form.control}
+              render={({ field }) => (
+                <Field>
+                  <FieldLabel htmlFor="setorId">Setor (opcional)</FieldLabel>
+                  <NativeSelect {...field} id="setorId" disabled={sectors.isPending}>
+                    <NativeSelectOption value="">
+                      {sectors.isPending ? 'Carregando…' : 'Sem setor'}
+                    </NativeSelectOption>
+                    {sectors.data
+                      ?.filter((sector) => sector.ativo)
+                      .map((sector) => (
+                        <NativeSelectOption key={sector.id} value={sector.id}>
+                          {sector.nome}
+                        </NativeSelectOption>
+                      ))}
+                  </NativeSelect>
                 </Field>
               )}
             />
