@@ -31,3 +31,19 @@ export interface Goal {
   rascunho: boolean;
   camposFaltantes: CompletionField[];
 }
+
+export interface GoalInput {
+  origem: GoalOrigin;
+  objetivo: string;
+  descricao: string;
+  requisitoIds: string[];
+  indicador: string;
+  modalidadeAfericao: MeasurementMode | null;
+  parametroPlanejado: string;
+  unidade: string;
+  periodoInicio: string | null;
+  periodoFim: string | null;
+  frequenciaApuracao: string;
+  formaComprovacao: string;
+  resultadoEsperado: string;
+}

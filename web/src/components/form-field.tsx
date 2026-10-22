@@ -8,7 +8,7 @@ import {
 } from 'react-hook-form';
 import { Field, FieldDescription, FieldError, FieldLabel } from '@/components/ui/field';
 
-export function FormField<T extends FieldValues, N extends Path<T>>({
+export function FormField<T extends FieldValues, N extends Path<T>, O extends FieldValues = T>({
   name,
   label,
   description,
@@ -18,7 +18,7 @@ export function FormField<T extends FieldValues, N extends Path<T>>({
   name: N;
   label: string;
   description?: string;
-  control: Control<T>;
+  control: Control<T, unknown, O>;
   children: (
     props: ControllerRenderProps<T, N> & {
       id: string;
