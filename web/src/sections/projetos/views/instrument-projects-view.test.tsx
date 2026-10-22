@@ -6,6 +6,9 @@ import type { Instrument } from '@/types/instrumentos';
 import type { Project } from '@/types/projetos';
 import { InstrumentProjectsView } from './instrument-projects-view';
 
+const push = vi.fn();
+vi.mock('next/navigation', () => ({ useRouter: () => ({ push }) }));
+
 const INSTRUMENT: Instrument = {
   id: '00000000-0000-4000-8000-000000000101',
   versao: 1,
@@ -130,6 +133,20 @@ describe('projetos do instrumento', () => {
     expect(screen.getByText('Vigência 01/04/2026 a 31/03/2027')).toBeInTheDocument();
     expect(screen.queryByRole('button', { name: 'Novo projeto' })).not.toBeInTheDocument();
     expect(screen.queryByRole('button', { name: /Ações do projeto/ })).not.toBeInTheDocument();
+    expect(within(projeto).getByRole('link', { name: 'P01' })).toHaveAttribute(
+      'href',
+      `/instrumentos/${INSTRUMENT.id}/projetos/${DANCA.id}`,
+    );
+  });
+
+  it('o menu do projeto leva as metas', async () => {
+    await signedInAs('PRESIDENCIA_GESTAO', page(INSTRUMENT, [DANCA]));
+    renderView();
+
+    fireEvent.click(await screen.findByRole('button', { name: 'Ações do projeto P01' }));
+    fireEvent.click(await screen.findByRole('menuitem', { name: 'Metas' }));
+
+    expect(push).toHaveBeenCalledWith(`/instrumentos/${INSTRUMENT.id}/projetos/${DANCA.id}`);
   });
 
   it('instrumento inativo nao oferece cadastro nem edicao', async () => {
