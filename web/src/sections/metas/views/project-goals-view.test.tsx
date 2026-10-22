@@ -179,6 +179,14 @@ describe('metas do projeto', () => {
     cleanup();
     clearLocalSession();
     vi.unstubAllGlobals();
+    window.localStorage.clear();
+  });
+
+  beforeEach(() => {
+    vi.stubGlobal(
+      'matchMedia',
+      vi.fn(() => ({ matches: false, addEventListener: vi.fn(), removeEventListener: vi.fn() })),
+    );
   });
 
   it('lista as metas com o rascunho identificado, sem acoes para quem so consulta', async () => {
@@ -188,7 +196,7 @@ describe('metas do projeto', () => {
     await screen.findByText('Apresentação pública ao fim das oficinas');
     const [, grupo, completa, rascunho] = screen.getAllByRole('row');
     expect(grupo).toHaveTextContent('Pendente (2)');
-    expect(completa).toHaveTextContent('Responsável: Ana Pedagógica· Coordenação Pedagógica');
+    expect(completa).toHaveTextContent('Responsável: Ana PedagógicaSetor: Coordenação Pedagógica');
     expect(within(completa).queryByText('Rascunho')).not.toBeInTheDocument();
     expect(completa).toHaveTextContent(
       'Requisitos: TR, item 24.1 · Certificado para quem concluir',
@@ -684,6 +692,88 @@ describe('metas do projeto', () => {
     expect(calls.find((call) => call.key === `POST ${GOALS}`)?.body).toMatchObject({
       responsavelId: ME.usuarioId,
       setorId: setor.id,
+    });
+  });
+
+  describe('filtros e quadro', () => {
+    const outra = {
+      ...RASCUNHO,
+      responsavel: { id: '00000000-0000-4000-8000-000000000299', nome: 'Bruno', ativo: true },
+      setor: { id: '00000000-0000-4000-8000-000000000902', nome: 'Comunicação', ativo: true },
+    };
+    const nucleo = {
+      'GET /auth/session': () => ({
+        status: 200,
+        body: { ...ME, setor: { id: COMPLETA.setor?.id, nome: COMPLETA.setor?.nome } },
+      }),
+    };
+
+    it('o nucleo entra vendo as metas do seu setor e pode ver todas', async () => {
+      await signedInAs('NUCLEO_PEDAGOGICO', page([COMPLETA, outra], nucleo));
+      renderView();
+
+      const meuSetor = await screen.findByRole('button', { name: 'Do meu setor' });
+      expect(meuSetor).toHaveAttribute('aria-pressed', 'true');
+      expect(screen.getByText('Oficinas de dança com 120 participantes')).toBeInTheDocument();
+      expect(
+        screen.queryByText('Apresentação pública ao fim das oficinas'),
+      ).not.toBeInTheDocument();
+
+      fireEvent.click(screen.getByRole('button', { name: 'Todas' }));
+      expect(
+        await screen.findByText('Apresentação pública ao fim das oficinas'),
+      ).toBeInTheDocument();
+      expect(screen.getByRole('button', { name: 'Todas' })).toHaveAttribute('aria-pressed', 'true');
+    });
+
+    it('lembra o filtro escolhido e volta ao padrao', async () => {
+      await signedInAs('NUCLEO_PEDAGOGICO', page([COMPLETA, outra], nucleo));
+      renderView();
+
+      fireEvent.click(await screen.findByRole('button', { name: 'Prazo próximo ou vencido' }));
+      expect(await screen.findByText('Nenhuma meta neste filtro')).toBeInTheDocument();
+      cleanup();
+      renderView();
+      expect(
+        await screen.findByRole('button', { name: 'Prazo próximo ou vencido' }),
+      ).toHaveAttribute('aria-pressed', 'true');
+
+      fireEvent.click(screen.getByRole('button', { name: 'Ver todas as metas' }));
+      expect(
+        await screen.findByText('Apresentação pública ao fim das oficinas'),
+      ).toBeInTheDocument();
+    });
+
+    it('a gestao entra em todas e ve o quadro por situacao, com a acao no cartao', async () => {
+      const andamento = { ...COMPLETA, situacao: 'EM_ANDAMENTO' as const };
+      await signedInAs(
+        'PRESIDENCIA_GESTAO',
+        page([andamento, outra], {
+          'GET /auth/session': () => ({
+            status: 200,
+            body: { usuarioId: 'gestao', perfil: 'PRESIDENCIA_GESTAO', setor: null },
+          }),
+        }),
+      );
+      renderView();
+
+      expect(await screen.findByRole('button', { name: 'Todas' })).toHaveAttribute(
+        'aria-pressed',
+        'true',
+      );
+      expect(screen.queryByRole('button', { name: 'Do meu setor' })).not.toBeInTheDocument();
+      fireEvent.click(screen.getByRole('button', { name: 'Quadro' }));
+
+      const pendente = await screen.findByRole('region', { name: 'Pendente (1)' });
+      const emAndamento = screen.getByRole('region', { name: 'Em andamento (1)' });
+      expect(screen.getByRole('region', { name: 'Concluída (0)' })).toHaveTextContent(
+        'Nenhuma meta.',
+      );
+      expect(pendente).toHaveTextContent('Responsável: BrunoSetor: Comunicação');
+      expect(within(emAndamento).getByText(/1 · Promover/)).toBeInTheDocument();
+      fireEvent.click(within(emAndamento).getByRole('button', { name: 'Ações da meta 1' }));
+      expect(await screen.findByRole('menuitem', { name: 'Mudar situação' })).toBeInTheDocument();
+      expect(window.localStorage.getItem('cybersetor-metas-visao')).toBe('QUADRO');
     });
   });
 
