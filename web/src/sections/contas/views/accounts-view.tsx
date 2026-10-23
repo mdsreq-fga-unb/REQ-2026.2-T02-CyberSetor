@@ -4,7 +4,7 @@ import { PlusIcon, UsersIcon } from 'lucide-react';
 import { cn } from 'cn';
 import { useState } from 'react';
 import { useSession } from '@/auth/hooks/use-session';
-import { profileLabel } from '@/auth/profiles';
+import { hasSector, profileLabel } from '@/auth/profiles';
 import { ListPagination } from '@/components/list/list-pagination';
 import { ListCard, ListEmpty, ListError, TableSkeleton } from '@/components/list/list-states';
 import { RowActionsMenu, type RowAction } from '@/components/list/row-actions-menu';
@@ -112,7 +112,9 @@ export function AccountsView() {
     }
     return [
       { label: 'Mudar perfil', onSelect: () => editing.show(account) },
-      { label: 'Mudar setor', onSelect: () => relocating.show(account) },
+      ...(hasSector(account.perfil) || account.setor
+        ? [{ label: 'Mudar setor', onSelect: () => relocating.show(account) }]
+        : []),
       { label: 'Redefinir senha', onSelect: () => confirming.show({ account, action: 'reset' }) },
       {
         label: 'Desativar conta',

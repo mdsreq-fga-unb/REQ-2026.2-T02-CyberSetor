@@ -17,6 +17,16 @@ const LABELS: Record<Perfil, string> = {
   ADMINISTRACAO_SISTEMA: 'Administração do sistema',
 };
 
+// Perfis de fora da equipe operacional do Instituto: a conta não tem setor (matriz 8.5.1).
+export const PROFILES_WITHOUT_SECTOR: readonly Perfil[] = [
+  'ADMINISTRACAO_SISTEMA',
+  'CONCEDENTE_AUDITORIA',
+];
+
+export function hasSector(perfil: string): boolean {
+  return !PROFILES_WITHOUT_SECTOR.includes(perfil as Perfil);
+}
+
 export interface NavItem {
   href: string;
   label: string;
