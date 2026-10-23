@@ -22,6 +22,7 @@ import { useInstrument } from '@/queries/instrumentos';
 import { useGoals } from '@/queries/metas';
 import { useProject } from '@/queries/projetos';
 import { paths } from '@/routes/paths';
+import { ProjectActivitiesSection } from '@/sections/atividades/views/project-activities-section';
 import type { Goal } from '@/types/metas';
 import type { Project } from '@/types/projetos';
 import { INSTRUMENT_TYPES, formatDate } from '../../instrumentos/format';
@@ -187,6 +188,10 @@ export function ProjectGoalsView({
           </Table>
           <ListPagination pagination={pagination} label="Paginação das metas" />
         </ListCard>
+      )}
+
+      {instrument.data && project.data && (
+        <ProjectActivitiesSection instrument={instrument.data} project={project.data} />
       )}
     </>
   );
