@@ -648,11 +648,13 @@ describe('metas do projeto', () => {
       expect(
         screen.queryByText('Apresentação pública ao fim das oficinas'),
       ).not.toBeInTheDocument();
+      expect(screen.getByText('Exibindo 1 de 2 metas')).toBeInTheDocument();
 
       fireEvent.click(screen.getByRole('button', { name: 'Todas' }));
       expect(
         await screen.findByText('Apresentação pública ao fim das oficinas'),
       ).toBeInTheDocument();
+      expect(screen.getByText('Exibindo 2 de 2 metas')).toBeInTheDocument();
       expect(screen.getByRole('button', { name: 'Todas' })).toHaveAttribute('aria-pressed', 'true');
     });
 
@@ -692,6 +694,11 @@ describe('metas do projeto', () => {
         'true',
       );
       expect(screen.queryByRole('button', { name: 'Do meu setor' })).not.toBeInTheDocument();
+      fireEvent.click(screen.getByRole('button', { name: 'Minhas' }));
+      expect(window.localStorage.getItem('cybersetor-metas-filtro-gestao')).toBe('MINHAS');
+      fireEvent.click(await screen.findByRole('button', { name: 'Ver todas as metas' }));
+      expect(screen.getByRole('button', { name: 'Todas' })).toHaveAttribute('aria-pressed', 'true');
+      expect(window.localStorage.getItem('cybersetor-metas-filtro-gestao')).toBeNull();
       fireEvent.click(screen.getByRole('button', { name: 'Quadro' }));
 
       const pendente = await screen.findByRole('region', { name: 'Pendente (1)' });
