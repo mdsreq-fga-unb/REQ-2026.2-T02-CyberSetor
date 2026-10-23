@@ -120,6 +120,7 @@ describe.each([
         if (url.endsWith('/auth/login')) {
           return json({ accessToken: 't', perfil: 'PRESIDENCIA_GESTAO', deveTrocarSenha: false });
         }
+        if (url.endsWith('/activities')) return json([]);
         if (url.endsWith('/goals')) return json(GOALS);
         if (url.endsWith('/requirements')) return json(REQUIREMENTS);
         if (url.includes('/projects/')) return json(PROJECT);
