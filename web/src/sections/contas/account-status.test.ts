@@ -11,6 +11,7 @@ const BASE: Account = {
   deveTrocarSenha: false,
   bloqueadoAte: null,
   ultimoAcessoEm: null,
+  setor: null,
 };
 
 const NOW = new Date('2026-10-20T12:00:00Z');

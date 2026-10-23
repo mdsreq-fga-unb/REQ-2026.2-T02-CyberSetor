@@ -44,6 +44,12 @@ export function useChangeProfile() {
   );
 }
 
+export function useChangeSector() {
+  return useAccountMutation(({ id, setorId }: { id: string; setorId: string | null }) =>
+    authorizedRequest<Account>(accountPath(id, 'sector'), { method: 'PATCH', body: { setorId } }),
+  );
+}
+
 export function useDeactivateAccount() {
   return useAccountMutation((id: string) =>
     authorizedRequest<DeactivationResult>(accountPath(id, 'deactivate'), { method: 'POST' }),

@@ -17,6 +17,10 @@ const ACCOUNTS: Account[] = Array.from({ length: 12 }, (_, index) => ({
   deveTrocarSenha: index % 4 === 1,
   bloqueadoAte: null,
   ultimoAcessoEm: null,
+  setor:
+    index % 3 === 1
+      ? { id: '00000000-0000-4000-8000-000000000401', nome: 'Coordenação Pedagógica' }
+      : null,
 }));
 
 function json(body: unknown): Response {

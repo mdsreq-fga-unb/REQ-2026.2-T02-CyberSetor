@@ -1,4 +1,11 @@
-import { FileTextIcon, HouseIcon, ShapesIcon, UsersIcon, type LucideIcon } from 'lucide-react';
+import {
+  Building2Icon,
+  FileTextIcon,
+  HouseIcon,
+  ShapesIcon,
+  UsersIcon,
+  type LucideIcon,
+} from 'lucide-react';
 import { paths } from '@/routes/paths';
 import type { Perfil } from './types';
 
@@ -9,6 +16,16 @@ const LABELS: Record<Perfil, string> = {
   CONCEDENTE_AUDITORIA: 'Órgão Concedente e Auditoria',
   ADMINISTRACAO_SISTEMA: 'Administração do sistema',
 };
+
+// Perfis de fora da equipe operacional do Instituto: a conta não tem setor (matriz 8.5.1).
+export const PROFILES_WITHOUT_SECTOR: readonly Perfil[] = [
+  'ADMINISTRACAO_SISTEMA',
+  'CONCEDENTE_AUDITORIA',
+];
+
+export function hasSector(perfil: string): boolean {
+  return !PROFILES_WITHOUT_SECTOR.includes(perfil as Perfil);
+}
 
 export interface NavItem {
   href: string;
@@ -30,6 +47,17 @@ export const NAVIGATION: NavItem[] = [
     label: 'Modalidades',
     icon: ShapesIcon,
     profiles: ['PRESIDENCIA_GESTAO', 'NUCLEO_PEDAGOGICO', 'ADMINISTRATIVO_FINANCEIRO'],
+  },
+  {
+    href: paths.dashboard.sectors,
+    label: 'Setores',
+    icon: Building2Icon,
+    profiles: [
+      'PRESIDENCIA_GESTAO',
+      'NUCLEO_PEDAGOGICO',
+      'ADMINISTRATIVO_FINANCEIRO',
+      'ADMINISTRACAO_SISTEMA',
+    ],
   },
   {
     href: paths.dashboard.accounts,

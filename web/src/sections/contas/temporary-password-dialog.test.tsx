@@ -13,6 +13,7 @@ const RESULT: TemporaryPasswordResult = {
     deveTrocarSenha: true,
     bloqueadoAte: null,
     ultimoAcessoEm: null,
+    setor: null,
   },
   senhaTemporaria: 'Temporaria-123456',
 };
