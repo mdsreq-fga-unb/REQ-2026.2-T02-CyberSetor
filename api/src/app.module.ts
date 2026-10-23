@@ -12,6 +12,7 @@ import { ModalitiesModule } from './modalities/modalities.module.js';
 import { PrismaModule } from './prisma/prisma.module.js';
 import { ProjectsModule } from './projects/projects.module.js';
 import { RequirementsModule } from './requirements/requirements.module.js';
+import { SectorsModule } from './sectors/sectors.module.js';
 
 @Module({
   imports: [
@@ -31,6 +32,7 @@ import { RequirementsModule } from './requirements/requirements.module.js';
     ActivitiesModule,
     RequirementsModule,
     GoalsModule,
+    SectorsModule,
   ],
 })
 export class AppModule {}
