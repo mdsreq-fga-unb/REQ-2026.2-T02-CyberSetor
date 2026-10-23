@@ -1,12 +1,15 @@
 'use client';
 
-import { ArrowLeftIcon, TargetIcon } from 'lucide-react';
+import { ArrowLeftIcon, PlusIcon, TargetIcon } from 'lucide-react';
 import Link from 'next/link';
+import { useSession } from '@/auth/hooks/use-session';
 import { ListPagination } from '@/components/list/list-pagination';
 import { ListCard, ListEmpty, ListError, TableSkeleton } from '@/components/list/list-states';
+import { RowActionsMenu } from '@/components/list/row-actions-menu';
 import { usePagination } from '@/components/list/use-pagination';
 import { PageHeader } from '@/components/page-header';
 import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
 import { Skeleton } from '@/components/ui/skeleton';
 import {
   Table,
@@ -17,15 +20,19 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table';
+import { toast } from '@/components/ui/toast';
+import { useDialogState } from '@/hooks/use-dialog-state';
 import { ApiError } from '@/lib/api';
 import { useInstrument } from '@/queries/instrumentos';
 import { useGoals } from '@/queries/metas';
 import { useProject } from '@/queries/projetos';
+import { useRequirements } from '@/queries/requisitos';
 import { paths } from '@/routes/paths';
 import type { Goal } from '@/types/metas';
 import type { Project } from '@/types/projetos';
 import { INSTRUMENT_TYPES, formatDate } from '../../instrumentos/format';
 import { missingText, requirementLabel } from '../format';
+import { GoalFormDialog } from '../goal-form-dialog';
 
 function loadFailure(error: unknown): string {
   if (error instanceof ApiError && error.status === 403) {
@@ -90,10 +97,16 @@ export function ProjectGoalsView({
   instrumentId: string;
   projectId: string;
 }) {
+  const { session } = useSession();
   const instrument = useInstrument(instrumentId);
   const project = useProject(projectId);
+  const requirements = useRequirements(instrumentId);
   const goals = useGoals(projectId);
   const pagination = usePagination(goals.data);
+  const form = useDialogState<{ goal: Goal | null }>();
+  const manager = session?.perfil === 'PRESIDENCIA_GESTAO';
+  const canEdit = manager && instrument.data?.ativo === true && requirements.data !== undefined;
+  const withoutRequirements = requirements.data?.length === 0;
 
   const back = (
     <Link
@@ -117,12 +130,22 @@ export function ProjectGoalsView({
     );
   }
 
+  const createButton = canEdit && (
+    <Button onClick={() => form.show({ goal: null })} disabled={!requirements.data?.length}>
+      <PlusIcon data-icon="inline-start" />
+      Nova meta
+    </Button>
+  );
+
   return (
     <>
       {back}
       {project.data ? (
         <div className="flex flex-col gap-3">
-          <PageHeader title={`${project.data.codigo} · ${project.data.titulo}`} />
+          <PageHeader
+            title={`${project.data.codigo} · ${project.data.titulo}`}
+            action={createButton}
+          />
           <ProjectSummary project={project.data} />
         </div>
       ) : (
@@ -130,6 +153,28 @@ export function ProjectGoalsView({
           <Skeleton className="h-8 w-full max-w-md" />
           <Skeleton className="h-4 w-full max-w-xs" />
         </div>
+      )}
+
+      {instrument.data && !instrument.data.ativo && (
+        <p className="text-muted-foreground">Instrumento inativo: não recebe nem altera metas.</p>
+      )}
+      {manager && (instrument.error || requirements.error) && (
+        <p role="alert" className="text-destructive">
+          Não foi possível carregar o instrumento e os requisitos dele; o cadastro e a edição de
+          metas ficam indisponíveis. Recarregue a página.
+        </p>
+      )}
+      {canEdit && withoutRequirements && (
+        <p className="text-muted-foreground">
+          Cadastre os requisitos do instrumento antes das metas, na{' '}
+          <Link
+            href={paths.dashboard.instrument(instrumentId)}
+            className="text-foreground underline underline-offset-4"
+          >
+            página do instrumento
+          </Link>
+          .
+        </p>
       )}
 
       <h2 className="text-lg font-semibold">Metas</h2>
@@ -140,6 +185,7 @@ export function ProjectGoalsView({
           icon={TargetIcon}
           title="Nenhuma meta neste projeto"
           description="Cadastre cada meta do plano de trabalho com o indicador, o período e a forma de comprovação."
+          action={(!withoutRequirements && createButton) || undefined}
         />
       ) : (
         <ListCard>
@@ -158,11 +204,16 @@ export function ProjectGoalsView({
                 <TableHead scope="col" className="hidden md:table-cell">
                   Período
                 </TableHead>
+                {canEdit && (
+                  <TableHead scope="col" className="w-16 px-4">
+                    <span className="sr-only">Ações</span>
+                  </TableHead>
+                )}
               </TableRow>
             </TableHeader>
             <TableBody>
               {goals.isPending ? (
-                <TableSkeleton columns={3} />
+                <TableSkeleton columns={canEdit ? 4 : 3} />
               ) : (
                 pagination.pageRows.map((goal) => (
                   <TableRow key={goal.id}>
@@ -180,6 +231,14 @@ export function ProjectGoalsView({
                     <TableCell className="hidden md:table-cell">
                       {period(goal.periodoInicio, goal.periodoFim)}
                     </TableCell>
+                    {canEdit && (
+                      <TableCell className="px-4 text-right">
+                        <RowActionsMenu
+                          label={`Ações da meta ${goal.ordem}`}
+                          actions={[{ label: 'Editar meta', onSelect: () => form.show({ goal }) }]}
+                        />
+                      </TableCell>
+                    )}
                   </TableRow>
                 ))
               )}
@@ -187,6 +246,18 @@ export function ProjectGoalsView({
           </Table>
           <ListPagination pagination={pagination} label="Paginação das metas" />
         </ListCard>
+      )}
+
+      {requirements.data && project.data && (
+        <GoalFormDialog
+          open={form.open}
+          projectId={projectId}
+          execution={project.data}
+          requirements={requirements.data}
+          goal={form.value?.goal ?? null}
+          onClose={form.close}
+          onSaved={(goal) => toast.add({ type: 'success', title: `Meta ${goal.ordem} salva` })}
+        />
       )}
     </>
   );
