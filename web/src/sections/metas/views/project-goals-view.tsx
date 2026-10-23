@@ -248,10 +248,11 @@ export function ProjectGoalsView({
         </ListCard>
       )}
 
-      {requirements.data && (
+      {requirements.data && project.data && (
         <GoalFormDialog
           open={form.open}
           projectId={projectId}
+          execution={project.data}
           requirements={requirements.data}
           goal={form.value?.goal ?? null}
           onClose={form.close}
