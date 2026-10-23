@@ -69,6 +69,8 @@ model Modalidade {
   criadoEm     DateTime @default(now()) @map("criado_em") @db.Timestamptz(3)
   atualizadoEm DateTime @updatedAt @map("atualizado_em") @db.Timestamptz(3)
 
+  atividades Atividade[]
+
   @@map("modalidade")
 }
 
@@ -87,6 +89,7 @@ model Projeto {
   instrumento Instrumento @relation(fields: [instrumentoId], references: [id], onDelete: Restrict)
   coordenador Usuario     @relation(fields: [coordenadorId], references: [id], onDelete: Restrict)
   metas       Meta[]
+  atividades  Atividade[]
 
   @@unique([instrumentoId, codigo])
   @@index([coordenadorId])
@@ -131,6 +134,7 @@ model Meta {
 
   projeto    Projeto         @relation(fields: [projetoId], references: [id], onDelete: Restrict)
   requisitos MetaRequisito[]
+  atividades AtividadeMeta[]
 
   @@index([projetoId])
   @@map("meta")
@@ -147,6 +151,42 @@ model MetaRequisito {
   @@id([metaId, requisitoId])
   @@index([requisitoId])
   @@map("meta_requisito")
+}
+
+model Atividade {
+  id            String   @id @default(uuid()) @db.Uuid
+  versao        Int      @default(1)
+  projetoId     String   @map("projeto_id") @db.Uuid
+  modalidadeId  String   @map("modalidade_id") @db.Uuid
+  responsavelId String   @map("responsavel_id") @db.Uuid
+  titulo        String
+  data          DateTime @db.Date
+  local         String
+  criadoEm      DateTime @default(now()) @map("criado_em") @db.Timestamptz(3)
+  atualizadoEm  DateTime @updatedAt @map("atualizado_em") @db.Timestamptz(3)
+
+  projeto     Projeto         @relation(fields: [projetoId], references: [id], onDelete: Restrict)
+  modalidade  Modalidade      @relation(fields: [modalidadeId], references: [id], onDelete: Restrict)
+  responsavel Usuario         @relation(fields: [responsavelId], references: [id], onDelete: Restrict)
+  metas       AtividadeMeta[]
+
+  @@index([projetoId])
+  @@index([modalidadeId])
+  @@index([responsavelId])
+  @@map("atividade")
+}
+
+model AtividadeMeta {
+  atividadeId String   @map("atividade_id") @db.Uuid
+  metaId      String   @map("meta_id") @db.Uuid
+  criadoEm    DateTime @default(now()) @map("criado_em") @db.Timestamptz(3)
+
+  atividade Atividade @relation(fields: [atividadeId], references: [id], onDelete: Restrict)
+  meta      Meta      @relation(fields: [metaId], references: [id], onDelete: Restrict)
+
+  @@id([atividadeId, metaId])
+  @@index([metaId])
+  @@map("atividade_meta")
 }
 
 model Setor {
@@ -194,6 +234,7 @@ model Usuario {
 
   pessoa              Pessoa            @relation(fields: [pessoaId], references: [id], onDelete: Restrict)
   projetosCoordenados Projeto[]
+  atividades          Atividade[]
   sessoes             Sessao[]
   eventos             TrilhaAuditoria[] @relation("autor")
   previas             TrilhaAuditoria[] @relation("previa")
