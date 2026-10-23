@@ -10,6 +10,7 @@ import { InstrumentsModule } from './instruments/instruments.module.js';
 import { ModalitiesModule } from './modalities/modalities.module.js';
 import { PrismaModule } from './prisma/prisma.module.js';
 import { ProjectsModule } from './projects/projects.module.js';
+import { RequirementsModule } from './requirements/requirements.module.js';
 
 @Module({
   imports: [
@@ -27,6 +28,7 @@ import { ProjectsModule } from './projects/projects.module.js';
     ModalitiesModule,
     ProjectsModule,
     ActivitiesModule,
+    RequirementsModule,
   ],
 })
 export class AppModule {}
