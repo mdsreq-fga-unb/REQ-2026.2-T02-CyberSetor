@@ -58,6 +58,10 @@ function isoDate(date: Date | null): string | null {
   return date ? date.toISOString().slice(0, 10) : null;
 }
 
+function brDate(date: Date): string {
+  return date.toISOString().slice(0, 10).split('-').reverse().join('/');
+}
+
 function sortedIds(ids: string[] | null): string[] {
   return [...new Set(ids ?? [])].sort();
 }
@@ -116,12 +120,20 @@ function columns(values: GoalValues): Prisma.MetaUncheckedUpdateInput {
   };
 }
 
-function assertPeriod(values: GoalValues): void {
-  [values.periodoInicio, values.periodoFim].forEach((value) => value !== null && toDate(value));
+function assertPeriod(values: GoalValues, project: { inicio: Date; fim: Date }): void {
+  const days = [values.periodoInicio, values.periodoFim].flatMap((value) =>
+    value === null ? [] : [toDate(value)],
+  );
   if (values.periodoInicio && values.periodoFim && values.periodoFim < values.periodoInicio) {
     throw new BadRequestException({
       code: 'INVALID_PERIOD',
       message: 'O fim do período não pode ser anterior ao início.',
+    });
+  }
+  if (days.some((day) => day < project.inicio || day > project.fim)) {
+    throw new BadRequestException({
+      code: 'OUTSIDE_PROJECT_EXECUTION',
+      message: `O período da meta deve ficar dentro da execução do projeto, de ${brDate(project.inicio)} a ${brDate(project.fim)}.`,
     });
   }
 }
@@ -166,7 +178,7 @@ export class GoalsService {
       const project = await this.project(tx, projetoId);
       assertActive(project.instrumento);
       const values = merge(BLANK, data);
-      assertPeriod(values);
+      assertPeriod(values, project);
       assertRequirementsPresent(values);
       await this.assertSameInstrument(tx, project.instrumentoId, values.requisitoIds);
 
@@ -218,7 +230,9 @@ export class GoalsService {
         (field) => JSON.stringify(next[field]) !== JSON.stringify(before[field]),
       );
       if (changed.length === 0) return toResponse(current);
-      if (changed.includes('periodoInicio') || changed.includes('periodoFim')) assertPeriod(next);
+      if (changed.includes('periodoInicio') || changed.includes('periodoFim')) {
+        assertPeriod(next, current.projeto);
+      }
       if (changed.includes('origem') || changed.includes('requisitoIds')) {
         assertRequirementsPresent(next);
       }

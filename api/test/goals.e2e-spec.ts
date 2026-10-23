@@ -342,6 +342,26 @@ describe('Metas do projeto (e2e)', () => {
     await created({ ...complete(), periodoInicio: '2026-03-01', periodoFim: '2026-03-01' });
   });
 
+  it('recusa periodo fora da execucao do projeto, no cadastro e na edicao', async () => {
+    const antes = await post({ ...complete(), periodoInicio: '2026-01-04' }).expect(400);
+    expect(antes.body).toMatchObject({
+      code: 'OUTSIDE_PROJECT_EXECUTION',
+      message:
+        'O período da meta deve ficar dentro da execução do projeto, de 05/01/2026 a 20/07/2026.',
+    });
+    const rascunho = await post({ ...draft(), periodoFim: '2026-07-21' }).expect(400);
+    expect((rascunho.body as ErrorBody).code).toBe('OUTSIDE_PROJECT_EXECUTION');
+
+    const meta = await created({
+      ...complete(),
+      periodoInicio: '2026-01-05',
+      periodoFim: '2026-07-20',
+    });
+    const edicao = await patch(meta.id, { versao: 1, periodoFim: '2026-08-01' }).expect(400);
+    expect((edicao.body as ErrorBody).code).toBe('OUTSIDE_PROJECT_EXECUTION');
+    expect(await prisma.meta.count()).toBe(1);
+  });
+
   it('aceita periodo com uma data so, como rascunho', async () => {
     const meta = await created({ ...complete(), periodoInicio: undefined });
 
