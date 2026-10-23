@@ -191,6 +191,7 @@ model AtividadeMeta {
 
 model Setor {
   id           String   @id @default(uuid()) @db.Uuid
+  versao       Int      @default(1)
   nome         String   @unique
   ativo        Boolean  @default(true)
   criadoEm     DateTime @default(now()) @map("criado_em") @db.Timestamptz(3)
