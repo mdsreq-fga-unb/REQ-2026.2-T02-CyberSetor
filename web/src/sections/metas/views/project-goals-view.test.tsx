@@ -251,6 +251,31 @@ describe('metas do projeto', () => {
     expect(calls.some((call) => call.key === `POST ${GOALS}`)).toBe(false);
   });
 
+  it('periodo fora da execucao do projeto nao chama a API', async () => {
+    const calls = await signedInAs('PRESIDENCIA_GESTAO', page([]));
+    renderView();
+
+    await openNew();
+    expect(
+      screen.getByText('Dentro da execução do projeto, de 05/01/2026 a 20/07/2026.'),
+    ).toBeInTheDocument();
+    expect(screen.getByLabelText('Início')).toHaveAttribute('min', '2026-01-05');
+    expect(screen.getByLabelText('Fim (prazo)')).toHaveAttribute('max', '2026-07-20');
+    fill('Origem', 'EDITAL');
+    fill('Objetivo', 'Ampliar o público');
+    fill('Descrição', 'Apresentação aberta');
+    fill('Início', '2026-01-04');
+    fill('Fim (prazo)', '2026-07-21');
+    fireEvent.click(screen.getByRole('button', { name: 'Salvar meta' }));
+
+    expect(
+      await screen.findAllByText(
+        'Escolha uma data dentro da execução do projeto, de 05/01/2026 a 20/07/2026.',
+      ),
+    ).toHaveLength(2);
+    expect(calls.some((call) => call.key === `POST ${GOALS}`)).toBe(false);
+  });
+
   it.each([
     ['GOAL_REQUIREMENT_REQUIRED', 'Relacione a meta a pelo menos um requisito do instrumento.'],
     [

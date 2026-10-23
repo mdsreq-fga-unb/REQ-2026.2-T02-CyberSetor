@@ -253,10 +253,11 @@ export function ProjectGoalsView({
         <ProjectActivitiesSection instrument={instrument.data} project={project.data} />
       )}
 
-      {requirements.data && (
+      {requirements.data && project.data && (
         <GoalFormDialog
           open={form.open}
           projectId={projectId}
+          execution={project.data}
           requirements={requirements.data}
           goal={form.value?.goal ?? null}
           onClose={form.close}

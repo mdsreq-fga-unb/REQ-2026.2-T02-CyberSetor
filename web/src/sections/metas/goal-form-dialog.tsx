@@ -1,7 +1,7 @@
 'use client';
 
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useEffect, useState, type FormEvent, type ReactNode } from 'react';
+import { useEffect, useMemo, useState, type FormEvent, type ReactNode } from 'react';
 import { Controller, useForm, useWatch } from 'react-hook-form';
 import { z } from 'zod';
 import { FormField } from '@/components/form-field';
@@ -14,7 +14,13 @@ import {
   DialogHeader,
   DialogTitle,
 } from '@/components/ui/dialog';
-import { FieldError, FieldGroup, FieldLegend, FieldSet } from '@/components/ui/field';
+import {
+  FieldDescription,
+  FieldError,
+  FieldGroup,
+  FieldLegend,
+  FieldSet,
+} from '@/components/ui/field';
 import { Input } from '@/components/ui/input';
 import { NativeSelect, NativeSelectOption } from '@/components/ui/native-select';
 import { Textarea } from '@/components/ui/textarea';
@@ -22,6 +28,7 @@ import { ApiError } from '@/lib/api';
 import { useFreshGoal, useSaveGoal } from '@/queries/metas';
 import type { Goal, GoalInput } from '@/types/metas';
 import type { Requirement } from '@/types/requisitos';
+import { formatDate } from '../instrumentos/format';
 import { GOAL_ORIGINS, MEASUREMENT_MODES } from './format';
 
 const DATE = /^\d{4}-\d{2}-\d{2}$/;
@@ -39,36 +46,59 @@ const date = z
   .refine((value) => value === '' || DATE.test(value), 'Informe a data completa.')
   .transform((value) => value || null);
 
-const schema = z
-  .object({
-    origem: z.enum(['EDITAL', 'PROJETO', 'INSTITUTO'], { error: 'Escolha a origem da meta.' }),
-    objetivo: text(500).min(1, 'Informe o objetivo.'),
-    descricao: text(2000).min(1, 'Descreva a meta.'),
-    requisitoIds: z.array(z.string()).max(50, 'Selecione no máximo 50 requisitos.'),
-    indicador: text(500),
-    modalidadeAfericao: z
-      .enum(['', 'QUANTITATIVA', 'QUALITATIVA'])
-      .transform((value) => value || null),
-    parametroPlanejado: text(100),
-    unidade: text(50),
-    periodoInicio: date,
-    periodoFim: date,
-    frequenciaApuracao: text(100),
-    formaComprovacao: text(1000),
-    resultadoEsperado: text(1000),
-  })
-  .refine(
-    (values) =>
-      !values.periodoInicio || !values.periodoFim || values.periodoFim >= values.periodoInicio,
-    {
-      path: ['periodoFim'],
-      message: 'O fim do período não pode ser anterior ao início.',
-      when: (payload) =>
-        z.object({ periodoInicio: date, periodoFim: date }).safeParse(payload.value).success,
-    },
-  );
+interface Execution {
+  inicio: string;
+  fim: string;
+}
 
-type FormValues = z.input<typeof schema>;
+const datesParse = (payload: { value: unknown }) =>
+  z.object({ periodoInicio: date, periodoFim: date }).safeParse(payload.value).success;
+
+const schemaFor = (execution: Execution) => {
+  const outside = `Escolha uma data dentro da execução do projeto, de ${formatDate(execution.inicio)} a ${formatDate(execution.fim)}.`;
+  const inside = (value: string | null) =>
+    !value || (value >= execution.inicio && value <= execution.fim);
+  return z
+    .object({
+      origem: z.enum(['EDITAL', 'PROJETO', 'INSTITUTO'], { error: 'Escolha a origem da meta.' }),
+      objetivo: text(500).min(1, 'Informe o objetivo.'),
+      descricao: text(2000).min(1, 'Descreva a meta.'),
+      requisitoIds: z.array(z.string()).max(50, 'Selecione no máximo 50 requisitos.'),
+      indicador: text(500),
+      modalidadeAfericao: z
+        .enum(['', 'QUANTITATIVA', 'QUALITATIVA'])
+        .transform((value) => value || null),
+      parametroPlanejado: text(100),
+      unidade: text(50),
+      periodoInicio: date,
+      periodoFim: date,
+      frequenciaApuracao: text(100),
+      formaComprovacao: text(1000),
+      resultadoEsperado: text(1000),
+    })
+    .refine(
+      (values) =>
+        !values.periodoInicio || !values.periodoFim || values.periodoFim >= values.periodoInicio,
+      {
+        path: ['periodoFim'],
+        message: 'O fim do período não pode ser anterior ao início.',
+        when: datesParse,
+      },
+    )
+    .refine((values) => inside(values.periodoInicio), {
+      path: ['periodoInicio'],
+      message: outside,
+      when: datesParse,
+    })
+    .refine((values) => inside(values.periodoFim), {
+      path: ['periodoFim'],
+      message: outside,
+      when: datesParse,
+    });
+};
+
+type GoalSchema = ReturnType<typeof schemaFor>;
+type FormValues = z.input<GoalSchema>;
 type FieldName = keyof FormValues;
 type TextField = Exclude<FieldName, 'origem' | 'requisitoIds' | 'modalidadeAfericao'>;
 
@@ -92,6 +122,7 @@ const FIELD_BY_CODE: Partial<Record<string, FieldName>> = {
   GOAL_REQUIREMENT_REQUIRED: 'requisitoIds',
   REQUIREMENT_OUTSIDE_INSTRUMENT: 'requisitoIds',
   INVALID_PERIOD: 'periodoFim',
+  OUTSIDE_PROJECT_EXECUTION: 'periodoFim',
 };
 
 function valuesOf(goal: Goal | null): FormValues {
@@ -132,6 +163,7 @@ function Section({ title, children }: { title: string; children: ReactNode }) {
 export function GoalFormDialog({
   open,
   projectId,
+  execution,
   requirements,
   goal,
   onClose,
@@ -139,6 +171,7 @@ export function GoalFormDialog({
 }: {
   open: boolean;
   projectId: string;
+  execution: Execution;
   requirements: Requirement[];
   goal: Goal | null;
   onClose: () => void;
@@ -149,7 +182,8 @@ export function GoalFormDialog({
   const [failure, setFailure] = useState<string | null>(null);
   const [current, setCurrent] = useState<Goal | null>(null);
   const editing = current ?? goal;
-  const form = useForm<FormValues, unknown, z.output<typeof schema>>({
+  const schema = useMemo(() => schemaFor(execution), [execution]);
+  const form = useForm<FormValues, unknown, z.output<GoalSchema>>({
     resolver: zodResolver(schema),
     defaultValues: EMPTY,
   });
@@ -204,6 +238,8 @@ export function GoalFormDialog({
     setFailure(null);
     return form.handleSubmit(onValid)(event);
   }
+
+  const dateLimits = { type: 'date', min: execution.inicio, max: execution.fim };
 
   const input = (name: TextField, label: string, extra: object = {}) => (
     <FormField name={name} label={label} control={form.control}>
@@ -308,9 +344,13 @@ export function GoalFormDialog({
               {area('formaComprovacao', 'Forma de comprovação')}
             </Section>
             <Section title="Período">
+              <FieldDescription>
+                Dentro da execução do projeto, de {formatDate(execution.inicio)} a{' '}
+                {formatDate(execution.fim)}.
+              </FieldDescription>
               <div className="grid gap-4 sm:grid-cols-2">
-                {input('periodoInicio', 'Início', { type: 'date' })}
-                {input('periodoFim', 'Fim (prazo)', { type: 'date' })}
+                {input('periodoInicio', 'Início', dateLimits)}
+                {input('periodoFim', 'Fim (prazo)', dateLimits)}
               </div>
             </Section>
             {area('resultadoEsperado', 'Resultado esperado')}
