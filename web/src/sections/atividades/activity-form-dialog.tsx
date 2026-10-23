@@ -276,7 +276,7 @@ export function ActivityFormDialog({
                   role="group"
                   aria-label="Metas atendidas"
                   aria-describedby={ariaDescribedBy}
-                  className="flex flex-col gap-1 rounded-md border border-input p-3"
+                  className="flex max-h-60 flex-col gap-1 overflow-y-auto rounded-md border border-input p-3"
                 >
                   {goals.isPending && (
                     <p className="text-sm text-muted-foreground">Carregando metas…</p>
@@ -286,7 +286,7 @@ export function ActivityFormDialog({
                       Nenhuma meta cadastrada neste projeto.
                     </p>
                   )}
-                  {goals.data?.map((goal) => {
+                  {goals.data?.map((goal, index) => {
                     const checked = Array.isArray(value) && value.includes(goal.id);
                     return (
                       <label
@@ -294,6 +294,7 @@ export function ActivityFormDialog({
                         className="flex min-h-12 cursor-pointer items-center gap-3 py-1 text-sm font-normal"
                       >
                         <input
+                          id={index === 0 ? 'metaIds' : undefined}
                           type="checkbox"
                           value={goal.id}
                           checked={checked}
