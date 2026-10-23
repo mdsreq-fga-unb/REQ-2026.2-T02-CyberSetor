@@ -72,7 +72,7 @@ export function ChangeSectorDialog({
               <NativeSelect
                 id="novo-setor"
                 value={setorId}
-                disabled={sectors.isPending}
+                disabled={!sectors.isSuccess}
                 onChange={(event) => setChosen(event.target.value)}
               >
                 <NativeSelectOption value="">
@@ -97,7 +97,7 @@ export function ChangeSectorDialog({
               </p>
             )}
             <DialogFooter>
-              <Button type="submit" disabled={changeSector.isPending || sectors.isPending}>
+              <Button type="submit" disabled={changeSector.isPending || !sectors.isSuccess}>
                 {changeSector.isPending ? 'Salvando…' : 'Salvar setor'}
               </Button>
             </DialogFooter>
