@@ -1,4 +1,9 @@
-import { ConflictException, Injectable, NotFoundException } from '@nestjs/common';
+import {
+  BadRequestException,
+  ConflictException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { randomBytes } from 'node:crypto';
 import { AuditTrailService } from '../audit/audit-trail.service.js';
 import { Prisma } from '../generated/prisma/client.js';
@@ -27,7 +32,7 @@ const ACCOUNT_SELECT = {
   deveTrocarSenha: true,
   bloqueadoAte: true,
   ultimoAcessoEm: true,
-  pessoa: { select: { nome: true } },
+  pessoa: { select: { nome: true, setor: { select: { id: true, nome: true } } } },
 } satisfies Prisma.UsuarioSelect;
 
 type AccountRow = Prisma.UsuarioGetPayload<{ select: typeof ACCOUNT_SELECT }>;
@@ -35,7 +40,7 @@ type AccountRow = Prisma.UsuarioGetPayload<{ select: typeof ACCOUNT_SELECT }>;
 const SERIALIZABLE = { isolationLevel: Prisma.TransactionIsolationLevel.Serializable };
 
 function toResponse({ pessoa, ...usuario }: AccountRow): AccountResponse {
-  return { ...usuario, nome: pessoa.nome };
+  return { ...usuario, nome: pessoa.nome, setor: pessoa.setor };
 }
 
 function generateTemporaryPassword(): string {
@@ -67,7 +72,9 @@ export class AccountsService {
       if (await tx.usuario.findUnique({ where: { emailLogin }, select: { id: true } })) {
         throw new ConflictException('Já existe conta com este e-mail.');
       }
-      const pessoa = await tx.pessoa.create({ data: { nome: data.nome } });
+      const setorId = data.setorId ?? null;
+      await this.assertSector(tx, setorId);
+      const pessoa = await tx.pessoa.create({ data: { nome: data.nome, setorId } });
       const usuario = await tx.usuario.create({
         data: {
           pessoaId: pessoa.id,
@@ -85,7 +92,7 @@ export class AccountsService {
           acao: 'ACCOUNT_CREATED',
           entidade: 'usuario',
           entidadeId: usuario.id,
-          depois: { emailLogin, perfil: usuario.perfil },
+          depois: { emailLogin, perfil: usuario.perfil, setorId },
           correlationId: actor.correlationId,
         },
         tx,
@@ -123,6 +130,32 @@ export class AccountsService {
       );
       return updated;
     }, SERIALIZABLE);
+    return toResponse(conta);
+  }
+
+  async changeSector(id: string, setorId: string | null, actor: Actor): Promise<AccountResponse> {
+    const conta = await this.prisma.$transaction(async (tx) => {
+      const current = await this.findOrFail(tx, id);
+      const before = current.pessoa.setor?.id ?? null;
+      if (before === setorId) return current;
+      await this.assertSector(tx, setorId);
+
+      await tx.pessoa.update({ where: { id: current.pessoaId }, data: { setorId } });
+      await this.audit.record(
+        {
+          autorTipo: AutorTipo.USUARIO,
+          usuarioId: actor.usuarioId,
+          acao: 'ACCOUNT_SECTOR_CHANGED',
+          entidade: 'usuario',
+          entidadeId: id,
+          antes: { setorId: before },
+          depois: { setorId },
+          correlationId: actor.correlationId,
+        },
+        tx,
+      );
+      return this.findOrFail(tx, id);
+    });
     return toResponse(conta);
   }
 
@@ -218,6 +251,17 @@ export class AccountsService {
     const conta = await tx.usuario.findUnique({ where: { id }, select: ACCOUNT_SELECT });
     if (!conta) throw new NotFoundException('Conta não encontrada.');
     return conta;
+  }
+
+  private async assertSector(tx: Prisma.TransactionClient, setorId: string | null): Promise<void> {
+    if (setorId === null) return;
+    const active = await tx.setor.count({ where: { id: setorId, ativo: true } });
+    if (active === 0) {
+      throw new BadRequestException({
+        code: 'INVALID_SECTOR',
+        message: 'Escolha o setor entre os setores ativos.',
+      });
+    }
   }
 
   private async ensureNotLastAdmin(tx: Prisma.TransactionClient, conta: AccountRow): Promise<void> {
