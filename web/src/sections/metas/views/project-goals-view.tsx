@@ -250,11 +250,13 @@ export function ProjectGoalsView({
   const standard = viewer ? defaultFilter(viewer) : 'TODAS';
   const filter = storedFilter ?? standard;
   const board = !mobile && storedView === 'QUADRO';
+  const loading = goals.isPending || me.isPending;
   const sorted = useMemo(
     () =>
-      goals.data &&
-      goals.data.filter((goal) => !viewer || matches(goal, filter, viewer)).sort(bySituation),
-    [goals.data, filter, viewer],
+      loading
+        ? undefined
+        : goals.data?.filter((goal) => !viewer || matches(goal, filter, viewer)).sort(bySituation),
+    [loading, goals.data, filter, viewer],
   );
   const pagination = usePagination(sorted);
   const form = useDialogState<{ goal: Goal | null }>();
@@ -376,6 +378,12 @@ export function ProjectGoalsView({
           )}
         </div>
       )}
+      {viewer && sorted && !!goals.data?.length && (
+        <p className="text-sm text-muted-foreground" aria-live="polite">
+          Exibindo {sorted.length} de {goals.data.length}{' '}
+          {goals.data.length === 1 ? 'meta' : 'metas'}
+        </p>
+      )}
       {goals.error && !goals.data ? (
         <ListError message="Não foi possível carregar as metas. Tente de novo." />
       ) : goals.data?.length === 0 ? (
@@ -391,7 +399,10 @@ export function ProjectGoalsView({
           title="Nenhuma meta neste filtro"
           description={`O filtro "${FILTER_LABELS[filter]}" não tem metas neste projeto.`}
           action={
-            <Button variant="outline" onClick={() => chooseFilter('TODAS')}>
+            <Button
+              variant="outline"
+              onClick={() => chooseFilter(standard === 'TODAS' ? null : 'TODAS')}
+            >
               Ver todas as metas
             </Button>
           }
@@ -400,7 +411,7 @@ export function ProjectGoalsView({
         <GoalsBoard goals={sorted} actionsFor={actionsFor} />
       ) : (
         <ListCard>
-          <Table aria-busy={goals.isPending}>
+          <Table aria-busy={loading}>
             <TableCaption className="sr-only">
               Metas do projeto {project.data?.codigo ?? ''}.
             </TableCaption>
@@ -423,7 +434,7 @@ export function ProjectGoalsView({
               </TableRow>
             </TableHeader>
             <TableBody>
-              {goals.isPending ? (
+              {loading ? (
                 <TableSkeleton columns={columns} />
               ) : (
                 pagination.pageRows.map((goal, index) => (
