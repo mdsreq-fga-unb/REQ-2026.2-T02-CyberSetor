@@ -53,16 +53,19 @@ function ActivitySummary({ activity }: { activity: Activity }) {
       <span className="font-medium">{activity.titulo}</span>
       <span className="text-sm text-muted-foreground">{activity.modalidade.nome}</span>
       <div className="mt-1 flex flex-wrap gap-1">
-        {activity.metas.map((meta) => (
-          <Badge key={meta.id} variant="secondary">
-            {metaBadgeLabel(meta)}
-          </Badge>
-        ))}
+        {activity.metas
+          .slice()
+          .sort((a, b) => a.ordem - b.ordem)
+          .map((meta) => (
+            <Badge key={meta.id} variant="secondary">
+              {metaBadgeLabel(meta)}
+            </Badge>
+          ))}
       </div>
-      <span className="text-muted-foreground md:hidden">
+      <span aria-hidden="true" className="text-muted-foreground md:hidden">
         {formatDate(activity.data)} · {activity.local}
       </span>
-      <span className="text-muted-foreground md:hidden">
+      <span aria-hidden="true" className="text-muted-foreground md:hidden">
         <Responsible activity={activity} />
       </span>
     </div>
