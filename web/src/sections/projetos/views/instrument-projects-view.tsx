@@ -28,6 +28,7 @@ import { useProjects } from '@/queries/projetos';
 import { paths } from '@/routes/paths';
 import type { Instrument } from '@/types/instrumentos';
 import type { Project } from '@/types/projetos';
+import { InstrumentRequirements } from '../../requisitos/instrument-requirements';
 import { INSTRUMENT_TYPES, formatDate } from '../../instrumentos/format';
 import { ProjectFormDialog } from '../project-form-dialog';
 
@@ -121,12 +122,14 @@ export function InstrumentProjectsView({ instrumentId }: { instrumentId: string 
         </div>
       )}
 
-      <h2 className="text-lg font-semibold">Projetos</h2>
       {instrument.data && !instrument.data.ativo && (
         <p className="text-muted-foreground">
-          Instrumento inativo: não recebe nem altera projetos.
+          Instrumento inativo: não recebe nem altera requisitos nem projetos.
         </p>
       )}
+      {instrument.data && <InstrumentRequirements instrument={instrument.data} canEdit={canEdit} />}
+
+      <h2 className="text-lg font-semibold">Projetos</h2>
 
       {projects.error && !projects.data ? (
         <ListError message={loadFailure(projects.error, 'os projetos')} />
