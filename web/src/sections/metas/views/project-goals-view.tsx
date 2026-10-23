@@ -75,6 +75,7 @@ function GoalSummary({ goal }: { goal: Goal }) {
         </span>
       )}
       <span className="text-muted-foreground md:hidden">{goal.indicador ?? 'Sem indicador'}</span>
+      {measure(goal) && <span className="text-muted-foreground md:hidden">{measure(goal)}</span>}
       <span className="text-muted-foreground md:hidden">
         {period(goal.periodoInicio, goal.periodoFim)}
       </span>

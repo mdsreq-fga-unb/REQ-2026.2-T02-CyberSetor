@@ -163,7 +163,7 @@ describe('metas do projeto', () => {
     expect(completa).toHaveTextContent(
       'Requisitos: TR, item 24.1 · Certificado para quem concluir',
     );
-    expect(completa).toHaveTextContent('120 participantes');
+    expect(within(completa).getAllByRole('cell')[0]).toHaveTextContent('120 participantes');
     expect(completa).toHaveTextContent('05/01/2026 a 30/06/2026');
     expect(within(rascunho).getByText('Rascunho')).toBeInTheDocument();
     expect(rascunho).toHaveTextContent(

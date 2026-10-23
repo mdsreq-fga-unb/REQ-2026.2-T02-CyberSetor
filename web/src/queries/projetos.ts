@@ -48,6 +48,10 @@ export function useSaveProject(instrumentId: string) {
             method: 'POST',
             body: data,
           }),
-    onSettled: () => queryClient.invalidateQueries({ queryKey: projectsKey(instrumentId) }),
+    onSettled: (_project, _error, { id }) =>
+      Promise.all([
+        queryClient.invalidateQueries({ queryKey: projectsKey(instrumentId) }),
+        id && queryClient.invalidateQueries({ queryKey: ['projetos', id] }),
+      ]),
   });
 }
