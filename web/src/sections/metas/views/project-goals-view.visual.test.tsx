@@ -134,6 +134,9 @@ describe.each([
         if (url.endsWith('/auth/login')) {
           return json({ accessToken: 't', perfil: 'PRESIDENCIA_GESTAO', deveTrocarSenha: false });
         }
+        if (url.endsWith('/auth/session')) {
+          return json({ usuarioId: 'gestao', perfil: 'PRESIDENCIA_GESTAO', setor: null });
+        }
         if (url.endsWith('/goals')) return json(GOALS);
         if (url.endsWith('/requirements')) return json(REQUIREMENTS);
         if (url.includes('/projects/')) return json(PROJECT);
@@ -146,6 +149,7 @@ describe.each([
   afterEach(() => {
     clearLocalSession();
     vi.unstubAllGlobals();
+    window.localStorage.clear();
   });
 
   it('projeto, metas com rascunho identificado e acoes', async () => {
@@ -160,5 +164,20 @@ describe.each([
 
     await expect.element(screen.getByText('Rascunho')).toBeVisible();
     await expect.element(screen.getByTestId('frame')).toMatchScreenshot(`metas-${device}`);
+  });
+
+  it.runIf(width >= 768)('quadro por situacao', async () => {
+    window.localStorage.setItem('cybersetor-metas-visao', 'QUADRO');
+    const client = new QueryClient({ defaultOptions: { queries: { retry: false } } });
+    const screen = await render(
+      <QueryClientProvider client={client}>
+        <div data-testid="frame" className="flex flex-col gap-6 bg-background p-4 text-foreground">
+          <ProjectGoalsView instrumentId={INSTRUMENT.id} projectId={PROJECT.id} />
+        </div>
+      </QueryClientProvider>,
+    );
+
+    await expect.element(screen.getByText('Em andamento (1)')).toBeVisible();
+    await expect.element(screen.getByTestId('frame')).toMatchScreenshot(`metas-quadro-${device}`);
   });
 });
