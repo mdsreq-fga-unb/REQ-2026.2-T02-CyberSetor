@@ -1,11 +1,12 @@
 'use client';
 
-import { ArrowLeftIcon, PlusIcon, TargetIcon } from 'lucide-react';
+import { AlertTriangleIcon, ArrowLeftIcon, ClockIcon, PlusIcon, TargetIcon } from 'lucide-react';
+import { Fragment, useMemo } from 'react';
 import Link from 'next/link';
 import { useSession } from '@/auth/hooks/use-session';
 import { ListPagination } from '@/components/list/list-pagination';
 import { ListCard, ListEmpty, ListError, TableSkeleton } from '@/components/list/list-states';
-import { RowActionsMenu } from '@/components/list/row-actions-menu';
+import { RowActionsMenu, type RowAction } from '@/components/list/row-actions-menu';
 import { usePagination } from '@/components/list/use-pagination';
 import { PageHeader } from '@/components/page-header';
 import { Badge } from '@/components/ui/badge';
@@ -27,12 +28,20 @@ import { useInstrument } from '@/queries/instrumentos';
 import { useGoals } from '@/queries/metas';
 import { useProject } from '@/queries/projetos';
 import { useRequirements } from '@/queries/requisitos';
+import { useCurrentUser } from '@/queries/sessao';
 import { paths } from '@/routes/paths';
 import type { Goal } from '@/types/metas';
 import type { Project } from '@/types/projetos';
 import { INSTRUMENT_TYPES, formatDate } from '../../instrumentos/format';
-import { missingText, requirementLabel } from '../format';
+import {
+  DEADLINE_ALERTS,
+  SITUATIONS,
+  SITUATION_ORDER,
+  missingText,
+  requirementLabel,
+} from '../format';
 import { GoalFormDialog } from '../goal-form-dialog';
+import { GoalSituationDialog } from '../goal-situation-dialog';
 
 function loadFailure(error: unknown): string {
   if (error instanceof ApiError && error.status === 403) {
@@ -65,6 +74,45 @@ function ProjectSummary({ project }: { project: Project }) {
   );
 }
 
+function DeadlineBadge({ goal }: { goal: Goal }) {
+  if (!goal.alertaPrazo) return null;
+  const overdue = goal.alertaPrazo === 'VENCIDA';
+  const Icon = overdue ? AlertTriangleIcon : ClockIcon;
+  return (
+    <Badge variant={overdue ? 'destructive' : 'outline'}>
+      <Icon data-icon="inline-start" />
+      {DEADLINE_ALERTS[goal.alertaPrazo]}
+    </Badge>
+  );
+}
+
+function Deadline({ goal }: { goal: Goal }) {
+  return (
+    <span className="flex flex-col items-start gap-1">
+      <span>{period(goal.periodoInicio, goal.periodoFim)}</span>
+      <DeadlineBadge goal={goal} />
+    </span>
+  );
+}
+
+function Owner({ goal }: { goal: Goal }) {
+  return (
+    <span className="flex flex-wrap items-center gap-2 text-muted-foreground">
+      {goal.responsavel ? `Responsável: ${goal.responsavel.nome}` : 'Sem responsável'}
+      {goal.responsavel && !goal.responsavel.ativo && (
+        <Badge variant="outline">Conta desativada</Badge>
+      )}
+      {goal.setor && <span>· {goal.setor.nome}</span>}
+    </span>
+  );
+}
+
+function bySituation(a: Goal, b: Goal): number {
+  return (
+    SITUATION_ORDER.indexOf(a.situacao) - SITUATION_ORDER.indexOf(b.situacao) || a.ordem - b.ordem
+  );
+}
+
 function GoalSummary({ goal }: { goal: Goal }) {
   return (
     <div className="flex flex-col gap-1">
@@ -75,6 +123,7 @@ function GoalSummary({ goal }: { goal: Goal }) {
       <span className="text-muted-foreground">
         Requisitos: {goal.requisitos.map(requirementLabel).join(' · ')}
       </span>
+      <Owner goal={goal} />
       {goal.rascunho && (
         <span className="flex flex-col items-start gap-1">
           <Badge variant="outline">Rascunho</Badge>
@@ -84,7 +133,7 @@ function GoalSummary({ goal }: { goal: Goal }) {
       <span className="text-muted-foreground md:hidden">{goal.indicador ?? 'Sem indicador'}</span>
       {measure(goal) && <span className="text-muted-foreground md:hidden">{measure(goal)}</span>}
       <span className="text-muted-foreground md:hidden">
-        {period(goal.periodoInicio, goal.periodoFim)}
+        <Deadline goal={goal} />
       </span>
     </div>
   );
@@ -102,10 +151,26 @@ export function ProjectGoalsView({
   const project = useProject(projectId);
   const requirements = useRequirements(instrumentId);
   const goals = useGoals(projectId);
-  const pagination = usePagination(goals.data);
+  const me = useCurrentUser();
+  const sorted = useMemo(() => goals.data && [...goals.data].sort(bySituation), [goals.data]);
+  const pagination = usePagination(sorted);
   const form = useDialogState<{ goal: Goal | null }>();
+  const situation = useDialogState<{ goal: Goal }>();
   const manager = session?.perfil === 'PRESIDENCIA_GESTAO';
-  const canEdit = manager && instrument.data?.ativo === true && requirements.data !== undefined;
+  const active = instrument.data?.ativo === true;
+  const canEdit = manager && active && requirements.data !== undefined;
+  const canChange = (goal: Goal) =>
+    active && (manager || (!!me.data && me.data.usuarioId === goal.responsavel?.id));
+  const actionsFor = (goal: Goal): RowAction[] => [
+    ...(canEdit ? [{ label: 'Editar meta', onSelect: () => form.show({ goal }) }] : []),
+    ...(canChange(goal)
+      ? [{ label: 'Mudar situação', onSelect: () => situation.show({ goal }) }]
+      : []),
+  ];
+  const withActions = canEdit || !!sorted?.some(canChange);
+  const columns = withActions ? 4 : 3;
+  const countOf = (situacao: Goal['situacao']) =>
+    sorted?.filter((goal) => goal.situacao === situacao).length ?? 0;
   const withoutRequirements = requirements.data?.length === 0;
 
   const back = (
@@ -202,9 +267,9 @@ export function ProjectGoalsView({
                   Indicador
                 </TableHead>
                 <TableHead scope="col" className="hidden md:table-cell">
-                  Período
+                  Período e prazo
                 </TableHead>
-                {canEdit && (
+                {withActions && (
                   <TableHead scope="col" className="w-16 px-4">
                     <span className="sr-only">Ações</span>
                   </TableHead>
@@ -213,33 +278,48 @@ export function ProjectGoalsView({
             </TableHeader>
             <TableBody>
               {goals.isPending ? (
-                <TableSkeleton columns={canEdit ? 4 : 3} />
+                <TableSkeleton columns={columns} />
               ) : (
-                pagination.pageRows.map((goal) => (
-                  <TableRow key={goal.id}>
-                    <TableCell className="px-4 py-3 whitespace-normal">
-                      <GoalSummary goal={goal} />
-                    </TableCell>
-                    <TableCell className="hidden whitespace-normal md:table-cell">
-                      <div className="flex flex-col gap-1">
-                        <span>{goal.indicador ?? '—'}</span>
-                        {measure(goal) && (
-                          <span className="text-muted-foreground">{measure(goal)}</span>
-                        )}
-                      </div>
-                    </TableCell>
-                    <TableCell className="hidden md:table-cell">
-                      {period(goal.periodoInicio, goal.periodoFim)}
-                    </TableCell>
-                    {canEdit && (
-                      <TableCell className="px-4 text-right">
-                        <RowActionsMenu
-                          label={`Ações da meta ${goal.ordem}`}
-                          actions={[{ label: 'Editar meta', onSelect: () => form.show({ goal }) }]}
-                        />
-                      </TableCell>
+                pagination.pageRows.map((goal, index) => (
+                  <Fragment key={goal.id}>
+                    {pagination.pageRows[index - 1]?.situacao !== goal.situacao && (
+                      <TableRow className="bg-muted/50 hover:bg-muted/50">
+                        <TableHead
+                          scope="colgroup"
+                          colSpan={columns}
+                          className="px-4 font-semibold"
+                        >
+                          {SITUATIONS[goal.situacao]} ({countOf(goal.situacao)})
+                        </TableHead>
+                      </TableRow>
                     )}
-                  </TableRow>
+                    <TableRow>
+                      <TableCell className="px-4 py-3 whitespace-normal">
+                        <GoalSummary goal={goal} />
+                      </TableCell>
+                      <TableCell className="hidden whitespace-normal md:table-cell">
+                        <div className="flex flex-col gap-1">
+                          <span>{goal.indicador ?? '—'}</span>
+                          {measure(goal) && (
+                            <span className="text-muted-foreground">{measure(goal)}</span>
+                          )}
+                        </div>
+                      </TableCell>
+                      <TableCell className="hidden md:table-cell">
+                        <Deadline goal={goal} />
+                      </TableCell>
+                      {withActions && (
+                        <TableCell className="px-4 text-right">
+                          {actionsFor(goal).length > 0 && (
+                            <RowActionsMenu
+                              label={`Ações da meta ${goal.ordem}`}
+                              actions={actionsFor(goal)}
+                            />
+                          )}
+                        </TableCell>
+                      )}
+                    </TableRow>
+                  </Fragment>
                 ))
               )}
             </TableBody>
@@ -259,6 +339,25 @@ export function ProjectGoalsView({
           onSaved={(goal) => toast.add({ type: 'success', title: `Meta ${goal.ordem} salva` })}
         />
       )}
+      <GoalSituationDialog
+        open={situation.open}
+        projectId={projectId}
+        goal={situation.value?.goal ?? null}
+        onClose={situation.close}
+        onChanged={(goal) =>
+          toast.add({
+            type: 'success',
+            title: `Meta ${goal.ordem}: ${SITUATIONS[goal.situacao].toLowerCase()}`,
+          })
+        }
+        onConflict={(goal) =>
+          toast.add({
+            type: 'error',
+            title: `Outra pessoa alterou a meta ${goal.ordem}`,
+            description: 'A lista foi atualizada. Confira a situação e tente de novo.',
+          })
+        }
+      />
     </>
   );
 }
