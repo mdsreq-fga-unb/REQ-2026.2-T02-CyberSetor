@@ -15,8 +15,10 @@ import {
   Min,
 } from 'class-validator';
 import { trimString } from '../common/trim.js';
-import { ModalidadeAfericao, OrigemMeta } from '../generated/prisma/enums.js';
+import { ModalidadeAfericao, OrigemMeta, SituacaoMeta } from '../generated/prisma/enums.js';
+import { SectorRefResponse } from '../sectors/sectors.dto.js';
 import { COMPLETION_FIELDS, type CompletionField } from './goal-completion.js';
+import { DEADLINE_ALERTS, type DeadlineAlert } from './goal-deadline.js';
 
 const ISO_DATE = /^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])$/;
 
@@ -111,6 +113,20 @@ export class CreateGoalDto {
   @IsString()
   @MaxLength(1000)
   resultadoEsperado?: string | null;
+
+  @ApiPropertyOptional({
+    nullable: true,
+    description:
+      'Conta ativa de Presidência e Gestão, Núcleo Pedagógico ou Administrativo-Financeiro',
+  })
+  @IsOptional()
+  @IsUUID()
+  responsavelId?: string | null;
+
+  @ApiPropertyOptional({ nullable: true, description: 'Setor executor, entre os ativos' })
+  @IsOptional()
+  @IsUUID()
+  setorId?: string | null;
 }
 
 export class UpdateGoalDto extends PartialType(CreateGoalDto, { skipNullProperties: false }) {
@@ -118,6 +134,50 @@ export class UpdateGoalDto extends PartialType(CreateGoalDto, { skipNullProperti
   @IsInt()
   @Min(1)
   versao!: number;
+}
+
+export class ChangeSituationDto {
+  @ApiProperty({ description: 'Versão lida; mudança sobre versão antiga é recusada com 409' })
+  @IsInt()
+  @Min(1)
+  versao!: number;
+
+  @ApiProperty({ enum: SituacaoMeta })
+  @IsEnum(SituacaoMeta)
+  situacao!: SituacaoMeta;
+}
+
+export class GoalOwnerResponse {
+  @ApiProperty()
+  id!: string;
+
+  @ApiProperty()
+  nome!: string;
+
+  @ApiProperty({ description: 'Conta desativada deixa a meta à espera de novo responsável' })
+  ativo!: boolean;
+}
+
+export class GoalSectorResponse {
+  @ApiProperty()
+  id!: string;
+
+  @ApiProperty()
+  nome!: string;
+
+  @ApiProperty()
+  ativo!: boolean;
+}
+
+export class EligibleOwnerResponse {
+  @ApiProperty()
+  id!: string;
+
+  @ApiProperty()
+  nome!: string;
+
+  @ApiProperty({ type: SectorRefResponse, nullable: true })
+  setor!: SectorRefResponse | null;
 }
 
 export class GoalRequirementResponse {
@@ -190,4 +250,21 @@ export class GoalResponse {
 
   @ApiProperty({ enum: COMPLETION_FIELDS, isArray: true })
   camposFaltantes!: CompletionField[];
+
+  @ApiProperty({ type: GoalOwnerResponse, nullable: true })
+  responsavel!: GoalOwnerResponse | null;
+
+  @ApiProperty({ type: GoalSectorResponse, nullable: true })
+  setor!: GoalSectorResponse | null;
+
+  @ApiProperty({ enum: SituacaoMeta })
+  situacao!: SituacaoMeta;
+
+  @ApiProperty({
+    enum: DEADLINE_ALERTS,
+    nullable: true,
+    description:
+      'Prazo nos próximos 30 dias ou vencido, para meta não concluída (data de Brasília)',
+  })
+  alertaPrazo!: DeadlineAlert | null;
 }

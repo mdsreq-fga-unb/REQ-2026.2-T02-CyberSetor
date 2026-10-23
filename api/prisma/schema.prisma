@@ -25,6 +25,12 @@ enum ModalidadeAfericao {
   QUALITATIVA
 }
 
+enum SituacaoMeta {
+  PENDENTE
+  EM_ANDAMENTO
+  CONCLUIDA
+}
+
 enum Perfil {
   PRESIDENCIA_GESTAO
   NUCLEO_PEDAGOGICO
@@ -129,14 +135,21 @@ model Meta {
   frequenciaApuracao String?             @map("frequencia_apuracao")
   formaComprovacao   String?             @map("forma_comprovacao")
   resultadoEsperado  String?             @map("resultado_esperado")
+  responsavelId      String?             @map("responsavel_id") @db.Uuid
+  setorId            String?             @map("setor_id") @db.Uuid
+  situacao           SituacaoMeta        @default(PENDENTE)
   criadoEm           DateTime            @default(now()) @map("criado_em") @db.Timestamptz(3)
   atualizadoEm       DateTime            @updatedAt @map("atualizado_em") @db.Timestamptz(3)
 
-  projeto    Projeto         @relation(fields: [projetoId], references: [id], onDelete: Restrict)
-  requisitos MetaRequisito[]
-  atividades AtividadeMeta[]
+  projeto     Projeto         @relation(fields: [projetoId], references: [id], onDelete: Restrict)
+  responsavel Usuario?        @relation(fields: [responsavelId], references: [id], onDelete: Restrict)
+  setor       Setor?          @relation(fields: [setorId], references: [id], onDelete: Restrict)
+  requisitos  MetaRequisito[]
+  atividades  AtividadeMeta[]
 
   @@index([projetoId])
+  @@index([responsavelId])
+  @@index([setorId])
   @@map("meta")
 }
 
@@ -198,6 +211,7 @@ model Setor {
   atualizadoEm DateTime @updatedAt @map("atualizado_em") @db.Timestamptz(3)
 
   pessoas Pessoa[]
+  metas   Meta[]
 
   @@map("setor")
 }
@@ -236,6 +250,7 @@ model Usuario {
   pessoa              Pessoa            @relation(fields: [pessoaId], references: [id], onDelete: Restrict)
   projetosCoordenados Projeto[]
   atividades          Atividade[]
+  metasResponsavel    Meta[]
   sessoes             Sessao[]
   eventos             TrilhaAuditoria[] @relation("autor")
   previas             TrilhaAuditoria[] @relation("previa")
