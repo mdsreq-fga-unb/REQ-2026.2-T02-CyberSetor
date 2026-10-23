@@ -11,6 +11,7 @@ import {
   Res,
 } from '@nestjs/common';
 import {
+  ApiBadRequestResponse,
   ApiBearerAuth,
   ApiConflictResponse,
   ApiCreatedResponse,
@@ -25,6 +26,7 @@ import { Perfil } from '../generated/prisma/enums.js';
 import {
   AccountResponse,
   ChangeProfileDto,
+  ChangeSectorDto,
   CreateAccountDto,
   DeactivationResponse,
   TemporaryPasswordResponse,
@@ -69,6 +71,18 @@ export class AccountsController {
     @Res({ passthrough: true }) res: Response,
   ): Promise<AccountResponse> {
     return this.accounts.changeProfile(id, body.perfil, actorOf(user, res));
+  }
+
+  @Patch(':id/sector')
+  @ApiOkResponse({ type: AccountResponse })
+  @ApiBadRequestResponse({ description: 'INVALID_SECTOR' })
+  changeSector(
+    @Param('id', ParseUUIDPipe) id: string,
+    @Body() body: ChangeSectorDto,
+    @CurrentUser() user: ValidSession,
+    @Res({ passthrough: true }) res: Response,
+  ): Promise<AccountResponse> {
+    return this.accounts.changeSector(id, body.setorId, actorOf(user, res));
   }
 
   @Post(':id/deactivate')

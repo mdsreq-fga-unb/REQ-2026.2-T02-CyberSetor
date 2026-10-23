@@ -27,6 +27,14 @@ export class AuthService implements OnModuleInit {
     private readonly audit: AuditTrailService,
   ) {}
 
+  async sectorOf(usuarioId: string): Promise<{ id: string; nome: string } | null> {
+    const usuario = await this.prisma.usuario.findUnique({
+      where: { id: usuarioId },
+      select: { pessoa: { select: { setor: { select: { id: true, nome: true } } } } },
+    });
+    return usuario?.pessoa.setor ?? null;
+  }
+
   async onModuleInit(): Promise<void> {
     this.dummyHash = await this.passwords.hash(randomBytes(32).toString('base64url'));
   }

@@ -1,8 +1,18 @@
-import { ApiProperty } from '@nestjs/swagger';
+import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { Transform } from 'class-transformer';
-import { IsEmail, IsEnum, IsNotEmpty, IsString, MaxLength } from 'class-validator';
+import {
+  IsEmail,
+  IsEnum,
+  IsNotEmpty,
+  IsOptional,
+  IsString,
+  IsUUID,
+  MaxLength,
+  ValidateIf,
+} from 'class-validator';
 import { trimString } from '../common/trim.js';
 import { Perfil } from '../generated/prisma/enums.js';
+import { SectorRefResponse } from '../sectors/sectors.dto.js';
 
 export class CreateAccountDto {
   @ApiProperty()
@@ -21,6 +31,18 @@ export class CreateAccountDto {
   @ApiProperty({ enum: Perfil })
   @IsEnum(Perfil)
   perfil!: Perfil;
+
+  @ApiPropertyOptional({ description: 'Setor ativo em que a pessoa está lotada' })
+  @IsOptional()
+  @IsUUID()
+  setorId?: string;
+}
+
+export class ChangeSectorDto {
+  @ApiProperty({ type: String, nullable: true, description: 'null tira a pessoa do setor' })
+  @ValidateIf((_obj, value) => value !== null)
+  @IsUUID()
+  setorId!: string | null;
 }
 
 export class ChangeProfileDto {
@@ -47,6 +69,9 @@ export class AccountResponse {
 
   @ApiProperty()
   ativo!: boolean;
+
+  @ApiProperty({ type: SectorRefResponse, nullable: true })
+  setor!: SectorRefResponse | null;
 
   @ApiProperty()
   deveTrocarSenha!: boolean;
