@@ -23,6 +23,13 @@ export function useEligibleCoordinators(enabled: boolean) {
   });
 }
 
+export function useProject(id: string) {
+  return useQuery({
+    queryKey: ['projetos', id],
+    queryFn: () => authorizedRequest<Project>(`/projects/${encodeURIComponent(id)}`),
+  });
+}
+
 export function useFreshProject() {
   return (id: string): Promise<Project> =>
     authorizedRequest<Project>(`/projects/${encodeURIComponent(id)}`);
@@ -41,6 +48,10 @@ export function useSaveProject(instrumentId: string) {
             method: 'POST',
             body: data,
           }),
-    onSettled: () => queryClient.invalidateQueries({ queryKey: projectsKey(instrumentId) }),
+    onSettled: (_project, _error, { id }) =>
+      Promise.all([
+        queryClient.invalidateQueries({ queryKey: projectsKey(instrumentId) }),
+        id && queryClient.invalidateQueries({ queryKey: ['projetos', id] }),
+      ]),
   });
 }

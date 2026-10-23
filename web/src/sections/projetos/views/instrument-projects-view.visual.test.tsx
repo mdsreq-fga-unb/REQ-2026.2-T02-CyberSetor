@@ -7,6 +7,8 @@ import type { Project } from '@/types/projetos';
 import type { Requirement } from '@/types/requisitos';
 import { InstrumentProjectsView } from './instrument-projects-view';
 
+vi.mock('next/navigation', () => ({ useRouter: () => ({ push: vi.fn() }) }));
+
 const INSTRUMENT: Instrument = {
   id: '00000000-0000-4000-8000-000000000401',
   versao: 1,
