@@ -2,7 +2,7 @@
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useEffect, useState, type FormEvent, type ReactNode } from 'react';
-import { Controller, useForm } from 'react-hook-form';
+import { Controller, useForm, useWatch } from 'react-hook-form';
 import { z } from 'zod';
 import { FormField } from '@/components/form-field';
 import { Button } from '@/components/ui/button';
@@ -26,6 +26,8 @@ import { GOAL_ORIGINS, MEASUREMENT_MODES } from './format';
 
 const DATE = /^\d{4}-\d{2}-\d{2}$/;
 
+const COMPLETION_FIELDS = ['indicador', 'formaComprovacao', 'periodoInicio', 'periodoFim'] as const;
+
 const text = (max: number) =>
   z
     .string()
@@ -42,7 +44,7 @@ const schema = z
     origem: z.enum(['EDITAL', 'PROJETO', 'INSTITUTO'], { error: 'Escolha a origem da meta.' }),
     objetivo: text(500).min(1, 'Informe o objetivo.'),
     descricao: text(2000).min(1, 'Descreva a meta.'),
-    requisitoIds: z.array(z.string()),
+    requisitoIds: z.array(z.string()).max(50, 'Selecione no máximo 50 requisitos.'),
     indicador: text(500),
     modalidadeAfericao: z
       .enum(['', 'QUANTITATIVA', 'QUALITATIVA'])
@@ -151,6 +153,10 @@ export function GoalFormDialog({
     resolver: zodResolver(schema),
     defaultValues: EMPTY,
   });
+
+  const completion = useWatch({ control: form.control, name: COMPLETION_FIELDS });
+  const becomesDraft =
+    editing !== null && !editing.rascunho && completion.some((value) => !value.trim());
 
   useEffect(() => {
     if (open) form.reset(valuesOf(goal));
@@ -308,6 +314,11 @@ export function GoalFormDialog({
               </div>
             </Section>
             {area('resultadoEsperado', 'Resultado esperado')}
+            {becomesDraft && (
+              <p role="status" className="text-sm text-muted-foreground">
+                Ao salvar, a meta volta a ser rascunho e sai da apuração.
+              </p>
+            )}
             {failure && (
               <p role="alert" className="text-sm text-destructive">
                 {failure}

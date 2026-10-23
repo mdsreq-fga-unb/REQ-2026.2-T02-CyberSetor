@@ -363,7 +363,9 @@ describe('metas do projeto', () => {
     fireEvent.click(await screen.findByRole('button', { name: 'Ações da meta 1' }));
     fireEvent.click(await screen.findByRole('menuitem', { name: 'Editar meta' }));
     expect(screen.getByRole('checkbox', { name: /Certificado/ })).toBeChecked();
+    expect(screen.queryByRole('status')).not.toBeInTheDocument();
     fill('Indicador', '');
+    expect(screen.getByRole('status')).toHaveTextContent('Ao salvar, a meta volta a ser rascunho');
     fill('Modalidade', '');
     fill('Fim (prazo)', '');
     fireEvent.click(screen.getByRole('button', { name: 'Salvar meta' }));
