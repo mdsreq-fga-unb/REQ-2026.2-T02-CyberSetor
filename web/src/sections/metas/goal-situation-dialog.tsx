@@ -19,9 +19,6 @@ import { SITUATIONS, SITUATION_ORDER } from './format';
 
 function failureOf(error: unknown): string {
   if (!(error instanceof ApiError)) return 'Não foi possível falar com o servidor. Tente de novo.';
-  if (error.code === 'VERSION_CONFLICT') {
-    return 'Outra pessoa alterou esta meta. Feche e confira a situação atual na lista.';
-  }
   if ([400, 403, 404, 409].includes(error.status)) return error.message;
   return 'Não foi possível salvar. Tente de novo.';
 }
@@ -32,12 +29,14 @@ export function GoalSituationDialog({
   goal,
   onClose,
   onChanged,
+  onConflict,
 }: {
   open: boolean;
   projectId: string;
   goal: Goal | null;
   onClose: () => void;
   onChanged: (goal: Goal) => void;
+  onConflict: (goal: Goal) => void;
 }) {
   const change = useChangeSituation(projectId);
   const [chosen, setChosen] = useState<GoalSituation | null>(null);
@@ -60,6 +59,11 @@ export function GoalSituationDialog({
       close();
       onChanged(updated);
     } catch (error) {
+      if (error instanceof ApiError && error.code === 'VERSION_CONFLICT') {
+        close();
+        onConflict(goal);
+        return;
+      }
       setFailure(failureOf(error));
     }
   }

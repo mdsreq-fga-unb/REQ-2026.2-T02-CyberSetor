@@ -516,6 +516,74 @@ describe('metas do projeto', () => {
     });
   });
 
+  it('conflito na situacao fecha o dialogo, avisa e recarrega a lista', async () => {
+    const calls = await signedInAs(
+      'PRESIDENCIA_GESTAO',
+      page([COMPLETA], {
+        [`PATCH /goals/${COMPLETA.id}/situation`]: () => ({
+          status: 409,
+          body: { code: 'VERSION_CONFLICT', message: 'A meta foi alterada.' },
+        }),
+      }),
+    );
+    renderView();
+
+    fireEvent.click(await screen.findByRole('button', { name: 'Ações da meta 1' }));
+    fireEvent.click(await screen.findByRole('menuitem', { name: 'Mudar situação' }));
+    fireEvent.change(await screen.findByLabelText('Situação'), {
+      target: { value: 'CONCLUIDA' },
+    });
+    const reads = () => calls.filter((call) => call.key === `GET ${GOALS}`).length;
+    const before = reads();
+    fireEvent.click(screen.getByRole('button', { name: 'Salvar situação' }));
+
+    expect(await screen.findByText('Outra pessoa alterou a meta 1')).toBeInTheDocument();
+    await vi.waitFor(() => {
+      expect(screen.queryByRole('dialog', { name: /Situação da meta/ })).not.toBeInTheDocument();
+      expect(reads()).toBeGreaterThan(before);
+    });
+  });
+
+  it('responsavel de setor inativo nao preenche o setor executor', async () => {
+    const setor = COMPLETA.setor!;
+    await signedInAs(
+      'PRESIDENCIA_GESTAO',
+      page([], {
+        'GET /goals/eligible-owners': () => ({
+          status: 200,
+          body: [
+            { id: ME.usuarioId, nome: 'Ana Pedagógica', setor: { id: setor.id, nome: setor.nome } },
+          ],
+        }),
+        'GET /sectors': () => ({ status: 200, body: [{ ...setor, versao: 2, ativo: false }] }),
+      }),
+    );
+    renderView();
+
+    await openNew();
+    await screen.findByRole('option', { name: 'Ana Pedagógica' });
+    fill('Responsável', ME.usuarioId);
+    expect(screen.getByLabelText('Setor executor')).toHaveValue('');
+  });
+
+  it('sem responsaveis ou setores, avisa no formulario', async () => {
+    await signedInAs(
+      'PRESIDENCIA_GESTAO',
+      page([], {
+        'GET /goals/eligible-owners': () => ({ status: 500 }),
+        'GET /sectors': () => ({ status: 200, body: [] }),
+      }),
+    );
+    renderView();
+
+    await openNew();
+
+    expect(await within(screen.getByRole('dialog')).findByRole('alert')).toHaveTextContent(
+      'Não foi possível carregar os responsáveis ou os setores.',
+    );
+    expect(screen.getByLabelText('Responsável')).toBeDisabled();
+  });
+
   it('ao escolher o responsavel, o setor executor vem do setor dele', async () => {
     const setor = COMPLETA.setor!;
     const calls = await signedInAs(

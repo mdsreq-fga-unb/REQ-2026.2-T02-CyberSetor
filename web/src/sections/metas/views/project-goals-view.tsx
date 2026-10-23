@@ -355,6 +355,13 @@ export function ProjectGoalsView({
             title: `Meta ${goal.ordem}: ${SITUATIONS[goal.situacao].toLowerCase()}`,
           })
         }
+        onConflict={(goal) =>
+          toast.add({
+            type: 'error',
+            title: `Outra pessoa alterou a meta ${goal.ordem}`,
+            description: 'A lista foi atualizada. Confira a situação e tente de novo.',
+          })
+        }
       />
     </>
   );

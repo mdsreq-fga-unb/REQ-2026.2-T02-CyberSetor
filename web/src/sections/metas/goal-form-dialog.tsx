@@ -360,12 +360,13 @@ export function GoalFormDialog({
                 {(props) => (
                   <NativeSelect
                     {...props}
-                    disabled={owners.isPending}
+                    disabled={!owners.isSuccess}
                     onChange={(event) => {
                       props.onChange(event);
                       const owner = owners.data?.find((item) => item.id === event.target.value);
-                      if (owner?.setor && !form.getValues('setorId')) {
-                        form.setValue('setorId', owner.setor.id);
+                      const sector = sectors.data?.find((item) => item.id === owner?.setor?.id);
+                      if (sector?.ativo && !form.getValues('setorId')) {
+                        form.setValue('setorId', sector.id);
                       }
                     }}
                   >
@@ -389,7 +390,7 @@ export function GoalFormDialog({
               </FormField>
               <FormField name="setorId" label="Setor executor" control={form.control}>
                 {(props) => (
-                  <NativeSelect {...props} disabled={sectors.isPending}>
+                  <NativeSelect {...props} disabled={!sectors.isSuccess}>
                     <NativeSelectOption value="">
                       {sectors.isPending ? 'Carregando…' : 'Sem setor'}
                     </NativeSelectOption>
@@ -408,6 +409,11 @@ export function GoalFormDialog({
                   </NativeSelect>
                 )}
               </FormField>
+              {(owners.isError || sectors.isError) && (
+                <p role="alert" className="text-sm text-destructive">
+                  Não foi possível carregar os responsáveis ou os setores. Feche e tente de novo.
+                </p>
+              )}
             </Section>
             <Section title="Período">
               <FieldDescription>
