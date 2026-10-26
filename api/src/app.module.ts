@@ -11,6 +11,7 @@ import { InstrumentsModule } from './instruments/instruments.module.js';
 import { ModalitiesModule } from './modalities/modalities.module.js';
 import { PrismaModule } from './prisma/prisma.module.js';
 import { ProjectsModule } from './projects/projects.module.js';
+import { RegistrationsModule } from './registrations/registrations.module.js';
 import { RequirementsModule } from './requirements/requirements.module.js';
 import { SectorsModule } from './sectors/sectors.module.js';
 
@@ -33,6 +34,7 @@ import { SectorsModule } from './sectors/sectors.module.js';
     RequirementsModule,
     GoalsModule,
     SectorsModule,
+    RegistrationsModule,
   ],
 })
 export class AppModule {}
