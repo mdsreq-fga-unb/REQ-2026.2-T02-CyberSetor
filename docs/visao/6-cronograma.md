@@ -10,7 +10,7 @@
 | 13/10/2026 | 1.5 | Alcance do MVP e incrementos posteriores alinhados à seção 10.2.6 | Caio Martins |
 | 19/10/2026 | 1.6 | Equipe atual de cinco integrantes | Maria Eduarda Marques |
 | 20/10/2026 | 1.7 | Sprints 4 e 5 alinhadas ao MVP e aos incrementos da seção 10.2.6: MVP concluído na Sprint 4, evidências e presença em campo na Sprint 5; checkpoint de 29/10 até a inscrição; alcance do MVP com as histórias da seção 10.1 | Equipe CyberSetor |
-| 26/10/2026 | 1.8 | Prestação de contas com o resultado alcançado; orientação de enquadramento (RF45) no incremento de evidências; teste de restauração do banco e dos arquivos juntos; Sprint 3 com a meta do seu plano; histórias previstas por sprint e ligação aos planos das sprints; características da Sprint 4 e da Sprint 5 pelos requisitos que entram; alcance do MVP remetido à seção 10.2.6; exportação do projeto (RF38) e cópia integral dos dados (RNF19) na transferência, com o que avança e o que depende de responsável nomeado pelo Instituto; CP5 na Sprint 4 com RF22 a RF27, sem o histórico de participação (RF21); manual técnico de operação na transferência | Vinicius Vieira |
+| 26/10/2026 | 1.8 | Prestação de contas com o resultado alcançado; orientação de enquadramento (RF45) no incremento de evidências; teste de restauração do banco e dos arquivos juntos; Sprint 3 com a meta do seu plano; histórias previstas por sprint e ligação aos planos das sprints; características da Sprint 4 e da Sprint 5 pelos requisitos que entram; alcance do MVP remetido à seção 10.2.6; exportação do projeto (RF38) e cópia integral dos dados (RNF19) na transferência, com o que avança e o que depende de responsável nomeado pelo Instituto; CP5 na Sprint 4 com RF22 a RF27, sem o histórico de participação (RF21); manual técnico de operação na transferência; políticas de cópia de segurança e de transferência remetidas à seção 2.6, ficando na 6.4 as atividades | Vinicius Vieira |
 
 ## 6.1 Calendário vigente
 
@@ -63,13 +63,13 @@ A composição do MVP e dos incrementos, por história e por requisito, está na
 
 ## 6.4 Estabilização, implantação e transferência
 
-A Sprint 6 e a margem final são tempo sem funcionalidade nova. O que se entrega nesse período:
+A Sprint 6 e a margem final são tempo sem funcionalidade nova. As políticas de [cópia de segurança](2-solucao-proposta.md#politica-copia-seguranca) e de [transferência](2-solucao-proposta.md#politica-transferencia) estão na seção 2.6; aqui ficam as atividades. O que se entrega nesse período:
 
 | Frente | O que precisa estar pronto | Evidência |
 |---|---|---|
 | Estabilização | correções do checkpoint e da Review da Unidade 3; revisão de segurança dos perfis de acesso | registro de defeitos fechados; teste de permissão por perfil |
 | Implantação | produto publicado no ambiente de produção descrito na seção 2.4, com domínio, certificado e cópia de segurança agendada | endereço acessível às pessoas do Instituto; registro da configuração |
-| Teste de restauração | restauração conjunta da cópia externa do banco e dos arquivos em ambiente descartável, nos termos do RNF18, com a aplicação lendo os dados restaurados, cronometrada | registro datado com identificador da cópia, tempo total e resultado — até ele existir, nenhuma afirmação de recuperabilidade é publicada |
+| Teste de restauração | ensaio de restauração conjunta do banco e dos arquivos, nos termos do [RNF18](../requisitos/8-requisitos.md#rnf18) | registro datado com identificador da cópia, tempo total e resultado |
 | Treinamento | sessões com as facilitadoras e com a coordenação, sobre o fluxo real de uma atividade e de um relatório | ata do treinamento; roteiro de tarefas críticas executado pela pessoa treinada |
 | Transferência | **credenciais** entregues por canal seguro e acessos da equipe revogados; **documentação** de operação, manual de usuário e manual técnico de operação; **domínio** e certificado no nome do Instituto ou com renovação atribuída; **infraestrutura** inventariada sem segredos; **cópia de segurança** com política, cópia externa e último ensaio; **responsáveis** nomeados pelo Instituto — dono operacional, administrador técnico e substituto; **dados**: cópia integral dos dados e dos arquivos em formatos abertos (RNF19), além da exportação de cada projeto em planilha aberta (RF38), conferidas | checklist de transferência assinado pelo representante do Instituto |
 
