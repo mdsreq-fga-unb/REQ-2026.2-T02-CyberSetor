@@ -15,6 +15,7 @@ const ADMIN: Account = {
   deveTrocarSenha: false,
   bloqueadoAte: null,
   ultimoAcessoEm: null,
+  setor: null,
 };
 
 const EDUCADORA: Account = {
@@ -25,7 +26,19 @@ const EDUCADORA: Account = {
   emailLogin: 'bia@instituto.org.br',
   perfil: 'NUCLEO_PEDAGOGICO',
   deveTrocarSenha: true,
+  setor: { id: '00000000-0000-4000-8000-000000000401', nome: 'Coordenação Pedagógica' },
 };
+
+const SECTORS = [
+  {
+    id: '00000000-0000-4000-8000-000000000401',
+    versao: 1,
+    nome: 'Coordenação Pedagógica',
+    ativo: true,
+  },
+  { id: '00000000-0000-4000-8000-000000000402', versao: 1, nome: 'Comunicação', ativo: true },
+  { id: '00000000-0000-4000-8000-000000000403', versao: 2, nome: 'Antigo', ativo: false },
+];
 
 type Route = (body: unknown) => { status: number; body?: unknown };
 
@@ -78,7 +91,7 @@ describe('administracao de contas', () => {
     expect(calls.map((call) => call.key)).toEqual(['POST /auth/login']);
   });
 
-  it('lista as contas numa tabela com perfil e situacao', async () => {
+  it('lista as contas numa tabela com perfil, setor e situacao', async () => {
     await signedInAs('ADMINISTRACAO_SISTEMA', {
       'GET /accounts': () => ({ status: 200, body: [ADMIN, EDUCADORA] }),
     });
@@ -86,13 +99,14 @@ describe('administracao de contas', () => {
 
     await screen.findAllByText('Bia Educadora');
     const table = screen.getByRole('table', {
-      name: 'Contas da equipe do Instituto e o perfil de acesso de cada pessoa.',
+      name: 'Contas da equipe do Instituto, com o perfil de acesso e o setor de cada pessoa.',
     });
     const rows = within(table).getAllByRole('row');
     expect(rows).toHaveLength(3);
     const [pessoa, perfil, situacao] = within(rows[2]).getAllByRole('cell');
     expect(pessoa).toHaveTextContent('Bia Educadora');
     expect(perfil).toHaveTextContent('Núcleo Pedagógico e Educadores');
+    expect(perfil).toHaveTextContent('Coordenação Pedagógica');
     expect(situacao).toHaveTextContent('Troca de senha pendente');
   });
 
@@ -133,6 +147,7 @@ describe('administracao de contas', () => {
   it('cria a conta e mostra a senha temporaria uma vez', async () => {
     const calls = await signedInAs('ADMINISTRACAO_SISTEMA', {
       'GET /accounts': () => ({ status: 200, body: [ADMIN] }),
+      'GET /sectors': () => ({ status: 200, body: SECTORS }),
       'POST /accounts': () => ({
         status: 201,
         body: { conta: EDUCADORA, senhaTemporaria: 'Temporaria-123456' },
@@ -146,6 +161,11 @@ describe('administracao de contas', () => {
       target: { value: 'bia@instituto.org.br' },
     });
     fireEvent.change(screen.getByLabelText('Perfil'), { target: { value: 'NUCLEO_PEDAGOGICO' } });
+    await screen.findByRole('option', { name: 'Comunicação' });
+    expect(screen.queryByRole('option', { name: 'Antigo' })).not.toBeInTheDocument();
+    fireEvent.change(screen.getByLabelText('Setor (opcional)'), {
+      target: { value: SECTORS[0].id },
+    });
     fireEvent.click(screen.getByRole('button', { name: 'Criar conta' }));
 
     expect(await screen.findByLabelText('Senha temporária')).toHaveValue('Temporaria-123456');
@@ -153,12 +173,133 @@ describe('administracao de contas', () => {
       nome: 'Bia Educadora',
       emailLogin: 'bia@instituto.org.br',
       perfil: 'NUCLEO_PEDAGOGICO',
+      setorId: SECTORS[0].id,
+    });
+  });
+
+  it('muda o setor da pessoa e tira o setor', async () => {
+    const calls = await signedInAs('ADMINISTRACAO_SISTEMA', {
+      'GET /accounts': () => ({ status: 200, body: [ADMIN, EDUCADORA] }),
+      'GET /sectors': () => ({ status: 200, body: SECTORS }),
+      [`PATCH /accounts/${EDUCADORA.id}/sector`]: (body) => ({
+        status: 200,
+        body: {
+          ...EDUCADORA,
+          setor:
+            (body as { setorId: string | null }).setorId === null
+              ? null
+              : { id: SECTORS[1].id, nome: 'Comunicação' },
+        },
+      }),
+    });
+    renderView();
+
+    fireEvent.click(await screen.findByRole('button', { name: 'Ações de Bia Educadora' }));
+    fireEvent.click(await screen.findByRole('menuitem', { name: 'Mudar setor' }));
+    await screen.findByRole('option', { name: 'Comunicação' });
+    expect(screen.getByLabelText('Setor')).toHaveValue(SECTORS[0].id);
+    fireEvent.change(screen.getByLabelText('Setor'), { target: { value: SECTORS[1].id } });
+    fireEvent.click(screen.getByRole('button', { name: 'Salvar setor' }));
+    expect(await screen.findByText('Setor de Bia Educadora: Comunicação')).toBeInTheDocument();
+
+    fireEvent.click(screen.getByRole('button', { name: 'Ações de Bia Educadora' }));
+    fireEvent.click(await screen.findByRole('menuitem', { name: 'Mudar setor' }));
+    await screen.findByRole('option', { name: 'Comunicação' });
+    fireEvent.change(screen.getByLabelText('Setor'), { target: { value: '' } });
+    fireEvent.click(screen.getByRole('button', { name: 'Salvar setor' }));
+    expect(await screen.findByText('Bia Educadora sem setor')).toBeInTheDocument();
+
+    expect(calls.filter((call) => call.key.endsWith('/sector')).map((call) => call.body)).toEqual([
+      { setorId: SECTORS[1].id },
+      { setorId: null },
+    ]);
+  });
+
+  it('setor recusado pela API mostra o motivo', async () => {
+    await signedInAs('ADMINISTRACAO_SISTEMA', {
+      'GET /accounts': () => ({ status: 200, body: [EDUCADORA] }),
+      'GET /sectors': () => ({ status: 200, body: SECTORS }),
+      [`PATCH /accounts/${EDUCADORA.id}/sector`]: () => ({
+        status: 400,
+        body: { code: 'INVALID_SECTOR', message: 'Setor inexistente ou inativo.' },
+      }),
+    });
+    renderView();
+
+    fireEvent.click(await screen.findByRole('button', { name: 'Ações de Bia Educadora' }));
+    fireEvent.click(await screen.findByRole('menuitem', { name: 'Mudar setor' }));
+    await screen.findByRole('option', { name: 'Comunicação' });
+    fireEvent.change(screen.getByLabelText('Setor'), { target: { value: SECTORS[1].id } });
+    fireEvent.click(screen.getByRole('button', { name: 'Salvar setor' }));
+
+    expect(await screen.findByRole('alert')).toHaveTextContent('Setor inexistente ou inativo.');
+  });
+
+  it('sem a lista de setores, avisa e nao cria a conta', async () => {
+    await signedInAs('ADMINISTRACAO_SISTEMA', {
+      'GET /accounts': () => ({ status: 200, body: [ADMIN] }),
+      'GET /sectors': () => ({ status: 500 }),
+    });
+    renderView();
+
+    fireEvent.click(await screen.findByRole('button', { name: 'Nova conta' }));
+
+    expect(await screen.findByRole('alert')).toHaveTextContent(
+      'Não foi possível carregar os setores.',
+    );
+    expect(screen.getByLabelText('Setor (opcional)')).toBeDisabled();
+    expect(screen.getByRole('button', { name: 'Criar conta' })).toBeDisabled();
+  });
+
+  it('administracao do sistema e concedente nao tem setor', async () => {
+    const calls = await signedInAs('ADMINISTRACAO_SISTEMA', {
+      'GET /accounts': () => ({ status: 200, body: [ADMIN] }),
+      'GET /sectors': () => ({ status: 200, body: SECTORS }),
+      'POST /accounts': () => ({
+        status: 201,
+        body: {
+          conta: { ...ADMIN, perfil: 'CONCEDENTE_AUDITORIA' },
+          senhaTemporaria: 'Temporaria-123456',
+        },
+      }),
+    });
+    renderView();
+
+    fireEvent.click(await screen.findByRole('button', { name: 'Ações de Ana Administradora' }));
+    expect(await screen.findByRole('menuitem', { name: 'Mudar perfil' })).toBeInTheDocument();
+    expect(screen.queryByRole('menuitem', { name: 'Mudar setor' })).not.toBeInTheDocument();
+    fireEvent.keyDown(document.activeElement ?? document.body, { key: 'Escape' });
+
+    fireEvent.click(await screen.findByRole('button', { name: 'Nova conta' }));
+    fireEvent.change(await screen.findByLabelText('Nome'), {
+      target: { value: 'Caio Concedente' },
+    });
+    fireEvent.change(screen.getByLabelText('E-mail de acesso'), {
+      target: { value: 'caio@concedente.gov.br' },
+    });
+    fireEvent.change(screen.getByLabelText('Perfil'), { target: { value: 'NUCLEO_PEDAGOGICO' } });
+    await screen.findByRole('option', { name: 'Comunicação' });
+    fireEvent.change(screen.getByLabelText('Setor (opcional)'), {
+      target: { value: SECTORS[0].id },
+    });
+    fireEvent.change(screen.getByLabelText('Perfil'), {
+      target: { value: 'CONCEDENTE_AUDITORIA' },
+    });
+    expect(screen.queryByLabelText('Setor (opcional)')).not.toBeInTheDocument();
+    fireEvent.click(screen.getByRole('button', { name: 'Criar conta' }));
+
+    expect(await screen.findByLabelText('Senha temporária')).toBeInTheDocument();
+    expect(calls.find((call) => call.key === 'POST /accounts')?.body).toEqual({
+      nome: 'Caio Concedente',
+      emailLogin: 'caio@concedente.gov.br',
+      perfil: 'CONCEDENTE_AUDITORIA',
     });
   });
 
   it('formulario incompleto nao chama a API', async () => {
     const calls = await signedInAs('ADMINISTRACAO_SISTEMA', {
       'GET /accounts': () => ({ status: 200, body: [ADMIN] }),
+      'GET /sectors': () => ({ status: 200, body: SECTORS }),
     });
     renderView();
 

@@ -2,9 +2,9 @@
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useState, type FormEvent } from 'react';
-import { Controller, useForm } from 'react-hook-form';
+import { Controller, useForm, useWatch } from 'react-hook-form';
 import { z } from 'zod';
-import { PROFILES, profileLabel } from '@/auth/profiles';
+import { PROFILES, hasSector, profileLabel } from '@/auth/profiles';
 import { Button } from '@/components/ui/button';
 import {
   Dialog,
@@ -18,6 +18,7 @@ import { Field, FieldError, FieldGroup, FieldLabel } from '@/components/ui/field
 import { Input } from '@/components/ui/input';
 import { NativeSelect, NativeSelectOption } from '@/components/ui/native-select';
 import { useCreateAccount } from '@/queries/contas';
+import { useSectors } from '@/queries/setores';
 import type { TemporaryPasswordResult } from '@/types/contas';
 import { errorMessage } from './error-message';
 
@@ -34,11 +35,17 @@ const schema = z.object({
     .max(254, 'O e-mail tem no máximo 254 caracteres.')
     .pipe(z.email('Informe um e-mail válido.')),
   perfil: z.enum(PROFILES, 'Escolha o perfil.'),
+  setorId: z.string().transform((value) => value || undefined),
 });
 
 type CreateAccountValues = z.input<typeof schema>;
 
-const EMPTY = { nome: '', emailLogin: '', perfil: '' } as unknown as CreateAccountValues;
+const EMPTY = {
+  nome: '',
+  emailLogin: '',
+  perfil: '',
+  setorId: '',
+} as unknown as CreateAccountValues;
 
 export function CreateAccountDialog({
   open,
@@ -50,11 +57,14 @@ export function CreateAccountDialog({
   onCreated: (result: TemporaryPasswordResult) => void;
 }) {
   const createAccount = useCreateAccount();
+  const sectors = useSectors(open);
   const [failure, setFailure] = useState<string | null>(null);
   const form = useForm<CreateAccountValues, unknown, z.output<typeof schema>>({
     resolver: zodResolver(schema),
     defaultValues: EMPTY,
   });
+  const withSector = hasSector(useWatch({ control: form.control, name: 'perfil' }));
+  const sectorsFailed = withSector && sectors.isError;
 
   function change(next: boolean) {
     if (!next) {
@@ -66,7 +76,9 @@ export function CreateAccountDialog({
 
   async function onValid(values: z.output<typeof schema>) {
     try {
-      const result = await createAccount.mutateAsync(values);
+      const result = await createAccount.mutateAsync(
+        withSector ? values : { ...values, setorId: undefined },
+      );
       change(false);
       onCreated(result);
     } catch (error) {
@@ -159,13 +171,41 @@ export function CreateAccountDialog({
                 </Field>
               )}
             />
+            {withSector && (
+              <Controller
+                name="setorId"
+                control={form.control}
+                render={({ field }) => (
+                  <Field>
+                    <FieldLabel htmlFor="setorId">Setor (opcional)</FieldLabel>
+                    <NativeSelect {...field} id="setorId" disabled={!sectors.isSuccess}>
+                      <NativeSelectOption value="">
+                        {sectors.isPending ? 'Carregando…' : 'Sem setor'}
+                      </NativeSelectOption>
+                      {sectors.data
+                        ?.filter((sector) => sector.ativo)
+                        .map((sector) => (
+                          <NativeSelectOption key={sector.id} value={sector.id}>
+                            {sector.nome}
+                          </NativeSelectOption>
+                        ))}
+                    </NativeSelect>
+                  </Field>
+                )}
+              />
+            )}
+            {sectorsFailed && (
+              <p role="alert" className="text-sm text-destructive">
+                Não foi possível carregar os setores. Feche e tente de novo.
+              </p>
+            )}
             {failure && (
               <p role="alert" className="text-sm text-destructive">
                 {failure}
               </p>
             )}
             <DialogFooter>
-              <Button type="submit" disabled={form.formState.isSubmitting}>
+              <Button type="submit" disabled={form.formState.isSubmitting || sectorsFailed}>
                 {form.formState.isSubmitting ? 'Criando…' : 'Criar conta'}
               </Button>
             </DialogFooter>
