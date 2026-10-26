@@ -1,6 +1,14 @@
 'use client';
 
-import { AlertTriangleIcon, ArrowLeftIcon, ClockIcon, PlusIcon, TargetIcon } from 'lucide-react';
+import {
+  AlertTriangleIcon,
+  ArrowLeftIcon,
+  ClockIcon,
+  ListFilterIcon,
+  PlusIcon,
+  TargetIcon,
+  UserXIcon,
+} from 'lucide-react';
 import { Fragment, useMemo } from 'react';
 import Link from 'next/link';
 import { useSession } from '@/auth/hooks/use-session';
@@ -23,6 +31,8 @@ import {
 } from '@/components/ui/table';
 import { toast } from '@/components/ui/toast';
 import { useDialogState } from '@/hooks/use-dialog-state';
+import { useIsMobile } from '@/hooks/use-mobile';
+import { useStoredChoice } from '@/hooks/use-stored-choice';
 import { ApiError } from '@/lib/api';
 import { useInstrument } from '@/queries/instrumentos';
 import { useGoals } from '@/queries/metas';
@@ -41,6 +51,14 @@ import {
   missingText,
   requirementLabel,
 } from '../format';
+import {
+  FILTER_LABELS,
+  GOAL_FILTERS,
+  defaultFilter,
+  filtersFor,
+  matches,
+  type GoalFilter,
+} from '../goal-filters';
 import { GoalFormDialog } from '../goal-form-dialog';
 import { GoalSituationDialog } from '../goal-situation-dialog';
 
@@ -99,12 +117,81 @@ function Deadline({ goal }: { goal: Goal }) {
 function Owner({ goal }: { goal: Goal }) {
   return (
     <span className="flex flex-wrap items-center gap-2 text-muted-foreground">
-      {goal.responsavel ? `Responsável: ${goal.responsavel.nome}` : 'Sem responsável'}
+      {goal.responsavel ? (
+        `Responsável: ${goal.responsavel.nome}`
+      ) : (
+        <Badge variant="outline">
+          <UserXIcon data-icon="inline-start" />
+          Sem responsável
+        </Badge>
+      )}
       {goal.responsavel && !goal.responsavel.ativo && (
         <Badge variant="outline">Conta desativada</Badge>
       )}
-      {goal.setor && <span>· {goal.setor.nome}</span>}
+      {goal.setor && <span>Setor: {goal.setor.nome}</span>}
     </span>
+  );
+}
+
+const VIEWS = ['LISTA', 'QUADRO'] as const;
+
+function GoalsBoard({
+  goals,
+  actionsFor,
+}: {
+  goals: Goal[];
+  actionsFor: (goal: Goal) => RowAction[];
+}) {
+  return (
+    <div className="grid grid-cols-3 gap-4">
+      {SITUATION_ORDER.map((situacao) => {
+        const column = goals.filter((goal) => goal.situacao === situacao);
+        return (
+          <section
+            key={situacao}
+            aria-labelledby={`coluna-${situacao}`}
+            className="flex flex-col gap-3 rounded-xl bg-muted/50 p-3"
+          >
+            <h3 id={`coluna-${situacao}`} className="px-1 font-semibold">
+              {SITUATIONS[situacao]} ({column.length})
+            </h3>
+            {column.length === 0 ? (
+              <p className="px-1 text-sm text-muted-foreground">Nenhuma meta.</p>
+            ) : (
+              <ul className="flex flex-col gap-3">
+                {column.map((goal) => (
+                  <li
+                    key={goal.id}
+                    className="flex items-start justify-between gap-2 rounded-lg border bg-background p-3 text-sm"
+                  >
+                    <div className="flex min-w-0 flex-col gap-1">
+                      <span className="font-medium">
+                        {goal.ordem} · {goal.objetivo}
+                      </span>
+                      <Owner goal={goal} />
+                      <span className="text-muted-foreground">
+                        <Deadline goal={goal} />
+                      </span>
+                      {goal.rascunho && (
+                        <Badge variant="outline" className="self-start">
+                          Rascunho
+                        </Badge>
+                      )}
+                    </div>
+                    {actionsFor(goal).length > 0 && (
+                      <RowActionsMenu
+                        label={`Ações da meta ${goal.ordem}`}
+                        actions={actionsFor(goal)}
+                      />
+                    )}
+                  </li>
+                ))}
+              </ul>
+            )}
+          </section>
+        );
+      })}
+    </div>
   );
 }
 
@@ -153,7 +240,24 @@ export function ProjectGoalsView({
   const requirements = useRequirements(instrumentId);
   const goals = useGoals(projectId);
   const me = useCurrentUser();
-  const sorted = useMemo(() => goals.data && [...goals.data].sort(bySituation), [goals.data]);
+  const viewer = me.data ?? null;
+  const [storedFilter, chooseFilter] = useStoredChoice<GoalFilter>(
+    `cybersetor-metas-filtro-${viewer?.usuarioId ?? ''}`,
+    viewer ? filtersFor(viewer) : GOAL_FILTERS,
+  );
+  const [storedView, chooseView] = useStoredChoice('cybersetor-metas-visao', VIEWS);
+  const mobile = useIsMobile();
+  const standard = viewer ? defaultFilter(viewer) : 'TODAS';
+  const filter = storedFilter ?? standard;
+  const board = !mobile && storedView === 'QUADRO';
+  const loading = goals.isPending || me.isPending;
+  const sorted = useMemo(
+    () =>
+      loading
+        ? undefined
+        : goals.data?.filter((goal) => !viewer || matches(goal, filter, viewer)).sort(bySituation),
+    [loading, goals.data, filter, viewer],
+  );
   const pagination = usePagination(sorted);
   const form = useDialogState<{ goal: Goal | null }>();
   const situation = useDialogState<{ goal: Goal }>();
@@ -244,6 +348,42 @@ export function ProjectGoalsView({
       )}
 
       <h2 className="text-lg font-semibold">Metas</h2>
+      {viewer && !!goals.data?.length && (
+        <div className="flex flex-wrap items-center justify-between gap-3">
+          <div role="group" aria-label="Filtro das metas" className="flex flex-wrap gap-2">
+            {filtersFor(viewer).map((option) => (
+              <Button
+                key={option}
+                variant={option === filter ? 'default' : 'outline'}
+                aria-pressed={option === filter}
+                onClick={() => chooseFilter(option === standard ? null : option)}
+              >
+                {FILTER_LABELS[option]}
+              </Button>
+            ))}
+          </div>
+          {!mobile && (
+            <div role="group" aria-label="Visão das metas" className="flex gap-2">
+              {VIEWS.map((option) => (
+                <Button
+                  key={option}
+                  variant={(option === 'QUADRO') === board ? 'secondary' : 'ghost'}
+                  aria-pressed={(option === 'QUADRO') === board}
+                  onClick={() => chooseView(option === 'LISTA' ? null : option)}
+                >
+                  {option === 'LISTA' ? 'Lista' : 'Quadro'}
+                </Button>
+              ))}
+            </div>
+          )}
+        </div>
+      )}
+      {viewer && sorted && !!goals.data?.length && (
+        <p className="text-sm text-muted-foreground" aria-live="polite">
+          Exibindo {sorted.length} de {goals.data.length}{' '}
+          {goals.data.length === 1 ? 'meta' : 'metas'}
+        </p>
+      )}
       {goals.error && !goals.data ? (
         <ListError message="Não foi possível carregar as metas. Tente de novo." />
       ) : goals.data?.length === 0 ? (
@@ -253,9 +393,25 @@ export function ProjectGoalsView({
           description="Cadastre cada meta do plano de trabalho com o indicador, o período e a forma de comprovação."
           action={(!withoutRequirements && createButton) || undefined}
         />
+      ) : sorted?.length === 0 ? (
+        <ListEmpty
+          icon={ListFilterIcon}
+          title="Nenhuma meta neste filtro"
+          description={`O filtro "${FILTER_LABELS[filter]}" não tem metas neste projeto.`}
+          action={
+            <Button
+              variant="outline"
+              onClick={() => chooseFilter(standard === 'TODAS' ? null : 'TODAS')}
+            >
+              Ver todas as metas
+            </Button>
+          }
+        />
+      ) : board && sorted ? (
+        <GoalsBoard goals={sorted} actionsFor={actionsFor} />
       ) : (
         <ListCard>
-          <Table aria-busy={goals.isPending}>
+          <Table aria-busy={loading}>
             <TableCaption className="sr-only">
               Metas do projeto {project.data?.codigo ?? ''}.
             </TableCaption>
@@ -278,7 +434,7 @@ export function ProjectGoalsView({
               </TableRow>
             </TableHeader>
             <TableBody>
-              {goals.isPending ? (
+              {loading ? (
                 <TableSkeleton columns={columns} />
               ) : (
                 pagination.pageRows.map((goal, index) => (
