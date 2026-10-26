@@ -162,6 +162,7 @@ describe('Autenticacao (e2e)', () => {
 
       expect(res.body).toEqual({
         usuarioId: usuario.id,
+        setor: null,
         perfil: Perfil.NUCLEO_PEDAGOGICO,
         deveTrocarSenha: false,
       });

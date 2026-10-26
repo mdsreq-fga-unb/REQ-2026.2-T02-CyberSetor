@@ -96,9 +96,10 @@ export class AuthController {
   @AllowPendingPasswordChange()
   @ApiBearerAuth()
   @ApiOkResponse({ type: SessionResponse })
-  session(@CurrentUser() user: ValidSession): SessionResponse {
+  async session(@CurrentUser() user: ValidSession): Promise<SessionResponse> {
     return {
       usuarioId: user.usuarioId,
+      setor: await this.auth.sectorOf(user.usuarioId),
       perfil: user.perfil,
       deveTrocarSenha: user.deveTrocarSenha,
     };
