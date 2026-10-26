@@ -50,7 +50,7 @@ export class CreateActivityDto {
   @IsArray()
   @ArrayNotEmpty()
   @ArrayUnique({ message: 'metaIds deve conter elementos únicos' })
-  @IsUUID('all', { each: true })
+  @IsUUID('all', { each: true, message: 'metaIds deve conter identificadores válidos' })
   metaIds!: string[];
 }
 
