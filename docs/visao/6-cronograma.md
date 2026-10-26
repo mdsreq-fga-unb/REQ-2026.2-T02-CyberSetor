@@ -10,6 +10,7 @@
 | 13/10/2026 | 1.5 | Alcance do MVP e incrementos posteriores alinhados à seção 10.2.6 | Caio Martins |
 | 19/10/2026 | 1.6 | Equipe atual de cinco integrantes | Maria Eduarda Marques |
 | 20/10/2026 | 1.7 | Sprints 4 e 5 alinhadas ao MVP e aos incrementos da seção 10.2.6: MVP concluído na Sprint 4, evidências e presença em campo na Sprint 5; checkpoint de 29/10 até a inscrição; alcance do MVP com as histórias da seção 10.1 | Equipe CyberSetor |
+| 26/10/2026 | 1.8 | Prestação de contas com o resultado alcançado; orientação de enquadramento (RF45) no incremento de evidências; teste de restauração do banco e dos arquivos juntos | Vinicius Vieira |
 
 ## 6.1 Calendário vigente
 
@@ -58,14 +59,14 @@ O recorte do MVP está na [seção 10.2.6](../requisitos/10-backlog.md#1026-mvp-
 1. **Parcerias e Metas (CP1, CP6 / HU-01a, HU-01b, HU-02a, HU-02b, HU-14):** Cadastro de instrumentos, projetos, vinculação de metas contratuais, responsáveis e acompanhamento de vencimentos, além do versionamento de aditivos.
 2. **Atividades (CP2 / HU-03a):** Cadastro das modalidades e das atividades associadas às metas dos projetos.
 3. **Inscrições e Titulares (CP3, CP5 / HU-07a, HU-07b, HU-07c, HU-08, HU-15a, HU-15b):** Inscrições públicas, com formulário configurável, e assistidas, base única de participantes com minimização de dados e atendimento a direitos de correção, exclusão e anonimização (LGPD).
-4. **Prestação de Contas (CP8 / HU-05a, HU-05b, HU-13):** Relatório de execução do objeto com as metas, a situação registrada e as justificativas obrigatórias, em PDF, e exportação dos dados do projeto em planilha aberta.
+4. **Prestação de Contas (CP8 / HU-05a, HU-05b, HU-13):** Relatório de execução do objeto com as metas, o resultado alcançado e as justificativas obrigatórias, em PDF, e exportação dos dados do projeto em planilha aberta.
 5. **Contas e perfis (CP1 / HU-16):** administração das contas da equipe do Instituto e dos perfis de acesso.
 
 ### O que fica para os incrementos posteriores
 
 Em conformidade com a matriz de valor de negócio × esforço técnico da seção 10.2.5, as capacidades que não integram o MVP seguem a ordem confirmada pelo Instituto, nas sprints da tabela da 6.2, salvo as evoluções posteriores:
 
-- **Incremento 2:** Repositório de comprovações e vinculação de evidências a atividades e metas (CP7 / HU-04a, HU-04b: RF32 a RF34), configuração das comprovações por modalidade (HU-03b: RF10); as evidências passam a compor o relatório e o PDF (RF36 e RF37).
+- **Incremento 2:** Repositório de comprovações e vinculação de evidências a atividades e metas (CP7 / HU-04a, HU-04b: RF32 a RF34, RF45), configuração das comprovações por modalidade (HU-03b: RF10); as evidências passam a compor o relatório e o PDF (RF36 e RF37).
 - **Incremento 3:** Registro de participação em campo on-line (CP4 / HU-09a: RF16) e lançamento ou retificação de presença fora do prazo com justificativa auditável (HU-10 / RF19).
 - **Evoluções posteriores, fora das sprints da disciplina, salvo folga:** Operação sem conexão e sincronização offline (CP4 / HU-09b: RF17 e HU-12: RF18), progresso calculado e risco de meta (CP6 / HU-11: RF28 a RF30) e histórico de participação de pessoas (CP5 / HU-06: RF20 e RF21).
 - **Fora do escopo desta versão:** Integração com serviços de mensagens proprietários (WhatsApp, SMS), módulos financeiro-contábeis próprios e adaptadores específicos para leiautes arbitrários de múltiplos financiadores externos.
@@ -78,7 +79,7 @@ A Sprint 6 e a margem final são tempo sem funcionalidade nova. O que se entrega
 |---|---|---|
 | Estabilização | correções do checkpoint e da Review da Unidade 3; revisão de segurança dos perfis de acesso | registro de defeitos fechados; teste de permissão por perfil |
 | Implantação | produto publicado no ambiente de produção descrito na seção 2.4, com domínio, certificado e cópia de segurança agendada | endereço acessível às pessoas do Instituto; registro da configuração |
-| Teste de restauração | restauração da cópia externa em banco descartável, com a aplicação lendo os dados restaurados, cronometrada | registro datado com identificador da cópia, tempo total e resultado — até ele existir, nenhuma afirmação de recuperabilidade é publicada |
+| Teste de restauração | restauração conjunta da cópia externa do banco e dos arquivos em ambiente descartável, com a aplicação lendo os dados restaurados, cronometrada | registro datado com identificador da cópia, tempo total e resultado — até ele existir, nenhuma afirmação de recuperabilidade é publicada |
 | Treinamento | sessões com as facilitadoras e com a coordenação, sobre o fluxo real de uma atividade e de um relatório | ata do treinamento; roteiro de tarefas críticas executado pela pessoa treinada |
 | Transferência | **credenciais** entregues por canal seguro e acessos da equipe revogados; **documentação** de operação, manual de usuário e *runbook* técnico; **domínio** e certificado no nome do Instituto ou com renovação atribuída; **infraestrutura** inventariada sem segredos; **cópia de segurança** com política, cópia externa e último ensaio; **responsáveis** nomeados pelo Instituto — dono operacional, administrador técnico e substituto; **dados** exportados em formato aberto e conferidos | checklist de transferência assinado pelo representante do Instituto |
 
