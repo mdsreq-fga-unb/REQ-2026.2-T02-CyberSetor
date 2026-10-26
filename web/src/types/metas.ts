@@ -26,7 +26,29 @@ export interface EligibleOwner {
 
 export type MeasurementMode = 'QUANTITATIVA' | 'QUALITATIVA';
 
-export type CompletionField = 'indicador' | 'formaComprovacao' | 'periodoInicio' | 'periodoFim';
+export type CompletionField =
+  'indicador' | 'parametroPlanejado' | 'formaComprovacao' | 'periodoInicio' | 'periodoFim';
+
+export type GoalReach = 'CUMPRIDA' | 'PARCIALMENTE_CUMPRIDA' | 'NAO_CUMPRIDA';
+
+export interface GoalResult {
+  id: string;
+  dataReferencia: string;
+  descricao: string;
+  valorAlcancado: number | null;
+  parametroPlanejado: number | null;
+  percentual: number | null;
+  alcance: GoalReach;
+  registradoPor: { id: string; nome: string };
+  registradoEm: string;
+}
+
+export interface GoalResultInput {
+  dataReferencia: string;
+  descricao: string;
+  valorAlcancado?: number;
+  alcance?: GoalReach;
+}
 
 export interface GoalRequirement {
   id: string;
@@ -58,6 +80,7 @@ export interface Goal {
   setor: GoalSector | null;
   situacao: GoalSituation;
   alertaPrazo: DeadlineAlert | null;
+  resultado: GoalResult | null;
 }
 
 export interface GoalInput {
