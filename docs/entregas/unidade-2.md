@@ -8,15 +8,18 @@
 | 21/09/2026 | 1.3 | Status e checklist alinhados à versão 2.1 da Seção 8: âncoras restauradas e valores iniciais marcados | Equipe CyberSetor |
 | 08/10/2026 | 1.4 | Atualização para catálogo RF01–RF39 e RNF01–RNF18, checklist concluído, validação integral com o Instituto e estrutura de apresentação em vídeo | Rodrigo Henrique |
 | 13/10/2026 | 2.0 | Incorporação do vídeo de apresentação | Rodrigo Henrique |
+| 26/10/2026 | 2.1 | Situação da validação: MVP confirmado em 08/10, pontos em aberto e valores iniciais, atas em conferência; página como registro da entrega de 13/10; histórias da entrega remetidas à correspondência da seção 10.2.2 | Vinicius Vieira |
 
 ---
 
 ## 1. Visão Geral da Entrega
 
+Esta página registra a entrega de 13/10/2026. A especificação vigente está nas [seções 8](../requisitos/8-requisitos.md) e [10](../requisitos/10-backlog.md).
+
 A entrega da Unidade 2 consolida a especificação formal de requisitos de software da plataforma CyberSetor para o Instituto No Setor, compreendendo o levantamento das Características de Produto (CP1 a CP8), os Requisitos Funcionais, os Requisitos Não Funcionais (FURPS+ e Sommerville), as Regras de Negócio e a Matriz de Rastreabilidade Bidirecional.
 
-- **Marcos:** lista de requisitos consolidada (fechamento da Sprint 1); MVP priorizado e validado em 28/09/2026; a Unidade 2 vence em 13/10/2026.
-- **Status:** 🟢 **Requisitos e MVP validados.** Catálogo oficial unificado (RF01 a RF39 e RNF01 a RNF18), Regras de Negócio (RN-01 a RN-13) e Matriz de Rastreabilidade Bidirecional integrados na Seção 8; Backlog com 15 Histórias de Usuário e recorte do MVP consolidados e validados junto ao Instituto No Setor.
+- **Marcos:** lista de requisitos consolidada (fechamento da Sprint 1); MVP priorizado com o Instituto em 28/09/2026 e confirmado em 08/10/2026; a Unidade 2 vence em 13/10/2026.
+- **Status:** **MVP confirmado pelo Instituto em 08/10/2026**, com pontos em aberto na [seção 8.6](../requisitos/8-requisitos.md#86-pontos-em-aberto-e-auditoria-de-lacunas) e valores iniciais marcados com 🔧; as atas de 28/09 e 08/10 estão em conferência pelo Instituto. Catálogo oficial unificado (RF01 a RF39 e RNF01 a RNF18), Regras de Negócio (RN-01 a RN-13) e Matriz de Rastreabilidade Bidirecional integrados na Seção 8; Backlog com as 15 Histórias de Usuário da entrega (correspondência com as histórias atuais na [seção 10.2.2](../requisitos/10-backlog.md#1022-avaliacao-de-negocio-com-o-instituto)) e recorte do MVP.
 - **Documentos Oficiais de Requisitos:**
     - [Seção 8 — Requisitos de Software](../requisitos/8-requisitos.md)
     - [Seção 9 — DoR e DoD](../requisitos/9-dor-dod.md)
@@ -41,10 +44,10 @@ A entrega da Unidade 2 consolida a especificação formal de requisitos de softw
 - [x] **Dupla Classificação dos RNFs:** Requisitos não funcionais classificados simultaneamente segundo as taxonomias **FURPS+** e **Ian Sommerville**.
 - [x] **Métricas Auditáveis nos RNFs:** Cada requisito não funcional acompanhado de critério objetivo e quantitativo para testes automatizados.
 - [x] **Conformidade Legal:** Requisitos parametrizados com o Marco Regulatório das Organizações da Sociedade Civil (Lei 13.019/2014) e com a LGPD (Lei 13.709/2018).
-- [x] **Rastreabilidade Bidirecional:** Matriz completa relacionando gargalos do BPMN (`G01` a `G06`), Objetivos Específicos (`OE01` a `OE06`), Características de Produto (`CP1` a `CP8`), RFs, RNFs e Histórias de Usuário (`HU-01` a `HU-15`), integrada na [Seção 8.4](../requisitos/8-requisitos.md#84-matriz-de-rastreabilidade-bidirecional).
+- [x] **Rastreabilidade Bidirecional:** Matriz completa relacionando gargalos do BPMN (`G01` a `G06`), Objetivos Específicos (`OE01` a `OE06`), Características de Produto (`CP1` a `CP8`), RFs, RNFs e Histórias de Usuário (`HU-01` a `HU-15`; correspondência com as histórias atuais na [seção 10.2.2](../requisitos/10-backlog.md#1022-avaliacao-de-negocio-com-o-instituto)), integrada na [Seção 8.4](../requisitos/8-requisitos.md#84-matriz-de-rastreabilidade-bidirecional).
 - [x] **Critérios de Aceitação Detalhados:** Critérios de aceitação objetivos e mensuráveis estruturados para cada história no [Backlog do Produto](../requisitos/10-backlog.md).
-- [x] **Validação com o Instituto:** Homologação e alinhamento do domínio, dados mínimos de cadastro, rotinas de campo e regras de negócio com as representantes do Instituto No Setor.
-- [x] **Priorização e MVP:** Classificação e priorização pela Matriz Técnica × Valor de Negócio, com o recorte do MVP definido e validado no [Backlog do Produto](../requisitos/10-backlog.md).
+- [x] **Validação com o Instituto:** MVP confirmado em 08/10/2026; domínio, dados mínimos de cadastro, rotinas de campo e regras de negócio tratados com as representantes do Instituto No Setor, com os pontos em aberto na [seção 8.6](../requisitos/8-requisitos.md#86-pontos-em-aberto-e-auditoria-de-lacunas).
+- [x] **Priorização e MVP:** Classificação e priorização pela Matriz Técnica × Valor de Negócio, com o recorte do MVP definido e confirmado pelo Instituto no [Backlog do Produto](../requisitos/10-backlog.md).
 - [x] **Regras de Negócio e Restrições:** As 13 regras que os requisitos referenciam consolidadas na [seção 8.7](../requisitos/8-requisitos.md#87-regras-de-negocio) (RN-01 a RN-13).
 
 ---
@@ -60,4 +63,4 @@ A entrega da Unidade 2 consolida a especificação formal de requisitos de softw
 | **Requisitos Não Funcionais (FURPS+ e Sommerville)** | [RNF01 a RNF18](../requisitos/8-requisitos.md#rnf01) | Seção 8.3 | Integrado ao catálogo oficial |
 | **Matriz de Rastreabilidade Bidirecional** | Gargalos BPMN, OEs, CPs, RFs, RNFs e HUs | [Seção 8.4](../requisitos/8-requisitos.md#84-matriz-de-rastreabilidade-bidirecional) | Integrada à Seção 8 |
 | **Critérios de Prontidão e Conclusão (DoR e DoD)** | Critérios INVEST e condições de aceite | [Seção 9 — DoR e DoD](../requisitos/9-dor-dod.md) | Integrado à documentação oficial |
-| **Backlog do Produto e MVP Validado** | Histórias HU-01 a HU-15, Matriz 4 × 4 e MVP | [Seção 10 — Backlog do Produto](../requisitos/10-backlog.md) | Integrado e validado com o cliente |
+| **Backlog do Produto e MVP Validado** | Histórias HU-01 a HU-15 (correspondência na [seção 10.2.2](../requisitos/10-backlog.md#1022-avaliacao-de-negocio-com-o-instituto)), Matriz 4 × 4 e MVP | [Seção 10 — Backlog do Produto](../requisitos/10-backlog.md) | Integrado; MVP confirmado pelo Instituto em 08/10/2026 |

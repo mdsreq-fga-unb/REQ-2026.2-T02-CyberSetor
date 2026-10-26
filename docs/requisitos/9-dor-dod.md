@@ -8,7 +8,7 @@
 | 05/10/2026 | 1.1 | Critério Testável da DoR limitado às ambiguidades identificadas na revisão | Maria Eduarda Marques |
 | 05/10/2026 | 1.2 | Conclusão do item na branch de integração do seu tipo: `docs-homologacao` para documentação, `api-develop` ou `web-develop` para código; demonstração no ambiente de homologação | Vinicius Vieira |
 | 20/10/2026 | 1.3 | Requisitos não funcionais de todo o produto (RNF03, RNF16 e RNF17) como condição de conclusão do item de código | Equipe CyberSetor |
-| 26/10/2026 | 1.4 | Item de código atende aos requisitos não funcionais listados na história, conferidos pela métrica; controle de acesso por perfil (RNF04) entre os requisitos de todo o produto | Vinicius Vieira |
+| 26/10/2026 | 1.4 | Item de código atende aos requisitos não funcionais listados na história, conferidos pela métrica; controle de acesso por perfil (RNF04) entre os requisitos de todo o produto; doR: o que impede a entrada separado do que admite valor provisório com 🔧; fluxo da tela nos critérios de aceitação no lugar do esboço. DoD: história concluída na versão publicada na homologação, com o percurso executado; item concluído distinto do incremento; validação pendente em "Aguardando"; tratamento do retorno do Instituto; registro de conclusão na issue da história; verificação por classe de requisito não funcional | Vinicius Vieira |
 
 ---
 
@@ -22,13 +22,13 @@ Uma história de usuário está pronta quando:
 
 1. **Independente (I):** não repete o resultado de outra história e pode ser ordenada e entregue sem depender artificialmente de outra; a dependência que existir está registrada na própria história.
 2. **Negociável (N):** descreve a necessidade e o comportamento esperado, sem fixar a solução técnica.
-3. **Valiosa (V):** tem valor claro para um perfil do Instituto, com o ator explícito na própria história (*Como …, quero … para …*), e valor de negócio validado com o Instituto, na escala MoSCoW pontuada de 4 a 1, com a justificativa registrada na [seção 10](10-backlog.md).
+3. **Valiosa (V):** tem valor claro para um perfil do Instituto, com o ator explícito na própria história (*Como …, quero … para …*), e valor de negócio validado com o Instituto, na escala MoSCoW pontuada de 4 a 1, com a justificativa registrada na [seção 10](10-backlog.md). A história que entra por obrigação legal ou por dependência técnica pode ter valor provisório, nas condições do item 8.
 4. **Estimável (E):** a equipe avaliou esforço, complexidade e lacuna de capacidade dos requisitos funcionais da história ([seção 10](10-backlog.md)); incerteza grande leva a dividir a história ou a investigar antes.
 5. **Pequena (S):** cabe em uma sprint; a que não cabe é dividida antes de entrar.
 6. **Testável (T):** tem critérios de aceitação em lista, cada um verificável e sem ambiguidade identificada na revisão por quem desenvolve.
 7. **Vinculada aos requisitos:** a pelo menos um requisito funcional da [seção 8](8-requisitos.md) e aos requisitos não funcionais e às regras de negócio que a condicionam.
-8. **Sem decisão externa pendente** que impeça o desenvolvimento: valor inicial marcado com 🔧 tem responsável e prazo registrados na história.
-9. **Com a interface esboçada e ligada à história**, quando envolve tela nova ou alterada.
+8. **Sem decisão externa pendente** que impeça o desenvolvimento. Impedem a entrada: ator ou resultado indefinido; critério de aceitação cujo comportamento central depende de resposta do Instituto; dependência de outra história que não esteja entregue nem planejada antes dela na mesma sprint. Admitem valor provisório marcado com 🔧, com responsável e prazo registrados na história: parâmetro numérico, campo opcional e valor de negócio de história que entra por obrigação legal ou por dependência técnica.
+9. **Com o fluxo da tela descrito nos critérios de aceitação**, quando envolve tela nova ou alterada: campos, ações e estados vazio e de erro. O esboço da tela é material de trabalho da dupla e não entra na história.
 
 ## 9.2 Definition of Done (DoD)
 
@@ -53,5 +53,17 @@ Um item de código está concluído quando:
 3. **Passa nos testes automatizados** na integração contínua.
 4. **Atende aos requisitos não funcionais** listados na história, conferidos pela métrica verificável de cada um na [seção 8.3](8-requisitos.md#83-lista-de-requisitos-nao-funcionais-rnfs), e atende aos requisitos não funcionais de todo o produto: segurança das comunicações e das sessões ([RNF03](8-requisitos.md#rnf03)), controle de acesso por perfil ([RNF04](8-requisitos.md#rnf04)), compatibilidade entre navegadores e dispositivos ([RNF16](8-requisitos.md#rnf16)) e restrição tecnológica e qualidade de código ([RNF17](8-requisitos.md#rnf17)).
 5. **Tem a documentação de uso e a da API atualizadas**, quando aplicável.
-6. **Incorpora o retorno do Instituto** sobre o item, quando houver, ou o registra no Product Backlog.
-7. **Pode ser demonstrado na Sprint Review**, em funcionamento no ambiente de homologação.
+6. **Incorpora o retorno do Instituto** sobre o item, quando houver. Retorno que contraria critério de aceitação ou regra já validada impede a conclusão até o ajuste; retorno que acrescenta comportamento vira item novo no Product Backlog.
+7. **Está publicado na homologação**, na versão identificada pelo commit da `api-develop` e da `web-develop`, com o percurso da história executado nessa versão.
+8. **Tem o registro de conclusão no item da história no quadro do projeto:** critérios de aceitação atendidos, testes, versão demonstrada e pendências.
+
+Os itens 1 a 6 são conferidos na revisão de cada pull request, e o item fica concluído quando integrado na linha do seu componente (`api-develop` ou `web-develop`). Os itens 7 e 8 valem para a história: o incremento é a versão das duas linhas publicada junta na homologação, e é nele que a história é dada como concluída e demonstrada na Sprint Review. História concluída com validação do Instituto pendente fica em "Aguardando" no quadro do projeto e com 🔧 no texto até a confirmação.
+
+**Verificação por classe de requisito não funcional**
+
+| Classe | Requisitos | Verificação |
+| :--- | :--- | :--- |
+| Autorização | [RNF04](8-requisitos.md#rnf04) | Testes de API por perfil na integração contínua |
+| Integridade e auditoria | [RNF01](8-requisitos.md#rnf01), [RNF02](8-requisitos.md#rnf02) | Teste da trilha de auditoria |
+| Desempenho | [RNF11](8-requisitos.md#rnf11), [RNF13](8-requisitos.md#rnf13) | Medição na homologação 🔧 |
+| Recuperação | [RNF18](8-requisitos.md#rnf18) | Ensaio de restauração registrado |

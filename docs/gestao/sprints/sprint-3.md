@@ -5,7 +5,7 @@
 | Campo | Conteúdo |
 |---|---|
 | **Código do documento** | C25 |
-| **Versão** | 1.0 |
+| **Versão** | 1.2 |
 | **Data de emissão** | 9 de outubro de 2026 |
 | **Projeto** | CyberSetor — sistema de gestão do ciclo de projetos financiados |
 | **Cliente** | Instituto Cultural e Social No Setor |
@@ -15,7 +15,7 @@
 | **Período da Sprint** | 06/10/2026 (terça-feira) a 20/10/2026 (terça-feira) — 2 semanas |
 | **Elaboração** | Vinicius Angelo de Brito Vieira (Scrum Master) |
 | **Product Owner** | Maria Eduarda Denis Duarte Marques |
-| **Situação** | Emitido com o deliberado na Sprint Planning de 07/10/2026 e nos encaminhamentos de 08/10 e 09/10 |
+| **Situação** | Emitido com o deliberado na Sprint Planning de 07/10/2026 e nos encaminhamentos de 08/10 e 09/10; resultado registrado depois da Sprint Review de 20/10/2026 |
 
 ---
 
@@ -260,6 +260,52 @@ A ordem é a da seção 10.2.6, confirmada pelo Instituto em 08/10. Dentro de ca
 
 ---
 
+## 12. Resultado da Sprint
+
+Meta **parcialmente atingida** (ata de 20/10/2026, D1): a Unidade 2 foi publicada antes de 13/10, o MVP foi confirmado pelo Instituto e o ambiente local e a base técnica foram definidos e integrados; a homologação e as primeiras histórias ficaram em pull request e passaram à [Sprint 4](sprint-4.md).
+
+### 12.1 Critérios de aceitação da Sprint
+
+| ID | Resultado | Evidência |
+|---|---|---|
+| CAS-01 | Atingido | [Síntese de entregas da Unidade 2](../../entregas/unidade-2.md), com o vídeo, publicada na versão de 13/10 |
+| CAS-02 | Parcial | MVP confirmado em 08/10 ([ata de 08/10](../atas/2026-10-08-validacao-mvp-instituto.md)); conferência da ata pelo Instituto e registro na seção 10.2.8 passaram à Sprint 4 |
+| CAS-03 | Parcial | [Seção 4](../../visao/4-estrategia-esw.md) revista em 13/10 (versão 1.6); a resposta ao docente passou à Sprint 4 |
+| CAS-04 | Atingido | Base técnica da API e do front integrada, com integração contínua (ata de 20/10, D1) |
+| CAS-05 | Parcial | Histórias da primeira entrega reestruturadas em dezesseis, uma por ator e resultado, e ratificadas na Review (ata de 20/10, D2; [seção 10.1](../../requisitos/10-backlog.md#101-backlog-geral)); a migração das issues das histórias passou à Sprint 4 |
+| CAS-06 | Não atingido | Homologação publicada em 21/10, já na Sprint 4 ([Ambientes do produto](../processo-scrumxp.md#ambientes-do-produto)) |
+| CAS-07 | Atingido | Adesão de 84% às dailies ([registro das dailies](../dailies.md)) |
+| CAS-08 | Não atingido | Demora na revisão dos pull requests registrada na Retrospectiva; revisão em até 24 horas com aviso geral (ata de 20/10, D5) |
+
+### 12.2 Itens do Sprint Backlog
+
+| ID | Resultado | Observação |
+|---|---|---|
+| U01 | Concluído | Unidade 2 publicada antes da aula de 13/10 |
+| U02 | Levado à Sprint 4 (C05) | Seção 4 revista em 13/10; resposta ao docente pendente |
+| U03 | Concluído | Síntese com catálogo, situação, checklist e vídeo |
+| U04 | Levado à Sprint 4 (C02) | Atas de 28/09 e 08/10 em conferência pelo Instituto |
+| U05 | Concluído | Vídeo publicado na síntese de entregas da Unidade 2 |
+| U06 | Concluído | Checklist da Unidade 2 com o link do vídeo |
+| U07 | Concluído | [Seção 6.3](../../visao/6-cronograma.md) alinhada à seção 10.2.6 |
+| U08 | Concluído | Revisão das seções 1, 2, 3, 5 e 7 e das páginas de apoio publicada com a Unidade 2; as abas Requisitos e Entregas não tiveram revisão própria |
+| U09 | Levado à Sprint 4 (C02) | Registro de 08/10 na seção 10.2.8 depois da conferência da ata |
+| U10 | Levado à Sprint 4 (C05) | Resposta ao docente sobre a seção 4 |
+| B01 | Concluído | Em 09/10 |
+| B02 | Concluído | Esqueleto da API integrado |
+| B03 | Concluído | Esqueleto do front integrado |
+| B04 | Levado à Sprint 4 (A01) | Autenticação e perfis em pull request no fim da sprint |
+| B05 | Levado à Sprint 4 (A03) | Ambiente local definido; homologação, backup e endereço no site passaram à Sprint 4 |
+| H01 | Levado à Sprint 4 (A02) | Substituído pela reestruturação em histórias derivadas (ata de 20/10, D2) |
+| H02 | Levado à Sprint 4 (A01) | Cadastro do instrumento (HU-01a) em pull request no fim da sprint |
+| H03 | Levado à Sprint 4 (B05) | Inscrição com Maria Eduarda e Caio |
+| P01 | Concluído | Dojos D1 e D2 com a entrega de cada integrante concluída em 19/10 ([Matriz de competências](../matriz-competencias.md#dojos-de-nivelamento)) |
+| P02 | Concluído | Este plano, publicado com a Unidade 2 |
+| P03 | Levado à Sprint 4 (A04) | O alinhamento técnico de 15/10 não ocorreu; as perguntas passaram à reunião com o Instituto |
+| P04 | Concluído | Review 3 em 20/10; a revisão da primeira entrega com o Instituto passou à Sprint 4 (A04) |
+
+---
+
 ## Anexo A — Plano de execução
 
 | Data | Atividade | Responsáveis |
@@ -281,3 +327,4 @@ A ordem é a da seção 10.2.6, confirmada pelo Instituto em 08/10. Dentro de ca
 |---|---|---|---|
 | 1.0 | 09/10/2026 | Emissão com o deliberado na Sprint Planning de 07/10 e nos encaminhamentos de 08/10 (confirmação do MVP) e 09/10 (fluxo de branches, linhas de código, segundo épico de cada dupla): meta, calendário, Sprint Backlog em três partes, priorização, alocação, riscos e critérios de aceitação | Vinicius |
 | 1.1 | 19/10/2026 | Saída de um integrante: perfil da equipe, Sprint Backlog, alocação e segundo épico atualizados para cinco integrantes; risco R07 substituído pelo de capacidade reduzida | Maria Eduarda Marques |
+| 1.2 | 26/10/2026 | Resultado da Sprint: critérios de aceitação e itens do Sprint Backlog avaliados a partir da Review de 20/10 | Vinicius Vieira |

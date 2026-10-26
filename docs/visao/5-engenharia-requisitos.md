@@ -8,6 +8,7 @@
 | 17/09/2026 | 1.3 | Taxonomia revista conforme o livro-texto: artefatos, eventos do Scrum e ferramentas separados das técnicas | Vinicius Vieira |
 | 17/09/2026 | 1.4 | Registro das sessões de entrevista remetido à seção 7.2 | Equipe CyberSetor |
 | 05/10/2026 | 1.5 | Revisão editorial: formatação direta, sem supressão de técnicas, artefatos ou mapeamento do ScrumXP | Rodrigo Henrique |
+| 26/10/2026 | 1.6 | Observação direta das instalações, dos processos administrativos e das planilhas, com a observação da chamada prevista para o incremento de presença; caso de triangulação; prototipação evolutiva, com a homologação como protótipo avaliado pelo Instituto e os testes visuais como verificação da tela | Vinicius Vieira |
 
 As seis atividades da Engenharia de Requisitos adotadas pela disciplina (elicitação e descoberta, análise e consenso, declaração, representação, verificação e validação, organização e atualização) não são etapas sequenciais. Elas se repetem e se entrelaçam ao longo do ciclo de desenvolvimento. Esta seção associa cada atividade às técnicas que a equipe usará no projeto e mapeia essas técnicas nas fases do ScrumXP.
 
@@ -17,8 +18,8 @@ As seis atividades da Engenharia de Requisitos adotadas pela disciplina (elicita
 
 - **Entrevista semiestruturada:** Conversas com as representantes do núcleo pedagógico, com roteiro aberto, para compreender o domínio, delimitar o problema e distinguir necessidades de desejos (sessões registradas na seção 7.2).
 - **Análise de documentos existentes:** Leitura do relatório de prestação de contas e da planilha de controle do Instituto para mapear o processo atual como ele de fato acontece.
-- **Observação direta:** Acompanhamento de uma oficina em campo para visualizar a chamada e o registro acontecendo na prática.
-- **Triangulação:** Cruzamento das entrevistas, documentos e observações para separar a visão formal da organização da prática cotidiana real.
+- **Observação direta:** Observação das instalações, dos processos administrativos (compras, cotações e registros de comprovação) e das planilhas em uso, nas visitas à sede de 08/09 e 21/09/2026. A observação de uma chamada em oficina é atividade de elicitação prevista para o incremento de presença em campo.
+- **Triangulação:** Cruzamento das entrevistas, documentos e observações para separar a visão formal da organização da prática cotidiana real. Exemplo: na visita de 21/09, a Matriz de Aquisição foi apontada como o instrumento mais crítico da rotina administrativa; cruzada com o escopo acordado em 08/09, que deixa o controle financeiro fora do produto, ela não virou requisito funcional e ficou como ponto em aberto, com a fronteira a definir com a área administrativo-financeira ([seção 8.6](../requisitos/8-requisitos.md#86-pontos-em-aberto-e-auditoria-de-lacunas), item 2).
 
 **Análise e Consenso**
 
@@ -40,13 +41,13 @@ As seis atividades da Engenharia de Requisitos adotadas pela disciplina (elicita
 - **Rich Picture:** Representação sistêmica e informal do cenário atual (livro, §10.5), apresentada na seção 1.3.
 - **Mapa de stakeholders:** Situação dos envolvidos e suas relações com a solução (livro, §§10.4–10.5), apresentada na seção 1.6.
 - **Modelo BPMN:** Diagramação formal do fluxo atual de inscrições e prestação de contas, localizando onde a solução intervém (livro, §10.6.2).
-- **Protótipos de baixa fidelidade:** Esboços rústicos de interface usados para validação rápida antes da codificação (livro, §10.5).
+- **Prototipação evolutiva:** O esboço de tela orienta a dupla e é material de trabalho, não publicado; a versão na homologação é o protótipo avaliado pelo Instituto na demonstração; as referências dos testes visuais, em 360 e 1280 px, são a verificação da tela.
 
 **Verificação e Validação**
 
 - **Revisão cruzada entre duplas:** Verificação de consistência, completude e testabilidade dos artefatos produzidos por outros pares.
 - **Checklist de qualidade:** Lista de inspeção aplicada às histórias antes do desenvolvimento.
-- **Sessão de validação com protótipo:** Apresentação visual ao Instituto para confirmar a adequação do requisito.
+- **Validação do protótipo na homologação:** Percurso da história executado com o Instituto na versão publicada na homologação, para confirmar a adequação do requisito.
 - **Testes de aceitação:** Verificações (automatizadas quando possível) derivadas dos critérios de aceitação.
 - **Demonstração com stakeholders:** Apresentação do incremento funcional na Sprint Review (evento do Scrum), retroalimentando o backlog.
 
@@ -69,11 +70,11 @@ Elicitação, verificação e validação, e organização e atualização apare
 | | Declaração | Escrita a valor | Épicos · Histórias de usuário · Glossário | Product Backlog inicial estruturado. |
 | **Planejamento da Sprint** | Análise e Consenso | Priorização | MoSCoW · Avaliação técnica × valor de negócio | Sprint Backlog priorizado e MVP recortado. |
 | | Declaração | Detalhamento | Critérios de aceitação · Regras de negócio | Itens verificáveis e catalogados para código. |
-| | Representação | Prototipação | Protótipos de baixa fidelidade | Entendimento da interface antes da construção. |
+| | Representação | Prototipação evolutiva | Esboço de tela da dupla · Fluxo da tela nos critérios de aceitação | Entendimento da interface antes da construção. |
 | **Execução da Sprint** | Elicitação e Descoberta | Elicitação contínua | Dúvidas operacionais com o Product Owner interno · Alinhamento de domínio com o Instituto | Lacunas operacionais destravadas; dúvidas de domínio encaminhadas à próxima validação com o Instituto. |
-| | Verificação e Validação | Inspeção interna | Revisão cruzada · Checklist de qualidade · Testes de aceitação | Ambiguidades reduzidas e requisitos verificáveis. |
+| | Verificação e Validação | Inspeção interna | Revisão cruzada · Checklist de qualidade · Testes de aceitação · Testes visuais em 360 e 1280 px | Ambiguidades reduzidas e requisitos verificáveis. |
 | | Organização e Atualização | Gestão de backlog | Backlog no GitHub Projects · Matriz de rastreabilidade | Requisitos rastreáveis do problema ao teste. |
-| **Revisão da Sprint** | Verificação e Validação | Validação externa | Sprint Review com demonstração · Sessão de validação | Confirmação de atendimento à necessidade real. |
+| **Revisão da Sprint** | Verificação e Validação | Validação externa | Sprint Review com demonstração · Validação do protótipo na homologação | Confirmação de atendimento à necessidade real. |
 | | Declaração | Absorção de feedback | Ajuste de histórias e critérios · Negociação | Histórias ajustadas ao entendimento mais atual. |
 | **Retrospectiva da Sprint** | Organização e Atualização | Melhoria de processo | Registro de lições aprendidas (seção 11) | Ajustes nas rotinas de ER da equipe. |
 | **Planejamento da Próxima Release** | Elicitação / Análise | Refinamento / Repriorização | Alinhamento com o Instituto · MoSCoW · Avaliação técnica × valor de negócio | Backlog reordenado para o próximo ciclo. |

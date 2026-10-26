@@ -6,6 +6,7 @@
 | 09/09/2026 | 1.1 | Verificação e publicação do site separadas por workflow | Vinicius Vieira |
 | 05/10/2026 | 2.0 | Branches por componente: documentação na `main` com homologação, API e web em linhas próprias; congelamento e marcação das entregas; controles da equipe na ausência de proteção de branch | Vinicius Vieira |
 | 07/10/2026 | 2.1 | Título de commit sem acentos; *rebase* para conflitos, sem *squash*; prazo de 24 horas para revisão de pull request | Maria Eduarda Marques |
+| 26/10/2026 | 2.2 | A `web-develop` publica a homologação do front | Vinicius Vieira |
 
 Acordo de trabalho da equipe para este repositório. O objetivo é que o histórico de commits e de pull requests seja a evidência do processo, e que ninguém dependa de memória para saber como contribuir.
 
@@ -21,7 +22,7 @@ A entrega da disciplina é este site, publicado pelo GitHub Pages a partir da pa
 | `docs-homologacao` | Documentação revisada, ainda não publicada | `docs/<assunto>`, `main` | Nada |
 | `api-develop` | API em integração | `feat/api/HU-xx-<assunto>`, `test/api/<assunto>`, `refactor/api/<assunto>`, `chore/api/<assunto>`, `api` | Homologação da API |
 | `api` | API em produção | `api-develop`, `fix/api-<assunto>` | Produção da API |
-| `web-develop` | Front em integração | `feat/web/HU-xx-<assunto>`, `test/web/<assunto>`, `refactor/web/<assunto>`, `chore/web/<assunto>`, `web` | Prévia do front |
+| `web-develop` | Front em integração | `feat/web/HU-xx-<assunto>`, `test/web/<assunto>`, `refactor/web/<assunto>`, `chore/web/<assunto>`, `web` | Homologação do front |
 | `web` | Front em produção | `web-develop`, `fix/web-<assunto>` | Produção do front |
 
 As linhas da API e do front não têm história comum com a `main` nem entre si: só contêm o próprio código e a própria configuração de integração contínua. Por isso não existe pull request de código para a documentação, da documentação para o código ou entre API e front. As seis branches da tabela não se apagam; as de trabalho são curtas e apagadas depois do merge. Não há branch por ambiente além das de produção da tabela: endereços e segredos de cada ambiente ficam na configuração da hospedagem.

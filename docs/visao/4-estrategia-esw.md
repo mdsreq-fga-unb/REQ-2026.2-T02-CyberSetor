@@ -10,6 +10,7 @@
 | 05/10/2026 | 1.5 | Revisão editorial: formatação direta, preservando toda a fundamentação teórica, citações e quadros comparativos | Rodrigo Henrique |
 | 13/10/2026 | 1.6 | Revisão conceitual: neutralidade no quadro comparativo, OpenUP iterativo, Scrum como framework, ScrumXP como processo adaptado e alinhamento de cadências | Caio Martins |
 | 19/10/2026 | 1.7 | Equipe atual de cinco integrantes | Maria Eduarda Marques |
+| 26/10/2026 | 1.8 | Programação em pares descrita como é aplicada: duplas por épico, sessões síncronas registradas pela coautoria do commit e na daily, revisão por outra dupla para quem trabalha sozinho e evidência apresentada na Sprint Review | Vinicius Vieira |
 
 A partir do cenário diagnosticado na Seção 1 e da solução proposta na Seção 2, a equipe CyberSetor estabeleceu as decisões de estratégia de engenharia de software para o atendimento ao Instituto No Setor nas três camadas metodológicas distinguidas pelo referencial da disciplina: **abordagem**, **ciclo de vida** e **processo**.
 
@@ -60,7 +61,7 @@ O **ScrumXP** adotado pelo projeto é um **processo adaptado pela equipe**, que 
    - **Objetivo:** Projetar, implementar e testar incrementos funcionais priorizados com alto padrão de qualidade de código.
    - **Atividades:**
      - Realizar Sprint Planning com seleção e estimativa dos itens do Sprint Backlog.
-     - Implementar funcionalidades com sessões de programação em pares (*Pair Programming*).
+     - Implementar as histórias em duplas por épico, com sessões síncronas de programação em pares (*Pair Programming*) quando a dupla trabalha junta e revisão por outra dupla quando o trabalho é individual.
      - Assegurar a integração contínua (*Continuous Integration*) e a refatoração constante do código.
 
 3. **Revisão e Validação com o Cliente (Sprint Review)**
@@ -83,7 +84,7 @@ O **ScrumXP** adotado pelo projeto é um **processo adaptado pela equipe**, que 
   - *Sprints de Duas Semanas:* Timeboxes fixos que conferem cadência e ritmo sustentável à equipe.
   - *Cerimônias Essenciais:* Reuniões de Planejamento de Sprint, Revisões com validação direta do cliente e Retrospectivas de processo.
 - **Práticas Técnicas de Engenharia (XP):**
-  - *Programação em Pares (Pair Programming):* Pareamento estruturado entre membros da equipe para nivelar conhecimentos técnicos e reduzir a densidade de defeitos.
+  - *Programação em Pares (Pair Programming):* As histórias são distribuídas por duplas, uma por épico. Quando a dupla trabalha junta, a sessão é síncrona e fica registrada pela coautoria do commit (`Co-authored-by`) e na daily. Quem trabalha sozinho tem o pull request revisado obrigatoriamente por integrante de outra dupla, controle que substitui o par. As sessões de cada sprint, tiradas do histórico de commits, são apresentadas na Sprint Review.
   - *Integração Contínua (CI):* Automação de compilação, checagem de estilo e execução de suítes de testes a cada pull request.
   - *Testes de Aceitação:* Cenários verificáveis estruturados a partir dos critérios de aceitação das histórias de usuário.
   - *Propriedade Coletiva e Refatoração:* Todo membro da equipe é responsável pela qualidade geral da base de código, simplificando o design sempre que oportuno.
@@ -103,7 +104,7 @@ A tabela a seguir compara o **OpenUP** (processo ágil baseado em arquitetura do
 | **Práticas Técnicas de Engenharia** | Prescreve orientações conceituais de análise e projeto orientados a objetos e casos de uso, sem detalhar rotinas diárias de codificação em pares. | Práticas prescritivas e contínuas de engenharia integradas ao dia a dia (Pair Programming, CI, TDD e Testes de Aceitação). |
 | **Documentação de Requisitos** | Estruturada e formal por fase, centrada em Casos de Uso, Modelo de Dados e Arquitetura Executável. | Viva, enxuta e rastreável: Histórias de Usuário, critérios de aceitação objetivos e protótipos de baixa fidelidade. |
 | **Colaboração com o Cliente** | Contínua ao longo de todas as iterações, complementada por marcos formais de avaliação de objetivos no encerramento de cada fase. | Contínua e direta ao final de cada sprint quinzenal, mediada pela demonstração de software em funcionamento. |
-| **Curva de Aprendizado da Equipe** | Moderada a alta: requer disciplina prévia em modelagem de casos de uso e gestão formal das disciplinas do processo unificado. | Baixa a moderada: alinhada à dinâmica acadêmica quinzenal e acelerada pelo pareamento técnico diário. |
+| **Curva de Aprendizado da Equipe** | Moderada a alta: requer disciplina prévia em modelagem de casos de uso e gestão formal das disciplinas do processo unificado. | Baixa a moderada: alinhada à dinâmica acadêmica quinzenal e acelerada pelo trabalho em duplas. |
 | **Aplicação no Contexto do Projeto** | Demanda governança disciplinada e dedicação inicial substancial à modelagem de casos de uso e validação arquitetural na Elaboração, exigindo maior esforço formal para um time de cinco estudantes. | Adequa-se à dinâmica de iterações curtas com prazos acadêmicos fixos, nivelando o conhecimento técnico da equipe pelas práticas prescritivas do XP. |
 
 > **Síntese da Comparação:** Embora o OpenUP seja um processo ágil disciplinado e robusto para governança baseada em arquitetura e casos de uso, sua adoção demandaria um esforço prévio de modelagem e ritos formais que não se ajustam com tanta fluidez à capacidade produtiva de uma equipe de cinco estudantes em ambiente acadêmico. O processo adaptado ScrumXP provê a agilidade gerencial necessária com menor sobrecarga documental inicial, assegurando rigor técnico por meio das práticas prescritivas do XP.

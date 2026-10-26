@@ -13,6 +13,7 @@
 | 07/10/2026 | 1.8 | Especificação dos papéis de Engenharia de Requisitos de cada integrante na composição da equipe e remoção de menções operacionais genéricas | Daniel Batista e Maria Eduarda Marques |
 | 19/10/2026 | 1.9 | Composição da equipe atualizada para cinco integrantes | Maria Eduarda Marques |
 | 21/10/2026 | 1.10 | Daily presencial às terças e quintas e escrita nos demais dias úteis | Vinicius Vieira |
+| 26/10/2026 | 1.11 | Interações de 21/09, 28/09 e 08/10 com o Instituto; alinhamento técnico de 15/10 registrado como encontro que não ocorreu; trabalho em duplas com revisão por outra dupla (7.1); validação da interface pela demonstração em homologação (7.3) | Vinicius Vieira |
 
 ## 7.1 Composição da Equipe
 
@@ -48,7 +49,7 @@ A nomenclatura das seis atividades segue o livro-texto da disciplina (MARSICANO,
 
 **O papel do cliente.** O Instituto No Setor **valida as entregas**, **indica o valor dos itens e participa da ordenação do Product Backlog** e é a fonte primária dos requisitos. O Product Owner interno **propõe** a ordenação a partir desse valor e a mantém atualizada entre os encontros; a proposta vale até o Instituto confirmá-la, e uma entrega avaliada apenas por essa via fica registrada como *pendente de validação externa*. Quem valida cada conjunto de funcionalidades está na seção 7.3.1.
 
-O Product Owner interno é a mitigação para duas limitações conhecidas: a dependência da disponibilidade do Product Owner, no Scrum, e a dependência do cliente presente, no XP. O Instituto No Setor não dispõe de equipe de tecnologia e atua com agenda reduzida, e por isso não funcionaria como cliente presente no sentido literal. As responsabilidades técnicas no desenvolvimento serão distribuídas a partir da matriz de competências, com programação em pares desde a Sprint 1.
+O Product Owner interno é a mitigação para duas limitações conhecidas: a dependência da disponibilidade do Product Owner, no Scrum, e a dependência do cliente presente, no XP. O Instituto No Setor não dispõe de equipe de tecnologia e atua com agenda reduzida, e por isso não funcionaria como cliente presente no sentido literal. As responsabilidades técnicas no desenvolvimento serão distribuídas a partir da matriz de competências, com o trabalho em duplas por épico e revisão de cada pull request por outra dupla; as sessões em dupla ficam registradas na coautoria dos commits.
 
 ## 7.2 Comunicação
 
@@ -79,14 +80,17 @@ As interlocutoras atuais são **Maria Clara e Maria Eduarda, do núcleo pedagóg
 | 02/09/2026 | Mensagem | Concordância **preliminar** com a proposta de solução — ver §7.3.2 |
 | 08/09/2026 | Presencial, na sede | Elicitação aprofundada, com observação direta e análise de documentos |
 | 15/09/2026 | Videoconferência | Levantamento com a área de projetos, a coordenação administrativo-financeira e o núcleo pedagógico: rotina administrativa, matriz de aquisição, separação de acesso por área e necessidades de painel e de comprovação em campo |
+| [21/09/2026](../gestao/atas/2026-09-21-reuniao-presencial-instituto.md) | Presencial, na sede | Levantamento de processos com a coordenação de execução, a presidência e o núcleo pedagógico: fluxo de compras, contratações e prestação de contas, Matriz de Aquisição e planilhas de projetos em andamento |
+| [28/09/2026](../gestao/atas/2026-09-28-validacao-mvp-instituto.md) | Videoconferência | Validação das histórias e priorização do MVP com o núcleo pedagógico (diretora pedagógica e Maria Eduarda): parcerias e metas como base do MVP, inscrições no MVP, evidências no incremento 2 — ver seção 10.2.8 |
+| [08/10/2026](../gestao/atas/2026-10-08-validacao-mvp-instituto.md) | Videoconferência | Validação do recorte do MVP com Maria Eduarda, do núcleo pedagógico: parcerias e metas, aditivos e auditoria, inscrições, direitos do titular e prestação de contas; evidências no incremento 2 |
 
-A tabela acima registra apenas encontros realizados: intenção e convite não entram nela. A cadência acordada é **semanal**. Quando um encontro não ocorre por incompatibilidade com o calendário do Instituto, a ausência é registrada com o motivo, em vez de a cadência ser reescrita: é assim que a tabela acima permanece fiel ao que aconteceu.
+A tabela acima registra apenas encontros realizados: intenção e convite não entram nela. O alinhamento técnico sobre a estrutura do banco de dados, combinado na reunião de 08/10 para 15/10/2026, não ocorreu. A cadência acordada é **semanal**. Quando um encontro não ocorre por incompatibilidade com o calendário do Instituto, a ausência é registrada com o motivo, em vez de a cadência ser reescrita: é assim que a tabela acima permanece fiel ao que aconteceu.
 
 ## 7.3 Processo de Validação
 
 A validação dos requisitos e da solução é um processo contínuo e centrado no cliente, estruturado em torno das interações e conversas de validação com as representantes do Instituto No Setor:
 
-1. **Validação com prototipação leve:** nas fases iniciais e a cada novo fluxo concebido, telas e navegações preliminares são apresentadas às representantes para validar a adequação da interface e do fluxo operacional antes do desenvolvimento completo.
+1. **Validação da interface em homologação:** a cada fluxo construído, as telas são demonstradas às representantes no ambiente de homologação, que funciona como protótipo evolutivo; os esboços de tela orientam a dupla antes da construção e não substituem essa demonstração.
 2. **Demonstração do MVP funcional mínimo:** com o avanço do desenvolvimento, as iterações e incrementos são demonstrados e exercitados com cenários reais das oficinas e eventos do Instituto, confirmando se o comportamento construído resolve de fato os gargalos de registro e prestação de contas.
 3. **Identificação conjunta de ambiguidades, inconsistências e omissões:** a equipe e as interlocutoras analisam ativamente cada funcionalidade demonstrada para identificar lacunas de regras de negócio, comportamentos inesperados ou fluxos ausentes.
 4. **Registro em ata e refinamento contínuo:** os apontamentos e acordos estabelecidos nas conversas de validação são formalmente sintetizados em ata de reunião, alimentando o refinamento imediato do Product Backlog e o planejamento das sprints seguintes.
