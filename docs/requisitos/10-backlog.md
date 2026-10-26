@@ -10,7 +10,7 @@
 | 05/10/2026 | 2.1 | Inclusão de âncoras HTML unívocas para as histórias de usuário (HU-01 a HU-15) para rastreabilidade direta a partir do catálogo | Rodrigo Henrique |
 | 19/10/2026 | 2.2 | HU-03: modalidade escolhida entre as cadastradas pelo Instituto, como no RF09 e na validação de 28/09; requisitos não funcionais do cadastro da atividade (RNF02, RNF04, RNF15, RNF16) | Maria Eduarda Marques |
 | 20/10/2026 | 2.3 | Histórias derivadas dos requisitos funcionais por regras explícitas: quinze histórias passam a vinte e cinco, cada requisito com uma única história; critérios de aceitação ampliados para cobrir o texto dos requisitos; administração de contas (RF40), cadastro de modalidades (RF41) e configuração do formulário de inscrição (RF42); personas ligadas aos perfis; correspondência entre as histórias validadas e as derivadas; avaliação técnica de RF40 a RF42; requisitos não funcionais de todo o produto na Definition of Done | Equipe CyberSetor |
-| 26/10/2026 | 2.4 | Resultado alcançado da meta no relatório (CA-05a.1, CA-05a.6; RF43 no MVP); parâmetro planejado na condição de rascunho da meta quantitativa (CA-01b.3); período da meta dentro da execução do projeto (CA-01b.4); justificativa para reabrir meta concluída (CA-02a.3); dados da atividade (CA-03a.3); comparativo das metas repactuadas (RF44) e orientação de enquadramento (RF45) como requisitos próprios; controle de acesso por perfil entre os requisitos de todo o produto, fora das linhas das histórias (RNF04); requisitos não funcionais das histórias conforme a matriz 8.4.2; portabilidade dos dados e eficiência do registro de presença entre os evolutivos (RNF19, RNF20) | Vinicius Vieira |
+| 26/10/2026 | 2.4 | Resultado alcançado da meta no relatório (CA-05a.1, CA-05a.6; RF43 no MVP); parâmetro planejado na condição de rascunho da meta quantitativa (CA-01b.3); período da meta dentro da execução do projeto (CA-01b.4); justificativa para reabrir meta concluída (CA-02a.3); dados da atividade (CA-03a.3); comparativo das metas repactuadas (RF44) e orientação de enquadramento (RF45) como requisitos próprios; controle de acesso por perfil entre os requisitos de todo o produto, fora das linhas das histórias (RNF04); gargalos atendidos pelo MVP e pelos incrementos (10.2.6); requisitos não funcionais das histórias conforme a matriz 8.4.2; portabilidade dos dados e eficiência do registro de presença entre os evolutivos (RNF19, RNF20) | Vinicius Vieira |
 
 ---
 
@@ -51,7 +51,7 @@ Uma história dividida mantém o número e recebe uma letra (HU-01a, HU-01b). Ca
 | Pessoas | **HU-15a** Corrigir dados a pedido do titular | [RF26](8-requisitos.md#rf26) | HU-07a |
 | Pessoas | **HU-15b** Excluir ou anonimizar dados a pedido do titular | [RF27](8-requisitos.md#rf27) | HU-07a |
 | Pessoas | **HU-16** Administrar contas e perfis da equipe do Instituto | [RF40](8-requisitos.md#rf40) | — |
-| Relatório | **HU-05a** Gerar relatório de execução com justificativa obrigatória | [RF35](8-requisitos.md#rf35), [RF36](8-requisitos.md#rf36), [RF39](8-requisitos.md#rf39), [RF43](8-requisitos.md#rf43) | HU-02a, HU-14; HU-04a para o índice de evidências |
+| Relatório | **HU-05a** Gerar relatório de execução com justificativa obrigatória | [RF35](8-requisitos.md#rf35), [RF36](8-requisitos.md#rf36), [RF39](8-requisitos.md#rf39), [RF43](8-requisitos.md#rf43) | HU-02a; HU-14 quando houver meta repactuada; HU-04a para o índice de evidências |
 | Relatório | **HU-05b** Baixar o relatório em PDF diagramado | [RF37](8-requisitos.md#rf37) | HU-05a; HU-04a para as miniaturas |
 | Relatório | **HU-13** Exportar dados do projeto em planilha aberta | [RF38](8-requisitos.md#rf38) | HU-02a; HU-09a para as presenças |
 
@@ -358,7 +358,7 @@ Personas das histórias e perfis da [seção 8.5.1](8-requisitos.md#851-perfis-d
     - CA-05a.3 Retificação feita após a finalização gera nova versão do relatório e registro na trilha de auditoria, preservando a versão anterior.
     - CA-05a.4 Havendo rascunho de evidência pendente no período, a geração do relatório final é bloqueada, com a indicação do que falta.
     - CA-05a.5 A emissão de cada relatório e cada justificativa registrada ficam na trilha de auditoria, com autor, data e hora.
-    - CA-05a.6 O usuário autorizado registra o resultado alcançado de cada meta com a data de referência: descrição, classificação do alcance (cumprida, parcialmente cumprida ou não cumprida) e, na meta quantitativa, o valor alcançado na unidade do parâmetro planejado; o percentual de cumprimento é calculado, nunca digitado.
+    - CA-05a.6 O usuário autorizado registra o resultado alcançado de cada meta com a data de referência: descrição, classificação do alcance (cumprida, parcialmente cumprida ou não cumprida) e, na meta quantitativa, o valor alcançado na unidade do parâmetro planejado; na meta quantitativa, o percentual de cumprimento e a classificação são calculados, nunca digitados.
 
     **Requisitos não funcionais e regras de negócio:** RNF02, RNF07, RNF08, RNF13; RN-11, RN-13, RN-14
 
@@ -605,6 +605,17 @@ O MVP é o primeiro recorte utilizável pelo Instituto: cadastrar o instrumento 
 | Incremento 3 | Presença em campo: HU-09a, HU-10 | RF16, RF19 |
 | Posterior | Presença em campo: HU-09b, HU-12 · Pessoas: HU-06 · Requisito e meta: HU-11 | RF17, RF18, RF20, RF21, RF28 a RF30 |
 
+**Gargalos atendidos pelo MVP.** Os gargalos do processo atual (seção 8.4.3) ficam assim no primeiro recorte:
+
+| Gargalo | No MVP | Nos incrementos |
+| :---: | :--- | :--- |
+| **G01** | Todos os requisitos (RF01 a RF04) | — |
+| **G02** | RF05 a RF08; o controle interno de chamados não tem RF | — |
+| **G03** | Cadastro de atividades e inscrições (RF09, RF11 a RF15, RF41) | Comprovações e evidências (RF10, RF32 a RF34, RF45) no incremento 2; presença on-line e lançamento fora do prazo (RF16, RF19) no incremento 3; operação sem conexão e carga horária (RF17, RF18, RF20) depois |
+| **G04** | Inscrição e direitos do titular (RF11, RF22 a RF27, RF42) | Ficha da pessoa (RF21) depois |
+| **G05** | Versionamento do plano e comparativo das metas repactuadas (RF31, RF44) | Progresso calculado, apuração e alerta de risco (RF28 a RF30) depois; o painel da Presidência não tem RF |
+| **G06** | Relatório com resultado alcançado e justificativas, PDF e planilha (RF35 a RF39, RF43) | Índice de evidências no relatório (RF36) e miniaturas no PDF (RF37) no incremento 2 |
+
 **Justificativas do recorte.**
 
 - **Fluxo mínimo completo.** O MVP fecha dois ciclos: do cadastro do instrumento à emissão do relatório, e da criação da atividade à lista de inscritos, com os controles de dados pessoais que a inscrição exige.
@@ -617,7 +628,7 @@ O MVP é o primeiro recorte utilizável pelo Instituto: cadastrar o instrumento 
 - **RF37 (relatório em PDF), valor 4 e esforço 3.** Entra por proposta da equipe confirmada pelo Instituto, em forma reduzida: no MVP o PDF reproduz o relatório do RF36 sem as miniaturas de evidências, que chegam com o incremento 2.
 - **RF36 e RF43 (relatório de execução e resultado alcançado).** No MVP o relatório traz metas, indicadores pactuados, o resultado alcançado registrado pelo usuário autorizado (RF43), com o percentual calculado na meta quantitativa, e as justificativas; o índice de comprovações chega com a evidência (incremento 2) e o cálculo automático do alcançado, com o RF28 (HU-11). Sem o registro do resultado, o relatório só reorganizaria dados consolidados fora do sistema.
 - **Relatório e planilha com os dados existentes (HU-05a, HU-05b e HU-13).** No MVP, o relatório, o PDF e a planilha saem com metas, resultado alcançado e justificativas; as evidências e as presenças passam a compor esses documentos quando a HU-04a e a HU-09a são entregues, cada uma com o critério que o verifica.
-- **Evidências no incremento 2.** O Instituto ordenou as evidências logo depois do MVP; o esforço delas (RF32 e RF34 com esforço 3) não cabe na primeira entrega.
+- **Evidências no incremento 2.** O Instituto ordenou as evidências logo depois do MVP; o esforço delas (RF32 e RF34 com esforço 3) não cabe na primeira entrega. A orientação de enquadramento (RF45) vai junto, porque só existe na tela de registro da foto (RF32).
 - **HU-10 (lançamento fora do prazo).** Foi apresentada e validada junto com evidências, mas corrige presenças já registradas; por isso acompanha o registro de presença no incremento 3.
 - **RF16 (registro on-line de presença), valor 2.** Sobe para o incremento 3 por dependência: a HU-10, de valor 4, corrige presenças registradas por ele. O registro sem conexão (RF17) e a sincronização (RF18) ficam para depois.
 - **HU-11 (progresso e risco), valor 3.** Fica para o fim porque o cálculo (RF28) depende de presenças e evidências registradas; antes disso o painel mostraria números enganosos. O RF29, candidato pela matriz, só tem efeito junto com o RF28.

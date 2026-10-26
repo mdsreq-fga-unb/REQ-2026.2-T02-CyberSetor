@@ -40,7 +40,7 @@ CP1 projetos e metas → CP2 atividades → CP5 pessoas → CP3 inscrição · C
 ```
 
 - **Pessoas junto da inscrição.** Inscrição, presença e contagem de participantes únicos dependem da base de pessoas, do aviso de cadastro repetido e do registro de consentimento; por isso a CP5 entra na Sprint 4 com a CP3, e a presença em campo (CP4) vem depois.
-- **Relatório em duas etapas.** No MVP, o relatório sai com metas, situação registrada e justificativas, sobre os dados do checkpoint de 29/10; as evidências entram na Sprint 5, e o progresso calculado (CP6) depende de presença e evidência registradas.
+- **Relatório em duas etapas.** No MVP, o relatório sai com metas, resultado alcançado e justificativas, sobre os dados do checkpoint de 29/10; as evidências entram na Sprint 5, e o progresso calculado (CP6) depende de presença e evidência registradas.
 - **Condições transversais, não acabamento.** Autenticação e perfis, controle de acesso por área, auditoria, cópia de segurança e restauração acompanham cada incremento desde a Sprint 3; não ficam para a Sprint 6.
 
 | Sprint | Características cobertas | Condição de saída |
