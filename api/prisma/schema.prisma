@@ -182,11 +182,43 @@ model Atividade {
   modalidade  Modalidade      @relation(fields: [modalidadeId], references: [id], onDelete: Restrict)
   responsavel Usuario         @relation(fields: [responsavelId], references: [id], onDelete: Restrict)
   metas       AtividadeMeta[]
+  inscricao   ConfiguracaoInscricao?
 
   @@index([projetoId])
   @@index([modalidadeId])
   @@index([responsavelId])
   @@map("atividade")
+}
+
+/// Campos que o formulário de inscrição pode pedir além dos mínimos (seção 8.5.4).
+/// Lista fechada: dado pessoal sensível não tem como entrar (RNF05).
+enum CampoInscricao {
+  EMAIL
+  CPF
+  BAIRRO_REGIAO
+  ESCOLARIDADE
+}
+
+/// Campo que identifica cadastro repetido (RF22, RF42).
+enum CampoDuplicidade {
+  EMAIL
+  CPF
+}
+
+model ConfiguracaoInscricao {
+  atividadeId      String           @id @map("atividade_id") @db.Uuid
+  versao           Int              @default(1)
+  aberta           Boolean          @default(true)
+  vagas            Int
+  camposAdicionais CampoInscricao[] @map("campos_adicionais")
+  campoDuplicidade CampoDuplicidade @map("campo_duplicidade")
+  codigoPublico    String           @unique @map("codigo_publico")
+  criadoEm         DateTime         @default(now()) @map("criado_em") @db.Timestamptz(3)
+  atualizadoEm     DateTime         @updatedAt @map("atualizado_em") @db.Timestamptz(3)
+
+  atividade Atividade @relation(fields: [atividadeId], references: [id], onDelete: Restrict)
+
+  @@map("configuracao_inscricao")
 }
 
 model AtividadeMeta {
