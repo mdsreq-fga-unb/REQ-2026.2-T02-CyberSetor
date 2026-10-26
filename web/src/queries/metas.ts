@@ -54,10 +54,18 @@ export function useEligibleOwners(enabled: boolean) {
 export function useChangeSituation(projectId: string) {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: ({ goal, situacao }: { goal: Goal; situacao: GoalSituation }) =>
+    mutationFn: ({
+      goal,
+      situacao,
+      justificativa,
+    }: {
+      goal: Goal;
+      situacao: GoalSituation;
+      justificativa?: string;
+    }) =>
       authorizedRequest<Goal>(`/goals/${encodeURIComponent(goal.id)}/situation`, {
         method: 'PATCH',
-        body: { versao: goal.versao, situacao },
+        body: { versao: goal.versao, situacao, justificativa },
       }),
     onSettled: () => queryClient.invalidateQueries({ queryKey: goalsKey(projectId) }),
   });

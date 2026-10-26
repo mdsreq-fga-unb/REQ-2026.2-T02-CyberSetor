@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, type FormEvent } from 'react';
+import { useRef, useState, type FormEvent } from 'react';
 import { Button } from '@/components/ui/button';
 import {
   Dialog,
@@ -10,8 +10,9 @@ import {
   DialogHeader,
   DialogTitle,
 } from '@/components/ui/dialog';
-import { Field, FieldGroup, FieldLabel } from '@/components/ui/field';
+import { Field, FieldDescription, FieldError, FieldGroup, FieldLabel } from '@/components/ui/field';
 import { NativeSelect, NativeSelectOption } from '@/components/ui/native-select';
+import { Textarea } from '@/components/ui/textarea';
 import { ApiError } from '@/lib/api';
 import { useChangeSituation } from '@/queries/metas';
 import type { Goal, GoalSituation } from '@/types/metas';
@@ -41,12 +42,23 @@ export function GoalSituationDialog({
   const change = useChangeSituation(projectId);
   const [chosen, setChosen] = useState<GoalSituation | null>(null);
   const [failure, setFailure] = useState<string | null>(null);
+  const [justification, setJustification] = useState('');
+  const [justificationError, setJustificationError] = useState<string | null>(null);
+  const justificationRef = useRef<HTMLTextAreaElement>(null);
   const situacao = chosen ?? goal?.situacao ?? 'PENDENTE';
+  const reopening = goal?.situacao === 'CONCLUIDA' && situacao !== 'CONCLUIDA';
 
   function close() {
     setChosen(null);
     setFailure(null);
+    setJustification('');
+    setJustificationError(null);
     onClose();
+  }
+
+  function missingJustification(message: string) {
+    setJustificationError(message);
+    justificationRef.current?.focus();
   }
 
   async function onSubmit(event: FormEvent<HTMLFormElement>) {
@@ -54,8 +66,13 @@ export function GoalSituationDialog({
     if (!goal) return;
     if (situacao === goal.situacao) return close();
     setFailure(null);
+    setJustificationError(null);
+    const justificativa = reopening ? justification.trim() : undefined;
+    if (reopening && !justificativa) {
+      return missingJustification('Informe a justificativa para reabrir a meta.');
+    }
     try {
-      const updated = await change.mutateAsync({ goal, situacao });
+      const updated = await change.mutateAsync({ goal, situacao, justificativa });
       close();
       onChanged(updated);
     } catch (error) {
@@ -63,6 +80,9 @@ export function GoalSituationDialog({
         close();
         onConflict(goal);
         return;
+      }
+      if (error instanceof ApiError && error.code === 'JUSTIFICATION_REQUIRED') {
+        return missingJustification(error.message);
       }
       setFailure(failureOf(error));
     }
@@ -91,6 +111,31 @@ export function GoalSituationDialog({
                 ))}
               </NativeSelect>
             </Field>
+            {reopening && (
+              <Field data-invalid={!!justificationError}>
+                <FieldLabel htmlFor="justificativa">Justificativa</FieldLabel>
+                <Textarea
+                  ref={justificationRef}
+                  id="justificativa"
+                  value={justification}
+                  maxLength={1000}
+                  aria-invalid={!!justificationError}
+                  aria-describedby={
+                    justificationError
+                      ? 'justificativa-ajuda justificativa-erro'
+                      : 'justificativa-ajuda'
+                  }
+                  onChange={(event) => setJustification(event.target.value)}
+                />
+                <FieldDescription id="justificativa-ajuda">
+                  A meta está concluída: para reabrir, diga o motivo. A justificativa fica
+                  registrada e visível às demais áreas.
+                </FieldDescription>
+                {justificationError && (
+                  <FieldError id="justificativa-erro" errors={[{ message: justificationError }]} />
+                )}
+              </Field>
+            )}
             {failure && (
               <p role="alert" className="text-sm text-destructive">
                 {failure}

@@ -544,6 +544,74 @@ describe('metas do projeto', () => {
     });
   });
 
+  it('reabrir meta concluida pede a justificativa e envia junto', async () => {
+    const concluida = { ...COMPLETA, situacao: 'CONCLUIDA' as const, alertaPrazo: null };
+    const calls = await signedInAs(
+      'PRESIDENCIA_GESTAO',
+      page([concluida], {
+        [`PATCH /goals/${COMPLETA.id}/situation`]: () => ({
+          status: 200,
+          body: { ...concluida, versao: 3, situacao: 'EM_ANDAMENTO' },
+        }),
+      }),
+    );
+    renderView();
+
+    fireEvent.click(await screen.findByRole('button', { name: 'Ações da meta 1' }));
+    fireEvent.click(await screen.findByRole('menuitem', { name: 'Mudar situação' }));
+    expect(await screen.findByLabelText('Situação')).toHaveValue('CONCLUIDA');
+    expect(screen.queryByLabelText('Justificativa')).not.toBeInTheDocument();
+    fireEvent.change(screen.getByLabelText('Situação'), { target: { value: 'EM_ANDAMENTO' } });
+    fireEvent.change(screen.getByLabelText('Justificativa'), { target: { value: '   ' } });
+    fireEvent.click(screen.getByRole('button', { name: 'Salvar situação' }));
+
+    expect(
+      await screen.findByText('Informe a justificativa para reabrir a meta.'),
+    ).toBeInTheDocument();
+    expect(screen.getByLabelText('Justificativa')).toHaveFocus();
+    expect(calls.some((call) => call.key.endsWith('/situation'))).toBe(false);
+
+    fill('Justificativa', 'Oficina remarcada pela escola parceira.');
+    fireEvent.click(screen.getByRole('button', { name: 'Salvar situação' }));
+
+    expect(await screen.findByText('Meta 1: em andamento')).toBeInTheDocument();
+    expect(calls.find((call) => call.key.endsWith('/situation'))?.body).toEqual({
+      versao: 2,
+      situacao: 'EM_ANDAMENTO',
+      justificativa: 'Oficina remarcada pela escola parceira.',
+    });
+  });
+
+  it('recusa da justificativa pela API aparece no campo', async () => {
+    const concluida = { ...COMPLETA, situacao: 'CONCLUIDA' as const, alertaPrazo: null };
+    await signedInAs(
+      'PRESIDENCIA_GESTAO',
+      page([concluida], {
+        [`PATCH /goals/${COMPLETA.id}/situation`]: () => ({
+          status: 400,
+          body: {
+            code: 'JUSTIFICATION_REQUIRED',
+            message: 'Informe a justificativa para reabrir uma meta concluída.',
+          },
+        }),
+      }),
+    );
+    renderView();
+
+    fireEvent.click(await screen.findByRole('button', { name: 'Ações da meta 1' }));
+    fireEvent.click(await screen.findByRole('menuitem', { name: 'Mudar situação' }));
+    fireEvent.change(await screen.findByLabelText('Situação'), {
+      target: { value: 'PENDENTE' },
+    });
+    fill('Justificativa', 'Motivo');
+    fireEvent.click(screen.getByRole('button', { name: 'Salvar situação' }));
+
+    expect(
+      await screen.findByText('Informe a justificativa para reabrir uma meta concluída.'),
+    ).toBeInTheDocument();
+    expect(screen.getByLabelText('Justificativa')).toHaveAttribute('aria-invalid', 'true');
+  });
+
   it('responsavel de setor inativo nao preenche o setor executor', async () => {
     const setor = COMPLETA.setor!;
     await signedInAs(
