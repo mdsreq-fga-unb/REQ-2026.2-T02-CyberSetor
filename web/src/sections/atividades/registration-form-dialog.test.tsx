@@ -276,4 +276,28 @@ describe('RegistrationFormDialog', () => {
     const submit = screen.getByRole('button', { name: 'Salvar alterações' });
     expect(submit).toBeDisabled();
   });
+
+  it('exibe erro de validacao se o campo configurado como identificador de duplicidade for desmarcado', async () => {
+    await signedInAs('PRESIDENCIA_GESTAO', {
+      [`GET /activities/${ACTIVITY.id}/registration`]: () => ({
+        status: 200,
+        body: REGISTRATION_MOCK, // Duplicidade por CPF, campos CPF e EMAIL
+      }),
+    });
+
+    renderDialog();
+    expect(
+      await screen.findByRole('heading', { name: 'Editar formulário de inscrição' }),
+    ).toBeInTheDocument();
+
+    // Desmarca o checkbox CPF mantendo o radio CPF selecionado
+    const cpfCheckbox = screen.getByRole('checkbox', { name: /CPF/ });
+    fireEvent.click(cpfCheckbox);
+
+    expect(
+      await screen.findByText(
+        'O campo que identifica cadastro repetido precisa estar marcado entre os campos adicionais.',
+      ),
+    ).toBeInTheDocument();
+  });
 });

@@ -45,7 +45,7 @@ const registrationSchema = z
   .object({
     aberta: z.boolean(),
     vagas: z.coerce
-      .number()
+      .number({ message: 'Informe o número de vagas.' })
       .int('O número de vagas deve ser um número inteiro.')
       .min(1, 'Informe ao menos 1 vaga.')
       .max(MAX_VAGAS, `O limite máximo é de ${MAX_VAGAS.toLocaleString('pt-BR')} vagas.`),
@@ -110,7 +110,7 @@ export function RegistrationFormDialog({
 
   const [failure, setFailure] = useState<string | null>(null);
   const [currentRegistration, setCurrentRegistration] = useState<Registration | null>(null);
-  const initializedRef = useRef(false);
+  const lastActivityIdRef = useRef<string | null>(null);
 
   const existing = currentRegistration ?? registrationQuery.data ?? null;
   const isEditing = existing !== null;
@@ -122,16 +122,16 @@ export function RegistrationFormDialog({
 
   useEffect(() => {
     if (!open) {
-      initializedRef.current = false;
+      lastActivityIdRef.current = null;
       return;
     }
-    if (!initializedRef.current && registrationQuery.isSuccess) {
-      initializedRef.current = true;
+    if (lastActivityIdRef.current !== activityId && registrationQuery.isSuccess) {
+      lastActivityIdRef.current = activityId;
       setCurrentRegistration(null);
       setFailure(null);
       form.reset(valuesFromRegistration(registrationQuery.data));
     }
-  }, [open, registrationQuery.isSuccess, registrationQuery.data, form]);
+  }, [open, activityId, registrationQuery.isSuccess, registrationQuery.data, form]);
 
   function close() {
     setFailure(null);

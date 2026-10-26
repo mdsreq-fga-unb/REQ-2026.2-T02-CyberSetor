@@ -1,7 +1,7 @@
 'use client';
 
 import { CheckIcon, CopyIcon, DownloadIcon, ExternalLinkIcon, QrCodeIcon } from 'lucide-react';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import {
@@ -36,13 +36,22 @@ export function RegistrationShareDialog({
   const registration = initialRegistration ?? registrationQuery.data;
 
   const [copied, setCopied] = useState(false);
-  const [qrDataUrl, setQrDataUrl] = useState<string | null>(null);
+  const [generated, setGenerated] = useState<{ forUrl: string; dataUrl: string } | null>(null);
   const [qrError, setQrError] = useState(false);
+  const copyTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const fullUrl =
     typeof window !== 'undefined' && registration?.linkPublico
       ? `${window.location.origin}${registration.linkPublico}`
       : (registration?.linkPublico ?? '');
+
+  const qrDataUrl = generated?.forUrl === fullUrl ? generated.dataUrl : null;
+
+  useEffect(() => {
+    return () => {
+      if (copyTimeoutRef.current) clearTimeout(copyTimeoutRef.current);
+    };
+  }, []);
 
   useEffect(() => {
     if (!open || !fullUrl) return;
@@ -50,14 +59,14 @@ export function RegistrationShareDialog({
     generateQrCodeDataUrl(fullUrl)
       .then((url) => {
         if (!cancelled) {
-          setQrDataUrl(url);
+          setGenerated({ forUrl: fullUrl, dataUrl: url });
           setQrError(false);
         }
       })
       .catch(() => {
         if (!cancelled) {
           setQrError(true);
-          setQrDataUrl(null);
+          setGenerated(null);
         }
       });
     return () => {
@@ -65,14 +74,34 @@ export function RegistrationShareDialog({
     };
   }, [open, fullUrl]);
 
+  function copyInputFallback() {
+    const input = document.getElementById('link-publico-input') as HTMLInputElement | null;
+    if (input) {
+      input.select();
+      try {
+        document.execCommand('copy');
+        setCopied(true);
+        if (copyTimeoutRef.current) clearTimeout(copyTimeoutRef.current);
+        copyTimeoutRef.current = setTimeout(() => setCopied(false), 2500);
+      } catch {
+        // Fallback silencioso
+      }
+    }
+  }
+
   async function handleCopy() {
     if (!fullUrl) return;
     try {
-      await navigator.clipboard.writeText(fullUrl);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 2500);
+      if (typeof navigator !== 'undefined' && navigator.clipboard?.writeText) {
+        await navigator.clipboard.writeText(fullUrl);
+        setCopied(true);
+        if (copyTimeoutRef.current) clearTimeout(copyTimeoutRef.current);
+        copyTimeoutRef.current = setTimeout(() => setCopied(false), 2500);
+      } else {
+        copyInputFallback();
+      }
     } catch {
-      // Fallback silencioso se permissão negada
+      copyInputFallback();
     }
   }
 
@@ -88,6 +117,7 @@ export function RegistrationShareDialog({
   }
 
   function handleClose() {
+    if (copyTimeoutRef.current) clearTimeout(copyTimeoutRef.current);
     setCopied(false);
     onClose();
   }

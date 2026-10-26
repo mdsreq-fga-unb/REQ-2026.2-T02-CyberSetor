@@ -145,6 +145,34 @@ describe('RegistrationShareDialog', () => {
     expect(screen.getByText('Encerrada')).toBeInTheDocument();
   });
 
+  it('dispara o download do QR Code ao clicar em Baixar QR Code PNG', async () => {
+    await signedInAs('PRESIDENCIA_GESTAO', {
+      [`GET /activities/${ACTIVITY.id}/registration`]: () => ({
+        status: 200,
+        body: REGISTRATION_OPEN,
+      }),
+    });
+
+    const clickSpy = vi.fn();
+    const originalCreate = document.createElement.bind(document);
+    vi.spyOn(document, 'createElement').mockImplementation((tag) => {
+      const el = originalCreate(tag);
+      if (tag === 'a') el.click = clickSpy;
+      return el;
+    });
+
+    renderShareDialog();
+
+    expect(await screen.findByAltText(/QR Code para inscrição/)).toBeInTheDocument();
+
+    const downloadBtn = screen.getByRole('button', { name: /Baixar QR Code PNG/ });
+    expect(downloadBtn).not.toBeDisabled();
+    fireEvent.click(downloadBtn);
+
+    expect(clickSpy).toHaveBeenCalledTimes(1);
+    vi.restoreAllMocks();
+  });
+
   it('informa quando a atividade ainda nao tem inscricao aberta', async () => {
     await signedInAs('PRESIDENCIA_GESTAO', {
       [`GET /activities/${ACTIVITY.id}/registration`]: () => ({
