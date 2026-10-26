@@ -268,28 +268,30 @@ export function RegistrationFormDialog({
                 </div>
               )}
 
-              {/* Situação da inscrição (switch/checkbox de abertura) */}
-              <div className="rounded-lg border border-border p-4">
-                <label className="flex min-h-12 cursor-pointer items-center justify-between gap-4">
-                  <div className="flex flex-col">
-                    <span className="font-medium">Situação da inscrição</span>
-                    <span className="text-sm text-muted-foreground">
-                      {abertaValue
-                        ? 'Formulário público aceitando novas inscrições'
-                        : 'Inscrições encerradas (formulário não aceita novos envios)'}
-                    </span>
-                  </div>
-                  <input
-                    type="checkbox"
-                    role="switch"
-                    aria-checked={abertaValue}
-                    checked={abertaValue}
-                    disabled={!instrumentAtivo}
-                    onChange={(e) => form.setValue('aberta', e.target.checked)}
-                    className="size-6 accent-primary"
-                  />
-                </label>
-              </div>
+              {/* Só na edição: a abertura já cria a inscrição aberta */}
+              {isEditing && (
+                <div className="rounded-lg border border-border p-4">
+                  <label className="flex min-h-12 cursor-pointer items-center justify-between gap-4">
+                    <div className="flex flex-col">
+                      <span className="font-medium">Situação da inscrição</span>
+                      <span className="text-sm text-muted-foreground">
+                        {abertaValue
+                          ? 'Formulário público aceitando novas inscrições'
+                          : 'Inscrições encerradas (formulário não aceita novos envios)'}
+                      </span>
+                    </div>
+                    <input
+                      type="checkbox"
+                      role="switch"
+                      aria-checked={abertaValue}
+                      checked={abertaValue}
+                      disabled={!instrumentAtivo}
+                      onChange={(e) => form.setValue('aberta', e.target.checked)}
+                      className="size-6 accent-primary"
+                    />
+                  </label>
+                </div>
+              )}
 
               {/* Vagas */}
               <FormField

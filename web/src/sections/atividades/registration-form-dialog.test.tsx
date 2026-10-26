@@ -120,6 +120,7 @@ describe('RegistrationFormDialog', () => {
     ).toBeInTheDocument();
     const submit = await screen.findByRole('button', { name: 'Abrir inscrição' });
     expect(await screen.findByText(/Proteção de dados/)).toBeInTheDocument();
+    expect(screen.queryByRole('switch')).not.toBeInTheDocument();
     fireEvent.click(submit);
 
     await waitFor(() => expect(onSaved).toHaveBeenCalledTimes(1));
@@ -152,6 +153,7 @@ describe('RegistrationFormDialog', () => {
       await screen.findByRole('heading', { name: 'Editar formulário de inscrição' }),
     ).toBeInTheDocument();
     const submit = await screen.findByRole('button', { name: 'Salvar alterações' });
+    expect(screen.getByRole('switch', { name: /Situação da inscrição/ })).toBeChecked();
 
     const vagasInput = screen.getByLabelText(/Número de vagas/);
     fireEvent.change(vagasInput, { target: { value: '45' } });
