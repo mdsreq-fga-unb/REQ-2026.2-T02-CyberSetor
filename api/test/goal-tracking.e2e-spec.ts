@@ -342,6 +342,44 @@ describe('Responsável, setor, situação e prazo da meta (e2e)', () => {
     }).expect(400);
   });
 
+  it('reabrir meta concluida exige justificativa, que fica na trilha', async () => {
+    const meta = await goal();
+    await situation(tokens[Perfil.PRESIDENCIA_GESTAO], meta.id, {
+      versao: 1,
+      situacao: 'CONCLUIDA',
+    }).expect(200);
+
+    for (const justificativa of [undefined, '   ']) {
+      const recusa = await situation(tokens[Perfil.PRESIDENCIA_GESTAO], meta.id, {
+        versao: 2,
+        situacao: 'EM_ANDAMENTO',
+        justificativa,
+      }).expect(400);
+      expect((recusa.body as ErrorBody).code).toBe('JUSTIFICATION_REQUIRED');
+    }
+    expect((await prisma.meta.findUniqueOrThrow({ where: { id: meta.id } })).situacao).toBe(
+      'CONCLUIDA',
+    );
+
+    const res = await situation(tokens[Perfil.PRESIDENCIA_GESTAO], meta.id, {
+      versao: 2,
+      situacao: 'EM_ANDAMENTO',
+      justificativa: ' Oficina remarcada pela escola parceira. ',
+    }).expect(200);
+    expect(res.body).toMatchObject({ versao: 3, situacao: 'EM_ANDAMENTO' });
+    const trilha = await prisma.trilhaAuditoria.findMany({
+      where: { entidadeId: meta.id, acao: 'GOAL_UPDATED' },
+      orderBy: { criadoEm: 'asc' },
+    });
+    expect(trilha.at(-1)).toMatchObject({
+      antes: { situacao: 'CONCLUIDA' },
+      depois: {
+        situacao: 'EM_ANDAMENTO',
+        justificativa: 'Oficina remarcada pela escola parceira.',
+      },
+    });
+  });
+
   it('duas mudancas de situacao simultaneas da mesma versao: uma grava, a outra recebe 409', async () => {
     const meta = await goal();
 

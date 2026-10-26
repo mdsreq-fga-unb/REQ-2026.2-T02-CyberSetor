@@ -145,6 +145,16 @@ export class ChangeSituationDto {
   @ApiProperty({ enum: SituacaoMeta })
   @IsEnum(SituacaoMeta)
   situacao!: SituacaoMeta;
+
+  @ApiPropertyOptional({
+    description: 'Obrigatória para reabrir meta concluída (RN-13); fica na trilha',
+    example: 'Oficina remarcada pela escola parceira; a meta volta a ser acompanhada.',
+  })
+  @IsOptional()
+  @Transform(trimString)
+  @IsString()
+  @MaxLength(1000)
+  justificativa?: string;
 }
 
 export class GoalOwnerResponse {

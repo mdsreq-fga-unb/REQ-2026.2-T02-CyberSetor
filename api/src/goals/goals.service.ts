@@ -8,7 +8,7 @@ import {
 import type { Actor } from '../accounts/accounts.service.js';
 import { AuditTrailService } from '../audit/audit-trail.service.js';
 import type { Prisma } from '../generated/prisma/client.js';
-import { AutorTipo, OrigemMeta, Perfil } from '../generated/prisma/enums.js';
+import { AutorTipo, OrigemMeta, Perfil, SituacaoMeta } from '../generated/prisma/enums.js';
 import { toDate } from '../instruments/instruments.service.js';
 import { PrismaService } from '../prisma/prisma.service.js';
 import { missingFields } from './goal-completion.js';
@@ -319,7 +319,7 @@ export class GoalsService {
 
   async changeSituation(
     id: string,
-    { versao, situacao }: ChangeSituationDto,
+    { versao, situacao, justificativa }: ChangeSituationDto,
     actor: Actor,
     perfil: Perfil,
   ): Promise<GoalResponse> {
@@ -352,6 +352,12 @@ export class GoalsService {
       if (current.versao !== versao) throw this.versionConflict();
       assertActive(current.projeto.instrumento);
       if (current.situacao === situacao) return toResponse(current);
+      if (current.situacao === SituacaoMeta.CONCLUIDA && !justificativa) {
+        throw new BadRequestException({
+          code: 'JUSTIFICATION_REQUIRED',
+          message: 'Informe a justificativa para reabrir uma meta concluída.',
+        });
+      }
 
       const updated = await tx.meta.updateMany({
         where: { id, versao },
@@ -367,7 +373,7 @@ export class GoalsService {
           entidade: 'meta',
           entidadeId: id,
           antes: { situacao: current.situacao },
-          depois: { situacao },
+          depois: justificativa ? { situacao, justificativa } : { situacao },
           correlationId: actor.correlationId,
         },
         tx,
