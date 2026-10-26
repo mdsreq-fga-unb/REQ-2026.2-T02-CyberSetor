@@ -10,7 +10,7 @@
 | 05/10/2026 | 2.1 | Inclusão de âncoras HTML unívocas para as histórias de usuário (HU-01 a HU-15) para rastreabilidade direta a partir do catálogo | Rodrigo Henrique |
 | 19/10/2026 | 2.2 | HU-03: modalidade escolhida entre as cadastradas pelo Instituto, como no RF09 e na validação de 28/09; requisitos não funcionais do cadastro da atividade (RNF02, RNF04, RNF15, RNF16) | Maria Eduarda Marques |
 | 20/10/2026 | 2.3 | Histórias derivadas dos requisitos funcionais por regras explícitas: quinze histórias passam a vinte e cinco, cada requisito com uma única história; critérios de aceitação ampliados para cobrir o texto dos requisitos; administração de contas (RF40), cadastro de modalidades (RF41) e configuração do formulário de inscrição (RF42); personas ligadas aos perfis; correspondência entre as histórias validadas e as derivadas; avaliação técnica de RF40 a RF42; requisitos não funcionais de todo o produto na Definition of Done | Equipe CyberSetor |
-| 26/10/2026 | 2.4 | Resultado alcançado da meta no relatório (CA-05a.1, CA-05a.6; RF43 no MVP); parâmetro planejado na condição de rascunho da meta quantitativa (CA-01b.3); período da meta dentro da execução do projeto (CA-01b.4); justificativa para reabrir meta concluída (CA-02a.3); dados da atividade (CA-03a.3); comparativo das metas repactuadas (RF44) e orientação de enquadramento (RF45) como requisitos próprios; controle de acesso por perfil entre os requisitos de todo o produto, fora das linhas das histórias (RNF04); gargalos atendidos pelo MVP e pelos incrementos (10.2.6); requisitos não funcionais das histórias conforme a matriz 8.4.2; portabilidade dos dados e eficiência do registro de presença entre os evolutivos (RNF19, RNF20); alcance da validação na 10.2.8: MVP aprovado pelo núcleo pedagógico; relatório e planilha aguardam a área administrativo-financeira | Vinicius Vieira |
+| 26/10/2026 | 2.4 | Resultado alcançado da meta no relatório (CA-05a.1, CA-05a.6; RF43 no MVP); parâmetro planejado na condição de rascunho da meta quantitativa (CA-01b.3); período da meta dentro da execução do projeto (CA-01b.4); justificativa para reabrir meta concluída (CA-02a.3); dados da atividade (CA-03a.3); comparativo das metas repactuadas (RF44) e orientação de enquadramento (RF45) como requisitos próprios; controle de acesso por perfil entre os requisitos de todo o produto, fora das linhas das histórias (RNF04); gargalos atendidos pelo MVP e pelos incrementos (10.2.6); requisitos não funcionais das histórias conforme a matriz 8.4.2; portabilidade dos dados e eficiência do registro de presença entre os evolutivos (RNF19, RNF20); alcance da validação na 10.2.8: MVP aprovado pelo núcleo pedagógico; relatório e planilha aguardam a área administrativo-financeira; hipótese do primeiro recorte e ordem de contenção (10.2.6); valor herdado das derivadas com resultado diferente marcado como inicial (10.2.2); requisitos associados exigíveis na conclusão da história (10.2.7); edição de meta fora da nova vigência (CA-14.5); minimização de dados no relatório e na correção a pedido do titular (RNF05) | Vinicius Vieira |
 
 ---
 
@@ -119,7 +119,7 @@ Personas das histórias e perfis da [seção 8.5.1](8-requisitos.md#851-perfis-d
     - CA-14.2 A versão original das metas e os resultados já apurados são preservados.
     - CA-14.3 Cada meta repactuada exibe o comparativo entre previsto original, reprogramado e realizado.
     - CA-14.4 A mudança do período de execução por ofício, registrada com a publicação de origem e a justificativa, gera nova versão do plano e atualiza a vigência do instrumento, preservando a versão anterior.
-    - CA-14.5 Na nova versão, as metas com prazo fora da nova vigência ficam sinalizadas para revisão pelo usuário autorizado, sem mudança automática de prazo 🔧.
+    - CA-14.5 Na nova versão, as metas com prazo fora da nova vigência ficam sinalizadas para revisão pelo usuário autorizado, sem mudança automática de prazo 🔧; ao editar o período de uma dessas metas, vale o CA-01b.4.
 
     **Requisitos não funcionais e regras de negócio:** RNF02, RNF08; RN-09, RN-13
 
@@ -318,7 +318,7 @@ Personas das histórias e perfis da [seção 8.5.1](8-requisitos.md#851-perfis-d
 
     - CA-15a.1 A correção de dado a pedido do titular registra autor, data, hora e justificativa.
 
-    **Requisitos não funcionais e regras de negócio:** RNF02
+    **Requisitos não funcionais e regras de negócio:** RNF02, RNF05
 
 <a id="hu-15b"></a>
 ??? note "HU-15b · Excluir ou anonimizar dados a pedido do titular"
@@ -360,7 +360,7 @@ Personas das histórias e perfis da [seção 8.5.1](8-requisitos.md#851-perfis-d
     - CA-05a.5 A emissão de cada relatório e cada justificativa registrada ficam na trilha de auditoria, com autor, data e hora.
     - CA-05a.6 O usuário autorizado registra o resultado alcançado de cada meta com a data de referência: descrição, classificação do alcance (cumprida, parcialmente cumprida ou não cumprida) e, na meta quantitativa, o valor alcançado na unidade do parâmetro planejado; na meta quantitativa, o percentual de cumprimento e a classificação são calculados, nunca digitados.
 
-    **Requisitos não funcionais e regras de negócio:** RNF02, RNF07, RNF08, RNF13; RN-11, RN-13, RN-14
+    **Requisitos não funcionais e regras de negócio:** RNF02, RNF05, RNF07, RNF08, RNF13; RN-11, RN-13, RN-14
 
 <a id="hu-05b"></a>
 ??? note "HU-05b · Baixar o relatório em PDF diagramado"
@@ -412,7 +412,7 @@ O **esforço técnico** de cada requisito é a média das três notas, arredonda
 
 ### 10.2.2 Avaliação de negócio com o Instituto
 
-O Instituto deu o valor a quatorze das quinze histórias apresentadas na validação de 28/09/2026, e a HU-15 entrou pela obrigação legal; cada história derivada na 10.1 herda o valor da original. A HU-16, de administração de contas, tem o valor proposto pela equipe, a confirmar com o Instituto 🔧.
+O Instituto deu o valor a quatorze das quinze histórias apresentadas na validação de 28/09/2026, e a HU-15 entrou pela obrigação legal; cada história derivada na 10.1 herda o valor da original. Nas derivadas cujo resultado difere do que foi avaliado (HU-03b, HU-05b, HU-07c e HU-09a), o valor herdado é inicial 🔧 e volta à conferência com o Instituto. A HU-16, de administração de contas, tem o valor proposto pela equipe, a confirmar com o Instituto 🔧.
 
 | História validada | Histórias derivadas (10.1) | Valor | Critério | Justificativa do Instituto |
 | :--- | :--- | :---: | :--- | :--- |
@@ -598,6 +598,10 @@ Candidatos ao MVP pela regra da matriz: valor 4 com esforço 1 ou 2, e valor 3 c
 
 O MVP é o primeiro recorte utilizável pelo Instituto: cadastrar o instrumento e o projeto, desdobrar requisitos e metas, dar responsável e prazo a cada meta, ser avisado dos vencimentos, registrar aditivos, receber inscrições por link, QR Code ou presencialmente, atender pedidos dos titulares dos dados e gerar a prestação de contas com justificativas. Na validação, o Instituto definiu parcerias e metas como a entrega prioritária, apontou as inscrições como o que "facilitaria para todas as equipes" e confirmou tentar o relatório e a planilha já no MVP.
 
+O que este recorte permite verificar é o controle de instrumentos, metas, prazos e inscrições, com o relatório montado a partir desses registros. A redução do esforço de prestação de contas depende das evidências e da presença, que chegam nos incrementos 2 e 3, e é conferida com o Instituto a cada entrega 🔧.
+
+Se a capacidade da sprint não comportar o recorte inteiro, descem para a sprint seguinte, nesta ordem, o PDF diagramado (HU-05b), o termo aditivo (HU-14) e o aviso por e-mail da HU-02b (CA-02b.4), única parte de história que desce separada do resto. O relatório com o resultado alcançado e as justificativas (HU-05a) e a planilha (HU-13) são preservados, e as histórias dos direitos do titular (HU-15a, HU-15b) não descem enquanto a inscrição pública puder receber dado real.
+
 | Incremento | Épicos e histórias | Requisitos funcionais |
 | :--- | :--- | :--- |
 | **MVP** | Requisito e meta: HU-01a, HU-01b, HU-02a, HU-02b, HU-14 · Atividade: HU-03a · Pessoas: HU-07a, HU-07b, HU-07c, HU-08, HU-15a, HU-15b, HU-16 · Relatório: HU-05a, HU-05b, HU-13 | RF01 a RF09, RF11 a RF15, RF22 a RF27, RF31, RF35 a RF44 |
@@ -638,7 +642,7 @@ O MVP é o primeiro recorte utilizável pelo Instituto: cadastrar o instrumento 
 | Classe | Requisitos não funcionais | Motivo |
 | :--- | :--- | :--- |
 | Obrigatórios para o MVP | [RNF03](8-requisitos.md#rnf03), [RNF04](8-requisitos.md#rnf04), [RNF16](8-requisitos.md#rnf16), [RNF17](8-requisitos.md#rnf17), [RNF18](8-requisitos.md#rnf18) | Valem para todo o produto desde a primeira entrega: acesso autenticado por perfil, conforme os perfis levantados com o Instituto (8.5.1), compatibilidade, pilha tecnológica e cópia de segurança; RNF03, RNF04, RNF16 e RNF17 fazem parte da Definition of Done dos itens de código |
-| Associados a RFs do MVP | [RNF01](8-requisitos.md#rnf01), [RNF02](8-requisitos.md#rnf02), [RNF05](8-requisitos.md#rnf05), [RNF06](8-requisitos.md#rnf06), [RNF07](8-requisitos.md#rnf07), [RNF08](8-requisitos.md#rnf08), [RNF11](8-requisitos.md#rnf11), [RNF12](8-requisitos.md#rnf12), [RNF13](8-requisitos.md#rnf13), [RNF15](8-requisitos.md#rnf15) | Integridade das metas, auditoria, minimização de dados e prazo de exclusão, guarda e integridade dos relatórios, desempenho do painel de prazos, da inscrição pública e da geração de relatórios, usabilidade da inscrição em celular |
+| Associados a RFs do MVP (exigíveis na conclusão da história que os lista) | [RNF01](8-requisitos.md#rnf01), [RNF02](8-requisitos.md#rnf02), [RNF05](8-requisitos.md#rnf05), [RNF06](8-requisitos.md#rnf06), [RNF07](8-requisitos.md#rnf07), [RNF08](8-requisitos.md#rnf08), [RNF11](8-requisitos.md#rnf11), [RNF12](8-requisitos.md#rnf12), [RNF13](8-requisitos.md#rnf13), [RNF15](8-requisitos.md#rnf15) | Integridade das metas, auditoria, minimização de dados e prazo de exclusão, guarda e integridade dos relatórios, desempenho do painel de prazos, da inscrição pública e da geração de relatórios, usabilidade da inscrição em celular |
 | Evolutivos | [RNF09](8-requisitos.md#rnf09), [RNF10](8-requisitos.md#rnf10), [RNF14](8-requisitos.md#rnf14), [RNF19](8-requisitos.md#rnf19), [RNF20](8-requisitos.md#rnf20) | Entram com os incrementos de evidência, de presença e de operação sem conexão; a cópia integral dos dados (RNF19), com a transferência do sistema |
 | Não aplicáveis | — | Nenhum requisito não funcional foi descartado |
 

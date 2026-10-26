@@ -13,7 +13,7 @@
 | 07/10/2026 | 1.8 | Especificação dos papéis de Engenharia de Requisitos de cada integrante na composição da equipe e remoção de menções operacionais genéricas | Daniel Batista e Maria Eduarda Marques |
 | 19/10/2026 | 1.9 | Composição da equipe atualizada para cinco integrantes | Maria Eduarda Marques |
 | 21/10/2026 | 1.10 | Daily presencial às terças e quintas e escrita nos demais dias úteis | Vinicius Vieira |
-| 26/10/2026 | 1.11 | Interações de 21/09, 28/09 e 08/10 com o Instituto; alinhamento técnico de 15/10 e reunião de 22/10, remarcada para 29/10, registrados como encontros que não ocorreram; ausência registrada sem exigência de motivo; atas de 08/09 e 15/09 ligadas na tabela; trabalho em duplas com revisão por outra dupla (7.1); validação da interface pela demonstração em homologação (7.3) | Vinicius Vieira |
+| 26/10/2026 | 1.11 | Interações de 21/09, 28/09 e 08/10 com o Instituto; alinhamento técnico de 15/10 e reunião de 22/10, remarcada para 29/10, registrados como encontros que não ocorreram; ausência registrada sem exigência de motivo; atas de 08/09 e 15/09 ligadas na tabela; trabalho em duplas com revisão por outra dupla (7.1); validação da interface pela demonstração em homologação (7.3); termos do Instituto nas notas de domínio da seção 8 | Vinicius Vieira |
 
 ## 7.1 Composição da Equipe
 
@@ -39,7 +39,7 @@ O que a tabela abaixo registra é **quem conduz cada atividade e responde por su
 | Atividade de ER | Quem conduz e responde pela evidência | Como a equipe participa | Evidência |
 |---|---|---|---|
 | **Elicitação e descoberta** | Maria Eduarda Marques (interlocução e agendamento) | A ata de cada sessão é publicada neste site, e as questões que dela surgem entram no refinamento semanal | Atas de reunião com o cliente; roteiros de entrevista; notas de observação direta |
-| **Análise e consenso** | Vinicius Vieira e Rodrigo Henrique (documentos do cliente) | Achados discutidos no refinamento semanal, onde a equipe fecha o entendimento | Análise da planilha-template; glossário de termos do Instituto; registro de lacunas |
+| **Análise e consenso** | Vinicius Vieira e Rodrigo Henrique (documentos do cliente) | Achados discutidos no refinamento semanal, onde a equipe fecha o entendimento | Análise da planilha-template; termos do Instituto nas notas de domínio da seção 8; registro de lacunas |
 | **Declaração** | Cada dupla, no bloco atribuído | Todas as duplas redigem histórias e critérios de aceitação | Histórias de usuário e critérios de aceitação no GitHub Projects |
 | **Representação** | Rodrigo Henrique (BPMN) · Daniel Batista (Rich Picture e mapa de stakeholders) | Diagramas revisados pela equipe antes de publicados | Diagramas publicados neste site |
 | **Verificação e validação** | Vinicius Vieira organiza a revisão cruzada; a validação cabe ao Instituto, por área competente — ver §7.3 | Cada dupla revisa o material de outra dupla | Registro da revisão por par; ata da sessão de validação |

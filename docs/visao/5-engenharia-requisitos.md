@@ -8,7 +8,7 @@
 | 17/09/2026 | 1.3 | Taxonomia revista conforme o livro-texto: artefatos, eventos do Scrum e ferramentas separados das técnicas | Vinicius Vieira |
 | 17/09/2026 | 1.4 | Registro das sessões de entrevista remetido à seção 7.2 | Equipe CyberSetor |
 | 05/10/2026 | 1.5 | Revisão editorial: formatação direta, sem supressão de técnicas, artefatos ou mapeamento do ScrumXP | Rodrigo Henrique |
-| 26/10/2026 | 1.6 | Observação direta das instalações, dos processos administrativos e das planilhas, com a observação da chamada prevista para o incremento de presença; caso de triangulação; prototipação evolutiva, com a homologação como protótipo avaliado pelo Instituto e os testes visuais como verificação da tela | Vinicius Vieira |
+| 26/10/2026 | 1.6 | Observação direta das instalações, dos processos administrativos e das planilhas, com a observação da chamada prevista para o incremento de presença; caso de triangulação; prototipação evolutiva, com a homologação como protótipo avaliado pelo Instituto e os testes visuais como verificação da tela; termos de domínio definidos na seção 8, sem glossário à parte | Vinicius Vieira |
 
 As seis atividades da Engenharia de Requisitos adotadas pela disciplina (elicitação e descoberta, análise e consenso, declaração, representação, verificação e validação, organização e atualização) não são etapas sequenciais. Elas se repetem e se entrelaçam ao longo do ciclo de desenvolvimento. Esta seção associa cada atividade às técnicas que a equipe usará no projeto e mapeia essas técnicas nas fases do ScrumXP.
 
@@ -34,7 +34,7 @@ As seis atividades da Engenharia de Requisitos adotadas pela disciplina (elicita
 - **Histórias de usuário:** Requisitos escritos na perspectiva do usuário, em linguagem de negócio, seguindo os critérios INVEST.
 - **Critérios de aceitação:** Lista de condições objetivas e mensuráveis associadas a cada história, tornando o comportamento e as restrições verificáveis sem impor sintaxe rígida.
 - **Catálogo de regras de negócio:** Registro das regras do domínio (limite de vagas, prazos, consentimentos), separadas das histórias que as usam.
-- **Glossário:** Definição unificada de termos de domínio (atividade, oficina, participante, meta), evitando ambiguidades.
+- **Termos de domínio:** os termos que mudam o comportamento do sistema (instrumento, requisito do instrumento, meta, atividade, modalidade) ficam definidos nas notas de domínio e nas regras de negócio da [seção 8](../requisitos/8-requisitos.md#85-notas-de-dominio-e-perguntas-chave-operacionais), sem glossário à parte.
 
 **Representação**
 
@@ -67,7 +67,7 @@ Elicitação, verificação e validação, e organização e atualização apare
 | **Planejamento da Release** | Elicitação e Descoberta | Imersão no contexto | Entrevista · Análise de documentos · Observação direta · Triangulação | Entendimento das dores e Documento de Visão consolidado. |
 | | Análise e Consenso | Delimitação de escopo | Ishikawa · Workshop de requisitos · Negociação | Problema central acordado com o Instituto. |
 | | Representação | Representação sistêmica | Rich Picture · Mapa de stakeholders · BPMN | Cenário atual modelado e validado. |
-| | Declaração | Escrita a valor | Épicos · Histórias de usuário · Glossário | Product Backlog inicial estruturado. |
+| | Declaração | Escrita a valor | Épicos · Histórias de usuário · Termos de domínio na seção 8 | Product Backlog inicial estruturado. |
 | **Planejamento da Sprint** | Análise e Consenso | Priorização | MoSCoW · Avaliação técnica × valor de negócio | Sprint Backlog priorizado e MVP recortado. |
 | | Declaração | Detalhamento | Critérios de aceitação · Regras de negócio | Itens verificáveis e catalogados para código. |
 | | Representação | Prototipação evolutiva | Esboço de tela da dupla · Fluxo da tela nos critérios de aceitação | Entendimento da interface antes da construção. |
