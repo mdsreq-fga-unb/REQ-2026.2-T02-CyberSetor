@@ -20,6 +20,7 @@
 | 05/10/2026 | 2.6 | Padronização verbal descrita como redução de ambiguidades, sem garantir sua ausência | Maria Eduarda Marques |
 | 19/10/2026 | 2.7 | Matriz dos requisitos não funcionais: RF09 ligado a RNF02, RNF04 e RNF15 | Maria Eduarda Marques |
 | 20/10/2026 | 2.8 | RF09 com o vínculo da atividade às metas; RF16 com a presença dos inscritos; RF31 e RN-09 com a mudança do período de execução; RF22 por e-mail ou CPF, conforme o formulário; documento formal em PDF ou DOCX (RF02) e planilha em XLSX ou CSV (RF38); administração de contas (RF40), cadastro de modalidades (RF41) e configuração do formulário de inscrição (RF42); matriz dos requisitos funcionais pela história dona e pelos novos critérios; matrizes dos requisitos não funcionais e das regras de negócio completadas; perfil de administração do sistema; dados mínimos da inscrição; métrica da RNF03 com sessão e bloqueio por tentativas; pontos em aberto revistos contra as validações com o Instituto | Equipe CyberSetor |
+| 26/10/2026 | 2.9 | Resultado alcançado da meta (RF43, RN-14), com percentual calculado na meta quantitativa e classificação do alcance; parâmetro planejado numérico na meta quantitativa (RF04, RN-02); relatório com o resultado alcançado (RF35, RF36); portabilidade dos dados (RNF19), que responde ao pedido de cópia integral; RN-13 ligada ao RF06; critérios novos na matriz (CA-01b.4, CA-02a.3) | Vinicius Vieira |
 
 ---
 
@@ -43,9 +44,9 @@ A governança do catálogo adota:
 | <a id="rf01"></a>**RF01** | Cadastrar instrumento convocatório e parceria | Permitir ao usuário autorizado cadastrar os instrumentos de parceria com o poder público, com tipo, órgão concedente, número do processo, valor global e vigência. | MROSC art. 16 e 42 \| [HU-01a](10-backlog.md#hu-01a) |
 | <a id="rf02"></a>**RF02** | Anexar documento formal homologado de parceria | Permitir ao usuário autorizado anexar ao instrumento, em PDF ou DOCX, o documento formal que o celebra. | MROSC art. 16 e 42 \| [HU-01a](10-backlog.md#hu-01a) |
 | <a id="rf03"></a>**RF03** | Cadastrar projeto operacional | Permitir ao usuário autorizado cadastrar os projetos de um instrumento ativo, com código, título, coordenador e cronograma. | OE01 \| [HU-01a](10-backlog.md#hu-01a) |
-| <a id="rf04"></a>**RF04** | Desdobrar requisitos contratuais e metas | Permitir ao usuário autorizado desdobrar o plano de trabalho em metas vinculadas aos requisitos do instrumento, registrando origem, indicador, parâmetro planejado, periodicidade e comprovação. | MROSC art. 22 e 42; [RN-01](#rn-01), [RN-02](#rn-02) \| [HU-01b](10-backlog.md#hu-01b) |
+| <a id="rf04"></a>**RF04** | Desdobrar requisitos contratuais e metas | Permitir ao usuário autorizado desdobrar o plano de trabalho em metas vinculadas aos requisitos do instrumento, registrando origem, indicador, parâmetro planejado (número com unidade, na meta quantitativa), periodicidade e comprovação. | MROSC art. 22 e 42; [RN-01](#rn-01), [RN-02](#rn-02) \| [HU-01b](10-backlog.md#hu-01b) |
 | <a id="rf05"></a>**RF05** | Atribuir responsável e setor executor a meta | Permitir ao usuário autorizado atribuir a cada meta um responsável e o setor executor. | Decisão 3 da ata de 08/09 \| [HU-02a](10-backlog.md#hu-02a) |
-| <a id="rf06"></a>**RF06** | Fixar prazo fatal e status de meta | Permitir ao usuário autorizado definir o prazo da meta e registrar sua situação: pendente, em andamento ou concluída. | OE04 \| [HU-02a](10-backlog.md#hu-02a) |
+| <a id="rf06"></a>**RF06** | Fixar prazo fatal e status de meta | Permitir ao usuário autorizado definir o prazo da meta e registrar sua situação: pendente, em andamento ou concluída. | OE04; [RN-13](#rn-13) \| [HU-02a](10-backlog.md#hu-02a) |
 | <a id="rf07"></a>**RF07** | Exibir linha do tempo e painel de prazos de metas | Permitir ao usuário autorizado consultar a linha do tempo do projeto, com a vigência do instrumento, os prazos das metas e os requisitos atendidos. | OE01, OE04 \| [HU-02b](10-backlog.md#hu-02b) |
 | <a id="rf08"></a>**RF08** | Emitir alertas de proximidade e pendências de metas | Alertar os usuários autorizados, no painel do projeto e por e-mail, sobre metas com prazo próximo, vencidas sem comprovação ou sem responsável. | [RN-03](#rn-03) \| [HU-02b](10-backlog.md#hu-02b) |
 | <a id="rf40"></a>**RF40** | Administrar contas e perfis de acesso | Permitir à administração do sistema criar contas da equipe com um perfil de acesso, mudar o perfil, desativar a conta e redefinir a senha, sem deixar o sistema sem administrador. | Seção 8.5.1; [RNF04](#rnf04) \| [HU-16](10-backlog.md#hu-16) |
@@ -94,6 +95,7 @@ A governança do catálogo adota:
 | <a id="rf29"></a>**RF29** | Parametrizar apuração de metas por acúmulo contínuo ou marco de entrega | Permitir ao usuário autorizado parametrizar o modelo de apuração da meta: progressão contínua cumulativa ou por entrega de marco. | Seção 2.3 \| [HU-11](10-backlog.md#hu-11) |
 | <a id="rf30"></a>**RF30** | Emitir alertas de risco de inexecução | Alertar no painel quando a execução de uma meta estiver 20 pontos percentuais ou mais abaixo do tempo transcorrido do período 🔧. | OE04 \| [HU-11](10-backlog.md#hu-11) |
 | <a id="rf31"></a>**RF31** | Versionar o plano de trabalho | Permitir ao usuário autorizado registrar termo aditivo, apostila ou mudança do período de execução como nova versão do plano de trabalho, preservando a versão anterior e os resultados já apurados. | MROSC art. 55 e 57; [RN-09](#rn-09), [RN-13](#rn-13) \| [HU-14](10-backlog.md#hu-14) |
+| <a id="rf43"></a>**RF43** | Registrar o resultado alcançado da meta | Permitir ao usuário autorizado registrar, para cada meta e data de referência, a descrição do resultado alcançado, a classificação do alcance (cumprida, parcialmente cumprida ou não cumprida) e, na meta quantitativa, o valor alcançado, com o percentual de cumprimento calculado sobre o parâmetro planejado. | Lei 13.019/2014, art. 66, I; [RN-14](#rn-14) \| [HU-05a](10-backlog.md#hu-05a) |
 
 ### CP7 — Repositório de Evidências e Documentação
 | Identificador | Requisito | Descrição | Rastreabilidade |
@@ -105,8 +107,8 @@ A governança do catálogo adota:
 ### CP8 — Relatórios e Exportação de Dados
 | Identificador | Requisito | Descrição | Rastreabilidade |
 | :---: | :--- | :--- | :--- |
-| <a id="rf35"></a>**RF35** | Exigir justificativa prévia para metas não atingidas | Impedir a finalização do relatório enquanto houver meta não atingida sem justificativa, notificando a direção sem travar os registros. | MROSC art. 64; [RN-11](#rn-11) \| [HU-05a](10-backlog.md#hu-05a) |
-| <a id="rf36"></a>**RF36** | Emitir Relatório de Execução do Objeto | Permitir ao usuário autorizado gerar o relatório periódico de execução com metas planejadas/realizadas, justificativas e índice cronológico de evidências. | MROSC art. 63 a 66 \| [HU-05a](10-backlog.md#hu-05a) |
+| <a id="rf35"></a>**RF35** | Exigir justificativa prévia para metas não atingidas | Impedir a finalização do relatório enquanto houver meta parcialmente cumprida ou não cumprida sem justificativa, notificando a direção sem travar os registros. | MROSC art. 64; [RN-11](#rn-11) \| [HU-05a](10-backlog.md#hu-05a) |
+| <a id="rf36"></a>**RF36** | Emitir Relatório de Execução do Objeto | Permitir ao usuário autorizado gerar o relatório periódico de execução com as metas pactuadas, o resultado alcançado de cada uma (RF43), as justificativas e o índice cronológico de evidências. | MROSC art. 63 a 66 \| [HU-05a](10-backlog.md#hu-05a) |
 | <a id="rf37"></a>**RF37** | Gerar relatório diagramado em PDF | Compilar e baixar o Relatório de Execução do Objeto em PDF padronizado com cabeçalho institucional, sumário, tabelas e evidências. | Seção 2.4 \| [HU-05b](10-backlog.md#hu-05b) |
 | <a id="rf38"></a>**RF38** | Exportar dados analíticos e consolidados em planilha aberta | Permitir ao usuário autorizado exportar os dados do projeto em formato tabular aberto (XLSX e CSV), selecionando entre visão analítica ou consolidada de metas. | MROSC art. 64 \| [HU-13](10-backlog.md#hu-13) |
 | <a id="rf39"></a>**RF39** | Registrar trilha de auditoria das operações de prestação de contas | Gravar em trilha imutável retificações, justificativas ou emissões de relatórios oficiais com data/hora e autor. | OE04 \| [HU-05a](10-backlog.md#hu-05a) |
@@ -152,6 +154,7 @@ A governança do catálogo adota:
 | <a id="rnf15"></a>**RNF15** | Usabilidade móvel e inclusiva | Usabilidade / Requisito de Produto | Disponibilizar interface legível sob luz solar, ergonômica ao toque e acessível a usuários com menor letramento digital. | Alvos de toque de no mínimo 48x48 px; sem rolagem horizontal a partir de 360 px; 100% dos critérios aplicáveis da WCAG 2.1 nível AA; registro de presença por turma concluído em até 3 min; fluxo concluído em até 5 telas por 4 de 5 pessoas. |
 | <a id="rnf16"></a>**RNF16** | Compatibilidade entre navegadores e dispositivos | Suportabilidade / Requisito de Produto | Garantir equivalência operacional e visual em desktops e dispositivos móveis nos principais navegadores web. | 0 quebras de layout ou erros de script entre 360 px e 1920 px nas duas versões estáveis mais recentes de Chromium, Firefox e WebKit 🔧, em testes de regressão visual. |
 | <a id="rnf17"></a>**RNF17** | Restrição tecnológica e qualidade de código | Restrição de Implementação / Requisito Organizacional | Seguir as diretrizes da arquitetura homologada com tipagem estrita e validação estática no pipeline de CI. | 0 erros de tipagem no TypeScript estrito (`strict: true`), 0 avisos no linter e 100% de sucesso no build de produção. |
+| <a id="rnf19"></a>**RNF19** | Portabilidade dos dados | Suportabilidade / Requisito Organizacional | Permitir ao Instituto obter, a qualquer momento e na transferência do sistema, cópia integral dos dados e dos arquivos em formatos abertos, sem depender da equipe de desenvolvimento nem de lançamento manual. | Cópia integral entregue em até 2 dias úteis 🔧 depois do pedido, com 100% das tabelas em CSV acompanhadas da descrição dos campos e 100% dos arquivos (documentos formais, evidências e relatórios emitidos) com o identificador do registro a que pertencem; conferida por contagem de registros contra o banco e abertura de uma amostra dos arquivos. |
 
 ---
 
@@ -167,9 +170,9 @@ A rastreabilidade estabelece o vínculo bidirecional entre os problemas diagnost
 | **RF01** | Cadastrar instrumento convocatório e parceria | G01 | MROSC art. 16 e 42 | HU-01a (CA-01a.1) | Total |
 | **RF02** | Anexar documento formal homologado de parceria | G01 | MROSC art. 16 e 42 | HU-01a (CA-01a.2) | Total |
 | **RF03** | Cadastrar projeto operacional | G01 | — | HU-01a (CA-01a.3) | Total |
-| **RF04** | Desdobrar requisitos contratuais e metas | G01 | MROSC art. 22 e 42; RN-01, RN-02 | HU-01b (CA-01b.1 a CA-01b.3) | Total |
+| **RF04** | Desdobrar requisitos contratuais e metas | G01 | MROSC art. 22 e 42; RN-01, RN-02 | HU-01b (CA-01b.1 a CA-01b.4) | Total |
 | **RF05** | Atribuir responsável e setor executor a meta | G02 | Decisão 3 da ata de 08/09 | HU-02a (CA-02a.1) | Total |
-| **RF06** | Fixar prazo fatal e status de meta | G02 | — | HU-02a (CA-02a.1, CA-02a.2) | Total |
+| **RF06** | Fixar prazo fatal e status de meta | G02 | RN-13 | HU-02a (CA-02a.1 a CA-02a.3) | Total |
 | **RF07** | Exibir linha do tempo e painel de prazos de metas | G01, G02 | — | HU-02b (CA-02b.1) | Total |
 | **RF08** | Emitir alertas de proximidade e pendências de metas | G02 | RN-03 | HU-02b (CA-02b.2 a CA-02b.4) | Total |
 | **RF40** | Administrar contas e perfis de acesso | — | Seção 8.5.1 | HU-16 (CA-16.1 a CA-16.5) | Total |
@@ -218,6 +221,7 @@ A rastreabilidade estabelece o vínculo bidirecional entre os problemas diagnost
 | **RF29** | Parametrizar apuração de metas por acúmulo contínuo ou marco de entrega | G05 | Seção 2.3 | HU-11 (CA-11.3, CA-11.5) | Total |
 | **RF30** | Emitir alertas de risco de inexecução | G05 | — | HU-11 (CA-11.4) | Parcial |
 | **RF31** | Versionar o plano de trabalho | G05 | MROSC art. 55 e 57; RN-09, RN-13 | HU-14 (CA-14.1 a CA-14.5) | Total |
+| **RF43** | Registrar o resultado alcançado da meta | G06 | Lei 13.019/2014, art. 66, I; RN-14 | HU-05a (CA-05a.1, CA-05a.6) | Total |
 
 #### CP7 — Repositório de Evidências e Documentação (OE05; OE06)
 | Requisito | Nome | Gargalo BPMN | Norma / Mitigação | História derivada | Cobertura |
@@ -230,7 +234,7 @@ A rastreabilidade estabelece o vínculo bidirecional entre os problemas diagnost
 | Requisito | Nome | Gargalo BPMN | Norma / Mitigação | História derivada | Cobertura |
 | :--- | :--- | :---: | :--- | :--- | :---: |
 | **RF35** | Exigir justificativa prévia para metas não atingidas | G06 | MROSC art. 64, §1º; RN-11 | HU-05a (CA-05a.2) | Total |
-| **RF36** | Emitir Relatório de Execução do Objeto | G06 | MROSC art. 63 a 66 | HU-05a (CA-05a.1, CA-05a.4); HU-04a (CA-04a.6) | Total |
+| **RF36** | Emitir Relatório de Execução do Objeto | G06 | MROSC art. 63 a 66; RN-14 | HU-05a (CA-05a.1, CA-05a.4); HU-04a (CA-04a.6) | Total |
 | **RF37** | Gerar relatório diagramado em PDF | G06 | Seção 2.4 | HU-05b (CA-05b.1); HU-04a (CA-04a.6) | Total |
 | **RF38** | Exportar dados analíticos e consolidados em planilha aberta | G06 | MROSC art. 64 | HU-13 (CA-13.1 a CA-13.5); HU-09a (CA-09a.3) | Total |
 | **RF39** | Registrar trilha de auditoria das operações de prestação de contas | G06 | — | HU-05a (CA-05a.3, CA-05a.5) | Total |
@@ -242,7 +246,7 @@ A rastreabilidade estabelece o vínculo bidirecional entre os problemas diagnost
 | RNF | Propriedade de Qualidade | Origem (Decisão, Risco Ético ou Norma) | Requisitos Funcionais Relacionados |
 | :--- | :--- | :--- | :--- |
 | **RNF01** | Integridade transacional dos dados | HU-01b (CA-01b.3) | RF04, RF18 |
-| **RNF02** | Auditabilidade das alterações | Seção 3.3.9 | RF01 a RF06, RF09 a RF11, RF13, RF19, RF26, RF27, RF31 a RF33, RF38 a RF42 |
+| **RNF02** | Auditabilidade das alterações | Seção 3.3.9 | RF01 a RF06, RF09 a RF11, RF13, RF19, RF26, RF27, RF31 a RF33, RF38 a RF43 |
 | **RNF03** | Segurança das comunicações e das sessões | Seções 3.3.1 e 3.3.2 | *Transversal (Todos os RFs)* |
 | **RNF04** | Controle de acesso por perfil | Seção 3.5 (visibilidade por perfil); matriz da seção 8.5.1 | RF09, RF19, RF21 a RF27, RF34, RF40 |
 | **RNF05** | Minimização de dados pessoais | LGPD art. 5º, II; Restrição HU-06 | RF11, RF13, RF21, RF38, RF42 |
@@ -259,6 +263,7 @@ A rastreabilidade estabelece o vínculo bidirecional entre os problemas diagnost
 | **RNF16** | Compatibilidade entre navegadores e dispositivos | Seção 2.4 | *Transversal (Todos os RFs)* |
 | **RNF17** | Restrição tecnológica e qualidade de código | Seção 2.4 | *Transversal (Todos os RFs)* |
 | **RNF18** | Cópia de segurança e recuperação de dados | Seção 2.6 | *Transversal (Todos os RFs)* |
+| **RNF19** | Portabilidade dos dados | Alinhamento de 15/09/2026 e levantamento presencial de 21/09/2026; Seção 2.5 | *Transversal (Todos os RFs)* |
 
 ---
 
@@ -272,7 +277,7 @@ A rastreabilidade estabelece o vínculo bidirecional entre os problemas diagnost
 | **G03** | Listas em papel, chamadas manuais e fotos dispersas | RF09 a RF20, RF32 a RF34, RF41 | **Total** |
 | **G04** | Dados pessoais desprotegidos em celulares (LGPD) | RF11, RF21 a RF27, RF42 | **Total** |
 | **G05** | Ausência de visão unificada para a Presidência | RF28 a RF31 | **Parcial** |
-| **G06** | Risco de glosa e insegurança na prestação de contas | RF35 a RF39 | **Total** |
+| **G06** | Risco de glosa e insegurança na prestação de contas | RF35 a RF39, RF43 | **Total** |
 
 G02: o controle interno de chamados não tem RF. G05: o painel da Presidência não tem RF.
 
@@ -284,7 +289,7 @@ G02: o controle interno de chamados não tem RF. G05: o painel da Presidência n
 | **CP3** | Inscrição de participantes | RF11 a RF15, RF42 | OE02; OE01 |
 | **CP4** | Registro de participação em campo | RF16 a RF20 | OE03; OE04 |
 | **CP5** | Cadastro e histórico de pessoas | RF21 a RF27 | OE01; OE03, OE06 |
-| **CP6** | Acompanhamento automático de metas | RF28 a RF31 | OE04; OE01 |
+| **CP6** | Acompanhamento automático de metas | RF28 a RF31, RF43 | OE04; OE01 |
 | **CP7** | Repositório de evidências e documentação | RF32 a RF34 | OE05; OE06 |
 | **CP8** | Relatórios e exportação de dados | RF35 a RF39 | OE06; OE04, OE05 |
 
@@ -319,6 +324,7 @@ Responde à divisão operacional de responsabilidades entre quem cria, edita ou 
 - **Cálculo de Metas Não Lineares:**
   * *Metas quantitativas cumulativas:* Percentual aferido pela razão contínua entre volume realizado (soma de presenças ou horas) e o volume pactuado.
   * *Metas de marco único (milestones):* Percentual binário (0% enquanto pendente e 100% após a anexação e homologação da evidência formal pelo analista).
+- **Origem do valor alcançado:** no primeiro recorte, o valor alcançado é registrado com data de referência (RF43); quando a apuração automática entra (RF28), ela passa a preencher o valor das metas cuja fonte são presenças e evidências registradas no sistema (RN-08, RN-14).
 - **Tratamento de Termos Aditivos:** O sistema não sobrescreve os dados pactuados originalmente. Ao aprovar um Termo Aditivo, cria-se uma versão incremental do plano de trabalho, permitindo que o Relatório de Execução do Objeto apresente uma tabela comparativa com colunas dedicadas: *Meta Pactuada Original*, *Alteração (TA nº)*, *Meta Vigente Reprogramada* e *Percentual Cumprido*.
 
 ### 8.5.4 Inscrição, Pessoas e LGPD (CP3 e CP5)
@@ -332,17 +338,16 @@ Responde à divisão operacional de responsabilidades entre quem cria, edita ou 
 
 1. **Gargalos G02 e G05:** o controle interno de ordens de serviço (G02), levantado como demanda candidata no alinhamento de 15/09/2026, e o painel consolidado da Presidência (G05), que depende dos cadastros e registros operacionais segundo o levantamento presencial de 21/09/2026, não têm requisito funcional nesta versão.
 2. **Matriz de Aquisição:** confirmada no levantamento presencial de 21/09/2026 como elemento a modelar no lugar da digitação manual, não tem requisito funcional; o controle financeiro e orçamentário está fora desta versão (seção 2), e a fronteira entre os dois está a definir com a área administrativo-financeira.
-3. **Exportação integral dos dados (CP8):** a exportação de todos os dados e anexos, para cópia do Instituto sem lançamento manual, foi pedida no alinhamento de 15/09/2026 e no levantamento presencial de 21/09/2026 e não tem requisito funcional próprio; o RF38 cobre a exportação da execução de um projeto.
-4. **Meta e etapa:** não está definido se a meta é cobrada pelo objetivo inteiro ou por etapa do plano de trabalho, o que afeta o RF04 e o cadastro das metas.
-5. **Alteração do período de execução:** os prazos das metas fora da nova vigência são sinalizados para revisão, sem mudança automática (CA-14.5) 🔧; a data da prestação de contas final depois da prorrogação está a definir.
-6. **Repetição do aviso de vencimento (RN-03):** a repetição do aviso depois do alerta de 30 dias, enquanto a meta não é concluída, está a definir.
-7. **Trava do relatório por pendência administrativo-financeira (RF35):** aplicação da exigência de justificativa a pendências da área administrativo-financeira, a confirmar com essa área; a solução não inclui controle financeiro.
-8. **Cadastro repetido e confirmação da inscrição:** o registro da validação de 08/10/2026 traz o cadastro repetido como aviso em um trecho e como bloqueio em outro; este documento adota o aviso com reaproveitamento, pelo campo escolhido no formulário (RF22, RF42) 🔧. No formulário público, o tratamento do cadastro repetido sem expor o cadastro de outra pessoa e o uso do CPF só para identificar repetição estão a definir 🔧. O mesmo registro traz o e-mail de confirmação na inscrição presencial, que não tem requisito funcional.
-9. **Inscrição de menores:** os campos do responsável legal e as faixas etárias usadas pelo Instituto estão a definir (RN-06, seção 8.5.4).
-10. **Cadastro do instrumento 🔧:** número de processo repetível e código do projeto único no instrumento (CA-01a.1, CA-01a.3); registro do código do instrumento na plataforma do financiador; obrigatoriedade do anexo do documento formal (seção 8.5.1).
-11. **Perfis e contas 🔧:** perfil da coordenação da equipe de execução, que encerra o projeto (RN-11), e do coordenador contratado pelo projeto; perfil de administração do sistema (seção 8.5.1); regras de conta (CA-16.1 a CA-16.3), inclusive o e-mail institucional compartilhado por várias pessoas frente a uma conta por pessoa (RF40); visibilidade das fotos de prova de execução por perfil (CA-04b.1); valor de negócio da HU-15 e da HU-16.
-12. **Valores a confirmar com o Instituto 🔧:** limiar de risco de meta e se ele é fixo ou definido por meta (RF30, CA-11.4); comprovações iniciais de cada modalidade, inclusive a dispensa de CPF na ação de acolhimento (RN-04, seção 8.5.2); prazo de atendimento aos pedidos do titular (RNF06).
-13. **Parâmetros técnicos a verificar 🔧:** duração e inatividade da sessão e bloqueio por tentativas (RNF03), observando no piloto se o encerramento por inatividade atrapalha oficinas longas; latências e carga (RNF11, RNF13, RNF14); versões de navegador (RNF16); RTO (RNF18), sendo o RPO de 6 h o informado no alinhamento de 15/09/2026.
+3. **Meta e etapa:** não está definido se a meta é cobrada pelo objetivo inteiro ou por etapa do plano de trabalho, o que afeta o RF04 e o cadastro das metas.
+4. **Alteração do período de execução:** os prazos das metas fora da nova vigência são sinalizados para revisão, sem mudança automática (CA-14.5) 🔧; a data da prestação de contas final depois da prorrogação está a definir.
+5. **Repetição do aviso de vencimento (RN-03):** a repetição do aviso depois do alerta de 30 dias, enquanto a meta não é concluída, está a definir.
+6. **Trava do relatório por pendência administrativo-financeira (RF35):** aplicação da exigência de justificativa a pendências da área administrativo-financeira, a confirmar com essa área; a solução não inclui controle financeiro.
+7. **Cadastro repetido e confirmação da inscrição:** o registro da validação de 08/10/2026 traz o cadastro repetido como aviso em um trecho e como bloqueio em outro; este documento adota o aviso com reaproveitamento, pelo campo escolhido no formulário (RF22, RF42) 🔧. No formulário público, o tratamento do cadastro repetido sem expor o cadastro de outra pessoa e o uso do CPF só para identificar repetição estão a definir 🔧. O mesmo registro traz o e-mail de confirmação na inscrição presencial, que não tem requisito funcional.
+8. **Inscrição de menores:** os campos do responsável legal e as faixas etárias usadas pelo Instituto estão a definir (RN-06, seção 8.5.4).
+9. **Cadastro do instrumento 🔧:** número de processo repetível e código do projeto único no instrumento (CA-01a.1, CA-01a.3); registro do código do instrumento na plataforma do financiador; obrigatoriedade do anexo do documento formal (seção 8.5.1).
+10. **Perfis e contas 🔧:** perfil da coordenação da equipe de execução, que encerra o projeto (RN-11), e do coordenador contratado pelo projeto; perfil de administração do sistema (seção 8.5.1); regras de conta (CA-16.1 a CA-16.3), inclusive o e-mail institucional compartilhado por várias pessoas frente a uma conta por pessoa (RF40); visibilidade das fotos de prova de execução por perfil (CA-04b.1); valor de negócio da HU-15 e da HU-16.
+11. **Valores a confirmar com o Instituto 🔧:** limiar de risco de meta e se ele é fixo ou definido por meta (RF30, CA-11.4); comprovações iniciais de cada modalidade, inclusive a dispensa de CPF na ação de acolhimento (RN-04, seção 8.5.2); prazo de atendimento aos pedidos do titular (RNF06); classes de alcance da meta e uso do valor alcançado no relatório (RN-14); prazo de entrega da cópia integral dos dados (RNF19).
+12. **Parâmetros técnicos a verificar 🔧:** duração e inatividade da sessão e bloqueio por tentativas (RNF03), observando no piloto se o encerramento por inatividade atrapalha oficinas longas; latências e carga (RNF11, RNF13, RNF14); versões de navegador (RNF16); RTO (RNF18), sendo o RPO de 6 h o informado no alinhamento de 15/09/2026.
 
 ---
 
@@ -353,7 +358,7 @@ Regras que condicionam o comportamento descrito nos requisitos funcionais. Cada 
 | ID | Regra | Origem | Requisitos relacionados |
 | :---: | :--- | :--- | :---: |
 | <a id="rn-01"></a>**RN-01** | Requisito do instrumento e meta do plano de trabalho são registros distintos, relacionados entre si: uma meta pode atender a mais de um requisito e um requisito pode exigir mais de uma meta. | Seção 2.3 (CP1); Lei 13.019/2014, art. 22 | RF04, RF07 |
-| <a id="rn-02"></a>**RN-02** | Meta sem indicador, forma de verificação ou prazo permanece como rascunho e não entra na apuração nem no relatório. | Lei 13.019/2014, art. 22, II e III | RF04, RF28 |
+| <a id="rn-02"></a>**RN-02** | Meta sem indicador, forma de verificação, prazo ou, na meta quantitativa, parâmetro planejado permanece como rascunho e não entra na apuração nem no relatório. | Lei 13.019/2014, art. 22, II e III | RF04, RF28 |
 | <a id="rn-03"></a>**RN-03** | O alerta de vencimento de meta é emitido automaticamente 30 dias antes do prazo, e o usuário autorizado pode registrar na própria meta avisos adicionais; os alertas são enviados por e-mail. | Validação com o Instituto em 28/09/2026 | RF08 |
 | <a id="rn-04"></a>**RN-04** | As comprovações exigidas de uma atividade são configuradas por instrumento e modalidade, e a atividade guarda a versão vigente no momento do cadastro. Configuração inicial 🔧: chamada nominal com assiduidade para oficinas formativas contínuas; contagem agregada e anônima, sem CPF, para ações de acolhimento e eventos de rua. | Seção 3.3.6; Seção 2.6 | RF09, RF10, RF33 |
 | <a id="rn-05"></a>**RN-05** | A inscrição não é condicionada a consentimento para os dados exigidos pela execução da parceria e pela prestação de contas; o consentimento é registrado apenas para contato e uso de imagem. | LGPD, art. 7º, I e II; Seção 2.6 | RF11, RF13, RF23 a RF25 |
@@ -364,4 +369,5 @@ Regras que condicionam o comportamento descrito nos requisitos funcionais. Cada 
 | <a id="rn-10"></a>**RN-10** | Arquivo anexado é rascunho até ser vinculado a uma atividade e a pelo menos uma meta; rascunho não compõe o índice de comprovações. | Seção 2.3 (relatório com índice de evidências por meta) | RF32, RF33 |
 | <a id="rn-11"></a>**RN-11** | O encerramento de uma atividade e a geração do relatório final exigem que não haja rascunho pendente de vinculação ou descarte. Comprovação que não pode mais ser produzida não impede o encerramento do projeto: a meta sem comprovação continua visível como pendente, e só a coordenação da equipe de execução encerra o projeto. | Seção 2.3; Lei 13.019/2014, arts. 63 a 66; validação com o Instituto em 28/09/2026 | RF33, RF35, RF36 |
 | <a id="rn-12"></a>**RN-12** | Imagem de prova de execução e material de divulgação são registros distintos: a prova fica restrita aos perfis de coordenação e prestação de contas, não é publicada automaticamente e só é reutilizada para divulgação com autorização registrada. | Seção 3.3.4; LGPD, art. 7º, I, e art. 14 | RF25, RF34 |
-| <a id="rn-13"></a>**RN-13** | Alteração de registro já concluído (meta ou plano de trabalho, presença de atividade realizada, evidência vinculada ou relatório finalizado) exige justificativa registrada, visível às demais áreas, e não depende de aprovação. | Validação com o Instituto em 28/09/2026 | RF19, RF31, RF33, RF39 |
+| <a id="rn-13"></a>**RN-13** | Alteração de registro já concluído (meta ou plano de trabalho, presença de atividade realizada, evidência vinculada ou relatório finalizado) exige justificativa registrada, visível às demais áreas, e não depende de aprovação. | Validação com o Instituto em 28/09/2026 | RF06, RF19, RF31, RF33, RF39 |
+| <a id="rn-14"></a>**RN-14** | O percentual de cumprimento da meta quantitativa é calculado, nunca informado: valor alcançado dividido pelo parâmetro planejado, na mesma unidade, sem teto de 100%. Meta qualitativa não tem percentual: o alcance é a classificação (cumprida, parcialmente cumprida ou não cumprida) com a descrição do resultado 🔧. Enquanto a meta não tem apuração automática (RF28, RF29), o valor alcançado é registrado pelo usuário autorizado, com a data de referência; com a apuração automática, vale o valor apurado (RN-08). | Lei 13.019/2014, art. 66, I; Decreto 8.726/2016, art. 55, I e § 4º; Decreto distrital 37.843/2016, art. 60, I, e art. 61 | RF28, RF36, RF43 |
