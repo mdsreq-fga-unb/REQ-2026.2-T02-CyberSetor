@@ -77,6 +77,7 @@ const BASE: Goal = {
   },
   situacao: 'EM_ANDAMENTO',
   alertaPrazo: 'VENCENDO',
+  resultado: null,
 };
 
 const GOALS: Goal[] = [
@@ -115,6 +116,17 @@ const GOALS: Goal[] = [
     requisitos: [BASE.requisitos[1]],
     situacao: 'PENDENTE',
     alertaPrazo: 'VENCIDA',
+    resultado: {
+      id: '00000000-0000-4000-8000-000000000901',
+      dataReferencia: '2026-07-20',
+      descricao: 'Certificados entregues às duas primeiras turmas.',
+      valorAlcancado: 63,
+      parametroPlanejado: 84,
+      percentual: 75,
+      alcance: 'PARCIALMENTE_CUMPRIDA',
+      registradoPor: { id: '00000000-0000-4000-8000-000000000601', nome: 'Ana Pedagógica' },
+      registradoEm: '2026-07-20T18:00:00.000Z',
+    },
   },
 ];
 

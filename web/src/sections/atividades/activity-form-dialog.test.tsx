@@ -82,6 +82,7 @@ const GOAL_1: Goal = {
   setor: null,
   situacao: 'PENDENTE',
   alertaPrazo: null,
+  resultado: null,
 };
 
 const GOAL_2: Goal = {
