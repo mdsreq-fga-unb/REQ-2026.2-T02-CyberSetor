@@ -113,7 +113,7 @@ Referência de capacidade: cerca de 2 horas por dia por integrante, como nas spr
 
 ### 6.1 Histórias selecionadas para a sprint
 
-As dezesseis histórias do MVP (seção 10.2.6): Requisito e meta HU-01a, HU-01b, HU-02a, HU-02b e HU-14; Atividade HU-03a; Pessoas HU-07a, HU-07b, HU-07c, HU-08, HU-15a, HU-15b e HU-16; Relatório HU-05a, HU-05b e HU-13. As demais continuam no Product Backlog, sem sprint. HU-16 e HU-01a (parte) já estão em pull request.
+As dezesseis histórias do MVP (seção 10.2.6): Requisito e meta HU-01a, HU-01b, HU-02a, HU-02b e HU-14; Atividade HU-03a; Pessoas HU-07a, HU-07b, HU-07c, HU-08, HU-15a, HU-15b e HU-16; Relatório HU-05a, HU-05b e HU-13. As demais continuam no Product Backlog, sem sprint. HU-16 e o cadastro de instrumento da HU-01a entram na sprint já integrados.
 
 ### 6.2 Sprint Backlog
 
@@ -147,7 +147,7 @@ As dezesseis histórias do MVP (seção 10.2.6): Requisito e meta HU-01a, HU-01b
 | ID | Item | Atividade de ER | Responsáveis | MoSCoW | Prazo |
 |---|---|---|---|---|---|
 | C01 | Ata de 20/10 e ata da reunião de 29/10 publicadas; ata de 29/10 conferida pelo Instituto | Organização e atualização | relator; Maria Eduarda | Must | 24/10 (ata de 20/10); 03/11 (ata de 29/10) |
-| C02 | Conferência das atas de 28/09 e 08/10 pelo Instituto; registro de 08/10 e 29/10 na 10.2.8 | Organização e atualização | Maria Eduarda | Should | 29/10 |
+| C02 | Conferência das atas de 28/09 e 08/10 pelo Instituto; registro de 08/10 na 10.2.8 depois dessa conferência; registro de 29/10 na 10.2.8 depois de C01 | Organização e atualização | Maria Eduarda | Should | 29/10 (conferência); 03/11 (registro de 29/10) |
 | C03 | Plano da Sprint 4 publicado (este documento) | Organização e atualização | Vinicius | Must | 21/10 |
 | C04 | Reunião de 29/10, que reúne a demonstração da primeira entrega e o checkpoint, com um projeto real e dados minimizados: preparação e ata | Validação | Maria Eduarda e Vinicius | Must | 29/10 |
 | C05 | Apontamento do docente sobre a seção 4 concluído e respondido | Verificação e validação | Caio | Should | 27/10 |
@@ -172,7 +172,7 @@ As dezesseis histórias do MVP (seção 10.2.6): Requisito e meta HU-01a, HU-01b
 
 ### 7.3 Ordem de construção (horizonte B)
 
-Depois de 22/10: HU-01a (documento e projeto), HU-01b, HU-02a e HU-03a; em seguida inscrições (HU-07b, HU-07a, HU-07c, HU-08), HU-02b e HU-14, HU-15a e HU-15b, HU-05a, HU-05b e HU-13. Dentro de cada história, a primeira fatia é vertical: API e tela para um critério de aceitação, em pull request de até 1.000 linhas (alvo 500), antes de ampliar. Branches com o código da história com letra (`feat/api/HU-01b-...`).
+A partir de 23/10: HU-01a (documento e projeto), HU-01b, HU-02a e HU-03a; em seguida inscrições (HU-07b, HU-07a, HU-07c, HU-08), HU-02b e HU-14, HU-15a e HU-15b, HU-05a, HU-05b e HU-13. Dentro de cada história, a primeira fatia é vertical: API e tela para um critério de aceitação, em pull request de até 1.000 linhas (alvo 500), antes de ampliar. Branches com o código da história com letra (`feat/api/HU-01b-...`).
 
 ---
 
@@ -234,4 +234,4 @@ As respostas do Instituto em 29/10 entram em nova versão deste plano.
 | Versão | Data | Alteração | Responsável |
 |---|---|---|---|
 | 1.0 | 21/10/2026 | Emissão com o deliberado no Sprint Planning de 20/10 e na realocação de 21/10: meta, calendário, Sprint Backlog em três partes, priorização, alocação, riscos e critérios de aceitação | Vinicius |
-| 1.1 | 26/10/2026 | Reunião com o Instituto remarcada de 22/10 para 29/10 (quinta-feira), com demonstração e checkpoint; remanejamento de 22/10 no perfil da equipe, no Sprint Backlog e na alocação; nova ordem de contenção; itens, riscos e critérios de aceitação ajustados à nova data | Vinicius Vieira |
+| 1.1 | 26/10/2026 | Reunião com o Instituto remarcada de 22/10 para 29/10 (quinta-feira), com demonstração e checkpoint; remanejamento de 22/10 no perfil da equipe, no Sprint Backlog e na alocação; nova ordem de contenção; itens, riscos e critérios de aceitação ajustados à nova data; prazos separados para os registros de 08/10 e 29/10 na 10.2.8 | Vinicius Vieira |

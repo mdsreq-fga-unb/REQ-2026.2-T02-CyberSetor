@@ -13,7 +13,7 @@
 | 07/10/2026 | 1.8 | Especificação dos papéis de Engenharia de Requisitos de cada integrante na composição da equipe e remoção de menções operacionais genéricas | Daniel Batista e Maria Eduarda Marques |
 | 19/10/2026 | 1.9 | Composição da equipe atualizada para cinco integrantes | Maria Eduarda Marques |
 | 21/10/2026 | 1.10 | Daily presencial às terças e quintas e escrita nos demais dias úteis | Vinicius Vieira |
-| 26/10/2026 | 1.11 | Interações de 21/09, 28/09 e 08/10 com o Instituto; alinhamento técnico de 15/10 registrado como encontro que não ocorreu; trabalho em duplas com revisão por outra dupla (7.1); validação da interface pela demonstração em homologação (7.3) | Vinicius Vieira |
+| 26/10/2026 | 1.11 | Interações de 21/09, 28/09 e 08/10 com o Instituto; alinhamento técnico de 15/10 e reunião de 22/10, remarcada para 29/10, registrados como encontros que não ocorreram; ausência registrada sem exigência de motivo; atas de 08/09 e 15/09 ligadas na tabela; trabalho em duplas com revisão por outra dupla (7.1); validação da interface pela demonstração em homologação (7.3) | Vinicius Vieira |
 
 ## 7.1 Composição da Equipe
 
@@ -78,13 +78,13 @@ As interlocutoras atuais são **Maria Clara e Maria Eduarda, do núcleo pedagóg
 |---|---|---|
 | 20/08/2026 | Videoconferência | Primeira reunião: contexto e dores |
 | 02/09/2026 | Mensagem | Concordância **preliminar** com a proposta de solução — ver §7.3.2 |
-| 08/09/2026 | Presencial, na sede | Elicitação aprofundada, com observação direta e análise de documentos |
-| 15/09/2026 | Videoconferência | Levantamento com a área de projetos, a coordenação administrativo-financeira e o núcleo pedagógico: rotina administrativa, matriz de aquisição, separação de acesso por área e necessidades de painel e de comprovação em campo |
+| [08/09/2026](../gestao/atas/2026-09-08-reuniao-presencial-instituto.md) | Presencial, na sede | Elicitação aprofundada, com observação direta e análise de documentos |
+| [15/09/2026](../gestao/atas/2026-09-15-reuniao-alinhamento-instituto.md) | Videoconferência | Levantamento com a área de projetos, a coordenação administrativo-financeira e o núcleo pedagógico: rotina administrativa, matriz de aquisição, separação de acesso por área e necessidades de painel e de comprovação em campo |
 | [21/09/2026](../gestao/atas/2026-09-21-reuniao-presencial-instituto.md) | Presencial, na sede | Levantamento de processos com a coordenação de execução, a presidência e o núcleo pedagógico: fluxo de compras, contratações e prestação de contas, Matriz de Aquisição e planilhas de projetos em andamento |
 | [28/09/2026](../gestao/atas/2026-09-28-validacao-mvp-instituto.md) | Videoconferência | Validação das histórias e priorização do MVP com o núcleo pedagógico (diretora pedagógica e Maria Eduarda): parcerias e metas como base do MVP, inscrições no MVP, evidências no incremento 2 — ver seção 10.2.8 |
 | [08/10/2026](../gestao/atas/2026-10-08-validacao-mvp-instituto.md) | Videoconferência | Validação do recorte do MVP com Maria Eduarda, do núcleo pedagógico: parcerias e metas, aditivos e auditoria, inscrições, direitos do titular e prestação de contas; evidências no incremento 2 |
 
-A tabela acima registra apenas encontros realizados: intenção e convite não entram nela. O alinhamento técnico sobre a estrutura do banco de dados, combinado na reunião de 08/10 para 15/10/2026, não ocorreu. A cadência acordada é **semanal**. Quando um encontro não ocorre por incompatibilidade com o calendário do Instituto, a ausência é registrada com o motivo, em vez de a cadência ser reescrita: é assim que a tabela acima permanece fiel ao que aconteceu.
+A tabela acima registra apenas encontros realizados: intenção e convite não entram nela. Dois encontros combinados não ocorreram: o alinhamento técnico sobre a estrutura do banco de dados, previsto na reunião de 08/10 para 15/10/2026, e a reunião de 22/10/2026, remarcada para 29/10/2026. A cadência acordada é **semanal**. Quando um encontro não ocorre, a ausência é registrada, em vez de a cadência ser reescrita: é assim que a tabela acima permanece fiel ao que aconteceu.
 
 ## 7.3 Processo de Validação
 
@@ -121,6 +121,6 @@ A consulta à área administrativo-financeira e à Diretoria de Projetos integra
 
 **Cobre:** em 02/09/2026, após ler a **proposta de solução**, as representantes do núcleo pedagógico do Instituto manifestaram concordância com o problema identificado. Isso confirma o problema descrito na seção 1.4 e os objetivos da seção 2 **como ponto de partida**.
 
-**Não cobre:** a manifestação foi por mensagem, **antes** da elicitação presencial aprofundada de 08/09/2026, e é portanto **preliminar**. Ela não valida o que só foi descoberto depois — em particular o reposicionamento do centro do produto para o ciclo do projeto financiado, a estrutura organizacional real do Instituto e o modelo de requisito/meta com indicador e parâmetro de aferição. Esses achados constam da ata de 08/09, que está em conferência pelo Instituto e cuja validação formal permanece pendente.
+**Não cobre:** a manifestação foi por mensagem, **antes** da elicitação presencial aprofundada de 08/09/2026, e é portanto **preliminar**. Ela não valida o que só foi descoberto depois — em particular o reposicionamento do centro do produto para o ciclo do projeto financiado, a estrutura organizacional real do Instituto e o modelo de requisito/meta com indicador e parâmetro de aferição. Esses achados constam da [ata de 08/09](../gestao/atas/2026-09-08-reuniao-presencial-instituto.md).
 
 Uma aprovação anterior não se estende automaticamente a fatos posteriores.

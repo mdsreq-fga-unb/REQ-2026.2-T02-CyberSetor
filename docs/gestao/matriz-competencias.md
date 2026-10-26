@@ -5,7 +5,7 @@
 | 03/09/2026 | 1.0 | Registro inicial das decisões técnicas e método da matriz de competências | Equipe CyberSetor |
 | 28/09/2026 | 1.1 | Explicitação do histórico de consolidação (pendência da Sprint 0 sanada no início da Sprint 1) | Daniel Batista |
 | 06/10/2026 | 1.2 | Dojos de nivelamento registrados como realizados, com o conteúdo de cada um | Vinicius Vieira |
-| 26/10/2026 | 1.3 | Dojos D1 e D2 com as entregas concluídas; testes com Vitest; ferramentas já exercitadas no código e as que ainda não foram; trabalho em duplas no lugar da programação em pares contínua | Vinicius Vieira |
+| 26/10/2026 | 1.3 | Dojos D1 e D2 com as entregas concluídas; testes com Vitest; ferramentas já exercitadas no código e as que ainda não foram; trabalho em duplas no lugar da programação em pares contínua; Dexie e operação sem conexão com o registro sem conexão | Vinicius Vieira |
 
 A pilha tecnológica citada na seção 2.4 do Documento de Visão não foi escolhida por preferência. Foi decidida a partir de uma matriz de competências preenchida pela equipe entre 02/09 e 03/09/2026 e consolidada integralmente no início da Sprint 1.
 
@@ -42,6 +42,6 @@ Dois dojos, gravados no Google Meet, em 10/09/2026, no início da Sprint 1: o D1
 | Situação na construção | Ferramentas |
 |---|---|
 | Já exercitadas no código | NestJS, Prisma, Next.js, TanStack Query, Vitest |
-| Ainda não exercitadas | Dexie e operação sem conexão, que entram com o registro de presença |
+| Ainda não exercitadas | Dexie e operação sem conexão, que entram com o registro sem conexão (HU-09b), depois do registro de presença on-line (HU-09a) |
 
 Esta página resume o método e as decisões, sem os níveis individuais de cada integrante.

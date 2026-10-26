@@ -272,7 +272,7 @@ Meta **parcialmente atingida** (ata de 20/10/2026, D1): a Unidade 2 foi publicad
 | CAS-02 | Parcial | MVP confirmado em 08/10 ([ata de 08/10](../atas/2026-10-08-validacao-mvp-instituto.md)); conferência da ata pelo Instituto e registro na seção 10.2.8 passaram à Sprint 4 |
 | CAS-03 | Parcial | [Seção 4](../../visao/4-estrategia-esw.md) revista em 13/10 (versão 1.6); a resposta ao docente passou à Sprint 4 |
 | CAS-04 | Atingido | Base técnica da API e do front integrada, com integração contínua (ata de 20/10, D1) |
-| CAS-05 | Parcial | Histórias da primeira entrega reestruturadas em dezesseis, uma por ator e resultado, e ratificadas na Review (ata de 20/10, D2; [seção 10.1](../../requisitos/10-backlog.md#101-backlog-geral)); a migração das issues das histórias passou à Sprint 4 |
+| CAS-05 | Parcial | Backlog reestruturado em vinte e cinco histórias, uma por ator e resultado, dezesseis delas no MVP (ata de 20/10, D2; [seção 10.1](../../requisitos/10-backlog.md#101-backlog-geral)), ratificado pela revisão do pull request; a migração das issues das histórias passou à Sprint 4 |
 | CAS-06 | Não atingido | Homologação publicada em 21/10, já na Sprint 4 ([Ambientes do produto](../processo-scrumxp.md#ambientes-do-produto)) |
 | CAS-07 | Atingido | Adesão de 84% às dailies ([registro das dailies](../dailies.md)) |
 | CAS-08 | Não atingido | Demora na revisão dos pull requests registrada na Retrospectiva; revisão em até 24 horas com aviso geral (ata de 20/10, D5) |

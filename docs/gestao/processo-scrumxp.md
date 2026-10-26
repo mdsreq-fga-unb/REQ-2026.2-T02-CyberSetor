@@ -92,7 +92,7 @@ As reuniões com o Instituto que alimentam a validação estão no [índice de a
 | Prática | Justificativa |
 |---|---|
 | TDD integral | A equipe não tem maturidade para sustentá-lo. Adotam-se testes de aceitação |
-| Refatoração contínua agressiva | Exige suíte de testes robusta, que não existirá no prazo |
+| Refatoração contínua agressiva | Exige uma suíte de testes ampla, que não existirá no prazo |
 | Metáfora do sistema | Baixo retorno em projeto pequeno |
 | Semana de 40 horas | Não se aplica ao contexto acadêmico |
 

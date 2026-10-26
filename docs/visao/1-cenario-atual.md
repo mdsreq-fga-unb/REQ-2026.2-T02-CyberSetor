@@ -10,7 +10,7 @@
 | 28/09/2026 | 1.5 | Rich Picture refeito com os oito componentes do fluxo operacional (financiadores públicos, editais e termos de fomento, projetos e metas, formulários avulsos, campo com listas e fotos, área administrativo-financeira, consolidação manual e entrega dos relatórios com risco de glosa), detalhados na seção 1.3 | Daniel Batista |
 | 30/09/2026 | 1.6 | Atualização do Rich Picture e mapa de stakeholders com papéis identificados na reunião de 08/09 (Diretoria de Projetos, Captação de Recursos, ausência de RH, demais setores operacionais e regimes de financiadores) | Equipe CyberSetor |
 | 05/10/2026 | 1.7 | Fechamento do dimensionamento empírico com estimativas da coordenação, restauração do mapa circular de stakeholders e unificação da matriz de interesse e poder | Rodrigo Henrique |
-| 26/10/2026 | 1.8 | Conectividade no campo com quedas pontuais (1.3 e 1.5); área administrativo-financeira com a rotina atual fora do sistema e a consulta a consolidados e relatórios, sem dados nominais (1.6 e 1.7) | Vinicius Vieira |
+| 26/10/2026 | 1.8 | Conectividade no campo com quedas pontuais (1.3 e 1.5); área administrativo-financeira com a rotina atual fora do sistema e a consulta a consolidados e relatórios, sem dados nominais (1.6 e 1.7); painel da presidência como capacidade candidata sem requisito funcional, sem saldo (1.7) | Vinicius Vieira |
 
 ---
 
@@ -123,7 +123,7 @@ A área do Instituto que valida cada conjunto de funcionalidades está na [seç�
 
 * **1. Presidência e Diretoria Executiva:**
   * *Perfil:* Lideranças que necessitam de tomada de decisão ágil sobre múltiplos projetos.
-  * *Interação com o sistema:* consulta ao painel consolidado de projetos, com situação das metas, cronograma e saldo. Trata-se de capacidade candidata, levantada em 15/09 e ainda pendente de validação com a presidência.
+  * *Interação com o sistema:* consulta ao painel consolidado de projetos, com situação das metas e cronograma. Trata-se de capacidade candidata, sem requisito funcional ([seção 8.6](../requisitos/8-requisitos.md#86-pontos-em-aberto-e-auditoria-de-lacunas), item 1).
 * **2. Diretoria de Projetos:**
   * *Perfil:* Analistas e coordenadores de parcerias com o setor público.
   * *Interação com o sistema:* cadastro de requisitos e metas do instrumento, atribuição de responsável e prazo por meta, e geração do Relatório de Execução do Objeto.
@@ -133,7 +133,7 @@ A área do Instituto que valida cada conjunto de funcionalidades está na [seç�
   * *Interação com o Sistema:* consulta a instrumentos, projetos e metas, aos números consolidados de presença e evidências e aos relatórios de execução, sem acesso a dados nominais de participantes ([seção 8.5.1](../requisitos/8-requisitos.md#851-perfis-de-acesso-e-permissoes-cp1-e-transversal)).
 * **4. Educadores, Artistas e Voluntários de Campo:**
   * *Perfil:* Agentes culturais que realizam o atendimento presencial no território do SCS.
-  * *Interação com o Sistema:* Operação móvel via navegador para conferência de presença em oficinas, upload de registros fotográficos vinculados à atividade e registro de ocorrências de campo.
+  * *Interação com o Sistema:* Operação móvel via navegador para conferência de presença em oficinas, envio de registros fotográficos vinculados à atividade e registro de ocorrências de campo.
 * **5. Participantes e Alunos das Oficinas:**
   * *Perfil:* Crianças, jovens e adultos inscritos nas atividades formativas.
   * *Interação com o Sistema:* Não operam o painel de gestão; interagem exclusivamente por páginas públicas de inscrição e assinatura de termos de adesão/consentimento de uso de dados e imagem.

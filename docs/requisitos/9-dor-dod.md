@@ -8,7 +8,7 @@
 | 05/10/2026 | 1.1 | Critério Testável da DoR limitado às ambiguidades identificadas na revisão | Maria Eduarda Marques |
 | 05/10/2026 | 1.2 | Conclusão do item na branch de integração do seu tipo: `docs-homologacao` para documentação, `api-develop` ou `web-develop` para código; demonstração no ambiente de homologação | Vinicius Vieira |
 | 20/10/2026 | 1.3 | Requisitos não funcionais de todo o produto (RNF03, RNF16 e RNF17) como condição de conclusão do item de código | Equipe CyberSetor |
-| 26/10/2026 | 1.4 | Item de código atende aos requisitos não funcionais listados na história, conferidos pela métrica; controle de acesso por perfil (RNF04) entre os requisitos de todo o produto; doR: o que impede a entrada separado do que admite valor provisório com 🔧; fluxo da tela nos critérios de aceitação no lugar do esboço. DoD: história concluída na versão publicada na homologação, com o percurso executado; item concluído distinto do incremento; validação pendente em "Aguardando"; tratamento do retorno do Instituto; registro de conclusão na issue da história; verificação por classe de requisito não funcional | Vinicius Vieira |
+| 26/10/2026 | 1.4 | Item de código atende aos requisitos não funcionais listados na história, conferidos pela métrica; controle de acesso por perfil (RNF04) entre os requisitos de todo o produto; DoR: o que impede a entrada separado do que admite valor provisório com 🔧; fluxo da tela nos critérios de aceitação no lugar do esboço. DoD: história concluída na versão publicada na homologação, com o percurso executado; item concluído distinto do incremento; validação pendente em "Aguardando"; tratamento do retorno do Instituto; registro de conclusão no quadro do projeto; revisor de outra dupla ou integrante independente; item de código e história com listas próprias; verificação por classe de requisito não funcional | Vinicius Vieira |
 
 ---
 
@@ -48,16 +48,21 @@ Um item de documentação de requisitos está concluído quando:
 
 Um item de código está concluído quando:
 
-1. **Está integrado à `api-develop` ou à `web-develop`** por pull request revisado e aprovado por integrante de outra dupla.
+1. **Está integrado à `api-develop` ou à `web-develop`** por pull request revisado e aprovado por integrante de outra dupla ou pelo integrante independente.
 2. **Atende aos critérios de aceitação** da história de usuário.
 3. **Passa nos testes automatizados** na integração contínua.
 4. **Atende aos requisitos não funcionais** listados na história, conferidos pela métrica verificável de cada um na [seção 8.3](8-requisitos.md#83-lista-de-requisitos-nao-funcionais-rnfs), e atende aos requisitos não funcionais de todo o produto: segurança das comunicações e das sessões ([RNF03](8-requisitos.md#rnf03)), controle de acesso por perfil ([RNF04](8-requisitos.md#rnf04)), compatibilidade entre navegadores e dispositivos ([RNF16](8-requisitos.md#rnf16)) e restrição tecnológica e qualidade de código ([RNF17](8-requisitos.md#rnf17)).
 5. **Tem a documentação de uso e a da API atualizadas**, quando aplicável.
 6. **Incorpora o retorno do Instituto** sobre o item, quando houver. Retorno que contraria critério de aceitação ou regra já validada impede a conclusão até o ajuste; retorno que acrescenta comportamento vira item novo no Product Backlog.
-7. **Está publicado na homologação**, na versão identificada pelo commit da `api-develop` e da `web-develop`, com o percurso da história executado nessa versão.
-8. **Tem o registro de conclusão no item da história no quadro do projeto:** critérios de aceitação atendidos, testes, versão demonstrada e pendências.
 
-Os itens 1 a 6 são conferidos na revisão de cada pull request, e o item fica concluído quando integrado na linha do seu componente (`api-develop` ou `web-develop`). Os itens 7 e 8 valem para a história: o incremento é a versão das duas linhas publicada junta na homologação, e é nele que a história é dada como concluída e demonstrada na Sprint Review. História concluída com validação do Instituto pendente fica em "Aguardando" no quadro do projeto e com 🔧 no texto até a confirmação.
+Esses itens são conferidos na revisão de cada pull request, e o item fica concluído quando integrado na linha do seu componente (`api-develop` ou `web-develop`).
+
+Uma história está concluída quando os seus itens de código estão concluídos e ela:
+
+1. **Está publicada na homologação**, na versão identificada pelo commit da `api-develop` e da `web-develop`, com o percurso da história executado nessa versão.
+2. **Tem o registro de conclusão no item da história no quadro do projeto:** critérios de aceitação atendidos, testes, versão demonstrada e pendências.
+
+O incremento é a versão das duas linhas publicada junta na homologação, e é nele que a história é dada como concluída e demonstrada na Sprint Review. História concluída com validação do Instituto pendente fica em "Aguardando" no quadro do projeto e com 🔧 no texto até a confirmação.
 
 **Verificação por classe de requisito não funcional**
 
