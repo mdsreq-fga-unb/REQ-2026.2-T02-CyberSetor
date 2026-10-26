@@ -65,10 +65,10 @@ function ActivitySummary({ activity }: { activity: Activity }) {
             </Badge>
           ))}
       </div>
-      <span aria-hidden="true" className="text-muted-foreground md:hidden">
+      <span className="text-muted-foreground md:hidden">
         {formatDate(activity.data)} · {activity.local}
       </span>
-      <span aria-hidden="true" className="text-muted-foreground md:hidden">
+      <span className="text-muted-foreground md:hidden">
         <Responsible activity={activity} />
       </span>
     </div>
