@@ -20,6 +20,8 @@ import {
   CreateGoalDto,
   EligibleOwnerResponse,
   GoalResponse,
+  GoalResultResponse,
+  RecordResultDto,
   UpdateGoalDto,
 } from './goals.dto.js';
 import { GoalsService } from './goals.service.js';
@@ -85,12 +87,39 @@ export class GoalsController {
     return this.goals.changeSituation(id, body, actorOf(user, res), user.perfil);
   }
 
+  @Get('goals/:id/results')
+  @Profiles(...INSTRUMENT_READERS)
+  @ApiOkResponse({ type: [GoalResultResponse], description: 'Do mais recente ao mais antigo' })
+  listResults(@Param('id', ParseUUIDPipe) id: string): Promise<GoalResultResponse[]> {
+    return this.goals.listResults(id);
+  }
+
+  @Post('goals/:id/results')
+  @Profiles(...INSTRUMENT_READERS)
+  @ApiCreatedResponse({ type: GoalResultResponse })
+  @ApiBadRequestResponse({
+    description:
+      'Campo inválido, FUTURE_REFERENCE_DATE, GOAL_DRAFT, RESULT_VALUE_REQUIRED ou RESULT_REACH_REQUIRED',
+  })
+  @ApiForbiddenResponse({
+    description: 'NOT_GOAL_OWNER: nem Presidência e Gestão, nem responsável',
+  })
+  @ApiConflictResponse({ description: 'INSTRUMENT_INACTIVE' })
+  recordResult(
+    @Param('id', ParseUUIDPipe) id: string,
+    @Body() body: RecordResultDto,
+    @CurrentUser() user: ValidSession,
+    @Res({ passthrough: true }) res: Response,
+  ): Promise<GoalResultResponse> {
+    return this.goals.recordResult(id, body, actorOf(user, res), user.perfil);
+  }
+
   @Patch('goals/:id')
   @Profiles(Perfil.PRESIDENCIA_GESTAO)
   @ApiOkResponse({ type: GoalResponse })
   @ApiBadRequestResponse({
     description:
-      'Campo inválido, INVALID_PERIOD, GOAL_REQUIREMENT_REQUIRED ou REQUIREMENT_OUTSIDE_INSTRUMENT',
+      'Campo inválido, INVALID_PERIOD, INVALID_PLANNED_VALUE, GOAL_REQUIREMENT_REQUIRED ou REQUIREMENT_OUTSIDE_INSTRUMENT',
   })
   @ApiConflictResponse({ description: 'VERSION_CONFLICT ou INSTRUMENT_INACTIVE' })
   update(
