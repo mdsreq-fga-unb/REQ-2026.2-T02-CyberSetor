@@ -1,4 +1,15 @@
-import type { CompletionField, GoalRequirement } from '@/types/metas';
+import type { CompletionField, GoalOrigin, GoalRequirement, MeasurementMode } from '@/types/metas';
+
+export const GOAL_ORIGINS: Record<GoalOrigin, string> = {
+  EDITAL: 'Edital',
+  PROJETO: 'Projeto',
+  INSTITUTO: 'Instituto',
+};
+
+export const MEASUREMENT_MODES: Record<MeasurementMode, string> = {
+  QUANTITATIVA: 'Quantitativa',
+  QUALITATIVA: 'Qualitativa',
+};
 
 const COMPLETION_LABELS: Record<CompletionField, string> = {
   indicador: 'indicador',

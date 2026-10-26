@@ -135,7 +135,7 @@ describe.each([
     vi.unstubAllGlobals();
   });
 
-  it('projeto e metas com rascunho identificado', async () => {
+  it('projeto, metas com rascunho identificado e acoes', async () => {
     const client = new QueryClient({ defaultOptions: { queries: { retry: false } } });
     const screen = await render(
       <QueryClientProvider client={client}>
