@@ -71,7 +71,17 @@ const COMPLETA: Goal = {
   ],
   rascunho: false,
   camposFaltantes: [],
+  responsavel: { id: '00000000-0000-4000-8000-000000000201', nome: 'Ana Pedagógica', ativo: true },
+  setor: {
+    id: '00000000-0000-4000-8000-000000000901',
+    nome: 'Coordenação Pedagógica',
+    ativo: true,
+  },
+  situacao: 'PENDENTE',
+  alertaPrazo: null,
 };
+
+const ME = { usuarioId: '00000000-0000-4000-8000-000000000201', perfil: 'NUCLEO_PEDAGOGICO' };
 
 const RASCUNHO: Goal = {
   ...COMPLETA,
@@ -176,7 +186,9 @@ describe('metas do projeto', () => {
     renderView();
 
     await screen.findByText('Apresentação pública ao fim das oficinas');
-    const [, completa, rascunho] = screen.getAllByRole('row');
+    const [, grupo, completa, rascunho] = screen.getAllByRole('row');
+    expect(grupo).toHaveTextContent('Pendente (2)');
+    expect(completa).toHaveTextContent('Responsável: Ana Pedagógica· Coordenação Pedagógica');
     expect(within(completa).queryByText('Rascunho')).not.toBeInTheDocument();
     expect(completa).toHaveTextContent(
       'Requisitos: TR, item 24.1 · Certificado para quem concluir',
@@ -231,6 +243,8 @@ describe('metas do projeto', () => {
       frequenciaApuracao: '',
       formaComprovacao: '',
       resultadoEsperado: '',
+      responsavelId: null,
+      setorId: null,
     });
   });
 
@@ -327,7 +341,7 @@ describe('metas do projeto', () => {
     expect(screen.getByLabelText('Fim (prazo)')).toHaveAttribute('aria-invalid', 'true');
   });
 
-  it('sem carregar os requisitos, avisa e nao oferece cadastro nem edicao', async () => {
+  it('sem carregar os requisitos, avisa e nao oferece cadastro nem edicao, so a situacao', async () => {
     await signedInAs(
       'PRESIDENCIA_GESTAO',
       page([COMPLETA], {
@@ -344,7 +358,9 @@ describe('metas do projeto', () => {
     );
     await screen.findByText('Oficinas de dança com 120 participantes');
     expect(screen.queryByRole('button', { name: 'Nova meta' })).not.toBeInTheDocument();
-    expect(screen.queryByRole('button', { name: /Ações da meta/ })).not.toBeInTheDocument();
+    fireEvent.click(screen.getByRole('button', { name: 'Ações da meta 1' }));
+    expect(await screen.findByRole('menuitem', { name: 'Mudar situação' })).toBeInTheDocument();
+    expect(screen.queryByRole('menuitem', { name: 'Editar meta' })).not.toBeInTheDocument();
   });
 
   it('sem requisitos no instrumento, nao oferece o cadastro e aponta o instrumento', async () => {
@@ -435,6 +451,240 @@ describe('metas do projeto', () => {
 
     expect(await screen.findByText('Meta 1 salva')).toBeInTheDocument();
     expect(patches[1]).toMatchObject({ versao: 5, objetivo: 'Formação artística e cidadã' });
+  });
+
+  it('agrupa por situacao, com responsavel, setor e alerta de prazo', async () => {
+    const andamento = {
+      ...COMPLETA,
+      situacao: 'EM_ANDAMENTO' as const,
+      alertaPrazo: 'VENCENDO' as const,
+    };
+    const pendente = { ...RASCUNHO, responsavel: null, setor: null };
+    const concluida = {
+      ...COMPLETA,
+      id: '00000000-0000-4000-8000-000000000803',
+      ordem: 3,
+      situacao: 'CONCLUIDA' as const,
+    };
+    await signedInAs('ADMINISTRATIVO_FINANCEIRO', page([concluida, andamento, pendente]));
+    renderView();
+
+    await screen.findByText('Apresentação pública ao fim das oficinas');
+    const rows = screen.getAllByRole('row').slice(1);
+    expect(rows.map((row) => row.textContent?.slice(0, 18))).toEqual([
+      'Pendente (1)',
+      expect.stringContaining('2 · Promover') as unknown as string,
+      'Em andamento (1)',
+      expect.stringContaining('1 · Promover') as unknown as string,
+      'Concluída (1)',
+      expect.stringContaining('3 · Promover') as unknown as string,
+    ]);
+    expect(rows[1]).toHaveTextContent('Sem responsável');
+    expect(within(rows[3]).getAllByText('Prazo em até 30 dias')[0]).toBeInTheDocument();
+  });
+
+  it('quem responde pela meta muda a situacao dela, e so dela', async () => {
+    const alheia = {
+      ...RASCUNHO,
+      responsavel: { id: '00000000-0000-4000-8000-000000000299', nome: 'Outra', ativo: true },
+    };
+    const calls = await signedInAs(
+      'NUCLEO_PEDAGOGICO',
+      page([COMPLETA, alheia], {
+        'GET /auth/session': () => ({ status: 200, body: { ...ME, setor: null } }),
+        [`PATCH /goals/${COMPLETA.id}/situation`]: () => ({
+          status: 200,
+          body: { ...COMPLETA, versao: 3, situacao: 'EM_ANDAMENTO' },
+        }),
+      }),
+    );
+    renderView();
+
+    fireEvent.click(await screen.findByRole('button', { name: 'Ações da meta 1' }));
+    expect(screen.queryByRole('button', { name: 'Ações da meta 2' })).not.toBeInTheDocument();
+    expect(screen.queryByRole('menuitem', { name: 'Editar meta' })).not.toBeInTheDocument();
+    fireEvent.click(await screen.findByRole('menuitem', { name: 'Mudar situação' }));
+    fireEvent.change(await screen.findByLabelText('Situação'), {
+      target: { value: 'EM_ANDAMENTO' },
+    });
+    fireEvent.click(screen.getByRole('button', { name: 'Salvar situação' }));
+
+    expect(await screen.findByText('Meta 1: em andamento')).toBeInTheDocument();
+    expect(calls.find((call) => call.key.endsWith('/situation'))?.body).toEqual({
+      versao: 2,
+      situacao: 'EM_ANDAMENTO',
+    });
+  });
+
+  it('conflito na situacao fecha o dialogo, avisa e recarrega a lista', async () => {
+    const calls = await signedInAs(
+      'PRESIDENCIA_GESTAO',
+      page([COMPLETA], {
+        [`PATCH /goals/${COMPLETA.id}/situation`]: () => ({
+          status: 409,
+          body: { code: 'VERSION_CONFLICT', message: 'A meta foi alterada.' },
+        }),
+      }),
+    );
+    renderView();
+
+    fireEvent.click(await screen.findByRole('button', { name: 'Ações da meta 1' }));
+    fireEvent.click(await screen.findByRole('menuitem', { name: 'Mudar situação' }));
+    fireEvent.change(await screen.findByLabelText('Situação'), {
+      target: { value: 'CONCLUIDA' },
+    });
+    const reads = () => calls.filter((call) => call.key === `GET ${GOALS}`).length;
+    const before = reads();
+    fireEvent.click(screen.getByRole('button', { name: 'Salvar situação' }));
+
+    expect(await screen.findByText('Outra pessoa alterou a meta 1')).toBeInTheDocument();
+    await vi.waitFor(() => {
+      expect(screen.queryByRole('dialog', { name: /Situação da meta/ })).not.toBeInTheDocument();
+      expect(reads()).toBeGreaterThan(before);
+    });
+  });
+
+  it('reabrir meta concluida pede a justificativa e envia junto', async () => {
+    const concluida = { ...COMPLETA, situacao: 'CONCLUIDA' as const, alertaPrazo: null };
+    const calls = await signedInAs(
+      'PRESIDENCIA_GESTAO',
+      page([concluida], {
+        [`PATCH /goals/${COMPLETA.id}/situation`]: () => ({
+          status: 200,
+          body: { ...concluida, versao: 3, situacao: 'EM_ANDAMENTO' },
+        }),
+      }),
+    );
+    renderView();
+
+    fireEvent.click(await screen.findByRole('button', { name: 'Ações da meta 1' }));
+    fireEvent.click(await screen.findByRole('menuitem', { name: 'Mudar situação' }));
+    expect(await screen.findByLabelText('Situação')).toHaveValue('CONCLUIDA');
+    expect(screen.queryByLabelText('Justificativa')).not.toBeInTheDocument();
+    fireEvent.change(screen.getByLabelText('Situação'), { target: { value: 'EM_ANDAMENTO' } });
+    fireEvent.change(screen.getByLabelText('Justificativa'), { target: { value: '   ' } });
+    fireEvent.click(screen.getByRole('button', { name: 'Salvar situação' }));
+
+    expect(
+      await screen.findByText('Informe a justificativa para reabrir a meta.'),
+    ).toBeInTheDocument();
+    expect(screen.getByLabelText('Justificativa')).toHaveFocus();
+    expect(calls.some((call) => call.key.endsWith('/situation'))).toBe(false);
+
+    fill('Justificativa', 'Oficina remarcada pela escola parceira.');
+    fireEvent.click(screen.getByRole('button', { name: 'Salvar situação' }));
+
+    expect(await screen.findByText('Meta 1: em andamento')).toBeInTheDocument();
+    expect(calls.find((call) => call.key.endsWith('/situation'))?.body).toEqual({
+      versao: 2,
+      situacao: 'EM_ANDAMENTO',
+      justificativa: 'Oficina remarcada pela escola parceira.',
+    });
+  });
+
+  it('recusa da justificativa pela API aparece no campo', async () => {
+    const concluida = { ...COMPLETA, situacao: 'CONCLUIDA' as const, alertaPrazo: null };
+    await signedInAs(
+      'PRESIDENCIA_GESTAO',
+      page([concluida], {
+        [`PATCH /goals/${COMPLETA.id}/situation`]: () => ({
+          status: 400,
+          body: {
+            code: 'JUSTIFICATION_REQUIRED',
+            message: 'Informe a justificativa para reabrir uma meta concluída.',
+          },
+        }),
+      }),
+    );
+    renderView();
+
+    fireEvent.click(await screen.findByRole('button', { name: 'Ações da meta 1' }));
+    fireEvent.click(await screen.findByRole('menuitem', { name: 'Mudar situação' }));
+    fireEvent.change(await screen.findByLabelText('Situação'), {
+      target: { value: 'PENDENTE' },
+    });
+    fill('Justificativa', 'Motivo');
+    fireEvent.click(screen.getByRole('button', { name: 'Salvar situação' }));
+
+    expect(
+      await screen.findByText('Informe a justificativa para reabrir uma meta concluída.'),
+    ).toBeInTheDocument();
+    expect(screen.getByLabelText('Justificativa')).toHaveAttribute('aria-invalid', 'true');
+  });
+
+  it('responsavel de setor inativo nao preenche o setor executor', async () => {
+    const setor = COMPLETA.setor!;
+    await signedInAs(
+      'PRESIDENCIA_GESTAO',
+      page([], {
+        'GET /goals/eligible-owners': () => ({
+          status: 200,
+          body: [
+            { id: ME.usuarioId, nome: 'Ana Pedagógica', setor: { id: setor.id, nome: setor.nome } },
+          ],
+        }),
+        'GET /sectors': () => ({ status: 200, body: [{ ...setor, versao: 2, ativo: false }] }),
+      }),
+    );
+    renderView();
+
+    await openNew();
+    await screen.findByRole('option', { name: 'Ana Pedagógica' });
+    fill('Responsável', ME.usuarioId);
+    expect(screen.getByLabelText('Setor executor')).toHaveValue('');
+  });
+
+  it('sem responsaveis ou setores, avisa no formulario', async () => {
+    await signedInAs(
+      'PRESIDENCIA_GESTAO',
+      page([], {
+        'GET /goals/eligible-owners': () => ({ status: 500 }),
+        'GET /sectors': () => ({ status: 200, body: [] }),
+      }),
+    );
+    renderView();
+
+    await openNew();
+
+    expect(await within(screen.getByRole('dialog')).findByRole('alert')).toHaveTextContent(
+      'Não foi possível carregar os responsáveis ou os setores.',
+    );
+    expect(screen.getByLabelText('Responsável')).toBeDisabled();
+  });
+
+  it('ao escolher o responsavel, o setor executor vem do setor dele', async () => {
+    const setor = COMPLETA.setor!;
+    const calls = await signedInAs(
+      'PRESIDENCIA_GESTAO',
+      page([], {
+        'GET /goals/eligible-owners': () => ({
+          status: 200,
+          body: [
+            { id: ME.usuarioId, nome: 'Ana Pedagógica', setor: { id: setor.id, nome: setor.nome } },
+          ],
+        }),
+        'GET /sectors': () => ({ status: 200, body: [{ ...setor, versao: 1 }] }),
+        [`POST ${GOALS}`]: () => ({ status: 201, body: COMPLETA }),
+      }),
+    );
+    renderView();
+
+    await openNew();
+    fill('Origem', 'EDITAL');
+    fill('Objetivo', 'Promover a formação artística de jovens');
+    fill('Descrição', 'Oficinas de dança com 120 participantes');
+    fireEvent.click(screen.getByRole('checkbox', { name: /TR, item 24.1/ }));
+    await screen.findByRole('option', { name: 'Ana Pedagógica' });
+    await screen.findByRole('option', { name: setor.nome });
+    fill('Responsável', ME.usuarioId);
+    expect(screen.getByLabelText('Setor executor')).toHaveValue(setor.id);
+    fireEvent.click(screen.getByRole('button', { name: 'Salvar meta' }));
+
+    expect(await screen.findByText('Meta 1 salva')).toBeInTheDocument();
+    expect(calls.find((call) => call.key === `POST ${GOALS}`)?.body).toMatchObject({
+      responsavelId: ME.usuarioId,
+      setorId: setor.id,
+    });
   });
 
   it('projeto inexistente mostra o aviso e o caminho de volta', async () => {

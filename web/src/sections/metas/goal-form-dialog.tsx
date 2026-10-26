@@ -25,7 +25,8 @@ import { Input } from '@/components/ui/input';
 import { NativeSelect, NativeSelectOption } from '@/components/ui/native-select';
 import { Textarea } from '@/components/ui/textarea';
 import { ApiError } from '@/lib/api';
-import { useFreshGoal, useSaveGoal } from '@/queries/metas';
+import { useEligibleOwners, useFreshGoal, useSaveGoal } from '@/queries/metas';
+import { useSectors } from '@/queries/setores';
 import type { Goal, GoalInput } from '@/types/metas';
 import type { Requirement } from '@/types/requisitos';
 import { formatDate } from '../instrumentos/format';
@@ -75,6 +76,8 @@ const schemaFor = (execution: Execution) => {
       frequenciaApuracao: text(100),
       formaComprovacao: text(1000),
       resultadoEsperado: text(1000),
+      responsavelId: z.string().transform((value) => value || null),
+      setorId: z.string().transform((value) => value || null),
     })
     .refine(
       (values) =>
@@ -100,7 +103,10 @@ const schemaFor = (execution: Execution) => {
 type GoalSchema = ReturnType<typeof schemaFor>;
 type FormValues = z.input<GoalSchema>;
 type FieldName = keyof FormValues;
-type TextField = Exclude<FieldName, 'origem' | 'requisitoIds' | 'modalidadeAfericao'>;
+type TextField = Exclude<
+  FieldName,
+  'origem' | 'requisitoIds' | 'modalidadeAfericao' | 'responsavelId' | 'setorId'
+>;
 
 const EMPTY: FormValues = {
   origem: '' as FormValues['origem'],
@@ -116,6 +122,8 @@ const EMPTY: FormValues = {
   frequenciaApuracao: '',
   formaComprovacao: '',
   resultadoEsperado: '',
+  responsavelId: '',
+  setorId: '',
 };
 
 const FIELD_BY_CODE: Partial<Record<string, FieldName>> = {
@@ -141,6 +149,8 @@ function valuesOf(goal: Goal | null): FormValues {
     frequenciaApuracao: goal.frequenciaApuracao ?? '',
     formaComprovacao: goal.formaComprovacao ?? '',
     resultadoEsperado: goal.resultadoEsperado ?? '',
+    responsavelId: goal.responsavel?.id ?? '',
+    setorId: goal.setor?.id ?? '',
   };
 }
 
@@ -178,6 +188,8 @@ export function GoalFormDialog({
   onSaved: (result: Goal) => void;
 }) {
   const save = useSaveGoal(projectId);
+  const owners = useEligibleOwners(open);
+  const sectors = useSectors(open);
   const freshGoal = useFreshGoal(projectId);
   const [failure, setFailure] = useState<string | null>(null);
   const [current, setCurrent] = useState<Goal | null>(null);
@@ -342,6 +354,66 @@ export function GoalFormDialog({
               </div>
               {input('frequenciaApuracao', 'Frequência de apuração')}
               {area('formaComprovacao', 'Forma de comprovação')}
+            </Section>
+            <Section title="Responsável e setor">
+              <FormField name="responsavelId" label="Responsável" control={form.control}>
+                {(props) => (
+                  <NativeSelect
+                    {...props}
+                    disabled={!owners.isSuccess}
+                    onChange={(event) => {
+                      props.onChange(event);
+                      const owner = owners.data?.find((item) => item.id === event.target.value);
+                      const sector = sectors.data?.find((item) => item.id === owner?.setor?.id);
+                      if (sector?.ativo && !form.getValues('setorId')) {
+                        form.setValue('setorId', sector.id);
+                      }
+                    }}
+                  >
+                    <NativeSelectOption value="">
+                      {owners.isPending ? 'Carregando…' : 'Sem responsável'}
+                    </NativeSelectOption>
+                    {editing?.responsavel &&
+                      !owners.data?.some((item) => item.id === editing.responsavel?.id) && (
+                        <NativeSelectOption value={editing.responsavel.id} disabled>
+                          {editing.responsavel.nome} (
+                          {editing.responsavel.ativo ? 'indisponível' : 'conta desativada'})
+                        </NativeSelectOption>
+                      )}
+                    {owners.data?.map((owner) => (
+                      <NativeSelectOption key={owner.id} value={owner.id}>
+                        {owner.nome}
+                      </NativeSelectOption>
+                    ))}
+                  </NativeSelect>
+                )}
+              </FormField>
+              <FormField name="setorId" label="Setor executor" control={form.control}>
+                {(props) => (
+                  <NativeSelect {...props} disabled={!sectors.isSuccess}>
+                    <NativeSelectOption value="">
+                      {sectors.isPending ? 'Carregando…' : 'Sem setor'}
+                    </NativeSelectOption>
+                    {sectors.data
+                      ?.filter((sector) => sector.ativo || sector.id === editing?.setor?.id)
+                      .map((sector) => (
+                        <NativeSelectOption
+                          key={sector.id}
+                          value={sector.id}
+                          disabled={!sector.ativo}
+                        >
+                          {sector.nome}
+                          {sector.ativo ? '' : ' (inativo)'}
+                        </NativeSelectOption>
+                      ))}
+                  </NativeSelect>
+                )}
+              </FormField>
+              {(owners.isError || sectors.isError) && (
+                <p role="alert" className="text-sm text-destructive">
+                  Não foi possível carregar os responsáveis ou os setores. Feche e tente de novo.
+                </p>
+              )}
             </Section>
             <Section title="Período">
               <FieldDescription>

@@ -78,6 +78,10 @@ const GOAL_1: Goal = {
   requisitos: [],
   rascunho: false,
   camposFaltantes: [],
+  responsavel: null,
+  setor: null,
+  situacao: 'PENDENTE',
+  alertaPrazo: null,
 };
 
 const GOAL_2: Goal = {
