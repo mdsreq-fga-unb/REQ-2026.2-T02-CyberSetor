@@ -27,7 +27,10 @@ import type { Instrument } from '@/types/instrumentos';
 import type { Project } from '@/types/projetos';
 import { formatDate } from '../../instrumentos/format';
 import { ActivityFormDialog } from '../activity-form-dialog';
+import { RegistrationFormDialog } from '../registration-form-dialog';
+import { RegistrationShareDialog } from '../registration-share-dialog';
 import { metaBadgeLabel } from '../format';
+import type { Registration } from '@/types/inscricoes';
 
 const EDITORS: Perfil[] = ['PRESIDENCIA_GESTAO', 'NUCLEO_PEDAGOGICO'];
 
@@ -83,6 +86,11 @@ export function ProjectActivitiesSection({
   const activities = useActivities(project.id);
   const pagination = usePagination(activities.data);
   const form = useDialogState<{ activity: Activity | null }>();
+  const registrationForm = useDialogState<{ activity: Activity }>();
+  const registrationShare = useDialogState<{
+    activity: Activity;
+    initialRegistration?: Registration;
+  }>();
 
   const canEdit = session !== null && EDITORS.includes(session.perfil) && instrument.ativo === true;
 
@@ -166,6 +174,14 @@ export function ProjectActivitiesSection({
                               label: 'Editar atividade',
                               onSelect: () => form.show({ activity }),
                             },
+                            {
+                              label: 'Configurar inscrição',
+                              onSelect: () => registrationForm.show({ activity }),
+                            },
+                            {
+                              label: 'Link e QR Code',
+                              onSelect: () => registrationShare.show({ activity }),
+                            },
                           ]}
                         />
                       </TableCell>
@@ -186,6 +202,45 @@ export function ProjectActivitiesSection({
         onClose={form.close}
         onSaved={(activity) =>
           toast.add({ type: 'success', title: `Atividade "${activity.titulo}" salva` })
+        }
+      />
+
+      <RegistrationFormDialog
+        open={registrationForm.open}
+        activity={registrationForm.value?.activity ?? null}
+        instrumentAtivo={instrument.ativo}
+        onClose={registrationForm.close}
+        onSaved={(saved) => {
+          toast.add({
+            type: 'success',
+            title: `Inscrição da atividade "${registrationForm.value?.activity?.titulo ?? ''}" salva`,
+          });
+          if (registrationForm.value?.activity) {
+            registrationShare.show({
+              activity: registrationForm.value.activity,
+              initialRegistration: saved,
+            });
+          }
+        }}
+        onOpenShare={(saved) => {
+          if (registrationForm.value?.activity) {
+            registrationShare.show({
+              activity: registrationForm.value.activity,
+              initialRegistration: saved,
+            });
+          }
+        }}
+      />
+
+      <RegistrationShareDialog
+        open={registrationShare.open}
+        activity={registrationShare.value?.activity ?? null}
+        initialRegistration={registrationShare.value?.initialRegistration}
+        onClose={registrationShare.close}
+        onOpenConfigure={
+          canEdit && registrationShare.value?.activity
+            ? () => registrationForm.show({ activity: registrationShare.value!.activity })
+            : undefined
         }
       />
     </section>
