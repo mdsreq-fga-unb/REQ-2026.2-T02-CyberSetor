@@ -6,6 +6,7 @@ import { useEffect, useRef, useState, type FormEvent } from 'react';
 import { useForm, useWatch } from 'react-hook-form';
 import { z } from 'zod';
 import { FormField } from '@/components/form-field';
+import { ListError } from '@/components/list/list-states';
 import { Button } from '@/components/ui/button';
 import {
   Dialog,
@@ -31,6 +32,7 @@ import {
   type CampoInscricao,
   type Registration,
 } from '@/types/inscricoes';
+import { registrationLoadFailure } from './format';
 
 const MAX_VAGAS = 10_000;
 
@@ -255,6 +257,17 @@ export function RegistrationFormDialog({
         {registrationQuery.isPending ? (
           <div className="py-8 text-center text-sm text-muted-foreground">
             Carregando configuração da inscrição…
+          </div>
+        ) : registrationQuery.isError ? (
+          <div className="flex flex-col gap-3 py-2">
+            <ListError message={registrationLoadFailure(registrationQuery.error)} />
+            <Button
+              variant="outline"
+              onClick={() => void registrationQuery.refetch()}
+              className="h-12 min-h-12 self-start"
+            >
+              Tentar de novo
+            </Button>
           </div>
         ) : (
           <form noValidate onSubmit={onSubmit}>

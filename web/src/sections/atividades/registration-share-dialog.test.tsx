@@ -173,6 +173,36 @@ describe('RegistrationShareDialog', () => {
     vi.restoreAllMocks();
   });
 
+  it('informa a falha ao carregar a inscricao e tenta de novo, sem dizer que ela nao foi aberta', async () => {
+    let calls = 0;
+    await signedInAs('PRESIDENCIA_GESTAO', {
+      [`GET /activities/${ACTIVITY.id}/registration`]: () => {
+        calls += 1;
+        // a consulta tenta três vezes antes de mostrar a falha
+        return calls <= 3
+          ? { status: 500, body: { code: 'INTERNAL_ERROR' } }
+          : { status: 200, body: REGISTRATION_OPEN };
+      },
+    });
+
+    renderShareDialog();
+
+    expect(
+      await screen.findByText(
+        'Não foi possível carregar a inscrição. Tente de novo.',
+        {},
+        { timeout: 6000 },
+      ),
+    ).toBeInTheDocument();
+    expect(
+      screen.queryByText('A inscrição desta atividade ainda não foi aberta.'),
+    ).not.toBeInTheDocument();
+
+    fireEvent.click(screen.getByRole('button', { name: 'Tentar de novo' }));
+
+    expect(await screen.findByLabelText('Link público do formulário')).toBeInTheDocument();
+  }, 10_000);
+
   it('informa quando a atividade ainda nao tem inscricao aberta', async () => {
     await signedInAs('PRESIDENCIA_GESTAO', {
       [`GET /activities/${ACTIVITY.id}/registration`]: () => ({
