@@ -134,6 +134,28 @@ describe('RegistrationFormDialog', () => {
     });
   });
 
+  it('na falha ao carregar a inscricao, nao mostra o formulario de abertura', async () => {
+    const calls = await signedInAs('PRESIDENCIA_GESTAO', {
+      [`GET /activities/${ACTIVITY.id}/registration`]: () => ({
+        status: 500,
+        body: { code: 'INTERNAL_ERROR' },
+      }),
+    });
+
+    renderDialog();
+
+    expect(
+      await screen.findByText(
+        'Não foi possível carregar a inscrição. Tente de novo.',
+        {},
+        { timeout: 6000 },
+      ),
+    ).toBeInTheDocument();
+    expect(screen.queryByRole('button', { name: 'Abrir inscrição' })).not.toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'Tentar de novo' })).toBeInTheDocument();
+    expect(calls.some((c) => c.key === `POST /activities/${ACTIVITY.id}/registration`)).toBe(false);
+  }, 10_000);
+
   it('edita inscricao existente com PATCH e versao', async () => {
     const calls = await signedInAs('NUCLEO_PEDAGOGICO', {
       [`GET /activities/${ACTIVITY.id}/registration`]: () => ({

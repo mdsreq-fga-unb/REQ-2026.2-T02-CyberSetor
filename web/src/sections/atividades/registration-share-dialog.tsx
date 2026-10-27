@@ -2,6 +2,7 @@
 
 import { CheckIcon, CopyIcon, DownloadIcon, ExternalLinkIcon, QrCodeIcon } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react';
+import { ListError } from '@/components/list/list-states';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import {
@@ -17,6 +18,7 @@ import { downloadDataUrl, generateQrCodeDataUrl } from '@/lib/qrcode';
 import { useRegistration } from '@/queries/inscricoes';
 import type { Activity } from '@/types/atividades';
 import type { Registration } from '@/types/inscricoes';
+import { registrationLoadFailure } from './format';
 
 export function RegistrationShareDialog({
   open,
@@ -135,6 +137,17 @@ export function RegistrationShareDialog({
         {registrationQuery.isPending && !initialRegistration ? (
           <div className="py-8 text-center text-sm text-muted-foreground">
             Carregando link público…
+          </div>
+        ) : registrationQuery.isError && !initialRegistration ? (
+          <div className="flex flex-col gap-3 py-2">
+            <ListError message={registrationLoadFailure(registrationQuery.error)} />
+            <Button
+              variant="outline"
+              onClick={() => void registrationQuery.refetch()}
+              className="h-12 min-h-12 self-start"
+            >
+              Tentar de novo
+            </Button>
           </div>
         ) : !registration ? (
           <div className="flex flex-col items-center gap-3 py-6 text-center">
