@@ -10,7 +10,7 @@
 | 05/10/2026 | 1.5 | Revisão editorial: formatação direta, preservando toda a fundamentação teórica, citações e quadros comparativos | Rodrigo Henrique |
 | 13/10/2026 | 1.6 | Revisão conceitual: neutralidade no quadro comparativo, OpenUP iterativo, Scrum como framework, ScrumXP como processo adaptado e alinhamento de cadências | Caio Martins |
 | 19/10/2026 | 1.7 | Equipe atual de cinco integrantes | Maria Eduarda Marques |
-| 26/10/2026 | 1.8 | Programação em pares por duplas de épico, com o detalhe na página de processo; MVP centrado em parcerias, metas e prestação de contas, com a presença nos incrementos; refatoração dentro da história, coberta pelos testes; documentação de requisitos do ScrumXP com o fluxo da tela e o protótipo evolutivo na homologação; justificativa sem superlativos | Vinicius Vieira |
+| 26/10/2026 | 1.8 | Programação em pares por duplas de épico, com o detalhe na página de processo; MVP centrado em parcerias, metas e prestação de contas, com a presença nos incrementos; refatoração dentro da história, coberta pelos testes; documentação de requisitos do ScrumXP com o fluxo da tela e o protótipo evolutivo na homologação; justificativa sem superlativos; quadro comparativo pelo que cada processo exige da equipe; síntese e alternativas descartadas pelos fatores do contexto | Vinicius Vieira |
 
 A partir do cenário diagnosticado na Seção 1 e da solução proposta na Seção 2, a equipe CyberSetor estabeleceu as decisões de estratégia de engenharia de software para o atendimento ao Instituto No Setor nas três camadas metodológicas distinguidas pelo referencial da disciplina: **abordagem**, **ciclo de vida** e **processo**.
 
@@ -29,7 +29,7 @@ A abordagem Ágil valoriza indivíduos e interações mais que processos e ferra
 
 **Por que escolher a Abordagem Ágil?**
 
-- **Adaptação a Requisitos Emergentes:** Permite ajustar o escopo e o nível de detalhamento dos requisitos conforme novas necessidades emergem da convivência em campo com o parceiro, superando a rigidez da abordagem Preditiva (Dirigida por Planos).
+- **Adaptação a Requisitos Emergentes:** Permite ajustar o escopo e o nível de detalhamento dos requisitos conforme novas necessidades emergem da convivência em campo com o parceiro; na abordagem Preditiva (Dirigida por Planos), essas mudanças passam pela revisão do plano.
 - **Entregas Incrementais de Valor:** Disponibiliza funcionalidades essenciais para validação precoce e contínua com a coordenação pedagógica, sem postergar a visibilidade da solução funcional para o término do semestre.
 - **Foco no Usuário do Instituto:** Prioriza as necessidades operacionais reais: o MVP trata das parcerias, das metas e da prestação de contas, e a chamada e a presença em oficinas e mutirões vêm nos incrementos seguintes ([seção 10.2.6](../requisitos/10-backlog.md#1026-mvp-e-incrementos)), calibrando a interface de acordo com o nível de letramento digital de quem atua na ponta.
 - **Equilíbrio Metodológico frente à Abordagem Preditiva ou Híbrida:** Adequa o esforço de especificação à capacidade produtiva de uma equipe de cinco membros, mantendo a documentação viva, rastreável e focada na entrega de valor funcional direto para a organização.
@@ -104,10 +104,10 @@ A tabela a seguir compara o **OpenUP** (processo ágil baseado em arquitetura do
 | **Práticas Técnicas de Engenharia** | Prescreve orientações conceituais de análise e projeto orientados a objetos e casos de uso, sem detalhar rotinas diárias de codificação em pares. | Práticas prescritivas e contínuas de engenharia integradas ao dia a dia (trabalho em duplas, integração contínua e testes de aceitação). |
 | **Documentação de Requisitos** | Estruturada e formal por fase, centrada em Casos de Uso, Modelo de Dados e Arquitetura Executável. | Viva, enxuta e rastreável: histórias de usuário, critérios de aceitação com o fluxo da tela e protótipo evolutivo na homologação. |
 | **Colaboração com o Cliente** | Contínua ao longo de todas as iterações, complementada por marcos formais de avaliação de objetivos no encerramento de cada fase. | Contínua e direta ao final de cada sprint quinzenal, mediada pela demonstração de software em funcionamento. |
-| **Curva de Aprendizado da Equipe** | Moderada a alta: requer disciplina prévia em modelagem de casos de uso e gestão formal das disciplinas do processo unificado. | Baixa a moderada: alinhada à dinâmica acadêmica quinzenal e acelerada pelo trabalho em duplas. |
-| **Aplicação no Contexto do Projeto** | Demanda governança disciplinada e dedicação inicial substancial à modelagem de casos de uso e validação arquitetural na Elaboração, exigindo maior esforço formal para um time de cinco estudantes. | Adequa-se à dinâmica de iterações curtas com prazos acadêmicos fixos, nivelando o conhecimento técnico da equipe pelas práticas prescritivas do XP. |
+| **O que exige da equipe** | Domínio da modelagem de casos de uso e das disciplinas do processo unificado. | Domínio das cerimônias do Scrum e das práticas do XP (trabalho em duplas, integração contínua e testes). |
+| **Aplicação no Contexto do Projeto** | Concentra na Elaboração a modelagem de casos de uso e a validação da arquitetura, antes da construção. | Distribui a modelagem e a validação pelas sprints, com as histórias refinadas a cada Planning e as práticas do XP aplicadas na construção. |
 
-> **Síntese da Comparação:** Embora o OpenUP seja um processo ágil disciplinado, voltado à governança baseada em arquitetura e casos de uso, sua adoção demandaria um esforço prévio de modelagem e ritos formais que não se ajustam com tanta fluidez à capacidade produtiva de uma equipe de cinco estudantes em ambiente acadêmico. O processo adaptado ScrumXP provê a agilidade gerencial necessária com menor sobrecarga documental inicial, assegurando rigor técnico por meio das práticas prescritivas do XP.
+> **Síntese da Comparação:** Os dois processos são iterativos e incrementais e poderiam conduzir o projeto. A escolha do ScrumXP se apoia em três fatores do contexto: sprints de duas semanas acompanham as quatro entregas do semestre; os requisitos são mantidos como histórias de usuário com critérios de aceitação, e não como casos de uso; e as práticas do XP ajudam a nivelar uma equipe de cinco estudantes com conhecimento técnico desigual. O OpenUP teria a vantagem de validar a arquitetura mais cedo; no ScrumXP, esse risco é tratado pela base técnica construída antes das histórias e pelos testes automatizados.
 
 ---
 
@@ -117,7 +117,7 @@ A tabela a seguir compara o **OpenUP** (processo ágil baseado em arquitetura do
 O Scrum isolado fornece governança e comunicação com stakeholders, mas é agnóstico em relação à engenharia de software, o que pode comprometer a sustentabilidade técnica do produto. Por outro lado, o XP provê práticas técnicas e disciplina de desenvolvimento, mas carece de uma estrutura de papéis organizacionais amplamente compreendida por clientes externos. O **ScrumXP** combina os dois: a cadência de gestão do Scrum e as práticas de código do XP.
 
 ### Coerência com os Valores da Engenharia de Requisitos
-Conforme registrado por Marsicano (2026, §5.4.1), os sete valores fundamentais da Engenharia de Requisitos adotados na disciplina — **Comunicação, Feedback, Simplicidade, Coragem, Respeito, Compromisso e Confiança** — são adaptações diretas do eXtreme Programming e do Scrum (acrescidos do valor Confiança). Adotar o ScrumXP não é apenas uma escolha operacional, mas uma decisão de **coerência metodológica integral** com a base conceitual da disciplina.
+Conforme registrado por Marsicano (2026, §5.4.1), os sete valores fundamentais da Engenharia de Requisitos adotados na disciplina — **Comunicação, Feedback, Simplicidade, Coragem, Respeito, Compromisso e Confiança** — são adaptações diretas do eXtreme Programming e do Scrum (acrescidos do valor Confiança). Adotar o ScrumXP mantém o processo da equipe alinhado a essa base conceitual.
 
 ### Pilares de Decisão para o Projeto
 
@@ -143,8 +143,8 @@ A tabela a seguir consolida os critérios que justificaram o descarte formal das
 | Abordagem / Processo | Motivo Principal do Descarte |
 |---|---|
 | **Cascata (Waterfall) e Modelo V** | Pressupõem estabilidade total de requisitos desde o início e verificação formal tardia. Incompatíveis com a descoberta contínua de requisitos e as entregas parciais do semestre. |
-| **Processo Unificado Completo (RUP)** | Sobrecarga de artefatos formais, fases extensas e curva de aprendizado burocrática inviável para uma equipe de cinco estudantes em ambiente universitário. |
-| **OpenUP (Open Unified Process)** | Demanda governança estruturada por fases e esforço inicial na disciplina de modelagem de casos de uso e arquitetura na Elaboração, exigindo curva de aprendizado e formalismo documental superiores à capacidade de uma equipe acadêmica reduzida. |
+| **Processo Unificado Completo (RUP)** | Conjunto extenso de papéis e artefatos, dimensionado para projetos e equipes maiores que uma equipe de cinco estudantes em um semestre. |
+| **OpenUP (Open Unified Process)** | Iterativo e adequado a equipes pequenas, mas organiza os requisitos em casos de uso e as iterações em fases com marcos próprios; o projeto mantém os requisitos em histórias de usuário e precisa de iterações alinhadas às quatro entregas do semestre. |
 | **Espiral (Boehm)** | Modelo orientado a projetos de grande porte com riscos críticos (aeroespaciais, defesa), demandando especialização em análise formal de riscos e alto custo gerencial. |
 | **Feature Driven Development (FDD)** | Pressupõe equipe previamente sênior em modelagem orientada a objetos e domínio de negócio mapeado logo na largada do projeto. |
 | **Kanban Isolado** | Embora ágil, prioriza fluxo contínuo para suporte e manutenção, carecendo de ritos temporais para sincronizar os prazos pedagógicos das quatro entregas do semestre. |
