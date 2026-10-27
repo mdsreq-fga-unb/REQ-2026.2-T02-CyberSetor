@@ -14,6 +14,7 @@ interface AccountBody {
   id: string;
   perfil: Perfil;
   ativo: boolean;
+  versao: number;
   deveTrocarSenha: boolean;
 }
 
@@ -135,7 +136,7 @@ describe('Administracao de contas (e2e)', () => {
     const res = await http()
       .patch(`/v1/accounts/${id}/profile`)
       .set('Authorization', `Bearer ${token}`)
-      .send({ perfil: Perfil.NUCLEO_PEDAGOGICO })
+      .send({ perfil: Perfil.NUCLEO_PEDAGOGICO, versao: 1 })
       .expect(200);
 
     expect((res.body as AccountBody).perfil).toBe(Perfil.NUCLEO_PEDAGOGICO);
@@ -227,6 +228,55 @@ describe('Administracao de contas (e2e)', () => {
     expect(JSON.stringify(event)).not.toContain(body.senhaTemporaria);
   });
 
+  it('recusa mudanca de perfil ou de setor sobre versao antiga da conta', async () => {
+    const { token } = await admin();
+    const id = await createUser('gestao@instituto.test', Perfil.PRESIDENCIA_GESTAO);
+
+    const first = await http()
+      .patch(`/v1/accounts/${id}/profile`)
+      .set('Authorization', `Bearer ${token}`)
+      .send({ perfil: Perfil.NUCLEO_PEDAGOGICO, versao: 1 })
+      .expect(200);
+    expect((first.body as AccountBody).versao).toBe(2);
+
+    const stale = await http()
+      .patch(`/v1/accounts/${id}/profile`)
+      .set('Authorization', `Bearer ${token}`)
+      .send({ perfil: Perfil.PRESIDENCIA_GESTAO, versao: 1 })
+      .expect(409);
+    expect(stale.body).toMatchObject({ code: 'VERSION_CONFLICT' });
+    const staleSector = await http()
+      .patch(`/v1/accounts/${id}/sector`)
+      .set('Authorization', `Bearer ${token}`)
+      .send({ setorId: null, versao: 1 })
+      .expect(409);
+    expect(staleSector.body).toMatchObject({ code: 'VERSION_CONFLICT' });
+
+    await http()
+      .post(`/v1/accounts/${id}/deactivate`)
+      .set('Authorization', `Bearer ${token}`)
+      .expect(200);
+    await http()
+      .patch(`/v1/accounts/${id}/profile`)
+      .set('Authorization', `Bearer ${token}`)
+      .send({ perfil: Perfil.PRESIDENCIA_GESTAO, versao: 2 })
+      .expect(409);
+    await http()
+      .patch(`/v1/accounts/${id}/profile`)
+      .set('Authorization', `Bearer ${token}`)
+      .send({ perfil: Perfil.NUCLEO_PEDAGOGICO })
+      .expect(400);
+
+    expect(await prisma.usuario.findUniqueOrThrow({ where: { id } })).toMatchObject({
+      perfil: Perfil.NUCLEO_PEDAGOGICO,
+      ativo: false,
+      versao: 3,
+    });
+    expect(await prisma.trilhaAuditoria.count({ where: { acao: 'ACCOUNT_PROFILE_CHANGED' } })).toBe(
+      1,
+    );
+  });
+
   it('nao desativa nem rebaixa o ultimo administrador ativo', async () => {
     const { id, token } = await admin();
 
@@ -239,7 +289,7 @@ describe('Administracao de contas (e2e)', () => {
     await http()
       .patch(`/v1/accounts/${id}/profile`)
       .set('Authorization', `Bearer ${token}`)
-      .send({ perfil: Perfil.PRESIDENCIA_GESTAO })
+      .send({ perfil: Perfil.PRESIDENCIA_GESTAO, versao: 1 })
       .expect(409);
 
     expect(await prisma.usuario.findUniqueOrThrow({ where: { id } })).toMatchObject({

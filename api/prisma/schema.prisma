@@ -272,6 +272,7 @@ model Usuario {
   senhaHash       String    @map("senha_hash")
   perfil          Perfil
   ativo           Boolean   @default(true)
+  versao          Int       @default(1)
   deveTrocarSenha Boolean   @default(true) @map("deve_trocar_senha")
   ultimoAcessoEm  DateTime? @map("ultimo_acesso_em") @db.Timestamptz(3)
   falhasLogin     Int       @default(0) @map("falhas_login")

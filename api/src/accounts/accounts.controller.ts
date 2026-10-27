@@ -63,26 +63,27 @@ export class AccountsController {
 
   @Patch(':id/profile')
   @ApiOkResponse({ type: AccountResponse })
-  @ApiConflictResponse({ description: 'Deixaria o sistema sem administrador ativo' })
+  @ApiConflictResponse({ description: 'LAST_ADMIN ou VERSION_CONFLICT' })
   changeProfile(
     @Param('id', ParseUUIDPipe) id: string,
     @Body() body: ChangeProfileDto,
     @CurrentUser() user: ValidSession,
     @Res({ passthrough: true }) res: Response,
   ): Promise<AccountResponse> {
-    return this.accounts.changeProfile(id, body.perfil, actorOf(user, res));
+    return this.accounts.changeProfile(id, body, actorOf(user, res));
   }
 
   @Patch(':id/sector')
   @ApiOkResponse({ type: AccountResponse })
   @ApiBadRequestResponse({ description: 'INVALID_SECTOR' })
+  @ApiConflictResponse({ description: 'VERSION_CONFLICT' })
   changeSector(
     @Param('id', ParseUUIDPipe) id: string,
     @Body() body: ChangeSectorDto,
     @CurrentUser() user: ValidSession,
     @Res({ passthrough: true }) res: Response,
   ): Promise<AccountResponse> {
-    return this.accounts.changeSector(id, body.setorId, actorOf(user, res));
+    return this.accounts.changeSector(id, body, actorOf(user, res));
   }
 
   @Post(':id/deactivate')

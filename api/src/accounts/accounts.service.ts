@@ -11,6 +11,8 @@ import { AutorTipo, Perfil } from '../generated/prisma/enums.js';
 import { PrismaService } from '../prisma/prisma.service.js';
 import type {
   AccountResponse,
+  ChangeProfileDto,
+  ChangeSectorDto,
   CreateAccountDto,
   DeactivationResponse,
   TemporaryPasswordResponse,
@@ -29,6 +31,7 @@ const ACCOUNT_SELECT = {
   emailLogin: true,
   perfil: true,
   ativo: true,
+  versao: true,
   deveTrocarSenha: true,
   bloqueadoAte: true,
   ultimoAcessoEm: true,
@@ -103,17 +106,19 @@ export class AccountsService {
     return { conta: toResponse(conta), senhaTemporaria };
   }
 
-  async changeProfile(id: string, perfil: Perfil, actor: Actor): Promise<AccountResponse> {
+  async changeProfile(
+    id: string,
+    { perfil, versao }: ChangeProfileDto,
+    actor: Actor,
+  ): Promise<AccountResponse> {
     const conta = await this.prisma.$transaction(async (tx) => {
       const current = await this.findOrFail(tx, id);
+      if (current.versao !== versao) throw this.versionConflict();
       if (current.perfil === perfil) return current;
       await this.ensureNotLastAdmin(tx, current);
 
-      const updated = await tx.usuario.update({
-        where: { id },
-        data: { perfil },
-        select: ACCOUNT_SELECT,
-      });
+      await this.bumpVersion(tx, id, versao, { perfil });
+      const updated = await this.findOrFail(tx, id);
       await this.revokeSessions(tx, id);
       await this.audit.record(
         {
@@ -133,13 +138,19 @@ export class AccountsService {
     return toResponse(conta);
   }
 
-  async changeSector(id: string, setorId: string | null, actor: Actor): Promise<AccountResponse> {
+  async changeSector(
+    id: string,
+    { setorId, versao }: ChangeSectorDto,
+    actor: Actor,
+  ): Promise<AccountResponse> {
     const conta = await this.prisma.$transaction(async (tx) => {
       const current = await this.findOrFail(tx, id);
+      if (current.versao !== versao) throw this.versionConflict();
       const before = current.pessoa.setor?.id ?? null;
       if (before === setorId) return current;
       await this.assertSector(tx, setorId);
 
+      await this.bumpVersion(tx, id, versao, {});
       await tx.pessoa.update({ where: { id: current.pessoaId }, data: { setorId } });
       await this.audit.record(
         {
@@ -168,7 +179,7 @@ export class AccountsService {
 
       const updated = await tx.usuario.update({
         where: { id },
-        data: { ativo: false },
+        data: { ativo: false, versao: { increment: 1 } },
         select: ACCOUNT_SELECT,
       });
       await this.revokeSessions(tx, id);
@@ -196,7 +207,7 @@ export class AccountsService {
 
       const updated = await tx.usuario.update({
         where: { id },
-        data: { ativo: true },
+        data: { ativo: true, versao: { increment: 1 } },
         select: ACCOUNT_SELECT,
       });
       await this.audit.record(
@@ -275,6 +286,26 @@ export class AccountsService {
         message: 'A operação deixaria o sistema sem administrador ativo.',
       });
     }
+  }
+
+  private async bumpVersion(
+    tx: Prisma.TransactionClient,
+    id: string,
+    versao: number,
+    data: Prisma.UsuarioUpdateManyMutationInput,
+  ): Promise<void> {
+    const updated = await tx.usuario.updateMany({
+      where: { id, versao },
+      data: { ...data, versao: { increment: 1 } },
+    });
+    if (updated.count === 0) throw this.versionConflict();
+  }
+
+  private versionConflict(): ConflictException {
+    return new ConflictException({
+      code: 'VERSION_CONFLICT',
+      message: 'A conta foi alterada por outra pessoa. Recarregue e tente de novo.',
+    });
   }
 
   private async revokeSessions(tx: Prisma.TransactionClient, usuarioId: string): Promise<void> {
