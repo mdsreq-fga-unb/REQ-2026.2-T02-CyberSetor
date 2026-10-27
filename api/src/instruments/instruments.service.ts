@@ -16,7 +16,15 @@ import type {
   UpdateInstrumentDto,
 } from './instruments.dto.js';
 
-type InstrumentRow = Prisma.InstrumentoGetPayload<object>;
+const CURRENT_DOCUMENT = {
+  documentos: {
+    select: { enviadoEm: true },
+    orderBy: [{ enviadoEm: 'desc' }, { id: 'desc' }],
+    take: 1,
+  },
+} satisfies Prisma.InstrumentoInclude;
+
+type InstrumentRow = Prisma.InstrumentoGetPayload<{ include: typeof CURRENT_DOCUMENT }>;
 
 const FIELDS = [
   'tipo',
@@ -48,6 +56,7 @@ function toResponse(row: InstrumentRow): InstrumentResponse {
     vigenciaInicio: row.vigenciaInicio.toISOString().slice(0, 10),
     vigenciaFim: row.vigenciaFim.toISOString().slice(0, 10),
     ativo: row.ativo,
+    documentoFormalEm: row.documentos[0]?.enviadoEm.toISOString() ?? null,
   };
 }
 
@@ -55,7 +64,9 @@ function snapshot(response: InstrumentResponse): Prisma.InputJsonObject {
   return Object.fromEntries(FIELDS.map((field) => [field, response[field]]));
 }
 
-function validate(values: Omit<InstrumentResponse, 'id' | 'versao' | 'ativo'>): void {
+function validate(
+  values: Omit<InstrumentResponse, 'id' | 'versao' | 'ativo' | 'documentoFormalEm'>,
+): void {
   [values.dataCelebracao, values.vigenciaInicio, values.vigenciaFim].forEach(toDate);
   if (Number(values.valorGlobal) <= 0) {
     throw new BadRequestException('O valor global deve ser maior que zero.');
@@ -76,12 +87,16 @@ export class InstrumentsService {
     const rows = await this.prisma.instrumento.findMany({
       where: ativo === undefined ? {} : { ativo },
       orderBy: [{ vigenciaInicio: 'desc' }, { criadoEm: 'desc' }],
+      include: CURRENT_DOCUMENT,
     });
     return rows.map(toResponse);
   }
 
   async get(id: string): Promise<InstrumentResponse> {
-    const row = await this.prisma.instrumento.findUnique({ where: { id } });
+    const row = await this.prisma.instrumento.findUnique({
+      where: { id },
+      include: CURRENT_DOCUMENT,
+    });
     if (!row) throw new NotFoundException('Instrumento não encontrado.');
     return toResponse(row);
   }
@@ -99,6 +114,7 @@ export class InstrumentsService {
           vigenciaInicio: toDate(data.vigenciaInicio),
           vigenciaFim: toDate(data.vigenciaFim),
         },
+        include: CURRENT_DOCUMENT,
       });
       const instrumento = toResponse(row);
       await this.audit.record(
@@ -123,7 +139,10 @@ export class InstrumentsService {
     actor: Actor,
   ): Promise<SavedInstrumentResponse> {
     return this.prisma.$transaction(async (tx) => {
-      const current = await tx.instrumento.findUnique({ where: { id } });
+      const current = await tx.instrumento.findUnique({
+        where: { id },
+        include: CURRENT_DOCUMENT,
+      });
       if (!current) throw new NotFoundException('Instrumento não encontrado.');
       if (current.versao !== versao) throw this.versionConflict();
 
@@ -156,7 +175,10 @@ export class InstrumentsService {
       });
       if (updated.count === 0) throw this.versionConflict();
 
-      const row = await tx.instrumento.findUniqueOrThrow({ where: { id } });
+      const row = await tx.instrumento.findUniqueOrThrow({
+        where: { id },
+        include: CURRENT_DOCUMENT,
+      });
       const instrumento = toResponse(row);
       const changed = FIELDS.filter((field) => before[field] !== instrumento[field]);
       await this.audit.record(

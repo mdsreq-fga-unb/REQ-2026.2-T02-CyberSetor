@@ -61,9 +61,29 @@ model Instrumento {
 
   projetos   Projeto[]
   requisitos RequisitoInstrumento[]
+  documentos DocumentoInstrumento[]
 
   @@index([numeroProcesso])
   @@map("instrumento")
+}
+
+/// Documento formal do instrumento; o mais recente vale, e os anteriores ficam guardados.
+model DocumentoInstrumento {
+  id            String   @id @default(uuid()) @db.Uuid
+  instrumentoId String   @map("instrumento_id") @db.Uuid
+  chave         String   @unique
+  nomeArquivo   String   @map("nome_arquivo")
+  tipoConteudo  String   @map("tipo_conteudo")
+  tamanho       Int
+  sha256        String
+  enviadoPorId  String   @map("enviado_por_id") @db.Uuid
+  enviadoEm     DateTime @default(now()) @map("enviado_em") @db.Timestamptz(3)
+
+  instrumento Instrumento @relation(fields: [instrumentoId], references: [id], onDelete: Restrict)
+  enviadoPor  Usuario     @relation(fields: [enviadoPorId], references: [id], onDelete: Restrict)
+
+  @@index([instrumentoId, enviadoEm])
+  @@map("documento_instrumento")
 }
 
 model Modalidade {
@@ -111,7 +131,7 @@ model RequisitoInstrumento {
   criadoEm      DateTime @default(now()) @map("criado_em") @db.Timestamptz(3)
   atualizadoEm  DateTime @updatedAt @map("atualizado_em") @db.Timestamptz(3)
 
-  instrumento Instrumento    @relation(fields: [instrumentoId], references: [id], onDelete: Restrict)
+  instrumento Instrumento     @relation(fields: [instrumentoId], references: [id], onDelete: Restrict)
   metas       MetaRequisito[]
 
   @@index([instrumentoId])
@@ -208,9 +228,9 @@ model Atividade {
   criadoEm      DateTime @default(now()) @map("criado_em") @db.Timestamptz(3)
   atualizadoEm  DateTime @updatedAt @map("atualizado_em") @db.Timestamptz(3)
 
-  projeto     Projeto         @relation(fields: [projetoId], references: [id], onDelete: Restrict)
-  modalidade  Modalidade      @relation(fields: [modalidadeId], references: [id], onDelete: Restrict)
-  responsavel Usuario         @relation(fields: [responsavelId], references: [id], onDelete: Restrict)
+  projeto     Projeto                @relation(fields: [projetoId], references: [id], onDelete: Restrict)
+  modalidade  Modalidade             @relation(fields: [modalidadeId], references: [id], onDelete: Restrict)
+  responsavel Usuario                @relation(fields: [responsavelId], references: [id], onDelete: Restrict)
   metas       AtividadeMeta[]
   inscricao   ConfiguracaoInscricao?
 
@@ -310,14 +330,15 @@ model Usuario {
   criadoEm        DateTime  @default(now()) @map("criado_em") @db.Timestamptz(3)
   atualizadoEm    DateTime  @updatedAt @map("atualizado_em") @db.Timestamptz(3)
 
-  pessoa              Pessoa            @relation(fields: [pessoaId], references: [id], onDelete: Restrict)
+  pessoa              Pessoa                 @relation(fields: [pessoaId], references: [id], onDelete: Restrict)
   projetosCoordenados Projeto[]
   atividades          Atividade[]
   metasResponsavel    Meta[]
+  documentosEnviados  DocumentoInstrumento[]
   resultadosMeta      ResultadoMeta[]
   sessoes             Sessao[]
-  eventos             TrilhaAuditoria[] @relation("autor")
-  previas             TrilhaAuditoria[] @relation("previa")
+  eventos             TrilhaAuditoria[]      @relation("autor")
+  previas             TrilhaAuditoria[]      @relation("previa")
 
   @@map("usuario")
 }

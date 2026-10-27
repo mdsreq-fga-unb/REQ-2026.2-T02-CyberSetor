@@ -5,6 +5,7 @@ import {
   HttpException,
   HttpStatus,
   Logger,
+  PayloadTooLargeException,
 } from '@nestjs/common';
 import type { Request, Response } from 'express';
 
@@ -21,6 +22,8 @@ const CODIGO_POR_STATUS: Partial<Record<number, string>> = {
   [HttpStatus.FORBIDDEN]: 'FORBIDDEN',
   [HttpStatus.NOT_FOUND]: 'NOT_FOUND',
   [HttpStatus.CONFLICT]: 'CONFLICT',
+  [HttpStatus.PAYLOAD_TOO_LARGE]: 'PAYLOAD_TOO_LARGE',
+  [HttpStatus.UNSUPPORTED_MEDIA_TYPE]: 'UNSUPPORTED_MEDIA_TYPE',
   [HttpStatus.UNPROCESSABLE_ENTITY]: 'UNPROCESSABLE',
   [HttpStatus.TOO_MANY_REQUESTS]: 'RATE_LIMITED',
   [HttpStatus.SERVICE_UNAVAILABLE]: 'SERVICE_UNAVAILABLE',
@@ -72,6 +75,10 @@ export class HttpExceptionFilter implements ExceptionFilter {
   }
 
   private mensagemDe(exception: unknown): string {
+    // O multer recusa o arquivo grande com mensagem própria, em inglês.
+    if (exception instanceof PayloadTooLargeException && !this.codigoProprio(exception)) {
+      return 'O arquivo passa do tamanho máximo permitido.';
+    }
     if (exception instanceof HttpException) {
       const body = exception.getResponse();
       if (typeof body === 'string') return body;

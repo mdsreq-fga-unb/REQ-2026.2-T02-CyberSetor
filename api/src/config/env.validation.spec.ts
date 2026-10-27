@@ -69,4 +69,34 @@ describe('validateEnv', () => {
   it('recusa NODE_ENV fora de development, test e production', () => {
     expect(() => validateEnv({ ...required, NODE_ENV: 'homologacao' })).toThrow('NODE_ENV');
   });
+
+  describe('armazenamento dos anexos', () => {
+    const s3 = {
+      STORAGE_DRIVER: 's3',
+      S3_ENDPOINT: 'https://s3.us-east-005.backblazeb2.com',
+      S3_REGION: 'us-east-005',
+      S3_BUCKET: 'anexos',
+      S3_ACCESS_KEY_ID: 'id-da-chave',
+      S3_SECRET_ACCESS_KEY: 'chave-de-teste',
+    };
+
+    it('usa a pasta local fora de producao e o link de 5 minutos', () => {
+      expect(validateEnv(required)).toMatchObject({
+        STORAGE_DRIVER: 'local',
+        STORAGE_LOCAL_DIR: '.storage',
+        DOCUMENT_URL_TTL_SECONDS: 300,
+      });
+    });
+
+    it('exige o S3 em producao', () => {
+      expect(() => validateEnv({ ...required, NODE_ENV: 'production' })).toThrow('STORAGE_DRIVER');
+      expect(validateEnv({ ...required, ...s3, NODE_ENV: 'production' }).STORAGE_DRIVER).toBe('s3');
+    });
+
+    it('exige endereco, regiao, bucket e chave quando o armazenamento e S3', () => {
+      for (const variavel of Object.keys(s3).filter((nome) => nome !== 'STORAGE_DRIVER')) {
+        expect(() => validateEnv({ ...required, ...s3, [variavel]: '' })).toThrow(variavel);
+      }
+    });
+  });
 });

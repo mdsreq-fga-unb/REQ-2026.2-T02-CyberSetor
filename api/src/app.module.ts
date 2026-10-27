@@ -14,6 +14,7 @@ import { ProjectsModule } from './projects/projects.module.js';
 import { RegistrationsModule } from './registrations/registrations.module.js';
 import { RequirementsModule } from './requirements/requirements.module.js';
 import { SectorsModule } from './sectors/sectors.module.js';
+import { StorageModule } from './storage/storage.module.js';
 
 @Module({
   imports: [
@@ -23,6 +24,7 @@ import { SectorsModule } from './sectors/sectors.module.js';
       envFilePath: ['.env'],
     }),
     PrismaModule,
+    StorageModule,
     HealthModule,
     AuditModule,
     AccountsModule,

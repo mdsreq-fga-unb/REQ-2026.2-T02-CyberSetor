@@ -144,10 +144,17 @@ jobs:
             exit 0
           fi
           docker build -t api-ci api
+          # Em produção os anexos exigem S3. A API não acessa o bucket ao subir: valores fictícios bastam.
           docker run -d --name api-ci --network host \
             -e NODE_ENV=production \
             -e DATABASE_URL=postgresql://cybersetor:cybersetor@localhost:5432/cybersetor_imagem \
             -e JWT_SECRET="$(openssl rand -base64 48)" \
+            -e STORAGE_DRIVER=s3 \
+            -e S3_ENDPOINT=http://127.0.0.1:9000 \
+            -e S3_REGION=us-east-1 \
+            -e S3_BUCKET=cybersetor-ci \
+            -e S3_ACCESS_KEY_ID=ci \
+            -e S3_SECRET_ACCESS_KEY=ci \
             api-ci
           for _ in $(seq 1 40); do
             estado=$(docker inspect --format '{{.State.Health.Status}}' api-ci)
