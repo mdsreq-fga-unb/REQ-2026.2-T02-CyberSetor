@@ -100,6 +100,7 @@ describe('Instrumentos de parceria (e2e)', () => {
       valorGlobal: '150000.50',
       vigenciaFim: '2027-03-31',
       ativo: true,
+      documentoFormalEm: null,
     });
     expect(numeroProcessoRepetido).toBe(false);
 

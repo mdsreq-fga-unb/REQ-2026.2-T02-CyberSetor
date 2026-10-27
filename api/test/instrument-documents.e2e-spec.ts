@@ -26,6 +26,7 @@ interface DocumentBody {
   tamanho: number;
   sha256: string;
   enviadoPor: { id: string; nome: string };
+  enviadoEm: string;
   url?: string;
   expiraEm?: string;
 }
@@ -183,7 +184,17 @@ describe('Documento formal do instrumento (e2e)', () => {
     expect(await prisma.documentoInstrumento.count()).toBe(0);
   });
 
+  async function listedDocumentDate(): Promise<string | null | undefined> {
+    const res = await server()
+      .get('/v1/instruments')
+      .set('Authorization', `Bearer ${tokens[Perfil.PRESIDENCIA_GESTAO]}`)
+      .expect(200);
+    const rows = res.body as { id: string; documentoFormalEm: string | null }[];
+    return rows.find((row) => row.id === instrumentoId)?.documentoFormalEm;
+  }
+
   it('substituir guarda o anterior e registra os dois arquivos na trilha', async () => {
+    expect(await listedDocumentDate()).toBeNull();
     const first = (await upload(Perfil.PRESIDENCIA_GESTAO, PDF, 'termo.pdf').expect(200))
       .body as DocumentBody;
     const second = (
@@ -193,6 +204,7 @@ describe('Documento formal do instrumento (e2e)', () => {
     const opened = (await open(Perfil.PRESIDENCIA_GESTAO).expect(200)).body as DocumentBody;
     expect(opened.nomeArquivo).toBe('termo-assinado.pdf');
     expect(await prisma.documentoInstrumento.count({ where: { instrumentoId } })).toBe(2);
+    expect(await listedDocumentDate()).toBe(second.enviadoEm);
     expect(
       await prisma.trilhaAuditoria.findFirstOrThrow({
         where: { acao: 'INSTRUMENT_DOCUMENT_REPLACED' },

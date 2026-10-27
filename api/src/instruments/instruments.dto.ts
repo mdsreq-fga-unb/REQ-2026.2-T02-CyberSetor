@@ -104,6 +104,14 @@ export class InstrumentResponse {
 
   @ApiProperty()
   ativo!: boolean;
+
+  @ApiProperty({
+    type: String,
+    format: 'date-time',
+    nullable: true,
+    description: 'Envio do documento formal vigente; nulo sem documento',
+  })
+  documentoFormalEm!: string | null;
 }
 
 export class SavedInstrumentResponse {
