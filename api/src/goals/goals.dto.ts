@@ -6,16 +6,23 @@ import {
   IsArray,
   IsEnum,
   IsInt,
+  IsNumber,
   IsNotEmpty,
   IsOptional,
   IsString,
   IsUUID,
   Matches,
   MaxLength,
+  Max,
   Min,
 } from 'class-validator';
 import { trimString } from '../common/trim.js';
-import { ModalidadeAfericao, OrigemMeta, SituacaoMeta } from '../generated/prisma/enums.js';
+import {
+  AlcanceMeta,
+  ModalidadeAfericao,
+  OrigemMeta,
+  SituacaoMeta,
+} from '../generated/prisma/enums.js';
 import { SectorRefResponse } from '../sectors/sectors.dto.js';
 import { COMPLETION_FIELDS, type CompletionField } from './goal-completion.js';
 import { DEADLINE_ALERTS, type DeadlineAlert } from './goal-deadline.js';
@@ -64,7 +71,11 @@ export class CreateGoalDto {
   @IsEnum(ModalidadeAfericao)
   modalidadeAfericao?: ModalidadeAfericao | null;
 
-  @ApiPropertyOptional({ nullable: true, example: '120' })
+  @ApiPropertyOptional({
+    nullable: true,
+    example: '120',
+    description: 'Na meta quantitativa, número maior que zero, com até duas casas decimais',
+  })
   @IsOptional()
   @Transform(trimString)
   @IsString()
@@ -155,6 +166,82 @@ export class ChangeSituationDto {
   @IsString()
   @MaxLength(1000)
   justificativa?: string;
+}
+
+export class RecordResultDto {
+  @ApiProperty({
+    format: 'date',
+    example: '2026-06-30',
+    description: 'Até quando o resultado vale',
+  })
+  @Matches(ISO_DATE, { message: 'dataReferencia deve estar no formato AAAA-MM-DD' })
+  dataReferencia!: string;
+
+  @ApiProperty({ example: '84 jovens concluíram as oficinas com frequência mínima de 70%.' })
+  @Transform(trimString)
+  @IsString()
+  @IsNotEmpty()
+  @MaxLength(2000)
+  descricao!: string;
+
+  @ApiPropertyOptional({
+    example: 84,
+    description: 'Obrigatório na meta quantitativa, na unidade do parâmetro planejado',
+  })
+  @IsOptional()
+  @IsNumber({ maxDecimalPlaces: 2 })
+  @Min(0)
+  @Max(999_999_999_999)
+  valorAlcancado?: number;
+
+  @ApiPropertyOptional({
+    enum: AlcanceMeta,
+    description: 'Obrigatório na meta qualitativa; na quantitativa é calculado pelo percentual',
+  })
+  @IsOptional()
+  @IsEnum(AlcanceMeta)
+  alcance?: AlcanceMeta;
+}
+
+export class GoalResultAuthorResponse {
+  @ApiProperty()
+  id!: string;
+
+  @ApiProperty()
+  nome!: string;
+}
+
+export class GoalResultResponse {
+  @ApiProperty()
+  id!: string;
+
+  @ApiProperty({ format: 'date' })
+  dataReferencia!: string;
+
+  @ApiProperty()
+  descricao!: string;
+
+  @ApiProperty({ type: Number, nullable: true })
+  valorAlcancado!: number | null;
+
+  @ApiProperty({ type: Number, nullable: true, description: 'Parâmetro planejado no registro' })
+  parametroPlanejado!: number | null;
+
+  @ApiProperty({
+    type: Number,
+    nullable: true,
+    description: 'Calculado; ausente na meta qualitativa',
+  })
+  percentual!: number | null;
+
+  @ApiProperty({ enum: AlcanceMeta })
+  alcance!: AlcanceMeta;
+
+  @ApiProperty({ type: GoalResultAuthorResponse })
+  registradoPor!: GoalResultAuthorResponse;
+
+  @ApiProperty({ format: 'date-time' })
+  registradoEm!: string;
 }
 
 export class GoalOwnerResponse {
@@ -277,4 +364,11 @@ export class GoalResponse {
       'Prazo nos próximos 30 dias ou vencido, para meta não concluída (data de Brasília)',
   })
   alertaPrazo!: DeadlineAlert | null;
+
+  @ApiProperty({
+    type: GoalResultResponse,
+    nullable: true,
+    description: 'Último resultado alcançado registrado (RF43)',
+  })
+  resultado!: GoalResultResponse | null;
 }

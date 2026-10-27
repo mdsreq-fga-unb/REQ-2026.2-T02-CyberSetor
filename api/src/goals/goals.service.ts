@@ -8,16 +8,25 @@ import {
 import type { Actor } from '../accounts/accounts.service.js';
 import { AuditTrailService } from '../audit/audit-trail.service.js';
 import type { Prisma } from '../generated/prisma/client.js';
-import { AutorTipo, OrigemMeta, Perfil, SituacaoMeta } from '../generated/prisma/enums.js';
+import {
+  AutorTipo,
+  ModalidadeAfericao,
+  OrigemMeta,
+  Perfil,
+  SituacaoMeta,
+} from '../generated/prisma/enums.js';
 import { toDate } from '../instruments/instruments.service.js';
 import { PrismaService } from '../prisma/prisma.service.js';
 import { missingFields } from './goal-completion.js';
 import { deadlineAlert, todayInBrasilia } from './goal-deadline.js';
+import { percentOf, plannedNumber, reachOf } from './goal-result.js';
 import type {
   ChangeSituationDto,
   CreateGoalDto,
   EligibleOwnerResponse,
   GoalResponse,
+  GoalResultResponse,
+  RecordResultDto,
   UpdateGoalDto,
 } from './goals.dto.js';
 
@@ -33,7 +42,17 @@ export const OWNER_PROFILES = [
   Perfil.ADMINISTRATIVO_FINANCEIRO,
 ];
 
+const WITH_AUTHOR = {
+  registradoPor: { select: { id: true, pessoa: { select: { nome: true } } } },
+} satisfies Prisma.ResultadoMetaInclude;
+
+const LATEST_FIRST = [
+  { dataReferencia: 'desc' },
+  { criadoEm: 'desc' },
+] satisfies Prisma.ResultadoMetaOrderByWithRelationInput[];
+
 const WITH_REQUIREMENTS = {
+  resultados: { include: WITH_AUTHOR, orderBy: LATEST_FIRST, take: 1 },
   responsavel: { select: { id: true, ativo: true, pessoa: { select: { nome: true } } } },
   setor: { select: { id: true, nome: true, ativo: true } },
   requisitos: {
@@ -43,6 +62,7 @@ const WITH_REQUIREMENTS = {
 } satisfies Prisma.MetaInclude;
 
 type GoalRow = Prisma.MetaGetPayload<{ include: typeof WITH_REQUIREMENTS }>;
+type ResultRow = Prisma.ResultadoMetaGetPayload<{ include: typeof WITH_AUTHOR }>;
 type InstrumentRow = Prisma.InstrumentoGetPayload<object>;
 
 const FIELDS = [
@@ -87,6 +107,24 @@ function sortedIds(ids: string[] | null): string[] {
   return [...new Set(ids ?? [])].sort();
 }
 
+function decimal(value: Prisma.Decimal | null): number | null {
+  return value === null ? null : value.toNumber();
+}
+
+function toResult(row: ResultRow): GoalResultResponse {
+  return {
+    id: row.id,
+    dataReferencia: row.dataReferencia.toISOString().slice(0, 10),
+    descricao: row.descricao,
+    valorAlcancado: decimal(row.valorAlcancado),
+    parametroPlanejado: decimal(row.parametroPlanejado),
+    percentual: decimal(row.percentual),
+    alcance: row.alcance,
+    registradoPor: { id: row.registradoPor.id, nome: row.registradoPor.pessoa.nome },
+    registradoEm: row.criadoEm.toISOString(),
+  };
+}
+
 function toResponse(row: GoalRow): GoalResponse {
   const periodoInicio = isoDate(row.periodoInicio);
   const periodoFim = isoDate(row.periodoFim);
@@ -119,6 +157,7 @@ function toResponse(row: GoalRow): GoalResponse {
     setor: row.setor,
     situacao: row.situacao,
     alertaPrazo: deadlineAlert(periodoFim, row.situacao, todayInBrasilia()),
+    resultado: row.resultados[0] ? toResult(row.resultados[0]) : null,
   };
 }
 
@@ -174,6 +213,23 @@ function assertPeriod(values: GoalValues, project: { inicio: Date; fim: Date }):
   }
 }
 
+function quantitative(values: Pick<GoalValues, 'modalidadeAfericao'>): boolean {
+  return values.modalidadeAfericao === ModalidadeAfericao.QUANTITATIVA;
+}
+
+function normalizePlanned(values: GoalValues): GoalValues {
+  if (!quantitative(values) || values.parametroPlanejado === null) return values;
+  const planned = plannedNumber(values.parametroPlanejado);
+  if (planned === null) {
+    throw new BadRequestException({
+      code: 'INVALID_PLANNED_VALUE',
+      message:
+        'Na meta quantitativa, o parâmetro planejado é um número maior que zero, com até duas casas decimais (por exemplo, 120 ou 12,5).',
+    });
+  }
+  return { ...values, parametroPlanejado: String(planned) };
+}
+
 function assertRequirementsPresent(values: GoalValues): void {
   if (ORIGINS_REQUIRING_REQUIREMENT.includes(values.origem) && values.requisitoIds.length === 0) {
     throw new BadRequestException({
@@ -213,7 +269,7 @@ export class GoalsService {
     return this.prisma.$transaction(async (tx) => {
       const project = await this.project(tx, projetoId);
       assertActive(project.instrumento);
-      const values = merge(BLANK, data);
+      const values = normalizePlanned(merge(BLANK, data));
       assertPeriod(values, project);
       assertRequirementsPresent(values);
       await this.assertSameInstrument(tx, project.instrumentoId, values.requisitoIds);
@@ -263,7 +319,11 @@ export class GoalsService {
       assertActive(current.projeto.instrumento);
 
       const before = valuesOf(toResponse(current));
-      const next = merge(before, changes);
+      const merged = merge(before, changes);
+      const next =
+        changes.parametroPlanejado !== undefined || changes.modalidadeAfericao !== undefined
+          ? normalizePlanned(merged)
+          : merged;
       const changed = FIELDS.filter(
         (field) => JSON.stringify(next[field]) !== JSON.stringify(before[field]),
       );
@@ -323,26 +383,7 @@ export class GoalsService {
     actor: Actor,
     perfil: Perfil,
   ): Promise<GoalResponse> {
-    const owner = await this.prisma.meta.findUnique({
-      where: { id },
-      select: { responsavelId: true },
-    });
-    if (!owner) throw new NotFoundException('Meta não encontrada.');
-    if (perfil !== Perfil.PRESIDENCIA_GESTAO && owner.responsavelId !== actor.usuarioId) {
-      await this.audit.record({
-        autorTipo: AutorTipo.USUARIO,
-        usuarioId: actor.usuarioId,
-        acao: 'ACCESS_DENIED',
-        entidade: 'meta',
-        entidadeId: id,
-        depois: { operacao: 'GOAL_SITUATION' },
-        correlationId: actor.correlationId,
-      });
-      throw new ForbiddenException({
-        code: 'NOT_GOAL_OWNER',
-        message: 'Só a Presidência e Gestão ou quem responde pela meta muda a situação dela.',
-      });
-    }
+    await this.assertMayRespond(id, actor, perfil, 'GOAL_SITUATION');
 
     return this.prisma.$transaction(async (tx) => {
       const current = await tx.meta.findUniqueOrThrow({
@@ -384,6 +425,105 @@ export class GoalsService {
     });
   }
 
+  async listResults(id: string): Promise<GoalResultResponse[]> {
+    const goal = await this.prisma.meta.count({ where: { id } });
+    if (goal === 0) throw new NotFoundException('Meta não encontrada.');
+    const rows = await this.prisma.resultadoMeta.findMany({
+      where: { metaId: id },
+      include: WITH_AUTHOR,
+      orderBy: LATEST_FIRST,
+    });
+    return rows.map(toResult);
+  }
+
+  async recordResult(
+    id: string,
+    { dataReferencia, descricao, valorAlcancado, alcance }: RecordResultDto,
+    actor: Actor,
+    perfil: Perfil,
+  ): Promise<GoalResultResponse> {
+    await this.assertMayRespond(id, actor, perfil, 'GOAL_RESULT');
+    const referencia = toDate(dataReferencia);
+    if (dataReferencia > todayInBrasilia()) {
+      throw new BadRequestException({
+        code: 'FUTURE_REFERENCE_DATE',
+        message: 'A data de referência do resultado não pode ser futura.',
+      });
+    }
+
+    return this.prisma.$transaction(async (tx) => {
+      const current = await tx.meta.findUniqueOrThrow({
+        where: { id },
+        include: { ...WITH_REQUIREMENTS, projeto: { include: { instrumento: true } } },
+      });
+      assertActive(current.projeto.instrumento);
+      const goal = toResponse(current);
+      if (goal.rascunho) {
+        throw new BadRequestException({
+          code: 'GOAL_DRAFT',
+          message:
+            'Complete a meta antes de registrar o resultado: meta em rascunho não entra na apuração.',
+        });
+      }
+
+      const planned = quantitative(goal) ? plannedNumber(goal.parametroPlanejado ?? '') : null;
+      let reached: { valor: number | null; percentual: number | null; alcance: typeof alcance };
+      if (planned !== null) {
+        if (valorAlcancado === undefined || alcance !== undefined) {
+          throw new BadRequestException({
+            code: 'RESULT_VALUE_REQUIRED',
+            message:
+              'Na meta quantitativa, informe o valor alcançado; a classificação é calculada pelo percentual.',
+          });
+        }
+        const percentual = percentOf(valorAlcancado, planned);
+        reached = { valor: valorAlcancado, percentual, alcance: reachOf(percentual) };
+      } else {
+        if (alcance === undefined || valorAlcancado !== undefined) {
+          throw new BadRequestException({
+            code: 'RESULT_REACH_REQUIRED',
+            message:
+              'Na meta qualitativa, informe a classificação do alcance, sem valor alcançado.',
+          });
+        }
+        reached = { valor: null, percentual: null, alcance };
+      }
+
+      const row = await tx.resultadoMeta.create({
+        data: {
+          metaId: id,
+          dataReferencia: referencia,
+          descricao,
+          valorAlcancado: reached.valor,
+          parametroPlanejado: planned,
+          percentual: reached.percentual,
+          alcance: reached.alcance!,
+          registradoPorId: actor.usuarioId,
+        },
+        include: WITH_AUTHOR,
+      });
+      const result = toResult(row);
+      await this.audit.record(
+        {
+          autorTipo: AutorTipo.USUARIO,
+          usuarioId: actor.usuarioId,
+          acao: 'GOAL_RESULT_RECORDED',
+          entidade: 'meta',
+          entidadeId: id,
+          depois: {
+            dataReferencia: result.dataReferencia,
+            valorAlcancado: result.valorAlcancado,
+            percentual: result.percentual,
+            alcance: result.alcance,
+          },
+          correlationId: actor.correlationId,
+        },
+        tx,
+      );
+      return result;
+    });
+  }
+
   async eligibleOwners(): Promise<EligibleOwnerResponse[]> {
     const rows = await this.prisma.usuario.findMany({
       where: { ativo: true, perfil: { in: OWNER_PROFILES } },
@@ -394,6 +534,36 @@ export class GoalsService {
       orderBy: { pessoa: { nome: 'asc' } },
     });
     return rows.map((row) => ({ id: row.id, nome: row.pessoa.nome, setor: row.pessoa.setor }));
+  }
+
+  private async assertMayRespond(
+    id: string,
+    actor: Actor,
+    perfil: Perfil,
+    operacao: 'GOAL_SITUATION' | 'GOAL_RESULT',
+  ): Promise<void> {
+    const owner = await this.prisma.meta.findUnique({
+      where: { id },
+      select: { responsavelId: true },
+    });
+    if (!owner) throw new NotFoundException('Meta não encontrada.');
+    if (perfil === Perfil.PRESIDENCIA_GESTAO || owner.responsavelId === actor.usuarioId) return;
+    await this.audit.record({
+      autorTipo: AutorTipo.USUARIO,
+      usuarioId: actor.usuarioId,
+      acao: 'ACCESS_DENIED',
+      entidade: 'meta',
+      entidadeId: id,
+      depois: { operacao },
+      correlationId: actor.correlationId,
+    });
+    throw new ForbiddenException({
+      code: 'NOT_GOAL_OWNER',
+      message:
+        operacao === 'GOAL_SITUATION'
+          ? 'Só a Presidência e Gestão ou quem responde pela meta muda a situação dela.'
+          : 'Só a Presidência e Gestão ou quem responde pela meta registra o resultado dela.',
+    });
   }
 
   private async assertOwner(
