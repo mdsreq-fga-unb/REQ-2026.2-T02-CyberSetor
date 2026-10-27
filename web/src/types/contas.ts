@@ -8,6 +8,7 @@ export interface Account {
   emailLogin: string;
   perfil: Perfil;
   ativo: boolean;
+  versao: number;
   setor: SectorRef | null;
   deveTrocarSenha: boolean;
   bloqueadoAte: string | null;

@@ -8,6 +8,7 @@ const BASE: Account = {
   emailLogin: 'ana@instituto.org.br',
   perfil: 'NUCLEO_PEDAGOGICO',
   ativo: true,
+  versao: 1,
   deveTrocarSenha: false,
   bloqueadoAte: null,
   ultimoAcessoEm: null,
