@@ -20,6 +20,7 @@ const INSTRUMENT: Instrument = {
   vigenciaInicio: '2026-04-01',
   vigenciaFim: '2027-03-31',
   ativo: true,
+  documentoFormalEm: null,
 };
 
 const ANA = { id: '00000000-0000-4000-8000-000000000201', nome: 'Ana Pedagógica' };
@@ -70,6 +71,7 @@ function page(instrument: Instrument, projects: Project[], extra: Record<string,
     [`GET ${BASE}`]: () => ({ status: 200, body: instrument }),
     [`GET ${BASE}/projects`]: () => ({ status: 200, body: projects }),
     [`GET ${BASE}/requirements`]: () => ({ status: 200, body: [] }),
+    [`GET ${BASE}/document`]: () => ({ status: 404, body: { code: 'DOCUMENT_NOT_ATTACHED' } }),
     'GET /projects/eligible-coordinators': () => ({ status: 200, body: [ANA, BIA] }),
     ...extra,
   };

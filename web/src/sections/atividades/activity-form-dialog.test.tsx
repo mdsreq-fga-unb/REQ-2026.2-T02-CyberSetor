@@ -20,6 +20,7 @@ const INSTRUMENT: Instrument = {
   vigenciaInicio: '2026-01-01',
   vigenciaFim: '2026-12-31',
   ativo: true,
+  documentoFormalEm: null,
 };
 
 const PROJECT: Project = {

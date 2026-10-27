@@ -20,6 +20,7 @@ const INSTRUMENTS: Instrument[] = Array.from({ length: 12 }, (_, index) => ({
   vigenciaInicio: '2026-04-01',
   vigenciaFim: '2027-03-31',
   ativo: index !== 2,
+  documentoFormalEm: index % 4 === 1 ? null : '2026-03-12T14:30:00.000Z',
 }));
 
 function json(body: unknown): Response {

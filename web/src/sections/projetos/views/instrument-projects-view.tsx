@@ -31,6 +31,7 @@ import type { Instrument } from '@/types/instrumentos';
 import type { Project } from '@/types/projetos';
 import { InstrumentRequirements } from '../../requisitos/instrument-requirements';
 import { INSTRUMENT_TYPES, formatDate } from '../../instrumentos/format';
+import { InstrumentDocument } from '../../instrumentos/instrument-document';
 import { ProjectFormDialog } from '../project-form-dialog';
 
 function loadFailure(error: unknown, subject: string): string {
@@ -129,6 +130,7 @@ export function InstrumentProjectsView({ instrumentId }: { instrumentId: string 
           Instrumento inativo: não recebe nem altera requisitos nem projetos.
         </p>
       )}
+      {instrument.data && <InstrumentDocument instrument={instrument.data} canEdit={canEdit} />}
       {instrument.data && <InstrumentRequirements instrument={instrument.data} canEdit={canEdit} />}
 
       <h2 className="text-lg font-semibold">Projetos</h2>
