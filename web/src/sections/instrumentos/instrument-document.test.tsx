@@ -60,6 +60,8 @@ async function signedInAs(perfil: string, routes: Record<string, Route>) {
 
 function renderSection(canEdit: boolean) {
   const client = new QueryClient({ defaultOptions: { queries: { retry: false } } });
+  client.setQueryData(['instrumentos', INSTRUMENT.id], INSTRUMENT);
+  client.setQueryData(['instrumentos'], [INSTRUMENT]);
   render(
     <QueryClientProvider client={client}>
       <Toaster>
@@ -67,6 +69,15 @@ function renderSection(canEdit: boolean) {
       </Toaster>
     </QueryClientProvider>,
   );
+  return client;
+}
+
+function refetchInterval(client: QueryClient): number | false | undefined {
+  const query = client
+    .getQueryCache()
+    .find({ queryKey: ['instrumentos', INSTRUMENT.id, 'documento'] });
+  const interval = query?.observers[0]?.options.refetchInterval;
+  return typeof interval === 'function' && query ? interval(query) : (interval as number | false);
 }
 
 function choose(file: File) {
@@ -95,7 +106,7 @@ describe('documento formal do instrumento', () => {
     expect(
       screen.getByText(/PDF · 1,5 MB · enviado em 27\/10\/2026, 10:05 por Beatriz Gestão/),
     ).toBeInTheDocument();
-    const link = screen.getByRole('link', { name: 'Abrir documento' });
+    const link = screen.getByRole('link', { name: /^Abrir documento\s*\(abre em nova aba\)$/ });
     expect(link).toHaveAttribute('href', TERMO.url);
     expect(link).toHaveAttribute('target', '_blank');
     expect(screen.queryByRole('button', { name: /documento/ })).not.toBeInTheDocument();
@@ -113,15 +124,19 @@ describe('documento formal do instrumento', () => {
         return { status: 200, body: TERMO };
       },
     });
-    renderSection(true);
+    const client = renderSection(true);
 
     expect(await screen.findByText('Nenhum documento formal anexado')).toBeInTheDocument();
+    expect(refetchInterval(client)).toBe(false);
     choose(new File(['%PDF-1.7'], 'termo.pdf', { type: 'application/pdf' }));
 
     expect(await screen.findByText('Documento formal anexado')).toBeInTheDocument();
+    expect(client.getQueryState(['instrumentos'])?.isInvalidated).toBe(true);
+    expect(client.getQueryState(['instrumentos', INSTRUMENT.id])?.isInvalidated).toBe(true);
     expect(sent).toHaveLength(1);
     expect((sent[0].get('arquivo') as File).name).toBe('termo.pdf');
     expect(await screen.findByRole('button', { name: 'Substituir documento' })).toBeInTheDocument();
+    expect(refetchInterval(client)).toBe(4 * 60 * 1000);
   });
 
   it('recusa na tela o arquivo que nao e PDF nem DOCX ou passa de 20 MB, sem enviar', async () => {

@@ -137,6 +137,7 @@ export function InstrumentDocument({
               >
                 <ExternalLinkIcon data-icon="inline-start" />
                 Abrir documento
+                <span className="sr-only"> (abre em nova aba)</span>
               </a>
             )}
             {chooseButton}

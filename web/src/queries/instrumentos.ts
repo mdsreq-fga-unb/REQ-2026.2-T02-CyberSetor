@@ -76,7 +76,8 @@ export function useInstrumentDocument(id: string) {
       }
     },
     staleTime: DOCUMENT_REFRESH_MS,
-    refetchInterval: DOCUMENT_REFRESH_MS,
+    // Sem documento não há link a renovar.
+    refetchInterval: (query) => (query.state.data ? DOCUMENT_REFRESH_MS : false),
   });
 }
 
@@ -95,6 +96,7 @@ export function useAttachDocument(id: string) {
       Promise.all([
         queryClient.invalidateQueries({ queryKey: instrumentDocumentKey(id) }),
         queryClient.invalidateQueries({ queryKey: instrumentsKey, exact: true }),
+        queryClient.invalidateQueries({ queryKey: instrumentKey(id), exact: true }),
       ]),
   });
 }
