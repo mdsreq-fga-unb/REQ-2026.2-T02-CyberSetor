@@ -2,7 +2,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { page } from 'vitest/browser';
 import { render } from 'vitest-browser-react';
 import { clearLocalSession, signIn } from '@/auth/session';
-import type { Instrument } from '@/types/instrumentos';
+import type { Instrument, InstrumentDocument } from '@/types/instrumentos';
 import type { Project } from '@/types/projetos';
 import type { Requirement } from '@/types/requisitos';
 import { InstrumentProjectsView } from './instrument-projects-view';
@@ -49,6 +49,17 @@ const REQUIREMENTS: Requirement[] = [
   referencia,
 }));
 
+const DOCUMENT: InstrumentDocument = {
+  nomeArquivo: 'Termo de Fomento 12-2026 - assinado.pdf',
+  tipoConteudo: 'application/pdf',
+  tamanho: 1_572_864,
+  sha256: 'a'.repeat(64),
+  enviadoEm: '2026-10-27T13:05:00.000Z',
+  enviadoPor: { id: '00000000-0000-4000-8000-000000000601', nome: 'Beatriz Gestão' },
+  url: 'https://anexos.example/termo.pdf',
+  expiraEm: '2026-10-27T13:10:00.000Z',
+};
+
 function json(body: unknown): Response {
   return new Response(JSON.stringify(body), { status: 200 });
 }
@@ -66,6 +77,7 @@ describe.each([
           return json({ accessToken: 't', perfil: 'PRESIDENCIA_GESTAO', deveTrocarSenha: false });
         }
         if (url.endsWith('/requirements')) return json(REQUIREMENTS);
+        if (url.endsWith('/document')) return json(DOCUMENT);
         return json(url.endsWith('/projects') ? PROJECTS : INSTRUMENT);
       }),
     );
@@ -91,6 +103,7 @@ describe.each([
     await expect
       .element(screen.getByText('Certificado para quem concluir a formação'))
       .toBeVisible();
+    await expect.element(screen.getByText(DOCUMENT.nomeArquivo)).toBeVisible();
     await expect.element(screen.getByTestId('frame')).toMatchScreenshot(`projetos-${device}`);
   });
 });

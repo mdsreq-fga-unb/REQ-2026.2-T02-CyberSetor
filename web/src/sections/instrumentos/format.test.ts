@@ -1,4 +1,11 @@
-import { formatDate, moneyInput, parseMoney } from './format';
+import {
+  documentFileProblem,
+  formatBytes,
+  formatDate,
+  formatDateTime,
+  moneyInput,
+  parseMoney,
+} from './format';
 
 describe('valor e data do instrumento', () => {
   it.each([
@@ -39,5 +46,30 @@ describe('valor e data do instrumento', () => {
 
   it('data sem fuso, como veio da API', () => {
     expect(formatDate('2027-03-31')).toBe('31/03/2027');
+  });
+});
+
+describe('documento formal', () => {
+  it('tamanho em KB ou MB, com virgula', () => {
+    expect(formatBytes(300)).toBe('1 KB');
+    expect(formatBytes(250 * 1024)).toBe('250 KB');
+    expect(formatBytes(1_572_864)).toBe('1,5 MB');
+  });
+
+  it('data e hora de Brasilia', () => {
+    expect(formatDateTime('2026-10-27T13:05:00.000Z')).toBe('27/10/2026, 10:05');
+  });
+
+  it('confere extensao e tamanho antes do envio', () => {
+    const file = (name: string, size: number) => {
+      const value = new File(['x'], name);
+      Object.defineProperty(value, 'size', { value: size });
+      return value;
+    };
+    expect(documentFileProblem(file('termo.PDF', 10))).toBeNull();
+    expect(documentFileProblem(file('termo.docx', 10))).toBeNull();
+    expect(documentFileProblem(file('termo.doc', 10))).toMatch(/PDF ou DOCX/);
+    expect(documentFileProblem(file('termo.pdf', 20 * 1024 * 1024 + 1))).toMatch(/20 MB/);
+    expect(documentFileProblem(file('termo.pdf', 0))).toMatch(/vazio/);
   });
 });

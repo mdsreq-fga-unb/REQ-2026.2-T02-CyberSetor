@@ -70,6 +70,7 @@ function page(instrument: Instrument, projects: Project[], extra: Record<string,
     [`GET ${BASE}`]: () => ({ status: 200, body: instrument }),
     [`GET ${BASE}/projects`]: () => ({ status: 200, body: projects }),
     [`GET ${BASE}/requirements`]: () => ({ status: 200, body: [] }),
+    [`GET ${BASE}/document`]: () => ({ status: 404, body: { code: 'DOCUMENT_NOT_ATTACHED' } }),
     'GET /projects/eligible-coordinators': () => ({ status: 200, body: [ANA, BIA] }),
     ...extra,
   };

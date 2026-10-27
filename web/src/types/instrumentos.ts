@@ -19,3 +19,14 @@ export interface SavedInstrument {
   instrumento: Instrument;
   numeroProcessoRepetido: boolean;
 }
+
+export interface InstrumentDocument {
+  nomeArquivo: string;
+  tipoConteudo: string;
+  tamanho: number;
+  sha256: string;
+  enviadoEm: string;
+  enviadoPor: { id: string; nome: string };
+  url?: string;
+  expiraEm?: string;
+}

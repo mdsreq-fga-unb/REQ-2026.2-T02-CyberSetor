@@ -17,7 +17,7 @@ export class ApiError extends Error {
 }
 
 export interface ApiRequestOptions {
-  method?: 'GET' | 'POST' | 'PATCH' | 'DELETE';
+  method?: 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE';
   body?: unknown;
   accessToken?: string;
   withSessionCookie?: boolean;
@@ -25,14 +25,19 @@ export interface ApiRequestOptions {
 
 export async function apiRequest<T>(path: string, options: ApiRequestOptions = {}): Promise<T> {
   const headers: Record<string, string> = {};
-  if (options.body !== undefined) headers['Content-Type'] = 'application/json';
+  const form = options.body instanceof FormData;
+  if (options.body !== undefined && !form) headers['Content-Type'] = 'application/json';
   if (options.accessToken) headers.Authorization = `Bearer ${options.accessToken}`;
   if (options.withSessionCookie) headers['X-CSRF'] = '1';
 
   const response = await fetch(`${API_URL}${path}`, {
     method: options.method ?? 'GET',
     headers,
-    body: options.body === undefined ? undefined : JSON.stringify(options.body),
+    body: form
+      ? (options.body as FormData)
+      : options.body === undefined
+        ? undefined
+        : JSON.stringify(options.body),
     credentials: options.withSessionCookie ? 'include' : 'omit',
   });
 
