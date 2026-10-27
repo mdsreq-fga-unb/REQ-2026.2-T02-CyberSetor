@@ -64,6 +64,7 @@ describe('Setores e setor da pessoa (e2e)', () => {
 
   beforeEach(async () => {
     await prisma.pessoa.updateMany({ data: { setorId: null } });
+    await prisma.usuario.updateMany({ data: { versao: 1 } });
     await prisma.$executeRawUnsafe('TRUNCATE TABLE trilha_auditoria');
     await prisma.setor.deleteMany();
   });
@@ -203,7 +204,10 @@ describe('Setores e setor da pessoa (e2e)', () => {
       expect(criacao.depois).toMatchObject({ setorId: setor.id });
 
       await as(Perfil.ADMINISTRACAO_SISTEMA)
-        .patch(`/v1/accounts/${ids[Perfil.NUCLEO_PEDAGOGICO]}/sector`, { setorId: setor.id })
+        .patch(`/v1/accounts/${ids[Perfil.NUCLEO_PEDAGOGICO]}/sector`, {
+          setorId: setor.id,
+          versao: 1,
+        })
         .expect(200);
       const sessao = await as(Perfil.NUCLEO_PEDAGOGICO).get('/v1/auth/session').expect(200);
       expect((sessao.body as AccountBody).setor).toEqual({
@@ -217,16 +221,18 @@ describe('Setores e setor da pessoa (e2e)', () => {
       const execucao = await created('Coordenação de Execução');
       const path = `/v1/accounts/${ids[Perfil.NUCLEO_PEDAGOGICO]}/sector`;
 
-      await as(Perfil.ADMINISTRACAO_SISTEMA).patch(path, { setorId: pedagogica.id }).expect(200);
+      await as(Perfil.ADMINISTRACAO_SISTEMA)
+        .patch(path, { setorId: pedagogica.id, versao: 1 })
+        .expect(200);
       const troca = await as(Perfil.ADMINISTRACAO_SISTEMA)
-        .patch(path, { setorId: execucao.id })
+        .patch(path, { setorId: execucao.id, versao: 2 })
         .expect(200);
       expect((troca.body as AccountBody).setor?.nome).toBe('Coordenação de Execução');
       const semSetor = await as(Perfil.ADMINISTRACAO_SISTEMA)
-        .patch(path, { setorId: null })
+        .patch(path, { setorId: null, versao: 3 })
         .expect(200);
       expect((semSetor.body as AccountBody).setor).toBeNull();
-      await as(Perfil.ADMINISTRACAO_SISTEMA).patch(path, { setorId: null }).expect(200);
+      await as(Perfil.ADMINISTRACAO_SISTEMA).patch(path, { setorId: null, versao: 4 }).expect(200);
 
       const trilha = await prisma.trilhaAuditoria.findMany({
         where: { entidadeId: ids[Perfil.NUCLEO_PEDAGOGICO], acao: 'ACCOUNT_SECTOR_CHANGED' },
@@ -258,7 +264,7 @@ describe('Setores e setor da pessoa (e2e)', () => {
           .expect(400);
         expect((criacao.body as ErrorBody).code).toBe('INVALID_SECTOR');
         const troca = await as(Perfil.ADMINISTRACAO_SISTEMA)
-          .patch(`/v1/accounts/${ids[Perfil.NUCLEO_PEDAGOGICO]}/sector`, { setorId })
+          .patch(`/v1/accounts/${ids[Perfil.NUCLEO_PEDAGOGICO]}/sector`, { setorId, versao: 1 })
           .expect(400);
         expect((troca.body as ErrorBody).code).toBe('INVALID_SECTOR');
       }
@@ -270,10 +276,10 @@ describe('Setores e setor da pessoa (e2e)', () => {
       const path = `/v1/accounts/${ids[Perfil.NUCLEO_PEDAGOGICO]}/sector`;
 
       for (const perfil of [Perfil.PRESIDENCIA_GESTAO, Perfil.NUCLEO_PEDAGOGICO]) {
-        await as(perfil).patch(path, { setorId: setor.id }).expect(403);
+        await as(perfil).patch(path, { setorId: setor.id, versao: 1 }).expect(403);
       }
       await as(Perfil.ADMINISTRACAO_SISTEMA)
-        .patch(`/v1/accounts/${MISSING}/sector`, { setorId: setor.id })
+        .patch(`/v1/accounts/${MISSING}/sector`, { setorId: setor.id, versao: 1 })
         .expect(404);
     });
   });

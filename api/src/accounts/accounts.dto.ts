@@ -3,11 +3,13 @@ import { Transform } from 'class-transformer';
 import {
   IsEmail,
   IsEnum,
+  IsInt,
   IsNotEmpty,
   IsOptional,
   IsString,
   IsUUID,
   MaxLength,
+  Min,
   ValidateIf,
 } from 'class-validator';
 import { trimString } from '../common/trim.js';
@@ -43,12 +45,22 @@ export class ChangeSectorDto {
   @ValidateIf((_obj, value) => value !== null)
   @IsUUID()
   setorId!: string | null;
+
+  @ApiProperty({ description: 'Versão lida; mudança sobre versão antiga é recusada com 409' })
+  @IsInt()
+  @Min(1)
+  versao!: number;
 }
 
 export class ChangeProfileDto {
   @ApiProperty({ enum: Perfil })
   @IsEnum(Perfil)
   perfil!: Perfil;
+
+  @ApiProperty({ description: 'Versão lida; mudança sobre versão antiga é recusada com 409' })
+  @IsInt()
+  @Min(1)
+  versao!: number;
 }
 
 export class AccountResponse {
@@ -69,6 +81,9 @@ export class AccountResponse {
 
   @ApiProperty()
   ativo!: boolean;
+
+  @ApiProperty()
+  versao!: number;
 
   @ApiProperty({ type: SectorRefResponse, nullable: true })
   setor!: SectorRefResponse | null;
