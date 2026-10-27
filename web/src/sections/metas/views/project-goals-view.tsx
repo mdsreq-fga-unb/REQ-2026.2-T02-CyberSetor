@@ -50,6 +50,7 @@ import {
   SITUATION_ORDER,
   missingText,
   requirementLabel,
+  resultText,
 } from '../format';
 import {
   FILTER_LABELS,
@@ -60,6 +61,7 @@ import {
   type GoalFilter,
 } from '../goal-filters';
 import { GoalFormDialog } from '../goal-form-dialog';
+import { GoalResultDialog } from '../goal-result-dialog';
 import { GoalSituationDialog } from '../goal-situation-dialog';
 
 function loadFailure(error: unknown): string {
@@ -172,6 +174,7 @@ function GoalsBoard({
                       <span className="text-muted-foreground">
                         <Deadline goal={goal} />
                       </span>
+                      <Result goal={goal} />
                       {goal.rascunho && (
                         <Badge variant="outline" className="self-start">
                           Rascunho
@@ -195,6 +198,16 @@ function GoalsBoard({
   );
 }
 
+function Result({ goal }: { goal: Goal }) {
+  if (!goal.resultado) return null;
+  return (
+    <span className="text-muted-foreground">
+      Resultado em {formatDate(goal.resultado.dataReferencia)}:{' '}
+      {resultText(goal.resultado, goal.unidade)}
+    </span>
+  );
+}
+
 function bySituation(a: Goal, b: Goal): number {
   return (
     SITUATION_ORDER.indexOf(a.situacao) - SITUATION_ORDER.indexOf(b.situacao) || a.ordem - b.ordem
@@ -212,6 +225,7 @@ function GoalSummary({ goal }: { goal: Goal }) {
         Requisitos: {goal.requisitos.map(requirementLabel).join(' · ')}
       </span>
       <Owner goal={goal} />
+      <Result goal={goal} />
       {goal.rascunho && (
         <span className="flex flex-col items-start gap-1">
           <Badge variant="outline">Rascunho</Badge>
@@ -261,6 +275,7 @@ export function ProjectGoalsView({
   const pagination = usePagination(sorted);
   const form = useDialogState<{ goal: Goal | null }>();
   const situation = useDialogState<{ goal: Goal }>();
+  const result = useDialogState<{ goal: Goal }>();
   const manager = session?.perfil === 'PRESIDENCIA_GESTAO';
   const active = instrument.data?.ativo === true;
   const canEdit = manager && active && requirements.data !== undefined;
@@ -270,6 +285,9 @@ export function ProjectGoalsView({
     ...(canEdit ? [{ label: 'Editar meta', onSelect: () => form.show({ goal }) }] : []),
     ...(canChange(goal)
       ? [{ label: 'Mudar situação', onSelect: () => situation.show({ goal }) }]
+      : []),
+    ...(canChange(goal) && !goal.rascunho
+      ? [{ label: 'Registrar resultado', onSelect: () => result.show({ goal }) }]
       : []),
   ];
   const withActions = canEdit || !!sorted?.some(canChange);
@@ -517,6 +535,15 @@ export function ProjectGoalsView({
             title: `Outra pessoa alterou a meta ${goal.ordem}`,
             description: 'A lista foi atualizada. Confira a situação e tente de novo.',
           })
+        }
+      />
+      <GoalResultDialog
+        open={result.open}
+        projectId={projectId}
+        goal={result.value?.goal ?? null}
+        onClose={result.close}
+        onRecorded={(goal) =>
+          toast.add({ type: 'success', title: `Resultado da meta ${goal.ordem} registrado` })
         }
       />
     </>

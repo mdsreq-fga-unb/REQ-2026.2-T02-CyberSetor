@@ -52,6 +52,13 @@ interface Execution {
   fim: string;
 }
 
+const PLANNED = /^\d+([.,]\d{1,2})?$/;
+
+const plannedParse = (payload: { value: unknown }) =>
+  z
+    .object({ modalidadeAfericao: z.string(), parametroPlanejado: z.string() })
+    .safeParse(payload.value).success;
+
 const datesParse = (payload: { value: unknown }) =>
   z.object({ periodoInicio: date, periodoFim: date }).safeParse(payload.value).success;
 
@@ -97,7 +104,20 @@ const schemaFor = (execution: Execution) => {
       path: ['periodoFim'],
       message: outside,
       when: datesParse,
-    });
+    })
+    .refine(
+      (values) =>
+        values.modalidadeAfericao !== 'QUANTITATIVA' ||
+        !values.parametroPlanejado ||
+        (PLANNED.test(values.parametroPlanejado) &&
+          Number(values.parametroPlanejado.replace(',', '.')) > 0),
+      {
+        path: ['parametroPlanejado'],
+        message:
+          'Na meta quantitativa, informe um número maior que zero, com até duas casas decimais.',
+        when: plannedParse,
+      },
+    );
 };
 
 type GoalSchema = ReturnType<typeof schemaFor>;
@@ -131,6 +151,7 @@ const FIELD_BY_CODE: Partial<Record<string, FieldName>> = {
   REQUIREMENT_OUTSIDE_INSTRUMENT: 'requisitoIds',
   INVALID_PERIOD: 'periodoFim',
   OUTSIDE_PROJECT_EXECUTION: 'periodoFim',
+  INVALID_PLANNED_VALUE: 'parametroPlanejado',
 };
 
 function valuesOf(goal: Goal | null): FormValues {
@@ -201,8 +222,14 @@ export function GoalFormDialog({
   });
 
   const completion = useWatch({ control: form.control, name: COMPLETION_FIELDS });
+  const [mode, planned] = useWatch({
+    control: form.control,
+    name: ['modalidadeAfericao', 'parametroPlanejado'],
+  });
   const becomesDraft =
-    editing !== null && !editing.rascunho && completion.some((value) => !value.trim());
+    editing !== null &&
+    !editing.rascunho &&
+    (completion.some((value) => !value.trim()) || (mode === 'QUANTITATIVA' && !planned.trim()));
 
   useEffect(() => {
     if (open) form.reset(valuesOf(goal));
@@ -271,8 +298,8 @@ export function GoalFormDialog({
         <DialogHeader>
           <DialogTitle>{goal ? `Editar meta ${goal.ordem}` : 'Nova meta'}</DialogTitle>
           <DialogDescription>
-            Sem indicador, forma de comprovação, início e fim do período, a meta fica como rascunho
-            e não entra na apuração.
+            Sem indicador, forma de comprovação, início e fim do período e, na meta quantitativa,
+            sem parâmetro planejado, a meta fica como rascunho e não entra na apuração.
           </DialogDescription>
         </DialogHeader>
         <form noValidate onSubmit={onSubmit}>
@@ -349,7 +376,14 @@ export function GoalFormDialog({
                 )}
               </FormField>
               <div className="grid gap-4 sm:grid-cols-2">
-                {input('parametroPlanejado', 'Parâmetro planejado')}
+                <FormField
+                  name="parametroPlanejado"
+                  label="Parâmetro planejado"
+                  description="Na meta quantitativa, um número: por exemplo, 120 ou 12,5."
+                  control={form.control}
+                >
+                  {(props) => <Input {...props} autoComplete="off" inputMode="decimal" />}
+                </FormField>
                 {input('unidade', 'Unidade')}
               </div>
               {input('frequenciaApuracao', 'Frequência de apuração')}

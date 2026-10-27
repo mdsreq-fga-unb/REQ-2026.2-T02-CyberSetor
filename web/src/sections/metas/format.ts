@@ -2,6 +2,8 @@ import type {
   CompletionField,
   DeadlineAlert,
   GoalOrigin,
+  GoalReach,
+  GoalResult,
   GoalRequirement,
   GoalSituation,
   MeasurementMode,
@@ -31,8 +33,15 @@ export const DEADLINE_ALERTS: Record<DeadlineAlert, string> = {
   VENCIDA: 'Prazo vencido',
 };
 
+export const REACHES: Record<GoalReach, string> = {
+  CUMPRIDA: 'Cumprida',
+  PARCIALMENTE_CUMPRIDA: 'Parcialmente cumprida',
+  NAO_CUMPRIDA: 'Não cumprida',
+};
+
 const COMPLETION_LABELS: Record<CompletionField, string> = {
   indicador: 'indicador',
+  parametroPlanejado: 'parâmetro planejado',
   formaComprovacao: 'forma de comprovação',
   periodoInicio: 'início do período',
   periodoFim: 'fim do período',
@@ -44,4 +53,34 @@ export function missingText(fields: CompletionField[]): string {
 
 export function requirementLabel(requirement: GoalRequirement): string {
   return requirement.referencia ?? requirement.descricao;
+}
+
+const NUMBER = new Intl.NumberFormat('pt-BR', { maximumFractionDigits: 2 });
+
+export function formatNumber(value: number): string {
+  return NUMBER.format(value);
+}
+
+// RN-14: na meta quantitativa, valor alcançado sobre o planejado; na qualitativa, só o alcance.
+export function resultText(result: GoalResult, unit: string | null): string {
+  const reach = REACHES[result.alcance];
+  if (result.valorAlcancado === null || result.parametroPlanejado === null) return reach;
+  const of = `${formatNumber(result.valorAlcancado)} de ${formatNumber(result.parametroPlanejado)}${unit ? ` ${unit}` : ''}`;
+  return `${of} (${formatNumber(result.percentual ?? 0)}%) · ${reach}`;
+}
+
+export function plannedNumber(value: string | null): number | null {
+  if (!value || !/^\d+([.,]\d{1,2})?$/.test(value)) return null;
+  const parsed = Number(value.replace(',', '.'));
+  return parsed > 0 ? parsed : null;
+}
+
+export function reachOf(percent: number): GoalReach {
+  if (percent >= 100) return 'CUMPRIDA';
+  if (percent === 0) return 'NAO_CUMPRIDA';
+  return 'PARCIALMENTE_CUMPRIDA';
+}
+
+export function todayInBrasilia(now: Date = new Date()): string {
+  return new Intl.DateTimeFormat('en-CA', { timeZone: 'America/Sao_Paulo' }).format(now);
 }

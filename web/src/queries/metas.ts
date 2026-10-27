@@ -1,6 +1,13 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { authorizedRequest } from '@/auth/session';
-import type { EligibleOwner, Goal, GoalInput, GoalSituation } from '@/types/metas';
+import type {
+  EligibleOwner,
+  Goal,
+  GoalInput,
+  GoalResult,
+  GoalResultInput,
+  GoalSituation,
+} from '@/types/metas';
 
 export function goalsKey(projectId: string) {
   return ['projetos', projectId, 'metas'] as const;
@@ -66,6 +73,18 @@ export function useChangeSituation(projectId: string) {
       authorizedRequest<Goal>(`/goals/${encodeURIComponent(goal.id)}/situation`, {
         method: 'PATCH',
         body: { versao: goal.versao, situacao, justificativa },
+      }),
+    onSettled: () => queryClient.invalidateQueries({ queryKey: goalsKey(projectId) }),
+  });
+}
+
+export function useRecordResult(projectId: string) {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: ({ goal, data }: { goal: Goal; data: GoalResultInput }) =>
+      authorizedRequest<GoalResult>(`/goals/${encodeURIComponent(goal.id)}/results`, {
+        method: 'POST',
+        body: data,
       }),
     onSettled: () => queryClient.invalidateQueries({ queryKey: goalsKey(projectId) }),
   });

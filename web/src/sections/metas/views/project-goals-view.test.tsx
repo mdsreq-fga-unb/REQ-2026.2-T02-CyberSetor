@@ -79,6 +79,7 @@ const COMPLETA: Goal = {
   },
   situacao: 'PENDENTE',
   alertaPrazo: null,
+  resultado: null,
 };
 
 const ME = { usuarioId: '00000000-0000-4000-8000-000000000201', perfil: 'NUCLEO_PEDAGOGICO' };
@@ -522,6 +523,118 @@ describe('metas do projeto', () => {
       versao: 2,
       situacao: 'EM_ANDAMENTO',
     });
+  });
+
+  it('registra o resultado da meta quantitativa com o percentual calculado', async () => {
+    const calls = await signedInAs(
+      'NUCLEO_PEDAGOGICO',
+      page([COMPLETA], {
+        'GET /auth/session': () => ({ status: 200, body: { ...ME, setor: null } }),
+        [`POST /goals/${COMPLETA.id}/results`]: (body) => ({
+          status: 201,
+          body: { id: 'r1', ...(body as object), percentual: 70, alcance: 'PARCIALMENTE_CUMPRIDA' },
+        }),
+      }),
+    );
+    renderView();
+
+    fireEvent.click(await screen.findByRole('button', { name: 'Ações da meta 1' }));
+    fireEvent.click(await screen.findByRole('menuitem', { name: 'Registrar resultado' }));
+    expect(await screen.findByLabelText('Data de referência')).not.toHaveValue('');
+    expect(screen.queryByLabelText('Alcance')).not.toBeInTheDocument();
+    fill('Valor alcançado (participantes)', '84');
+    expect(screen.getByRole('status')).toHaveTextContent(
+      '70% do planejado · Parcialmente cumprida',
+    );
+    fill('Data de referência', '2026-06-30');
+    fill('Descrição do resultado', '84 jovens concluíram com frequência mínima.');
+    fireEvent.click(screen.getByRole('button', { name: 'Registrar resultado' }));
+
+    expect(await screen.findByText('Resultado da meta 1 registrado')).toBeInTheDocument();
+    expect(calls.find((call) => call.key.endsWith('/results'))?.body).toEqual({
+      dataReferencia: '2026-06-30',
+      descricao: '84 jovens concluíram com frequência mínima.',
+      valorAlcancado: 84,
+    });
+  });
+
+  it('na meta qualitativa, pede a classificacao do alcance e nao o valor', async () => {
+    const qualitativa = { ...COMPLETA, modalidadeAfericao: 'QUALITATIVA' as const };
+    const calls = await signedInAs(
+      'PRESIDENCIA_GESTAO',
+      page([qualitativa], {
+        [`POST /goals/${COMPLETA.id}/results`]: (body) => ({
+          status: 201,
+          body: { id: 'r1', ...(body as object), percentual: null },
+        }),
+      }),
+    );
+    renderView();
+
+    fireEvent.click(await screen.findByRole('button', { name: 'Ações da meta 1' }));
+    fireEvent.click(await screen.findByRole('menuitem', { name: 'Registrar resultado' }));
+    await screen.findByLabelText('Alcance');
+    expect(screen.queryByLabelText(/Valor alcançado/)).not.toBeInTheDocument();
+    fill('Descrição do resultado', 'Apresentação pública realizada.');
+    fireEvent.click(screen.getByRole('button', { name: 'Registrar resultado' }));
+    expect(await screen.findByText('Escolha a classificação do alcance.')).toBeInTheDocument();
+    expect(calls.some((call) => call.key.endsWith('/results'))).toBe(false);
+
+    fill('Alcance', 'CUMPRIDA');
+    fireEvent.click(screen.getByRole('button', { name: 'Registrar resultado' }));
+    expect(await screen.findByText('Resultado da meta 1 registrado')).toBeInTheDocument();
+    expect(calls.find((call) => call.key.endsWith('/results'))?.body).toMatchObject({
+      alcance: 'CUMPRIDA',
+      descricao: 'Apresentação pública realizada.',
+    });
+  });
+
+  it('mostra o ultimo resultado na lista e nao oferece o registro na meta em rascunho', async () => {
+    const comResultado = {
+      ...COMPLETA,
+      resultado: {
+        id: 'r1',
+        dataReferencia: '2026-06-30',
+        descricao: 'x',
+        valorAlcancado: 84,
+        parametroPlanejado: 120,
+        percentual: 70,
+        alcance: 'PARCIALMENTE_CUMPRIDA' as const,
+        registradoPor: { id: ME.usuarioId, nome: 'Ana Pedagógica' },
+        registradoEm: '2026-06-30T12:00:00.000Z',
+      },
+    };
+    await signedInAs('PRESIDENCIA_GESTAO', page([comResultado, RASCUNHO]));
+    renderView();
+
+    expect(
+      await screen.findByText(
+        'Resultado em 30/06/2026: 84 de 120 participantes (70%) · Parcialmente cumprida',
+      ),
+    ).toBeInTheDocument();
+    fireEvent.click(screen.getByRole('button', { name: 'Ações da meta 2' }));
+    expect(await screen.findByRole('menuitem', { name: 'Mudar situação' })).toBeInTheDocument();
+    expect(screen.queryByRole('menuitem', { name: 'Registrar resultado' })).not.toBeInTheDocument();
+  });
+
+  it('parametro planejado nao numerico na meta quantitativa nao chama a API', async () => {
+    const calls = await signedInAs('PRESIDENCIA_GESTAO', page([]));
+    renderView();
+
+    await openNew();
+    fill('Origem', 'EDITAL');
+    fill('Objetivo', 'Ampliar o público');
+    fill('Descrição', 'Apresentação aberta');
+    fill('Modalidade', 'QUANTITATIVA');
+    fill('Parâmetro planejado', 'cento e vinte');
+    fireEvent.click(screen.getByRole('button', { name: 'Salvar meta' }));
+
+    expect(
+      await screen.findByText(
+        'Na meta quantitativa, informe um número maior que zero, com até duas casas decimais.',
+      ),
+    ).toBeInTheDocument();
+    expect(calls.some((call) => call.key === `POST ${GOALS}`)).toBe(false);
   });
 
   it('conflito na situacao fecha o dialogo, avisa e recarrega a lista', async () => {
