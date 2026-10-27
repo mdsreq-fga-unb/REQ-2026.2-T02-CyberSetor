@@ -113,3 +113,39 @@ export class SavedInstrumentResponse {
   @ApiProperty({ description: 'Outro instrumento já usa o mesmo número de processo' })
   numeroProcessoRepetido!: boolean;
 }
+
+export class DocumentSenderResponse {
+  @ApiProperty()
+  id!: string;
+
+  @ApiProperty()
+  nome!: string;
+}
+
+export class InstrumentDocumentResponse {
+  @ApiProperty()
+  nomeArquivo!: string;
+
+  @ApiProperty({ example: 'application/pdf' })
+  tipoConteudo!: string;
+
+  @ApiProperty({ description: 'Bytes' })
+  tamanho!: number;
+
+  @ApiProperty({ description: 'SHA-256 do conteúdo, em hexadecimal' })
+  sha256!: string;
+
+  @ApiProperty({ type: String, format: 'date-time' })
+  enviadoEm!: Date;
+
+  @ApiProperty({ type: DocumentSenderResponse })
+  enviadoPor!: DocumentSenderResponse;
+}
+
+export class OpenInstrumentDocumentResponse extends InstrumentDocumentResponse {
+  @ApiProperty({ description: 'Endereço assinado de curta duração para abrir o documento' })
+  url!: string;
+
+  @ApiProperty({ type: String, format: 'date-time' })
+  expiraEm!: Date;
+}

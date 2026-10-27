@@ -10,6 +10,7 @@ import {
   Min,
   MinLength,
   ValidateBy,
+  ValidateIf,
   validateSync,
 } from 'class-validator';
 
@@ -36,6 +37,13 @@ export enum NodeEnv {
   TEST = 'test',
   PRODUCTION = 'production',
 }
+
+export enum StorageDriver {
+  LOCAL = 'local',
+  S3 = 's3',
+}
+
+const usesS3 = (env: EnvironmentVariables) => env.STORAGE_DRIVER === StorageDriver.S3;
 
 export class EnvironmentVariables {
   @IsOptional()
@@ -77,6 +85,44 @@ export class EnvironmentVariables {
   @IsOptional()
   @ValidateBy({ name: 'isTrustProxy', validator: { validate: isTrustProxy } })
   TRUST_PROXY?: string;
+
+  @IsOptional()
+  @IsEnum(StorageDriver)
+  STORAGE_DRIVER: StorageDriver = StorageDriver.LOCAL;
+
+  @IsOptional()
+  @IsString()
+  STORAGE_LOCAL_DIR: string = '.storage';
+
+  @ValidateIf(usesS3)
+  @IsUrl({ protocols: ['https', 'http'], require_tld: false, require_protocol: true })
+  S3_ENDPOINT?: string;
+
+  @ValidateIf(usesS3)
+  @IsString()
+  @MinLength(1)
+  S3_REGION?: string;
+
+  @ValidateIf(usesS3)
+  @IsString()
+  @MinLength(1)
+  S3_BUCKET?: string;
+
+  @ValidateIf(usesS3)
+  @IsString()
+  @MinLength(1)
+  S3_ACCESS_KEY_ID?: string;
+
+  @ValidateIf(usesS3)
+  @IsString()
+  @MinLength(1)
+  S3_SECRET_ACCESS_KEY?: string;
+
+  @IsOptional()
+  @IsInt()
+  @Min(60)
+  @Max(3600)
+  DOCUMENT_URL_TTL_SECONDS: number = 300;
 }
 
 export function validateEnv(config: Record<string, unknown>): EnvironmentVariables {
@@ -94,6 +140,11 @@ export function validateEnv(config: Record<string, unknown>): EnvironmentVariabl
       .map((e) => `${e.property}: ${Object.values(e.constraints ?? {}).join(', ')}`)
       .join('; ');
     throw new Error(`Variaveis de ambiente invalidas — ${detalhe}`);
+  }
+  if (validated.NODE_ENV === NodeEnv.PRODUCTION && !usesS3(validated)) {
+    throw new Error(
+      'Variaveis de ambiente invalidas — STORAGE_DRIVER: em producao os anexos ficam no armazenamento S3',
+    );
   }
   return validated;
 }

@@ -67,20 +67,25 @@ O `.env`, o `.env.test` e o cliente gerado não são versionados. O `.env.exampl
 
 ## Variáveis de ambiente
 
-| Variável                         | Padrão               | Uso                                                                                                                                                     |
-| -------------------------------- | -------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `NODE_ENV`                       | `development`        | `production` em homologação e produção (cookie `__Host-` e `Secure`)                                                                                    |
-| `PORT`                           | `3001`               | porta da API                                                                                                                                            |
-| `CORS_ORIGIN`                    | vazio                | origem exata do front, ex.: `http://localhost:3000`                                                                                                     |
-| `DATABASE_URL`                   | —                    | obrigatória                                                                                                                                             |
-| `JWT_SECRET`                     | —                    | obrigatória, 32 caracteres ou mais                                                                                                                      |
-| `ACCESS_TOKEN_TTL_MINUTES`       | `15`                 | validade do token de acesso                                                                                                                             |
-| `SESSION_IDLE_TIMEOUT_MINUTES`   | `30`                 | encerramento por inatividade                                                                                                                            |
-| `SESSION_ABSOLUTE_TIMEOUT_HOURS` | `8`                  | duração máxima da sessão                                                                                                                                |
-| `TRUST_PROXY`                    | vazio                | atrás de proxy reverso, de quem confiar o `X-Forwarded-For` (formato do Express: número de saltos ou `loopback, linklocal, uniquelocal`); vazio desliga |
-| `SEED_ADMIN_NAME/EMAIL/PASSWORD` | —                    | só para `pnpm seed:admin`; senha temporária de 15 a 64 caracteres                                                                                       |
-| `POSTGRES_USER/PASSWORD/DB/PORT` | `cybersetor`, `5432` | Compose local; a porta acompanha a da `DATABASE_URL`                                                                                                    |
-| `REDIS_PORT`                     | `6379`               | Compose local                                                                                                                                           |
+| Variável                             | Padrão               | Uso                                                                                                                                                     |
+| ------------------------------------ | -------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `NODE_ENV`                           | `development`        | `production` em homologação e produção (cookie `__Host-` e `Secure`)                                                                                    |
+| `PORT`                               | `3001`               | porta da API                                                                                                                                            |
+| `CORS_ORIGIN`                        | vazio                | origem exata do front, ex.: `http://localhost:3000`                                                                                                     |
+| `DATABASE_URL`                       | —                    | obrigatória                                                                                                                                             |
+| `JWT_SECRET`                         | —                    | obrigatória, 32 caracteres ou mais                                                                                                                      |
+| `ACCESS_TOKEN_TTL_MINUTES`           | `15`                 | validade do token de acesso                                                                                                                             |
+| `SESSION_IDLE_TIMEOUT_MINUTES`       | `30`                 | encerramento por inatividade                                                                                                                            |
+| `SESSION_ABSOLUTE_TIMEOUT_HOURS`     | `8`                  | duração máxima da sessão                                                                                                                                |
+| `TRUST_PROXY`                        | vazio                | atrás de proxy reverso, de quem confiar o `X-Forwarded-For` (formato do Express: número de saltos ou `loopback, linklocal, uniquelocal`); vazio desliga |
+| `STORAGE_DRIVER`                     | `local`              | onde ficam os anexos: `local` (pasta, para desenvolvimento e testes) ou `s3`; em produção, só `s3`                                                      |
+| `STORAGE_LOCAL_DIR`                  | `.storage`           | pasta dos anexos com `local`; os testes de ponta a ponta usam uma pasta temporária                                                                      |
+| `S3_ENDPOINT/REGION/BUCKET`          | —                    | com `s3`: endereço S3 do provedor, região e bucket privado dos anexos                                                                                   |
+| `S3_ACCESS_KEY_ID/SECRET_ACCESS_KEY` | —                    | com `s3`: chave restrita ao bucket dos anexos                                                                                                           |
+| `DOCUMENT_URL_TTL_SECONDS`           | `300`                | validade do link assinado para abrir um anexo (60 a 3600)                                                                                               |
+| `SEED_ADMIN_NAME/EMAIL/PASSWORD`     | —                    | só para `pnpm seed:admin`; senha temporária de 15 a 64 caracteres                                                                                       |
+| `POSTGRES_USER/PASSWORD/DB/PORT`     | `cybersetor`, `5432` | Compose local; a porta acompanha a da `DATABASE_URL`                                                                                                    |
+| `REDIS_PORT`                         | `6379`               | Compose local                                                                                                                                           |
 
 Variável vazia vale como ausente: a opcional cai no padrão e a obrigatória reprova a inicialização.
 
@@ -97,6 +102,7 @@ A homologação roda no Coolify a partir da `api-develop`, com a imagem do `Dock
   - `CORS_ORIGIN` é a origem exata do front.
   - `TRUST_PROXY=loopback, linklocal, uniquelocal` faz o limite de tentativas contar o IP de quem acessa, e não o do proxy. Só vale com a API acessível apenas pelo proxy: no Coolify, porta só em _Ports Exposes_, sem _Ports Mappings_.
   - `JWT_SECRET` é gerado com `openssl rand -base64 48`.
+  - Anexos: `STORAGE_DRIVER=s3` e as variáveis `S3_*` do bucket privado de anexos, com a chave restrita a esse bucket. Sem elas, a API não sobe em produção.
 - **Domínio:** o front e a API ficam em subdomínios do mesmo domínio, porque o cookie de renovação é `SameSite=Strict`.
 
 Para conferir a imagem localmente:
