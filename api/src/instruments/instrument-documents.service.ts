@@ -15,7 +15,7 @@ import type { Prisma } from '../generated/prisma/client.js';
 import { AutorTipo } from '../generated/prisma/enums.js';
 import { PrismaService } from '../prisma/prisma.service.js';
 import { FILE_STORAGE, type FileStorage } from '../storage/file-storage.js';
-import { detectDocumentType, documentFileName } from './document-type.js';
+import { type DocumentType, detectDocumentType, documentFileName } from './document-type.js';
 import type {
   InstrumentDocumentResponse,
   OpenInstrumentDocumentResponse,
@@ -101,6 +101,23 @@ export class InstrumentDocumentsService {
     const sha256 = createHash('sha256').update(file.buffer).digest('hex');
     await this.storage.put(chave, file.buffer, type.contentType);
 
+    try {
+      return await this.record(instrumentoId, chave, file, type, sha256, actor);
+    } catch (error) {
+      // Sem o registro, o arquivo fica órfão no armazenamento; a falha da remoção não esconde a original.
+      await this.storage.delete(chave).catch(() => undefined);
+      throw error;
+    }
+  }
+
+  private record(
+    instrumentoId: string,
+    chave: string,
+    file: UploadedDocument,
+    type: DocumentType,
+    sha256: string,
+    actor: Actor,
+  ): Promise<InstrumentDocumentResponse> {
     return this.prisma.$transaction(async (tx) => {
       const previous = await tx.documentoInstrumento.findFirst({
         where: { instrumentoId },

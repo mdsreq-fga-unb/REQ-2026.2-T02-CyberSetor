@@ -1,3 +1,5 @@
+import { readdir } from 'node:fs/promises';
+import { join } from 'node:path';
 import { INestApplication } from '@nestjs/common';
 import { Test } from '@nestjs/testing';
 import request from 'supertest';
@@ -153,10 +155,11 @@ describe('Documento formal do instrumento (e2e)', () => {
   });
 
   it('aceita DOCX pelo conteudo e recusa outro formato mesmo com extensao de PDF', async () => {
-    const sent = await upload(Perfil.PRESIDENCIA_GESTAO, docx(), 'termo.docx').expect(200);
-    expect((sent.body as DocumentBody).tipoConteudo).toBe(
-      'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
-    );
+    const sent = await upload(Perfil.PRESIDENCIA_GESTAO, docx(), 'termo.pdf').expect(200);
+    expect(sent.body as DocumentBody).toMatchObject({
+      nomeArquivo: 'termo.docx',
+      tipoConteudo: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+    });
 
     const refused = await upload(
       Perfil.PRESIDENCIA_GESTAO,
@@ -235,6 +238,15 @@ describe('Documento formal do instrumento (e2e)', () => {
       expect(refused.body).not.toHaveProperty('url');
     }
     await open(Perfil.ADMINISTRATIVO_FINANCEIRO).expect(200);
+  });
+
+  it('falha ao gravar o registro remove o arquivo enviado', async () => {
+    vi.spyOn(prisma, '$transaction').mockRejectedValueOnce(new Error('banco indisponivel'));
+    await upload(Perfil.PRESIDENCIA_GESTAO, PDF, 'termo.pdf').expect(500);
+
+    expect(await prisma.documentoInstrumento.count()).toBe(0);
+    const folder = join(process.env.STORAGE_LOCAL_DIR ?? '', 'instrumentos', instrumentoId);
+    expect(await readdir(folder).catch(() => [])).toEqual([]);
   });
 
   it('sem documento, instrumento inexistente ou inativo e link adulterado', async () => {

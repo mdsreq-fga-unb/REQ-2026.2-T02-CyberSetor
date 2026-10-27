@@ -1,4 +1,9 @@
-import { GetObjectCommand, PutObjectCommand, S3Client } from '@aws-sdk/client-s3';
+import {
+  DeleteObjectCommand,
+  GetObjectCommand,
+  PutObjectCommand,
+  S3Client,
+} from '@aws-sdk/client-s3';
 import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
 import { contentDisposition, type FileStorage, type StoredFile } from './file-storage.js';
 
@@ -38,6 +43,10 @@ export class S3FileStorage implements FileStorage {
         ContentLength: body.length,
       }),
     );
+  }
+
+  async delete(key: string): Promise<void> {
+    await this.client.send(new DeleteObjectCommand({ Bucket: this.settings.bucket, Key: key }));
   }
 
   signedUrl(file: StoredFile, expiresInSeconds: number): Promise<string> {

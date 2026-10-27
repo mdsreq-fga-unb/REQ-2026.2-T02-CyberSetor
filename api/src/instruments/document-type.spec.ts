@@ -35,5 +35,18 @@ describe('nome do documento formal', () => {
 
   it('usa um nome padrao quando o nome vem vazio', () => {
     expect(documentFileName('  ', pdf)).toBe('documento-formal.pdf');
+    expect(documentFileName('.pdf', pdf)).toBe('documento-formal.pdf');
+  });
+
+  it('termina na extensao do tipo conferido pelo conteudo', () => {
+    const docx = {
+      contentType: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+      extension: 'docx',
+    } as const;
+    expect(documentFileName('termo.PDF', pdf)).toBe('termo.pdf');
+    expect(documentFileName('termo.pdf', docx)).toBe('termo.docx');
+    expect(documentFileName('termo.doc', docx)).toBe('termo.docx');
+    expect(documentFileName('termo v2.final', pdf)).toBe('termo v2.final.pdf');
+    expect(documentFileName(`${'a'.repeat(300)}.pdf`, pdf)).toHaveLength(194);
   });
 });

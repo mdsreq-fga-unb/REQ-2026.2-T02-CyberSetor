@@ -1,5 +1,5 @@
 import { createHmac, timingSafeEqual } from 'node:crypto';
-import { mkdir, readFile, writeFile } from 'node:fs/promises';
+import { mkdir, readFile, rm, writeFile } from 'node:fs/promises';
 import { dirname, join, resolve, sep } from 'node:path';
 import type { FileStorage, StoredFile } from './file-storage.js';
 
@@ -22,6 +22,10 @@ export class LocalFileStorage implements FileStorage {
     const path = this.pathOf(key);
     await mkdir(dirname(path), { recursive: true });
     await writeFile(path, body);
+  }
+
+  async delete(key: string): Promise<void> {
+    await rm(this.pathOf(key), { force: true });
   }
 
   signedUrl(file: StoredFile, expiresInSeconds: number, baseUrl: string): Promise<string> {

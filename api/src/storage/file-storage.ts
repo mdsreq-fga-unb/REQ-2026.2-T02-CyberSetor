@@ -8,6 +8,8 @@ export interface StoredFile {
 
 export interface FileStorage {
   put(key: string, body: Buffer, contentType: string): Promise<void>;
+  /** Remove o arquivo; usado só para desfazer um envio cujo registro não foi gravado. */
+  delete(key: string): Promise<void>;
   /** Endereço de curta duração para abrir o arquivo; o armazenamento nunca é público. */
   signedUrl(file: StoredFile, expiresInSeconds: number, baseUrl: string): Promise<string>;
 }
