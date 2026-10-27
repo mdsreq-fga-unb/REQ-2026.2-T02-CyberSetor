@@ -20,6 +20,7 @@ const INSTRUMENT: Instrument = {
   vigenciaInicio: '2026-04-01',
   vigenciaFim: '2027-03-31',
   ativo: true,
+  documentoFormalEm: null,
 };
 
 const PROJECTS: Project[] = Array.from({ length: 12 }, (_, index) => ({

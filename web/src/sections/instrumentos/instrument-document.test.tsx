@@ -16,6 +16,7 @@ const INSTRUMENT: Instrument = {
   vigenciaInicio: '2026-04-01',
   vigenciaFim: '2027-03-31',
   ativo: true,
+  documentoFormalEm: null,
 };
 
 const PATH = `/instruments/${INSTRUMENT.id}/document`;
@@ -88,6 +89,9 @@ describe('documento formal do instrumento', () => {
     renderSection(false);
 
     expect(await screen.findByText('Termo de Fomento 12-2026.pdf')).toBeInTheDocument();
+    expect(screen.getByRole('region', { name: 'Documento formal' })).toHaveAccessibleDescription(
+      /Termo, convênio ou ato assinado com o concedente\. Documentos internos/,
+    );
     expect(
       screen.getByText(/PDF · 1,5 MB · enviado em 27\/10\/2026, 10:05 por Beatriz Gestão/),
     ).toBeInTheDocument();

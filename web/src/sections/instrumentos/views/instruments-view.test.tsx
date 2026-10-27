@@ -19,6 +19,7 @@ const EMENDA: Instrument = {
   vigenciaInicio: '2026-04-01',
   vigenciaFim: '2027-03-31',
   ativo: true,
+  documentoFormalEm: null,
 };
 
 type Route = (body: unknown) => { status: number; body?: unknown };
@@ -68,11 +69,18 @@ describe('instrumentos', () => {
     cleanup();
     clearLocalSession();
     vi.unstubAllGlobals();
+    push.mockClear();
   });
 
   it('lista numa tabela com valor em reais e vigencia em datas', async () => {
+    const comDocumento: Instrument = {
+      ...EMENDA,
+      id: '00000000-0000-4000-8000-000000000102',
+      numeroProcesso: '00150-2/2026',
+      documentoFormalEm: '2026-03-12T14:30:00.000Z',
+    };
     await signedInAs('ADMINISTRATIVO_FINANCEIRO', {
-      'GET /instruments': () => ({ status: 200, body: [EMENDA] }),
+      'GET /instruments': () => ({ status: 200, body: [EMENDA, comDocumento] }),
     });
     renderView();
 
@@ -80,12 +88,13 @@ describe('instrumentos', () => {
     const table = screen.getByRole('table', {
       name: 'Editais, emendas e parcerias que financiam os projetos do Instituto.',
     });
-    const [, row] = within(table).getAllByRole('row');
+    const [, row, other] = within(table).getAllByRole('row');
     const [instrumento, valor, vigencia, situacao] = within(row).getAllByRole('cell');
     expect(instrumento).toHaveTextContent('Emenda parlamentar · Secretaria de Cultura');
     expect(valor).toHaveTextContent('R$ 150.000,50');
     expect(vigencia).toHaveTextContent('01/04/2026 a 31/03/2027');
-    expect(situacao).toHaveTextContent('Ativo');
+    expect(situacao).toHaveTextContent('AtivoSem documento formal');
+    expect(within(other).getAllByRole('cell')[3]).toHaveTextContent(/^Ativo$/);
   });
 
   it('perfil que so consulta nao cadastra nem edita, mas abre os projetos', async () => {
@@ -112,7 +121,7 @@ describe('instrumentos', () => {
     expect(push).toHaveBeenCalledWith(`/instrumentos/${EMENDA.id}`);
   });
 
-  it('cadastra com o valor convertido e avisa processo repetido', async () => {
+  it('cadastra com o valor convertido, avisa processo repetido e abre o instrumento', async () => {
     const calls = await signedInAs('PRESIDENCIA_GESTAO', {
       'GET /instruments': () => ({ status: 200, body: [] }),
       'POST /instruments': () => ({
@@ -134,8 +143,11 @@ describe('instrumentos', () => {
     fireEvent.click(screen.getByRole('button', { name: 'Salvar instrumento' }));
 
     expect(
-      await screen.findByText('Outro instrumento já usa o processo 00150-1/2026.'),
+      await screen.findByText(
+        'Outro instrumento já usa o processo 00150-1/2026. Agora anexe o documento formal que o celebra.',
+      ),
     ).toBeInTheDocument();
+    expect(push).toHaveBeenCalledWith(`/instrumentos/${EMENDA.id}`);
     expect(calls.find((call) => call.key === 'POST /instruments')?.body).toEqual({
       tipo: 'EMENDA',
       orgaoConcedente: 'Secretaria de Cultura',
@@ -252,6 +264,7 @@ describe('instrumentos', () => {
     fireEvent.click(screen.getByRole('button', { name: 'Salvar instrumento' }));
 
     expect(await screen.findByText('Instrumento salvo')).toBeInTheDocument();
+    expect(push).not.toHaveBeenCalled();
     expect(patches[0]).toMatchObject({ versao: 3, vigenciaFim: '2027-06-30' });
     expect(patches[1]).toMatchObject({
       versao: 4,

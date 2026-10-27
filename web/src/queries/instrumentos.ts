@@ -91,6 +91,10 @@ export function useAttachDocument(id: string) {
         { method: 'PUT', body },
       );
     },
-    onSettled: () => queryClient.invalidateQueries({ queryKey: instrumentDocumentKey(id) }),
+    onSettled: () =>
+      Promise.all([
+        queryClient.invalidateQueries({ queryKey: instrumentDocumentKey(id) }),
+        queryClient.invalidateQueries({ queryKey: instrumentsKey, exact: true }),
+      ]),
   });
 }

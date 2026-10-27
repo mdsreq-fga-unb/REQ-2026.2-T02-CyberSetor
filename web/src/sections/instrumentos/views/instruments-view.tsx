@@ -42,11 +42,16 @@ function term(instrument: Instrument): string {
   return `${formatDate(instrument.vigenciaInicio)} a ${formatDate(instrument.vigenciaFim)}`;
 }
 
-function StatusBadge({ instrument }: { instrument: Instrument }) {
+function StatusBadges({ instrument }: { instrument: Instrument }) {
   return (
-    <Badge variant={instrument.ativo ? 'secondary' : 'outline'}>
-      {instrument.ativo ? 'Ativo' : 'Inativo'}
-    </Badge>
+    <span className="flex flex-wrap gap-1.5">
+      <Badge variant={instrument.ativo ? 'secondary' : 'outline'}>
+        {instrument.ativo ? 'Ativo' : 'Inativo'}
+      </Badge>
+      {instrument.documentoFormalEm === null && (
+        <Badge variant="outline">Sem documento formal</Badge>
+      )}
+    </span>
   );
 }
 
@@ -59,15 +64,23 @@ export function InstrumentsView() {
   const form = useDialogState<{ instrument: Instrument | null }>();
 
   function saved({ instrumento, numeroProcessoRepetido }: SavedInstrument) {
+    const created = !form.value?.instrument;
+    const next = created ? 'Agora anexe o documento formal que o celebra.' : undefined;
     toast.add(
       numeroProcessoRepetido
         ? {
             type: 'warning',
             title: 'Instrumento salvo',
-            description: `Outro instrumento já usa o processo ${instrumento.numeroProcesso}.`,
+            description: [
+              `Outro instrumento já usa o processo ${instrumento.numeroProcesso}.`,
+              next,
+            ]
+              .filter(Boolean)
+              .join(' '),
           }
-        : { type: 'success', title: 'Instrumento salvo' },
+        : { type: 'success', title: 'Instrumento salvo', description: next },
     );
+    if (created) router.push(paths.dashboard.instrument(instrumento.id));
   }
 
   const createButton = canEdit && (
@@ -134,7 +147,7 @@ export function InstrumentsView() {
                           {formatMoney(instrument.valorGlobal)} · {term(instrument)}
                         </span>
                         <span className="md:hidden">
-                          <StatusBadge instrument={instrument} />
+                          <StatusBadges instrument={instrument} />
                         </span>
                       </div>
                     </TableCell>
@@ -143,7 +156,7 @@ export function InstrumentsView() {
                     </TableCell>
                     <TableCell className="hidden md:table-cell">{term(instrument)}</TableCell>
                     <TableCell className="hidden md:table-cell">
-                      <StatusBadge instrument={instrument} />
+                      <StatusBadges instrument={instrument} />
                     </TableCell>
                     <TableCell className="px-4 text-right">
                       <RowActionsMenu

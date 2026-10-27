@@ -76,10 +76,20 @@ export function InstrumentDocument({
   );
 
   return (
-    <section className="flex flex-col gap-4" aria-labelledby="documento-titulo">
-      <h2 id="documento-titulo" className="text-lg font-semibold">
-        Documento formal
-      </h2>
+    <section
+      className="flex flex-col gap-4"
+      aria-labelledby="documento-titulo"
+      aria-describedby="documento-descricao"
+    >
+      <div className="flex flex-col gap-1">
+        <h2 id="documento-titulo" className="text-lg font-semibold">
+          Documento formal
+        </h2>
+        <p id="documento-descricao" className="text-muted-foreground">
+          Termo, convênio ou ato assinado com o concedente. Documentos internos do Instituto e
+          arquivos de trabalho não entram aqui.
+        </p>
+      </div>
       {canEdit && (
         <input
           ref={input}

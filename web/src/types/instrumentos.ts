@@ -11,9 +11,10 @@ export interface Instrument {
   vigenciaInicio: string;
   vigenciaFim: string;
   ativo: boolean;
+  documentoFormalEm: string | null;
 }
 
-export type InstrumentInput = Omit<Instrument, 'id' | 'versao' | 'ativo'>;
+export type InstrumentInput = Omit<Instrument, 'id' | 'versao' | 'ativo' | 'documentoFormalEm'>;
 
 export interface SavedInstrument {
   instrumento: Instrument;

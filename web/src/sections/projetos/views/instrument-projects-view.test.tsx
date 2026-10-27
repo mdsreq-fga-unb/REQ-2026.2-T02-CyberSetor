@@ -20,6 +20,7 @@ const INSTRUMENT: Instrument = {
   vigenciaInicio: '2026-04-01',
   vigenciaFim: '2027-03-31',
   ativo: true,
+  documentoFormalEm: null,
 };
 
 const ANA = { id: '00000000-0000-4000-8000-000000000201', nome: 'Ana Pedagógica' };
