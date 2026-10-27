@@ -134,7 +134,7 @@ As dezesseis histórias do MVP (seção 10.2.6): Requisito e meta HU-01a, HU-01b
 | B02 | HU-01b: requisitos do instrumento e metas com parâmetros | Declaração | Vinicius | Must | 27/10 |
 | B03 | HU-02a: responsável, setor, prazo e situação da meta | Declaração | Vinicius | Must | 29/10 |
 | B04 | HU-03a: modalidades e atividades ligadas a metas | Declaração | Maria Eduarda e Caio | Must | 27/10 |
-| B05 | HU-07b e HU-07a: abertura da inscrição e formulário público | Declaração | Maria Eduarda e Caio | Must | 30/10 |
+| B05 | HU-07b e HU-07a: abertura da inscrição e formulário público | Declaração | Maria Eduarda e Caio | Must | 28/10 (HU-07b, para a reunião de 29/10); 30/10 (HU-07a) |
 | B06 | HU-07c e HU-08: vaga ou lista de espera; inscrição presencial | Declaração | Maria Eduarda e Caio | Should | 03/11 |
 | B07 | HU-02b e HU-14: painel de prazos com avisos; termo aditivo como nova versão | Declaração | Daniel e Rodrigo; Vinicius na HU-02b | Should | 03/11 |
 | B08 | HU-15a e HU-15b: correção, exclusão e anonimização a pedido do titular | Declaração | Vinicius | Should | 03/11 |
@@ -168,11 +168,11 @@ As dezesseis histórias do MVP (seção 10.2.6): Requisito e meta HU-01a, HU-01b
 - **Must:** A01 a A04, B01 a B05, C01, C03 e C04 — a homologação, a primeira entrega e o ciclo do instrumento à meta com a atividade e a inscrição aberta.
 - **Should:** B06 a B11, C02 e C05 — fecham os dois ciclos do MVP; se a velocidade ficar abaixo do necessário, descem para a Sprint 5 na ordem HU-05b, depois HU-14, depois só o aviso por e-mail da HU-02b (CA-02b.4), com aviso ao Instituto. HU-15a e HU-15b não descem enquanto a inscrição pública puder receber dado real.
 
-**Verificação de capacidade.** Cinco dias plenos para nove histórias novas em duas duplas e um integrante independente, com a distribuição da seção 8. A contenção é por história inteira; a única exceção é o aviso por e-mail da HU-02b, que pode descer sozinho, e nesse caso a HU-02b só é concluída quando ele for entregue.
+**Verificação de capacidade.** Cinco dias plenos para nove histórias novas em duas duplas e um integrante independente, com a distribuição da seção 8: com a referência da seção 5.2, são cerca de 50 horas de construção (cinco integrantes, 2 horas por dia pleno), perto de 6 horas por história; as histórias com requisito de esforço 3 (HU-15b e HU-05b, pela escala da seção 10.2.1) passam disso, e a HU-05b é a primeira da ordem de contenção; sem contar os dias reduzidos, que ficam para revisão, integração e a reunião de 29/10. A contenção é por história inteira; a única exceção é o aviso por e-mail da HU-02b, que pode descer sozinho, e nesse caso a HU-02b só é concluída quando ele for entregue.
 
 ### 7.3 Ordem de construção (horizonte B)
 
-A partir de 23/10: HU-01a (documento e projeto), HU-01b, HU-02a e HU-03a; em seguida inscrições (HU-07b, HU-07a, HU-07c, HU-08), HU-02b e HU-14, HU-15a e HU-15b, HU-05a, HU-05b e HU-13. Dentro de cada história, a primeira fatia é vertical: API e tela para um critério de aceitação, em pull request de até 1.000 linhas (alvo 500), antes de ampliar. Branches com o código da história com letra (`feat/api/HU-01b-...`).
+A partir de 23/10: HU-01a (documento e projeto), HU-01b, HU-02a e HU-03a; em seguida inscrições (HU-07b, HU-07a, HU-07c, HU-08), HU-02b, HU-15a e HU-15b, HU-05a, HU-14, HU-05b e HU-13. Dentro de cada história, a primeira fatia é vertical: API e tela para um critério de aceitação, em pull request de até 1.000 linhas (alvo 500), antes de ampliar. Branches com o código da história com letra (`feat/api/HU-01b-...`).
 
 ---
 
@@ -225,6 +225,43 @@ Os pull requests da base técnica e da primeira fatia foram revisados e integrad
 
 **22/10 — remanejamento.** Combinado no grupo da equipe: HU-01b e HU-02a passam a Vinicius; HU-05a passa a Daniel e Rodrigo, com a HU-14 e a HU-13; HU-02b fica com Vinicius, Daniel e Rodrigo; HU-05b continua com Vinicius. A ordem de contenção da seção 7.2 passa a HU-05b, depois HU-14, depois só o aviso por e-mail da HU-02b; HU-15a e HU-15b não descem enquanto a inscrição pública puder receber dado real.
 
+**26/10 — conferência da Definition of Ready das histórias selecionadas.** As dezesseis histórias, conferidas contra os nove itens da [DoR](../../requisitos/9-dor-dod.md#91-definition-of-ready-dor), atendem aos itens 2, 4, 5, 6 e 7: avaliação técnica de cada requisito funcional na [seção 10.2.3](../../requisitos/10-backlog.md#1023-avaliacao-tecnica), critérios de aceitação em lista e requisitos não funcionais e regras de negócio ligados pela matriz. No item 1, as dependências estão na tabela da [seção 10.1](../../requisitos/10-backlog.md#101-backlog-geral); a HU-14 depende da HU-05a para o realizado do comparativo (CA-14.3) e por isso vem depois dela na ordem de construção (seção 7.3). Antes da conferência, nenhuma história com tela descrevia o estado vazio, e poucas as recusas próprias (item 9); as pendências marcadas com 🔧 não tinham responsável, e o prazo era 22/10 (item 8). Os critérios de tela estão agora na seção 10.1, e os estados comuns a todas as telas, na [RNF15](../../requisitos/8-requisitos.md#rnf15).
+
+| História | Valor (item 3) | Pendência admitida com 🔧 (item 8) | Tela (item 9) |
+|---|---|---|---|
+| HU-01a | 4 | Número de processo repetido e código do projeto único (CA-01a.1, CA-01a.3); obrigatoriedade do anexo | CA-01a.4 |
+| HU-01b | 4 | Condição de rascunho (CA-01b.3); meta pelo objetivo ou por etapa | CA-01b.5 |
+| HU-02a | 4 | — | CA-02a.4 |
+| HU-02b | 4 | Repetição do aviso depois dos 30 dias | CA-02b.5 |
+| HU-14 | 4 | Sinalização sem mudança automática de prazo (CA-14.5) | CA-14.6 |
+| HU-03a | 4 | Encontros e recorrência da atividade | CA-03a.4 |
+| HU-07a | 4 | Repetição de e-mail ou CPF; formulários que o Instituto já usa | CA-07a.7 |
+| HU-07b | 4 | Campo que identifica cadastro repetido (CA-07b.1) | CA-07b.4 |
+| HU-07c | 4 🔧 | Valor herdado | Resultado na tela pelo CA-07c.1 |
+| HU-08 | 4 | Cadastro repetido e e-mail de confirmação (CA-08.3) | CA-08.5 |
+| HU-15a | 4 🔧 | Valor por obrigação legal | CA-15a.2 |
+| HU-15b | 4 🔧 | Valor por obrigação legal; prazo de atendimento (CA-15b.3) | CA-15b.4 |
+| HU-16 | 4 🔧 | Valor por dependência técnica; perfil de administração e uma conta por pessoa; senha temporária, efeito da mudança de perfil e redefinição (CA-16.1 a CA-16.3) | CA-16.6 |
+| HU-05a | 4 | Trava por pendência administrativo-financeira; conferência do valor alcançado com a fonte | CA-05a.7 |
+| HU-05b | 4 🔧 | Valor herdado | CA-05b.2 |
+| HU-13 | 4 | — | CA-13.6 |
+
+Nenhuma pendência impede a entrada: são parâmetros, campos opcionais, regras cujo comportamento padrão já está no critério e valores provisórios, que o item 8 admite. Cada uma tem prazo na reunião de 29/10 e responsável Maria Eduarda Marques, registrados na história no quadro do projeto. Os critérios de tela foram conferidos contra a tela integrada. Voltam à sprint, nas histórias a que pertencem: o parâmetro planejado numérico e a recusa no campo da HU-01b (CA-01b.3, CA-01b.5); o aviso de falta de modalidade no formulário da atividade (HU-03a, CA-03a.4); a falha ao carregar a inscrição, hoje mostrada como inscrição não aberta (HU-07b); o aviso de alteração simultânea na mudança de perfil e de setor da conta (HU-16); e os testes de falha de carregamento nas telas de atividades, instrumentos, modalidades, projetos, requisitos e setores (RNF15).
+
+**26/10 — conferência da ata de 08/10 com o catálogo.** Cada decisão da [ata de 08/10](../atas/2026-10-08-validacao-mvp-instituto.md) foi conferida com os requisitos, as regras de negócio e os critérios de aceitação das seções 8 e 10.
+
+| Decisão de 08/10 | No catálogo | Resultado |
+|---|---|---|
+| 1. Instrumentos, projetos e metas com indicador e prazos; documentos assinados anexados | RF01 a RF04; CA-01a.2, CA-01b.3 | Diverge: a ata cita indicador e datas para a meta sair do rascunho; o catálogo segue 28/09 (meta sem parâmetros fica em rascunho) e exige também forma de comprovação e, na meta quantitativa, parâmetro com unidade 🔧 |
+| 2. Responsável e setor; acompanhamento de prazos; aviso por e-mail 30 dias antes, por domínio de teste | RF05 a RF08; CA-02a.1, CA-02b.4 | Coerente; o domínio de teste é configuração da implantação, sem requisito |
+| 3. Aditivo e mudança de período como nova versão; alteração com justificativa | RF31; RN-09, RN-13; CA-14.1, CA-14.4 | Coerente |
+| 4. Inscrição por link e QR Code, aviso de privacidade, vagas, lista de espera, cadastro repetido e inscrição presencial | RF11 a RF15, RF22, RF23, RF42; CA-07a.3, CA-07a.4, CA-08.3 | Diverge: a ata registra aviso no tema e bloqueio na decisão; o catálogo tem aviso com reaproveitamento 🔧; o e-mail de confirmação na inscrição presencial não tem critério 🔧 |
+| 5. Correção, exclusão e anonimização desde a primeira fase | RF26, RF27; HU-15a e HU-15b no MVP | Coerente |
+| 6. Relatório em PDF e planilhas; justificativa obrigatória com trava e aviso; trilha de auditoria; fotos no incremento 2 | RF35 a RF39; RN-11; CA-05a.2 | Coerente; o resultado alcançado (RF43) não consta da ata e vai à validação da área administrativo-financeira |
+| 7. Sprints de duas semanas e revisões com o Instituto | Processo (seção 4) | Não se aplica |
+
+As divergências marcadas com 🔧 estão entre as pendências da reunião de 29/10, com responsável Maria Eduarda Marques.
+
 As respostas do Instituto em 29/10 entram em nova versão deste plano.
 
 ---
@@ -234,4 +271,4 @@ As respostas do Instituto em 29/10 entram em nova versão deste plano.
 | Versão | Data | Alteração | Responsável |
 |---|---|---|---|
 | 1.0 | 21/10/2026 | Emissão com o deliberado no Sprint Planning de 20/10 e na realocação de 21/10: meta, calendário, Sprint Backlog em três partes, priorização, alocação, riscos e critérios de aceitação | Vinicius |
-| 1.1 | 26/10/2026 | Reunião com o Instituto remarcada de 22/10 para 29/10 (quinta-feira), com demonstração e checkpoint; remanejamento de 22/10 no perfil da equipe, no Sprint Backlog e na alocação; nova ordem de contenção; itens, riscos e critérios de aceitação ajustados à nova data; prazos separados para os registros de 08/10 e 29/10 na 10.2.8 | Vinicius Vieira |
+| 1.1 | 26/10/2026 | Reunião com o Instituto remarcada de 22/10 para 29/10 (quinta-feira), com demonstração e checkpoint; remanejamento de 22/10 no perfil da equipe, no Sprint Backlog e na alocação; nova ordem de contenção; itens, riscos e critérios de aceitação ajustados à nova data, com a HU-07b antes da reunião; horas de construção na verificação de capacidade; HU-14 depois da HU-05a na ordem de construção; prazos separados para os registros de 08/10 e 29/10 na 10.2.8; conferência da Definition of Ready das histórias selecionadas e da ata de 08/10 com o catálogo | Vinicius Vieira |
