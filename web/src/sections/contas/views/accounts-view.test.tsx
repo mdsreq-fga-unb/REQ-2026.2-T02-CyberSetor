@@ -12,6 +12,7 @@ const ADMIN: Account = {
   emailLogin: 'ana@instituto.org.br',
   perfil: 'ADMINISTRACAO_SISTEMA',
   ativo: true,
+  versao: 1,
   deveTrocarSenha: false,
   bloqueadoAte: null,
   ultimoAcessoEm: null,
@@ -210,9 +211,53 @@ describe('administracao de contas', () => {
     expect(await screen.findByText('Bia Educadora sem setor')).toBeInTheDocument();
 
     expect(calls.filter((call) => call.key.endsWith('/sector')).map((call) => call.body)).toEqual([
-      { setorId: SECTORS[1].id },
-      { setorId: null },
+      { setorId: SECTORS[1].id, versao: 1 },
+      { setorId: null, versao: 1 },
     ]);
+  });
+
+  it('mudanca de perfil sobre versao antiga recarrega a conta e avisa', async () => {
+    let listed = 0;
+    const atual: Account = { ...EDUCADORA, perfil: 'PRESIDENCIA_GESTAO', versao: 2 };
+    const calls = await signedInAs('ADMINISTRACAO_SISTEMA', {
+      'GET /accounts': () => {
+        listed += 1;
+        return { status: 200, body: [ADMIN, listed === 1 ? EDUCADORA : atual] };
+      },
+      [`PATCH /accounts/${EDUCADORA.id}/profile`]: (body) =>
+        (body as { versao: number }).versao === 1
+          ? {
+              status: 409,
+              body: { code: 'VERSION_CONFLICT', message: 'A conta foi alterada por outra pessoa.' },
+            }
+          : { status: 200, body: { ...atual, perfil: 'CONCEDENTE_AUDITORIA', versao: 3 } },
+    });
+    renderView();
+
+    fireEvent.click(await screen.findByRole('button', { name: 'Ações de Bia Educadora' }));
+    fireEvent.click(await screen.findByRole('menuitem', { name: 'Mudar perfil' }));
+    fireEvent.change(await screen.findByLabelText('Perfil'), {
+      target: { value: 'CONCEDENTE_AUDITORIA' },
+    });
+    fireEvent.click(screen.getByRole('button', { name: 'Salvar perfil' }));
+
+    expect(await screen.findByRole('alert')).toHaveTextContent(
+      'Outra pessoa alterou esta conta. O formulário mostra a versão atual',
+    );
+    expect(screen.getByLabelText('Perfil')).toHaveValue('PRESIDENCIA_GESTAO');
+
+    fireEvent.change(screen.getByLabelText('Perfil'), {
+      target: { value: 'CONCEDENTE_AUDITORIA' },
+    });
+    fireEvent.click(screen.getByRole('button', { name: 'Salvar perfil' }));
+    await waitFor(() =>
+      expect(
+        calls.filter((call) => call.key.endsWith('/profile')).map((call) => call.body),
+      ).toEqual([
+        { perfil: 'CONCEDENTE_AUDITORIA', versao: 1 },
+        { perfil: 'CONCEDENTE_AUDITORIA', versao: 2 },
+      ]),
+    );
   });
 
   it('setor recusado pela API mostra o motivo', async () => {

@@ -14,6 +14,7 @@ const ACCOUNTS: Account[] = Array.from({ length: 12 }, (_, index) => ({
   emailLogin: `pessoa${index + 1}@instituto.org.br`,
   perfil: PERFIS[index % PERFIS.length],
   ativo: index !== 3,
+  versao: 1,
   deveTrocarSenha: index % 4 === 1,
   bloqueadoAte: null,
   ultimoAcessoEm: null,

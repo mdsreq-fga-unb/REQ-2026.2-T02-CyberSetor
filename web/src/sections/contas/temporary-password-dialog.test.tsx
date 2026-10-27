@@ -10,6 +10,7 @@ const RESULT: TemporaryPasswordResult = {
     emailLogin: 'bia@instituto.org.br',
     perfil: 'NUCLEO_PEDAGOGICO',
     ativo: true,
+    versao: 1,
     deveTrocarSenha: true,
     bloqueadoAte: null,
     ultimoAcessoEm: null,

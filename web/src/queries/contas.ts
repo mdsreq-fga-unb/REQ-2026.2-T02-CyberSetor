@@ -38,15 +38,30 @@ export function useCreateAccount() {
   );
 }
 
+export function useFreshAccount() {
+  return async (id: string): Promise<Account | null> => {
+    const accounts = await authorizedRequest<Account[]>('/accounts');
+    return accounts.find((account) => account.id === id) ?? null;
+  };
+}
+
 export function useChangeProfile() {
-  return useAccountMutation(({ id, perfil }: { id: string; perfil: Perfil }) =>
-    authorizedRequest<Account>(accountPath(id, 'profile'), { method: 'PATCH', body: { perfil } }),
+  return useAccountMutation(
+    ({ id, perfil, versao }: { id: string; perfil: Perfil; versao: number }) =>
+      authorizedRequest<Account>(accountPath(id, 'profile'), {
+        method: 'PATCH',
+        body: { perfil, versao },
+      }),
   );
 }
 
 export function useChangeSector() {
-  return useAccountMutation(({ id, setorId }: { id: string; setorId: string | null }) =>
-    authorizedRequest<Account>(accountPath(id, 'sector'), { method: 'PATCH', body: { setorId } }),
+  return useAccountMutation(
+    ({ id, setorId, versao }: { id: string; setorId: string | null; versao: number }) =>
+      authorizedRequest<Account>(accountPath(id, 'sector'), {
+        method: 'PATCH',
+        body: { setorId, versao },
+      }),
   );
 }
 
