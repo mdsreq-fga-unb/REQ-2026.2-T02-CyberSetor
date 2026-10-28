@@ -14,6 +14,7 @@ import {
   ApiBearerAuth,
   ApiConflictResponse,
   ApiCreatedResponse,
+  ApiNotFoundResponse,
   ApiOkResponse,
   ApiTags,
 } from '@nestjs/swagger';
@@ -86,6 +87,7 @@ export class ProjectsController {
   @Get('projects/:id/report-preview')
   @Profiles(...INSTRUMENT_READERS)
   @ApiOkResponse({ type: ReportPreviewResponse })
+  @ApiNotFoundResponse({ description: 'Projeto não encontrado' })
   @ApiBadRequestResponse({ description: 'INVALID_PERIOD ou data inválida' })
   reportPreview(
     @Param('id', ParseUUIDPipe) id: string,
