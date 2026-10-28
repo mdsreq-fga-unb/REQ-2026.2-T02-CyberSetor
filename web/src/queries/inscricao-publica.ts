@@ -16,6 +16,7 @@ export function usePublicForm(codigo: string) {
     queryKey: publicFormKey(codigo),
     queryFn: () => apiRequest<PublicForm>(`/public/registrations/${encodeURIComponent(codigo)}`),
     retry: false,
+    refetchOnWindowFocus: false,
   });
 }
 

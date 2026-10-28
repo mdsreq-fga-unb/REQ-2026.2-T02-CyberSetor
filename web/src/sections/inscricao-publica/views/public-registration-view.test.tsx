@@ -131,6 +131,11 @@ describe('formulario publico de inscricao', () => {
     fillAdult();
     fill('Data de nascimento', bornYearsAgo(15));
     expect(await screen.findByLabelText('Nome do responsável')).toBeInTheDocument();
+    expect(
+      screen.getByLabelText(
+        'O responsável legal autoriza o uso da imagem do participante em materiais do Instituto',
+      ),
+    ).not.toBeChecked();
     fireEvent.click(screen.getByRole('button', { name: 'Confirmar inscrição' }));
 
     expect(await screen.findByText('Informe o nome do responsável legal.')).toBeInTheDocument();

@@ -2,6 +2,12 @@ export function onlyDigits(value: string): string {
   return value.replace(/\D/g, '');
 }
 
+/** Telefone só com DDD e número; tira o +55 que o preenchimento automático do celular traz. */
+export function phoneDigits(value: string): string {
+  const digits = onlyDigits(value);
+  return /^55\d{10,11}$/.test(digits) ? digits.slice(2) : digits;
+}
+
 /** Confere os dígitos verificadores do CPF; a API confere de novo. */
 export function isValidCpf(value: string): boolean {
   const cpf = onlyDigits(value);

@@ -19,13 +19,20 @@ import type {
   SubmittedRegistration,
 } from '@/types/inscricao-publica';
 import type { CampoInscricao } from '@/types/inscricoes';
-import { ageOn, formatDateBr, isValidCpf, onlyDigits, todayInBrasilia } from '../participant-data';
+import {
+  ageOn,
+  formatDateBr,
+  isValidCpf,
+  onlyDigits,
+  phoneDigits,
+  todayInBrasilia,
+} from '../participant-data';
 
 const ADULT_AGE = 18;
 const ISO_DATE = /^\d{4}-\d{2}-\d{2}$/;
 
 const phone = (message: string) =>
-  z.string().refine((value) => /^\d{10,11}$/.test(onlyDigits(value)), message);
+  z.string().refine((value) => /^\d{10,11}$/.test(phoneDigits(value)), message);
 
 const FIELD_OF = {
   EMAIL: 'email',
@@ -103,7 +110,7 @@ function schemaFor(asked: CampoInscricao[]) {
           message: 'Informe o nome do responsável legal.',
         });
       }
-      if (!/^\d{10,11}$/.test(onlyDigits(values.responsavelTelefone))) {
+      if (!/^\d{10,11}$/.test(phoneDigits(values.responsavelTelefone))) {
         ctx.addIssue({
           code: 'custom',
           path: ['responsavelTelefone'],
@@ -117,7 +124,7 @@ function schemaFor(asked: CampoInscricao[]) {
 function submissionOf(values: FormValues, form: PublicForm): PublicSubmission {
   const body: PublicSubmission = {
     nome: values.nome.trim(),
-    telefone: onlyDigits(values.telefone),
+    telefone: phoneDigits(values.telefone),
     dataNascimento: values.dataNascimento,
     versaoAviso: form.aviso.versao,
     autorizaComunicados: values.autorizaComunicados,
@@ -129,7 +136,7 @@ function submissionOf(values: FormValues, form: PublicForm): PublicSubmission {
   }
   if (isMinor(values.dataNascimento)) {
     body.responsavelNome = values.responsavelNome.trim();
-    body.responsavelTelefone = onlyDigits(values.responsavelTelefone);
+    body.responsavelTelefone = phoneDigits(values.responsavelTelefone);
   }
   return body;
 }
@@ -378,12 +385,20 @@ function RegistrationForm({
               <legend className="mb-1 text-sm font-medium">Autorizações (opcionais)</legend>
               <Consent
                 name="autorizaComunicados"
-                label="Quero receber comunicados do Instituto"
+                label={
+                  minor
+                    ? 'O responsável legal autoriza o envio de comunicados do Instituto'
+                    : 'Quero receber comunicados do Instituto'
+                }
                 control={control}
               />
               <Consent
                 name="autorizaImagem"
-                label="Autorizo o uso da minha imagem em materiais do Instituto"
+                label={
+                  minor
+                    ? 'O responsável legal autoriza o uso da imagem do participante em materiais do Instituto'
+                    : 'Autorizo o uso da minha imagem em materiais do Instituto'
+                }
                 control={control}
               />
             </fieldset>
@@ -448,7 +463,8 @@ export function PublicRegistrationView({ codigo }: { codigo: string }) {
     );
   }
 
-  if (form.error) {
+  // Com o formulário já carregado, uma recarga que falha não apaga o que foi digitado.
+  if (!form.data) {
     const notFound = form.error instanceof ApiError && form.error.status === 404;
     return notFound ? (
       <Message
