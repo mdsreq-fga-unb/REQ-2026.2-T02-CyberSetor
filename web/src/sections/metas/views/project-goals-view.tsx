@@ -41,6 +41,7 @@ import { useRequirements } from '@/queries/requisitos';
 import { useCurrentUser } from '@/queries/sessao';
 import { paths } from '@/routes/paths';
 import { ProjectActivitiesSection } from '@/sections/atividades/views/project-activities-section';
+import { ProjectReportPreviewSection } from './project-report-preview-section';
 import type { Goal } from '@/types/metas';
 import type { Project } from '@/types/projetos';
 import { INSTRUMENT_TYPES, formatDate } from '../../instrumentos/format';
@@ -506,6 +507,8 @@ export function ProjectGoalsView({
       {instrument.data && project.data && (
         <ProjectActivitiesSection instrument={instrument.data} project={project.data} />
       )}
+
+      {project.data && <ProjectReportPreviewSection projectId={projectId} />}
 
       {requirements.data && project.data && (
         <GoalFormDialog
