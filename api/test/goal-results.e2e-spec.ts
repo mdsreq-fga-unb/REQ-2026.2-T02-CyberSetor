@@ -364,4 +364,81 @@ describe('Resultado alcançado da meta e parâmetro planejado numérico (e2e)', 
       await gestao().get(`/v1/goals/${MISSING}/results`).expect(404);
     });
   });
+
+  describe('prévia do relatório por período', () => {
+    const preview = (token: string, query: string) =>
+      as(token).get(`/v1/projects/${projetoId}/report-preview?${query}`);
+
+    it('mostra o ultimo resultado ate o fim do periodo, com o fim incluido', async () => {
+      const meta = await goal();
+      await record(tokens[Perfil.NUCLEO_PEDAGOGICO], meta.id, {
+        dataReferencia: '2026-03-15',
+        descricao: '100 jovens concluíram com frequência mínima.',
+        valorAlcancado: 100,
+      }).expect(201);
+
+      const depois = await preview(
+        tokens[Perfil.NUCLEO_PEDAGOGICO],
+        'from=2026-04-01&to=2026-06-30',
+      ).expect(200);
+      expect((depois.body as { metas: object[] }).metas[0]).toMatchObject({
+        status: 'PARCIALMENTE_CUMPRIDA',
+        percentual: 83.33,
+      });
+      const noDia = await preview(
+        tokens[Perfil.ADMINISTRATIVO_FINANCEIRO],
+        'from=2026-01-01&to=2026-03-15',
+      ).expect(200);
+      expect((noDia.body as { metas: { status: string }[] }).metas[0].status).toBe(
+        'PARCIALMENTE_CUMPRIDA',
+      );
+      const antes = await preview(
+        tokens[Perfil.PRESIDENCIA_GESTAO],
+        'from=2026-01-01&to=2026-03-14',
+      ).expect(200);
+      expect((antes.body as { metas: object[] }).metas[0]).toMatchObject({
+        resultado: null,
+        status: null,
+      });
+    });
+
+    it('meta em rascunho fica fora da apuracao', async () => {
+      const meta = await goal();
+      await record(tokens[Perfil.PRESIDENCIA_GESTAO], meta.id, {
+        dataReferencia: '2026-03-15',
+        descricao: '100 jovens concluíram.',
+        valorAlcancado: 100,
+      }).expect(201);
+      await prisma.meta.update({ where: { id: meta.id }, data: { indicador: null } });
+
+      const res = await preview(
+        tokens[Perfil.PRESIDENCIA_GESTAO],
+        'from=2026-01-01&to=2026-06-30',
+      ).expect(200);
+      expect((res.body as { metas: object[] }).metas[0]).toMatchObject({
+        rascunho: true,
+        resultado: null,
+        percentual: null,
+        status: null,
+      });
+    });
+
+    it('recusa periodo invertido ou mal formado, projeto inexistente e perfis sem leitura', async () => {
+      const gestaoToken = tokens[Perfil.PRESIDENCIA_GESTAO];
+      const invertido = await preview(gestaoToken, 'from=2026-06-30&to=2026-01-01').expect(400);
+      expect((invertido.body as ErrorBody).code).toBe('INVALID_PERIOD');
+      await preview(gestaoToken, 'from=2026-02-30&to=2026-06-30').expect(400);
+      await preview(gestaoToken, 'from=01/01/2026&to=2026-06-30').expect(400);
+      await preview(gestaoToken, 'from=2026-01-01').expect(400);
+      await as(gestaoToken)
+        .get(`/v1/projects/${MISSING}/report-preview?from=2026-01-01&to=2026-06-30`)
+        .expect(404);
+      for (const perfil of [Perfil.CONCEDENTE_AUDITORIA, Perfil.ADMINISTRACAO_SISTEMA]) {
+        await preview(tokens[perfil], 'from=2026-01-01&to=2026-06-30').expect(403);
+      }
+      await request(app.getHttpServer())
+        .get(`/v1/projects/${projetoId}/report-preview?from=2026-01-01&to=2026-06-30`)
+        .expect(401);
+    });
+  });
 });

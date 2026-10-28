@@ -1,9 +1,20 @@
-import { Body, Controller, Get, Param, ParseUUIDPipe, Patch, Post, Res } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Param,
+  ParseUUIDPipe,
+  Patch,
+  Post,
+  Query,
+  Res,
+} from '@nestjs/common';
 import {
   ApiBadRequestResponse,
   ApiBearerAuth,
   ApiConflictResponse,
   ApiCreatedResponse,
+  ApiNotFoundResponse,
   ApiOkResponse,
   ApiTags,
 } from '@nestjs/swagger';
@@ -20,6 +31,7 @@ import {
   ProjectResponse,
   UpdateProjectDto,
 } from './projects.dto.js';
+import { ReportPreviewQueryDto, ReportPreviewResponse } from './report-preview.dto.js';
 import { ProjectsService } from './projects.service.js';
 
 function actorOf(user: ValidSession, res: Response): Actor {
@@ -70,6 +82,18 @@ export class ProjectsController {
   @ApiOkResponse({ type: ProjectResponse })
   get(@Param('id', ParseUUIDPipe) id: string): Promise<ProjectResponse> {
     return this.projects.get(id);
+  }
+
+  @Get('projects/:id/report-preview')
+  @Profiles(...INSTRUMENT_READERS)
+  @ApiOkResponse({ type: ReportPreviewResponse })
+  @ApiNotFoundResponse({ description: 'Projeto não encontrado' })
+  @ApiBadRequestResponse({ description: 'INVALID_PERIOD ou data inválida' })
+  reportPreview(
+    @Param('id', ParseUUIDPipe) id: string,
+    @Query() query: ReportPreviewQueryDto,
+  ): Promise<ReportPreviewResponse> {
+    return this.projects.reportPreview(id, query);
   }
 
   @Patch('projects/:id')

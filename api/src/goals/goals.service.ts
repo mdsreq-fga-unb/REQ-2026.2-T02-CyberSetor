@@ -42,7 +42,7 @@ export const OWNER_PROFILES = [
   Perfil.ADMINISTRATIVO_FINANCEIRO,
 ];
 
-const WITH_AUTHOR = {
+export const WITH_AUTHOR = {
   registradoPor: { select: { id: true, pessoa: { select: { nome: true } } } },
 } satisfies Prisma.ResultadoMetaInclude;
 
@@ -62,7 +62,7 @@ const WITH_REQUIREMENTS = {
 } satisfies Prisma.MetaInclude;
 
 type GoalRow = Prisma.MetaGetPayload<{ include: typeof WITH_REQUIREMENTS }>;
-type ResultRow = Prisma.ResultadoMetaGetPayload<{ include: typeof WITH_AUTHOR }>;
+export type ResultRow = Prisma.ResultadoMetaGetPayload<{ include: typeof WITH_AUTHOR }>;
 type InstrumentRow = Prisma.InstrumentoGetPayload<object>;
 
 const FIELDS = [
@@ -111,7 +111,7 @@ function decimal(value: Prisma.Decimal | null): number | null {
   return value === null ? null : value.toNumber();
 }
 
-function toResult(row: ResultRow): GoalResultResponse {
+export function toResult(row: ResultRow): GoalResultResponse {
   return {
     id: row.id,
     dataReferencia: row.dataReferencia.toISOString().slice(0, 10),
