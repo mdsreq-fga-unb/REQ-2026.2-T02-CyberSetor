@@ -92,8 +92,11 @@ export class HttpExceptionFilter implements ExceptionFilter {
 
   private detalhesDeValidacao(exception: unknown): Record<string, unknown> {
     if (!(exception instanceof HttpException)) return {};
-    const body = exception.getResponse();
-    const msg = (body as { message?: unknown }).message;
-    return Array.isArray(msg) ? { errors: msg } : {};
+    const body = exception.getResponse() as { message?: unknown; details?: unknown };
+    if (Array.isArray(body.message)) return { errors: body.message };
+    // Recusa de regra com detalhe próprio (ex.: quais campos faltam).
+    return body.details && typeof body.details === 'object'
+      ? (body.details as Record<string, unknown>)
+      : {};
   }
 }

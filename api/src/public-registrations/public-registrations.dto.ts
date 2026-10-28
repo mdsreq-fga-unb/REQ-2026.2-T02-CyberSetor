@@ -4,11 +4,11 @@ import {
   IsBoolean,
   IsEmail,
   IsNotEmpty,
-  IsOptional,
   IsString,
   Matches,
   MaxLength,
   MinLength,
+  ValidateIf,
 } from 'class-validator';
 import { trimString } from '../common/trim.js';
 import { CampoInscricao } from '../generated/prisma/enums.js';
@@ -19,6 +19,16 @@ const PHONE = /^\d{10,11}$/;
 
 const digits = ({ value }: { value: unknown }): unknown =>
   typeof value === 'string' ? onlyDigits(value) : value;
+// O preenchimento automático do celular costuma trazer o +55.
+const phoneDigits = ({ value }: { value: unknown }): unknown => {
+  if (typeof value !== 'string') return value;
+  const d = onlyDigits(value);
+  return /^55\d{10,11}$/.test(d) ? d.slice(2) : d;
+};
+// Campo opcional: ausente passa; enviado, inclusive null, é validado.
+const sent = (_obj: object, value: unknown): boolean => value !== undefined;
+// Sem conversão implícita: o texto "false" não vira autorização dada.
+const asSent = ({ obj, key }: { obj: Record<string, unknown>; key: string }): unknown => obj[key];
 const lowerTrim = ({ value }: { value: unknown }): unknown =>
   typeof value === 'string' ? value.trim().toLowerCase() : value;
 
@@ -31,7 +41,7 @@ export class SubmitRegistrationDto {
   nome!: string;
 
   @ApiProperty({ example: '61999998888', description: 'DDD e número; pontuação é ignorada' })
-  @Transform(digits)
+  @Transform(phoneDigits)
   @IsString()
   @Matches(PHONE, { message: 'telefone deve ter DDD e número, com 10 ou 11 dígitos' })
   telefone!: string;
@@ -41,20 +51,20 @@ export class SubmitRegistrationDto {
   dataNascimento!: string;
 
   @ApiPropertyOptional({ example: 'ana@exemplo.com' })
-  @IsOptional()
+  @ValidateIf(sent)
   @Transform(lowerTrim)
   @IsEmail({}, { message: 'email inválido' })
   @MaxLength(254)
   email?: string;
 
   @ApiPropertyOptional({ example: '529.982.247-25', description: 'Pontuação é ignorada' })
-  @IsOptional()
+  @ValidateIf(sent)
   @Transform(digits)
   @IsString()
   cpf?: string;
 
   @ApiPropertyOptional({ example: 'Asa Sul' })
-  @IsOptional()
+  @ValidateIf(sent)
   @Transform(trimString)
   @IsString()
   @IsNotEmpty()
@@ -62,7 +72,7 @@ export class SubmitRegistrationDto {
   bairroRegiao?: string;
 
   @ApiPropertyOptional({ example: 'Ensino médio completo' })
-  @IsOptional()
+  @ValidateIf(sent)
   @Transform(trimString)
   @IsString()
   @IsNotEmpty()
@@ -75,15 +85,17 @@ export class SubmitRegistrationDto {
   versaoAviso!: string;
 
   @ApiProperty({ description: 'Autorização opcional para receber comunicados' })
+  @Transform(asSent)
   @IsBoolean()
   autorizaComunicados!: boolean;
 
   @ApiProperty({ description: 'Autorização opcional de uso institucional de imagem' })
+  @Transform(asSent)
   @IsBoolean()
   autorizaImagem!: boolean;
 
   @ApiPropertyOptional({ description: 'Obrigatório para menor de 18 anos' })
-  @IsOptional()
+  @ValidateIf(sent)
   @Transform(trimString)
   @IsString()
   @MinLength(2)
@@ -91,8 +103,8 @@ export class SubmitRegistrationDto {
   responsavelNome?: string;
 
   @ApiPropertyOptional({ description: 'Obrigatório para menor de 18 anos' })
-  @IsOptional()
-  @Transform(digits)
+  @ValidateIf(sent)
+  @Transform(phoneDigits)
   @IsString()
   @Matches(PHONE, { message: 'responsavelTelefone deve ter DDD e número, com 10 ou 11 dígitos' })
   responsavelTelefone?: string;

@@ -237,10 +237,24 @@ describe('Formulário público de inscrição (e2e)', () => {
     ['CPF com digito errado', { ...ADULTO, cpf: '529.982.247-24' }, 'INVALID_CPF'],
     ['aviso de outra versao', { ...ADULTO, versaoAviso: '2020-01-01' }, 'NOTICE_OUTDATED'],
     ['nascimento no futuro', { ...ADULTO, dataNascimento: '2999-01-01' }, 'INVALID_BIRTH_DATE'],
+    ['campo pedido nulo', { ...ADULTO, cpf: null }, 'VALIDATION_ERROR'],
+    ['autorizacao em texto', { ...ADULTO, autorizaImagem: 'false' }, 'VALIDATION_ERROR'],
   ])('recusa %s com 400', async (_caso, body, code) => {
     const res = await enviar(body).expect(400);
     expect((res.body as ErrorBody).code).toBe(code);
     expect(await prisma.inscricao.count()).toBe(0);
+  });
+
+  it('campo pedido ausente diz qual falta', async () => {
+    const res = await enviar({ ...ADULTO, cpf: undefined }).expect(400);
+    expect((res.body as ErrorBody & { details: { campos: string[] } }).details.campos).toEqual([
+      'CPF',
+    ]);
+  });
+
+  it('aceita telefone com o codigo do pais', async () => {
+    await enviar({ ...ADULTO, telefone: '+55 (61) 99999-8888' }).expect(201);
+    expect((await prisma.participante.findFirstOrThrow()).telefone).toBe('61999998888');
   });
 
   it('inscricao encerrada ou instrumento inativo fecham o formulario', async () => {

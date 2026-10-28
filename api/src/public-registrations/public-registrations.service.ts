@@ -96,7 +96,7 @@ export class PublicRegistrationsService {
     if (data.versaoAviso !== DATA_NOTICE.versao) {
       throw invalid(
         'NOTICE_OUTDATED',
-        'O aviso de tratamento de dados mudou. Recarregue o formulário e leia o aviso atual.',
+        'O aviso de tratamento de dados mudou. Leia o aviso atual e envie de novo.',
       );
     }
     this.assertFieldsMatchConfig(config.camposAdicionais, data);
