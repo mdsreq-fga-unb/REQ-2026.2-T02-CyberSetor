@@ -7,7 +7,7 @@ export function reportPreviewKey(projectId: string, from?: string, to?: string) 
 }
 
 export function useReportPreview(projectId: string, from: string, to: string) {
-  const enabled = Boolean(projectId && from && to);
+  const enabled = Boolean(projectId && from && to && from <= to);
 
   return useQuery({
     queryKey: reportPreviewKey(projectId, from, to),
