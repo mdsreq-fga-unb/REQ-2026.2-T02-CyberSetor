@@ -230,7 +230,7 @@ describe('Prévia do Relatório de Execução - reportPreview (unitário)', () =
     expect(res.metas[4].resultado?.valorAlcancado).toBeNull();
     expect(res.metas[4].resultado?.descricao).toBe('Certificação obtida com sucesso');
 
-    // Valida que o filtro temporal exige gte e lte
+    // Último resultado até o fim do período, sem limite inferior (CA-05a.1)
     expect(prismaMock.meta.findMany).toHaveBeenCalledTimes(1);
     const lastCall = prismaMock.meta.findMany.mock.lastCall as unknown as [
       {
@@ -240,10 +240,7 @@ describe('Prévia do Relatório de Execução - reportPreview (unitário)', () =
     ];
     expect(lastCall[0].where).toEqual({ projetoId });
     expect(lastCall[0].include.resultados.where).toEqual({
-      dataReferencia: {
-        gte: new Date('2026-01-01T00:00:00.000Z'),
-        lte: new Date('2026-06-30T00:00:00.000Z'),
-      },
+      dataReferencia: { lte: new Date('2026-06-30T00:00:00.000Z') },
     });
   });
 });

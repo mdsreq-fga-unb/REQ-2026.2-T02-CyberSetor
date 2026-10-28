@@ -122,7 +122,7 @@ export class ProjectsService {
     projectId: string,
     { from, to }: ReportPreviewQueryDto,
   ): Promise<ReportPreviewResponse> {
-    const fromDateVal = toDate(from);
+    toDate(from); // recusa data inexistente, como 2026-02-30
     const toDateVal = toDate(to);
     if (from > to) {
       throw new BadRequestException({
@@ -146,10 +146,11 @@ export class ProjectsService {
 
     const goals = await this.prisma.meta.findMany({
       where: { projetoId: projectId },
-      orderBy: { ordem: 'asc' },
+      orderBy: [{ ordem: 'asc' }, { criadoEm: 'asc' }],
       include: {
         resultados: {
-          where: { dataReferencia: { gte: fromDateVal, lte: toDateVal } },
+          // Meta quantitativa é cumulativa: vale o último resultado até o fim do período (CA-05a.1).
+          where: { dataReferencia: { lte: toDateVal } },
           include: WITH_AUTHOR,
           orderBy: [{ dataReferencia: 'desc' }, { criadoEm: 'desc' }],
           take: 1,
@@ -161,7 +162,8 @@ export class ProjectsService {
       const periodoInicio = goal.periodoInicio ? isoDate(goal.periodoInicio) : null;
       const periodoFim = goal.periodoFim ? isoDate(goal.periodoFim) : null;
       const rascunho = missingFields({ ...goal, periodoInicio, periodoFim }).length > 0;
-      const latestResult = goal.resultados[0] ? toResult(goal.resultados[0]) : null;
+      // Meta em rascunho não entra na apuração (RN-02).
+      const latestResult = !rascunho && goal.resultados[0] ? toResult(goal.resultados[0]) : null;
 
       return {
         id: goal.id,
