@@ -233,7 +233,10 @@ describe('Prévia do Relatório de Execução - reportPreview (unitário)', () =
     // Valida que o filtro temporal exige gte e lte
     expect(prismaMock.meta.findMany).toHaveBeenCalledTimes(1);
     const lastCall = prismaMock.meta.findMany.mock.lastCall as unknown as [
-      { where: { projetoId: string }; include: { resultados: { where: { dataReferencia: unknown } } } },
+      {
+        where: { projetoId: string };
+        include: { resultados: { where: { dataReferencia: unknown } } };
+      },
     ];
     expect(lastCall[0].where).toEqual({ projetoId });
     expect(lastCall[0].include.resultados.where).toEqual({
