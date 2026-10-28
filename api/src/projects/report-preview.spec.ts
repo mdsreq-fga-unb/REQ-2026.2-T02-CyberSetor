@@ -165,6 +165,35 @@ describe('Prévia do Relatório de Execução - reportPreview (unitário)', () =
         situacao: SituacaoMeta.PENDENTE,
         resultados: [],
       },
+      // Meta 5: Qualitativa cumprida
+      {
+        id: 'meta-5',
+        ordem: 5,
+        origem: OrigemMeta.PROJETO,
+        objetivo: 'Obter certificação',
+        descricao: 'Certificação de conformidade',
+        indicador: 'Certificado',
+        modalidadeAfericao: ModalidadeAfericao.QUALITATIVA,
+        parametroPlanejado: null,
+        unidade: null,
+        formaComprovacao: 'Certidão',
+        periodoInicio: new Date('2026-01-01T03:00:00.000Z'),
+        periodoFim: new Date('2026-06-30T03:00:00.000Z'),
+        situacao: SituacaoMeta.CONCLUIDA,
+        resultados: [
+          {
+            id: 'res-5',
+            dataReferencia: new Date('2026-06-15T03:00:00.000Z'),
+            descricao: 'Certificação obtida com sucesso',
+            valorAlcancado: null,
+            parametroPlanejado: null,
+            percentual: null,
+            alcance: AlcanceMeta.CUMPRIDA,
+            registradoPor: autor,
+            criadoEm: new Date('2026-06-15T14:00:00.000Z'),
+          },
+        ],
+      },
     ]);
 
     const res = await service.reportPreview(projetoId, {
@@ -175,7 +204,7 @@ describe('Prévia do Relatório de Execução - reportPreview (unitário)', () =
     // Confere cabeçalho
     expect(res.projeto.codigo).toBe('P01');
     expect(res.periodo).toEqual({ from: '2026-01-01', to: '2026-06-30' });
-    expect(res.metas).toHaveLength(4);
+    expect(res.metas).toHaveLength(5);
 
     // Meta 1: Cumprida com 120%
     expect(res.metas[0].status).toBe(AlcanceMeta.CUMPRIDA);
@@ -194,5 +223,24 @@ describe('Prévia do Relatório de Execução - reportPreview (unitário)', () =
     expect(res.metas[3].status).toBeNull();
     expect(res.metas[3].percentual).toBeNull();
     expect(res.metas[3].resultado).toBeNull();
+
+    // Meta 5: Qualitativa cumprida
+    expect(res.metas[4].status).toBe(AlcanceMeta.CUMPRIDA);
+    expect(res.metas[4].percentual).toBeNull();
+    expect(res.metas[4].resultado?.valorAlcancado).toBeNull();
+    expect(res.metas[4].resultado?.descricao).toBe('Certificação obtida com sucesso');
+
+    // Valida que o filtro temporal exige gte e lte
+    expect(prismaMock.meta.findMany).toHaveBeenCalledTimes(1);
+    const lastCall = prismaMock.meta.findMany.mock.lastCall as unknown as [
+      { where: { projetoId: string }; include: { resultados: { where: { dataReferencia: unknown } } } },
+    ];
+    expect(lastCall[0].where).toEqual({ projetoId });
+    expect(lastCall[0].include.resultados.where).toEqual({
+      dataReferencia: {
+        gte: new Date('2026-01-01T00:00:00.000Z'),
+        lte: new Date('2026-06-30T00:00:00.000Z'),
+      },
+    });
   });
 });

@@ -122,7 +122,7 @@ export class ProjectsService {
     projectId: string,
     { from, to }: ReportPreviewQueryDto,
   ): Promise<ReportPreviewResponse> {
-    toDate(from);
+    const fromDateVal = toDate(from);
     const toDateVal = toDate(to);
     if (from > to) {
       throw new BadRequestException({
@@ -149,7 +149,7 @@ export class ProjectsService {
       orderBy: { ordem: 'asc' },
       include: {
         resultados: {
-          where: { dataReferencia: { lte: toDateVal } },
+          where: { dataReferencia: { gte: fromDateVal, lte: toDateVal } },
           include: WITH_AUTHOR,
           orderBy: [{ dataReferencia: 'desc' }, { criadoEm: 'desc' }],
           take: 1,
