@@ -46,7 +46,11 @@ export function useSaveGoal(projectId: string) {
             method: 'POST',
             body: data,
           }),
-    onSettled: () => queryClient.invalidateQueries({ queryKey: goalsKey(projectId) }),
+    onSettled: () =>
+      Promise.all([
+        queryClient.invalidateQueries({ queryKey: goalsKey(projectId) }),
+        queryClient.invalidateQueries({ queryKey: ['report-preview', projectId] }),
+      ]),
   });
 }
 
@@ -74,7 +78,11 @@ export function useChangeSituation(projectId: string) {
         method: 'PATCH',
         body: { versao: goal.versao, situacao, justificativa },
       }),
-    onSettled: () => queryClient.invalidateQueries({ queryKey: goalsKey(projectId) }),
+    onSettled: () =>
+      Promise.all([
+        queryClient.invalidateQueries({ queryKey: goalsKey(projectId) }),
+        queryClient.invalidateQueries({ queryKey: ['report-preview', projectId] }),
+      ]),
   });
 }
 
@@ -86,6 +94,10 @@ export function useRecordResult(projectId: string) {
         method: 'POST',
         body: data,
       }),
-    onSettled: () => queryClient.invalidateQueries({ queryKey: goalsKey(projectId) }),
+    onSettled: () =>
+      Promise.all([
+        queryClient.invalidateQueries({ queryKey: goalsKey(projectId) }),
+        queryClient.invalidateQueries({ queryKey: ['report-preview', projectId] }),
+      ]),
   });
 }

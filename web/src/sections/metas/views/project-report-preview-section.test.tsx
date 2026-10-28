@@ -265,18 +265,17 @@ describe('ProjectReportPreviewSection', () => {
     expect(screen.getByText('0%')).toBeInTheDocument();
     expect(screen.getByText('Não cumprida')).toBeInTheDocument();
 
-    // Meta 4: Sem resultado no período
+    // Meta 4: rascunho fica fora da apuração (RN-02)
     expect(screen.getByText('Articulação comunitária')).toBeInTheDocument();
-    expect(screen.getByText('Sem resultado no período')).toBeInTheDocument();
-    expect(screen.getByText('Meta em rascunho')).toBeInTheDocument();
+    expect(screen.getByText('Rascunho, fora da apuração')).toBeInTheDocument();
 
     // Meta 5: Qualitativa cumprida
     expect(screen.getByText('Selo de transparência')).toBeInTheDocument();
-    expect(screen.getByText('Marco / Qualitativa')).toBeInTheDocument();
-    expect(screen.getByText('Selo obtido com louvor')).toBeInTheDocument();
+    expect(screen.getByText('Selo obtido com louvor (em 15/06/2026)')).toBeInTheDocument();
 
     // Cabeçalhos
-    expect(screen.getByText('Percentual')).toBeInTheDocument();
-    expect(screen.getByText('Status de Cumprimento')).toBeInTheDocument();
+    expect(screen.getByRole('columnheader', { name: 'Percentual' })).toBeInTheDocument();
+    expect(screen.getByRole('columnheader', { name: 'Cumprimento' })).toBeInTheDocument();
+    expect(screen.getByRole('table', { name: /Metas do projeto no período/ })).toBeInTheDocument();
   });
 });

@@ -8,6 +8,7 @@ import { Input } from '@/components/ui/input';
 import {
   Table,
   TableBody,
+  TableCaption,
   TableCell,
   TableHead,
   TableHeader,
@@ -15,48 +16,62 @@ import {
 } from '@/components/ui/table';
 import { useReportPreview } from '@/queries/relatorios';
 import type { GoalReach } from '@/types/metas';
+import { formatNumber, plannedNumber, REACHES } from '../format';
 import type { ReportPreviewGoal } from '@/types/relatorios';
 
 interface ProjectReportPreviewSectionProps {
   projectId: string;
 }
 
-function ReachBadge({ reach }: { reach: GoalReach | null }) {
+function ReachBadge({ reach, draft }: { reach: GoalReach | null; draft: boolean }) {
+  if (draft) return <Badge variant="outline">Rascunho, fora da apuração</Badge>;
   if (reach === 'CUMPRIDA') {
     return (
       <Badge className="bg-emerald-600 text-white hover:bg-emerald-600 dark:bg-emerald-600">
-        Cumprida
+        {REACHES.CUMPRIDA}
       </Badge>
     );
   }
   if (reach === 'PARCIALMENTE_CUMPRIDA') {
     return (
       <Badge className="border border-amber-500/30 bg-amber-500/15 text-amber-900 dark:bg-amber-500/20 dark:text-amber-300">
-        Parcialmente cumprida
+        {REACHES.PARCIALMENTE_CUMPRIDA}
       </Badge>
     );
   }
   if (reach === 'NAO_CUMPRIDA') {
-    return <Badge variant="destructive">Não cumprida</Badge>;
+    return <Badge variant="destructive">{REACHES.NAO_CUMPRIDA}</Badge>;
   }
   return <Badge variant="secondary">Sem resultado no período</Badge>;
 }
 
+function withUnit(value: number, unit: string | null): string {
+  return unit ? `${formatNumber(value)} ${unit}` : formatNumber(value);
+}
+
+function dateBr(isoDate: string): string {
+  const [year, month, day] = isoDate.slice(0, 10).split('-');
+  return `${day}/${month}/${year}`;
+}
+
+// O percentual vem do resultado gravado; o planejado mostrado é o mesmo da conta (RN-14).
 function plannedText(goal: ReportPreviewGoal): string {
-  if (goal.modalidadeAfericao === 'QUANTITATIVA') {
-    return goal.parametroPlanejado
-      ? `${goal.parametroPlanejado} ${goal.unidade ?? ''}`.trim()
-      : 'A definir';
-  }
-  return 'Marco / Qualitativa';
+  if (goal.modalidadeAfericao !== 'QUANTITATIVA') return goal.parametroPlanejado ?? 'A definir';
+  const planned = goal.resultado?.parametroPlanejado ?? plannedNumber(goal.parametroPlanejado);
+  return planned === null ? 'A definir' : withUnit(planned, goal.unidade);
 }
 
 function reachedText(goal: ReportPreviewGoal): string {
   if (!goal.resultado) return '—';
+  const when = `em ${dateBr(goal.resultado.dataReferencia)}`;
   if (goal.modalidadeAfericao === 'QUANTITATIVA' && goal.resultado.valorAlcancado !== null) {
-    return `${goal.resultado.valorAlcancado} ${goal.unidade ?? ''}`.trim();
+    return `${withUnit(goal.resultado.valorAlcancado, goal.unidade)} ${when}`;
   }
-  return goal.resultado.descricao;
+  return `${goal.resultado.descricao} (${when})`;
+}
+
+function percentText(goal: ReportPreviewGoal): string {
+  return goal.percentual === null ? '—' : `${formatNumber(goal.percentual)}%`;
 }
 
 export function ProjectReportPreviewSection({ projectId }: ProjectReportPreviewSectionProps) {
@@ -162,21 +177,32 @@ export function ProjectReportPreviewSection({ projectId }: ProjectReportPreviewS
             ) : (
               <ListCard>
                 <Table>
+                  <TableCaption className="sr-only">
+                    Metas do projeto no período, com o planejado, o alcançado e o cumprimento
+                  </TableCaption>
                   <TableHeader>
                     <TableRow>
-                      <TableHead className="w-16">Meta</TableHead>
-                      <TableHead>Objetivo</TableHead>
-                      <TableHead>Planejado</TableHead>
-                      <TableHead>Alcançado</TableHead>
-                      <TableHead className="w-24">Percentual</TableHead>
-                      <TableHead className="w-48">Status de Cumprimento</TableHead>
+                      <TableHead scope="col" className="w-12">
+                        Meta
+                      </TableHead>
+                      <TableHead scope="col">Objetivo</TableHead>
+                      <TableHead scope="col" className="hidden md:table-cell">
+                        Planejado
+                      </TableHead>
+                      <TableHead scope="col" className="hidden md:table-cell">
+                        Alcançado
+                      </TableHead>
+                      <TableHead scope="col" className="hidden md:table-cell">
+                        Percentual
+                      </TableHead>
+                      <TableHead scope="col">Cumprimento</TableHead>
                     </TableRow>
                   </TableHeader>
                   <TableBody>
                     {data.metas.map((goal) => (
                       <TableRow key={goal.id}>
                         <TableCell className="font-semibold">{goal.ordem}</TableCell>
-                        <TableCell className="whitespace-normal min-w-[200px]">
+                        <TableCell className="whitespace-normal">
                           <div className="flex flex-col gap-0.5">
                             <span className="font-medium">{goal.objetivo}</span>
                             {goal.indicador && (
@@ -184,20 +210,23 @@ export function ProjectReportPreviewSection({ projectId }: ProjectReportPreviewS
                                 Indicador: {goal.indicador}
                               </span>
                             )}
-                            {goal.rascunho && (
-                              <span className="text-xs text-amber-600 dark:text-amber-400">
-                                Meta em rascunho
-                              </span>
-                            )}
+                            <span className="text-xs text-muted-foreground md:hidden">
+                              Planejado: {plannedText(goal)} · Alcançado: {reachedText(goal)}
+                              {goal.percentual !== null && ` (${percentText(goal)})`}
+                            </span>
                           </div>
                         </TableCell>
-                        <TableCell className="text-sm">{plannedText(goal)}</TableCell>
-                        <TableCell className="text-sm">{reachedText(goal)}</TableCell>
-                        <TableCell className="font-medium text-sm">
-                          {goal.percentual !== null ? `${goal.percentual}%` : '—'}
+                        <TableCell className="hidden whitespace-normal text-sm md:table-cell">
+                          {plannedText(goal)}
                         </TableCell>
-                        <TableCell>
-                          <ReachBadge reach={goal.status} />
+                        <TableCell className="hidden whitespace-normal text-sm md:table-cell">
+                          {reachedText(goal)}
+                        </TableCell>
+                        <TableCell className="hidden text-sm font-medium md:table-cell">
+                          {percentText(goal)}
+                        </TableCell>
+                        <TableCell className="whitespace-normal">
+                          <ReachBadge reach={goal.status} draft={goal.rascunho} />
                         </TableCell>
                       </TableRow>
                     ))}
