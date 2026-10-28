@@ -123,6 +123,34 @@ const MOCK_PREVIEW: ReportPreview = {
       percentual: null,
       status: null,
     },
+    {
+      id: 'meta-5',
+      ordem: 5,
+      origem: 'PROJETO',
+      objetivo: 'Selo de transparência',
+      descricao: 'Conquistar selo de integridade',
+      indicador: 'Certificado',
+      modalidadeAfericao: 'QUALITATIVA',
+      parametroPlanejado: null,
+      unidade: null,
+      periodoInicio: '2026-01-01',
+      periodoFim: '2026-06-30',
+      situacao: 'CONCLUIDA',
+      rascunho: false,
+      resultado: {
+        id: 'res-5',
+        dataReferencia: '2026-06-15',
+        descricao: 'Selo obtido com louvor',
+        valorAlcancado: null,
+        parametroPlanejado: null,
+        percentual: null,
+        alcance: 'CUMPRIDA',
+        registradoPor: { id: 'usr-1', nome: 'Coordenadora Ana' },
+        registradoEm: '2026-06-15T10:00:00.000Z',
+      },
+      percentual: null,
+      status: 'CUMPRIDA',
+    },
   ],
 };
 
@@ -169,7 +197,10 @@ describe('ProjectReportPreviewSection', () => {
     ).toBeInTheDocument();
   });
 
-  it('avisa quando a data inicial é posterior à data final', () => {
+  it('avisa quando a data inicial é posterior à data final e bloqueia a chamada à API', () => {
+    const fetchSpy = vi.fn();
+    vi.stubGlobal('fetch', fetchSpy);
+
     renderComponent();
 
     const fromInput = screen.getByLabelText('Data inicial');
@@ -182,6 +213,7 @@ describe('ProjectReportPreviewSection', () => {
       screen.getByText('A data inicial não pode ser posterior à data final.'),
     ).toBeInTheDocument();
     expect(screen.getByText('Intervalo de datas inválido')).toBeInTheDocument();
+    expect(fetchSpy).not.toHaveBeenCalled();
   });
 
   it('renderiza a tabela de metas com cumprimento e badges correspondentes após preencher o período', async () => {
@@ -221,7 +253,7 @@ describe('ProjectReportPreviewSection', () => {
     // Meta 1: Cumprida com 120%
     expect(await screen.findByText('Capacitar jovens')).toBeInTheDocument();
     expect(screen.getByText('120%')).toBeInTheDocument();
-    expect(screen.getByText('Cumprida')).toBeInTheDocument();
+    expect(screen.getAllByText('Cumprida')).toHaveLength(2);
 
     // Meta 2: Parcialmente cumprida com 50%
     expect(screen.getByText('Oficinas de ritmo')).toBeInTheDocument();
@@ -237,5 +269,14 @@ describe('ProjectReportPreviewSection', () => {
     expect(screen.getByText('Articulação comunitária')).toBeInTheDocument();
     expect(screen.getByText('Sem resultado no período')).toBeInTheDocument();
     expect(screen.getByText('Meta em rascunho')).toBeInTheDocument();
+
+    // Meta 5: Qualitativa cumprida
+    expect(screen.getByText('Selo de transparência')).toBeInTheDocument();
+    expect(screen.getByText('Marco / Qualitativa')).toBeInTheDocument();
+    expect(screen.getByText('Selo obtido com louvor')).toBeInTheDocument();
+
+    // Cabeçalhos
+    expect(screen.getByText('Percentual')).toBeInTheDocument();
+    expect(screen.getByText('Status de Cumprimento')).toBeInTheDocument();
   });
 });

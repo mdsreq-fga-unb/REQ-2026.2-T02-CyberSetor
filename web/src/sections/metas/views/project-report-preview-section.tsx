@@ -31,7 +31,7 @@ function ReachBadge({ reach }: { reach: GoalReach | null }) {
   }
   if (reach === 'PARCIALMENTE_CUMPRIDA') {
     return (
-      <Badge className="bg-amber-500 text-white hover:bg-amber-500 dark:bg-amber-500">
+      <Badge className="border border-amber-500/30 bg-amber-500/15 text-amber-900 dark:bg-amber-500/20 dark:text-amber-300">
         Parcialmente cumprida
       </Badge>
     );
@@ -168,15 +168,15 @@ export function ProjectReportPreviewSection({ projectId }: ProjectReportPreviewS
                       <TableHead>Objetivo</TableHead>
                       <TableHead>Planejado</TableHead>
                       <TableHead>Alcançado</TableHead>
-                      <TableHead className="w-24">Cumprimento</TableHead>
-                      <TableHead className="w-48">Situação</TableHead>
+                      <TableHead className="w-24">Percentual</TableHead>
+                      <TableHead className="w-48">Status de Cumprimento</TableHead>
                     </TableRow>
                   </TableHeader>
                   <TableBody>
                     {data.metas.map((goal) => (
                       <TableRow key={goal.id}>
                         <TableCell className="font-semibold">{goal.ordem}</TableCell>
-                        <TableCell>
+                        <TableCell className="whitespace-normal min-w-[200px]">
                           <div className="flex flex-col gap-0.5">
                             <span className="font-medium">{goal.objetivo}</span>
                             {goal.indicador && (
