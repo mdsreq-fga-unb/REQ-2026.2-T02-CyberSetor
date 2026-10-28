@@ -10,12 +10,15 @@ import { Prisma } from '../generated/prisma/client.js';
 import { AutorTipo, Perfil } from '../generated/prisma/enums.js';
 import { toDate } from '../instruments/instruments.service.js';
 import { PrismaService } from '../prisma/prisma.service.js';
+import { missingFields } from '../goals/goal-completion.js';
+import { toResult, WITH_AUTHOR } from '../goals/goals.service.js';
 import type {
   CoordinatorResponse,
   CreateProjectDto,
   ProjectResponse,
   UpdateProjectDto,
 } from './projects.dto.js';
+import type { ReportPreviewQueryDto, ReportPreviewResponse } from './report-preview.dto.js';
 
 export const COORDINATOR_PROFILES = [Perfil.PRESIDENCIA_GESTAO, Perfil.NUCLEO_PEDAGOGICO];
 
@@ -113,6 +116,85 @@ export class ProjectsService {
     const row = await this.prisma.projeto.findUnique({ where: { id }, include: WITH_COORDINATOR });
     if (!row) throw new NotFoundException('Projeto não encontrado.');
     return toResponse(row);
+  }
+
+  async reportPreview(
+    projectId: string,
+    { from, to }: ReportPreviewQueryDto,
+  ): Promise<ReportPreviewResponse> {
+    toDate(from);
+    const toDateVal = toDate(to);
+    if (from > to) {
+      throw new BadRequestException({
+        code: 'INVALID_PERIOD',
+        message: 'A data inicial (from) não pode ser posterior à data final (to).',
+      });
+    }
+
+    const project = await this.prisma.projeto.findUnique({
+      where: { id: projectId },
+      select: {
+        id: true,
+        codigo: true,
+        titulo: true,
+        instrumentoId: true,
+        inicio: true,
+        fim: true,
+      },
+    });
+    if (!project) throw new NotFoundException('Projeto não encontrado.');
+
+    const goals = await this.prisma.meta.findMany({
+      where: { projetoId: projectId },
+      orderBy: { ordem: 'asc' },
+      include: {
+        resultados: {
+          where: { dataReferencia: { lte: toDateVal } },
+          include: WITH_AUTHOR,
+          orderBy: [{ dataReferencia: 'desc' }, { criadoEm: 'desc' }],
+          take: 1,
+        },
+      },
+    });
+
+    const metas = goals.map((goal) => {
+      const periodoInicio = goal.periodoInicio ? isoDate(goal.periodoInicio) : null;
+      const periodoFim = goal.periodoFim ? isoDate(goal.periodoFim) : null;
+      const rascunho = missingFields({ ...goal, periodoInicio, periodoFim }).length > 0;
+      const latestResult = goal.resultados[0] ? toResult(goal.resultados[0]) : null;
+
+      return {
+        id: goal.id,
+        ordem: goal.ordem,
+        origem: goal.origem,
+        objetivo: goal.objetivo,
+        descricao: goal.descricao,
+        indicador: goal.indicador,
+        modalidadeAfericao: goal.modalidadeAfericao,
+        parametroPlanejado: goal.parametroPlanejado,
+        unidade: goal.unidade,
+        periodoInicio,
+        periodoFim,
+        situacao: goal.situacao,
+        rascunho,
+        resultado: latestResult,
+        percentual: latestResult?.percentual ?? null,
+        status: latestResult?.alcance ?? null,
+      };
+    });
+
+    return {
+      projeto: {
+        id: project.id,
+        codigo: project.codigo,
+        titulo: project.titulo,
+        instrumentoId: project.instrumentoId,
+        inicio: isoDate(project.inicio),
+        fim: isoDate(project.fim),
+      },
+      periodo: { from, to },
+      metas,
+    };
   }
 
   async eligibleCoordinators(): Promise<CoordinatorResponse[]> {
