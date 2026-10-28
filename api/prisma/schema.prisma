@@ -233,6 +233,7 @@ model Atividade {
   responsavel Usuario                @relation(fields: [responsavelId], references: [id], onDelete: Restrict)
   metas       AtividadeMeta[]
   inscricao   ConfiguracaoInscricao?
+  inscricoes  Inscricao[]
 
   @@index([projetoId])
   @@index([modalidadeId])
@@ -269,6 +270,55 @@ model ConfiguracaoInscricao {
   atividade Atividade @relation(fields: [atividadeId], references: [id], onDelete: Restrict)
 
   @@map("configuracao_inscricao")
+}
+
+/// Pessoa que se inscreve numa atividade. Separada da `pessoa` da equipe do Instituto,
+/// para que dados de participantes não se misturem com os de quem opera o sistema (LGPD).
+/// Guarda só os campos mínimos (seção 8.5.4) e os da lista fechada da configuração (RNF05).
+model Participante {
+  id             String   @id @default(uuid()) @db.Uuid
+  nome           String
+  telefone       String
+  dataNascimento DateTime @map("data_nascimento") @db.Date
+  email          String?
+  cpf            String?  @db.VarChar(11)
+  bairroRegiao   String?  @map("bairro_regiao")
+  escolaridade   String?
+  criadoEm       DateTime @default(now()) @map("criado_em") @db.Timestamptz(3)
+  atualizadoEm   DateTime @updatedAt @map("atualizado_em") @db.Timestamptz(3)
+
+  inscricoes Inscricao[]
+
+  @@index([cpf])
+  @@index([email])
+  @@map("participante")
+}
+
+enum SituacaoInscricao {
+  CONFIRMADA
+}
+
+model Inscricao {
+  id                  String            @id @default(uuid()) @db.Uuid
+  atividadeId         String            @map("atividade_id") @db.Uuid
+  participanteId      String            @map("participante_id") @db.Uuid
+  situacao            SituacaoInscricao @default(CONFIRMADA)
+  /// Valor normalizado do campo que identifica cadastro repetido (e-mail ou CPF).
+  chaveDuplicidade    String            @map("chave_duplicidade")
+  versaoAviso         String            @map("versao_aviso")
+  avisoApresentadoEm  DateTime          @map("aviso_apresentado_em") @db.Timestamptz(3)
+  autorizaComunicados Boolean           @map("autoriza_comunicados")
+  autorizaImagem      Boolean           @map("autoriza_imagem")
+  responsavelNome     String?           @map("responsavel_nome")
+  responsavelTelefone String?           @map("responsavel_telefone")
+  criadoEm            DateTime          @default(now()) @map("criado_em") @db.Timestamptz(3)
+
+  atividade    Atividade    @relation(fields: [atividadeId], references: [id], onDelete: Restrict)
+  participante Participante @relation(fields: [participanteId], references: [id], onDelete: Restrict)
+
+  @@unique([atividadeId, chaveDuplicidade])
+  @@index([participanteId])
+  @@map("inscricao")
 }
 
 model AtividadeMeta {
