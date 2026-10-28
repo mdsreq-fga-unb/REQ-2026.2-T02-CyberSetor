@@ -7,8 +7,7 @@ import { Controller, useForm, useWatch, type Control } from 'react-hook-form';
 import { z } from 'zod';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Field, FieldError, FieldGroup, FieldLabel } from '@/components/ui/field';
-import { Input } from '@/components/ui/input';
+import { Field, FieldGroup } from '@/components/ui/field';
 import { Skeleton } from '@/components/ui/skeleton';
 import { ApiError } from '@/lib/api';
 import { usePublicForm, useSubmitRegistration } from '@/queries/inscricao-publica';
@@ -19,20 +18,12 @@ import type {
   SubmittedRegistration,
 } from '@/types/inscricao-publica';
 import type { CampoInscricao } from '@/types/inscricoes';
-import {
-  ageOn,
-  formatDateBr,
-  isValidCpf,
-  onlyDigits,
-  phoneDigits,
-  todayInBrasilia,
-} from '../participant-data';
+import { CpfField, DateField, PhoneField, TextField } from '@/components/form/fields';
+import { ageOn, formatDate, isValidPhone, todayInBrasilia } from '@/lib/br';
+import { cpfSchema, phoneSchema } from '@/lib/schemas';
 
 const ADULT_AGE = 18;
 const ISO_DATE = /^\d{4}-\d{2}-\d{2}$/;
-
-const phone = (message: string) =>
-  z.string().refine((value) => /^\d{10,11}$/.test(phoneDigits(value)), message);
 
 const FIELD_OF = {
   EMAIL: 'email',
@@ -54,8 +45,6 @@ interface FormValues {
   responsavelNome: string;
   responsavelTelefone: string;
 }
-
-type FieldName = keyof FormValues;
 
 const EMPTY: FormValues = {
   nome: '',
@@ -83,7 +72,7 @@ function schemaFor(asked: CampoInscricao[]) {
   return z
     .object({
       nome: required('Informe o seu nome.').max(150, 'O nome tem no máximo 150 caracteres.'),
-      telefone: phone('Informe o telefone com DDD, como (61) 99999-8888.'),
+      telefone: phoneSchema(),
       dataNascimento: z
         .string()
         .regex(ISO_DATE, 'Informe a data de nascimento.')
@@ -91,9 +80,7 @@ function schemaFor(asked: CampoInscricao[]) {
       email: has('EMAIL')
         ? required('Informe o seu e-mail.').pipe(z.email('Informe um e-mail válido.'))
         : optional,
-      cpf: has('CPF')
-        ? required('Informe o seu CPF.').refine(isValidCpf, 'CPF inválido. Confira os números.')
-        : optional,
+      cpf: has('CPF') ? cpfSchema('Informe o seu CPF.') : optional,
       bairroRegiao: has('BAIRRO_REGIAO') ? required('Informe o bairro ou a região.') : optional,
       escolaridade: has('ESCOLARIDADE') ? required('Informe a escolaridade.') : optional,
       autorizaComunicados: z.boolean(),
@@ -110,7 +97,7 @@ function schemaFor(asked: CampoInscricao[]) {
           message: 'Informe o nome do responsável legal.',
         });
       }
-      if (!/^\d{10,11}$/.test(phoneDigits(values.responsavelTelefone))) {
+      if (!isValidPhone(values.responsavelTelefone)) {
         ctx.addIssue({
           code: 'custom',
           path: ['responsavelTelefone'],
@@ -124,7 +111,7 @@ function schemaFor(asked: CampoInscricao[]) {
 function submissionOf(values: FormValues, form: PublicForm): PublicSubmission {
   const body: PublicSubmission = {
     nome: values.nome.trim(),
-    telefone: phoneDigits(values.telefone),
+    telefone: values.telefone,
     dataNascimento: values.dataNascimento,
     versaoAviso: form.aviso.versao,
     autorizaComunicados: values.autorizaComunicados,
@@ -132,11 +119,11 @@ function submissionOf(values: FormValues, form: PublicForm): PublicSubmission {
   };
   for (const campo of form.camposAdicionais) {
     const name = FIELD_OF[campo];
-    body[name] = name === 'cpf' ? onlyDigits(values.cpf) : values[name].trim();
+    body[name] = values[name].trim();
   }
   if (isMinor(values.dataNascimento)) {
     body.responsavelNome = values.responsavelNome.trim();
-    body.responsavelTelefone = phoneDigits(values.responsavelTelefone);
+    body.responsavelTelefone = values.responsavelTelefone;
   }
   return body;
 }
@@ -151,7 +138,7 @@ function failureOf(error: unknown): string {
 function ActivitySummary({ activity }: { activity: PublicActivity }) {
   return (
     <CardDescription>
-      {formatDateBr(activity.data)} · {activity.local}
+      {formatDate(activity.data)} · {activity.local}
     </CardDescription>
   );
 }
@@ -177,55 +164,6 @@ function Message({
         <p className="text-center text-sm text-muted-foreground">{text}</p>
       </CardContent>
     </Card>
-  );
-}
-
-function TextField({
-  name,
-  label,
-  control,
-  type = 'text',
-  inputMode,
-  autoComplete,
-  hint,
-}: {
-  name: FieldName;
-  label: string;
-  control: Control<FormValues>;
-  type?: string;
-  inputMode?: 'text' | 'tel' | 'email' | 'numeric';
-  autoComplete?: string;
-  hint?: string;
-}) {
-  return (
-    <Controller
-      name={name}
-      control={control}
-      render={({ field, fieldState }) => (
-        <Field data-invalid={fieldState.invalid}>
-          <FieldLabel htmlFor={name}>{label}</FieldLabel>
-          <Input
-            {...field}
-            value={String(field.value)}
-            id={name}
-            type={type}
-            inputMode={inputMode}
-            autoComplete={autoComplete}
-            className="h-12"
-            aria-invalid={fieldState.invalid}
-            aria-describedby={
-              fieldState.invalid ? `${name}-error` : hint ? `${name}-hint` : undefined
-            }
-          />
-          {hint && !fieldState.invalid && (
-            <p id={`${name}-hint`} className="text-xs text-muted-foreground">
-              {hint}
-            </p>
-          )}
-          {fieldState.invalid && <FieldError id={`${name}-error`} errors={[fieldState.error]} />}
-        </Field>
-      )}
-    />
   );
 }
 
@@ -313,21 +251,13 @@ function RegistrationForm({
         <form noValidate onSubmit={onSubmit}>
           <FieldGroup>
             <TextField name="nome" label="Nome completo" control={control} autoComplete="name" />
-            <TextField
-              name="telefone"
-              label="Telefone com DDD"
-              control={control}
-              type="tel"
-              inputMode="tel"
-              autoComplete="tel"
-              hint="Exemplo: (61) 99999-8888"
-            />
-            <TextField
+            <PhoneField name="telefone" label="Telefone com DDD" control={control} />
+            <DateField
               name="dataNascimento"
               label="Data de nascimento"
               control={control}
-              type="date"
               autoComplete="bday"
+              notFuture
             />
             {asks('EMAIL') && (
               <TextField
@@ -339,15 +269,7 @@ function RegistrationForm({
                 autoComplete="email"
               />
             )}
-            {asks('CPF') && (
-              <TextField
-                name="cpf"
-                label="CPF"
-                control={control}
-                inputMode="numeric"
-                hint="Só os números ou com pontos e traço"
-              />
-            )}
+            {asks('CPF') && <CpfField name="cpf" label="CPF" control={control} />}
             {asks('BAIRRO_REGIAO') && (
               <TextField name="bairroRegiao" label="Bairro ou região" control={control} />
             )}
@@ -361,12 +283,10 @@ function RegistrationForm({
                   Responsável legal (obrigatório para menores de 18 anos)
                 </p>
                 <TextField name="responsavelNome" label="Nome do responsável" control={control} />
-                <TextField
+                <PhoneField
                   name="responsavelTelefone"
                   label="Telefone do responsável com DDD"
                   control={control}
-                  type="tel"
-                  inputMode="tel"
                 />
               </div>
             )}
@@ -437,7 +357,7 @@ export function PublicRegistrationView({ codigo }: { codigo: string }) {
         </CardHeader>
         <CardContent className="flex flex-col gap-2 text-center text-sm">
           <p>
-            {formatDateBr(submitted.atividade.data)} · {submitted.atividade.local}
+            {formatDate(submitted.atividade.data)} · {submitted.atividade.local}
           </p>
           <p className="text-muted-foreground">
             Se tiver dúvidas ou quiser cancelar, fale com a equipe do Instituto.

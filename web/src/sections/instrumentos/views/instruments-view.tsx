@@ -26,7 +26,8 @@ import { ApiError } from '@/lib/api';
 import { useInstruments } from '@/queries/instrumentos';
 import { paths } from '@/routes/paths';
 import type { Instrument, SavedInstrument } from '@/types/instrumentos';
-import { INSTRUMENT_TYPES, formatDate, formatMoney } from '../format';
+import { formatDate, formatMoney } from '@/lib/br';
+import { INSTRUMENT_TYPES } from '../format';
 import { InstrumentFormDialog } from '../instrument-form-dialog';
 
 const DESCRIPTION = 'Editais, emendas e parcerias que financiam os projetos do Instituto.';

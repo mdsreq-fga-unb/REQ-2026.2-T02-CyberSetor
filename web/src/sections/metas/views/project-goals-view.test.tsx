@@ -618,7 +618,7 @@ describe('metas do projeto', () => {
     expect(screen.queryByRole('menuitem', { name: 'Registrar resultado' })).not.toBeInTheDocument();
   });
 
-  it('parametro planejado nao numerico na meta quantitativa nao chama a API', async () => {
+  it('parametro planejado zero na meta quantitativa nao chama a API', async () => {
     const calls = await signedInAs('PRESIDENCIA_GESTAO', page([]));
     renderView();
 
@@ -627,7 +627,8 @@ describe('metas do projeto', () => {
     fill('Objetivo', 'Ampliar o público');
     fill('Descrição', 'Apresentação aberta');
     fill('Modalidade', 'QUANTITATIVA');
-    fill('Parâmetro planejado', 'cento e vinte');
+    expect(screen.getByLabelText('Parâmetro planejado')).toHaveAttribute('inputmode', 'decimal');
+    fill('Parâmetro planejado', '0');
     fireEvent.click(screen.getByRole('button', { name: 'Salvar meta' }));
 
     expect(

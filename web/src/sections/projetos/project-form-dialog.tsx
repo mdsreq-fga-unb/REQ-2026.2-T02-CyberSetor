@@ -4,6 +4,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useEffect, useMemo, useState, type FormEvent } from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
+import { DateField, TextField } from '@/components/form/fields';
 import { FormField } from '@/components/form-field';
 import { Button } from '@/components/ui/button';
 import {
@@ -15,15 +16,15 @@ import {
   DialogTitle,
 } from '@/components/ui/dialog';
 import { FieldGroup } from '@/components/ui/field';
-import { Input } from '@/components/ui/input';
 import { NativeSelect, NativeSelectOption } from '@/components/ui/native-select';
 import { ApiError } from '@/lib/api';
+import { dateSchema } from '@/lib/schemas';
 import { useEligibleCoordinators, useFreshProject, useSaveProject } from '@/queries/projetos';
 import type { Instrument } from '@/types/instrumentos';
 import type { Project } from '@/types/projetos';
-import { formatDate } from '../instrumentos/format';
+import { formatDate } from '@/lib/br';
 
-const DATE = z.string().regex(/^\d{4}-\d{2}-\d{2}$/, 'Informe a data completa.');
+const DATE = dateSchema();
 const COORDINATION = 'contas ativas de Presidência e Gestão ou de Núcleo Pedagógico';
 
 function schemaFor(instrument: Instrument, saved: Project | null) {
@@ -181,12 +182,6 @@ export function ProjectFormDialog({
     return form.handleSubmit(onValid)(event);
   }
 
-  const text = (name: FieldName, label: string, extra: object = {}, description?: string) => (
-    <FormField name={name} label={label} description={description} control={form.control}>
-      {(props) => <Input {...props} {...extra} />}
-    </FormField>
-  );
-
   return (
     <Dialog open={open} onOpenChange={(next) => !next && !form.formState.isSubmitting && close()}>
       <DialogContent className="max-h-[calc(100dvh-2rem)] overflow-y-auto sm:max-w-2xl">
@@ -198,8 +193,14 @@ export function ProjectFormDialog({
         </DialogHeader>
         <form noValidate onSubmit={onSubmit}>
           <FieldGroup>
-            {text('codigo', 'Código', { autoComplete: 'off' }, 'Único neste instrumento.')}
-            {text('titulo', 'Título', { autoComplete: 'off' })}
+            <TextField
+              control={form.control}
+              name="codigo"
+              label="Código"
+              description="Único neste instrumento."
+              autoComplete="off"
+            />
+            <TextField control={form.control} name="titulo" label="Título" autoComplete="off" />
             <FormField
               name="coordenadorId"
               label="Coordenação"
@@ -226,13 +227,21 @@ export function ProjectFormDialog({
               )}
             </FormField>
             <div className="grid gap-4 sm:grid-cols-2">
-              {text(
-                'inicio',
-                'Início da execução',
-                { type: 'date' },
-                `Dentro da vigência: ${formatDate(instrument.vigenciaInicio)} a ${formatDate(instrument.vigenciaFim)}.`,
-              )}
-              {text('fim', 'Fim da execução', { type: 'date' })}
+              <DateField
+                control={form.control}
+                name="inicio"
+                label="Início da execução"
+                description={`Dentro da vigência: ${formatDate(instrument.vigenciaInicio)} a ${formatDate(instrument.vigenciaFim)}.`}
+                min={instrument.vigenciaInicio}
+                max={instrument.vigenciaFim}
+              />
+              <DateField
+                control={form.control}
+                name="fim"
+                label="Fim da execução"
+                min={instrument.vigenciaInicio}
+                max={instrument.vigenciaFim}
+              />
             </div>
             {coordinators.isError && (
               <p role="alert" className="text-sm text-destructive">
