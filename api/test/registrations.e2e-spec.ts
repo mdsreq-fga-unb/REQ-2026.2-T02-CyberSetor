@@ -29,6 +29,7 @@ describe('Configuração da inscrição da atividade (e2e)', () => {
   const tokens = {} as Record<Perfil, string>;
   const ids = {} as Record<Perfil, string>;
   let instrumentoId: string;
+  let projetoId: string;
   let atividadeId: string;
   let outraAtividadeId: string;
 
@@ -86,6 +87,7 @@ describe('Configuração da inscrição da atividade (e2e)', () => {
         fim: new Date('2026-12-15T00:00:00.000Z'),
       },
     });
+    projetoId = projeto.id;
     const modalidade = await prisma.modalidade.create({ data: { nome: 'Oficina contínua' } });
     const nova = (titulo: string) =>
       prisma.atividade.create({
@@ -249,6 +251,34 @@ describe('Configuração da inscrição da atividade (e2e)', () => {
         where: { entidadeId: atividadeId, acao: 'REGISTRATION_UPDATED' },
       }),
     ).toBe(0);
+  });
+
+  it('a lista de atividades traz a situacao da inscricao e os inscritos', async () => {
+    type Row = {
+      id: string;
+      inscricao: { aberta: boolean; vagas: number; inscritos: number } | null;
+    };
+    const lista = async () =>
+      (
+        (
+          await as(Perfil.ADMINISTRATIVO_FINANCEIRO)
+            .get(`/v1/projects/${projetoId}/activities`)
+            .expect(200)
+        ).body as Row[]
+      ).reduce<Record<string, Row['inscricao']>>(
+        (acc, row) => ({ ...acc, [row.id]: row.inscricao }),
+        {},
+      );
+
+    expect((await lista())[atividadeId]).toBeNull();
+    const aberta = await opened();
+    expect((await lista())[atividadeId]).toEqual({ aberta: true, vagas: 30, inscritos: 0 });
+    expect((await lista())[outraAtividadeId]).toBeNull();
+
+    await as(Perfil.NUCLEO_PEDAGOGICO)
+      .patch(path(), { versao: aberta.versao, aberta: false })
+      .expect(200);
+    expect((await lista())[atividadeId]).toMatchObject({ aberta: false });
   });
 
   it('consulta a configuracao, e informa quando a inscricao ainda nao foi aberta', async () => {
