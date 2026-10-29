@@ -17,7 +17,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { toast } from '@/components/ui/toast';
 import { paths } from '@/routes/paths';
 import type { InstrumentTerm, OpenRegistration, PanelGoal, UpcomingActivity } from '@/types/painel';
-import { formatDate } from '../instrumentos/format';
+import { formatDate } from '@/lib/br';
 
 const DAY = 24 * 60 * 60 * 1000;
 
