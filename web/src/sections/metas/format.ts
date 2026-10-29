@@ -8,6 +8,7 @@ import type {
   GoalSituation,
   MeasurementMode,
 } from '@/types/metas';
+import { formatNumber } from '@/lib/br';
 
 export const GOAL_ORIGINS: Record<GoalOrigin, string> = {
   EDITAL: 'Edital',
@@ -55,12 +56,6 @@ export function requirementLabel(requirement: GoalRequirement): string {
   return requirement.referencia ?? requirement.descricao;
 }
 
-const NUMBER = new Intl.NumberFormat('pt-BR', { maximumFractionDigits: 2 });
-
-export function formatNumber(value: number): string {
-  return NUMBER.format(value);
-}
-
 // RN-14: na meta quantitativa, valor alcançado sobre o planejado; na qualitativa, só o alcance.
 export function resultText(result: GoalResult, unit: string | null): string {
   const reach = REACHES[result.alcance];
@@ -79,8 +74,4 @@ export function reachOf(percent: number): GoalReach {
   if (percent >= 100) return 'CUMPRIDA';
   if (percent === 0) return 'NAO_CUMPRIDA';
   return 'PARCIALMENTE_CUMPRIDA';
-}
-
-export function todayInBrasilia(now: Date = new Date()): string {
-  return new Intl.DateTimeFormat('en-CA', { timeZone: 'America/Sao_Paulo' }).format(now);
 }

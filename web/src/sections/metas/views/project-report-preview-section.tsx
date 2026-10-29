@@ -16,7 +16,8 @@ import {
 } from '@/components/ui/table';
 import { useReportPreview } from '@/queries/relatorios';
 import type { GoalReach } from '@/types/metas';
-import { formatNumber, plannedNumber, REACHES } from '../format';
+import { formatDate, formatNumber } from '@/lib/br';
+import { plannedNumber, REACHES } from '../format';
 import type { ReportPreviewGoal } from '@/types/relatorios';
 
 interface ProjectReportPreviewSectionProps {
@@ -49,11 +50,6 @@ function withUnit(value: number, unit: string | null): string {
   return unit ? `${formatNumber(value)} ${unit}` : formatNumber(value);
 }
 
-function dateBr(isoDate: string): string {
-  const [year, month, day] = isoDate.slice(0, 10).split('-');
-  return `${day}/${month}/${year}`;
-}
-
 // O percentual vem do resultado gravado; o planejado mostrado é o mesmo da conta (RN-14).
 function plannedText(goal: ReportPreviewGoal): string {
   if (goal.modalidadeAfericao !== 'QUANTITATIVA') return goal.parametroPlanejado ?? 'A definir';
@@ -63,7 +59,7 @@ function plannedText(goal: ReportPreviewGoal): string {
 
 function reachedText(goal: ReportPreviewGoal): string {
   if (!goal.resultado) return '—';
-  const when = `em ${dateBr(goal.resultado.dataReferencia)}`;
+  const when = `em ${formatDate(goal.resultado.dataReferencia)}`;
   if (goal.modalidadeAfericao === 'QUANTITATIVA' && goal.resultado.valorAlcancado !== null) {
     return `${withUnit(goal.resultado.valorAlcancado, goal.unidade)} ${when}`;
   }

@@ -618,7 +618,33 @@ describe('metas do projeto', () => {
     expect(screen.queryByRole('menuitem', { name: 'Registrar resultado' })).not.toBeInTheDocument();
   });
 
-  it('parametro planejado nao numerico na meta quantitativa nao chama a API', async () => {
+  it('parametro planejado decimal digitado aos poucos continua no mesmo campo', async () => {
+    await signedInAs('PRESIDENCIA_GESTAO', page([]));
+    renderView();
+
+    await openNew();
+    fill('Modalidade', 'QUANTITATIVA');
+    const campo = screen.getByLabelText('Parâmetro planejado');
+    for (const parcial of ['12', '12,', '12,5']) fill('Parâmetro planejado', parcial);
+    expect(screen.getByLabelText('Parâmetro planejado')).toBe(campo);
+    expect(campo).toHaveAttribute('inputmode', 'decimal');
+    expect(campo).toHaveValue('12,5');
+  });
+
+  it('texto livre de meta qualitativa continua em texto ao trocar para quantitativa', async () => {
+    await signedInAs('PRESIDENCIA_GESTAO', page([]));
+    renderView();
+
+    await openNew();
+    fill('Modalidade', 'QUALITATIVA');
+    fill('Parâmetro planejado', 'Apresentação pública');
+    fill('Modalidade', 'QUANTITATIVA');
+    const campo = screen.getByLabelText('Parâmetro planejado');
+    expect(campo).not.toHaveAttribute('inputmode', 'decimal');
+    expect(campo).toHaveValue('Apresentação pública');
+  });
+
+  it('parametro planejado zero na meta quantitativa nao chama a API', async () => {
     const calls = await signedInAs('PRESIDENCIA_GESTAO', page([]));
     renderView();
 
@@ -627,7 +653,8 @@ describe('metas do projeto', () => {
     fill('Objetivo', 'Ampliar o público');
     fill('Descrição', 'Apresentação aberta');
     fill('Modalidade', 'QUANTITATIVA');
-    fill('Parâmetro planejado', 'cento e vinte');
+    expect(screen.getByLabelText('Parâmetro planejado')).toHaveAttribute('inputmode', 'decimal');
+    fill('Parâmetro planejado', '0');
     fireEvent.click(screen.getByRole('button', { name: 'Salvar meta' }));
 
     expect(

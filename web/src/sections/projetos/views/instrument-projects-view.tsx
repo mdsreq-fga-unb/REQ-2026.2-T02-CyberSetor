@@ -30,7 +30,8 @@ import { paths } from '@/routes/paths';
 import type { Instrument } from '@/types/instrumentos';
 import type { Project } from '@/types/projetos';
 import { InstrumentRequirements } from '../../requisitos/instrument-requirements';
-import { INSTRUMENT_TYPES, formatDate } from '../../instrumentos/format';
+import { formatDate } from '@/lib/br';
+import { INSTRUMENT_TYPES } from '../../instrumentos/format';
 import { InstrumentDocument } from '../../instrumentos/instrument-document';
 import { ProjectFormDialog } from '../project-form-dialog';
 

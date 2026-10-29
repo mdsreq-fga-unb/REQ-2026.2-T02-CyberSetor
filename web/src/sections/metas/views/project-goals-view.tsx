@@ -44,7 +44,8 @@ import { ProjectActivitiesSection } from '@/sections/atividades/views/project-ac
 import { ProjectReportPreviewSection } from './project-report-preview-section';
 import type { Goal } from '@/types/metas';
 import type { Project } from '@/types/projetos';
-import { INSTRUMENT_TYPES, formatDate } from '../../instrumentos/format';
+import { formatDate } from '@/lib/br';
+import { INSTRUMENT_TYPES } from '../../instrumentos/format';
 import {
   DEADLINE_ALERTS,
   SITUATIONS,

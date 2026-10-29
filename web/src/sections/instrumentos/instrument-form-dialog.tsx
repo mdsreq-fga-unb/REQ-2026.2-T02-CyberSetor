@@ -4,6 +4,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useEffect, useState, type FormEvent } from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
+import { DateField, MoneyField, TextField } from '@/components/form/fields';
 import { FormField } from '@/components/form-field';
 import { Button } from '@/components/ui/button';
 import {
@@ -15,15 +16,15 @@ import {
   DialogTitle,
 } from '@/components/ui/dialog';
 import { FieldGroup } from '@/components/ui/field';
-import { Input } from '@/components/ui/input';
 import { NativeSelect, NativeSelectOption } from '@/components/ui/native-select';
 import { ApiError } from '@/lib/api';
+import { dateSchema, moneySchema } from '@/lib/schemas';
 import { useFreshInstrument, useSaveInstrument } from '@/queries/instrumentos';
 import type { Instrument, InstrumentType, SavedInstrument } from '@/types/instrumentos';
-import { INSTRUMENT_TYPES, moneyInput, parseMoney } from './format';
+import { INSTRUMENT_TYPES } from './format';
 
 const TYPES = Object.keys(INSTRUMENT_TYPES) as InstrumentType[];
-const DATE = z.string().regex(/^\d{4}-\d{2}-\d{2}$/, 'Informe a data completa.');
+const DATE = dateSchema();
 const TERM = z.object({ vigenciaInicio: DATE, vigenciaFim: DATE });
 
 const schema = z
@@ -39,14 +40,7 @@ const schema = z
       .trim()
       .min(1, 'Informe o número do processo.')
       .max(100, 'O número tem no máximo 100 caracteres.'),
-    valorGlobal: z.string().transform((value, ctx) => {
-      const parsed = parseMoney(value);
-      if ('error' in parsed) {
-        ctx.addIssue({ code: 'custom', message: parsed.error });
-        return z.NEVER;
-      }
-      return parsed.value;
-    }),
+    valorGlobal: moneySchema('Informe o valor global.'),
     dataCelebracao: DATE,
     vigenciaInicio: DATE,
     vigenciaFim: DATE,
@@ -58,7 +52,6 @@ const schema = z
   });
 
 type FormValues = z.input<typeof schema>;
-type FieldName = keyof FormValues;
 
 const EMPTY = {
   tipo: '',
@@ -76,7 +69,7 @@ function valuesOf(instrument: Instrument | null): FormValues {
     tipo: instrument.tipo,
     orgaoConcedente: instrument.orgaoConcedente,
     numeroProcesso: instrument.numeroProcesso,
-    valorGlobal: moneyInput(instrument.valorGlobal),
+    valorGlobal: instrument.valorGlobal,
     dataCelebracao: instrument.dataCelebracao,
     vigenciaInicio: instrument.vigenciaInicio,
     vigenciaFim: instrument.vigenciaFim,
@@ -157,12 +150,6 @@ export function InstrumentFormDialog({
     return form.handleSubmit(onValid)(event);
   }
 
-  const text = (name: FieldName, label: string, extra: object = {}) => (
-    <FormField name={name} label={label} control={form.control}>
-      {(props) => <Input {...props} {...extra} />}
-    </FormField>
-  );
-
   return (
     <Dialog open={open} onOpenChange={(next) => !next && !form.formState.isSubmitting && close()}>
       <DialogContent className="max-h-[calc(100dvh-2rem)] overflow-y-auto sm:max-w-2xl">
@@ -188,16 +175,23 @@ export function InstrumentFormDialog({
                 </NativeSelect>
               )}
             </FormField>
-            {text('orgaoConcedente', 'Órgão concedente', { autoComplete: 'off' })}
-            {text('numeroProcesso', 'Número do processo', { autoComplete: 'off' })}
-            {text('valorGlobal', 'Valor global (R$)', {
-              inputMode: 'decimal',
-              autoComplete: 'off',
-            })}
+            <TextField
+              control={form.control}
+              name="orgaoConcedente"
+              label="Órgão concedente"
+              autoComplete="off"
+            />
+            <TextField
+              control={form.control}
+              name="numeroProcesso"
+              label="Número do processo"
+              autoComplete="off"
+            />
+            <MoneyField control={form.control} name="valorGlobal" label="Valor global" />
             <div className="grid gap-4 sm:grid-cols-3">
-              {text('dataCelebracao', 'Data de celebração', { type: 'date' })}
-              {text('vigenciaInicio', 'Início da vigência', { type: 'date' })}
-              {text('vigenciaFim', 'Fim da vigência', { type: 'date' })}
+              <DateField control={form.control} name="dataCelebracao" label="Data de celebração" />
+              <DateField control={form.control} name="vigenciaInicio" label="Início da vigência" />
+              <DateField control={form.control} name="vigenciaFim" label="Fim da vigência" />
             </div>
             {failure && (
               <p role="alert" className="text-sm text-destructive">

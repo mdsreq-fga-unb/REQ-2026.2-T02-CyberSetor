@@ -25,7 +25,7 @@ import { useActivities } from '@/queries/atividades';
 import type { Activity } from '@/types/atividades';
 import type { Instrument } from '@/types/instrumentos';
 import type { Project } from '@/types/projetos';
-import { formatDate } from '../../instrumentos/format';
+import { formatDate } from '@/lib/br';
 import { ActivityFormDialog } from '../activity-form-dialog';
 import { RegistrationFormDialog } from '../registration-form-dialog';
 import { RegistrationShareDialog } from '../registration-share-dialog';

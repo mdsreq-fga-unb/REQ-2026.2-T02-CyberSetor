@@ -4,6 +4,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useEffect, useMemo, useState, type FormEvent } from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
+import { DateField, TextField } from '@/components/form/fields';
 import { FormField } from '@/components/form-field';
 import { Button } from '@/components/ui/button';
 import {
@@ -15,17 +16,17 @@ import {
   DialogTitle,
 } from '@/components/ui/dialog';
 import { FieldGroup } from '@/components/ui/field';
-import { Input } from '@/components/ui/input';
 import { NativeSelect, NativeSelectOption } from '@/components/ui/native-select';
 import { ApiError } from '@/lib/api';
+import { dateSchema } from '@/lib/schemas';
 import { useEligibleResponsibles, useFreshActivity, useSaveActivity } from '@/queries/atividades';
 import { useGoals } from '@/queries/metas';
 import { useModalities } from '@/queries/modalidades';
 import type { Activity } from '@/types/atividades';
 import type { Project } from '@/types/projetos';
-import { formatDate } from '../instrumentos/format';
+import { formatDate } from '@/lib/br';
 
-const DATE = z.string().regex(/^\d{4}-\d{2}-\d{2}$/, 'Informe a data completa.');
+const DATE = dateSchema();
 
 function schemaFor(project: Project, saved: Activity | null) {
   const term = `${formatDate(project.inicio)} a ${formatDate(project.fim)}`;
@@ -184,12 +185,6 @@ export function ActivityFormDialog({
     return form.handleSubmit(onValid)(event);
   }
 
-  const text = (name: FieldName, label: string, extra: object = {}, description?: string) => (
-    <FormField name={name} label={label} description={description} control={form.control}>
-      {(props) => <Input {...props} {...extra} />}
-    </FormField>
-  );
-
   return (
     <Dialog open={open} onOpenChange={(next) => !next && !form.formState.isSubmitting && close()}>
       <DialogContent className="max-h-[calc(100dvh-2rem)] overflow-y-auto sm:max-w-2xl">
@@ -201,7 +196,12 @@ export function ActivityFormDialog({
         </DialogHeader>
         <form noValidate onSubmit={onSubmit}>
           <FieldGroup>
-            {text('titulo', 'Nome / título da atividade', { autoComplete: 'off' })}
+            <TextField
+              control={form.control}
+              name="titulo"
+              label="Nome / título da atividade"
+              autoComplete="off"
+            />
 
             <FormField
               name="modalidadeId"
@@ -231,13 +231,15 @@ export function ActivityFormDialog({
             </FormField>
 
             <div className="grid gap-4 sm:grid-cols-2">
-              {text(
-                'data',
-                'Data de realização',
-                { type: 'date' },
-                `Dentro do período do projeto: ${formatDate(project.inicio)} a ${formatDate(project.fim)}.`,
-              )}
-              {text('local', 'Local', { autoComplete: 'off' })}
+              <DateField
+                control={form.control}
+                name="data"
+                label="Data de realização"
+                description={`Dentro do período do projeto: ${formatDate(project.inicio)} a ${formatDate(project.fim)}.`}
+                min={project.inicio}
+                max={project.fim}
+              />
+              <TextField control={form.control} name="local" label="Local" autoComplete="off" />
             </div>
 
             <FormField

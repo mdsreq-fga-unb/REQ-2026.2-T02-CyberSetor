@@ -9,13 +9,8 @@ import { toast } from '@/components/ui/toast';
 import { ApiError } from '@/lib/api';
 import { useAttachDocument, useInstrumentDocument } from '@/queries/instrumentos';
 import type { Instrument } from '@/types/instrumentos';
-import {
-  DOCUMENT_ACCEPT,
-  documentFileProblem,
-  documentKind,
-  formatBytes,
-  formatDateTime,
-} from './format';
+import { DOCUMENT_ACCEPT, documentFileProblem, documentKind, formatBytes } from './format';
+import { formatDateTime } from '@/lib/br';
 
 function uploadFailure(error: unknown): string {
   if (!(error instanceof ApiError)) return 'Não foi possível enviar o arquivo. Tente de novo.';
