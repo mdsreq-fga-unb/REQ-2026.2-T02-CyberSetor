@@ -7,7 +7,7 @@ import {
 import type { Actor } from '../accounts/accounts.service.js';
 import { AuditTrailService } from '../audit/audit-trail.service.js';
 import { Prisma } from '../generated/prisma/client.js';
-import { AutorTipo, CampoDuplicidade, CampoInscricao } from '../generated/prisma/enums.js';
+import { AutorTipo, CampoInscricao } from '../generated/prisma/enums.js';
 import { todayInBrasilia } from '../goals/goal-deadline.js';
 import { PrismaService } from '../prisma/prisma.service.js';
 import {
@@ -133,11 +133,13 @@ export class ParticipantsService {
   async list(busca?: string): Promise<ParticipantSummaryResponse[]> {
     const text = busca?.trim() ?? '';
     const digits = onlyDigits(text);
+    // % e _ são curingas do ILIKE: a busca procura o texto como foi digitado.
+    const literal = text.replace(/[\\%_]/g, (char) => `\\${char}`);
     const where: Prisma.ParticipanteWhereInput = text
       ? {
           OR: [
-            { nome: { contains: text, mode: 'insensitive' } },
-            { email: { contains: text.toLowerCase() } },
+            { nome: { contains: literal, mode: 'insensitive' } },
+            { email: { contains: literal.toLowerCase() } },
             ...(digits.length >= MIN_PHONE_SEARCH ? [{ telefone: { contains: digits } }] : []),
           ],
         }
@@ -146,7 +148,8 @@ export class ParticipantsService {
     const rows = await this.prisma.participante.findMany({
       where,
       orderBy: [{ nome: 'asc' }, { criadoEm: 'asc' }],
-      take: LIST_LIMIT,
+      // Um a mais que o limite avisa a tela de que a lista foi cortada.
+      take: LIST_LIMIT + 1,
       include: {
         _count: { select: { inscricoes: true } },
         inscricoes: {
@@ -222,14 +225,19 @@ export class ParticipantsService {
         if (updated.count === 0) throw this.versionConflict();
 
         // A chave de cadastro repetido da inscrição guarda o e-mail ou o CPF: acompanha a correção.
+        // A chave guardada diz qual dado ela copiou, mesmo que a configuração tenha mudado depois.
+        // Dado apagado a pedido do titular não fica na chave: ela passa a ser um marcador da inscrição.
         for (const inscricao of current.inscricoes) {
-          const key = inscricao.atividade.inscricao?.campoDuplicidade;
           const field =
-            key === CampoDuplicidade.EMAIL ? 'email' : key === CampoDuplicidade.CPF ? 'cpf' : null;
+            inscricao.chaveDuplicidade === before.email
+              ? 'email'
+              : inscricao.chaveDuplicidade === before.cpf
+                ? 'cpf'
+                : null;
           if (field && changed.includes(field)) {
             await tx.inscricao.update({
               where: { id: inscricao.id },
-              data: { chaveDuplicidade: next[field]! },
+              data: { chaveDuplicidade: next[field] ?? `apagado:${inscricao.id}` },
             });
           }
         }

@@ -313,6 +313,52 @@ describe('Participantes: busca, ficha e correção a pedido do titular (e2e)', (
     expect(atual).toMatchObject({ versao: 1, cpf: CPF_BRUNO });
   });
 
+  it('chave guardada acompanha o dado copiado mesmo depois de a configuracao mudar', async () => {
+    // Dança usava o e-mail como chave; a configuração passa a pedir só o CPF.
+    const danca = await prisma.inscricao.findFirstOrThrow({
+      where: { participanteId: ana, chaveDuplicidade: 'ana@exemplo.test' },
+    });
+    await prisma.configuracaoInscricao.update({
+      where: { atividadeId: danca.atividadeId },
+      data: { campoDuplicidade: 'CPF', camposAdicionais: [CampoInscricao.CPF] },
+    });
+
+    await corrige(ana, { email: 'ana.souza@exemplo.test' }).expect(200);
+    expect(
+      (await prisma.inscricao.findUniqueOrThrow({ where: { id: danca.id } })).chaveDuplicidade,
+    ).toBe('ana.souza@exemplo.test');
+
+    await nucleo()
+      .patch(`/v1/participants/${ana}`, {
+        versao: 2,
+        justificativa: 'Titular pediu para apagar o e-mail.',
+        email: null,
+      })
+      .expect(200);
+    const chave = (await prisma.inscricao.findUniqueOrThrow({ where: { id: danca.id } }))
+      .chaveDuplicidade;
+    expect(chave).toBe(`apagado:${danca.id}`);
+  });
+
+  it('busca trata % e _ como texto e avisa quando a lista passa do limite', async () => {
+    const busca = (termo: string) =>
+      nucleo()
+        .get(`/v1/participants?busca=${encodeURIComponent(termo)}`)
+        .expect(200);
+    expect((await busca('%')).body).toEqual([]);
+    expect((await busca('_')).body).toEqual([]);
+
+    await prisma.participante.createMany({
+      data: Array.from({ length: 205 }, (_, i) => ({
+        nome: `Pessoa ${String(i).padStart(3, '0')}`,
+        telefone: '61900000000',
+        dataNascimento: new Date('1995-01-01'),
+      })),
+    });
+    const todos = (await nucleo().get('/v1/participants').expect(200)).body as Summary[];
+    expect(todos).toHaveLength(201);
+  });
+
   it('pode apagar um dado que nenhum formulario pede; sem mudanca, nada e gravado', async () => {
     const res = await corrige(bruno, { email: null, bairroRegiao: null }).expect(200);
     expect((res.body as Participant).versao).toBe(1);

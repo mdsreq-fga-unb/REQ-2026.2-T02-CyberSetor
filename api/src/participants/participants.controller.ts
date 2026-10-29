@@ -33,7 +33,11 @@ export class ParticipantsController {
   constructor(private readonly participants: ParticipantsService) {}
 
   @Get()
-  @ApiOkResponse({ type: [ParticipantSummaryResponse] })
+  @ApiOkResponse({
+    type: [ParticipantSummaryResponse],
+    description:
+      'Até 200, por nome; um 201º item avisa que a lista foi cortada e pede busca mais precisa',
+  })
   list(@Query() query: ListParticipantsQuery): Promise<ParticipantSummaryResponse[]> {
     return this.participants.list(query.busca);
   }

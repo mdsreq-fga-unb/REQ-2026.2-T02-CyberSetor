@@ -59,7 +59,8 @@ export class HttpExceptionFilter implements ExceptionFilter {
 
     if (ehErroDoServidor) {
       this.logger.error(
-        `${req.method} ${req.url} -> ${status} [${correlationId}]`,
+        // Sem a query: a busca pode trazer nome, e-mail ou telefone.
+        `${req.method} ${req.path} -> ${status} [${correlationId}]`,
         exception instanceof Error ? exception.stack : String(exception),
       );
     }
