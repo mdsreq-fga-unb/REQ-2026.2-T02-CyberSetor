@@ -55,7 +55,7 @@ describe('tela inicial', () => {
     expect(screen.getByText('Núcleo Pedagógico e Educadores · Pedagógico')).toBeInTheDocument();
     expect(
       screen.getByText(
-        'Há 1 meta vencida e 2 metas com prazo nos próximos 30 dias. Você responde por 3 metas.',
+        'Há 1 meta vencida, 2 metas com prazo nos próximos 30 dias e 1 meta sem responsável. Você responde por 3 metas.',
       ),
     ).toBeInTheDocument();
     expect(screen.queryByText(/API conectada/)).not.toBeInTheDocument();
@@ -70,6 +70,7 @@ describe('tela inicial', () => {
     expect(prazos.getByText('Vence hoje')).toBeInTheDocument();
     expect(prazos.getByText('Vence em 23 dias')).toBeInTheDocument();
     expect(prazos.getByText('Sem responsável')).toBeInTheDocument();
+    expect(prazos.getByText('Conta desativada')).toBeInTheDocument();
     expect(
       prazos.getByRole('link', { name: 'Meta 4 · Entregar o relatório parcial' }),
     ).toHaveAttribute(
@@ -82,7 +83,10 @@ describe('tela inicial', () => {
     await signedInWith('NUCLEO_PEDAGOGICO', () => ({ status: 200, body: NUCLEO }));
     renderView();
 
-    const destaque = within(await screen.findByRole('region', { name: 'Inscrições abertas' }));
+    const destaque = within(await screen.findByRole('region', { name: /Inscrições abertas/ }));
+    expect(
+      destaque.getByRole('heading', { name: 'Inscrições abertas · 1 de 2' }),
+    ).toBeInTheDocument();
     expect(destaque.getByText('Oficina de serigrafia')).toBeInTheDocument();
     expect(destaque.getByText('12 de 30 vagas preenchidas')).toBeInTheDocument();
     expect(destaque.getByRole('link', { name: /Abrir formulário/ })).toHaveAttribute(
@@ -91,8 +95,8 @@ describe('tela inicial', () => {
     );
 
     const atividades = within(screen.getByRole('region', { name: 'Próximas atividades' }));
-    expect(atividades.getByText('Inscrição aberta · 12 de 30')).toBeInTheDocument();
-    expect(atividades.getByText('Sem inscrição')).toBeInTheDocument();
+    expect(atividades.getAllByText('Inscrição aberta · 12 de 30').length).toBeGreaterThan(0);
+    expect(atividades.getAllByText('Inscrição não aberta').length).toBeGreaterThan(0);
 
     expect(
       screen.getByRole('progressbar', { name: 'Vigência decorrida do processo DEMO-0001/2026' }),
@@ -105,10 +109,17 @@ describe('tela inicial', () => {
       ...NUCLEO,
       painel: {
         ...PANEL,
-        resumo: { ...PANEL.resumo, metasVencendo: 0, metasVencidas: 0, inscricoesAbertas: 0 },
+        resumo: {
+          ...PANEL.resumo,
+          metasVencendo: 0,
+          metasVencidas: 0,
+          metasSemResponsavel: 0,
+          inscricoesAbertas: 0,
+        },
         prazos: [],
         semResponsavel: [],
         proximasAtividades: [],
+        inscricoesAbertas: [],
         vigencias: [],
       },
     };
@@ -122,12 +133,12 @@ describe('tela inicial', () => {
     ).toBeInTheDocument();
     expect(
       screen.getByText(
-        'Nenhuma inscrição aberta. Abra pelo menu da atividade, na página do projeto.',
+        'Nenhuma inscrição aberta. Abra pela lista de atividades, na página do projeto.',
       ),
     ).toBeInTheDocument();
     expect(
       screen.getByText(
-        'Nenhuma meta vencida ou com prazo nos próximos 30 dias. Os prazos estão em dia.',
+        'Nenhuma meta vencida, com prazo nos próximos 30 dias ou sem responsável. Os prazos estão em dia.',
       ),
     ).toBeInTheDocument();
   });
@@ -169,9 +180,72 @@ describe('tela inicial', () => {
     expect(await screen.findByRole('heading', { name: 'Olá, Maria' })).toBeInTheDocument();
   });
 
+  it('carrossel passa para a proxima inscricao e copia o link dela', async () => {
+    const writeText = vi.fn().mockResolvedValue(undefined);
+    Object.defineProperty(navigator, 'clipboard', { value: { writeText }, configurable: true });
+    await signedInWith('NUCLEO_PEDAGOGICO', () => ({ status: 200, body: NUCLEO }));
+    renderView();
+
+    const destaque = within(await screen.findByRole('region', { name: /Inscrições abertas/ }));
+    fireEvent.click(destaque.getByRole('button', { name: 'Próxima inscrição' }));
+    expect(destaque.getByText('Mostra de dança')).toBeInTheDocument();
+    expect(
+      destaque.getByRole('heading', { name: 'Inscrições abertas · 2 de 2' }),
+    ).toBeInTheDocument();
+
+    fireEvent.click(destaque.getByRole('button', { name: 'Copiar link' }));
+    expect(await screen.findByText('Link copiado')).toBeInTheDocument();
+    expect(writeText).toHaveBeenCalledWith(`${window.location.origin}/inscrever/QrStUvWxYzAbCdEf`);
+  });
+
+  it('lista de prazos avisa quantas aparecem quando ha mais', async () => {
+    const muitos: Dashboard = {
+      ...NUCLEO,
+      painel: { ...PANEL, resumo: { ...PANEL.resumo, metasVencidas: 7, metasVencendo: 4 } },
+    };
+    await signedInWith('NUCLEO_PEDAGOGICO', () => ({ status: 200, body: muitos }));
+    renderView();
+
+    expect(
+      await screen.findByText('Vencidas e com prazo nos próximos 30 dias · 3 de 11'),
+    ).toBeInTheDocument();
+  });
+
+  it('orgao concedente ve so as boas-vindas, e quem nao abre inscricao nao recebe a instrucao', async () => {
+    await signedInWith('CONCEDENTE_AUDITORIA', () => ({
+      status: 200,
+      body: {
+        usuario: { nome: 'Auditora Federal', perfil: 'CONCEDENTE_AUDITORIA', setor: null },
+        painel: null,
+        contas: null,
+      },
+    }));
+    renderView();
+
+    expect(await screen.findByRole('heading', { name: 'Olá, Auditora' })).toBeInTheDocument();
+    expect(screen.getByText(/consulta à prestação de contas/)).toBeInTheDocument();
+    expect(screen.queryByRole('region', { name: 'Prazos das metas' })).not.toBeInTheDocument();
+  });
+
+  it('financeiro sem inscricao aberta nao recebe a instrucao de abrir', async () => {
+    const financeiro: Dashboard = {
+      ...NUCLEO,
+      usuario: { ...NUCLEO.usuario, perfil: 'ADMINISTRATIVO_FINANCEIRO' },
+      painel: {
+        ...PANEL,
+        resumo: { ...PANEL.resumo, inscricoesAbertas: 0 },
+        inscricoesAbertas: [],
+      },
+    };
+    await signedInWith('ADMINISTRATIVO_FINANCEIRO', () => ({ status: 200, body: financeiro }));
+    renderView();
+
+    expect(await screen.findByText('Nenhuma inscrição aberta no momento.')).toBeInTheDocument();
+  });
+
   it('resumo do dia sem metas vencidas fala so do prazo proximo', () => {
     expect(
       panelSummary({ ...PANEL, resumo: { ...PANEL.resumo, metasVencidas: 0, minhasMetas: 0 } }),
-    ).toBe('Há 2 metas com prazo nos próximos 30 dias.');
+    ).toBe('Há 2 metas com prazo nos próximos 30 dias e 1 meta sem responsável.');
   });
 });

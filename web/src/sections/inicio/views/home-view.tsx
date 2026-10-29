@@ -35,16 +35,19 @@ function count(value: number, one: string, many: string): string {
 
 /** O resumo do dia em uma frase, pelo que pede atenção primeiro. */
 export function panelSummary(panel: Panel): string {
-  const { metasVencidas, metasVencendo, minhasMetas } = panel.resumo;
-  if (metasVencidas === 0 && metasVencendo === 0) {
-    return 'Nenhuma meta vencida ou com prazo nos próximos 30 dias. Os prazos estão em dia.';
+  const { metasVencidas, metasVencendo, metasSemResponsavel, minhasMetas } = panel.resumo;
+  if (metasVencidas === 0 && metasVencendo === 0 && metasSemResponsavel === 0) {
+    return 'Nenhuma meta vencida, com prazo nos próximos 30 dias ou sem responsável. Os prazos estão em dia.';
   }
   const parts = [
     metasVencidas > 0 && count(metasVencidas, 'meta vencida', 'metas vencidas'),
     metasVencendo > 0 && `${count(metasVencendo, 'meta', 'metas')} com prazo nos próximos 30 dias`,
+    metasSemResponsavel > 0 && `${count(metasSemResponsavel, 'meta', 'metas')} sem responsável`,
   ].filter(Boolean);
+  const list =
+    parts.length > 1 ? `${parts.slice(0, -1).join(', ')} e ${parts[parts.length - 1]}` : parts[0];
   const mine = minhasMetas > 0 ? ` Você responde por ${count(minhasMetas, 'meta', 'metas')}.` : '';
-  return `Há ${parts.join(' e ')}.${mine}`;
+  return `Há ${list}.${mine}`;
 }
 
 function firstName(nome: string): string {
@@ -58,7 +61,8 @@ function subtitleOf(dashboard: Dashboard): string {
 
 function PanelHome({ dashboard, panel }: { dashboard: Dashboard; panel: Panel }) {
   const { resumo } = panel;
-  const open = panel.proximasAtividades.filter((activity) => activity.inscricao?.aberta);
+  const canOpen = ['PRESIDENCIA_GESTAO', 'NUCLEO_PEDAGOGICO'].includes(dashboard.usuario.perfil);
+  const deadlines = resumo.metasVencidas + resumo.metasVencendo;
   return (
     <div className="grid gap-4 lg:grid-cols-12 lg:gap-6">
       <div className="lg:col-span-8">
@@ -77,7 +81,11 @@ function PanelHome({ dashboard, panel }: { dashboard: Dashboard; panel: Panel })
         />
       </div>
       <div className="lg:col-span-4">
-        <OpenRegistrations activities={open} total={resumo.inscricoesAbertas} />
+        <OpenRegistrations
+          registrations={panel.inscricoesAbertas}
+          total={resumo.inscricoesAbertas}
+          canOpen={canOpen}
+        />
       </div>
 
       <div className="grid grid-cols-2 gap-4 lg:col-span-12 lg:grid-cols-4 lg:gap-6">
@@ -105,7 +113,7 @@ function PanelHome({ dashboard, panel }: { dashboard: Dashboard; panel: Panel })
         <SummaryWidget
           title="Atividades em 30 dias"
           value={resumo.atividadesProximas}
-          caption={count(resumo.inscricoesAbertas, 'inscrição aberta', 'inscrições abertas')}
+          caption="De hoje aos próximos 30 dias"
           icon={CalendarDaysIcon}
           tone="success"
         />
@@ -114,7 +122,11 @@ function PanelHome({ dashboard, panel }: { dashboard: Dashboard; panel: Panel })
       <PanelCard
         id="prazos"
         title="Prazos das metas"
-        description="Vencidas e com prazo nos próximos 30 dias"
+        description={
+          deadlines > panel.prazos.length
+            ? `Vencidas e com prazo nos próximos 30 dias · ${panel.prazos.length} de ${deadlines}`
+            : 'Vencidas e com prazo nos próximos 30 dias'
+        }
         empty={panel.prazos.length === 0 ? 'Nenhuma pendência de prazo.' : null}
         className="lg:col-span-8"
       >
@@ -216,6 +228,7 @@ function HomeSkeleton() {
       aria-label="Carregando o painel"
       className="grid gap-4 lg:grid-cols-12 lg:gap-6"
     >
+      <h1 className="sr-only">Início</h1>
       <Skeleton className="h-48 lg:col-span-8" />
       <Skeleton className="h-48 lg:col-span-4" />
       {[0, 1, 2, 3].map((item) => (
@@ -234,6 +247,7 @@ export function HomeView() {
   if (dashboard.isError) {
     return (
       <div className="flex flex-col items-start gap-3">
+        <h1 className="sr-only">Início</h1>
         <ListError message="Não foi possível carregar o painel." />
         <Button variant="outline" onClick={() => void dashboard.refetch()}>
           Tentar de novo

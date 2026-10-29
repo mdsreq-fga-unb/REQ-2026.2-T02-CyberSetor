@@ -9,5 +9,8 @@ export function useDashboard() {
   return useQuery({
     queryKey: dashboardKey,
     queryFn: () => authorizedRequest<Dashboard>('/dashboard'),
+    // Metas, atividades e inscrições mudam em outras telas: o painel recarrega a cada visita.
+    staleTime: 0,
+    refetchOnMount: 'always',
   });
 }

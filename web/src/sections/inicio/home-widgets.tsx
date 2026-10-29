@@ -16,7 +16,7 @@ import { Button, buttonVariants } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { toast } from '@/components/ui/toast';
 import { paths } from '@/routes/paths';
-import type { InstrumentTerm, PanelGoal, UpcomingActivity } from '@/types/painel';
+import type { InstrumentTerm, OpenRegistration, PanelGoal, UpcomingActivity } from '@/types/painel';
 import { formatDate } from '../instrumentos/format';
 
 const DAY = 24 * 60 * 60 * 1000;
@@ -106,7 +106,7 @@ export function SummaryWidget({
       <span
         aria-hidden
         className={cn(
-          'flex size-12 shrink-0 items-center justify-center rounded-full',
+          'hidden size-12 shrink-0 items-center justify-center rounded-full sm:flex',
           TONES[tone],
         )}
       >
@@ -176,7 +176,14 @@ export function DeadlineList({ goals, hoje }: { goals: PanelGoal[]; hoje: string
             </p>
             <p className="text-sm">
               {goal.responsavel ? (
-                <>Responsável: {goal.responsavel.nome}</>
+                <>
+                  Responsável: {goal.responsavel.nome}
+                  {!goal.responsavel.ativo && (
+                    <Badge variant="outline" className="ml-2">
+                      Conta desativada
+                    </Badge>
+                  )}
+                </>
               ) : (
                 <span className="font-medium text-destructive">Sem responsável</span>
               )}
@@ -271,7 +278,7 @@ export function TermList({ terms, hoje }: { terms: InstrumentTerm[]; hoje: strin
 const MONTHS = ['jan', 'fev', 'mar', 'abr', 'mai', 'jun', 'jul', 'ago', 'set', 'out', 'nov', 'dez'];
 
 function registrationText(activity: UpcomingActivity): string {
-  if (!activity.inscricao) return 'Sem inscrição';
+  if (!activity.inscricao) return 'Inscrição não aberta';
   const { aberta, inscritos, vagas } = activity.inscricao;
   return `${aberta ? 'Inscrição aberta' : 'Inscrição encerrada'} · ${inscritos} de ${vagas}`;
 }
@@ -301,6 +308,7 @@ export function UpcomingActivityList({ activities }: { activities: UpcomingActiv
               <p className="truncate text-sm text-muted-foreground">
                 {formatDate(activity.data)} · {activity.local} · {activity.projeto.codigo}
               </p>
+              <p className="text-sm sm:hidden">{registrationText(activity)}</p>
             </div>
             <Badge
               variant={activity.inscricao?.aberta ? 'default' : 'outline'}
@@ -317,16 +325,19 @@ export function UpcomingActivityList({ activities }: { activities: UpcomingActiv
 
 /** Inscrições abertas em destaque, uma de cada vez, com o link para divulgar. */
 export function OpenRegistrations({
-  activities,
+  registrations,
   total,
+  canOpen,
 }: {
-  activities: UpcomingActivity[];
+  registrations: OpenRegistration[];
   total: number;
+  canOpen: boolean;
 }) {
   const [index, setIndex] = useState(0);
-  const current = activities[Math.min(index, activities.length - 1)];
+  const position = Math.min(index, registrations.length - 1);
+  const current = registrations[position];
 
-  if (!current?.inscricao) {
+  if (!current) {
     return (
       <section
         aria-labelledby="inscricoes-abertas"
@@ -336,16 +347,15 @@ export function OpenRegistrations({
           Inscrições abertas
         </h2>
         <p className="text-sm text-muted-foreground">
-          {total > 0
-            ? `${plural(total, 'inscrição aberta', 'inscrições abertas')}, nenhuma com atividade nos próximos 30 dias.`
-            : 'Nenhuma inscrição aberta. Abra pelo menu da atividade, na página do projeto.'}
+          {canOpen
+            ? 'Nenhuma inscrição aberta. Abra pela lista de atividades, na página do projeto.'
+            : 'Nenhuma inscrição aberta no momento.'}
         </p>
       </section>
     );
   }
 
-  const { inscricao } = current;
-  const link = `${typeof window === 'undefined' ? '' : window.location.origin}${inscricao.linkPublico}`;
+  const link = `${typeof window === 'undefined' ? '' : window.location.origin}${current.linkPublico}`;
 
   async function copy() {
     try {
@@ -368,15 +378,16 @@ export function OpenRegistrations({
           className="text-xs font-semibold tracking-wide text-white/80 uppercase"
         >
           Inscrições abertas
+          {total > 1 && ` · ${position + 1} de ${total}`}
         </h2>
-        {activities.length > 1 && (
+        {registrations.length > 1 && (
           <div className="flex items-center gap-1">
             <Button
               size="icon"
               variant="ghost"
               className="text-white hover:bg-white/10 hover:text-white"
               aria-label="Inscrição anterior"
-              onClick={() => setIndex((index - 1 + activities.length) % activities.length)}
+              onClick={() => setIndex((position - 1 + registrations.length) % registrations.length)}
             >
               <ChevronLeftIcon />
             </Button>
@@ -385,28 +396,31 @@ export function OpenRegistrations({
               variant="ghost"
               className="text-white hover:bg-white/10 hover:text-white"
               aria-label="Próxima inscrição"
-              onClick={() => setIndex((index + 1) % activities.length)}
+              onClick={() => setIndex((position + 1) % registrations.length)}
             >
               <ChevronRightIcon />
             </Button>
           </div>
         )}
       </div>
-      <div aria-live="polite" className="flex flex-1 flex-col gap-1">
-        <p className="sr-only">
-          {Math.min(index, activities.length - 1) + 1} de {activities.length}
-        </p>
+      <div
+        role="group"
+        aria-roledescription="slide"
+        aria-label={`${position + 1} de ${registrations.length}`}
+        aria-live="polite"
+        className="flex flex-1 flex-col gap-1"
+      >
         <p className="text-xl font-semibold">{current.titulo}</p>
         <p className="text-sm text-white/80">
           {formatDate(current.data)} · {current.local}
         </p>
         <p className="mt-3 text-sm">
-          {inscricao.inscritos} de {inscricao.vagas} vagas preenchidas
+          {current.inscritos} de {current.vagas} vagas preenchidas
         </p>
         <div className="h-2 overflow-hidden rounded-full bg-white/20" aria-hidden>
           <div
             className="h-full rounded-full bg-white"
-            style={{ width: `${Math.min(100, (inscricao.inscritos / inscricao.vagas) * 100)}%` }}
+            style={{ width: `${Math.min(100, (current.inscritos / current.vagas) * 100)}%` }}
           />
         </div>
       </div>

@@ -14,7 +14,7 @@ export interface PanelGoal {
   objetivo: string;
   periodoFim: string | null;
   alerta: DeadlineAlert | null;
-  responsavel: { id: string; nome: string } | null;
+  responsavel: { id: string; nome: string; ativo: boolean } | null;
   projeto: ProjectRef;
 }
 
@@ -25,6 +25,17 @@ export interface UpcomingActivity {
   local: string;
   projeto: ProjectRef;
   inscricao: { aberta: boolean; vagas: number; inscritos: number; linkPublico: string } | null;
+}
+
+export interface OpenRegistration {
+  atividadeId: string;
+  titulo: string;
+  data: string;
+  local: string;
+  projeto: ProjectRef;
+  vagas: number;
+  inscritos: number;
+  linkPublico: string;
 }
 
 export interface InstrumentTerm {
@@ -48,6 +59,7 @@ export interface Panel {
   prazos: PanelGoal[];
   semResponsavel: PanelGoal[];
   proximasAtividades: UpcomingActivity[];
+  inscricoesAbertas: OpenRegistration[];
   vigencias: InstrumentTerm[];
 }
 
