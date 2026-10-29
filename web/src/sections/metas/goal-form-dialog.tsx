@@ -54,6 +54,8 @@ interface Execution {
 }
 
 const PLANNED = /^\d+([.,]\d{1,2})?$/;
+// Número em digitação, inclusive com o separador no fim ("12."), para o campo não trocar no meio.
+const TYPING_NUMBER = /^\d*([.,]\d*)?$/;
 
 const plannedParse = (payload: { value: unknown }) =>
   z
@@ -280,7 +282,7 @@ export function GoalFormDialog({
   }
 
   // Parâmetro antigo em texto continua em texto livre, para não ser reescrito sem querer.
-  const numericPlanned = mode === 'QUANTITATIVA' && (planned === '' || PLANNED.test(planned));
+  const numericPlanned = mode === 'QUANTITATIVA' && TYPING_NUMBER.test(planned);
 
   const input = (name: TextName, label: string, extra: object = {}) => (
     <FormField name={name} label={label} control={form.control}>

@@ -29,6 +29,7 @@ function Form({ initial, onSubmit }: { initial?: Partial<Input>; onSubmit: (v: O
       <DecimalField control={form.control} name="quantidade" label="Quantidade" />
       <DateField control={form.control} name="data" label="Data" notFuture />
       <button type="submit">Enviar</button>
+      <output aria-label="Alterado">{form.formState.isDirty ? 'sim' : 'não'}</output>
     </form>
   );
 }
@@ -74,6 +75,19 @@ describe('campos de formulario', () => {
     );
     expect(screen.getByLabelText('Telefone')).toHaveValue('(61) 3333-4444');
     expect(screen.getByLabelText('Valor')).toHaveValue('R$ 300.000,00');
+    expect(screen.getByLabelText('Alterado')).toHaveTextContent('não');
+  });
+
+  it('valor colado com ponto decimal fica com centavos, nao cem vezes maior', async () => {
+    const onSubmit = vi.fn();
+    render(<Form onSubmit={onSubmit} />);
+    const paste = (label: string, text: string) =>
+      fireEvent.paste(screen.getByLabelText(label), { clipboardData: { getData: () => text } });
+
+    paste('Valor', 'R$ 10.50');
+    paste('Quantidade', '10.5');
+    expect(await screen.findByDisplayValue('R$ 10,50')).toBeInTheDocument();
+    expect(screen.getByLabelText('Quantidade')).toHaveValue('10,5');
   });
 
   it('telefone colado com +55 fica sem o codigo do pais', () => {

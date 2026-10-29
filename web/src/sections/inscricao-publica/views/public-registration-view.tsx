@@ -287,6 +287,7 @@ function RegistrationForm({
                   name="responsavelTelefone"
                   label="Telefone do responsável com DDD"
                   control={control}
+                  autoComplete="off"
                 />
               </div>
             )}

@@ -12,7 +12,10 @@ export function onlyDigits(value: string): string {
 /** Telefone só com DDD e número; tira o +55 que o preenchimento automático do celular traz. */
 export function phoneDigits(value: string): string {
   const digits = onlyDigits(value);
-  return /^55\d{10,11}$/.test(digits) ? digits.slice(2) : digits;
+  // 55 + celular (13 dígitos) só pode ser +55; com 12 dígitos, só quando veio com "+".
+  const withCountry =
+    /^55\d{11}$/.test(digits) || (value.trim().startsWith('+') && /^55\d{10}$/.test(digits));
+  return withCountry ? digits.slice(2) : digits;
 }
 
 export function isValidPhone(digits: string): boolean {

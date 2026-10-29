@@ -119,6 +119,9 @@ export function CpfField<T extends FieldValues, N extends Path<T>, O extends Fie
   );
 }
 
+/** "10.50" ou "R$ 10.50": um ponto só, com até duas casas depois dele. */
+const PASTED_DECIMAL = /^\s*(?:R\$\s*)?(\d+\.\d{1,2})\s*$/;
+
 type NumberFieldProps<T extends FieldValues, N extends Path<T>, O extends FieldValues> = FieldProps<
   T,
   N,
@@ -153,6 +156,14 @@ function NumberField<T extends FieldValues, N extends Path<T>, O extends FieldVa
           fixedDecimalScale={fixedDecimals}
           allowNegative={false}
           isAllowed={({ floatValue }) => floatValue === undefined || floatValue < 1e12}
+          onPaste={(event) => {
+            // Valor copiado em formato inglês ("10.50"): o ponto é decimal, não milhar.
+            const text = event.clipboardData.getData('text');
+            const match = PASTED_DECIMAL.exec(text);
+            if (!match) return;
+            event.preventDefault();
+            onChange(match[1]);
+          }}
           onValueChange={(values, { source }) => {
             if (source === 'event') onChange(values.value);
           }}

@@ -19,6 +19,10 @@ describe('formatos brasileiros', () => {
   it('telefone sem pontuacao e sem o +55', () => {
     expect(phoneDigits('+55 (61) 99999-8888')).toBe('61999998888');
     expect(phoneDigits('(55) 99999-8888')).toBe('55999998888');
+    // DDD 55 com um dígito a mais não vira +55; com o "+" escrito, sim.
+    expect(phoneDigits('(55) 99999-88887')).toBe('559999988887');
+    expect(phoneDigits('+55 61 3333-4444')).toBe('6133334444');
+    expect(phoneDigits('5561999998888')).toBe('61999998888');
   });
 
   it('CPF formatado e conferido', () => {
