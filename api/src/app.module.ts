@@ -16,6 +16,7 @@ import { RegistrationsModule } from './registrations/registrations.module.js';
 import { RequirementsModule } from './requirements/requirements.module.js';
 import { SectorsModule } from './sectors/sectors.module.js';
 import { StorageModule } from './storage/storage.module.js';
+import { ParticipantsModule } from './participants/participants.module.js';
 
 @Module({
   imports: [
@@ -39,6 +40,7 @@ import { StorageModule } from './storage/storage.module.js';
     SectorsModule,
     RegistrationsModule,
     PublicRegistrationsModule,
+    ParticipantsModule,
   ],
 })
 export class AppModule {}
