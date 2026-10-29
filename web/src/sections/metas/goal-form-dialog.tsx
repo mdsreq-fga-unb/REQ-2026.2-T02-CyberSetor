@@ -4,6 +4,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useEffect, useMemo, useState, type FormEvent, type ReactNode } from 'react';
 import { Controller, useForm, useWatch } from 'react-hook-form';
 import { z } from 'zod';
+import { DateField, DecimalField, TextField } from '@/components/form/fields';
 import { FormField } from '@/components/form-field';
 import { Button } from '@/components/ui/button';
 import {
@@ -29,7 +30,7 @@ import { useEligibleOwners, useFreshGoal, useSaveGoal } from '@/queries/metas';
 import { useSectors } from '@/queries/setores';
 import type { Goal, GoalInput } from '@/types/metas';
 import type { Requirement } from '@/types/requisitos';
-import { formatDate } from '../instrumentos/format';
+import { formatDate } from '@/lib/br';
 import { GOAL_ORIGINS, MEASUREMENT_MODES } from './format';
 
 const DATE = /^\d{4}-\d{2}-\d{2}$/;
@@ -53,6 +54,8 @@ interface Execution {
 }
 
 const PLANNED = /^\d+([.,]\d{1,2})?$/;
+// Número em digitação, inclusive com o separador no fim ("12."), para o campo não trocar no meio.
+const TYPING_NUMBER = /^\d*([.,]\d*)?$/;
 
 const plannedParse = (payload: { value: unknown }) =>
   z
@@ -123,7 +126,7 @@ const schemaFor = (execution: Execution) => {
 type GoalSchema = ReturnType<typeof schemaFor>;
 type FormValues = z.input<GoalSchema>;
 type FieldName = keyof FormValues;
-type TextField = Exclude<
+type TextName = Exclude<
   FieldName,
   'origem' | 'requisitoIds' | 'modalidadeAfericao' | 'responsavelId' | 'setorId'
 >;
@@ -278,15 +281,16 @@ export function GoalFormDialog({
     return form.handleSubmit(onValid)(event);
   }
 
-  const dateLimits = { type: 'date', min: execution.inicio, max: execution.fim };
+  // Parâmetro antigo em texto continua em texto livre, para não ser reescrito sem querer.
+  const numericPlanned = mode === 'QUANTITATIVA' && TYPING_NUMBER.test(planned);
 
-  const input = (name: TextField, label: string, extra: object = {}) => (
+  const input = (name: TextName, label: string, extra: object = {}) => (
     <FormField name={name} label={label} control={form.control}>
       {(props) => <Input {...props} autoComplete="off" {...extra} />}
     </FormField>
   );
 
-  const area = (name: TextField, label: string) => (
+  const area = (name: TextName, label: string) => (
     <FormField name={name} label={label} control={form.control}>
       {(props) => <Textarea {...props} />}
     </FormField>
@@ -376,14 +380,22 @@ export function GoalFormDialog({
                 )}
               </FormField>
               <div className="grid gap-4 sm:grid-cols-2">
-                <FormField
-                  name="parametroPlanejado"
-                  label="Parâmetro planejado"
-                  description="Na meta quantitativa, um número: por exemplo, 120 ou 12,5."
-                  control={form.control}
-                >
-                  {(props) => <Input {...props} autoComplete="off" inputMode="decimal" />}
-                </FormField>
+                {numericPlanned ? (
+                  <DecimalField
+                    control={form.control}
+                    name="parametroPlanejado"
+                    label="Parâmetro planejado"
+                    description="Na meta quantitativa, um número: por exemplo, 120 ou 12,5."
+                  />
+                ) : (
+                  <TextField
+                    control={form.control}
+                    name="parametroPlanejado"
+                    label="Parâmetro planejado"
+                    description="Na meta quantitativa, um número: por exemplo, 120 ou 12,5."
+                    autoComplete="off"
+                  />
+                )}
                 {input('unidade', 'Unidade')}
               </div>
               {input('frequenciaApuracao', 'Frequência de apuração')}
@@ -455,8 +467,20 @@ export function GoalFormDialog({
                 {formatDate(execution.fim)}.
               </FieldDescription>
               <div className="grid gap-4 sm:grid-cols-2">
-                {input('periodoInicio', 'Início', dateLimits)}
-                {input('periodoFim', 'Fim (prazo)', dateLimits)}
+                <DateField
+                  control={form.control}
+                  name="periodoInicio"
+                  label="Início"
+                  min={execution.inicio}
+                  max={execution.fim}
+                />
+                <DateField
+                  control={form.control}
+                  name="periodoFim"
+                  label="Fim (prazo)"
+                  min={execution.inicio}
+                  max={execution.fim}
+                />
               </div>
             </Section>
             {area('resultadoEsperado', 'Resultado esperado')}

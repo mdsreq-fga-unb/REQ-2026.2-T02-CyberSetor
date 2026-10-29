@@ -15,24 +15,24 @@ import {
   DialogTitle,
 } from '@/components/ui/dialog';
 import { FieldGroup } from '@/components/ui/field';
-import { Input } from '@/components/ui/input';
 import { NativeSelect, NativeSelectOption } from '@/components/ui/native-select';
 import { Textarea } from '@/components/ui/textarea';
 import { ApiError } from '@/lib/api';
 import { useRecordResult } from '@/queries/metas';
 import type { Goal, GoalReach, GoalResult } from '@/types/metas';
-import { REACHES, formatNumber, plannedNumber, reachOf, todayInBrasilia } from './format';
+import { DateField, DecimalField } from '@/components/form/fields';
+import { formatNumber, todayInBrasilia } from '@/lib/br';
+import { dateSchema } from '@/lib/schemas';
+import { REACHES, plannedNumber, reachOf } from './format';
 
-const DATE = /^\d{4}-\d{2}-\d{2}$/;
-const DECIMAL = /^\d+([.,]\d{1,2})?$/;
+const DECIMAL = /^\d+(\.\d{1,2})?$/;
 
 function schemaFor(quantitative: boolean) {
   return z
     .object({
-      dataReferencia: z
-        .string()
-        .regex(DATE, 'Informe a data de referência.')
-        .refine((value) => value <= todayInBrasilia(), 'A data de referência não pode ser futura.'),
+      dataReferencia: dateSchema('Informe a data de referência.', {
+        notFuture: 'A data de referência não pode ser futura.',
+      }),
       descricao: z
         .string()
         .trim()
@@ -89,7 +89,7 @@ export function GoalResultDialog({
     defaultValues: { dataReferencia: '', descricao: '', valorAlcancado: '', alcance: '' },
   });
   const typed = useWatch({ control: form.control, name: 'valorAlcancado' });
-  const reached = DECIMAL.test(typed.trim()) ? Number(typed.trim().replace(',', '.')) : null;
+  const reached = DECIMAL.test(typed) ? Number(typed) : null;
   const percent =
     planned !== null && reached !== null ? Math.round((reached / planned) * 10000) / 100 : null;
 
@@ -118,7 +118,7 @@ export function GoalResultDialog({
           dataReferencia: values.dataReferencia,
           descricao: values.descricao.trim(),
           ...(quantitative
-            ? { valorAlcancado: Number(values.valorAlcancado.trim().replace(',', '.')) }
+            ? { valorAlcancado: Number(values.valorAlcancado) }
             : { alcance: values.alcance as GoalReach }),
         },
       });
@@ -148,23 +148,20 @@ export function GoalResultDialog({
         </DialogHeader>
         <form noValidate onSubmit={onSubmit}>
           <FieldGroup>
-            <FormField
+            <DateField
+              control={form.control}
               name="dataReferencia"
               label="Data de referência"
               description="Até quando o resultado vale."
-              control={form.control}
-            >
-              {(props) => <Input {...props} type="date" max={todayInBrasilia()} />}
-            </FormField>
+              notFuture
+            />
             {quantitative ? (
-              <FormField
+              <DecimalField
+                control={form.control}
                 name="valorAlcancado"
                 label={`Valor alcançado${goal?.unidade ? ` (${goal.unidade})` : ''}`}
                 description={`Planejado: ${formatNumber(planned)}${goal?.unidade ? ` ${goal.unidade}` : ''}. O percentual e a classificação são calculados.`}
-                control={form.control}
-              >
-                {(props) => <Input {...props} inputMode="decimal" autoComplete="off" />}
-              </FormField>
+              />
             ) : (
               <FormField name="alcance" label="Alcance" control={form.control}>
                 {(props) => (

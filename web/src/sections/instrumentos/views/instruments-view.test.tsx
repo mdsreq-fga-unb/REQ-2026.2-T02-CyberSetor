@@ -136,7 +136,7 @@ describe('instrumentos', () => {
     fill('Tipo', 'EMENDA');
     fill('Órgão concedente', 'Secretaria de Cultura');
     fill('Número do processo', '00150-1/2026');
-    fill('Valor global (R$)', '150.000,50');
+    fill('Valor global', '150.000,50');
     fill('Data de celebração', '2026-03-10');
     fill('Início da vigência', '2026-04-01');
     fill('Fim da vigência', '2027-03-31');
@@ -177,7 +177,7 @@ describe('instrumentos', () => {
 
     await screen.findByText('Nenhum instrumento cadastrado');
     fireEvent.click(screen.getAllByRole('button', { name: 'Novo instrumento' })[0]);
-    fill('Valor global (R$)', '0');
+    fill('Valor global', '0');
     fill('Início da vigência', '2027-01-01');
     fill('Fim da vigência', '2026-01-01');
     fireEvent.click(screen.getByRole('button', { name: 'Salvar instrumento' }));
@@ -204,23 +204,16 @@ describe('instrumentos', () => {
     expect(calls.filter((call) => call.key === 'GET /instruments')).toHaveLength(1);
   });
 
-  it('valor com ponto decimal e recusado no campo, sem chamar a API', async () => {
-    const calls = await signedInAs('PRESIDENCIA_GESTAO', {
+  it('valor global aparece em reais enquanto se digita', async () => {
+    await signedInAs('PRESIDENCIA_GESTAO', {
       'GET /instruments': () => ({ status: 200, body: [] }),
     });
     renderView();
 
     await screen.findByText('Nenhum instrumento cadastrado');
     fireEvent.click(screen.getAllByRole('button', { name: 'Novo instrumento' })[0]);
-    fill('Valor global (R$)', '10.50');
-    fireEvent.click(screen.getByRole('button', { name: 'Salvar instrumento' }));
-
-    expect(
-      await screen.findByText(
-        'Use o formato 150.000,00: ponto para milhar e vírgula para centavos.',
-      ),
-    ).toBeInTheDocument();
-    expect(calls.some((call) => call.key === 'POST /instruments')).toBe(false);
+    fill('Valor global', '150000,5');
+    expect(screen.getByLabelText('Valor global')).toHaveValue('R$ 150.000,50');
   });
 
   it('depois de um conflito, mostra a versao atual e salva com ela', async () => {
@@ -252,7 +245,7 @@ describe('instrumentos', () => {
       }),
     );
     fireEvent.click(await screen.findByRole('menuitem', { name: 'Editar instrumento' }));
-    expect(await screen.findByLabelText('Valor global (R$)')).toHaveValue('150000,50');
+    expect(await screen.findByLabelText('Valor global')).toHaveValue('R$ 150.000,50');
     fill('Fim da vigência', '2027-06-30');
     fireEvent.click(screen.getByRole('button', { name: 'Salvar instrumento' }));
 
