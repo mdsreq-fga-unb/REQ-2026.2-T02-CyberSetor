@@ -102,6 +102,7 @@ const ACTIVITY: Activity = {
   responsavel: { id: RESPONSIBLE_1.id, nome: RESPONSIBLE_1.nome, ativo: true },
   data: '2026-05-10',
   local: 'Galpão SCS',
+  inscricao: null,
   metas: [{ id: GOAL_1.id, ordem: GOAL_1.ordem, objetivo: GOAL_1.objetivo }],
 };
 

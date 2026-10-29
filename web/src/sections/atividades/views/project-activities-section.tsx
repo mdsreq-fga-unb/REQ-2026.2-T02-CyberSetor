@@ -50,6 +50,50 @@ function Responsible({ activity }: { activity: Activity }) {
   );
 }
 
+function registrationText(activity: Activity): string {
+  const { inscricao } = activity;
+  if (!inscricao) return 'Inscrição não aberta';
+  const situacao = inscricao.aberta ? 'Inscrição aberta' : 'Inscrição encerrada';
+  return `${situacao} · ${inscricao.inscritos} de ${inscricao.vagas}`;
+}
+
+function RegistrationStatus({
+  activity,
+  onOpen,
+  onShare,
+}: {
+  activity: Activity;
+  onOpen?: () => void;
+  onShare?: () => void;
+}) {
+  return (
+    <div className="flex flex-col items-start gap-2">
+      <Badge variant={activity.inscricao?.aberta ? 'default' : 'outline'}>
+        {registrationText(activity)}
+      </Badge>
+      {activity.inscricao
+        ? onShare && (
+            <Button
+              variant="outline"
+              onClick={onShare}
+              aria-label={`Divulgar a inscrição de ${activity.titulo}`}
+            >
+              Divulgar
+            </Button>
+          )
+        : onOpen && (
+            <Button
+              variant="outline"
+              onClick={onOpen}
+              aria-label={`Abrir inscrição de ${activity.titulo}`}
+            >
+              Abrir inscrição
+            </Button>
+          )}
+    </div>
+  );
+}
+
 function ActivitySummary({ activity }: { activity: Activity }) {
   return (
     <div className="flex flex-col gap-1">
@@ -71,6 +115,7 @@ function ActivitySummary({ activity }: { activity: Activity }) {
       <span className="text-muted-foreground md:hidden">
         <Responsible activity={activity} />
       </span>
+      <span className="text-sm md:hidden">{registrationText(activity)}</span>
     </div>
   );
 }
@@ -140,6 +185,9 @@ export function ProjectActivitiesSection({
                 <TableHead scope="col" className="hidden md:table-cell">
                   Responsável
                 </TableHead>
+                <TableHead scope="col" className="hidden md:table-cell">
+                  Inscrição
+                </TableHead>
                 {canEdit && (
                   <TableHead scope="col" className="w-16 px-4">
                     <span className="sr-only">Ações</span>
@@ -149,7 +197,7 @@ export function ProjectActivitiesSection({
             </TableHeader>
             <TableBody>
               {activities.isPending ? (
-                <TableSkeleton columns={canEdit ? 4 : 3} />
+                <TableSkeleton columns={canEdit ? 5 : 4} />
               ) : (
                 pagination.pageRows.map((activity) => (
                   <TableRow key={activity.id}>
@@ -165,6 +213,13 @@ export function ProjectActivitiesSection({
                     <TableCell className="hidden whitespace-normal md:table-cell">
                       <Responsible activity={activity} />
                     </TableCell>
+                    <TableCell className="hidden md:table-cell">
+                      <RegistrationStatus
+                        activity={activity}
+                        onOpen={canEdit ? () => registrationForm.show({ activity }) : undefined}
+                        onShare={canEdit ? () => registrationShare.show({ activity }) : undefined}
+                      />
+                    </TableCell>
                     {canEdit && (
                       <TableCell className="px-4 text-right">
                         <RowActionsMenu
@@ -175,7 +230,9 @@ export function ProjectActivitiesSection({
                               onSelect: () => form.show({ activity }),
                             },
                             {
-                              label: 'Configurar inscrição',
+                              label: activity.inscricao
+                                ? 'Configurar inscrição'
+                                : 'Abrir inscrição',
                               onSelect: () => registrationForm.show({ activity }),
                             },
                             {

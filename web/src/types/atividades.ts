@@ -26,6 +26,14 @@ export interface Activity {
   data: string;
   local: string;
   metas: ActivityMeta[];
+  /** Nulo enquanto a inscrição não foi aberta. */
+  inscricao: ActivityRegistrationStatus | null;
+}
+
+export interface ActivityRegistrationStatus {
+  aberta: boolean;
+  vagas: number;
+  inscritos: number;
 }
 
 export interface ActivityInput {

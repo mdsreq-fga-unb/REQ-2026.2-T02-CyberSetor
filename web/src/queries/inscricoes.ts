@@ -53,7 +53,15 @@ export function useOpenRegistration(activityId: string) {
           body: data,
         },
       ),
-    onSuccess: () => queryClient.invalidateQueries({ queryKey: registrationKey(activityId) }),
+    onSuccess: () =>
+      Promise.all([
+        queryClient.invalidateQueries({ queryKey: registrationKey(activityId) }),
+        // A lista de atividades mostra a situação da inscrição e os inscritos.
+        queryClient.invalidateQueries({
+          queryKey: ['projetos'],
+          predicate: (query) => query.queryKey[2] === 'atividades',
+        }),
+      ]),
   });
 }
 
@@ -68,6 +76,14 @@ export function useUpdateRegistration(activityId: string) {
           body: data,
         },
       ),
-    onSuccess: () => queryClient.invalidateQueries({ queryKey: registrationKey(activityId) }),
+    onSuccess: () =>
+      Promise.all([
+        queryClient.invalidateQueries({ queryKey: registrationKey(activityId) }),
+        // A lista de atividades mostra a situação da inscrição e os inscritos.
+        queryClient.invalidateQueries({
+          queryKey: ['projetos'],
+          predicate: (query) => query.queryKey[2] === 'atividades',
+        }),
+      ]),
   });
 }
