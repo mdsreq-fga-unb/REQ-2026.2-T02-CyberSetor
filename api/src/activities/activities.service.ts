@@ -26,6 +26,8 @@ const WITH_DETAILS = {
     select: { meta: { select: { id: true, ordem: true, objetivo: true } } },
     orderBy: { meta: { ordem: 'asc' } },
   },
+  inscricao: { select: { aberta: true, vagas: true } },
+  _count: { select: { inscricoes: true } },
 } satisfies Prisma.AtividadeInclude;
 
 type ActivityRow = Prisma.AtividadeGetPayload<{ include: typeof WITH_DETAILS }>;
@@ -73,6 +75,13 @@ function toResponse(row: ActivityRow): ActivityResponse {
       ordem: meta.ordem,
       objetivo: meta.objetivo,
     })),
+    inscricao: row.inscricao
+      ? {
+          aberta: row.inscricao.aberta,
+          vagas: row.inscricao.vagas,
+          inscritos: row._count.inscricoes,
+        }
+      : null,
   };
 }
 
