@@ -75,7 +75,9 @@ function correctionOf(participant: Participant, values: FormValues): Participant
     if (value !== participant[field]) correction[field] = value;
   }
   for (const field of OPTIONAL) {
-    const value = values[field].trim() || null;
+    const typed = values[field].trim();
+    // O e-mail é guardado em minúsculas; só a caixa diferente não é correção.
+    const value = (field === 'email' ? typed.toLowerCase() : typed) || null;
     if (value !== participant[field]) correction[field] = value;
   }
   return Object.keys(correction).length > 2 ? correction : null;
@@ -112,8 +114,13 @@ export function CorrectParticipantDialog({
   const form = useForm<FormValues>({ resolver: zodResolver(schema) });
 
   useEffect(() => {
-    // Abre com os dados atuais; depois de um conflito, recarrega com a versão nova.
-    if (open && participant) form.reset(valuesOf(participant));
+    // Abre com os dados atuais; depois de um conflito, recarrega a versão nova sem perder a justificativa.
+    if (open && participant) {
+      form.reset({
+        ...valuesOf(participant),
+        justificativa: form.getValues('justificativa') ?? '',
+      });
+    }
   }, [open, participant, form]);
 
   function close() {
@@ -206,7 +213,7 @@ export function CorrectParticipantDialog({
               control={control}
               name="justificativa"
               label="Justificativa"
-              description="Quem pediu, quando e por qual canal. Fica registrada com o seu nome, a data e a hora."
+              description="Quem pediu, quando e por qual canal, sem repetir os dados corrigidos. Fica registrada com o seu nome, a data e a hora."
             >
               {(props) => <Textarea {...props} rows={3} />}
             </FormField>

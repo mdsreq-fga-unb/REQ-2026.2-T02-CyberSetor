@@ -31,6 +31,8 @@ const TITLE = 'Participantes';
 const DESCRIPTION =
   'Pessoas inscritas nas atividades, com a ficha e a correção a pedido do titular.';
 const COLUMNS = 4;
+/** A API devolve até 200 por nome e um item a mais quando há outros. */
+const LIMIT = 200;
 
 function loadFailure(error: unknown): string {
   if (error instanceof ApiError && error.status === 403) {
@@ -52,11 +54,22 @@ export function ParticipantsView() {
   const [busca, setBusca] = useState('');
   const deferred = useDeferredValue(busca);
   const participants = useParticipants(deferred, isNucleo);
-  const pagination = usePagination(participants.data);
 
   const viewing = useDialogState<string>();
   const [correcting, setCorrecting] = useState(false);
   const participant = useParticipant(viewing.value);
+  const truncated = (participants.data?.length ?? 0) > LIMIT;
+  const pagination = usePagination(participants.data?.slice(0, LIMIT));
+
+  function show(id: string, correct: boolean) {
+    setCorrecting(correct);
+    viewing.show(id);
+  }
+
+  function closeAll() {
+    setCorrecting(false);
+    viewing.close();
+  }
 
   if (!isNucleo) {
     return (
@@ -87,6 +100,13 @@ export function ParticipantsView() {
           className="pl-9"
         />
       </div>
+
+      {truncated && (
+        <p role="status" className="text-sm text-muted-foreground">
+          Mostrando os {LIMIT} primeiros por nome. Busque pelo nome, pelo telefone ou pelo e-mail
+          para achar quem não aparece.
+        </p>
+      )}
 
       {participants.error && !participants.data ? (
         <ListError message={loadFailure(participants.error)} />
@@ -151,14 +171,8 @@ export function ParticipantsView() {
                       <RowActionsMenu
                         label={`Ações de ${row.nome}`}
                         actions={[
-                          { label: 'Ver ficha', onSelect: () => viewing.show(row.id) },
-                          {
-                            label: 'Corrigir dados',
-                            onSelect: () => {
-                              viewing.show(row.id);
-                              setCorrecting(true);
-                            },
-                          },
+                          { label: 'Ver ficha', onSelect: () => show(row.id, false) },
+                          { label: 'Corrigir dados', onSelect: () => show(row.id, true) },
                         ]}
                       />
                     </TableCell>
@@ -172,11 +186,12 @@ export function ParticipantsView() {
       )}
 
       <ParticipantDialog
-        open={viewing.open && !correcting}
+        // Enquanto a ficha carrega, ou se ela falhar, mostra a ficha mesmo vindo de "Corrigir dados".
+        open={viewing.open && (!correcting || !participant.data)}
         participant={participant.data}
         loading={participant.isPending}
         failed={participant.isError}
-        onClose={viewing.close}
+        onClose={closeAll}
         onCorrect={() => setCorrecting(true)}
       />
       <CorrectParticipantDialog

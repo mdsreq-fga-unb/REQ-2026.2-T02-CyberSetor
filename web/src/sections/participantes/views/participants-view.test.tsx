@@ -162,6 +162,8 @@ describe('participantes', () => {
       target: { value: '(61) 98888-7777' },
     });
     fireEvent.change(screen.getByLabelText('Escolaridade'), { target: { value: '  ' } });
+    fireEvent.change(screen.getByLabelText('Bairro ou região'), { target: { value: '' } });
+    fireEvent.change(screen.getByLabelText('E-mail'), { target: { value: 'Ana@Exemplo.test' } });
     fireEvent.change(screen.getByLabelText('Justificativa'), {
       target: { value: 'Pedido da titular por telefone em 28/10.' },
     });
@@ -172,7 +174,57 @@ describe('participantes', () => {
       versao: 1,
       justificativa: 'Pedido da titular por telefone em 28/10.',
       telefone: '61988887777',
+      bairroRegiao: null,
     });
+  });
+
+  it('erro da API aparece no campo correspondente', async () => {
+    await signedInAs('NUCLEO_PEDAGOGICO', {
+      [LIST]: () => ({ status: 200, body: [ANA_RESUMO] }),
+      [GET]: () => ({ status: 200, body: ANA }),
+      [PATCH]: () => ({
+        status: 400,
+        body: { code: 'GUARDIAN_REQUIRED', message: 'Menor de idade exige responsável.' },
+      }),
+    });
+    renderView();
+    await openCorrection();
+
+    fireEvent.change(screen.getByLabelText('Nome completo'), { target: { value: 'Ana Lima' } });
+    fireEvent.change(screen.getByLabelText('Justificativa'), {
+      target: { value: 'Pedido da titular por telefone.' },
+    });
+    fireEvent.click(screen.getByRole('button', { name: 'Salvar correção' }));
+
+    expect(await screen.findByText('Menor de idade exige responsável.')).toBeInTheDocument();
+    expect(screen.getByLabelText('Data de nascimento')).toHaveAttribute('aria-invalid', 'true');
+  });
+
+  it('se a ficha nao carrega, Corrigir dados mostra o erro em vez de nada', async () => {
+    await signedInAs('NUCLEO_PEDAGOGICO', {
+      [LIST]: () => ({ status: 200, body: [ANA_RESUMO] }),
+      [GET]: () => ({ status: 500, body: { code: 'INTERNAL', message: 'falha' } }),
+    });
+    renderView();
+
+    fireEvent.click(await screen.findByRole('button', { name: 'Ações de Ana Souza' }));
+    fireEvent.click(await screen.findByRole('menuitem', { name: 'Corrigir dados' }));
+
+    expect(
+      await screen.findByText('Não foi possível carregar a ficha. Feche e tente de novo.'),
+    ).toBeInTheDocument();
+  });
+
+  it('lista cortada em 200 avisa para refinar a busca', async () => {
+    const many = Array.from({ length: 201 }, (_, index) => ({
+      ...ANA_RESUMO,
+      id: `00000000-0000-4000-8000-${String(index).padStart(12, '0')}`,
+      nome: `Pessoa ${String(index).padStart(3, '0')}`,
+    }));
+    await signedInAs('NUCLEO_PEDAGOGICO', { [LIST]: () => ({ status: 200, body: many }) });
+    renderView();
+
+    expect(await screen.findByText(/Mostrando os 200 primeiros por nome/)).toBeInTheDocument();
   });
 
   it('sem justificativa ou sem mudanca, nao chama a API', async () => {
@@ -225,5 +277,6 @@ describe('participantes', () => {
 
     expect(await screen.findByRole('alert')).toHaveTextContent('Outra pessoa alterou estes dados.');
     expect(await screen.findByDisplayValue('Ana S. Lima')).toBeInTheDocument();
+    expect(screen.getByLabelText('Justificativa')).toHaveValue('Pedido da titular por telefone.');
   });
 });

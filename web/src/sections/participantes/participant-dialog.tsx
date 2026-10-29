@@ -20,7 +20,7 @@ function Item({ label, value }: { label: string; value: string | null }) {
   return (
     <div className="flex flex-col gap-0.5">
       <dt className="text-xs text-muted-foreground">{label}</dt>
-      <dd className="text-sm">{value || '—'}</dd>
+      <dd className="min-w-0 text-sm break-words">{value || '—'}</dd>
     </div>
   );
 }
