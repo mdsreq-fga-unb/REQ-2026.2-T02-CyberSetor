@@ -1,0 +1,229 @@
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { cleanup, fireEvent, render, screen, within } from '@testing-library/react';
+import { clearLocalSession, signIn } from '@/auth/session';
+import { Toaster } from '@/components/ui/toast';
+import type { Participant, ParticipantSummary } from '@/types/participantes';
+import { ParticipantsView } from './participants-view';
+
+const ANA_ID = '00000000-0000-4000-8000-000000000701';
+
+const ANA_RESUMO: ParticipantSummary = {
+  id: ANA_ID,
+  versao: 1,
+  nome: 'Ana Souza',
+  idade: 36,
+  telefone: '61999998888',
+  email: 'ana@exemplo.test',
+  inscricoes: 2,
+  ultimaAtividade: { id: 'a2', titulo: 'Oficina de dança', data: '2026-11-20' },
+};
+
+const ANA: Participant = {
+  id: ANA_ID,
+  versao: 1,
+  nome: 'Ana Souza',
+  telefone: '61999998888',
+  dataNascimento: '1990-05-20',
+  idade: 36,
+  email: 'ana@exemplo.test',
+  cpf: '52998224725',
+  bairroRegiao: 'Asa Sul',
+  escolaridade: null,
+  inscricoes: [
+    {
+      id: 'i1',
+      situacao: 'CONFIRMADA',
+      inscritoEm: '2026-10-28T13:00:00.000Z',
+      autorizaComunicados: true,
+      autorizaImagem: false,
+      responsavelNome: null,
+      responsavelTelefone: null,
+      atividade: { id: 'a2', titulo: 'Oficina de dança', data: '2026-11-20' },
+      projetoId: 'p1',
+      instrumentoId: 'i1',
+    },
+  ],
+};
+
+type Route = (body: unknown, url: string) => { status: number; body?: unknown };
+
+function json(status: number, body?: unknown): Response {
+  return new Response(body === undefined ? null : JSON.stringify(body), { status });
+}
+
+async function signedInAs(perfil: string, routes: Record<string, Route>) {
+  const calls: { key: string; url: string; body: unknown }[] = [];
+  vi.stubGlobal(
+    'fetch',
+    vi.fn(async (url: string, init: RequestInit = {}) => {
+      const key = `${init.method ?? 'GET'} ${new URL(url).pathname.replace(/^\/v1/, '')}`;
+      const body = typeof init.body === 'string' ? JSON.parse(init.body) : undefined;
+      calls.push({ key, url, body });
+      if (key === 'POST /auth/login') {
+        return json(200, { accessToken: 't', perfil, deveTrocarSenha: false });
+      }
+      const route = routes[key];
+      if (!route) return json(404, { code: 'NOT_FOUND', message: key });
+      const result = route(body, url);
+      return json(result.status, result.body);
+    }),
+  );
+  await signIn('nucleo@instituto.org.br', 'senha-de-teste-longa');
+  return calls;
+}
+
+function renderView() {
+  const client = new QueryClient({ defaultOptions: { queries: { retry: false } } });
+  render(
+    <QueryClientProvider client={client}>
+      <Toaster>
+        <ParticipantsView />
+      </Toaster>
+    </QueryClientProvider>,
+  );
+}
+
+const LIST = 'GET /participants';
+const GET = `GET /participants/${ANA_ID}`;
+const PATCH = `PATCH /participants/${ANA_ID}`;
+
+async function openCorrection() {
+  fireEvent.click(await screen.findByRole('button', { name: 'Ações de Ana Souza' }));
+  fireEvent.click(await screen.findByRole('menuitem', { name: 'Corrigir dados' }));
+  return screen.findByRole('heading', { name: 'Corrigir dados' });
+}
+
+describe('participantes', () => {
+  afterEach(() => {
+    cleanup();
+    clearLocalSession();
+    vi.unstubAllGlobals();
+  });
+
+  it('outro perfil ve o aviso e nao consulta as fichas', async () => {
+    const calls = await signedInAs('PRESIDENCIA_GESTAO', {});
+    renderView();
+
+    expect(
+      await screen.findByText('Só o Núcleo Pedagógico acessa as fichas de participantes.'),
+    ).toBeInTheDocument();
+    expect(calls.some((call) => call.key === LIST)).toBe(false);
+  });
+
+  it('lista com idade, inscricoes e ultima atividade, e busca pelo termo', async () => {
+    const calls = await signedInAs('NUCLEO_PEDAGOGICO', {
+      [LIST]: (_body, url) => ({
+        status: 200,
+        body: new URL(url).searchParams.get('busca') === 'ninguem' ? [] : [ANA_RESUMO],
+      }),
+    });
+    renderView();
+
+    expect(await screen.findByText('Ana Souza')).toBeInTheDocument();
+    expect(screen.getByText('36 anos · 2 inscrições')).toBeInTheDocument();
+    expect(screen.getAllByText('(61) 99999-8888').length).toBeGreaterThan(0);
+    expect(screen.getAllByText('Oficina de dança · 20/11/2026').length).toBeGreaterThan(0);
+
+    fireEvent.change(screen.getByLabelText('Buscar participante por nome, telefone ou e-mail'), {
+      target: { value: 'ninguem' },
+    });
+    expect(await screen.findByText('Ninguém encontrado')).toBeInTheDocument();
+    expect(calls.some((call) => call.url.endsWith('/participants?busca=ninguem'))).toBe(true);
+  });
+
+  it('ficha com as inscricoes e as autorizacoes', async () => {
+    await signedInAs('NUCLEO_PEDAGOGICO', {
+      [LIST]: () => ({ status: 200, body: [ANA_RESUMO] }),
+      [GET]: () => ({ status: 200, body: ANA }),
+    });
+    renderView();
+
+    fireEvent.click(await screen.findByRole('button', { name: 'Ações de Ana Souza' }));
+    fireEvent.click(await screen.findByRole('menuitem', { name: 'Ver ficha' }));
+
+    const ficha = within(await screen.findByRole('dialog'));
+    expect(await ficha.findByText('529.982.247-25')).toBeInTheDocument();
+    expect(ficha.getByText('20/05/1990 (36 anos)')).toBeInTheDocument();
+    expect(ficha.getByRole('link', { name: 'Oficina de dança' })).toBeInTheDocument();
+    expect(ficha.getByText('Comunicados: sim')).toBeInTheDocument();
+    expect(ficha.getByText('Uso de imagem: não')).toBeInTheDocument();
+  });
+
+  it('corrige so o que mudou, com a justificativa, e avisa', async () => {
+    const calls = await signedInAs('NUCLEO_PEDAGOGICO', {
+      [LIST]: () => ({ status: 200, body: [ANA_RESUMO] }),
+      [GET]: () => ({ status: 200, body: ANA }),
+      [PATCH]: () => ({ status: 200, body: { ...ANA, versao: 2, telefone: '61988887777' } }),
+    });
+    renderView();
+    await openCorrection();
+
+    fireEvent.change(screen.getByLabelText('Telefone com DDD'), {
+      target: { value: '(61) 98888-7777' },
+    });
+    fireEvent.change(screen.getByLabelText('Escolaridade'), { target: { value: '  ' } });
+    fireEvent.change(screen.getByLabelText('Justificativa'), {
+      target: { value: 'Pedido da titular por telefone em 28/10.' },
+    });
+    fireEvent.click(screen.getByRole('button', { name: 'Salvar correção' }));
+
+    expect(await screen.findByText('Dados de Ana Souza corrigidos')).toBeInTheDocument();
+    expect(calls.find((call) => call.key === PATCH)?.body).toEqual({
+      versao: 1,
+      justificativa: 'Pedido da titular por telefone em 28/10.',
+      telefone: '61988887777',
+    });
+  });
+
+  it('sem justificativa ou sem mudanca, nao chama a API', async () => {
+    const calls = await signedInAs('NUCLEO_PEDAGOGICO', {
+      [LIST]: () => ({ status: 200, body: [ANA_RESUMO] }),
+      [GET]: () => ({ status: 200, body: ANA }),
+    });
+    renderView();
+    await openCorrection();
+
+    fireEvent.change(screen.getByLabelText('Nome completo'), { target: { value: 'Ana Lima' } });
+    fireEvent.click(screen.getByRole('button', { name: 'Salvar correção' }));
+    expect(
+      await screen.findByText('Descreva o pedido do titular em pelo menos 10 caracteres.'),
+    ).toBeInTheDocument();
+
+    fireEvent.change(screen.getByLabelText('Nome completo'), { target: { value: 'Ana Souza' } });
+    fireEvent.change(screen.getByLabelText('Justificativa'), {
+      target: { value: 'Pedido da titular por telefone.' },
+    });
+    fireEvent.click(screen.getByRole('button', { name: 'Salvar correção' }));
+    expect(await screen.findByText('Nenhum dado foi alterado.')).toBeInTheDocument();
+    expect(calls.some((call) => call.key === PATCH)).toBe(false);
+  });
+
+  it('conflito de versao recarrega a ficha e pede para refazer', async () => {
+    let versao = 1;
+    await signedInAs('NUCLEO_PEDAGOGICO', {
+      [LIST]: () => ({ status: 200, body: [ANA_RESUMO] }),
+      [GET]: () => ({
+        status: 200,
+        body: { ...ANA, versao, nome: versao > 1 ? 'Ana S. Lima' : ANA.nome },
+      }),
+      [PATCH]: () => {
+        versao = 2;
+        return {
+          status: 409,
+          body: { code: 'VERSION_CONFLICT', message: 'Os dados foram alterados por outra pessoa.' },
+        };
+      },
+    });
+    renderView();
+    await openCorrection();
+
+    fireEvent.change(screen.getByLabelText('Nome completo'), { target: { value: 'Ana Lima' } });
+    fireEvent.change(screen.getByLabelText('Justificativa'), {
+      target: { value: 'Pedido da titular por telefone.' },
+    });
+    fireEvent.click(screen.getByRole('button', { name: 'Salvar correção' }));
+
+    expect(await screen.findByRole('alert')).toHaveTextContent('Outra pessoa alterou estes dados.');
+    expect(await screen.findByDisplayValue('Ana S. Lima')).toBeInTheDocument();
+  });
+});

@@ -3,6 +3,7 @@ import {
   FileTextIcon,
   HouseIcon,
   ShapesIcon,
+  UserRoundSearchIcon,
   UsersIcon,
   type LucideIcon,
 } from 'lucide-react';
@@ -41,6 +42,12 @@ export const NAVIGATION: NavItem[] = [
     label: 'Instrumentos',
     icon: FileTextIcon,
     profiles: ['PRESIDENCIA_GESTAO', 'NUCLEO_PEDAGOGICO', 'ADMINISTRATIVO_FINANCEIRO'],
+  },
+  {
+    href: paths.dashboard.participants,
+    label: 'Participantes',
+    icon: UserRoundSearchIcon,
+    profiles: ['NUCLEO_PEDAGOGICO'],
   },
   {
     href: paths.dashboard.modalities,
