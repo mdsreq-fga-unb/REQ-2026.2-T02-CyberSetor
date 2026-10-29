@@ -23,6 +23,7 @@ const ACTIVITY: Activity = {
   },
   data: '2026-05-10',
   local: 'Galpão SCS',
+  inscricao: null,
   metas: [{ id: '00000000-0000-4000-8000-000000000051', ordem: 1, objetivo: 'Atender 100 jovens' }],
 };
 

@@ -23,6 +23,7 @@ const ACTIVITY: Activity = {
   },
   data: '2026-05-10',
   local: 'Galpão SCS',
+  inscricao: null,
   metas: [{ id: '00000000-0000-4000-8000-000000000051', ordem: 1, objetivo: 'Atender 100 jovens' }],
 };
 
@@ -320,7 +321,7 @@ describe('RegistrationFormDialog', () => {
 
     expect(
       await screen.findByText(
-        'O campo que identifica cadastro repetido precisa estar marcado entre os campos adicionais.',
+        'O dado escolhido para evitar inscrição em dobro precisa estar entre os dados pedidos.',
       ),
     ).toBeInTheDocument();
   });

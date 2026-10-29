@@ -45,6 +45,7 @@ const ACTIVITY_1: Activity = {
   responsavel: { id: 'r1', nome: 'Carlos Instrutor', ativo: true },
   data: '2026-05-10',
   local: 'Galpão SCS',
+  inscricao: null,
   metas: [{ id: 'meta-1', ordem: 1, objetivo: 'Atender 100 jovens' }],
 };
 
@@ -57,6 +58,7 @@ const ACTIVITY_2: Activity = {
   responsavel: { id: 'r2', nome: 'Juliana Educadora', ativo: false },
   data: '2026-06-20',
   local: 'Praça Central',
+  inscricao: null,
   metas: [
     { id: 'meta-1', ordem: 1, objetivo: 'Atender 100 jovens' },
     { id: 'meta-2', ordem: 2, objetivo: 'Apresentação final' },
@@ -154,6 +156,47 @@ describe('ProjectActivitiesSection', () => {
     expect(
       screen.getByRole('button', { name: `Ações da atividade ${ACTIVITY_1.titulo}` }),
     ).toBeInTheDocument();
+  });
+
+  it('mostra a situacao da inscricao com a acao visivel de abrir ou divulgar', async () => {
+    await signedInAs('NUCLEO_PEDAGOGICO', {
+      [`GET /projects/${PROJECT.id}/activities`]: () => ({
+        status: 200,
+        body: [
+          { ...ACTIVITY_1, inscricao: { aberta: true, vagas: 30, inscritos: 12 } },
+          ACTIVITY_2,
+        ],
+      }),
+    });
+    renderSection();
+
+    expect((await screen.findAllByText('Inscrição aberta · 12 de 30')).length).toBeGreaterThan(0);
+    expect(screen.getAllByText('Inscrição não aberta').length).toBeGreaterThan(0);
+    expect(
+      screen.getByRole('button', { name: `Abrir inscrição de ${ACTIVITY_2.titulo}` }),
+    ).toBeInTheDocument();
+
+    fireEvent.click(
+      screen.getByRole('button', { name: `Divulgar a inscrição de ${ACTIVITY_1.titulo}` }),
+    );
+    expect(
+      await screen.findByRole('heading', { name: 'Divulgar inscrição da atividade' }),
+    ).toBeInTheDocument();
+  });
+
+  it('perfil de consulta ve a situacao da inscricao sem as acoes', async () => {
+    await signedInAs('ADMINISTRATIVO_FINANCEIRO', {
+      [`GET /projects/${PROJECT.id}/activities`]: () => ({
+        status: 200,
+        body: [{ ...ACTIVITY_1, inscricao: { aberta: false, vagas: 30, inscritos: 30 } }],
+      }),
+    });
+    renderSection();
+
+    expect((await screen.findAllByText('Inscrição encerrada · 30 de 30')).length).toBeGreaterThan(
+      0,
+    );
+    expect(screen.queryByRole('button', { name: /Divulgar/ })).not.toBeInTheDocument();
   });
 
   it('perfil de consulta (ADMINISTRATIVO_FINANCEIRO) consulta mas nao altera', async () => {

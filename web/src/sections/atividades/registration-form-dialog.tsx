@@ -57,7 +57,7 @@ const registrationSchema = z
   .refine((data) => data.camposAdicionais.includes(data.campoDuplicidade), {
     path: ['campoDuplicidade'],
     message:
-      'O campo que identifica cadastro repetido precisa estar marcado entre os campos adicionais.',
+      'O dado escolhido para evitar inscrição em dobro precisa estar entre os dados pedidos.',
   });
 
 type FormValues = z.input<typeof registrationSchema>;
@@ -249,8 +249,8 @@ export function RegistrationFormDialog({
           </DialogTitle>
           <DialogDescription>
             {activity
-              ? `Defina vagas, campos e chave de repetição para "${activity.titulo}".`
-              : 'Defina o limite de vagas, os campos adicionais e o identificador.'}
+              ? `Defina as vagas e os dados pedidos no formulário de "${activity.titulo}".`
+              : 'Defina as vagas e os dados pedidos no formulário.'}
           </DialogDescription>
         </DialogHeader>
 
@@ -328,22 +328,20 @@ export function RegistrationFormDialog({
 
               {/* Campos mínimos informativos */}
               <div className="flex flex-col gap-2 rounded-lg border border-muted bg-muted/30 p-4">
-                <span className="text-sm font-semibold">
-                  Campos mínimos obrigatórios (seção 8.5.4 — sempre incluídos)
-                </span>
+                <span className="text-sm font-semibold">Sempre pedidos no formulário</span>
                 <ul className="flex flex-col gap-1 text-sm text-muted-foreground">
                   <li className="flex items-center gap-2">
                     <input type="checkbox" checked disabled className="size-4" />
-                    <span>Nome completo e Telefone (fixo)</span>
+                    <span>Nome completo e telefone</span>
                   </li>
                   <li className="flex items-center gap-2">
                     <input type="checkbox" checked disabled className="size-4" />
-                    <span>Data de nascimento e responsável legal se menor de 18 anos (fixo)</span>
+                    <span>Data de nascimento e, para menor de 18 anos, o responsável legal</span>
                   </li>
                   <li className="flex items-center gap-2">
                     <input type="checkbox" checked disabled className="size-4" />
                     <span>
-                      Ciência do aviso de privacidade e opções de comunicados/imagem (fixo)
+                      Aviso sobre o uso dos dados e as autorizações de comunicados e de imagem
                     </span>
                   </li>
                 </ul>
@@ -351,12 +349,8 @@ export function RegistrationFormDialog({
 
               {/* Campos adicionais */}
               <div className="flex flex-col gap-2">
-                <span className="text-sm font-semibold">
-                  Campos adicionais do formulário (RF42)
-                </span>
-                <p className="text-xs text-muted-foreground">
-                  Selecione os dados adicionais a solicitar aos inscritos.
-                </p>
+                <span className="text-sm font-semibold">Dados a mais que esta atividade pede</span>
+                <p className="text-xs text-muted-foreground">Peça só o que a atividade precisa.</p>
                 <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
                   {CAMPOS_ADICIONAIS.map((campo) => {
                     const isChecked = camposAdicionaisValue.includes(campo);
@@ -382,17 +376,15 @@ export function RegistrationFormDialog({
 
               {/* Campo que identifica cadastro repetido */}
               <div className="flex flex-col gap-2">
-                <span className="text-sm font-semibold">
-                  Campo que identifica cadastro repetido (CA-07b.1, RF42) *
-                </span>
+                <span className="text-sm font-semibold">Como evitar inscrição em dobro *</span>
                 <p className="text-xs text-muted-foreground">
-                  Utilizado para evitar que o mesmo participante se inscreva mais de uma vez. O
-                  campo escolhido é obrigatoriamente incluído no formulário.
+                  O sistema não aceita duas inscrições com o mesmo dado nesta atividade. O dado
+                  escolhido passa a ser pedido no formulário.
                 </p>
                 <div
                   className="flex flex-wrap gap-4"
                   role="radiogroup"
-                  aria-label="Identificador de duplicidade"
+                  aria-label="Como evitar inscrição em dobro"
                 >
                   {(['CPF', 'EMAIL'] as const).map((chave) => (
                     <label
@@ -408,12 +400,7 @@ export function RegistrationFormDialog({
                         onChange={() => handleChaveDuplicidadeChange(chave)}
                         className="size-5 text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
                       />
-                      <span>
-                        <strong>{chave === 'CPF' ? 'CPF' : 'E-mail'}</strong>{' '}
-                        <span className="text-muted-foreground">
-                          (requer {chave === 'CPF' ? 'CPF' : 'E-mail'} marcado)
-                        </span>
-                      </span>
+                      <span>{chave === 'CPF' ? 'Pelo CPF' : 'Pelo e-mail'}</span>
                     </label>
                   ))}
                 </div>
@@ -428,12 +415,9 @@ export function RegistrationFormDialog({
               <div className="flex items-start gap-3 rounded-lg border border-primary/20 bg-primary/5 p-4 text-xs text-muted-foreground">
                 <ShieldCheckIcon className="size-5 shrink-0 text-primary" aria-hidden="true" />
                 <div>
-                  <strong className="block font-medium text-foreground">
-                    Proteção de dados (CA-07b.2 · RNF05 — LGPD art. 5º, II)
-                  </strong>
-                  O sistema recusa e não oferece campos de dados pessoais sensíveis (como raça,
-                  etnia, religião, filiação partidária ou dados de saúde). Apenas o catálogo fechado
-                  acima é permitido.
+                  <strong className="block font-medium text-foreground">Proteção de dados</strong>O
+                  formulário não pede raça, religião, saúde, filiação partidária nem outros dados
+                  sensíveis. Só os dados da lista acima podem ser pedidos.
                 </div>
               </div>
 
