@@ -14,7 +14,11 @@ const DAY = 24 * 60 * 60 * 1000;
 interface Panel {
   hoje: string;
   resumo: Record<string, number>;
-  prazos: { objetivo: string; alerta: string | null; responsavel: { nome: string } | null }[];
+  prazos: {
+    objetivo: string;
+    alerta: string | null;
+    responsavel: { nome: string; ativo: boolean } | null;
+  }[];
   semResponsavel: { objetivo: string }[];
   proximasAtividades: {
     titulo: string;
@@ -25,6 +29,7 @@ interface Panel {
       linkPublico: string;
     } | null;
   }[];
+  inscricoesAbertas: { titulo: string; inscritos: number; linkPublico: string }[];
   vigencias: { numeroProcesso: string }[];
 }
 
@@ -148,6 +153,22 @@ describe('Painel da tela inicial (e2e)', () => {
     await meta(p1.id, 4, 'Concluida vencida', -5, { situacao: 'CONCLUIDA' });
     await meta(p1.id, 5, 'Vence hoje', 0, { responsavelId: ids[Perfil.PRESIDENCIA_GESTAO] });
     await meta(p2.id, 1, 'De instrumento inativo', -1);
+    await meta(p1.id, 6, 'Vence no limite', 30);
+    await meta(p1.id, 7, 'Fora da janela', 31);
+    // Vencidas antigas não podem esconder as que ainda vão vencer.
+    for (let i = 0; i < 6; i += 1) await meta(p1.id, 10 + i, `Antiga ${i}`, -40 - i);
+    const desativada = await prisma.pessoa.create({ data: { nome: 'Ex-educadora' } });
+    const exConta = await prisma.usuario.create({
+      data: {
+        pessoaId: desativada.id,
+        emailLogin: 'ex@instituto.test',
+        senhaHash,
+        perfil: Perfil.NUCLEO_PEDAGOGICO,
+        deveTrocarSenha: false,
+        ativo: false,
+      },
+    });
+    await meta(p1.id, 8, 'Responsavel desativado', 15, { responsavelId: exConta.id });
 
     const modalidade = await prisma.modalidade.create({ data: { nome: 'Oficina' } });
     const atividade = async (projetoId: string, titulo: string, offset: number) =>
@@ -162,19 +183,26 @@ describe('Painel da tela inicial (e2e)', () => {
         },
       });
     const aberta = await atividade(p1.id, 'Oficina com inscricao', 5);
-    await atividade(p1.id, 'Roda de conversa', 20);
-    await atividade(p1.id, 'Mostra distante', 60);
-    await atividade(p2.id, 'Do instrumento inativo', 3);
-    await prisma.configuracaoInscricao.create({
-      data: {
-        atividadeId: aberta.id,
-        aberta: true,
-        vagas: 30,
-        camposAdicionais: [],
-        campoDuplicidade: 'EMAIL',
-        codigoPublico: 'codigoPainel0001',
-      },
-    });
+    const roda = await atividade(p1.id, 'Roda de conversa', 20);
+    const mostra = await atividade(p1.id, 'Mostra distante', 60);
+    const inativa = await atividade(p2.id, 'Do instrumento inativo', 3);
+    const ontem = await atividade(p1.id, 'Oficina de ontem', -1);
+    const inscricao = (atividadeId: string, codigoPublico: string, aberta = true) =>
+      prisma.configuracaoInscricao.create({
+        data: {
+          atividadeId,
+          aberta,
+          vagas: 30,
+          camposAdicionais: [],
+          campoDuplicidade: 'EMAIL',
+          codigoPublico,
+        },
+      });
+    await inscricao(aberta.id, 'codigoPainel0001');
+    await inscricao(roda.id, 'codigoPainel0002', false);
+    await inscricao(mostra.id, 'codigoPainel0003');
+    await inscricao(inativa.id, 'codigoPainel0004');
+    await inscricao(ontem.id, 'codigoPainel0005');
     for (const nome of ['Ana', 'Bia']) {
       const participante = await prisma.participante.create({
         data: { nome, telefone: '61999998888', dataNascimento: new Date('2000-01-01') },
@@ -214,24 +242,33 @@ describe('Painel da tela inicial (e2e)', () => {
     expect(body.contas).toBeNull();
     expect(body.painel?.hoje).toBe(brasilia(0));
     expect(body.painel?.resumo).toEqual({
-      minhasMetas: 2,
-      metasVencendo: 2,
-      metasVencidas: 1,
+      minhasMetas: 10,
+      metasVencendo: 4,
+      metasVencidas: 7,
       metasSemResponsavel: 1,
-      inscricoesAbertas: 1,
+      inscricoesAbertas: 2,
       atividadesProximas: 2,
     });
   });
 
   it('prazos em ordem, com o alerta; concluida e instrumento inativo ficam fora', async () => {
     const painel = (await get(Perfil.PRESIDENCIA_GESTAO)).painel!;
+    // Três vagas para as que ainda vão vencer; as vencidas mais recentes ocupam o resto.
     expect(painel.prazos.map((m) => [m.objetivo, m.alerta])).toEqual([
+      ['Antiga 1', 'VENCIDA'],
+      ['Antiga 0', 'VENCIDA'],
       ['Vencida', 'VENCIDA'],
       ['Vence hoje', 'VENCENDO'],
       ['Vencendo sem responsavel', 'VENCENDO'],
+      ['Responsavel desativado', 'VENCENDO'],
     ]);
-    expect(painel.prazos[2].responsavel).toBeNull();
-    expect(painel.prazos[1].responsavel?.nome).toBe('Pessoa PRESIDENCIA_GESTAO');
+    expect(painel.prazos[4].responsavel).toBeNull();
+    expect(painel.prazos[3].responsavel).toEqual(
+      expect.objectContaining({ nome: 'Pessoa PRESIDENCIA_GESTAO', ativo: true }),
+    );
+    expect(painel.prazos[5].responsavel).toEqual(
+      expect.objectContaining({ nome: 'Ex-educadora', ativo: false }),
+    );
     expect(painel.semResponsavel.map((m) => m.objetivo)).toEqual(['Vencendo sem responsavel']);
     expect(painel.resumo.minhasMetas).toBe(1);
   });
@@ -248,9 +285,21 @@ describe('Painel da tela inicial (e2e)', () => {
           linkPublico: '/inscrever/codigoPainel0001',
         },
       }),
-      expect.objectContaining({ titulo: 'Roda de conversa', inscricao: null }),
+      expect.objectContaining({
+        titulo: 'Roda de conversa',
+        inscricao: expect.objectContaining({ aberta: false, inscritos: 0 }) as unknown,
+      }),
     ]);
     expect(painel.vigencias.map((v) => v.numeroProcesso)).toEqual(['P-PROXIMO', 'P-ATIVO']);
+    // Abertas de hoje em diante, inclusive além de 30 dias; encerrada, passada e de instrumento inativo ficam fora.
+    expect(painel.inscricoesAbertas).toEqual([
+      expect.objectContaining({
+        titulo: 'Oficina com inscricao',
+        inscritos: 2,
+        linkPublico: '/inscrever/codigoPainel0001',
+      }),
+      expect.objectContaining({ titulo: 'Mostra distante', inscritos: 0 }),
+    ]);
   });
 
   it('administracao recebe o resumo das contas, sem o painel', async () => {

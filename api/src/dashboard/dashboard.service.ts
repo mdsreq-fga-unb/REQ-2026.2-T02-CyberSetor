@@ -12,7 +12,10 @@ import type {
   ProjectRefResponse,
 } from './dashboard.dto.js';
 
-const LIST_SIZE = { prazos: 6, semResponsavel: 5, atividades: 5, vigencias: 4 };
+const LIST_SIZE = { prazos: 6, semResponsavel: 5, atividades: 5, vigencias: 4, inscricoes: 5 };
+// Vagas da lista de prazos garantidas às metas que ainda vão vencer, para as vencidas antigas
+// não esconderem as que pedem ação agora (CA-02b.2).
+const DUE_SOON_SLOTS = 3;
 
 const PROJECT_REF = { select: { id: true, codigo: true, titulo: true, instrumentoId: true } };
 
@@ -23,7 +26,7 @@ const GOAL_REF = {
   periodoFim: true,
   situacao: true,
   projeto: PROJECT_REF,
-  responsavel: { select: { id: true, pessoa: { select: { nome: true } } } },
+  responsavel: { select: { id: true, ativo: true, pessoa: { select: { nome: true } } } },
 } satisfies Prisma.MetaSelect;
 
 type GoalRow = Prisma.MetaGetPayload<{ select: typeof GOAL_REF }>;
@@ -55,7 +58,7 @@ function goalRef(row: GoalRow, today: string): GoalRefResponse {
     periodoFim,
     alerta: deadlineAlert(periodoFim, row.situacao, today),
     responsavel: row.responsavel
-      ? { id: row.responsavel.id, nome: row.responsavel.pessoa.nome }
+      ? { id: row.responsavel.id, nome: row.responsavel.pessoa.nome, ativo: row.responsavel.ativo }
       : null,
     projeto: projectRef(row.projeto),
   };
@@ -98,6 +101,11 @@ export class DashboardService {
     const dueSoon = { ...openGoal, periodoFim: { gte: todayDate, lte: warningDate } };
     const overdue = { ...openGoal, periodoFim: { lt: todayDate } };
     const unowned = { ...openGoal, responsavelId: null };
+    // Inscrição aberta de atividade que ainda vai acontecer, em qualquer data futura.
+    const openRegistration = {
+      aberta: true,
+      atividade: { data: { gte: todayDate }, projeto: { instrumento: { ativo: true } } },
+    } satisfies Prisma.ConfiguracaoInscricaoWhereInput;
 
     const [
       minhasMetas,
@@ -106,23 +114,29 @@ export class DashboardService {
       metasSemResponsavel,
       inscricoesAbertas,
       atividadesProximas,
-      prazos,
+      vencendo,
+      vencidas,
       semResponsavel,
       atividades,
+      inscricoes,
       vigencias,
     ] = await this.prisma.$transaction([
       this.prisma.meta.count({ where: { ...openGoal, responsavelId: usuarioId } }),
       this.prisma.meta.count({ where: dueSoon }),
       this.prisma.meta.count({ where: overdue }),
       this.prisma.meta.count({ where: unowned }),
-      this.prisma.configuracaoInscricao.count({
-        where: { aberta: true, atividade: { projeto: { instrumento: { ativo: true } } } },
-      }),
+      this.prisma.configuracaoInscricao.count({ where: openRegistration }),
       this.prisma.atividade.count({ where: upcoming }),
       this.prisma.meta.findMany({
-        where: { ...openGoal, periodoFim: { lte: warningDate } },
+        where: dueSoon,
         select: GOAL_REF,
         orderBy: [{ periodoFim: 'asc' }, { ordem: 'asc' }],
+        take: LIST_SIZE.prazos,
+      }),
+      this.prisma.meta.findMany({
+        where: overdue,
+        select: GOAL_REF,
+        orderBy: [{ periodoFim: 'desc' }, { ordem: 'asc' }],
         take: LIST_SIZE.prazos,
       }),
       this.prisma.meta.findMany({
@@ -145,6 +159,25 @@ export class DashboardService {
         orderBy: [{ data: 'asc' }, { titulo: 'asc' }],
         take: LIST_SIZE.atividades,
       }),
+      this.prisma.configuracaoInscricao.findMany({
+        where: openRegistration,
+        select: {
+          vagas: true,
+          codigoPublico: true,
+          atividade: {
+            select: {
+              id: true,
+              titulo: true,
+              data: true,
+              local: true,
+              projeto: PROJECT_REF,
+              _count: { select: { inscricoes: true } },
+            },
+          },
+        },
+        orderBy: [{ atividade: { data: 'asc' } }, { atividade: { titulo: 'asc' } }],
+        take: LIST_SIZE.inscricoes,
+      }),
       this.prisma.instrumento.findMany({
         where: { ativo: true },
         select: {
@@ -158,6 +191,14 @@ export class DashboardService {
         take: LIST_SIZE.vigencias,
       }),
     ]);
+
+    // Vencidas mais recentes primeiro na seleção; na tela, do prazo mais antigo ao mais próximo.
+    const dueSoonShown = vencendo.slice(
+      0,
+      Math.max(DUE_SOON_SLOTS, LIST_SIZE.prazos - vencidas.length),
+    );
+    const overdueShown = vencidas.slice(0, LIST_SIZE.prazos - dueSoonShown.length).reverse();
+    const prazos = [...overdueShown, ...dueSoonShown].slice(0, LIST_SIZE.prazos);
 
     return {
       hoje: today,
@@ -185,6 +226,16 @@ export class DashboardService {
               linkPublico: `/inscrever/${row.inscricao.codigoPublico}`,
             }
           : null,
+      })),
+      inscricoesAbertas: inscricoes.map((row) => ({
+        atividadeId: row.atividade.id,
+        titulo: row.atividade.titulo,
+        data: isoDate(row.atividade.data),
+        local: row.atividade.local,
+        projeto: projectRef(row.atividade.projeto),
+        vagas: row.vagas,
+        inscritos: row.atividade._count.inscricoes,
+        linkPublico: `/inscrever/${row.codigoPublico}`,
       })),
       vigencias: vigencias.map((row) => ({
         id: row.id,

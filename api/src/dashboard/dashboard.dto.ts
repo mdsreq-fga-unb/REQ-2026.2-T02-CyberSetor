@@ -11,6 +11,11 @@ export class PersonRefResponse {
   nome!: string;
 }
 
+export class OwnerRefResponse extends PersonRefResponse {
+  @ApiProperty({ description: 'Conta desativada continua como responsável até a troca' })
+  ativo!: boolean;
+}
+
 export class DashboardUserResponse {
   @ApiProperty()
   nome!: string;
@@ -49,7 +54,7 @@ export class PanelSummaryResponse {
   @ApiProperty({ description: 'Metas não concluídas sem responsável' })
   metasSemResponsavel!: number;
 
-  @ApiProperty()
+  @ApiProperty({ description: 'Inscrições abertas de atividades de hoje em diante' })
   inscricoesAbertas!: number;
 
   @ApiProperty({ description: 'Atividades de hoje aos próximos 30 dias' })
@@ -72,8 +77,8 @@ export class GoalRefResponse {
   @ApiProperty({ enum: DEADLINE_ALERTS, nullable: true })
   alerta!: DeadlineAlert | null;
 
-  @ApiProperty({ type: PersonRefResponse, nullable: true })
-  responsavel!: PersonRefResponse | null;
+  @ApiProperty({ type: OwnerRefResponse, nullable: true })
+  responsavel!: OwnerRefResponse | null;
 
   @ApiProperty({ type: ProjectRefResponse })
   projeto!: ProjectRefResponse;
@@ -113,6 +118,32 @@ export class UpcomingActivityResponse {
   inscricao!: ActivityRegistrationSummary | null;
 }
 
+export class OpenRegistrationResponse {
+  @ApiProperty()
+  atividadeId!: string;
+
+  @ApiProperty()
+  titulo!: string;
+
+  @ApiProperty({ format: 'date' })
+  data!: string;
+
+  @ApiProperty()
+  local!: string;
+
+  @ApiProperty({ type: ProjectRefResponse })
+  projeto!: ProjectRefResponse;
+
+  @ApiProperty()
+  vagas!: number;
+
+  @ApiProperty()
+  inscritos!: number;
+
+  @ApiProperty({ example: '/inscrever/AbCdEfGhIjKlMnOp' })
+  linkPublico!: string;
+}
+
 export class InstrumentTermResponse {
   @ApiProperty()
   id!: string;
@@ -137,7 +168,11 @@ export class PanelResponse {
   @ApiProperty({ type: PanelSummaryResponse })
   resumo!: PanelSummaryResponse;
 
-  @ApiProperty({ type: [GoalRefResponse], description: 'Vencidas e com prazo em 30 dias, até 6' })
+  @ApiProperty({
+    type: [GoalRefResponse],
+    description:
+      'Vencidas e com prazo em 30 dias, até 6, com até 3 vagas para as que ainda vão vencer',
+  })
   prazos!: GoalRefResponse[];
 
   @ApiProperty({ type: [GoalRefResponse], description: 'Sem responsável, até 5' })
@@ -145,6 +180,12 @@ export class PanelResponse {
 
   @ApiProperty({ type: [UpcomingActivityResponse], description: 'Próximos 30 dias, até 5' })
   proximasAtividades!: UpcomingActivityResponse[];
+
+  @ApiProperty({
+    type: [OpenRegistrationResponse],
+    description: 'Inscrições abertas de atividades de hoje em diante, da mais próxima, até 5',
+  })
+  inscricoesAbertas!: OpenRegistrationResponse[];
 
   @ApiProperty({
     type: [InstrumentTermResponse],
