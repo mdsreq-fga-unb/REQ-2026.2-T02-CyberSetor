@@ -98,6 +98,17 @@ export class ActivityMetaResponse {
   objetivo!: string;
 }
 
+export class ActivityRegistrationStatusResponse {
+  @ApiProperty({ description: 'Se o formulário público aceita novas inscrições' })
+  aberta!: boolean;
+
+  @ApiProperty()
+  vagas!: number;
+
+  @ApiProperty({ description: 'Total de inscrições recebidas' })
+  inscritos!: number;
+}
+
 export class ActivityResponse {
   @ApiProperty()
   id!: string;
@@ -125,4 +136,11 @@ export class ActivityResponse {
 
   @ApiProperty({ type: [ActivityMetaResponse] })
   metas!: ActivityMetaResponse[];
+
+  @ApiProperty({
+    type: ActivityRegistrationStatusResponse,
+    nullable: true,
+    description: 'Situação da inscrição; nulo quando a inscrição ainda não foi aberta',
+  })
+  inscricao!: ActivityRegistrationStatusResponse | null;
 }
