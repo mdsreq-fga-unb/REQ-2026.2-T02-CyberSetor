@@ -12,25 +12,15 @@ import {
 } from 'class-validator';
 import { trimString } from '../common/trim.js';
 import { CampoInscricao } from '../generated/prisma/enums.js';
-import { onlyDigits } from './participant-data.js';
+import { toDigits, toLowerTrim, toPhoneDigits } from './participant-data.js';
 
 const ISO_DATE = /^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])$/;
 const PHONE = /^\d{10,11}$/;
 
-const digits = ({ value }: { value: unknown }): unknown =>
-  typeof value === 'string' ? onlyDigits(value) : value;
-// O preenchimento automático do celular costuma trazer o +55.
-const phoneDigits = ({ value }: { value: unknown }): unknown => {
-  if (typeof value !== 'string') return value;
-  const d = onlyDigits(value);
-  return /^55\d{10,11}$/.test(d) ? d.slice(2) : d;
-};
 // Campo opcional: ausente passa; enviado, inclusive null, é validado.
 const sent = (_obj: object, value: unknown): boolean => value !== undefined;
 // Sem conversão implícita: o texto "false" não vira autorização dada.
 const asSent = ({ obj, key }: { obj: Record<string, unknown>; key: string }): unknown => obj[key];
-const lowerTrim = ({ value }: { value: unknown }): unknown =>
-  typeof value === 'string' ? value.trim().toLowerCase() : value;
 
 export class SubmitRegistrationDto {
   @ApiProperty({ example: 'Ana Souza' })
@@ -41,7 +31,7 @@ export class SubmitRegistrationDto {
   nome!: string;
 
   @ApiProperty({ example: '61999998888', description: 'DDD e número; pontuação é ignorada' })
-  @Transform(phoneDigits)
+  @Transform(toPhoneDigits)
   @IsString()
   @Matches(PHONE, { message: 'telefone deve ter DDD e número, com 10 ou 11 dígitos' })
   telefone!: string;
@@ -52,14 +42,14 @@ export class SubmitRegistrationDto {
 
   @ApiPropertyOptional({ example: 'ana@exemplo.com' })
   @ValidateIf(sent)
-  @Transform(lowerTrim)
+  @Transform(toLowerTrim)
   @IsEmail({}, { message: 'email inválido' })
   @MaxLength(254)
   email?: string;
 
   @ApiPropertyOptional({ example: '529.982.247-25', description: 'Pontuação é ignorada' })
   @ValidateIf(sent)
-  @Transform(digits)
+  @Transform(toDigits)
   @IsString()
   cpf?: string;
 
@@ -104,7 +94,7 @@ export class SubmitRegistrationDto {
 
   @ApiPropertyOptional({ description: 'Obrigatório para menor de 18 anos' })
   @ValidateIf(sent)
-  @Transform(phoneDigits)
+  @Transform(toPhoneDigits)
   @IsString()
   @Matches(PHONE, { message: 'responsavelTelefone deve ter DDD e número, com 10 ou 11 dígitos' })
   responsavelTelefone?: string;

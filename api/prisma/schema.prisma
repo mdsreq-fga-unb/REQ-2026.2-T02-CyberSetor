@@ -277,6 +277,7 @@ model ConfiguracaoInscricao {
 /// Guarda só os campos mínimos (seção 8.5.4) e os da lista fechada da configuração (RNF05).
 model Participante {
   id             String   @id @default(uuid()) @db.Uuid
+  versao         Int      @default(1)
   nome           String
   telefone       String
   dataNascimento DateTime @map("data_nascimento") @db.Date
