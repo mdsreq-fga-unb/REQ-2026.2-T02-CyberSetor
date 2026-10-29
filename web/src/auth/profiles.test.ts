@@ -29,6 +29,11 @@ describe('perfis de acesso', () => {
     expect(hrefs.includes('/contas')).toBe(perfil === 'ADMINISTRACAO_SISTEMA');
   });
 
+  it.each(PERFIS)('participantes aparece so para o nucleo pedagogico: %s', (perfil) => {
+    const hrefs = navigationFor(perfil, NAVIGATION).map((item) => item.href);
+    expect(hrefs.includes('/participantes')).toBe(perfil === 'NUCLEO_PEDAGOGICO');
+  });
+
   it.each(PERFIS)('instrumentos segue a matriz da secao 8.5.1: %s', (perfil) => {
     const hrefs = navigationFor(perfil, NAVIGATION).map((item) => item.href);
     expect(hrefs.includes('/instrumentos')).toBe(
