@@ -116,6 +116,7 @@ model Projeto {
   coordenador Usuario     @relation(fields: [coordenadorId], references: [id], onDelete: Restrict)
   metas       Meta[]
   atividades  Atividade[]
+  relatorios  Relatorio[]
 
   @@unique([instrumentoId, codigo])
   @@index([coordenadorId])
@@ -165,8 +166,9 @@ model Meta {
   responsavel Usuario?        @relation(fields: [responsavelId], references: [id], onDelete: Restrict)
   setor       Setor?          @relation(fields: [setorId], references: [id], onDelete: Restrict)
   requisitos  MetaRequisito[]
-  atividades  AtividadeMeta[]
-  resultados  ResultadoMeta[]
+  atividades     AtividadeMeta[]
+  resultados     ResultadoMeta[]
+  relatorioMetas RelatorioMeta[]
 
   @@index([projetoId])
   @@index([responsavelId])
@@ -195,8 +197,9 @@ model ResultadoMeta {
   registradoPorId    String      @map("registrado_por_id") @db.Uuid
   criadoEm           DateTime    @default(now()) @map("criado_em") @db.Timestamptz(3)
 
-  meta          Meta    @relation(fields: [metaId], references: [id], onDelete: Restrict)
-  registradoPor Usuario @relation(fields: [registradoPorId], references: [id], onDelete: Restrict)
+  meta           Meta            @relation(fields: [metaId], references: [id], onDelete: Restrict)
+  registradoPor  Usuario         @relation(fields: [registradoPorId], references: [id], onDelete: Restrict)
+  relatorioMetas RelatorioMeta[]
 
   @@index([metaId, dataReferencia])
   @@index([registradoPorId])
@@ -389,6 +392,7 @@ model Usuario {
   sessoes             Sessao[]
   eventos             TrilhaAuditoria[]      @relation("autor")
   previas             TrilhaAuditoria[]      @relation("previa")
+  relatorios          Relatorio[]
 
   @@map("usuario")
 }
@@ -428,4 +432,61 @@ model TrilhaAuditoria {
   @@index([usuarioId])
   @@index([criadoEm])
   @@map("trilha_auditoria")
+}
+
+/// Relatório de execução do objeto por período (RF36, RF39, RNF08).
+/// Cada versão é imutável (append-only); a retificação cria nova versão no mesmo período.
+model Relatorio {
+  id                  String   @id @default(uuid()) @db.Uuid
+  projetoId           String   @map("projeto_id") @db.Uuid
+  versao              Int      @default(1)
+  periodoInicio       DateTime @map("periodo_inicio") @db.Date
+  periodoFim          DateTime @map("periodo_fim") @db.Date
+  relatorioAnteriorId String?  @unique @map("relatorio_anterior_id") @db.Uuid
+  motivoRetificacao   String?  @map("motivo_retificacao") @db.Text
+  emitidoPorId        String   @map("emitido_por_id") @db.Uuid
+  criadoEm            DateTime @default(now()) @map("criado_em") @db.Timestamptz(3)
+
+  projeto           Projeto         @relation(fields: [projetoId], references: [id], onDelete: Restrict)
+  emitidoPor        Usuario         @relation(fields: [emitidoPorId], references: [id], onDelete: Restrict)
+  relatorioAnterior Relatorio?      @relation("HistoricoVersoesRelatorio", fields: [relatorioAnteriorId], references: [id], onDelete: Restrict)
+  retificacao       Relatorio?      @relation("HistoricoVersoesRelatorio")
+  metas             RelatorioMeta[]
+
+  @@unique([projetoId, periodoInicio, periodoFim, versao])
+  @@index([projetoId])
+  @@index([emitidoPorId])
+  @@map("relatorio")
+}
+
+/// Cópia imutável da meta e do resultado apurado na emissão daquela versão do relatório (RNF08).
+model RelatorioMeta {
+  id                      String              @id @default(uuid()) @db.Uuid
+  relatorioId             String              @map("relatorio_id") @db.Uuid
+  metaId                  String              @map("meta_id") @db.Uuid
+  resultadoMetaId         String              @map("resultado_meta_id") @db.Uuid
+  metaOrdem               Int                 @map("meta_ordem")
+  metaOrigem              OrigemMeta          @map("meta_origem")
+  metaObjetivo            String              @map("meta_objetivo")
+  metaDescricao           String              @map("meta_descricao")
+  metaIndicador           String?             @map("meta_indicador")
+  modalidadeAfericao      ModalidadeAfericao? @map("modalidade_afericao")
+  unidade                 String?
+  parametroPlanejado      Decimal?            @map("parametro_planejado") @db.Decimal(14, 2)
+  valorAlcancado          Decimal?            @map("valor_alcancado") @db.Decimal(14, 2)
+  percentual              Decimal?            @map("percentual") @db.Decimal(8, 2)
+  alcance                 AlcanceMeta
+  resultadoDataReferencia DateTime            @map("resultado_data_referencia") @db.Date
+  resultadoDescricao      String              @map("resultado_descricao")
+  justificativa           String?             @db.Text
+  criadoEm                DateTime            @default(now()) @map("criado_em") @db.Timestamptz(3)
+
+  relatorio     Relatorio     @relation(fields: [relatorioId], references: [id], onDelete: Restrict)
+  meta          Meta          @relation(fields: [metaId], references: [id], onDelete: Restrict)
+  resultadoMeta ResultadoMeta @relation(fields: [resultadoMetaId], references: [id], onDelete: Restrict)
+
+  @@unique([relatorioId, metaId])
+  @@index([metaId])
+  @@index([resultadoMetaId])
+  @@map("relatorio_meta")
 }
