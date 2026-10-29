@@ -11,7 +11,7 @@ import { todayInBrasilia } from '../goals/goal-deadline.js';
 import { PrismaService } from '../prisma/prisma.service.js';
 import { CAMPOS_MINIMOS } from '../registrations/registrations.dto.js';
 import { DATA_NOTICE } from './notice.js';
-import { ageOn, isValidCpf } from './participant-data.js';
+import { ageOn, birthDateProblem, isValidCpf } from './participant-data.js';
 import type {
   PublicFormResponse,
   SubmitRegistrationDto,
@@ -19,7 +19,6 @@ import type {
 } from './public-registrations.dto.js';
 
 const ADULT_AGE = 18;
-const MAX_AGE = 120;
 
 /** Campo da lista fechada ↔ propriedade do envio. */
 const FIELD_OF: Record<CampoInscricao, 'email' | 'cpf' | 'bairroRegiao' | 'escolaridade'> = {
@@ -195,15 +194,9 @@ export class PublicRegistrationsService {
   /** Menor de 18 anos exige o responsável legal (RN-06); para adulto, o responsável é descartado. */
   private guardianOf(data: SubmitRegistrationDto): { nome: string; telefone: string } | null {
     const today = todayInBrasilia();
-    const birth = new Date(`${data.dataNascimento}T00:00:00.000Z`);
-    if (Number.isNaN(birth.getTime()) || isoDate(birth) !== data.dataNascimento) {
-      throw invalid('INVALID_BIRTH_DATE', 'Data de nascimento inexistente.');
-    }
-    const age = ageOn(data.dataNascimento, today);
-    if (data.dataNascimento > today || age > MAX_AGE) {
-      throw invalid('INVALID_BIRTH_DATE', 'Confira a data de nascimento.');
-    }
-    if (age >= ADULT_AGE) return null;
+    const problem = birthDateProblem(data.dataNascimento, today);
+    if (problem) throw invalid('INVALID_BIRTH_DATE', problem);
+    if (ageOn(data.dataNascimento, today) >= ADULT_AGE) return null;
     if (!data.responsavelNome || !data.responsavelTelefone) {
       throw invalid(
         'GUARDIAN_REQUIRED',

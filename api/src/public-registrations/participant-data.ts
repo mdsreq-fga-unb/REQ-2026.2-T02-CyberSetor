@@ -24,3 +24,30 @@ export function ageOn(birthDate: string, today: string): number {
 export function onlyDigits(value: string): string {
   return value.replace(/\D/g, '');
 }
+
+// Transformações dos campos do participante, usadas no formulário público e na correção.
+export const toDigits = ({ value }: { value: unknown }): unknown =>
+  typeof value === 'string' ? onlyDigits(value) : value;
+
+// O preenchimento automático do celular costuma trazer o +55.
+export const toPhoneDigits = ({ value }: { value: unknown }): unknown => {
+  if (typeof value !== 'string') return value;
+  const digits = onlyDigits(value);
+  return /^55\d{10,11}$/.test(digits) ? digits.slice(2) : digits;
+};
+
+export const toLowerTrim = ({ value }: { value: unknown }): unknown =>
+  typeof value === 'string' ? value.trim().toLowerCase() : value;
+
+const MAX_AGE = 120;
+
+/** Motivo da recusa da data de nascimento (AAAA-MM-DD), ou null quando está certa. */
+export function birthDateProblem(birthDate: string, today: string): string | null {
+  const date = new Date(`${birthDate}T00:00:00.000Z`);
+  if (Number.isNaN(date.getTime()) || date.toISOString().slice(0, 10) !== birthDate) {
+    return 'Data de nascimento inexistente.';
+  }
+  if (birthDate > today || ageOn(birthDate, today) > MAX_AGE)
+    return 'Confira a data de nascimento.';
+  return null;
+}
