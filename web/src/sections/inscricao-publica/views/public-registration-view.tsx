@@ -34,6 +34,7 @@ const FIELD_OF = {
 
 interface FormValues {
   nome: string;
+  nomePreferencia: string;
   telefone: string;
   dataNascimento: string;
   email: string;
@@ -48,6 +49,7 @@ interface FormValues {
 
 const EMPTY: FormValues = {
   nome: '',
+  nomePreferencia: '',
   telefone: '',
   dataNascimento: '',
   email: '',
@@ -72,6 +74,7 @@ function schemaFor(asked: CampoInscricao[]) {
   return z
     .object({
       nome: required('Informe o seu nome.').max(150, 'O nome tem no máximo 150 caracteres.'),
+      nomePreferencia: z.string().max(80, 'Use no máximo 80 caracteres.'),
       telefone: phoneSchema(),
       dataNascimento: z
         .string()
@@ -117,6 +120,8 @@ function submissionOf(values: FormValues, form: PublicForm): PublicSubmission {
     autorizaComunicados: values.autorizaComunicados,
     autorizaImagem: values.autorizaImagem,
   };
+  const nomePreferencia = values.nomePreferencia.trim();
+  if (nomePreferencia) body.nomePreferencia = nomePreferencia;
   for (const campo of form.camposAdicionais) {
     const name = FIELD_OF[campo];
     body[name] = values[name].trim();
@@ -251,6 +256,12 @@ function RegistrationForm({
         <form noValidate onSubmit={onSubmit}>
           <FieldGroup>
             <TextField name="nome" label="Nome completo" control={control} autoComplete="name" />
+            <TextField
+              name="nomePreferencia"
+              label="Como prefere ser chamado(a)? (opcional)"
+              control={control}
+              autoComplete="nickname"
+            />
             <PhoneField name="telefone" label="Telefone com DDD" control={control} />
             <DateField
               name="dataNascimento"

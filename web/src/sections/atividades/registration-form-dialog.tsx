@@ -332,7 +332,7 @@ export function RegistrationFormDialog({
                 <ul className="flex flex-col gap-1 text-sm text-muted-foreground">
                   <li className="flex items-center gap-2">
                     <input type="checkbox" checked disabled className="size-4" />
-                    <span>Nome completo e telefone</span>
+                    <span>Nome completo, nome de preferência (opcional) e telefone</span>
                   </li>
                   <li className="flex items-center gap-2">
                     <input type="checkbox" checked disabled className="size-4" />

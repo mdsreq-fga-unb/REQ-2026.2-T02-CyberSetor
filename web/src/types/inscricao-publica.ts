@@ -16,6 +16,7 @@ export interface PublicForm {
 
 export interface PublicSubmission {
   nome: string;
+  nomePreferencia?: string;
   telefone: string;
   dataNascimento: string;
   email?: string;

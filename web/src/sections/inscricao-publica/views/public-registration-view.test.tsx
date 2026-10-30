@@ -123,6 +123,32 @@ describe('formulario publico de inscricao', () => {
     });
   });
 
+  it('nome de preferencia e opcional e vai sem espacos quando preenchido', async () => {
+    const calls = stubApi({
+      [GET]: () => ({ status: 200, body: FORM }),
+      [POST]: () => ({
+        status: 201,
+        body: {
+          situacao: 'CONFIRMADA',
+          atividade: FORM.atividade,
+          inscritoEm: '2026-10-30T13:00:00.000Z',
+        },
+      }),
+    });
+    renderView();
+
+    await screen.findByLabelText('CPF');
+    fillAdult();
+    fill('Como prefere ser chamado(a)? (opcional)', '  Aninha  ');
+    fireEvent.click(screen.getByRole('button', { name: 'Confirmar inscrição' }));
+
+    await screen.findByRole('heading', { name: 'Inscrição confirmada' });
+    expect(calls.find((call) => call.key === POST)?.body).toMatchObject({
+      nome: 'Ana Souza',
+      nomePreferencia: 'Aninha',
+    });
+  });
+
   it('menor de 18 anos ve e precisa preencher o responsavel legal antes de enviar', async () => {
     const calls = stubApi({ [GET]: () => ({ status: 200, body: FORM }) });
     renderView();
