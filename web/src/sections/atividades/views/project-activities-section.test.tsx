@@ -44,6 +44,9 @@ const ACTIVITY_1: Activity = {
   modalidade: { id: 'm1', nome: 'Oficina Formativa', ativo: true },
   responsavel: { id: 'r1', nome: 'Carlos Instrutor', ativo: true },
   data: '2026-05-10',
+  horaInicio: '09:00',
+  horaFim: '12:30',
+  cargaHorariaMinutos: 210,
   local: 'Galpão SCS',
   inscricao: null,
   metas: [{ id: 'meta-1', ordem: 1, objetivo: 'Atender 100 jovens' }],
@@ -57,6 +60,9 @@ const ACTIVITY_2: Activity = {
   modalidade: { id: 'm2', nome: 'Apresentação Pública', ativo: true },
   responsavel: { id: 'r2', nome: 'Juliana Educadora', ativo: false },
   data: '2026-06-20',
+  horaInicio: null,
+  horaFim: null,
+  cargaHorariaMinutos: null,
   local: 'Praça Central',
   inscricao: null,
   metas: [
@@ -146,6 +152,12 @@ describe('ProjectActivitiesSection', () => {
     expect(screen.getAllByText('Meta 1').length).toBeGreaterThan(0);
     expect(screen.getAllByText('Meta 2').length).toBeGreaterThan(0);
     expect(screen.getAllByText('Carlos Instrutor').length).toBeGreaterThan(0);
+
+    // Horario e carga horaria; a atividade anterior ao horario mostra so a data
+    expect(screen.getAllByText(/10\/05\/2026 · 9h às 12h30 · 3 h 30 min/).length).toBeGreaterThan(
+      0,
+    );
+    expect(screen.getAllByText('20/06/2026').length).toBeGreaterThan(0);
 
     // Responsavel desativado (Juliana Educadora)
     expect(screen.getAllByText('Juliana Educadora').length).toBeGreaterThan(0);

@@ -24,6 +24,10 @@ export interface Activity {
   responsavel: ActivityResponsavel;
   titulo: string;
   data: string;
+  /** HH:MM; nulos nas atividades cadastradas antes do horário. */
+  horaInicio: string | null;
+  horaFim: string | null;
+  cargaHorariaMinutos: number | null;
   local: string;
   metas: ActivityMeta[];
   /** Nulo enquanto a inscrição não foi aberta. */
