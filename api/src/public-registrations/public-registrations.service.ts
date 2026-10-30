@@ -86,6 +86,10 @@ export class PublicRegistrationsService {
       termo: config.termoCompromisso
         ? { versao: termVersion(config.termoCompromisso), texto: config.termoCompromisso }
         : null,
+      apresentacao: config.apresentacao,
+      prazoInscricao: config.prazoInscricao?.toISOString().slice(0, 10) ?? null,
+      prazoHora: config.prazoHora?.toISOString().slice(11, 16) ?? null,
+      contatoWhatsapp: config.contatoWhatsapp,
     };
   }
 

@@ -168,6 +168,29 @@ export class PublicFormResponse {
     description: 'Compromissos da turma, com aceite obrigatório; null quando a atividade não tem',
   })
   termo!: CommitmentTermResponse | null;
+
+  @ApiProperty({
+    nullable: true,
+    description: 'Apresentação da atividade escrita pela coordenação',
+  })
+  apresentacao!: string | null;
+
+  @ApiProperty({
+    nullable: true,
+    example: '2026-11-05',
+    description: 'Último dia para se inscrever',
+  })
+  prazoInscricao!: string | null;
+
+  @ApiProperty({
+    nullable: true,
+    example: '18:00',
+    description: 'Hora do prazo; null = fim do dia',
+  })
+  prazoHora!: string | null;
+
+  @ApiProperty({ nullable: true, example: '61999998888', description: 'WhatsApp do Instituto' })
+  contatoWhatsapp!: string | null;
 }
 
 export class SubmittedRegistrationResponse {

@@ -154,6 +154,33 @@ describe('Formulário público de inscrição (e2e)', () => {
       camposAdicionais: ['CPF'],
       aviso: { versao: DATA_NOTICE.versao, texto: DATA_NOTICE.texto },
       termo: null,
+      apresentacao: null,
+      prazoInscricao: null,
+      prazoHora: null,
+      contatoWhatsapp: null,
+    });
+  });
+
+  it('devolve a apresentacao, o prazo e o WhatsApp do Instituto', async () => {
+    const prazo = new Date();
+    prazo.setUTCDate(prazo.getUTCDate() + 3);
+    const dia = prazo.toISOString().slice(0, 10);
+    await prisma.configuracaoInscricao.update({
+      where: { atividadeId },
+      data: {
+        apresentacao: 'Oficina de 8 horas, com certificado.',
+        prazoInscricao: new Date(`${dia}T00:00:00.000Z`),
+        prazoHora: new Date('1970-01-01T18:00:00.000Z'),
+        contatoWhatsapp: '61999998888',
+      },
+    });
+    const comTudo = await server().get(`/v1/public/registrations/${codigo}`).expect(200);
+    expect(comTudo.body).toMatchObject({
+      aberta: true,
+      apresentacao: 'Oficina de 8 horas, com certificado.',
+      prazoInscricao: dia,
+      prazoHora: '18:00',
+      contatoWhatsapp: '61999998888',
     });
   });
 
