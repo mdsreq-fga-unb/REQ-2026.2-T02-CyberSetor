@@ -48,6 +48,47 @@ export async function waitlistPosition(
 }
 
 /**
+ * Confirma, a pedido do Núcleo, uma inscrição da espera numa vaga livre, fora da ordem de chegada
+ * quando a promoção automática estiver desligada. Devolve o motivo da recusa, se houver.
+ */
+export async function confirmFromWaitlist(
+  tx: Prisma.TransactionClient,
+  audit: AuditTrailService,
+  atividadeId: string,
+  inscricaoId: string,
+  actor: { usuarioId: string; correlationId: string },
+): Promise<'NOT_FOUND' | 'NOT_WAITING' | 'NO_VACANCY' | null> {
+  const { vagas } = await lockRegistration(tx, atividadeId);
+  const inscricao = await tx.inscricao.findFirst({
+    where: { id: inscricaoId, atividadeId },
+    select: { situacao: true },
+  });
+  if (!inscricao) return 'NOT_FOUND';
+  if (inscricao.situacao !== SituacaoInscricao.LISTA_ESPERA) return 'NOT_WAITING';
+  if ((await nextSituation(tx, atividadeId, vagas)) !== SituacaoInscricao.CONFIRMADA) {
+    return 'NO_VACANCY';
+  }
+  await tx.inscricao.update({
+    where: { id: inscricaoId },
+    data: { situacao: SituacaoInscricao.CONFIRMADA },
+  });
+  await audit.record(
+    {
+      autorTipo: AutorTipo.USUARIO,
+      usuarioId: actor.usuarioId,
+      acao: 'REGISTRATION_CONFIRMED_FROM_WAITLIST',
+      entidade: 'inscricao',
+      entidadeId: inscricaoId,
+      antes: { situacao: SituacaoInscricao.LISTA_ESPERA },
+      depois: { situacao: SituacaoInscricao.CONFIRMADA },
+      correlationId: actor.correlationId,
+    },
+    tx,
+  );
+  return null;
+}
+
+/**
  * Com mais vagas, as primeiras da espera passam a confirmadas, na ordem de chegada. Com menos
  * vagas, ninguém perde a vaga já confirmada: só as novas inscrições vão para a espera.
  */

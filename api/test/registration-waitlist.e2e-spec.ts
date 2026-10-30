@@ -287,6 +287,46 @@ describe('Vagas, lista de espera e inscritos da atividade (e2e)', () => {
     expect(trilha.depois).toEqual({ vagas: 3, promocaoAutomatica: false });
   });
 
+  it('com a promocao desligada, o Nucleo confirma quem escolher da espera numa vaga livre', async () => {
+    await prisma.configuracaoInscricao.update({
+      where: { atividadeId },
+      data: { promocaoAutomatica: false },
+    });
+    await inscrever(1, SituacaoInscricao.CONFIRMADA);
+    await inscrever(2, SituacaoInscricao.LISTA_ESPERA);
+    await inscrever(3, SituacaoInscricao.LISTA_ESPERA);
+    const idDe = async (n: number) =>
+      (
+        await prisma.inscricao.findFirstOrThrow({
+          where: { chaveDuplicidade: `pessoa${n}@exemplo.com` },
+        })
+      ).id;
+    const confirmar = (perfil: Perfil, id: string) =>
+      server()
+        .post(`${listPath()}/${id}/confirmation`)
+        .set('Authorization', `Bearer ${tokens[perfil]}`);
+
+    const res = await confirmar(Perfil.NUCLEO_PEDAGOGICO, await idDe(3)).expect(200);
+
+    const lista = res.body as ListBody;
+    expect(lista.inscricoes.map((i) => [i.nome, i.situacao, i.posicaoEspera])).toEqual([
+      ['Pessoa 1', 'CONFIRMADA', null],
+      ['Pessoa 3', 'CONFIRMADA', null],
+      ['Pessoa 2', 'LISTA_ESPERA', 1],
+    ]);
+    expect(
+      await prisma.trilhaAuditoria.count({
+        where: { acao: 'REGISTRATION_CONFIRMED_FROM_WAITLIST', entidadeId: await idDe(3) },
+      }),
+    ).toBe(1);
+    const semVaga = await confirmar(Perfil.NUCLEO_PEDAGOGICO, await idDe(2)).expect(409);
+    expect((semVaga.body as { code: string }).code).toBe('NO_VACANCY');
+    const confirmada = await confirmar(Perfil.NUCLEO_PEDAGOGICO, await idDe(1)).expect(409);
+    expect((confirmada.body as { code: string }).code).toBe('NOT_IN_WAITLIST');
+    await confirmar(Perfil.NUCLEO_PEDAGOGICO, '00000000-0000-4000-8000-000000000000').expect(404);
+    await confirmar(Perfil.PRESIDENCIA_GESTAO, await idDe(2)).expect(403);
+  });
+
   it('lista os inscritos ao Nucleo, com busca, menor e responsavel; os demais veem so os totais', async () => {
     await inscrever(1, SituacaoInscricao.CONFIRMADA);
     await inscrever(2, SituacaoInscricao.CONFIRMADA, true);

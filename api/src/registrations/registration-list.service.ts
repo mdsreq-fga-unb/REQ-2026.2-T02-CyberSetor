@@ -1,9 +1,12 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { ConflictException, Injectable, NotFoundException } from '@nestjs/common';
+import type { Actor } from '../accounts/accounts.service.js';
+import { AuditTrailService } from '../audit/audit-trail.service.js';
 import { SituacaoInscricao } from '../generated/prisma/enums.js';
 import { todayInBrasilia } from '../goals/goal-deadline.js';
 import { PrismaService } from '../prisma/prisma.service.js';
 import { ageOn, onlyDigits } from '../public-registrations/participant-data.js';
 import type { RegistrationListResponse } from './registration-list.dto.js';
+import { confirmFromWaitlist } from './waitlist.js';
 
 const ADULT_AGE = 18;
 const MIN_PHONE_SEARCH = 3;
@@ -16,7 +19,46 @@ const ORDER: Record<SituacaoInscricao, number> = {
 /** Lista nominal dos inscritos de uma atividade, para o Núcleo Pedagógico (HU-07c, RNF04). */
 @Injectable()
 export class RegistrationListService {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(
+    private readonly prisma: PrismaService,
+    private readonly audit: AuditTrailService,
+  ) {}
+
+  /** Vaga confirmada a uma pessoa da espera, quando há vaga livre (promoção manual). */
+  async confirm(
+    atividadeId: string,
+    inscricaoId: string,
+    actor: Actor,
+  ): Promise<RegistrationListResponse> {
+    const ativo = await this.prisma.atividade.findUnique({
+      where: { id: atividadeId },
+      select: { projeto: { select: { instrumento: { select: { ativo: true } } } } },
+    });
+    if (!ativo) throw new NotFoundException('Atividade não encontrada.');
+    if (!ativo.projeto.instrumento.ativo) {
+      throw new ConflictException({
+        code: 'INSTRUMENT_INACTIVE',
+        message: 'O instrumento está inativo e não altera inscrições.',
+      });
+    }
+    const refused = await this.prisma.$transaction((tx) =>
+      confirmFromWaitlist(tx, this.audit, atividadeId, inscricaoId, actor),
+    );
+    if (refused === 'NOT_FOUND') throw new NotFoundException('Inscrição não encontrada.');
+    if (refused === 'NOT_WAITING') {
+      throw new ConflictException({
+        code: 'NOT_IN_WAITLIST',
+        message: 'Esta inscrição não está na lista de espera.',
+      });
+    }
+    if (refused === 'NO_VACANCY') {
+      throw new ConflictException({
+        code: 'NO_VACANCY',
+        message: 'Não há vaga livre. Aumente as vagas da inscrição para confirmar.',
+      });
+    }
+    return this.list(atividadeId);
+  }
 
   async list(atividadeId: string, busca?: string): Promise<RegistrationListResponse> {
     const config = await this.prisma.configuracaoInscricao.findUnique({
