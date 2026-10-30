@@ -327,6 +327,102 @@ describe('Vagas, lista de espera e inscritos da atividade (e2e)', () => {
     await confirmar(Perfil.PRESIDENCIA_GESTAO, await idDe(2)).expect(403);
   });
 
+  describe('cancelamento ou desistencia', () => {
+    const idDe = async (n: number) =>
+      (
+        await prisma.inscricao.findFirstOrThrow({
+          where: { chaveDuplicidade: `pessoa${n}@exemplo.com` },
+        })
+      ).id;
+    const cancelar = (perfil: Perfil, id: string, body: object) =>
+      server()
+        .post(`${listPath()}/${id}/cancellation`)
+        .set('Authorization', `Bearer ${tokens[perfil]}`)
+        .send(body);
+    const PEDIDO = { canal: 'WHATSAPP', pedidoEm: '2026-10-29' };
+
+    beforeEach(async () => {
+      await inscrever(1, SituacaoInscricao.CONFIRMADA);
+      await inscrever(2, SituacaoInscricao.CONFIRMADA);
+      await inscrever(3, SituacaoInscricao.LISTA_ESPERA);
+      await inscrever(4, SituacaoInscricao.LISTA_ESPERA);
+    });
+
+    it('libera a vaga para a primeira da espera, guarda o pedido e nao conta a cancelada', async () => {
+      const res = await cancelar(Perfil.NUCLEO_PEDAGOGICO, await idDe(1), PEDIDO).expect(200);
+
+      const lista = res.body as ListBody & {
+        canceladas: number;
+        inscricoes: { cancelamento: object | null }[];
+      };
+      expect(lista).toMatchObject({ vagas: 2, confirmadas: 2, emEspera: 1, canceladas: 1 });
+      expect(lista.inscricoes.map((i) => [i.nome, i.situacao, i.posicaoEspera])).toEqual([
+        ['Pessoa 2', 'CONFIRMADA', null],
+        ['Pessoa 3', 'CONFIRMADA', null],
+        ['Pessoa 4', 'LISTA_ESPERA', 1],
+        ['Pessoa 1', 'CANCELADA', null],
+      ]);
+      expect(lista.inscricoes[3]?.cancelamento).toEqual(PEDIDO);
+      const trilha = await prisma.trilhaAuditoria.findFirstOrThrow({
+        where: { acao: 'REGISTRATION_CANCELLED' },
+      });
+      expect(trilha).toMatchObject({
+        usuarioId: ids[Perfil.NUCLEO_PEDAGOGICO],
+        antes: { situacao: 'CONFIRMADA' },
+        depois: { situacao: 'CANCELADA', ...PEDIDO },
+      });
+      expect(await prisma.trilhaAuditoria.count({ where: { acao: 'REGISTRATION_PROMOTED' } })).toBe(
+        1,
+      );
+      const atividades = (
+        await as(Perfil.ADMINISTRATIVO_FINANCEIRO)
+          .get(`/v1/projects/${projetoId}/activities`)
+          .expect(200)
+      ).body as { id: string; inscricao: object | null }[];
+      expect(atividades.find((a) => a.id === atividadeId)?.inscricao).toMatchObject({
+        inscritos: 2,
+        emEspera: 1,
+      });
+    });
+
+    it('sem promocao automatica, a vaga fica livre; tirar alguem da espera nao promove', async () => {
+      await prisma.configuracaoInscricao.update({
+        where: { atividadeId },
+        data: { promocaoAutomatica: false },
+      });
+
+      await cancelar(Perfil.NUCLEO_PEDAGOGICO, await idDe(1), PEDIDO).expect(200);
+      const res = await cancelar(Perfil.NUCLEO_PEDAGOGICO, await idDe(4), PEDIDO).expect(200);
+
+      expect(res.body).toMatchObject({ confirmadas: 1, emEspera: 1, canceladas: 2 });
+      expect(await prisma.trilhaAuditoria.count({ where: { acao: 'REGISTRATION_PROMOTED' } })).toBe(
+        0,
+      );
+    });
+
+    it('recusa cancelamento repetido, data futura, canal fora da lista, inexistente e outro perfil', async () => {
+      await cancelar(Perfil.NUCLEO_PEDAGOGICO, await idDe(1), PEDIDO).expect(200);
+
+      const repetido = await cancelar(Perfil.NUCLEO_PEDAGOGICO, await idDe(1), PEDIDO).expect(409);
+      expect((repetido.body as { code: string }).code).toBe('ALREADY_CANCELLED');
+      const futura = await cancelar(Perfil.NUCLEO_PEDAGOGICO, await idDe(2), {
+        ...PEDIDO,
+        pedidoEm: '2999-01-01',
+      }).expect(400);
+      expect((futura.body as { code: string }).code).toBe('INVALID_REQUEST_DATE');
+      await cancelar(Perfil.NUCLEO_PEDAGOGICO, await idDe(2), { ...PEDIDO, canal: 'CARTA' }).expect(
+        400,
+      );
+      await cancelar(
+        Perfil.NUCLEO_PEDAGOGICO,
+        '00000000-0000-4000-8000-000000000000',
+        PEDIDO,
+      ).expect(404);
+      await cancelar(Perfil.PRESIDENCIA_GESTAO, await idDe(2), PEDIDO).expect(403);
+      expect(await prisma.inscricao.count({ where: { situacao: 'CANCELADA' } })).toBe(1);
+    });
+  });
+
   it('lista os inscritos ao Nucleo, com busca, menor e responsavel; os demais veem so os totais', async () => {
     await inscrever(1, SituacaoInscricao.CONFIRMADA);
     await inscrever(2, SituacaoInscricao.CONFIRMADA, true);

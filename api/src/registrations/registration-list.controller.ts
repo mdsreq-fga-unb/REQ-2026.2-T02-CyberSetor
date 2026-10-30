@@ -1,5 +1,16 @@
-import { Controller, Get, HttpCode, Param, ParseUUIDPipe, Post, Query, Res } from '@nestjs/common';
 import {
+  Body,
+  Controller,
+  Get,
+  HttpCode,
+  Param,
+  ParseUUIDPipe,
+  Post,
+  Query,
+  Res,
+} from '@nestjs/common';
+import {
+  ApiBadRequestResponse,
   ApiBearerAuth,
   ApiConflictResponse,
   ApiNotFoundResponse,
@@ -11,7 +22,11 @@ import { CurrentUser } from '../auth/authenticated-user.js';
 import { Profiles } from '../auth/decorators.js';
 import type { ValidSession } from '../auth/session.service.js';
 import { Perfil } from '../generated/prisma/enums.js';
-import { ListRegistrationsQuery, RegistrationListResponse } from './registration-list.dto.js';
+import {
+  CancelRegistrationDto,
+  ListRegistrationsQuery,
+  RegistrationListResponse,
+} from './registration-list.dto.js';
 import { RegistrationListService } from './registration-list.service.js';
 
 /** Dados nominais: só o Núcleo Pedagógico; os demais perfis veem os totais na atividade (RNF04). */
@@ -30,6 +45,26 @@ export class RegistrationListController {
     @Query() query: ListRegistrationsQuery,
   ): Promise<RegistrationListResponse> {
     return this.registrations.list(id, query.busca);
+  }
+
+  /** Cancelamento ou desistência registrado pelo Núcleo; a vaga liberada anda a espera. */
+  @Post(':inscricaoId/cancellation')
+  @HttpCode(200)
+  @ApiOkResponse({ type: RegistrationListResponse, description: 'A lista atualizada' })
+  @ApiBadRequestResponse({ description: 'INVALID_REQUEST_DATE ou canal fora da lista' })
+  @ApiNotFoundResponse({ description: 'Atividade ou inscrição inexistente' })
+  @ApiConflictResponse({ description: 'ALREADY_CANCELLED ou INSTRUMENT_INACTIVE' })
+  cancel(
+    @Param('id', ParseUUIDPipe) id: string,
+    @Param('inscricaoId', ParseUUIDPipe) inscricaoId: string,
+    @Body() body: CancelRegistrationDto,
+    @CurrentUser() user: ValidSession,
+    @Res({ passthrough: true }) res: Response,
+  ): Promise<RegistrationListResponse> {
+    return this.registrations.cancel(id, inscricaoId, body, {
+      usuarioId: user.usuarioId,
+      correlationId: String(res.locals.correlationId ?? ''),
+    });
   }
 
   /** Promoção manual: confirma a vaga de quem está na espera, se houver vaga livre. */

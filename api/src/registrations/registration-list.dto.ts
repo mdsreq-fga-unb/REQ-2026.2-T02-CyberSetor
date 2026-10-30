@@ -1,8 +1,10 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { Transform } from 'class-transformer';
-import { IsOptional, IsString, MaxLength } from 'class-validator';
+import { IsEnum, IsOptional, IsString, Matches, MaxLength } from 'class-validator';
 import { trimString } from '../common/trim.js';
-import { SituacaoInscricao } from '../generated/prisma/enums.js';
+import { CanalPedido, SituacaoInscricao } from '../generated/prisma/enums.js';
+
+const ISO_DATE = /^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])$/;
 
 export class ListRegistrationsQuery {
   @ApiPropertyOptional({ description: 'Parte do nome, do telefone ou do e-mail' })
@@ -11,6 +13,24 @@ export class ListRegistrationsQuery {
   @IsString()
   @MaxLength(150)
   busca?: string;
+}
+
+export class CancelRegistrationDto {
+  @ApiProperty({ enum: CanalPedido, description: 'Por onde chegou o pedido de cancelamento' })
+  @IsEnum(CanalPedido)
+  canal!: CanalPedido;
+
+  @ApiProperty({ format: 'date', description: 'Data do pedido; não pode ser futura' })
+  @Matches(ISO_DATE, { message: 'pedidoEm deve estar no formato AAAA-MM-DD' })
+  pedidoEm!: string;
+}
+
+export class CancellationResponse {
+  @ApiProperty({ format: 'date' })
+  pedidoEm!: string;
+
+  @ApiProperty({ enum: CanalPedido })
+  canal!: CanalPedido;
 }
 
 export class RegisteredPersonResponse {
@@ -55,6 +75,9 @@ export class RegisteredPersonResponse {
 
   @ApiProperty({ nullable: true })
   responsavelTelefone!: string | null;
+
+  @ApiProperty({ type: CancellationResponse, nullable: true })
+  cancelamento!: CancellationResponse | null;
 }
 
 export class RegistrationListResponse {
@@ -67,9 +90,13 @@ export class RegistrationListResponse {
   @ApiProperty({ description: 'Inscrições na lista de espera' })
   emEspera!: number;
 
+  @ApiProperty({ description: 'Inscrições canceladas, que não ocupam vaga' })
+  canceladas!: number;
+
   @ApiProperty({
     type: [RegisteredPersonResponse],
-    description: 'Confirmadas e depois a espera, cada grupo pela ordem de chegada; a busca filtra',
+    description:
+      'Confirmadas, espera e canceladas, cada grupo pela ordem de chegada; a busca filtra',
   })
   inscricoes!: RegisteredPersonResponse[];
 }

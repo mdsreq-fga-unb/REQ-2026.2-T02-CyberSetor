@@ -331,6 +331,7 @@ enum CanalPedido {
 enum SituacaoInscricao {
   CONFIRMADA
   LISTA_ESPERA
+  CANCELADA
 }
 
 model Inscricao {
@@ -354,6 +355,9 @@ model Inscricao {
   comunicadosRevogacaoCanal CanalPedido?      @map("comunicados_revogacao_canal")
   imagemRevogadaEm          DateTime?         @map("imagem_revogada_em") @db.Date
   imagemRevogacaoCanal      CanalPedido?      @map("imagem_revogacao_canal")
+  /// Cancelamento ou desistência registrado pelo Núcleo: data do pedido e canal; a vaga volta para a espera.
+  canceladaEm               DateTime?         @map("cancelada_em") @db.Date
+  cancelamentoCanal         CanalPedido?      @map("cancelamento_canal")
   /// Ordem de chegada, atribuída depois da trava da configuração: decide a vaga e a posição na espera (RF15).
   ordemChegada              Int               @default(autoincrement()) @map("ordem_chegada")
   criadoEm                  DateTime          @default(now()) @map("criado_em") @db.Timestamptz(3)

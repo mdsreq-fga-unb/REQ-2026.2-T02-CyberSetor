@@ -1,5 +1,5 @@
 import { Prisma } from '../generated/prisma/client.js';
-import { AutorTipo, SituacaoInscricao } from '../generated/prisma/enums.js';
+import { AutorTipo, CanalPedido, SituacaoInscricao } from '../generated/prisma/enums.js';
 import type { AuditTrailService } from '../audit/audit-trail.service.js';
 
 /**
@@ -14,10 +14,16 @@ import type { AuditTrailService } from '../audit/audit-trail.service.js';
 export async function lockRegistration(
   tx: Prisma.TransactionClient,
   atividadeId: string,
-): Promise<{ vagas: number; listaEspera: boolean }> {
-  const [row] = await tx.$queryRaw<{ vagas: number; lista_espera: boolean }[]>`
-    SELECT "vagas", "lista_espera" FROM "configuracao_inscricao" WHERE "atividade_id" = ${atividadeId}::uuid FOR UPDATE`;
-  return { vagas: row.vagas, listaEspera: row.lista_espera };
+): Promise<{ vagas: number; listaEspera: boolean; promocaoAutomatica: boolean }> {
+  const [row] = await tx.$queryRaw<
+    { vagas: number; lista_espera: boolean; promocao_automatica: boolean }[]
+  >`
+    SELECT "vagas", "lista_espera", "promocao_automatica" FROM "configuracao_inscricao" WHERE "atividade_id" = ${atividadeId}::uuid FOR UPDATE`;
+  return {
+    vagas: row.vagas,
+    listaEspera: row.lista_espera,
+    promocaoAutomatica: row.promocao_automatica,
+  };
 }
 
 /** Situação da próxima inscrição: confirmada enquanto houver vaga; depois, lista de espera. */
@@ -85,6 +91,56 @@ export async function confirmFromWaitlist(
     },
     tx,
   );
+  return null;
+}
+
+/**
+ * Cancelamento ou desistência registrado pelo Núcleo, com a data do pedido e o canal. A vaga
+ * confirmada que se libera vai para a espera quando a promoção automática estiver ligada.
+ */
+export async function cancelRegistration(
+  tx: Prisma.TransactionClient,
+  audit: AuditTrailService,
+  atividadeId: string,
+  inscricaoId: string,
+  pedido: { canal: CanalPedido; pedidoEm: string },
+  actor: { usuarioId: string; correlationId: string },
+): Promise<'NOT_FOUND' | 'ALREADY_CANCELLED' | null> {
+  const regras = await lockRegistration(tx, atividadeId);
+  const inscricao = await tx.inscricao.findFirst({
+    where: { id: inscricaoId, atividadeId },
+    select: { situacao: true },
+  });
+  if (!inscricao) return 'NOT_FOUND';
+  if (inscricao.situacao === SituacaoInscricao.CANCELADA) return 'ALREADY_CANCELLED';
+  await tx.inscricao.update({
+    where: { id: inscricaoId },
+    data: {
+      situacao: SituacaoInscricao.CANCELADA,
+      canceladaEm: new Date(`${pedido.pedidoEm}T00:00:00.000Z`),
+      cancelamentoCanal: pedido.canal,
+    },
+  });
+  await audit.record(
+    {
+      autorTipo: AutorTipo.USUARIO,
+      usuarioId: actor.usuarioId,
+      acao: 'REGISTRATION_CANCELLED',
+      entidade: 'inscricao',
+      entidadeId: inscricaoId,
+      antes: { situacao: inscricao.situacao },
+      depois: {
+        situacao: SituacaoInscricao.CANCELADA,
+        canal: pedido.canal,
+        pedidoEm: pedido.pedidoEm,
+      },
+      correlationId: actor.correlationId,
+    },
+    tx,
+  );
+  if (inscricao.situacao === SituacaoInscricao.CONFIRMADA && regras.promocaoAutomatica) {
+    await promoteWaitlist(tx, audit, atividadeId, regras.vagas, actor);
+  }
   return null;
 }
 

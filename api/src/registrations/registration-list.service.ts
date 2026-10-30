@@ -1,12 +1,17 @@
-import { ConflictException, Injectable, NotFoundException } from '@nestjs/common';
+import {
+  BadRequestException,
+  ConflictException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import type { Actor } from '../accounts/accounts.service.js';
 import { AuditTrailService } from '../audit/audit-trail.service.js';
 import { SituacaoInscricao } from '../generated/prisma/enums.js';
 import { todayInBrasilia } from '../goals/goal-deadline.js';
 import { PrismaService } from '../prisma/prisma.service.js';
 import { ageOn, onlyDigits } from '../public-registrations/participant-data.js';
-import type { RegistrationListResponse } from './registration-list.dto.js';
-import { confirmFromWaitlist } from './waitlist.js';
+import type { CancelRegistrationDto, RegistrationListResponse } from './registration-list.dto.js';
+import { cancelRegistration, confirmFromWaitlist } from './waitlist.js';
 
 const ADULT_AGE = 18;
 const MIN_PHONE_SEARCH = 3;
@@ -14,6 +19,7 @@ const MIN_PHONE_SEARCH = 3;
 const ORDER: Record<SituacaoInscricao, number> = {
   [SituacaoInscricao.CONFIRMADA]: 0,
   [SituacaoInscricao.LISTA_ESPERA]: 1,
+  [SituacaoInscricao.CANCELADA]: 2,
 };
 
 /** Lista nominal dos inscritos de uma atividade, para o Núcleo Pedagógico (HU-07c, RNF04). */
@@ -24,23 +30,43 @@ export class RegistrationListService {
     private readonly audit: AuditTrailService,
   ) {}
 
+  /** Cancelamento ou desistência, com data do pedido e canal; a vaga liberada anda a espera. */
+  async cancel(
+    atividadeId: string,
+    inscricaoId: string,
+    dto: CancelRegistrationDto,
+    actor: Actor,
+  ): Promise<RegistrationListResponse> {
+    const pedidoEm = new Date(`${dto.pedidoEm}T00:00:00.000Z`);
+    const exists =
+      !Number.isNaN(pedidoEm.getTime()) && pedidoEm.toISOString().slice(0, 10) === dto.pedidoEm;
+    if (!exists || dto.pedidoEm > todayInBrasilia()) {
+      throw new BadRequestException({
+        code: 'INVALID_REQUEST_DATE',
+        message: 'Confira a data do pedido; ela não pode ser futura.',
+      });
+    }
+    await this.assertEditable(atividadeId);
+    const refused = await this.prisma.$transaction((tx) =>
+      cancelRegistration(tx, this.audit, atividadeId, inscricaoId, dto, actor),
+    );
+    if (refused === 'NOT_FOUND') throw new NotFoundException('Inscrição não encontrada.');
+    if (refused === 'ALREADY_CANCELLED') {
+      throw new ConflictException({
+        code: 'ALREADY_CANCELLED',
+        message: 'Esta inscrição já foi cancelada.',
+      });
+    }
+    return this.list(atividadeId);
+  }
+
   /** Vaga confirmada a uma pessoa da espera, quando há vaga livre (promoção manual). */
   async confirm(
     atividadeId: string,
     inscricaoId: string,
     actor: Actor,
   ): Promise<RegistrationListResponse> {
-    const ativo = await this.prisma.atividade.findUnique({
-      where: { id: atividadeId },
-      select: { projeto: { select: { instrumento: { select: { ativo: true } } } } },
-    });
-    if (!ativo) throw new NotFoundException('Atividade não encontrada.');
-    if (!ativo.projeto.instrumento.ativo) {
-      throw new ConflictException({
-        code: 'INSTRUMENT_INACTIVE',
-        message: 'O instrumento está inativo e não altera inscrições.',
-      });
-    }
+    await this.assertEditable(atividadeId);
     const refused = await this.prisma.$transaction((tx) =>
       confirmFromWaitlist(tx, this.audit, atividadeId, inscricaoId, actor),
     );
@@ -104,16 +130,39 @@ export class RegistrationListService {
           autorizaImagem: row.autorizaImagem,
           responsavelNome: row.responsavelNome,
           responsavelTelefone: row.responsavelTelefone,
+          cancelamento:
+            row.canceladaEm && row.cancelamentoCanal
+              ? {
+                  pedidoEm: row.canceladaEm.toISOString().slice(0, 10),
+                  canal: row.cancelamentoCanal,
+                }
+              : null,
         };
       })
       .sort((a, b) => ORDER[a.situacao] - ORDER[b.situacao]);
 
+    const canceladas = rows.filter((row) => row.situacao === SituacaoInscricao.CANCELADA).length;
     return {
       vagas: config.vagas,
-      confirmadas: inscricoes.length - espera,
+      confirmadas: inscricoes.length - espera - canceladas,
       emEspera: espera,
+      canceladas,
       inscricoes: inscricoes.filter(matches(busca)),
     };
+  }
+
+  private async assertEditable(atividadeId: string): Promise<void> {
+    const atividade = await this.prisma.atividade.findUnique({
+      where: { id: atividadeId },
+      select: { projeto: { select: { instrumento: { select: { ativo: true } } } } },
+    });
+    if (!atividade) throw new NotFoundException('Atividade não encontrada.');
+    if (!atividade.projeto.instrumento.ativo) {
+      throw new ConflictException({
+        code: 'INSTRUMENT_INACTIVE',
+        message: 'O instrumento está inativo e não altera inscrições.',
+      });
+    }
   }
 }
 
