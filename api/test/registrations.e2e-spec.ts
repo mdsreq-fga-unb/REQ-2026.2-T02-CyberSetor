@@ -433,7 +433,12 @@ describe('Configuração da inscrição da atividade (e2e)', () => {
 
     expect((await lista())[atividadeId]).toBeNull();
     const aberta = await opened();
-    expect((await lista())[atividadeId]).toEqual({ aberta: true, vagas: 30, inscritos: 0 });
+    expect((await lista())[atividadeId]).toEqual({
+      aberta: true,
+      vagas: 30,
+      inscritos: 0,
+      emEspera: 0,
+    });
     expect((await lista())[outraAtividadeId]).toBeNull();
 
     await as(Perfil.NUCLEO_PEDAGOGICO)

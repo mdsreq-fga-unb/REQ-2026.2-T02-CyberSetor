@@ -7,7 +7,7 @@ import {
 import type { Actor } from '../accounts/accounts.service.js';
 import { AuditTrailService } from '../audit/audit-trail.service.js';
 import { Prisma } from '../generated/prisma/client.js';
-import { AutorTipo, Perfil } from '../generated/prisma/enums.js';
+import { AutorTipo, Perfil, SituacaoInscricao } from '../generated/prisma/enums.js';
 import { toDate } from '../instruments/instruments.service.js';
 import { PrismaService } from '../prisma/prisma.service.js';
 import type {
@@ -27,7 +27,7 @@ const WITH_DETAILS = {
     orderBy: { meta: { ordem: 'asc' } },
   },
   inscricao: { select: { aberta: true, vagas: true } },
-  _count: { select: { inscricoes: true } },
+  inscricoes: { select: { situacao: true } },
 } satisfies Prisma.AtividadeInclude;
 
 type ActivityRow = Prisma.AtividadeGetPayload<{ include: typeof WITH_DETAILS }>;
@@ -153,7 +153,10 @@ function toResponse(row: ActivityRow): ActivityResponse {
       ? {
           aberta: row.inscricao.aberta,
           vagas: row.inscricao.vagas,
-          inscritos: row._count.inscricoes,
+          inscritos: row.inscricoes.filter((i) => i.situacao === SituacaoInscricao.CONFIRMADA)
+            .length,
+          emEspera: row.inscricoes.filter((i) => i.situacao === SituacaoInscricao.LISTA_ESPERA)
+            .length,
         }
       : null,
   };

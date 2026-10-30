@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { deadlineAlert, DEADLINE_WARNING_DAYS, todayInBrasilia } from '../goals/goal-deadline.js';
-import { Perfil, SituacaoMeta } from '../generated/prisma/enums.js';
+import { Perfil, SituacaoInscricao, SituacaoMeta } from '../generated/prisma/enums.js';
 import type { Prisma } from '../generated/prisma/client.js';
 import { INSTRUMENT_READERS } from '../instruments/instruments.controller.js';
 import { PrismaService } from '../prisma/prisma.service.js';
@@ -16,6 +16,9 @@ const LIST_SIZE = { prazos: 6, semResponsavel: 5, atividades: 5, vigencias: 4, i
 // Vagas da lista de prazos garantidas às metas que ainda vão vencer, para as vencidas antigas
 // não esconderem as que pedem ação agora (CA-02b.2).
 const DUE_SOON_SLOTS = 3;
+
+// Inscritos no painel são as vagas confirmadas; a lista de espera não ocupa vaga (RF14).
+const CONFIRMED = { where: { situacao: SituacaoInscricao.CONFIRMADA } };
 
 const PROJECT_REF = { select: { id: true, codigo: true, titulo: true, instrumentoId: true } };
 
@@ -154,7 +157,7 @@ export class DashboardService {
           local: true,
           projeto: PROJECT_REF,
           inscricao: { select: { aberta: true, vagas: true, codigoPublico: true } },
-          _count: { select: { inscricoes: true } },
+          _count: { select: { inscricoes: CONFIRMED } },
         },
         orderBy: [{ data: 'asc' }, { titulo: 'asc' }],
         take: LIST_SIZE.atividades,
@@ -171,7 +174,7 @@ export class DashboardService {
               data: true,
               local: true,
               projeto: PROJECT_REF,
-              _count: { select: { inscricoes: true } },
+              _count: { select: { inscricoes: CONFIRMED } },
             },
           },
         },

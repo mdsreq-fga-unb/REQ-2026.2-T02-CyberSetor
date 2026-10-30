@@ -128,8 +128,11 @@ export class ActivityRegistrationStatusResponse {
   @ApiProperty()
   vagas!: number;
 
-  @ApiProperty({ description: 'Total de inscrições recebidas' })
+  @ApiProperty({ description: 'Inscrições com vaga confirmada' })
   inscritos!: number;
+
+  @ApiProperty({ description: 'Inscrições na lista de espera' })
+  emEspera!: number;
 }
 
 export class ActivityResponse {
