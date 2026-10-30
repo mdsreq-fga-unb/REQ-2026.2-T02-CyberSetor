@@ -265,6 +265,12 @@ model ConfiguracaoInscricao {
   campoDuplicidade CampoDuplicidade @map("campo_duplicidade")
   /// Compromissos da turma que a pessoa aceita para se inscrever; sem termo, não há aceite.
   termoCompromisso String?          @map("termo_compromisso")
+  /// Apresentação da atividade na página de inscrição (descritivo da oficina); opcional.
+  apresentacao     String?
+  /// Último dia para se inscrever; o formulário encerra ao fim desse dia, no horário de Brasília.
+  prazoInscricao   DateTime?        @map("prazo_inscricao") @db.Date
+  /// WhatsApp do Instituto para dúvidas, só dígitos com DDD; nunca o número pessoal de quem coordena.
+  contatoWhatsapp  String?          @map("contato_whatsapp") @db.VarChar(11)
   codigoPublico    String           @unique @map("codigo_publico")
   criadoEm         DateTime         @default(now()) @map("criado_em") @db.Timestamptz(3)
   atualizadoEm     DateTime         @updatedAt @map("atualizado_em") @db.Timestamptz(3)

@@ -22,6 +22,16 @@ interface RegistrationBody {
   codigoPublico: string;
   linkPublico: string;
   termoCompromisso: string | null;
+  apresentacao: string | null;
+  prazoInscricao: string | null;
+  contatoWhatsapp: string | null;
+}
+
+/** Dia no formato AAAA-MM-DD, contado a partir de hoje (UTC basta: o teste fica longe da virada). */
+function day(offset: number): string {
+  const date = new Date();
+  date.setUTCDate(date.getUTCDate() + offset);
+  return date.toISOString().slice(0, 10);
 }
 
 describe('Configuração da inscrição da atividade (e2e)', () => {
@@ -256,6 +266,55 @@ describe('Configuração da inscrição da atividade (e2e)', () => {
       .patch(path(), { versao: 3, termoCompromisso: '   ' })
       .expect(400);
     expect((vazio.body as { code: string }).code).toBe('VALIDATION_ERROR');
+  });
+
+  it('abre com apresentacao, prazo e WhatsApp do Instituto, edita e limpa com a trilha do que mudou', async () => {
+    await prisma.atividade.update({
+      where: { id: atividadeId },
+      data: { data: new Date(`${day(30)}T00:00:00.000Z`) },
+    });
+    const inscricao = await opened({
+      ...VALID,
+      apresentacao: '  Oficina de 8 horas, com certificado.  ',
+      prazoInscricao: day(20),
+      contatoWhatsapp: '+55 (61) 99999-8888',
+    });
+    expect(inscricao).toMatchObject({
+      apresentacao: 'Oficina de 8 horas, com certificado.',
+      prazoInscricao: day(20),
+      contatoWhatsapp: '61999998888',
+    });
+
+    const editada = await as(Perfil.NUCLEO_PEDAGOGICO)
+      .patch(path(), { versao: 1, apresentacao: 'Oficina de 8 horas. Não há almoço.' })
+      .expect(200);
+    expect((editada.body as RegistrationBody).versao).toBe(2);
+    const edicao = await prisma.trilhaAuditoria.findFirstOrThrow({
+      where: { entidadeId: atividadeId, acao: 'REGISTRATION_UPDATED' },
+    });
+    expect(edicao.antes).toEqual({ apresentacao: 'Oficina de 8 horas, com certificado.' });
+
+    const limpa = await as(Perfil.NUCLEO_PEDAGOGICO)
+      .patch(path(), { versao: 2, apresentacao: null, prazoInscricao: null, contatoWhatsapp: null })
+      .expect(200);
+    expect(limpa.body as RegistrationBody).toMatchObject({
+      versao: 3,
+      apresentacao: null,
+      prazoInscricao: null,
+      contatoWhatsapp: null,
+    });
+  });
+
+  it.each([
+    ['apresentacao longa demais', { apresentacao: 'a'.repeat(2001) }],
+    ['apresentacao em branco', { apresentacao: '   ' }],
+    ['prazo fora do formato de data', { prazoInscricao: '05/11/2026' }],
+    ['WhatsApp sem DDD', { contatoWhatsapp: '99998888' }],
+  ])('recusa %s com 400', async (_caso, extra) => {
+    await as(Perfil.NUCLEO_PEDAGOGICO)
+      .post(path(), { ...VALID, ...extra })
+      .expect(400);
+    expect(await prisma.configuracaoInscricao.count()).toBe(0);
   });
 
   it('nao deixa tirar do formulario o campo que identifica cadastro repetido', async () => {

@@ -25,8 +25,19 @@ const FIELDS = [
   'camposAdicionais',
   'campoDuplicidade',
   'termoCompromisso',
+  'apresentacao',
+  'prazoInscricao',
+  'contatoWhatsapp',
 ] as const;
 type Field = (typeof FIELDS)[number];
+
+function isoDate(date: Date | null): string | null {
+  return date ? date.toISOString().slice(0, 10) : null;
+}
+
+function toDate(isoDay: string | null): Date | null {
+  return isoDay ? new Date(`${isoDay}T00:00:00.000Z`) : null;
+}
 
 function toResponse(row: RegistrationRow): RegistrationResponse {
   return {
@@ -38,6 +49,9 @@ function toResponse(row: RegistrationRow): RegistrationResponse {
     camposAdicionais: [...row.camposAdicionais].sort(),
     campoDuplicidade: row.campoDuplicidade,
     termoCompromisso: row.termoCompromisso,
+    apresentacao: row.apresentacao,
+    prazoInscricao: isoDate(row.prazoInscricao),
+    contatoWhatsapp: row.contatoWhatsapp,
     codigoPublico: row.codigoPublico,
     linkPublico: `/inscrever/${row.codigoPublico}`,
   };
@@ -97,6 +111,9 @@ export class RegistrationsService {
           camposAdicionais: data.camposAdicionais,
           campoDuplicidade: data.campoDuplicidade,
           termoCompromisso: data.termoCompromisso ?? null,
+          apresentacao: data.apresentacao ?? null,
+          prazoInscricao: toDate(data.prazoInscricao ?? null),
+          contatoWhatsapp: data.contatoWhatsapp ?? null,
           codigoPublico: randomBytes(12).toString('base64url'),
         },
       });
@@ -146,6 +163,12 @@ export class RegistrationsService {
           changes.termoCompromisso === undefined
             ? before.termoCompromisso
             : changes.termoCompromisso,
+        apresentacao:
+          changes.apresentacao === undefined ? before.apresentacao : changes.apresentacao,
+        prazoInscricao:
+          changes.prazoInscricao === undefined ? before.prazoInscricao : changes.prazoInscricao,
+        contatoWhatsapp:
+          changes.contatoWhatsapp === undefined ? before.contatoWhatsapp : changes.contatoWhatsapp,
       };
       assertKeyAsked(next.camposAdicionais, next.campoDuplicidade);
       const changed = FIELDS.filter((field) => !same(field, before, next));
@@ -159,6 +182,9 @@ export class RegistrationsService {
           camposAdicionais: next.camposAdicionais,
           campoDuplicidade: next.campoDuplicidade,
           termoCompromisso: next.termoCompromisso,
+          apresentacao: next.apresentacao,
+          prazoInscricao: toDate(next.prazoInscricao),
+          contatoWhatsapp: next.contatoWhatsapp,
           versao: { increment: 1 },
         },
       });
