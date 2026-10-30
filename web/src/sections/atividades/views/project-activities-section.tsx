@@ -5,7 +5,7 @@ import { useSession } from '@/auth/hooks/use-session';
 import type { Perfil } from '@/auth/types';
 import { ListPagination } from '@/components/list/list-pagination';
 import { ListCard, ListEmpty, ListError, TableSkeleton } from '@/components/list/list-states';
-import { RowActionsMenu } from '@/components/list/row-actions-menu';
+import { RowActionsMenu, type RowAction } from '@/components/list/row-actions-menu';
 import { usePagination } from '@/components/list/use-pagination';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -28,6 +28,7 @@ import type { Project } from '@/types/projetos';
 import { formatDate, formatSchedule } from '@/lib/br';
 import { ActivityFormDialog } from '../activity-form-dialog';
 import { RegistrationFormDialog } from '../registration-form-dialog';
+import { RegistrationListDialog } from '../registration-list-dialog';
 import { RegistrationShareDialog } from '../registration-share-dialog';
 import { RegistrationToggleDialog } from '../registration-toggle-dialog';
 import { metaBadgeLabel, registrationStatus, type RegistrationTone } from '../format';
@@ -155,8 +156,38 @@ export function ProjectActivitiesSection({
     initialRegistration?: Registration;
   }>();
   const registrationToggle = useDialogState<{ activity: Activity }>();
+  const registrationList = useDialogState<Activity>();
 
   const canEdit = session !== null && EDITORS.includes(session.perfil) && instrument.ativo === true;
+  // Os nomes dos inscritos são só do Núcleo Pedagógico, mesmo com o instrumento inativo (RNF04).
+  const seesNames = session?.perfil === 'NUCLEO_PEDAGOGICO';
+  const hasActions = canEdit || seesNames;
+
+  function actionsFor(activity: Activity): RowAction[] {
+    const actions: RowAction[] = [];
+    if (canEdit) {
+      actions.push(
+        { label: 'Editar atividade', onSelect: () => form.show({ activity }) },
+        {
+          label: activity.inscricao ? 'Configurar inscrição' : 'Abrir inscrição',
+          onSelect: () => registrationForm.show({ activity }),
+        },
+      );
+      if (activity.inscricao) {
+        actions.push(
+          { label: 'Link e QR Code', onSelect: () => registrationShare.show({ activity }) },
+          {
+            label: activity.inscricao.aberta ? 'Encerrar inscrições' : 'Reabrir inscrições',
+            onSelect: () => registrationToggle.show({ activity }),
+          },
+        );
+      }
+    }
+    if (seesNames && activity.inscricao) {
+      actions.push({ label: 'Ver inscritos', onSelect: () => registrationList.show(activity) });
+    }
+    return actions;
+  }
 
   const createButton = canEdit && (
     <Button onClick={() => form.show({ activity: null })}>
@@ -207,7 +238,7 @@ export function ProjectActivitiesSection({
                 <TableHead scope="col" className="hidden md:table-cell">
                   Inscrição
                 </TableHead>
-                {canEdit && (
+                {hasActions && (
                   <TableHead scope="col" className="w-16 px-4">
                     <span className="sr-only">Ações</span>
                   </TableHead>
@@ -216,7 +247,7 @@ export function ProjectActivitiesSection({
             </TableHeader>
             <TableBody>
               {activities.isPending ? (
-                <TableSkeleton columns={canEdit ? 5 : 4} />
+                <TableSkeleton columns={hasActions ? 5 : 4} />
               ) : (
                 pagination.pageRows.map((activity) => (
                   <TableRow key={activity.id}>
@@ -239,37 +270,14 @@ export function ProjectActivitiesSection({
                         onShare={canEdit ? () => registrationShare.show({ activity }) : undefined}
                       />
                     </TableCell>
-                    {canEdit && (
+                    {hasActions && (
                       <TableCell className="px-4 text-right">
-                        <RowActionsMenu
-                          label={`Ações da atividade ${activity.titulo}`}
-                          actions={[
-                            {
-                              label: 'Editar atividade',
-                              onSelect: () => form.show({ activity }),
-                            },
-                            {
-                              label: activity.inscricao
-                                ? 'Configurar inscrição'
-                                : 'Abrir inscrição',
-                              onSelect: () => registrationForm.show({ activity }),
-                            },
-                            ...(activity.inscricao
-                              ? [
-                                  {
-                                    label: 'Link e QR Code',
-                                    onSelect: () => registrationShare.show({ activity }),
-                                  },
-                                  {
-                                    label: activity.inscricao.aberta
-                                      ? 'Encerrar inscrições'
-                                      : 'Reabrir inscrições',
-                                    onSelect: () => registrationToggle.show({ activity }),
-                                  },
-                                ]
-                              : []),
-                          ]}
-                        />
+                        {actionsFor(activity).length > 0 && (
+                          <RowActionsMenu
+                            label={`Ações da atividade ${activity.titulo}`}
+                            actions={actionsFor(activity)}
+                          />
+                        )}
                       </TableCell>
                     )}
                   </TableRow>
@@ -322,6 +330,12 @@ export function ProjectActivitiesSection({
         activity={registrationToggle.open ? (registrationToggle.value?.activity ?? null) : null}
         onClose={registrationToggle.close}
         onDone={(message) => toast.add({ type: 'success', title: message })}
+      />
+
+      <RegistrationListDialog
+        open={registrationList.open}
+        activity={registrationList.value}
+        onClose={registrationList.close}
       />
 
       <RegistrationShareDialog

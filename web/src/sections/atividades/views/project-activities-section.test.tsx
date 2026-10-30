@@ -1,8 +1,9 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { cleanup, fireEvent, render, screen } from '@testing-library/react';
+import { cleanup, fireEvent, render, screen, within } from '@testing-library/react';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import { clearLocalSession, signIn } from '@/auth/session';
 import type { Activity } from '@/types/atividades';
+import type { RegisteredPerson, SituacaoInscricao } from '@/types/inscricoes';
 import type { Instrument } from '@/types/instrumentos';
 import type { Project } from '@/types/projetos';
 import { ProjectActivitiesSection } from './project-activities-section';
@@ -75,6 +76,29 @@ type Route = (body: unknown) => { status: number; body?: unknown };
 
 function json(status: number, body?: unknown): Response {
   return new Response(body === undefined ? null : JSON.stringify(body), { status });
+}
+
+function person(
+  nome: string,
+  situacao: SituacaoInscricao,
+  posicaoEspera: number | null,
+): RegisteredPerson {
+  return {
+    id: `inscricao-${nome}`,
+    participanteId: `participante-${nome}`,
+    nome,
+    idade: 30,
+    menor: false,
+    telefone: '61999998888',
+    email: null,
+    situacao,
+    posicaoEspera,
+    inscritoEm: '2026-10-28T13:00:00.000Z',
+    autorizaComunicados: true,
+    autorizaImagem: false,
+    responsavelNome: null,
+    responsavelTelefone: null,
+  };
 }
 
 async function signedInAs(perfil: string, routes: Record<string, Route>) {
@@ -298,6 +322,48 @@ describe('ProjectActivitiesSection', () => {
     );
     expect(await screen.findByRole('menuitem', { name: 'Abrir inscrição' })).toBeInTheDocument();
     expect(screen.queryByRole('menuitem', { name: /Encerrar|Link e QR Code/ })).toBeNull();
+  });
+
+  it('Nucleo ve os inscritos confirmados e a lista de espera pela posicao', async () => {
+    await signedInAs('NUCLEO_PEDAGOGICO', {
+      [`GET /projects/${PROJECT.id}/activities`]: () => ({
+        status: 200,
+        body: [{ ...ACTIVITY_1, inscricao: { aberta: true, vagas: 1, inscritos: 1, emEspera: 1 } }],
+      }),
+      [`GET /activities/${ACTIVITY_1.id}/registrations`]: () => ({
+        status: 200,
+        body: {
+          vagas: 1,
+          confirmadas: 1,
+          emEspera: 1,
+          inscricoes: [
+            person('Ana Souza', 'CONFIRMADA', null),
+            {
+              ...person('Bruno Lima', 'LISTA_ESPERA', 1),
+              menor: true,
+              responsavelNome: 'Carla Lima',
+            },
+          ],
+        },
+      }),
+    });
+    renderSection();
+
+    fireEvent.click(
+      await screen.findByRole('button', { name: `Ações da atividade ${ACTIVITY_1.titulo}` }),
+    );
+    fireEvent.click(await screen.findByRole('menuitem', { name: 'Ver inscritos' }));
+
+    expect(
+      await screen.findByText('1 de 1 vagas confirmadas · 1 na lista de espera'),
+    ).toBeInTheDocument();
+    const confirmadas = screen.getByRole('region', { name: 'Vagas confirmadas (1)' });
+    expect(within(confirmadas).getByText('Ana Souza')).toBeInTheDocument();
+    const espera = screen.getByRole('region', { name: 'Lista de espera (1)' });
+    expect(within(espera).getByText(/1º ·/)).toBeInTheDocument();
+    expect(within(espera).getByText('Bruno Lima', { exact: false })).toBeInTheDocument();
+    expect(within(espera).getByText('Menor')).toBeInTheDocument();
+    expect(within(espera).getByText(/Responsável: Carla Lima/)).toBeInTheDocument();
   });
 
   it('perfil de consulta (ADMINISTRATIVO_FINANCEIRO) consulta mas nao altera', async () => {

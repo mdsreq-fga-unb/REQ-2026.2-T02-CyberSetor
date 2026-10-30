@@ -4,6 +4,7 @@ import { ApiError } from '@/lib/api';
 import type {
   OpenRegistrationInput,
   Registration,
+  RegistrationList,
   UpdateRegistrationInput,
 } from '@/types/inscricoes';
 
@@ -37,6 +38,26 @@ export function useRegistration(activityId?: string, enabled = true) {
   });
 }
 
+export function registrationListKey(activityId: string, busca = '') {
+  return ['atividades', activityId, 'inscritos', busca] as const;
+}
+
+/** Inscritos da atividade: só o Núcleo Pedagógico (seção 8.5.1, RNF04). */
+export function useRegistrationList(activityId: string | undefined, busca: string, enabled = true) {
+  const query = busca.trim();
+  return useQuery({
+    queryKey: registrationListKey(activityId ?? '', query),
+    queryFn: () =>
+      authorizedRequest<RegistrationList>(
+        `/activities/${encodeURIComponent(activityId!)}/registrations${
+          query ? `?busca=${encodeURIComponent(query)}` : ''
+        }`,
+      ),
+    enabled: Boolean(activityId && enabled),
+    placeholderData: (previous) => previous,
+  });
+}
+
 export function useFreshRegistration() {
   return (activityId: string): Promise<Registration> =>
     authorizedRequest<Registration>(`/activities/${encodeURIComponent(activityId)}/registration`);
@@ -56,6 +77,8 @@ export function useOpenRegistration(activityId: string) {
     onSuccess: () =>
       Promise.all([
         queryClient.invalidateQueries({ queryKey: registrationKey(activityId) }),
+        // Mais vagas promovem a lista de espera.
+        queryClient.invalidateQueries({ queryKey: ['atividades', activityId, 'inscritos'] }),
         // A lista de atividades mostra a situação da inscrição e os inscritos.
         queryClient.invalidateQueries({
           queryKey: ['projetos'],
@@ -79,6 +102,8 @@ export function useUpdateRegistration(activityId: string) {
     onSuccess: () =>
       Promise.all([
         queryClient.invalidateQueries({ queryKey: registrationKey(activityId) }),
+        // Mais vagas promovem a lista de espera.
+        queryClient.invalidateQueries({ queryKey: ['atividades', activityId, 'inscritos'] }),
         // A lista de atividades mostra a situação da inscrição e os inscritos.
         queryClient.invalidateQueries({
           queryKey: ['projetos'],

@@ -56,3 +56,28 @@ export interface UpdateRegistrationInput {
 }
 
 export type SituacaoInscricao = 'CONFIRMADA' | 'LISTA_ESPERA';
+
+/** Pessoa inscrita na atividade, como o Núcleo Pedagógico vê (HU-07c). */
+export interface RegisteredPerson {
+  id: string;
+  participanteId: string;
+  nome: string;
+  idade: number;
+  menor: boolean;
+  telefone: string;
+  email: string | null;
+  situacao: SituacaoInscricao;
+  posicaoEspera: number | null;
+  inscritoEm: string;
+  autorizaComunicados: boolean;
+  autorizaImagem: boolean;
+  responsavelNome: string | null;
+  responsavelTelefone: string | null;
+}
+
+export interface RegistrationList {
+  vagas: number;
+  confirmadas: number;
+  emEspera: number;
+  inscricoes: RegisteredPerson[];
+}
