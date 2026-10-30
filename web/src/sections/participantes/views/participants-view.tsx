@@ -23,9 +23,10 @@ import { useDialogState } from '@/hooks/use-dialog-state';
 import { ApiError } from '@/lib/api';
 import { formatDate, formatPhone } from '@/lib/br';
 import { useParticipant, useParticipants } from '@/queries/participantes';
-import type { ParticipantSummary } from '@/types/participantes';
+import type { ParticipantRegistration, ParticipantSummary } from '@/types/participantes';
 import { CorrectParticipantDialog } from '../correct-participant-dialog';
 import { ParticipantDialog } from '../participant-dialog';
+import { RevokeAuthorizationDialog } from '../revoke-authorization-dialog';
 
 const TITLE = 'Participantes';
 const DESCRIPTION =
@@ -57,6 +58,7 @@ export function ParticipantsView() {
 
   const viewing = useDialogState<string>();
   const [correcting, setCorrecting] = useState(false);
+  const [revoking, setRevoking] = useState<ParticipantRegistration | null>(null);
   const participant = useParticipant(viewing.value);
   const truncated = (participants.data?.length ?? 0) > LIMIT;
   const pagination = usePagination(participants.data?.slice(0, LIMIT));
@@ -68,6 +70,7 @@ export function ParticipantsView() {
 
   function closeAll() {
     setCorrecting(false);
+    setRevoking(null);
     viewing.close();
   }
 
@@ -148,7 +151,15 @@ export function ParticipantsView() {
                   <TableRow key={row.id}>
                     <TableCell className="px-4 py-3 whitespace-normal">
                       <div className="flex flex-col gap-1">
-                        <span className="font-medium">{row.nome}</span>
+                        <span className="font-medium">
+                          {row.nome}
+                          {row.nomePreferencia && (
+                            <span className="font-normal text-muted-foreground">
+                              {' '}
+                              ({row.nomePreferencia})
+                            </span>
+                          )}
+                        </span>
                         <span className="text-sm text-muted-foreground">
                           {row.idade} anos · {row.inscricoes}{' '}
                           {row.inscricoes === 1 ? 'inscrição' : 'inscrições'}
@@ -187,12 +198,20 @@ export function ParticipantsView() {
 
       <ParticipantDialog
         // Enquanto a ficha carrega, ou se ela falhar, mostra a ficha mesmo vindo de "Corrigir dados".
-        open={viewing.open && (!correcting || !participant.data)}
+        open={viewing.open && !revoking && (!correcting || !participant.data)}
         participant={participant.data}
         loading={participant.isPending}
         failed={participant.isError}
         onClose={closeAll}
         onCorrect={() => setCorrecting(true)}
+        onRevoke={setRevoking}
+      />
+      <RevokeAuthorizationDialog
+        open={viewing.open && Boolean(revoking)}
+        participant={participant.data ?? null}
+        registration={revoking}
+        onClose={() => setRevoking(null)}
+        onRevoked={() => toast.add({ type: 'success', title: 'Revogação registrada' })}
       />
       <CorrectParticipantDialog
         open={viewing.open && correcting && Boolean(participant.data)}

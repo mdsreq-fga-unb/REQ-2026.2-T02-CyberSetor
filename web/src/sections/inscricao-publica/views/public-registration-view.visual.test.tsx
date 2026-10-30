@@ -14,11 +14,21 @@ const FORM: PublicForm = {
     texto:
       'O Instituto usa os dados deste formulário para a sua inscrição na atividade e para a prestação de contas da parceria que a financia.',
   },
+  termo: {
+    versao: 'a1b2c3d4e5f60718',
+    texto:
+      '1. Chegar no horário combinado.\n2. Avisar a equipe quando não puder vir.\n3. Cuidar do material e do espaço.',
+  },
+  apresentacao:
+    'Oficina de 8 horas para quem quer imprimir as próprias estampas.\nLeve uma camiseta clara. Não será oferecido almoço.',
+  prazoInscricao: '2026-11-08',
+  prazoHora: '18:00',
+  contatoWhatsapp: '61999998888',
 };
 
 describe.each([
-  ['celular', 360, 1600],
-  ['desktop', 1280, 1400],
+  ['celular', 360, 2000],
+  ['desktop', 1280, 1700],
 ])('formulario publico no %s', (device, width, height) => {
   beforeEach(async () => {
     await page.viewport(width, height);

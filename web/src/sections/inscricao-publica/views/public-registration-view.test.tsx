@@ -11,7 +11,14 @@ const FORM: PublicForm = {
   camposMinimos: ['NOME', 'TELEFONE', 'DATA_NASCIMENTO', 'CONSENTIMENTOS'],
   camposAdicionais: ['CPF'],
   aviso: { versao: '2026-10-28-provisoria', texto: 'O Instituto usa os dados para a inscrição.' },
+  termo: null,
+  apresentacao: null,
+  prazoInscricao: null,
+  prazoHora: null,
+  contatoWhatsapp: null,
 };
+
+const TERMO = { versao: 'a1b2c3d4e5f60718', texto: 'Chegar no horário.\nAvisar quando faltar.' };
 
 type Route = (body: unknown) => { status: number; body?: unknown };
 
@@ -85,7 +92,9 @@ describe('formulario publico de inscricao', () => {
     expect(screen.getByText('O Instituto usa os dados para a inscrição.')).toBeInTheDocument();
     expect(screen.getByLabelText('Quero receber comunicados do Instituto')).not.toBeChecked();
     expect(
-      screen.getByLabelText('Autorizo o uso da minha imagem em materiais do Instituto'),
+      screen.getByLabelText(
+        'Autorizo o uso da minha imagem e da minha voz em materiais do Instituto',
+      ),
     ).not.toBeChecked();
     expect(screen.queryByLabelText('Nome do responsável')).not.toBeInTheDocument();
   });
@@ -123,6 +132,151 @@ describe('formulario publico de inscricao', () => {
     });
   });
 
+  it('nome de preferencia e opcional e vai sem espacos quando preenchido', async () => {
+    const calls = stubApi({
+      [GET]: () => ({ status: 200, body: FORM }),
+      [POST]: () => ({
+        status: 201,
+        body: {
+          situacao: 'CONFIRMADA',
+          atividade: FORM.atividade,
+          inscritoEm: '2026-10-30T13:00:00.000Z',
+        },
+      }),
+    });
+    renderView();
+
+    await screen.findByLabelText('CPF');
+    fillAdult();
+    fill('Como prefere ser chamado(a)? (opcional)', '  Aninha  ');
+    fireEvent.click(screen.getByRole('button', { name: 'Confirmar inscrição' }));
+
+    await screen.findByRole('heading', { name: 'Inscrição confirmada' });
+    expect(calls.find((call) => call.key === POST)?.body).toMatchObject({
+      nome: 'Ana Souza',
+      nomePreferencia: 'Aninha',
+    });
+  });
+
+  it('mostra a apresentacao, o prazo com a hora e o link do WhatsApp do Instituto', async () => {
+    stubApi({
+      [GET]: () => ({
+        status: 200,
+        body: {
+          ...FORM,
+          apresentacao: 'Oficina de 8 horas.\nLeve uma camiseta clara.',
+          prazoInscricao: '2026-11-08',
+          prazoHora: '18:00',
+          contatoWhatsapp: '61999998888',
+        },
+      }),
+    });
+    renderView();
+
+    expect(
+      await screen.findByRole('heading', { level: 2, name: 'Sobre a atividade' }),
+    ).toBeInTheDocument();
+    expect(screen.getByText(/Leve uma camiseta clara/)).toBeInTheDocument();
+    expect(screen.getByText('08/11/2026, às 18h')).toBeInTheDocument();
+    expect(screen.getByRole('link', { name: /WhatsApp do Instituto/ })).toHaveAttribute(
+      'href',
+      'https://wa.me/5561999998888',
+    );
+  });
+
+  it('sem apresentacao, prazo nem contato, a pagina fica como antes', async () => {
+    stubApi({ [GET]: () => ({ status: 200, body: FORM }) });
+    renderView();
+
+    await screen.findByRole('heading', { level: 1, name: /Oficina de serigrafia/ });
+    expect(screen.queryByText('Sobre a atividade')).not.toBeInTheDocument();
+    expect(screen.queryByText('Inscrições até')).not.toBeInTheDocument();
+    expect(screen.queryByRole('link', { name: /WhatsApp/ })).not.toBeInTheDocument();
+  });
+
+  it('prazo sem hora vale ate as 23h59', async () => {
+    stubApi({
+      [GET]: () => ({ status: 200, body: { ...FORM, prazoInscricao: '2026-11-08' } }),
+    });
+    renderView();
+
+    expect(await screen.findByText('08/11/2026, às 23h59')).toBeInTheDocument();
+  });
+
+  it('sem termo, nao mostra os compromissos nem manda versao de termo', async () => {
+    stubApi({ [GET]: () => ({ status: 200, body: FORM }) });
+    renderView();
+
+    await screen.findByLabelText('CPF');
+    expect(screen.queryByText('Compromissos da turma')).not.toBeInTheDocument();
+    expect(
+      screen.queryByLabelText('Li os compromissos acima e concordo com todos'),
+    ).not.toBeInTheDocument();
+  });
+
+  it('com termo, mostra os compromissos e so envia com o aceite, junto da versao', async () => {
+    const calls = stubApi({
+      [GET]: () => ({ status: 200, body: { ...FORM, termo: TERMO } }),
+      [POST]: () => ({
+        status: 201,
+        body: {
+          situacao: 'CONFIRMADA',
+          atividade: FORM.atividade,
+          inscritoEm: '2026-10-30T13:00:00.000Z',
+        },
+      }),
+    });
+    renderView();
+
+    await screen.findByLabelText('CPF');
+    expect(screen.getByRole('heading', { name: 'Compromissos da turma' })).toBeInTheDocument();
+    expect(screen.getByText(/Avisar quando faltar/)).toBeInTheDocument();
+    fillAdult();
+    fireEvent.click(screen.getByRole('button', { name: 'Confirmar inscrição' }));
+
+    expect(
+      await screen.findByText('Marque que concorda com os compromissos da turma.'),
+    ).toBeInTheDocument();
+    expect(calls.some((call) => call.key === POST)).toBe(false);
+
+    fireEvent.click(screen.getByLabelText('Li os compromissos acima e concordo com todos'));
+    fireEvent.click(screen.getByRole('button', { name: 'Confirmar inscrição' }));
+
+    await screen.findByRole('heading', { name: 'Inscrição confirmada' });
+    expect(calls.find((call) => call.key === POST)?.body).toMatchObject({
+      versaoTermo: TERMO.versao,
+    });
+  });
+
+  it('termo alterado durante o preenchimento recarrega o texto e pede o aceite de novo', async () => {
+    let versao = TERMO.versao;
+    const calls = stubApi({
+      [GET]: () => ({ status: 200, body: { ...FORM, termo: { ...TERMO, versao } } }),
+      [POST]: () => {
+        versao = 'f0e1d2c3b4a59687';
+        return {
+          status: 400,
+          body: {
+            code: 'TERM_OUTDATED',
+            message: 'Os compromissos da turma mudaram. Leia o texto atual e envie de novo.',
+          },
+        };
+      },
+    });
+    renderView();
+
+    await screen.findByLabelText('CPF');
+    fillAdult();
+    fireEvent.click(screen.getByLabelText('Li os compromissos acima e concordo com todos'));
+    fireEvent.click(screen.getByRole('button', { name: 'Confirmar inscrição' }));
+
+    expect(await screen.findByRole('alert')).toHaveTextContent('Os compromissos da turma mudaram.');
+    expect(
+      screen.getByLabelText('Li os compromissos acima e concordo com todos'),
+    ).not.toBeChecked();
+    expect(calls.filter((call) => call.key === GET).length).toBeGreaterThan(1);
+  });
+
   it('menor de 18 anos ve e precisa preencher o responsavel legal antes de enviar', async () => {
     const calls = stubApi({ [GET]: () => ({ status: 200, body: FORM }) });
     renderView();
@@ -133,7 +287,7 @@ describe('formulario publico de inscricao', () => {
     expect(await screen.findByLabelText('Nome do responsável')).toBeInTheDocument();
     expect(
       screen.getByLabelText(
-        'O responsável legal autoriza o uso da imagem do participante em materiais do Instituto',
+        'O responsável legal autoriza o uso da imagem e da voz do participante em materiais do Instituto',
       ),
     ).not.toBeChecked();
     fireEvent.click(screen.getByRole('button', { name: 'Confirmar inscrição' }));
@@ -207,6 +361,31 @@ describe('formulario publico de inscricao', () => {
     expect(
       await screen.findByRole('heading', { name: 'Inscrições encerradas' }),
     ).toBeInTheDocument();
+    expect(screen.queryByLabelText('Nome completo')).not.toBeInTheDocument();
+  });
+
+  it('prazo vencido mostra quando terminou e o WhatsApp do Instituto', async () => {
+    stubApi({
+      [GET]: () => ({
+        status: 200,
+        body: {
+          ...FORM,
+          aberta: false,
+          prazoInscricao: '2026-10-01',
+          prazoHora: '18:00',
+          contatoWhatsapp: '61999998888',
+        },
+      }),
+    });
+    renderView();
+
+    expect(
+      await screen.findByText('O prazo de inscrição terminou em 01/10/2026, às 18h.'),
+    ).toBeInTheDocument();
+    expect(screen.getByRole('link', { name: /WhatsApp do Instituto/ })).toHaveAttribute(
+      'href',
+      'https://wa.me/5561999998888',
+    );
     expect(screen.queryByLabelText('Nome completo')).not.toBeInTheDocument();
   });
 
