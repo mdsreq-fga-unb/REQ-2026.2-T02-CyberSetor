@@ -95,7 +95,7 @@ export class SubmitRegistrationDto {
   @IsBoolean()
   autorizaComunicados!: boolean;
 
-  @ApiProperty({ description: 'Autorização opcional de uso institucional de imagem' })
+  @ApiProperty({ description: 'Autorização opcional de uso institucional de imagem e voz' })
   @Transform(asSent)
   @IsBoolean()
   autorizaImagem!: boolean;
