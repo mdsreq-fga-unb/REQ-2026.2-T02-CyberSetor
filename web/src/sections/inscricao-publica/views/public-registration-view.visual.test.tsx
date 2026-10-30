@@ -19,6 +19,11 @@ const FORM: PublicForm = {
     texto:
       '1. Chegar no horário combinado.\n2. Avisar a equipe quando não puder vir.\n3. Cuidar do material e do espaço.',
   },
+  apresentacao:
+    'Oficina de 8 horas para quem quer imprimir as próprias estampas.\nLeve uma camiseta clara. Não será oferecido almoço.',
+  prazoInscricao: '2026-11-08',
+  prazoHora: '18:00',
+  contatoWhatsapp: '61999998888',
 };
 
 describe.each([

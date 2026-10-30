@@ -5,6 +5,7 @@ import { ShieldCheckIcon } from 'lucide-react';
 import { useEffect, useRef, useState, type FormEvent } from 'react';
 import { useForm, useWatch } from 'react-hook-form';
 import { z } from 'zod';
+import { DateField, PhoneField } from '@/components/form/fields';
 import { FormField } from '@/components/form-field';
 import { ListError } from '@/components/list/list-states';
 import { Button } from '@/components/ui/button';
@@ -20,6 +21,7 @@ import { FieldGroup } from '@/components/ui/field';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { ApiError } from '@/lib/api';
+import { formatDate, isValidPhone, todayInBrasilia } from '@/lib/br';
 import {
   useFreshRegistration,
   useOpenRegistration,
@@ -37,6 +39,9 @@ import { registrationLoadFailure } from './format';
 
 const MAX_VAGAS = 10_000;
 const MAX_TERMO = 4000;
+const MAX_APRESENTACAO = 2000;
+const ISO_DATE = /^\d{4}-\d{2}-\d{2}$/;
+const HOUR = /^([01]\d|2[0-3]):[0-5]\d$/;
 
 const LABELS_ADICIONAIS: Record<CampoInscricao, string> = {
   CPF: 'CPF (Cadastro de Pessoas Físicas)',
@@ -59,11 +64,38 @@ const registrationSchema = z
       .string()
       .trim()
       .max(MAX_TERMO, `O texto tem no máximo ${MAX_TERMO.toLocaleString('pt-BR')} caracteres.`),
+    apresentacao: z
+      .string()
+      .trim()
+      .max(
+        MAX_APRESENTACAO,
+        `O texto tem no máximo ${MAX_APRESENTACAO.toLocaleString('pt-BR')} caracteres.`,
+      ),
+    prazoInscricao: z
+      .string()
+      .refine((value) => value === '' || ISO_DATE.test(value), 'Informe a data completa.')
+      .refine(
+        (value) => value === '' || value >= todayInBrasilia(),
+        'O prazo não pode ser uma data que já passou.',
+      ),
+    prazoHora: z
+      .string()
+      .refine((value) => value === '' || HOUR.test(value), 'Informe a hora, como 18:00.'),
+    contatoWhatsapp: z
+      .string()
+      .refine(
+        (value) => value === '' || isValidPhone(value),
+        'Informe o WhatsApp com DDD, como (61) 99999-8888.',
+      ),
   })
   .refine((data) => data.camposAdicionais.includes(data.campoDuplicidade), {
     path: ['campoDuplicidade'],
     message:
       'O dado escolhido para evitar inscrição em dobro precisa estar entre os dados pedidos.',
+  })
+  .refine((data) => data.prazoHora === '' || data.prazoInscricao !== '', {
+    path: ['prazoInscricao'],
+    message: 'Informe a data do prazo para usar a hora.',
   });
 
 type FormValues = z.input<typeof registrationSchema>;
@@ -76,6 +108,10 @@ const DEFAULT_VALUES: FormValues = {
   camposAdicionais: ['EMAIL'],
   campoDuplicidade: 'EMAIL',
   termoCompromisso: '',
+  apresentacao: '',
+  prazoInscricao: '',
+  prazoHora: '',
+  contatoWhatsapp: '',
 };
 
 function valuesFromRegistration(reg: Registration | null): FormValues {
@@ -86,12 +122,16 @@ function valuesFromRegistration(reg: Registration | null): FormValues {
     camposAdicionais: [...reg.camposAdicionais],
     campoDuplicidade: reg.campoDuplicidade,
     termoCompromisso: reg.termoCompromisso ?? '',
+    apresentacao: reg.apresentacao ?? '',
+    prazoInscricao: reg.prazoInscricao ?? '',
+    prazoHora: reg.prazoHora ?? '',
+    contatoWhatsapp: reg.contatoWhatsapp ?? '',
   };
 }
 
 function failureOf(error: unknown): string {
   if (!(error instanceof ApiError)) return 'Não foi possível falar com o servidor. Tente de novo.';
-  if (error.status === 409 || error.status === 400) return error.message;
+  if (error.status === 409 || error.status === 400 || error.status === 422) return error.message;
   if (error.status === 403) {
     return 'O seu perfil não tem permissão para configurar a inscrição desta atividade.';
   }
@@ -174,6 +214,10 @@ export function RegistrationFormDialog({
           camposAdicionais: data.camposAdicionais,
           campoDuplicidade: data.campoDuplicidade,
           termoCompromisso: data.termoCompromisso || null,
+          apresentacao: data.apresentacao || null,
+          prazoInscricao: data.prazoInscricao || null,
+          prazoHora: data.prazoHora || null,
+          contatoWhatsapp: data.contatoWhatsapp || null,
         });
       } else {
         saved = await openMutation.mutateAsync({
@@ -181,6 +225,10 @@ export function RegistrationFormDialog({
           camposAdicionais: data.camposAdicionais,
           campoDuplicidade: data.campoDuplicidade,
           ...(data.termoCompromisso && { termoCompromisso: data.termoCompromisso }),
+          ...(data.apresentacao && { apresentacao: data.apresentacao }),
+          ...(data.prazoInscricao && { prazoInscricao: data.prazoInscricao }),
+          ...(data.prazoHora && { prazoHora: data.prazoHora }),
+          ...(data.contatoWhatsapp && { contatoWhatsapp: data.contatoWhatsapp }),
         });
       }
       close();
@@ -188,6 +236,17 @@ export function RegistrationFormDialog({
     } catch (error) {
       if (existing && error instanceof ApiError && error.code === 'VERSION_CONFLICT') {
         await reloadAfterConflict(activityId);
+        return;
+      }
+      if (
+        error instanceof ApiError &&
+        (error.code === 'DEADLINE_INVALID' || error.code === 'DEADLINE_PASSED')
+      ) {
+        form.setError(
+          'prazoInscricao',
+          { type: 'server', message: error.message },
+          { shouldFocus: true },
+        );
         return;
       }
       if (error instanceof ApiError && error.code === 'DUPLICATE_KEY_NOT_ASKED') {
@@ -437,6 +496,65 @@ export function RegistrationFormDialog({
                   />
                 )}
               </FormField>
+
+              <fieldset className="flex flex-col gap-5 rounded-lg border border-border p-4">
+                <legend className="px-1 text-sm font-semibold">
+                  Apresentação na página de inscrição
+                </legend>
+                <p className="-mt-3 text-xs text-muted-foreground">
+                  {activity
+                    ? `A página já mostra o título, a data (${formatDate(activity.data)}) e o local. Tudo aqui é opcional.`
+                    : 'A página já mostra o título, a data e o local. Tudo aqui é opcional.'}
+                </p>
+                <FormField
+                  name="apresentacao"
+                  label="Texto de apresentação"
+                  description="O que é a atividade, para quem é, o que se aprende e o que levar."
+                  control={form.control}
+                >
+                  {(props) => (
+                    <Textarea
+                      {...props}
+                      rows={5}
+                      disabled={!instrumentAtivo}
+                      value={props.value ?? ''}
+                    />
+                  )}
+                </FormField>
+                <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
+                  <DateField
+                    control={form.control}
+                    name="prazoInscricao"
+                    label="Inscrições até"
+                    description="Depois disso, o link mostra que as inscrições terminaram."
+                    min={todayInBrasilia()}
+                    max={activity?.data}
+                    disabled={!instrumentAtivo}
+                  />
+                  <FormField
+                    name="prazoHora"
+                    label="Hora do prazo"
+                    description="Sem hora, as inscrições vão até as 23h59."
+                    control={form.control}
+                  >
+                    {(props) => (
+                      <Input
+                        {...props}
+                        type="time"
+                        disabled={!instrumentAtivo}
+                        value={props.value ?? ''}
+                      />
+                    )}
+                  </FormField>
+                </div>
+                <PhoneField
+                  control={form.control}
+                  name="contatoWhatsapp"
+                  label="WhatsApp do Instituto para dúvidas"
+                  description="Use um número do Instituto, não um número pessoal."
+                  disabled={!instrumentAtivo}
+                />
+              </fieldset>
 
               {/* Aviso LGPD / RNF05 */}
               <div className="flex items-start gap-3 rounded-lg border border-primary/20 bg-primary/5 p-4 text-xs text-muted-foreground">

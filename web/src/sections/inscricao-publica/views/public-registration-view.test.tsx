@@ -12,6 +12,10 @@ const FORM: PublicForm = {
   camposAdicionais: ['CPF'],
   aviso: { versao: '2026-10-28-provisoria', texto: 'O Instituto usa os dados para a inscrição.' },
   termo: null,
+  apresentacao: null,
+  prazoInscricao: null,
+  prazoHora: null,
+  contatoWhatsapp: null,
 };
 
 const TERMO = { versao: 'a1b2c3d4e5f60718', texto: 'Chegar no horário.\nAvisar quando faltar.' };

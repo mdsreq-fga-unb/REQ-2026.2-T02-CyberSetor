@@ -14,6 +14,13 @@ export interface PublicForm {
   aviso: { versao: string; texto: string };
   /** Compromissos da turma, com aceite obrigatório; null quando a atividade não tem. */
   termo: { versao: string; texto: string } | null;
+  apresentacao: string | null;
+  /** Último dia para se inscrever (AAAA-MM-DD). */
+  prazoInscricao: string | null;
+  /** Hora do prazo (HH:MM); null = fim do dia. */
+  prazoHora: string | null;
+  /** WhatsApp do Instituto para dúvidas, só dígitos com DDD. */
+  contatoWhatsapp: string | null;
 }
 
 export interface PublicSubmission {

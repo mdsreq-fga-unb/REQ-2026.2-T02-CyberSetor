@@ -36,6 +36,10 @@ const REGISTRATION_MOCK: Registration = {
   camposAdicionais: ['CPF', 'EMAIL'],
   campoDuplicidade: 'CPF',
   termoCompromisso: null,
+  apresentacao: null,
+  prazoInscricao: null,
+  prazoHora: null,
+  contatoWhatsapp: null,
   codigoPublico: 'abc123xyz789',
   linkPublico: '/inscrever/abc123xyz789',
 };
@@ -181,6 +185,78 @@ describe('RegistrationFormDialog', () => {
     expect(
       calls.find((c) => c.key === `POST /activities/${ACTIVITY.id}/registration`)?.body,
     ).toMatchObject({ termoCompromisso: 'Chegar no horário.' });
+  });
+
+  it('abre com apresentacao, prazo com hora e WhatsApp do Instituto', async () => {
+    const calls = await signedInAs('PRESIDENCIA_GESTAO', {
+      [`GET /activities/${ACTIVITY.id}/registration`]: () => ({
+        status: 404,
+        body: { code: 'REGISTRATION_NOT_OPENED', message: 'Inscrição não aberta' },
+      }),
+      [`POST /activities/${ACTIVITY.id}/registration`]: (body) => ({
+        status: 201,
+        body: { ...REGISTRATION_MOCK, ...(body as object) },
+      }),
+    });
+    const onSaved = vi.fn();
+    renderDialog({ onSaved });
+    const prazo = new Date(Date.now() + 5 * 86_400_000).toISOString().slice(0, 10);
+
+    fireEvent.change(await screen.findByLabelText('Texto de apresentação'), {
+      target: { value: '  Oficina de 8 horas.  ' },
+    });
+    fireEvent.change(screen.getByLabelText('Inscrições até'), { target: { value: prazo } });
+    fireEvent.change(screen.getByLabelText('Hora do prazo'), { target: { value: '18:00' } });
+    fireEvent.change(screen.getByLabelText('WhatsApp do Instituto para dúvidas'), {
+      target: { value: '(61) 99999-8888' },
+    });
+    fireEvent.click(screen.getByRole('button', { name: 'Abrir inscrição' }));
+
+    await waitFor(() => expect(onSaved).toHaveBeenCalledTimes(1));
+    expect(
+      calls.find((c) => c.key === `POST /activities/${ACTIVITY.id}/registration`)?.body,
+    ).toMatchObject({
+      apresentacao: 'Oficina de 8 horas.',
+      prazoInscricao: prazo,
+      prazoHora: '18:00',
+      contatoWhatsapp: '61999998888',
+    });
+  });
+
+  it('hora sem data e prazo recusado pela API aparecem no campo do prazo', async () => {
+    await signedInAs('PRESIDENCIA_GESTAO', {
+      [`GET /activities/${ACTIVITY.id}/registration`]: () => ({
+        status: 404,
+        body: { code: 'REGISTRATION_NOT_OPENED', message: 'Inscrição não aberta' },
+      }),
+      [`POST /activities/${ACTIVITY.id}/registration`]: () => ({
+        status: 400,
+        body: {
+          code: 'DEADLINE_INVALID',
+          message: 'O prazo de inscrição precisa ir de agora até a data da atividade, 10/05/2026.',
+        },
+      }),
+    });
+    const onSaved = vi.fn();
+    renderDialog({ onSaved });
+
+    fireEvent.change(await screen.findByLabelText('Hora do prazo'), {
+      target: { value: '18:00' },
+    });
+    fireEvent.click(screen.getByRole('button', { name: 'Abrir inscrição' }));
+    expect(
+      await screen.findByText('Informe a data do prazo para usar a hora.'),
+    ).toBeInTheDocument();
+
+    const prazo = new Date(Date.now() + 5 * 86_400_000).toISOString().slice(0, 10);
+    fireEvent.change(screen.getByLabelText('Inscrições até'), { target: { value: prazo } });
+    fireEvent.click(screen.getByRole('button', { name: 'Abrir inscrição' }));
+    expect(
+      await screen.findByText(
+        'O prazo de inscrição precisa ir de agora até a data da atividade, 10/05/2026.',
+      ),
+    ).toBeInTheDocument();
+    expect(onSaved).not.toHaveBeenCalled();
   });
 
   it('na edicao, apagar os compromissos envia null', async () => {
