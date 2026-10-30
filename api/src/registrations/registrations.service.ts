@@ -12,6 +12,7 @@ import { Prisma } from '../generated/prisma/client.js';
 import { AutorTipo } from '../generated/prisma/enums.js';
 import { deadlineOf, nowInBrasilia, withinDeadline } from './deadline.js';
 import { PrismaService } from '../prisma/prisma.service.js';
+import { promoteWaitlist } from './waitlist.js';
 import {
   CAMPOS_MINIMOS,
   type OpenRegistrationDto,
@@ -260,6 +261,9 @@ export class RegistrationsService {
         },
       });
       if (updated.count === 0) throw this.versionConflict();
+      if (next.vagas > before.vagas) {
+        await promoteWaitlist(tx, this.audit, atividadeId, next.vagas, actor);
+      }
 
       const inscricao = toResponse(
         await tx.configuracaoInscricao.findUniqueOrThrow({ where: { atividadeId } }),

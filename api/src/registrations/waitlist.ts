@@ -1,5 +1,6 @@
 import { Prisma } from '../generated/prisma/client.js';
-import { SituacaoInscricao } from '../generated/prisma/enums.js';
+import { AutorTipo, SituacaoInscricao } from '../generated/prisma/enums.js';
+import type { AuditTrailService } from '../audit/audit-trail.service.js';
 
 /**
  * Vagas e lista de espera da inscrição (HU-07c, RF14, RF15).
@@ -44,4 +45,43 @@ export async function waitlistPosition(
       ordemChegada: { lte: ordemChegada },
     },
   });
+}
+
+/**
+ * Com mais vagas, as primeiras da espera passam a confirmadas, na ordem de chegada. Com menos
+ * vagas, ninguém perde a vaga já confirmada: só as novas inscrições vão para a espera.
+ */
+export async function promoteWaitlist(
+  tx: Prisma.TransactionClient,
+  audit: AuditTrailService,
+  atividadeId: string,
+  vagas: number,
+  actor: { usuarioId: string; correlationId: string },
+): Promise<void> {
+  const confirmadas = await tx.inscricao.count({
+    where: { atividadeId, situacao: SituacaoInscricao.CONFIRMADA },
+  });
+  if (confirmadas >= vagas) return;
+  const promovidas = await tx.inscricao.findMany({
+    where: { atividadeId, situacao: SituacaoInscricao.LISTA_ESPERA },
+    orderBy: { ordemChegada: 'asc' },
+    take: vagas - confirmadas,
+    select: { id: true },
+  });
+  for (const { id } of promovidas) {
+    await tx.inscricao.update({ where: { id }, data: { situacao: SituacaoInscricao.CONFIRMADA } });
+    await audit.record(
+      {
+        autorTipo: AutorTipo.USUARIO,
+        usuarioId: actor.usuarioId,
+        acao: 'REGISTRATION_PROMOTED',
+        entidade: 'inscricao',
+        entidadeId: id,
+        antes: { situacao: SituacaoInscricao.LISTA_ESPERA },
+        depois: { situacao: SituacaoInscricao.CONFIRMADA },
+        correlationId: actor.correlationId,
+      },
+      tx,
+    );
+  }
 }

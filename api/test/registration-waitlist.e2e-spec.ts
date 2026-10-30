@@ -216,6 +216,37 @@ describe('Vagas, lista de espera e inscritos da atividade (e2e)', () => {
     ).toBe(1);
   });
 
+  it('com mais vagas, promove a espera na ordem de chegada; com menos, ninguem perde a vaga', async () => {
+    await inscrever(1, SituacaoInscricao.CONFIRMADA);
+    await inscrever(2, SituacaoInscricao.CONFIRMADA);
+    await inscrever(3, SituacaoInscricao.LISTA_ESPERA);
+    await inscrever(4, SituacaoInscricao.LISTA_ESPERA);
+    const config = `/v1/activities/${atividadeId}/registration`;
+
+    await as(Perfil.NUCLEO_PEDAGOGICO).patch(config, { versao: 1, vagas: 3 }).expect(200);
+
+    let lista = (await as(Perfil.NUCLEO_PEDAGOGICO).get(listPath()).expect(200)).body as ListBody;
+    expect(lista.inscricoes.map((i) => [i.nome, i.situacao, i.posicaoEspera])).toEqual([
+      ['Pessoa 1', 'CONFIRMADA', null],
+      ['Pessoa 2', 'CONFIRMADA', null],
+      ['Pessoa 3', 'CONFIRMADA', null],
+      ['Pessoa 4', 'LISTA_ESPERA', 1],
+    ]);
+    const promovida = await prisma.trilhaAuditoria.findFirstOrThrow({
+      where: { acao: 'REGISTRATION_PROMOTED' },
+    });
+    expect(promovida).toMatchObject({
+      usuarioId: ids[Perfil.NUCLEO_PEDAGOGICO],
+      antes: { situacao: 'LISTA_ESPERA' },
+      depois: { situacao: 'CONFIRMADA' },
+    });
+
+    await as(Perfil.NUCLEO_PEDAGOGICO).patch(config, { versao: 2, vagas: 1 }).expect(200);
+
+    lista = (await as(Perfil.NUCLEO_PEDAGOGICO).get(listPath()).expect(200)).body as ListBody;
+    expect(lista).toMatchObject({ vagas: 1, confirmadas: 3, emEspera: 1 });
+  });
+
   it('lista os inscritos ao Nucleo, com busca, menor e responsavel; os demais veem so os totais', async () => {
     await inscrever(1, SituacaoInscricao.CONFIRMADA);
     await inscrever(2, SituacaoInscricao.CONFIRMADA, true);
