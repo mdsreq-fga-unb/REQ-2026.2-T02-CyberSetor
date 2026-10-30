@@ -104,6 +104,11 @@ export function ParticipantDialog({
                       <Authorization label="Comunicados" given={inscricao.autorizaComunicados} />
                       <Authorization label="Uso de imagem" given={inscricao.autorizaImagem} />
                     </div>
+                    {inscricao.termoAceitoEm && (
+                      <p className="text-sm text-muted-foreground">
+                        Compromissos da turma aceitos em {formatDateTime(inscricao.termoAceitoEm)}
+                      </p>
+                    )}
                     {inscricao.responsavelNome && (
                       <p className="text-sm text-muted-foreground">
                         Responsável legal: {inscricao.responsavelNome}

@@ -38,6 +38,7 @@ const ANA: Participant = {
       inscritoEm: '2026-10-28T13:00:00.000Z',
       autorizaComunicados: true,
       autorizaImagem: false,
+      termoAceitoEm: '2026-10-28T13:00:00.000Z',
       responsavelNome: null,
       responsavelTelefone: null,
       atividade: { id: 'a2', titulo: 'Oficina de dança', data: '2026-11-20' },
@@ -147,6 +148,7 @@ describe('participantes', () => {
     expect(await ficha.findByText('529.982.247-25')).toBeInTheDocument();
     expect(ficha.getByText('20/05/1990 (36 anos)')).toBeInTheDocument();
     expect(ficha.getByText('Aninha')).toBeInTheDocument();
+    expect(ficha.getByText(/Compromissos da turma aceitos em/)).toBeInTheDocument();
     expect(ficha.getByRole('link', { name: 'Oficina de dança' })).toBeInTheDocument();
     expect(ficha.getByText('Comunicados: sim')).toBeInTheDocument();
     expect(ficha.getByText('Uso de imagem: não')).toBeInTheDocument();

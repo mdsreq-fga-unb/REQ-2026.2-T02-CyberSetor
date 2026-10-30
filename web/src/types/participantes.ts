@@ -22,6 +22,7 @@ export interface ParticipantRegistration {
   inscritoEm: string;
   autorizaComunicados: boolean;
   autorizaImagem: boolean;
+  termoAceitoEm: string | null;
   responsavelNome: string | null;
   responsavelTelefone: string | null;
   atividade: ParticipantActivity;
