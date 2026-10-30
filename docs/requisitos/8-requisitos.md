@@ -21,6 +21,7 @@
 | 19/10/2026 | 2.7 | Matriz dos requisitos não funcionais: RF09 ligado a RNF02, RNF04 e RNF15 | Maria Eduarda Marques |
 | 20/10/2026 | 2.8 | RF09 com o vínculo da atividade às metas; RF16 com a presença dos inscritos; RF31 e RN-09 com a mudança do período de execução; RF22 por e-mail ou CPF, conforme o formulário; documento formal em PDF ou DOCX (RF02) e planilha em XLSX ou CSV (RF38); administração de contas (RF40), cadastro de modalidades (RF41) e configuração do formulário de inscrição (RF42); matriz dos requisitos funcionais pela história dona e pelos novos critérios; matrizes dos requisitos não funcionais e das regras de negócio completadas; perfil de administração do sistema; dados mínimos da inscrição; métrica da RNF03 com sessão e bloqueio por tentativas; pontos em aberto revistos contra as validações com o Instituto | Equipe CyberSetor |
 | 26/10/2026 | 2.9 | Resultado alcançado da meta (RF43, RN-14), com percentual calculado na meta quantitativa e classificação do alcance; parâmetro planejado numérico na meta quantitativa (RF04, RN-02); relatório com o resultado alcançado e aviso à direção ou à coordenação responsável (RF35, RF36); meta de marco e comparativo dos aditivos na seção 8.5.3 alinhados ao RN-14 e ao RF44; dados da atividade (RF09); comparativo das metas repactuadas (RF44) separado do versionamento (RF31); orientação de enquadramento (RF45) separada da restrição de acesso às fotos (RF34); carga horária (RN-15); métricas de cifragem e revogação de sessão com a exceção do formulário público (RNF03), de escopo por perfil (RNF04), de texto livre e anexos (RNF05), de conferência dos números do relatório (RNF08), de ambiente e massa de referência (RNF11, RNF13) e de restauração conjunta de banco e arquivos (RNF18); acessibilidade (RNF15) separada da eficiência da chamada (RNF20) e estendida a todas as telas, com os estados de carregamento, vazio e erro; portabilidade dos dados (RNF19); controle de acesso por perfil para todo o produto; regras de negócio citadas nos dois sentidos e gargalos de inscrição e de direitos do titular na matriz; RN-13 ligada ao RF06; encontros da atividade e formulários de inscrição entre os pontos em aberto; minimização de dados estendida à correção a pedido do titular, às justificativas e ao resultado alcançado (RNF05) | Vinicius Vieira |
+| 30/10/2026 | 2.10 | Apresentação da inscrição (RF46), com texto, prazo com hora opcional e WhatsApp do Instituto, a partir do checkpoint com o Instituto em 29/10; RF11 passa a exibir a data, o horário e o local da atividade e a apresentação | Vinicius Vieira |
 
 ---
 
@@ -61,12 +62,13 @@ A governança do catálogo adota:
 ### CP3 — Inscrição de Participantes
 | Identificador | Requisito | Descrição | Rastreabilidade |
 | :---: | :--- | :--- | :--- |
-| <a id="rf11"></a>**RF11** | Disponibilizar formulário público de inscrição | Permitir ao interessado se inscrever em uma atividade por formulário público no celular, sem criar conta nem senha. | [RN-05](#rn-05), [RN-06](#rn-06) \| [HU-07a](10-backlog.md#hu-07a) |
+| <a id="rf11"></a>**RF11** | Disponibilizar formulário público de inscrição | Permitir ao interessado se inscrever em uma atividade por formulário público no celular, sem criar conta nem senha. O formulário exibe a data, o horário e o local da atividade e, quando houver, a apresentação, o prazo e o contato do Instituto ([RF46](#rf46)). | [RN-05](#rn-05), [RN-06](#rn-06) \| [HU-07a](10-backlog.md#hu-07a), [HU-07d](10-backlog.md#hu-07d) |
 | <a id="rf12"></a>**RF12** | Gerar link e QR Code de inscrição | Permitir ao usuário autorizado gerar, para cada atividade, o link e o QR Code do formulário público de inscrição. | OE02 \| [HU-07b](10-backlog.md#hu-07b) |
 | <a id="rf13"></a>**RF13** | Registrar inscrição presencial assistida | Permitir ao usuário autorizado inscrever presencialmente quem não dispõe de celular ou conectividade. | Seção 3.3.10; [RN-05](#rn-05), [RN-06](#rn-06) \| [HU-08](10-backlog.md#hu-08) |
 | <a id="rf14"></a>**RF14** | Limitar vagas da atividade | Encerrar as inscrições confirmadas de uma atividade quando o número de vagas estipulado for atingido. | OE01, OE02 \| [HU-07c](10-backlog.md#hu-07c) |
 | <a id="rf15"></a>**RF15** | Registrar lista de espera | Registrar as inscrições excedentes em lista de espera ordenada por ordem cronológica de chegada. | OE01, OE02 \| [HU-07c](10-backlog.md#hu-07c) |
 | <a id="rf42"></a>**RF42** | Configurar o formulário de inscrição | Permitir ao usuário autorizado definir, ao abrir a inscrição de uma atividade, os campos do formulário além dos mínimos e o campo que identifica cadastro repetido 🔧. | OE02; validação com o Instituto em 08/10/2026 \| [HU-07b](10-backlog.md#hu-07b) |
+| <a id="rf46"></a>**RF46** 🔧 | Apresentar a inscrição | Permitir ao usuário autorizado informar, na inscrição de uma atividade, o texto de apresentação, o prazo de inscrição e o contato do Instituto para dúvidas, exibidos no formulário público, e encerrar as inscrições ao fim do prazo. | OE02; checkpoint com o Instituto em 29/10/2026 \| [HU-07d](10-backlog.md#hu-07d) |
 
 ### CP4 — Registro de Participação em Campo
 | Identificador | Requisito | Descrição | Rastreabilidade |
@@ -190,12 +192,13 @@ A rastreabilidade estabelece o vínculo bidirecional entre os problemas diagnost
 #### CP3 — Inscrição de Participantes (OE02; OE01)
 | Requisito | Nome | Gargalo BPMN | Norma / Mitigação | História derivada | Cobertura |
 | :--- | :--- | :---: | :--- | :--- | :---: |
-| **RF11** | Disponibilizar formulário público de inscrição | G03, G04 | RN-05, RN-06 | HU-07a (CA-07a.1, CA-07a.2, CA-07a.4) | Total |
+| **RF11** | Disponibilizar formulário público de inscrição | G03, G04 | RN-05, RN-06 | HU-07a (CA-07a.1, CA-07a.2, CA-07a.4); HU-07d (CA-07d.2) | Total |
 | **RF12** | Gerar link e QR Code de inscrição | G03 | — | HU-07b (CA-07b.3) | Total |
 | **RF13** | Registrar inscrição presencial assistida | G03 | Seção 3.3.10; RN-05, RN-06 | HU-08 (CA-08.1) | Total |
 | **RF14** | Limitar vagas da atividade | G03 | — | HU-07c (CA-07c.1); HU-07b (CA-07b.1) | Total |
 | **RF15** | Registrar lista de espera | G03 | — | HU-07c (CA-07c.1, CA-07c.2) | Total |
 | **RF42** | Configurar o formulário de inscrição | G04 | Seção 8.5.4; RNF05 | HU-07b (CA-07b.1, CA-07b.2) | Total |
+| **RF46** | Apresentar a inscrição | G03 | — | HU-07d (CA-07d.1 a CA-07d.7) | Total |
 
 #### CP4 — Registro de Participação em Campo (OE03; OE04)
 | Requisito | Nome | Gargalo BPMN | Norma / Mitigação | História derivada | Cobertura |
@@ -251,7 +254,7 @@ A rastreabilidade estabelece o vínculo bidirecional entre os problemas diagnost
 | RNF | Propriedade de Qualidade | Origem (Decisão, Risco Ético ou Norma) | Requisitos Funcionais Relacionados |
 | :--- | :--- | :--- | :--- |
 | **RNF01** | Integridade transacional dos dados | HU-01b (CA-01b.3) | RF04, RF18 |
-| **RNF02** | Auditabilidade das alterações | Seção 3.3.9 | RF01 a RF06, RF09 a RF11, RF13, RF19, RF26, RF27, RF31 a RF33, RF38 a RF43 |
+| **RNF02** | Auditabilidade das alterações | Seção 3.3.9 | RF01 a RF06, RF09 a RF11, RF13, RF19, RF26, RF27, RF31 a RF33, RF38 a RF43, RF46 |
 | **RNF03** | Segurança das comunicações e das sessões | Seções 3.3.1 e 3.3.2; NIST SP 800-52 Rev. 2 | *Transversal (Todos os RFs)* |
 | **RNF04** | Controle de acesso por perfil | Seção 3.5 (visibilidade por perfil); matriz da seção 8.5.1 | *Transversal (Todos os RFs, exceto as operações públicas do formulário de inscrição do RF11)* |
 | **RNF05** | Minimização de dados pessoais | LGPD art. 5º, II; Restrição HU-06 | RF11, RF13, RF19, RF21, RF26, RF32 a RF35, RF38, RF42, RF43 |
@@ -261,7 +264,7 @@ A rastreabilidade estabelece o vínculo bidirecional entre os problemas diagnost
 | **RNF09** | Resiliência offline e sincronização sem duplicidade | Seção 3.3.3 | RF16 a RF19, RF32 |
 | **RNF10** | Descarte de dados pessoais no aparelho | Seções 3.3.1 e 3.3.2 | RF17, RF18, RF32 |
 | **RNF11** | Desempenho das consultas agregadas | OE04 | RF07, RF08, RF28 |
-| **RNF12** | Desempenho da inscrição pública | OE02 | RF11, RF12 |
+| **RNF12** | Desempenho da inscrição pública | OE02 | RF11, RF12, RF46 |
 | **RNF13** | Desempenho da geração de relatórios | OE06 | RF36, RF37 |
 | **RNF14** | Eficiência no envio de evidências | Seção 3.3.1 | RF32 |
 | **RNF15** | Usabilidade móvel e acessibilidade | Seção 3.3.10 | *Transversal (Todos os RFs com tela)* |
@@ -280,7 +283,7 @@ A rastreabilidade estabelece o vínculo bidirecional entre os problemas diagnost
 | :---: | :--- | :--- | :---: |
 | **G01** | Destrinchamento manual de editais e instrumentos | RF01, RF02, RF03, RF04 | **Total** |
 | **G02** | Demandas e prazos descentralizados sem responsável | RF05, RF06, RF07, RF08 | **Parcial** |
-| **G03** | Listas em papel, chamadas manuais e fotos dispersas | RF09 a RF20, RF32 a RF34, RF41, RF45 | **Total** |
+| **G03** | Listas em papel, chamadas manuais e fotos dispersas | RF09 a RF20, RF32 a RF34, RF41, RF45, RF46 | **Total** |
 | **G04** | Dados pessoais desprotegidos em celulares (LGPD) | RF11, RF21 a RF27, RF42 | **Total** |
 | **G05** | Ausência de visão unificada para a Presidência | RF28 a RF31, RF44 | **Parcial** |
 | **G06** | Risco de glosa e insegurança na prestação de contas | RF35 a RF39, RF43 | **Total** |
@@ -294,7 +297,7 @@ A cobertura no MVP e nos incrementos está na [seção 10.2.6](10-backlog.md#102
 | :---: | :--- | :---: | :--- |
 | **CP1** | Gestão de projetos e metas | RF01 a RF08, RF40 | OE01; OE04 |
 | **CP2** | Gestão de atividades | RF09, RF10, RF41 | OE01; OE04, OE06 |
-| **CP3** | Inscrição de participantes | RF11 a RF15, RF42 | OE02; OE01 |
+| **CP3** | Inscrição de participantes | RF11 a RF15, RF42, RF46 | OE02; OE01 |
 | **CP4** | Registro de participação em campo | RF16 a RF20 | OE03; OE04 |
 | **CP5** | Cadastro e histórico de pessoas | RF21 a RF27 | OE01; OE03, OE06 |
 | **CP6** | Acompanhamento automático de metas | RF28 a RF31, RF43, RF44 | OE04; OE01 |
