@@ -171,6 +171,7 @@ describe('Formulário público de inscrição (e2e)', () => {
         local: 'Setor Comercial Sul',
       },
       aberta: true,
+      vagasEsgotadas: false,
       camposMinimos: ['NOME', 'TELEFONE', 'DATA_NASCIMENTO', 'CONSENTIMENTOS'],
       camposAdicionais: ['CPF'],
       aviso: { versao: DATA_NOTICE.versao, texto: DATA_NOTICE.texto },
@@ -216,6 +217,7 @@ describe('Formulário público de inscrição (e2e)', () => {
 
     expect(res.body).toMatchObject({
       situacao: 'CONFIRMADA',
+      posicaoEspera: null,
       atividade: { titulo: 'Oficina de serigrafia' },
     });
     const inscricao = await prisma.inscricao.findFirstOrThrow({ include: { participante: true } });

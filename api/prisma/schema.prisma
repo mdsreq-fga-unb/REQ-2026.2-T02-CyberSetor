@@ -326,6 +326,7 @@ enum CanalPedido {
 
 enum SituacaoInscricao {
   CONFIRMADA
+  LISTA_ESPERA
 }
 
 model Inscricao {
@@ -349,6 +350,8 @@ model Inscricao {
   comunicadosRevogacaoCanal CanalPedido?      @map("comunicados_revogacao_canal")
   imagemRevogadaEm          DateTime?         @map("imagem_revogada_em") @db.Date
   imagemRevogacaoCanal      CanalPedido?      @map("imagem_revogacao_canal")
+  /// Ordem de chegada, atribuída depois da trava da configuração: decide a vaga e a posição na espera (RF15).
+  ordemChegada              Int               @default(autoincrement()) @map("ordem_chegada")
   criadoEm                  DateTime          @default(now()) @map("criado_em") @db.Timestamptz(3)
 
   atividade    Atividade    @relation(fields: [atividadeId], references: [id], onDelete: Restrict)
@@ -356,6 +359,7 @@ model Inscricao {
 
   @@unique([atividadeId, chaveDuplicidade])
   @@index([participanteId])
+  @@index([atividadeId, situacao, ordemChegada])
   @@map("inscricao")
 }
 

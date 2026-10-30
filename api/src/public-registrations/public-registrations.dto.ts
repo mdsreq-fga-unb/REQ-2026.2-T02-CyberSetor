@@ -11,7 +11,7 @@ import {
   ValidateIf,
 } from 'class-validator';
 import { trimString } from '../common/trim.js';
-import { CampoInscricao } from '../generated/prisma/enums.js';
+import { CampoInscricao, SituacaoInscricao } from '../generated/prisma/enums.js';
 import { toDigits, toLowerTrim, toPhoneDigits } from './participant-data.js';
 
 const ISO_DATE = /^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])$/;
@@ -164,6 +164,9 @@ export class PublicFormResponse {
   @ApiProperty({ description: 'Se o formulário aceita novas inscrições' })
   aberta!: boolean;
 
+  @ApiProperty({ description: 'Vagas preenchidas: a próxima inscrição entra na lista de espera' })
+  vagasEsgotadas!: boolean;
+
   @ApiProperty({
     isArray: true,
     example: ['NOME', 'TELEFONE', 'DATA_NASCIMENTO', 'CONSENTIMENTOS'],
@@ -208,8 +211,15 @@ export class PublicFormResponse {
 }
 
 export class SubmittedRegistrationResponse {
-  @ApiProperty({ example: 'CONFIRMADA' })
-  situacao!: string;
+  @ApiProperty({ enum: SituacaoInscricao, example: SituacaoInscricao.CONFIRMADA })
+  situacao!: SituacaoInscricao;
+
+  @ApiProperty({
+    type: Number,
+    nullable: true,
+    description: 'Posição na lista de espera (1, 2, …); nula quando a vaga foi confirmada',
+  })
+  posicaoEspera!: number | null;
 
   @ApiProperty({ type: PublicActivityResponse })
   atividade!: PublicActivityResponse;
