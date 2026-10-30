@@ -6,15 +6,18 @@ import {
   IsArray,
   IsInt,
   IsNotEmpty,
+  IsOptional,
   IsString,
   IsUUID,
   Matches,
+  Max,
   MaxLength,
   Min,
 } from 'class-validator';
 import { trimString } from '../common/trim.js';
 
 const ISO_DATE = /^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])$/;
+const HH_MM = /^([01]\d|2[0-3]):[0-5]\d$/;
 
 export class CreateActivityDto {
   @ApiProperty({ example: 'Oficina de música e cidadania — Turma A' })
@@ -35,6 +38,26 @@ export class CreateActivityDto {
   @ApiProperty({ example: '2026-10-28', format: 'date' })
   @Matches(ISO_DATE, { message: 'data deve estar no formato AAAA-MM-DD' })
   data!: string;
+
+  @ApiProperty({ example: '09:00', description: 'Hora de início, HH:MM' })
+  @Matches(HH_MM, { message: 'horaInicio deve estar no formato HH:MM' })
+  horaInicio!: string;
+
+  @ApiProperty({ example: '17:00', description: 'Hora de fim, HH:MM, depois do início' })
+  @Matches(HH_MM, { message: 'horaFim deve estar no formato HH:MM' })
+  horaFim!: string;
+
+  @ApiProperty({
+    required: false,
+    example: 480,
+    description:
+      'Carga horária em minutos; sem ela, vale o intervalo entre início e fim, que é o limite',
+  })
+  @IsOptional()
+  @IsInt()
+  @Min(1)
+  @Max(1440)
+  cargaHorariaMinutos?: number;
 
   @ApiProperty({ example: 'Galpão Cultural SCS' })
   @Transform(trimString)
@@ -124,6 +147,20 @@ export class ActivityResponse {
 
   @ApiProperty({ format: 'date' })
   data!: string;
+
+  @ApiProperty({
+    type: String,
+    nullable: true,
+    example: '09:00',
+    description: 'Nulo nas atividades cadastradas antes do horário',
+  })
+  horaInicio!: string | null;
+
+  @ApiProperty({ type: String, nullable: true, example: '17:00' })
+  horaFim!: string | null;
+
+  @ApiProperty({ type: Number, nullable: true, example: 480 })
+  cargaHorariaMinutos!: number | null;
 
   @ApiProperty()
   local!: string;

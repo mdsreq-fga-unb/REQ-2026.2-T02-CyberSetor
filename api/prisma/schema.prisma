@@ -217,16 +217,21 @@ model MetaRequisito {
 }
 
 model Atividade {
-  id            String   @id @default(uuid()) @db.Uuid
-  versao        Int      @default(1)
-  projetoId     String   @map("projeto_id") @db.Uuid
-  modalidadeId  String   @map("modalidade_id") @db.Uuid
-  responsavelId String   @map("responsavel_id") @db.Uuid
-  titulo        String
-  data          DateTime @db.Date
-  local         String
-  criadoEm      DateTime @default(now()) @map("criado_em") @db.Timestamptz(3)
-  atualizadoEm  DateTime @updatedAt @map("atualizado_em") @db.Timestamptz(3)
+  id                  String    @id @default(uuid()) @db.Uuid
+  versao              Int       @default(1)
+  projetoId           String    @map("projeto_id") @db.Uuid
+  modalidadeId        String    @map("modalidade_id") @db.Uuid
+  responsavelId       String    @map("responsavel_id") @db.Uuid
+  titulo              String
+  data                DateTime  @db.Date
+  /// Nulos só nas atividades cadastradas antes do horário (30/10); a tela exige os dois.
+  horaInicio          DateTime? @map("hora_inicio") @db.Time(0)
+  horaFim             DateTime? @map("hora_fim") @db.Time(0)
+  /// Pode ser menor que o intervalo entre início e fim (pausa, almoço), nunca maior.
+  cargaHorariaMinutos Int?      @map("carga_horaria_minutos")
+  local               String
+  criadoEm            DateTime  @default(now()) @map("criado_em") @db.Timestamptz(3)
+  atualizadoEm        DateTime  @updatedAt @map("atualizado_em") @db.Timestamptz(3)
 
   projeto     Projeto                @relation(fields: [projetoId], references: [id], onDelete: Restrict)
   modalidade  Modalidade             @relation(fields: [modalidadeId], references: [id], onDelete: Restrict)

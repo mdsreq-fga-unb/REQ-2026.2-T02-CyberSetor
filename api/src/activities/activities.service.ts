@@ -33,9 +33,24 @@ const WITH_DETAILS = {
 type ActivityRow = Prisma.AtividadeGetPayload<{ include: typeof WITH_DETAILS }>;
 type ProjectWithInstrument = Prisma.ProjetoGetPayload<{ include: { instrumento: true } }>;
 
-const SCALAR_FIELDS = ['titulo', 'modalidadeId', 'responsavelId', 'data', 'local'] as const;
+const SCALAR_FIELDS = [
+  'titulo',
+  'modalidadeId',
+  'responsavelId',
+  'data',
+  'horaInicio',
+  'horaFim',
+  'cargaHorariaMinutos',
+  'local',
+] as const;
 
-interface ActivityValues {
+interface Schedule {
+  horaInicio: string | null;
+  horaFim: string | null;
+  cargaHorariaMinutos: number | null;
+}
+
+interface ActivityValues extends Schedule {
   titulo: string;
   modalidadeId: string;
   responsavelId: string;
@@ -52,6 +67,62 @@ function brDate(date: Date): string {
   return isoDate(date).split('-').reverse().join('/');
 }
 
+/** Coluna TIME: o Prisma devolve a hora como data em 1970-01-01, em UTC. */
+function hhmm(time: Date | null): string | null {
+  return time ? time.toISOString().slice(11, 16) : null;
+}
+
+function toTime(value: string | null): Date | null {
+  return value ? new Date(`1970-01-01T${value}:00Z`) : null;
+}
+
+function minutesOf(value: string): number {
+  const [hours, minutes] = value.split(':').map(Number);
+  return hours * 60 + minutes;
+}
+
+function formatMinutes(total: number): string {
+  const hours = Math.floor(total / 60);
+  const minutes = total % 60;
+  if (hours === 0) return `${minutes} min`;
+  return minutes === 0 ? `${hours} h` : `${hours} h ${minutes} min`;
+}
+
+/**
+ * Início e fim andam juntos, o fim vem depois do início e a carga horária não passa do
+ * intervalo entre os dois. Sem carga informada, vale o intervalo.
+ */
+function scheduleOf(
+  horaInicio: string | null,
+  horaFim: string | null,
+  cargaHorariaMinutos: number | null,
+): Schedule {
+  if (!horaInicio || !horaFim) {
+    if (!horaInicio && !horaFim && cargaHorariaMinutos === null) {
+      return { horaInicio: null, horaFim: null, cargaHorariaMinutos: null };
+    }
+    throw new BadRequestException({
+      code: 'SCHEDULE_INCOMPLETE',
+      message: 'Informe a hora de início e a hora de fim da atividade.',
+    });
+  }
+  const duracao = minutesOf(horaFim) - minutesOf(horaInicio);
+  if (duracao <= 0) {
+    throw new BadRequestException({
+      code: 'INVALID_TIME_RANGE',
+      message: 'A hora de fim deve ser depois da hora de início.',
+    });
+  }
+  const carga = cargaHorariaMinutos ?? duracao;
+  if (carga > duracao) {
+    throw new BadRequestException({
+      code: 'WORKLOAD_EXCEEDS_DURATION',
+      message: `A carga horária não pode passar do intervalo entre início e fim (${formatMinutes(duracao)}).`,
+    });
+  }
+  return { horaInicio, horaFim, cargaHorariaMinutos: carga };
+}
+
 function toResponse(row: ActivityRow): ActivityResponse {
   return {
     id: row.id,
@@ -59,6 +130,9 @@ function toResponse(row: ActivityRow): ActivityResponse {
     projetoId: row.projetoId,
     titulo: row.titulo,
     data: isoDate(row.data),
+    horaInicio: hhmm(row.horaInicio),
+    horaFim: hhmm(row.horaFim),
+    cargaHorariaMinutos: row.cargaHorariaMinutos,
     local: row.local,
     modalidade: {
       id: row.modalidade.id,
@@ -91,6 +165,9 @@ function valuesOf(activity: ActivityResponse): ActivityValues {
     modalidadeId: activity.modalidade.id,
     responsavelId: activity.responsavel.id,
     data: activity.data,
+    horaInicio: activity.horaInicio,
+    horaFim: activity.horaFim,
+    cargaHorariaMinutos: activity.cargaHorariaMinutos,
     local: activity.local,
     metaIds: activity.metas.map((meta) => meta.id),
   };
@@ -165,6 +242,7 @@ export class ActivitiesService {
       const project = await this.project(tx, projetoId);
       assertActiveInstrument(project);
       assertDateWithinProject(data.data, project);
+      const schedule = scheduleOf(data.horaInicio, data.horaFim, data.cargaHorariaMinutos ?? null);
       await this.assertActiveModality(tx, data.modalidadeId);
       await this.assertActiveResponsible(tx, data.responsavelId);
       await this.assertMetasBelongToProject(tx, projetoId, data.metaIds);
@@ -176,6 +254,9 @@ export class ActivitiesService {
           responsavelId: data.responsavelId,
           titulo: data.titulo,
           data: toDate(data.data),
+          horaInicio: toTime(schedule.horaInicio),
+          horaFim: toTime(schedule.horaFim),
+          cargaHorariaMinutos: schedule.cargaHorariaMinutos,
           local: data.local,
           metas: {
             create: data.metaIds.map((metaId) => ({ metaId })),
@@ -225,6 +306,13 @@ export class ActivitiesService {
         modalidadeId: changes.modalidadeId ?? before.modalidadeId,
         responsavelId: changes.responsavelId ?? before.responsavelId,
         data: changes.data ?? before.data,
+        ...scheduleOf(
+          changes.horaInicio ?? before.horaInicio,
+          changes.horaFim ?? before.horaFim,
+          changes.cargaHorariaMinutos === undefined
+            ? before.cargaHorariaMinutos
+            : changes.cargaHorariaMinutos,
+        ),
         local: changes.local ?? before.local,
         metaIds: changes.metaIds ?? before.metaIds,
       };
@@ -251,6 +339,9 @@ export class ActivitiesService {
           modalidadeId: next.modalidadeId,
           responsavelId: next.responsavelId,
           data: toDate(next.data),
+          horaInicio: toTime(next.horaInicio),
+          horaFim: toTime(next.horaFim),
+          cargaHorariaMinutos: next.cargaHorariaMinutos,
           local: next.local,
           versao: { increment: 1 },
         },
