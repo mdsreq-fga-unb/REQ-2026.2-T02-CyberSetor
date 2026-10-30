@@ -20,6 +20,7 @@ import type {
   CorrectParticipantDto,
   ParticipantResponse,
   ParticipantSummaryResponse,
+  RevokeAuthorizationDto,
 } from './participants.dto.js';
 
 const ADULT_AGE = 18;
@@ -105,6 +106,17 @@ function toResponse(row: ParticipantRow, today: string): ParticipantResponse {
       autorizaComunicados: inscricao.autorizaComunicados,
       autorizaImagem: inscricao.autorizaImagem,
       termoAceitoEm: inscricao.termoAceitoEm,
+      comunicadosRevogacao:
+        inscricao.comunicadosRevogadosEm && inscricao.comunicadosRevogacaoCanal
+          ? {
+              pedidoEm: isoDate(inscricao.comunicadosRevogadosEm),
+              canal: inscricao.comunicadosRevogacaoCanal,
+            }
+          : null,
+      imagemRevogacao:
+        inscricao.imagemRevogadaEm && inscricao.imagemRevogacaoCanal
+          ? { pedidoEm: isoDate(inscricao.imagemRevogadaEm), canal: inscricao.imagemRevogacaoCanal }
+          : null,
       responsavelNome: inscricao.responsavelNome,
       responsavelTelefone: inscricao.responsavelTelefone,
       atividade: {
@@ -267,6 +279,71 @@ export class ParticipantsService {
         return toResponse(row, today);
       }),
     );
+  }
+
+  /**
+   * Revogação de autorização a pedido do titular (CA-07a.6): guarda a data do pedido e o canal,
+   * mantém a autorização dada no envio como registro e não mexe na inscrição.
+   */
+  async revoke(
+    id: string,
+    inscricaoId: string,
+    dto: RevokeAuthorizationDto,
+    actor: Actor,
+  ): Promise<ParticipantResponse> {
+    const today = todayInBrasilia();
+    const pedidoEm = new Date(`${dto.pedidoEm}T00:00:00.000Z`);
+    const exists =
+      !Number.isNaN(pedidoEm.getTime()) && pedidoEm.toISOString().slice(0, 10) === dto.pedidoEm;
+    if (!exists || dto.pedidoEm > today) {
+      throw invalid('INVALID_REQUEST_DATE', 'Confira a data do pedido; ela não pode ser futura.');
+    }
+    const comunicados = dto.autorizacao === 'COMUNICADOS';
+    return this.prisma.$transaction(async (tx) => {
+      const inscricao = await tx.inscricao.findFirst({
+        where: { id: inscricaoId, participanteId: id },
+      });
+      if (!inscricao)
+        throw new NotFoundException('Inscrição não encontrada para este participante.');
+      const given = comunicados ? inscricao.autorizaComunicados : inscricao.autorizaImagem;
+      if (!given) {
+        throw new ConflictException({
+          code: 'AUTHORIZATION_NOT_GIVEN',
+          message: 'Esta autorização não foi dada na inscrição; não há o que revogar.',
+        });
+      }
+      const updated = await tx.inscricao.updateMany({
+        where: comunicados
+          ? { id: inscricaoId, comunicadosRevogadosEm: null }
+          : { id: inscricaoId, imagemRevogadaEm: null },
+        data: comunicados
+          ? { comunicadosRevogadosEm: pedidoEm, comunicadosRevogacaoCanal: dto.canal }
+          : { imagemRevogadaEm: pedidoEm, imagemRevogacaoCanal: dto.canal },
+      });
+      if (updated.count === 0) {
+        throw new ConflictException({
+          code: 'ALREADY_REVOKED',
+          message: 'Esta autorização já foi revogada.',
+        });
+      }
+      await this.audit.record(
+        {
+          autorTipo: AutorTipo.USUARIO,
+          usuarioId: actor.usuarioId,
+          acao: 'AUTHORIZATION_REVOKED',
+          entidade: 'inscricao',
+          entidadeId: inscricaoId,
+          depois: { autorizacao: dto.autorizacao, canal: dto.canal, pedidoEm: dto.pedidoEm },
+          correlationId: actor.correlationId,
+        },
+        tx,
+      );
+      const row = await tx.participante.findUniqueOrThrow({
+        where: { id },
+        include: WITH_REGISTRATIONS,
+      });
+      return toResponse(row, today);
+    });
   }
 
   private assertValid(

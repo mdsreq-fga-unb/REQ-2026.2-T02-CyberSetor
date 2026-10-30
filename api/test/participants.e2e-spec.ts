@@ -190,6 +190,7 @@ describe('Participantes: busca, ficha e correção a pedido do titular (e2e)', (
       get: (path: string) => server.get(path).set('Authorization', auth),
       patch: (path: string, body: object) =>
         server.patch(path).set('Authorization', auth).send(body),
+      post: (path: string, body: object) => server.post(path).set('Authorization', auth).send(body),
     };
   }
   const nucleo = () => as(Perfil.NUCLEO_PEDAGOGICO);
@@ -211,6 +212,9 @@ describe('Participantes: busca, ficha e correção a pedido do titular (e2e)', (
       await as(perfil).get('/v1/participants').expect(403);
       await as(perfil).get(`/v1/participants/${ana}`).expect(403);
       await as(perfil).patch(`/v1/participants/${ana}`, { versao: 1 }).expect(403);
+      await as(perfil)
+        .post(`/v1/participants/${ana}/registrations/${ana}/revocations`, {})
+        .expect(403);
     }
     await request(app.getHttpServer()).get('/v1/participants').expect(401);
   });
@@ -294,6 +298,64 @@ describe('Participantes: busca, ficha e correção a pedido do titular (e2e)', (
 
     const apagado = await corrige(ana, { versao: 2, nomePreferencia: null }).expect(200);
     expect(apagado.body as Participant).toMatchObject({ versao: 3, nomePreferencia: null });
+  });
+
+  it('registra a revogacao com data e canal, mantem a inscricao e a trilha nao guarda dados pessoais', async () => {
+    const inscricao = await prisma.inscricao.findFirstOrThrow({
+      where: { participanteId: ana, chaveDuplicidade: CPF_ANA },
+    });
+    const res = await nucleo()
+      .post(`/v1/participants/${ana}/registrations/${inscricao.id}/revocations`, {
+        autorizacao: 'COMUNICADOS',
+        canal: 'EMAIL',
+        pedidoEm: '2026-10-29',
+      })
+      .expect(200);
+
+    const revogada = (res.body as { inscricoes: Record<string, unknown>[] }).inscricoes;
+    expect(revogada.find((item) => item.id === inscricao.id)).toMatchObject({
+      autorizaComunicados: true,
+      comunicadosRevogacao: { pedidoEm: '2026-10-29', canal: 'EMAIL' },
+      imagemRevogacao: null,
+      situacao: 'CONFIRMADA',
+    });
+    const trilha = await prisma.trilhaAuditoria.findFirstOrThrow({
+      where: { acao: 'AUTHORIZATION_REVOKED', entidadeId: inscricao.id },
+    });
+    expect(trilha.usuarioId).not.toBeNull();
+    expect(trilha.depois).toEqual({
+      autorizacao: 'COMUNICADOS',
+      canal: 'EMAIL',
+      pedidoEm: '2026-10-29',
+    });
+  });
+
+  it('recusa revogacao repetida, de autorizacao nao dada, com data futura ou de outra pessoa', async () => {
+    const inscricao = await prisma.inscricao.findFirstOrThrow({
+      where: { participanteId: ana, chaveDuplicidade: CPF_ANA },
+    });
+    const revoga = (body: object, participanteId = ana) =>
+      nucleo().post(
+        `/v1/participants/${participanteId}/registrations/${inscricao.id}/revocations`,
+        { autorizacao: 'COMUNICADOS', canal: 'TELEFONE', pedidoEm: '2026-10-29', ...body },
+      );
+
+    await revoga({}).expect(200);
+    expect(((await revoga({}).expect(409)).body as ErrorBody).code).toBe('ALREADY_REVOKED');
+    expect(((await revoga({ autorizacao: 'IMAGEM' }).expect(409)).body as ErrorBody).code).toBe(
+      'AUTHORIZATION_NOT_GIVEN',
+    );
+    expect(((await revoga({ pedidoEm: '2999-01-01' }).expect(400)).body as ErrorBody).code).toBe(
+      'INVALID_REQUEST_DATE',
+    );
+    expect(((await revoga({ pedidoEm: '2026-02-30' }).expect(400)).body as ErrorBody).code).toBe(
+      'INVALID_REQUEST_DATE',
+    );
+    await revoga({ canal: 'POMBO' }).expect(400);
+    await revoga({}, bruno).expect(404);
+    expect(await prisma.trilhaAuditoria.count({ where: { acao: 'AUTHORIZATION_REVOKED' } })).toBe(
+      1,
+    );
   });
 
   it('sem justificativa a correcao e recusada no campo da justificativa', async () => {

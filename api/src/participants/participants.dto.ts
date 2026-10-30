@@ -2,6 +2,7 @@ import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { Transform } from 'class-transformer';
 import {
   IsEmail,
+  IsEnum,
   IsInt,
   IsNotEmpty,
   IsOptional,
@@ -13,7 +14,7 @@ import {
   ValidateIf,
 } from 'class-validator';
 import { trimString } from '../common/trim.js';
-import { SituacaoInscricao } from '../generated/prisma/enums.js';
+import { CanalPedido, SituacaoInscricao } from '../generated/prisma/enums.js';
 import { toDigits, toLowerTrim, toPhoneDigits } from '../public-registrations/participant-data.js';
 
 const ISO_DATE = /^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])$/;
@@ -106,6 +107,31 @@ export class CorrectParticipantDto {
   escolaridade?: string | null;
 }
 
+export const AUTORIZACOES = ['COMUNICADOS', 'IMAGEM'] as const;
+export type Autorizacao = (typeof AUTORIZACOES)[number];
+
+export class RevokeAuthorizationDto {
+  @ApiProperty({ enum: AUTORIZACOES, description: 'IMAGEM cobre imagem e voz' })
+  @IsEnum(AUTORIZACOES, { message: 'autorizacao deve ser COMUNICADOS ou IMAGEM' })
+  autorizacao!: Autorizacao;
+
+  @ApiProperty({ enum: CanalPedido, description: 'Por onde o titular pediu' })
+  @IsEnum(CanalPedido)
+  canal!: CanalPedido;
+
+  @ApiProperty({ format: 'date', description: 'Data do pedido; não pode ser futura' })
+  @Matches(ISO_DATE, { message: 'pedidoEm deve estar no formato AAAA-MM-DD' })
+  pedidoEm!: string;
+}
+
+export class RevocationResponse {
+  @ApiProperty({ format: 'date' })
+  pedidoEm!: string;
+
+  @ApiProperty({ enum: CanalPedido })
+  canal!: CanalPedido;
+}
+
 export class ParticipantActivityRef {
   @ApiProperty()
   id!: string;
@@ -168,6 +194,12 @@ export class ParticipantRegistrationResponse {
 
   @ApiProperty({ nullable: true, description: 'Quando aceitou os compromissos da turma' })
   termoAceitoEm!: Date | null;
+
+  @ApiProperty({ type: RevocationResponse, nullable: true })
+  comunicadosRevogacao!: RevocationResponse | null;
+
+  @ApiProperty({ type: RevocationResponse, nullable: true, description: 'Imagem e voz' })
+  imagemRevogacao!: RevocationResponse | null;
 
   @ApiProperty({ nullable: true })
   responsavelNome!: string | null;
