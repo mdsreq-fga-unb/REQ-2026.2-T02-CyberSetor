@@ -51,6 +51,24 @@ export class OpenRegistrationDto {
   campoDuplicidade!: CampoDuplicidade;
 
   @ApiPropertyOptional({
+    default: true,
+    description:
+      'Com as vagas preenchidas, novas inscrições entram na lista de espera; false recusa o envio',
+  })
+  @ValidateIf((_obj, value) => value !== undefined)
+  @IsBoolean()
+  listaEspera?: boolean;
+
+  @ApiPropertyOptional({
+    default: true,
+    description:
+      'Com mais vagas, a lista de espera é confirmada pela ordem de chegada; false deixa ao Núcleo',
+  })
+  @ValidateIf((_obj, value) => value !== undefined)
+  @IsBoolean()
+  promocaoAutomatica?: boolean;
+
+  @ApiPropertyOptional({
     maxLength: MAX_TERMO,
     description: 'Compromissos da turma; com termo, o formulário exige o aceite',
   })
@@ -126,6 +144,22 @@ export class UpdateRegistrationDto {
   @IsEnum(CampoDuplicidade)
   campoDuplicidade?: CampoDuplicidade;
 
+  @ApiPropertyOptional({
+    description:
+      'Com as vagas preenchidas, novas inscrições entram na lista de espera; false recusa o envio',
+  })
+  @ValidateIf((_obj, value) => value !== undefined)
+  @IsBoolean()
+  listaEspera?: boolean;
+
+  @ApiPropertyOptional({
+    description:
+      'Com mais vagas, a lista de espera é confirmada pela ordem de chegada; false deixa ao Núcleo',
+  })
+  @ValidateIf((_obj, value) => value !== undefined)
+  @IsBoolean()
+  promocaoAutomatica?: boolean;
+
   @ApiPropertyOptional({ nullable: true, maxLength: MAX_TERMO, description: 'null tira o termo' })
   @ValidateIf((_obj, value) => value !== undefined && value !== null)
   @Transform(trimString)
@@ -184,6 +218,18 @@ export class RegistrationResponse {
 
   @ApiProperty({ enum: CampoDuplicidade })
   campoDuplicidade!: CampoDuplicidade;
+
+  @ApiProperty({
+    description:
+      'Com as vagas preenchidas, novas inscrições entram na lista de espera; false recusa o envio',
+  })
+  listaEspera!: boolean;
+
+  @ApiProperty({
+    description:
+      'Com mais vagas, a lista de espera é confirmada pela ordem de chegada; false deixa ao Núcleo',
+  })
+  promocaoAutomatica!: boolean;
 
   @ApiProperty({ nullable: true, description: 'Compromissos da turma' })
   termoCompromisso!: string | null;

@@ -27,6 +27,8 @@ const FIELDS = [
   'vagas',
   'camposAdicionais',
   'campoDuplicidade',
+  'listaEspera',
+  'promocaoAutomatica',
   'termoCompromisso',
   'apresentacao',
   'prazoInscricao',
@@ -60,6 +62,8 @@ function toResponse(row: RegistrationRow): RegistrationResponse {
     camposMinimos: [...CAMPOS_MINIMOS],
     camposAdicionais: [...row.camposAdicionais].sort(),
     campoDuplicidade: row.campoDuplicidade,
+    listaEspera: row.listaEspera,
+    promocaoAutomatica: row.promocaoAutomatica,
     termoCompromisso: row.termoCompromisso,
     apresentacao: row.apresentacao,
     prazoInscricao: isoDate(row.prazoInscricao),
@@ -158,6 +162,8 @@ export class RegistrationsService {
           vagas: data.vagas,
           camposAdicionais: data.camposAdicionais,
           campoDuplicidade: data.campoDuplicidade,
+          listaEspera: data.listaEspera ?? true,
+          promocaoAutomatica: data.promocaoAutomatica ?? true,
           termoCompromisso: data.termoCompromisso ?? null,
           apresentacao: data.apresentacao ?? null,
           prazoInscricao: toDate(data.prazoInscricao ?? null),
@@ -208,6 +214,8 @@ export class RegistrationsService {
           ? [...changes.camposAdicionais].sort()
           : before.camposAdicionais,
         campoDuplicidade: changes.campoDuplicidade ?? before.campoDuplicidade,
+        listaEspera: changes.listaEspera ?? before.listaEspera,
+        promocaoAutomatica: changes.promocaoAutomatica ?? before.promocaoAutomatica,
         termoCompromisso:
           changes.termoCompromisso === undefined
             ? before.termoCompromisso
@@ -252,6 +260,8 @@ export class RegistrationsService {
           vagas: next.vagas,
           camposAdicionais: next.camposAdicionais,
           campoDuplicidade: next.campoDuplicidade,
+          listaEspera: next.listaEspera,
+          promocaoAutomatica: next.promocaoAutomatica,
           termoCompromisso: next.termoCompromisso,
           apresentacao: next.apresentacao,
           prazoInscricao: toDate(next.prazoInscricao),
@@ -261,7 +271,11 @@ export class RegistrationsService {
         },
       });
       if (updated.count === 0) throw this.versionConflict();
-      if (next.vagas > before.vagas) {
+      // Ligar a promoção também confirma a espera nas vagas que estiverem livres.
+      if (
+        next.promocaoAutomatica &&
+        (changed.includes('vagas') || changed.includes('promocaoAutomatica'))
+      ) {
         await promoteWaitlist(tx, this.audit, atividadeId, next.vagas, actor);
       }
 

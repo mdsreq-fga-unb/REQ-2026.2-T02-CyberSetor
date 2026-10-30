@@ -168,6 +168,11 @@ export class PublicFormResponse {
   vagasEsgotadas!: boolean;
 
   @ApiProperty({
+    description: 'Com as vagas esgotadas: true entra na lista de espera; false recusa o envio',
+  })
+  listaEspera!: boolean;
+
+  @ApiProperty({
     isArray: true,
     example: ['NOME', 'TELEFONE', 'DATA_NASCIMENTO', 'CONSENTIMENTOS'],
   })

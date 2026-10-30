@@ -265,25 +265,29 @@ enum CampoDuplicidade {
 }
 
 model ConfiguracaoInscricao {
-  atividadeId      String           @id @map("atividade_id") @db.Uuid
-  versao           Int              @default(1)
-  aberta           Boolean          @default(true)
-  vagas            Int
-  camposAdicionais CampoInscricao[] @map("campos_adicionais")
-  campoDuplicidade CampoDuplicidade @map("campo_duplicidade")
+  atividadeId        String           @id @map("atividade_id") @db.Uuid
+  versao             Int              @default(1)
+  aberta             Boolean          @default(true)
+  vagas              Int
+  camposAdicionais   CampoInscricao[] @map("campos_adicionais")
+  campoDuplicidade   CampoDuplicidade @map("campo_duplicidade")
+  /// Com as vagas preenchidas, novas inscrições vão para a lista de espera; desligada, o formulário recusa (RF15).
+  listaEspera        Boolean          @default(true) @map("lista_espera")
+  /// Com mais vagas, a espera passa a confirmada pela ordem de chegada; desligada, o Núcleo confirma quem escolher.
+  promocaoAutomatica Boolean          @default(true) @map("promocao_automatica")
   /// Compromissos da turma que a pessoa aceita para se inscrever; sem termo, não há aceite.
-  termoCompromisso String?          @map("termo_compromisso")
+  termoCompromisso   String?          @map("termo_compromisso")
   /// Apresentação da atividade na página de inscrição (descritivo da oficina); opcional.
-  apresentacao     String?
+  apresentacao       String?
   /// Último dia para se inscrever; o formulário encerra ao fim desse dia, no horário de Brasília.
-  prazoInscricao   DateTime?        @map("prazo_inscricao") @db.Date
+  prazoInscricao     DateTime?        @map("prazo_inscricao") @db.Date
   /// Hora opcional do prazo, para encerramento decisivo; sem ela, vale o fim do dia.
-  prazoHora        DateTime?        @map("prazo_hora") @db.Time(0)
+  prazoHora          DateTime?        @map("prazo_hora") @db.Time(0)
   /// WhatsApp do Instituto para dúvidas, só dígitos com DDD; nunca o número pessoal de quem coordena.
-  contatoWhatsapp  String?          @map("contato_whatsapp") @db.VarChar(11)
-  codigoPublico    String           @unique @map("codigo_publico")
-  criadoEm         DateTime         @default(now()) @map("criado_em") @db.Timestamptz(3)
-  atualizadoEm     DateTime         @updatedAt @map("atualizado_em") @db.Timestamptz(3)
+  contatoWhatsapp    String?          @map("contato_whatsapp") @db.VarChar(11)
+  codigoPublico      String           @unique @map("codigo_publico")
+  criadoEm           DateTime         @default(now()) @map("criado_em") @db.Timestamptz(3)
+  atualizadoEm       DateTime         @updatedAt @map("atualizado_em") @db.Timestamptz(3)
 
   atividade Atividade @relation(fields: [atividadeId], references: [id], onDelete: Restrict)
 

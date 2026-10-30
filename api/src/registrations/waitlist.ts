@@ -10,14 +10,14 @@ import type { AuditTrailService } from '../audit/audit-trail.service.js';
  * A posição na espera não é guardada; sai da ordem de chegada entre as inscrições em espera.
  */
 
-/** Trava a configuração da atividade até o fim da transação e devolve as vagas em vigor. */
+/** Trava a configuração da atividade até o fim da transação e devolve as regras em vigor. */
 export async function lockRegistration(
   tx: Prisma.TransactionClient,
   atividadeId: string,
-): Promise<number> {
-  const [row] = await tx.$queryRaw<{ vagas: number }[]>`
-    SELECT "vagas" FROM "configuracao_inscricao" WHERE "atividade_id" = ${atividadeId}::uuid FOR UPDATE`;
-  return row.vagas;
+): Promise<{ vagas: number; listaEspera: boolean }> {
+  const [row] = await tx.$queryRaw<{ vagas: number; lista_espera: boolean }[]>`
+    SELECT "vagas", "lista_espera" FROM "configuracao_inscricao" WHERE "atividade_id" = ${atividadeId}::uuid FOR UPDATE`;
+  return { vagas: row.vagas, listaEspera: row.lista_espera };
 }
 
 /** Situação da próxima inscrição: confirmada enquanto houver vaga; depois, lista de espera. */

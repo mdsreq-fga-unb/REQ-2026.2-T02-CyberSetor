@@ -172,6 +172,7 @@ describe('Formulário público de inscrição (e2e)', () => {
       },
       aberta: true,
       vagasEsgotadas: false,
+      listaEspera: true,
       camposMinimos: ['NOME', 'TELEFONE', 'DATA_NASCIMENTO', 'CONSENTIMENTOS'],
       camposAdicionais: ['CPF'],
       aviso: { versao: DATA_NOTICE.versao, texto: DATA_NOTICE.texto },

@@ -92,6 +92,7 @@ export class PublicRegistrationsService {
       atividade: publicActivity(config),
       aberta: isOpen(config),
       vagasEsgotadas: confirmadas >= config.vagas,
+      listaEspera: config.listaEspera,
       camposMinimos: [...CAMPOS_MINIMOS],
       camposAdicionais: [...config.camposAdicionais].sort(),
       aviso: { versao: DATA_NOTICE.versao, texto: DATA_NOTICE.texto },
@@ -133,12 +134,19 @@ export class PublicRegistrationsService {
 
     try {
       return await this.prisma.$transaction(async (tx) => {
-        const vagas = await lockRegistration(tx, config.atividadeId);
+        const regras = await lockRegistration(tx, config.atividadeId);
         const repeated = await tx.inscricao.count({
           where: { atividadeId: config.atividadeId, chaveDuplicidade: chave },
         });
         if (repeated > 0) throw this.alreadyRegistered();
 
+        const situacao = await nextSituation(tx, config.atividadeId, regras.vagas);
+        if (situacao === SituacaoInscricao.LISTA_ESPERA && !regras.listaEspera) {
+          throw new ConflictException({
+            code: 'REGISTRATION_FULL',
+            message: 'As vagas desta atividade já foram preenchidas.',
+          });
+        }
         const participante = await tx.participante.create({
           data: {
             nome: data.nome,
@@ -155,7 +163,7 @@ export class PublicRegistrationsService {
           data: {
             atividadeId: config.atividadeId,
             participanteId: participante.id,
-            situacao: await nextSituation(tx, config.atividadeId, vagas),
+            situacao,
             chaveDuplicidade: chave,
             versaoAviso: DATA_NOTICE.versao,
             avisoApresentadoEm: new Date(),

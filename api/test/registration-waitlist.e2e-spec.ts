@@ -247,6 +247,46 @@ describe('Vagas, lista de espera e inscritos da atividade (e2e)', () => {
     expect(lista).toMatchObject({ vagas: 1, confirmadas: 3, emEspera: 1 });
   });
 
+  it('sem lista de espera, o formulario avisa as vagas esgotadas e recusa o envio', async () => {
+    await prisma.configuracaoInscricao.update({
+      where: { atividadeId },
+      data: { vagas: 1, listaEspera: false },
+    });
+
+    await enviar(1).expect(201);
+    const recusa = await enviar(2).expect(409);
+
+    expect((recusa.body as { code: string }).code).toBe('REGISTRATION_FULL');
+    const form = await server().get(`/v1/public/registrations/${CODIGO}`).expect(200);
+    expect(form.body).toMatchObject({ aberta: true, vagasEsgotadas: true, listaEspera: false });
+    expect(await prisma.inscricao.count()).toBe(1);
+  });
+
+  it('sem promocao automatica, mais vagas nao confirmam a espera; ligar a promocao confirma', async () => {
+    await inscrever(1, SituacaoInscricao.CONFIRMADA);
+    await inscrever(2, SituacaoInscricao.CONFIRMADA);
+    await inscrever(3, SituacaoInscricao.LISTA_ESPERA);
+    const config = `/v1/activities/${atividadeId}/registration`;
+
+    const desligada = await as(Perfil.NUCLEO_PEDAGOGICO)
+      .patch(config, { versao: 1, promocaoAutomatica: false, vagas: 3 })
+      .expect(200);
+    expect(desligada.body).toMatchObject({ listaEspera: true, promocaoAutomatica: false });
+    let lista = (await as(Perfil.NUCLEO_PEDAGOGICO).get(listPath()).expect(200)).body as ListBody;
+    expect(lista).toMatchObject({ vagas: 3, confirmadas: 2, emEspera: 1 });
+
+    await as(Perfil.NUCLEO_PEDAGOGICO)
+      .patch(config, { versao: 2, promocaoAutomatica: true })
+      .expect(200);
+    lista = (await as(Perfil.NUCLEO_PEDAGOGICO).get(listPath()).expect(200)).body as ListBody;
+    expect(lista).toMatchObject({ confirmadas: 3, emEspera: 0 });
+    const trilha = await prisma.trilhaAuditoria.findFirstOrThrow({
+      where: { acao: 'REGISTRATION_UPDATED' },
+      orderBy: { criadoEm: 'asc' },
+    });
+    expect(trilha.depois).toEqual({ vagas: 3, promocaoAutomatica: false });
+  });
+
   it('lista os inscritos ao Nucleo, com busca, menor e responsavel; os demais veem so os totais', async () => {
     await inscrever(1, SituacaoInscricao.CONFIRMADA);
     await inscrever(2, SituacaoInscricao.CONFIRMADA, true);
