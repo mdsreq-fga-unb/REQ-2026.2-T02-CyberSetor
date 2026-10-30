@@ -7,6 +7,7 @@
 | 17/09/2026 | 1.2 | Riscos éticos e operacionais aprofundados: dispositivos pessoais, uso de imagens, burocratização do cuidado, distorção de metas, governança de retificações e rastreabilidade | Rodrigo Henrique e Lucas Leal |
 | 17/09/2026 | 1.3 | Impactos pretendidos restaurados como 3.1 e princípios da intervenção separados em 3.2; riscos reunidos em 3.3, com o da exclusão por familiaridade digital; rastreabilidade sem repetir a mitigação; governança de dados remetida à seção 2.6, ficando aqui a visibilidade por perfil; capacidades descritas em lugar de identificadores que a seção 8 declara; base legal e prazo de guarda alinhados à Lei 13.709/2018 e ao art. 68 da Lei 13.019/2014; mitigações declaradas como previstas | Equipe CyberSetor |
 | 05/10/2026 | 1.4 | Revisão editorial: padronização da formatação e espaçamentos, preservando integralmente o conteúdo e a densidade analítica original | Rodrigo Henrique |
+| 26/10/2026 | 1.5 | Conectividade no campo com quedas pontuais e lançamento posterior com justificativa até a operação sem conexão (3.3.1 a 3.3.3); rastreabilidade das mitigações com as histórias da seção 10.1; riscos 3.3.1 a 3.3.3 em termos do uso, com o conflito de sincronização descrito pelo resultado; identificação nominal ligada à prestação de contas nominal ao concedente; mitigações dos riscos 3.3.1 a 3.3.4 e visibilidade por perfil (3.5) com remissão às políticas da seção 2.6 e aos requisitos; autorização de uso de imagem separada da prova de execução (3.3.4) | Vinicius Vieira |
 
 ---
 
@@ -41,22 +42,22 @@ A digitalização dos processos de prestação de contas traz tensões práticas
 
 ### 3.3.1 Dependência dos telefones pessoais dos educadores
 - **Risco:** A equipe de campo e os oficineiros não dispõem de aparelhos celulares corporativos fornecidos pelo Instituto, utilizando seus próprios smartphones pessoais para acessar o sistema, consultar chamadas e carregar fotos. Essa dinâmica pode sobrecarregar planos de internet móvel particulares, consumir armazenamento pessoal e gerar desgaste das baterias durante oficinas abertas.
-- **Mitigação:** A aplicação web é projetada para ser leve (*Mobile-First/PWA*), otimizada para consumir o mínimo de tráfego de dados e armazenar dados em cache local no navegador (*IndexedDB*). O educador pode operar a chamada totalmente desconectado e realizar a sincronização posterior em uma rede Wi-Fi (na sede do Instituto ou em casa), reduzindo a dependência de dados móveis particulares.
+- **Mitigação:** A aplicação web é pensada primeiro para o celular, pode ser instalada pelo navegador, sem loja de aplicativos, e consome o mínimo de tráfego de dados. Quando a conexão falha no local, a presença é lançada depois, com justificativa (RF19); com a operação sem conexão, o educador pode fazer a chamada desconectado e enviá-la depois por uma rede Wi-Fi (na sede do Instituto ou em casa), o que reduz a dependência de dados móveis particulares. A política está na [seção 2.6](2-solucao-proposta.md#politica-sem-conexao).
 
 ### 3.3.2 Perda, furto ou comprometimento do aparelho
 - **Risco:** O SCS é uma região central de grande circulação urbana, onde furtos e perdas de celulares são riscos reais. Caso um aparelho de um educador seja subtraído com dados locais armazenados ou com a sessão da aplicação aberta, informações pessoais de participantes poderiam ser indevidamente expostas.
-- **Mitigação:** O CyberSetor prevê expiração automática de sessão (*session timeout*), armazenamento local protegido e expurgo do cache de dados confidenciais do dispositivo móvel logo após a confirmação da sincronização com a API central. Nenhum banco de dados nominal completo de participantes fica persistido permanentemente no navegador do smartphone.
+- **Mitigação:** O CyberSetor prevê o encerramento automático da sessão após um período sem uso. Dado de participante só fica no aparelho com a operação sem conexão, em armazenamento local protegido, e sai dele logo que o servidor confirma o recebimento ([RNF10](../requisitos/8-requisitos.md#rnf10); [seção 2.6](2-solucao-proposta.md#politica-sem-conexao)). Nenhum banco de dados nominal completo de participantes fica persistido permanentemente no navegador do smartphone.
 
 ### 3.3.3 Conflitos na sincronização sem conexão
-- **Risco:** Durante oficinas com múltiplos facilitadores ou em situações de intermitência de sinal no SCS, o mesmo registro de presença ou atividade pode ser lançado ou alterado simultaneamente por mais de uma pessoa em modo desconectado. Ao reconectar, a sincronização cega poderia sobrescrever marcações corretas ou gerar duplicidade de atendimentos.
-- **Mitigação:** Identificadores imutáveis gerados no cliente e sincronização idempotente baseada no modelo *Append-Only* com registro do instante do evento (*timestamp* de captura vs. *timestamp* de envio). O servidor realiza conciliação sem duplicar presenças da mesma pessoa na mesma data/oficina, sinalizando visualmente ao usuário se a pendência foi transmitida com sucesso ou se necessita de conferência.
+- **Risco:** Durante oficinas com múltiplos facilitadores ou nas quedas pontuais de sinal no SCS, o mesmo registro de presença ou atividade pode ser lançado ou alterado simultaneamente por mais de uma pessoa em modo desconectado. Ao reconectar, a sincronização cega poderia sobrescrever marcações corretas ou gerar duplicidade de atendimentos.
+- **Mitigação:** O reenvio de uma chamada não duplica nem perde presenças, e o registro em conflito fica visível ao coordenador para conferência ([RF18](../requisitos/8-requisitos.md#rf18), [RNF09](../requisitos/8-requisitos.md#rnf09), [HU-12](../requisitos/10-backlog.md#hu-12)). A política de operação sem conexão, com o lançamento posterior enquanto ela não existe, está na [seção 2.6](2-solucao-proposta.md#politica-sem-conexao).
 
 ### 3.3.4 Fotografia como evidência e proteção da imagem
 - **Risco:** Editais públicos exigem comprovação fotográfica da realização das ações. No entanto, fotografar pessoas em situação de rua, crianças e adolescentes em oficinas no espaço público pode gerar constrangimento, violação da imagem, exposição estigmatizante e infração ao Estatuto da Criança e do Adolescente (ECA) e à LGPD.
 - **Mitigação:**
   1. *Diretriz Operacional de Enquadramento:* As orientações de campo recomendam registros fotográficos panorâmicos, de costas, em plano aberto ou focando na atividade/produção artística (painéis, instrumentos, trabalhos manuais), evitando retratos faciais em close-up de participantes vulneráveis.
   2. *Controle de Acesso Sistêmico:* O módulo de evidências restringirá a visualização das fotos aos perfis com competência sobre o projeto, e as fotos não são publicadas em galerias abertas na internet.
-  3. *Termo de Uso de Imagem Vinculado:* O formulário de matrícula contém consentimento específico e voluntário para registro fotográfico institucional e para fins de prestação de contas governamental.
+  3. *Autorização de Uso de Imagem:* A foto de prova de execução e a de divulgação são registros distintos; a divulgação depende de autorização própria, colhida na inscrição, e a recusa não afeta a participação ([RN-12](../requisitos/8-requisitos.md#rn-12); [seção 2.6](2-solucao-proposta.md#politica-dados-pessoais)).
 
 ### 3.3.5 Reutilização do histórico de contatos
 - **Risco:** A centralização de telefones e e-mails de participantes em uma base única facilita a comunicação do Instituto, mas pode descambar para o envio de mensagens indesejadas (*spam*), quebrando o princípio da finalidade (art. 6º da LGPD) e expondo contatos a usos não autorizados.
@@ -64,7 +65,7 @@ A digitalização dos processos de prestação de contas traz tensões práticas
 
 ### 3.3.6 Pressão por metas e burocratização do acolhimento
 - **Risco:** A necessidade contábil de justificar verbas públicas pode induzir facilitadores a exigir documentos (CPF, nome completo, comprovante de residência) antes de fornecer apoio social imediato (refeições, banho, acolhimento), afastando indivíduos que desconfiam de cadastros governamentais ou que não portam documentação civil.
-- **Mitigação:** Segregação de modalidades de registro: para ações assistenciais e de acolhimento emergencial no território, está previsto o **registro quantitativo agregado anônimo** (ex.: "45 banhos realizados no turno matutino"), sem exigência de identificação nominal do beneficiário. A identificação nominal com CPF fica restrita às oficinas de formação contínua que emitem certificados formais e exigem prestação de contas nominal ao concedente.
+- **Mitigação:** Segregação de modalidades de registro: para ações assistenciais e de acolhimento emergencial no território, está previsto o **registro quantitativo agregado anônimo** (ex.: "45 banhos realizados no turno matutino"), sem exigência de identificação nominal do beneficiário. A identificação nominal com CPF fica restrita às oficinas de formação contínua que exigem prestação de contas nominal ao concedente.
 
 ### 3.3.7 A meta quantitativa como fim em si mesma
 - **Risco:** Quando o cumprimento numérico de metas contratuais torna-se o único indicador monitorado pelo software, equipes de campo podem ser pressionadas a priorizar "quantidade de pessoas atendidas" em detrimento da profundidade do vínculo formativo, acolhendo mais pessoas superficialmente apenas para "fechar o gráfico".
@@ -95,24 +96,22 @@ Cada desafio tratado acima corresponde a uma capacidade do produto. Os identific
 | :--- | :--- |
 | **Uso de dispositivos pessoais (*BYOD*)** | Interface responsiva, priorizando o uso em telefone, e registro local no navegador para operação sem conexão. |
 | **Furto, perda ou roubo de smartphones** | Expiração de sessão no aparelho, revogação de acesso em caso de perda e descarte do registro local após a confirmação do envio. |
-| **Conflitos de sincronização *offline*** | **HU-03 e HU-04:** registro de presenças e anexação de evidências, com reenvio que não duplica lançamento e política declarada para registros simultâneos conflitantes. |
-| **Exposição de fotos de pessoas vulneráveis** | **HU-04:** Vinculação de fotos a metas com controle de acesso por perfil.<br>**HU-06:** Termo digital de consentimento de uso de imagem. |
-| **Reutilização indevida de dados para contato** | **HU-06:** Gestão da base única com flag explícita de autorização de contato e histórico de consentimento. |
-| **Burocratização do acolhimento humano** | **HU-03:** Tipificação de objetos com modalidade de cômputo anônimo de atendimentos sem exigência de CPF. |
-| **Distorção de metas (Lei de Goodhart)** | **HU-05:** Estruturação do Relatório do Objeto contendo justificativas contextuais e campos de avaliação qualitativa. |
-| **Julgamentos injustos por dados incompletos** | **HU-01 / HU-03:** Regra de negócio de lançamento retroativo com justificativa prévia antes do fechamento do ciclo. |
-| **Erros de lançamento e direitos do titular** | **HU-06:** Retificação cadastral auditável e histórico de alterações com responsável e justificativa. |
+| **Conflitos de sincronização *offline*** | **HU-09a, HU-09b e HU-12:** registro de presenças, operação sem conexão e sincronização com reenvio que não duplica lançamento e política declarada para registros simultâneos conflitantes.<br>**HU-04a:** anexação de evidências com o mesmo tratamento de reenvio. |
+| **Exposição de fotos de pessoas vulneráveis** | **HU-04a e HU-04b:** Vinculação de fotos a atividades e metas, acesso restrito por perfil e orientação de enquadramento.<br>**HU-07a:** Autorização de uso de imagem registrada na inscrição, separada da participação. |
+| **Reutilização indevida de dados para contato** | **HU-07a:** Autorização de contato opcional registrada na inscrição, com revogação datada. |
+| **Burocratização do acolhimento humano** | **HU-03a e HU-03b:** Modalidades criadas pelo Instituto e comprovações por modalidade, com cômputo anônimo de atendimentos sem exigência de CPF. |
+| **Distorção de metas (Lei de Goodhart)** | **HU-05a:** Estruturação do Relatório do Objeto contendo justificativas contextuais e campos de avaliação qualitativa. |
+| **Julgamentos injustos por dados incompletos** | **HU-10:** Lançamento ou correção de presença fora do prazo, com justificativa obrigatória. |
+| **Erros de lançamento e direitos do titular** | **HU-15a:** Retificação cadastral a pedido do titular, com justificativa registrada.<br>**HU-10:** Correção de presença com justificativa e trilha de auditoria. |
 
 ---
 
 ## 3.5 Visibilidade por perfil
 
-Os compromissos gerais de tratamento de dados pessoais, com base legal, finalidade e prazo de retenção, estão na seção 2.6. O que a intervenção social acrescenta é a separação de quem enxerga o quê, que é a condição para que o registro não se torne exposição.
+Os compromissos gerais de tratamento de dados pessoais, com base legal, finalidade e prazo de retenção, estão na [seção 2.6](2-solucao-proposta.md#politica-dados-pessoais). O que a intervenção social acrescenta é a separação de quem enxerga o quê, que é a condição para que o registro não se torne exposição.
 
 A matriz de acesso definitiva é decidida com as áreas competentes do Instituto. A diretriz prevista é esta:
 
 - *Núcleo pedagógico e assistentes:* acesso às fichas de participantes para mediação das oficinas e cuidados específicos.
 - *Administrativo-financeiro:* acesso aos números consolidados de frequência e metas alcançadas, bloqueando visualização de nomes, telefones ou fotos de alunos.
 - *Órgãos concedentes e auditoria:* acesso aos relatórios e às evidências que a prestação de contas exige, pelo tempo da análise, sem acesso à base cadastral completa.
-
-O prazo de guarda e a base legal de cada finalidade seguem o que a seção 2.6 estabelece.

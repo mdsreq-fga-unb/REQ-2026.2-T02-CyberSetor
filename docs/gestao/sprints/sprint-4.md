@@ -5,7 +5,7 @@
 | Campo | Conteúdo |
 |---|---|
 | **Código do documento** | C34 |
-| **Versão** | 1.0 |
+| **Versão** | 1.1 |
 | **Data de emissão** | 21 de outubro de 2026 |
 | **Projeto** | CyberSetor — sistema de gestão do ciclo de projetos financiados |
 | **Cliente** | Instituto Cultural e Social No Setor |
@@ -15,7 +15,7 @@
 | **Período da Sprint** | 20/10/2026 (terça-feira) a 03/11/2026 (terça-feira) — 2 semanas |
 | **Elaboração** | Vinicius Angelo de Brito Vieira (Scrum Master) |
 | **Product Owner** | Maria Eduarda Denis Duarte Marques |
-| **Situação** | Emitido com o deliberado no Sprint Planning de 20/10/2026 e na realocação de 21/10 |
+| **Situação** | Emitido com o deliberado no Sprint Planning de 20/10/2026 e na realocação de 21/10; revisto com a remarcação da reunião com o Instituto e o remanejamento de 22/10 |
 
 ---
 
@@ -47,7 +47,7 @@ BECK, K. **Extreme Programming Explained: Embrace Change.** 2. ed. Addison-Wesle
 
 A Sprint 3 terminou com a meta **parcialmente atingida**: a Unidade 2 foi publicada na versão marcada antes de 13/10, o Instituto confirmou o MVP em 08/10, o ambiente local foi definido e a base técnica da API e do front foi integrada com integração contínua. A homologação não foi publicada e as primeiras histórias (contas, HU-16; instrumento, HU-01a) ficaram em pull request, porque a construção só começou depois da Unidade 2, das provas e da saída de um integrante em 13/10.
 
-O backlog foi reestruturado em vinte e cinco histórias, uma por ator e resultado (seção 10.1), e a equipe o ratifica pela revisão do pull request correspondente. A reunião com o Instituto em 22/10 apresenta a primeira entrega e fecha os pontos em aberto da seção 8.6; o checkpoint de 29/10 acompanha um projeto real com dados minimizados.
+O backlog foi reestruturado em vinte e cinco histórias, uma por ator e resultado (seção 10.1), e a equipe o ratifica pela revisão do pull request correspondente. A reunião com o Instituto prevista para 22/10 não ocorreu e passou para 29/10 (quinta-feira), que reúne a demonstração da primeira entrega, as perguntas sobre os pontos em aberto da seção 8.6 e o checkpoint, com um projeto real e dados minimizados.
 
 ---
 
@@ -58,9 +58,9 @@ O backlog foi reestruturado em vinte e cinco histórias, uma por ator e resultad
 | Evento | Data | Horário | Observação |
 |---|---|---|---|
 | Sprint Planning 4 | 20/10 (terça) | 20h56 | Na mesma reunião da Review 3 e da Retrospectiva 3 |
-| Reunião com o Instituto — primeira entrega e validação da seção 8.6 | 22/10 (quinta) | a combinar com o Instituto | Demonstração da primeira entrega |
+| Reunião com o Instituto — prevista | 22/10 (quinta) | — | Não ocorreu; passou para 29/10 |
 | Reuniões da equipe | terças e quintas | entre 20h e 23h | Meet, com transcrição |
-| Checkpoint com o Instituto | 29/10 (quarta) | a combinar com o Instituto em 22/10 | Um projeto real, dados minimizados |
+| Reunião com o Instituto — demonstração da primeira entrega, pontos em aberto da seção 8.6 e checkpoint | 29/10 (quinta) | a combinar com o Instituto | Um projeto real, dados minimizados |
 | Sprint Review 4 e Retrospectiva 4 | 03/11 (terça) | à noite | — |
 | Sprint Planning 5 | 03/11 (terça) | na mesma reunião | — |
 
@@ -70,7 +70,7 @@ O backlog foi reestruturado em vinte e cinco histórias, uma por ator e resultad
 
 **Como a meta se verifica:** as dezesseis histórias do MVP (seção 10.2.6) em Done no quadro, cada uma com os critérios de aceitação exercitados em homologação; endereço da homologação registrado no site; checkpoint de 29/10 realizado com ata.
 
-**Recorte da primeira entrega (22/10):** autenticação com painel por perfil, contas e perfis (HU-16), cadastro de instrumento (HU-01a) e modalidades (HU-03a) em homologação. HU-01b, HU-02a e o cadastro da atividade vão ao Instituto com data, até 03/11.
+**Recorte da primeira entrega (29/10):** as histórias publicadas na homologação até a véspera, cada uma com o seu percurso; as que não estiverem publicadas vão ao Instituto com data, até 03/11.
 
 ---
 
@@ -82,28 +82,28 @@ O backlog foi reestruturado em vinte e cinco histórias, uma por ator e resultad
 |---|---|---|---|
 | 20/10 | terça | Review 3, Retrospectiva 3 e Planning 4 | Nula — cerimônia |
 | 21/10 | quarta | Revisão e integração dos pull requests; homologação | Reduzida |
-| 22/10 | quinta | Reunião com o Instituto; aula | Reduzida |
+| 22/10 | quinta | Aula; a reunião com o Instituto não ocorreu | Reduzida |
 | 23/10 | sexta | Construção; issues das histórias migradas | Plena |
 | 24/10 e 25/10 | fim de semana | — | Não contada |
 | 26/10 | segunda | Construção | Plena |
 | 27/10 | terça | Construção; reunião da equipe | Plena |
 | 28/10 | quarta | Construção | Plena |
-| 29/10 | quinta | Checkpoint com o Instituto | Reduzida |
+| 29/10 | quinta | Reunião com o Instituto: demonstração e checkpoint | Reduzida |
 | 30/10 | sexta | Construção | Plena |
 | 31/10 a 02/11 | fim de semana e Finados | Não contada |
 | 03/11 | terça | Sprint Review 4 e Retrospectiva 4 | Nula — cerimônia |
 
-**Síntese:** 10 dias úteis; 5 de capacidade plena, 3 reduzidos e 2 de cerimônia. A primeira semana começa com a homologação e a reunião com o Instituto; a construção das histórias novas se concentra de 23/10 a 30/10.
+**Síntese:** 10 dias úteis; 5 de capacidade plena, 3 reduzidos e 2 de cerimônia. A primeira semana começa com a homologação; a construção das histórias novas se concentra de 23/10 a 30/10.
 
 ### 5.2 Perfil da equipe para os produtos de trabalho desta Sprint
 
 | Integrante | Papel | Foco nesta Sprint |
 |---|---|---|
-| Vinicius Vieira | Scrum Master · independente | Homologação e integração; HU-01a (documento formal e projeto), HU-16, HU-15a e HU-15b, HU-05a e HU-05b; revisão dos pull requests das duplas; apoio às duas frentes |
-| Maria Eduarda Marques | Product Owner · dupla com Caio | Reunião de 22/10 e checkpoint de 29/10; HU-03a, HU-07a, HU-07b, HU-07c e HU-08; revisão dos pull requests da outra dupla |
+| Vinicius Vieira | Scrum Master · independente | Homologação e integração; HU-01a (documento formal e projeto), HU-01b, HU-02a, HU-02b (com Daniel e Rodrigo), HU-16, HU-15a, HU-15b e HU-05b; revisão dos pull requests das duplas; apoio às duas frentes |
+| Maria Eduarda Marques | Product Owner · dupla com Caio | Reunião de 29/10, com demonstração e checkpoint; HU-03a, HU-07a, HU-07b, HU-07c e HU-08; revisão dos pull requests da outra dupla |
 | Caio Martins | Dupla com Maria Eduarda | HU-03a e inscrições (HU-07a, HU-07b, HU-07c, HU-08) |
-| Daniel Batista | Dupla com Rodrigo | HU-01b, HU-02a, HU-02b, HU-14 e HU-13; revisão dos pull requests da outra dupla |
-| Rodrigo Henrique Donato | Dupla com Daniel | HU-01b, HU-02a, HU-02b, HU-14 e HU-13; revisão dos pull requests da outra dupla e da documentação |
+| Daniel Batista | Dupla com Rodrigo | HU-02b (com Vinicius), HU-14, HU-13 e HU-05a; revisão dos pull requests da outra dupla |
+| Rodrigo Henrique Donato | Dupla com Daniel | HU-02b (com Vinicius), HU-14, HU-13 e HU-05a; revisão dos pull requests da outra dupla e da documentação |
 
 Referência de capacidade: cerca de 2 horas por dia por integrante, como nas sprints anteriores. Padrões para copiar: módulo `instruments` na API; telas de lista e componentes comuns no front, descritos no README do front.
 
@@ -113,42 +113,43 @@ Referência de capacidade: cerca de 2 horas por dia por integrante, como nas spr
 
 ### 6.1 Histórias selecionadas para a sprint
 
-As dezesseis histórias do MVP (seção 10.2.6): Requisito e meta HU-01a, HU-01b, HU-02a, HU-02b e HU-14; Atividade HU-03a; Pessoas HU-07a, HU-07b, HU-07c, HU-08, HU-15a, HU-15b e HU-16; Relatório HU-05a, HU-05b e HU-13. As demais continuam no Product Backlog, sem sprint. HU-16 e HU-01a (parte) já estão em pull request.
+As dezesseis histórias do MVP (seção 10.2.6): Requisito e meta HU-01a, HU-01b, HU-02a, HU-02b e HU-14; Atividade HU-03a; Pessoas HU-07a, HU-07b, HU-07c, HU-08, HU-15a, HU-15b e HU-16; Relatório HU-05a, HU-05b e HU-13. As demais continuam no Product Backlog, sem sprint. HU-16 e o cadastro de instrumento da HU-01a entram na sprint já integrados.
 
 ### 6.2 Sprint Backlog
 
-**Parte A — Homologação e integração** (21/10 a 22/10)
+**Parte A — Homologação e integração** (21/10 a 29/10)
 
 | ID | Item | Atividade de ER | Responsáveis | MoSCoW | Prazo |
 |---|---|---|---|---|---|
 | A01 | Pull requests da autenticação, das imagens de implantação, das contas e do instrumento revisados e integrados na ordem de dependência | Não se aplica | revisores; Vinicius integra | Must | 21/10 (concluído em 20/10) |
 | A02 | Pull request das histórias derivadas revisado e integrado; issues das histórias migradas para as histórias com letra e HU-16; tarefas remanejadas; quadro na Sprint 4 | Organização e atualização | equipe revisa; Vinicius aplica | Must | 21/10 (concluído) |
 | A03 | Homologação da API e do front publicada, com banco privado, backup com teste de restauração e endereço registrado no site | Não se aplica | Vinicius | Must | 21/10; endereço no site até 03/11 |
-| A04 | Reunião de 22/10: demonstração da primeira entrega, perguntas fechadas sobre os pontos em aberto da seção 8.6; respostas aplicadas na documentação em pull request seguinte | Validação | Vinicius e Maria Eduarda; equipe | Must | 22/10; documentação até 27/10 |
+| A04 | Reunião com o Instituto, remarcada de 22/10 para 29/10: demonstração da primeira entrega, perguntas fechadas sobre os pontos em aberto da seção 8.6; respostas aplicadas na documentação em pull request seguinte | Validação | Vinicius e Maria Eduarda; equipe | Must | 29/10; documentação até 03/11 |
 
 **Parte B — Histórias do MVP** (23/10 a 30/10)
 
 | ID | Item | Atividade de ER | Responsáveis | MoSCoW | Prazo |
 |---|---|---|---|---|---|
 | B01 | HU-01a: documento formal (anexo) e projeto | Declaração | Vinicius | Must | 27/10 |
-| B02 | HU-01b: requisitos do instrumento e metas com parâmetros | Declaração | Daniel e Rodrigo | Must | 27/10 |
-| B03 | HU-02a: responsável, setor, prazo e situação da meta | Declaração | Daniel e Rodrigo | Must | 29/10 |
+| B02 | HU-01b: requisitos do instrumento e metas com parâmetros | Declaração | Vinicius | Must | 27/10 |
+| B03 | HU-02a: responsável, setor, prazo e situação da meta | Declaração | Vinicius | Must | 29/10 |
 | B04 | HU-03a: modalidades e atividades ligadas a metas | Declaração | Maria Eduarda e Caio | Must | 27/10 |
-| B05 | HU-07b e HU-07a: abertura da inscrição e formulário público | Declaração | Maria Eduarda e Caio | Must | 30/10 |
+| B05 | HU-07b e HU-07a: abertura da inscrição e formulário público | Declaração | Maria Eduarda e Caio | Must | 28/10 (HU-07b, para a reunião de 29/10); 30/10 (HU-07a) |
 | B06 | HU-07c e HU-08: vaga ou lista de espera; inscrição presencial | Declaração | Maria Eduarda e Caio | Should | 03/11 |
-| B07 | HU-02b e HU-14: painel de prazos com avisos; termo aditivo como nova versão | Declaração | Daniel e Rodrigo | Should | 03/11 |
+| B07 | HU-02b e HU-14: painel de prazos com avisos; termo aditivo como nova versão | Declaração | Daniel e Rodrigo; Vinicius na HU-02b | Should | 03/11 |
 | B08 | HU-15a e HU-15b: correção, exclusão e anonimização a pedido do titular | Declaração | Vinicius | Should | 03/11 |
-| B09 | HU-05a e HU-05b: relatório com justificativa e PDF, depois da HU-02a | Declaração | Vinicius | Should | 03/11 |
+| B09 | HU-05a: relatório com resultado alcançado e justificativa, depois da HU-02a | Declaração | Daniel e Rodrigo | Should | 03/11 |
 | B10 | HU-13: planilha do projeto, depois da HU-02a | Declaração | Daniel e Rodrigo | Should | 03/11 |
+| B11 | HU-05b: relatório em PDF, depois da HU-05a | Declaração | Vinicius | Should | 03/11 |
 
 **Parte C — Processo e documentação**
 
 | ID | Item | Atividade de ER | Responsáveis | MoSCoW | Prazo |
 |---|---|---|---|---|---|
-| C01 | Ata de 20/10 e ata de 22/10 publicadas; ata de 22/10 conferida pelo Instituto | Organização e atualização | relator; Maria Eduarda | Must | 24/10 |
-| C02 | Conferência das atas de 28/09 e 08/10 pelo Instituto; registro de 08/10 e 22/10 na 10.2.8 | Organização e atualização | Maria Eduarda | Should | 29/10 |
+| C01 | Ata de 20/10 e ata da reunião de 29/10 publicadas; ata de 29/10 conferida pelo Instituto | Organização e atualização | relator; Maria Eduarda | Must | 24/10 (ata de 20/10); 03/11 (ata de 29/10) |
+| C02 | Conferência das atas de 28/09 e 08/10 pelo Instituto; registro de 08/10 na 10.2.8 depois dessa conferência; registro de 29/10 na 10.2.8 depois de C01 | Organização e atualização | Maria Eduarda | Should | 29/10 (conferência); 03/11 (registro de 29/10) |
 | C03 | Plano da Sprint 4 publicado (este documento) | Organização e atualização | Vinicius | Must | 21/10 |
-| C04 | Checkpoint de 29/10 com um projeto real e dados minimizados: preparação e ata | Validação | Maria Eduarda e Vinicius | Must | 29/10 |
+| C04 | Reunião de 29/10, que reúne a demonstração da primeira entrega e o checkpoint, com um projeto real e dados minimizados: preparação e ata | Validação | Maria Eduarda e Vinicius | Must | 29/10 |
 | C05 | Apontamento do docente sobre a seção 4 concluído e respondido | Verificação e validação | Caio | Should | 27/10 |
 
 ---
@@ -165,13 +166,13 @@ As dezesseis histórias do MVP (seção 10.2.6): Requisito e meta HU-01a, HU-01b
 ### 7.2 Aplicação nesta sprint (horizonte A)
 
 - **Must:** A01 a A04, B01 a B05, C01, C03 e C04 — a homologação, a primeira entrega e o ciclo do instrumento à meta com a atividade e a inscrição aberta.
-- **Should:** B06 a B10, C02 e C05 — fecham os dois ciclos do MVP; descem para a Sprint 5 na ordem HU-05b, HU-15b, HU-02b, se a velocidade ficar abaixo do necessário, com aviso ao Instituto.
+- **Should:** B06 a B11, C02 e C05 — fecham os dois ciclos do MVP; se a velocidade ficar abaixo do necessário, descem para a Sprint 5 na ordem HU-05b, depois HU-14, depois só o aviso por e-mail da HU-02b (CA-02b.4), com aviso ao Instituto. HU-15a e HU-15b não descem enquanto a inscrição pública puder receber dado real.
 
-**Verificação de capacidade.** Cinco dias plenos para nove histórias novas em duas duplas e um integrante independente: cada dupla tem duas histórias *Must* e duas ou três *Should*. A contenção é por história inteira, nunca por critério de aceitação parcial.
+**Verificação de capacidade.** Cinco dias plenos para nove histórias novas em duas duplas e um integrante independente, com a distribuição da seção 8: com a referência da seção 5.2, são cerca de 50 horas de construção (cinco integrantes, 2 horas por dia pleno), perto de 6 horas por história; as histórias com requisito de esforço 3 (HU-15b e HU-05b, pela escala da seção 10.2.1) passam disso, e a HU-05b é a primeira da ordem de contenção; sem contar os dias reduzidos, que ficam para revisão, integração e a reunião de 29/10. A contenção é por história inteira; a única exceção é o aviso por e-mail da HU-02b, que pode descer sozinho, e nesse caso a HU-02b só é concluída quando ele for entregue.
 
 ### 7.3 Ordem de construção (horizonte B)
 
-Depois de 22/10: HU-01a (documento e projeto), HU-01b, HU-02a e HU-03a; em seguida inscrições (HU-07b, HU-07a, HU-07c, HU-08), HU-02b e HU-14, HU-15a e HU-15b, HU-05a, HU-05b e HU-13. Dentro de cada história, a primeira fatia é vertical: API e tela para um critério de aceitação, em pull request de até 1.000 linhas (alvo 500), antes de ampliar. Branches com o código da história com letra (`feat/api/HU-01b-...`).
+A partir de 23/10: HU-01a (documento e projeto), HU-01b, HU-02a e HU-03a; em seguida inscrições (HU-07b, HU-07a, HU-07c, HU-08), HU-02b, HU-15a e HU-15b, HU-05a, HU-14, HU-05b e HU-13. Dentro de cada história, a primeira fatia é vertical: API e tela para um critério de aceitação, em pull request de até 1.000 linhas (alvo 500), antes de ampliar. Branches com o código da história com letra (`feat/api/HU-01b-...`).
 
 ---
 
@@ -179,11 +180,11 @@ Depois de 22/10: HU-01a (documento e projeto), HU-01b, HU-02a e HU-03a; em segui
 
 | Dupla ou integrante | Histórias | Padrão de referência |
 |---|---|---|
-| Daniel e Rodrigo | HU-01b, HU-02a, HU-02b, HU-14, HU-13 | módulo `instruments` da API e tela de instrumentos |
+| Daniel e Rodrigo | HU-02b (com Vinicius), HU-14, HU-13, HU-05a | módulo `instruments` da API e tela de instrumentos |
 | Maria Eduarda e Caio | HU-03a, HU-07a, HU-07b, HU-07c, HU-08 | tela de contas e componentes de lista |
-| Vinicius | HU-01a (documento formal e projeto), HU-16, HU-15a, HU-15b, HU-05a, HU-05b; homologação e integração; revisão dos pull requests das duplas | — |
+| Vinicius | HU-01a (documento formal e projeto), HU-01b, HU-02a, HU-02b (com Daniel e Rodrigo), HU-16, HU-15a, HU-15b, HU-05b; homologação e integração; revisão dos pull requests das duplas | — |
 
-Revisão cruzada: pull request de uma dupla é revisado pela outra ou por Vinicius, em até 24 horas, com aviso no grupo quando vencer.
+Revisão cruzada: pull request de uma dupla é revisado pela outra ou por Vinicius, e o de Vinicius, por integrante de uma das duplas, em até 24 horas, com aviso no grupo quando vencer.
 
 ---
 
@@ -191,12 +192,12 @@ Revisão cruzada: pull request de uma dupla é revisado pela outra ou por Vinici
 
 | # | Risco | Probabilidade | Impacto | Resposta |
 |---|---|---|---|---|
-| R1 | Homologação sem link em 22/10 | Baixa | Alto | Pull requests já integrados; sem o link, demonstração local por compartilhamento de tela |
+| R1 | Homologação sem link na reunião de 29/10 | Baixa | Alto | Pull requests já integrados; sem o link, demonstração local por compartilhamento de tela |
 | R2 | Duplas sem ambiente local funcionando | Baixa | Alto | Execução local em 21/10 com retorno no grupo; READMEs da API e do front; apoio de Vinicius |
-| R3 | Respostas do Instituto em 22/10 mudam critérios de aceitação (cadastro repetido, prorrogação, número de processo, código do projeto, conta por pessoa) | Média | Médio | Critérios marcados como pendentes nas histórias; pull request de documentação até 27/10 |
-| R4 | Velocidade abaixo do necessário para nove histórias novas | Alta | Alto | Contenção de 7.2; aviso ao Instituto no checkpoint de 29/10 |
+| R3 | Respostas do Instituto em 29/10 mudam critérios de aceitação (cadastro repetido, prorrogação, número de processo, código do projeto, conta por pessoa) | Média | Médio | Critérios marcados como pendentes nas histórias; pull request de documentação até 03/11 |
+| R4 | Velocidade abaixo do necessário para nove histórias novas | Alta | Alto | Remanejamento de 22/10; contenção de 7.2 (HU-05b, HU-14, aviso por e-mail da HU-02b); aviso ao Instituto na reunião de 29/10 |
 | R5 | Armazenamento e módulo de anexos (HU-01a, RF02) atrasam o documento formal | Média | Médio | Armazenamento criado com a homologação; projeto antes do documento formal, se preciso |
-| R6 | Atas de 28/09 e 08/10 sem conferência do Instituto | Alta | Baixo | C2 de 22/10; registro na 10.2.8 só depois |
+| R6 | Atas de 28/09 e 08/10 sem conferência do Instituto | Alta | Baixo | Conferência pedida até a reunião de 29/10; registro de 08/10 na 10.2.8 só depois dela |
 
 ---
 
@@ -206,9 +207,9 @@ Revisão cruzada: pull request de uma dupla é revisado pela outra ou por Vinici
 |---|---|---|
 | CAS-01 | Homologação da API e do front no ar, com banco privado, backup testado e endereço no site | Página de processo; registro do teste de restauração |
 | CAS-02 | Pull requests da base e da primeira fatia integrados; issues das histórias migradas | Repositório e quadro |
-| CAS-03 | Primeira entrega apresentada ao Instituto em 22/10 com ata conferida; respostas aos pontos em aberto da seção 8.6 aplicadas | Ata de 22/10; seções 8 e 10 |
+| CAS-03 | Primeira entrega apresentada ao Instituto na reunião de 29/10, com ata conferida; respostas aos pontos em aberto da seção 8.6 aplicadas | Ata de 29/10; seções 8 e 10 |
 | CAS-04 | Histórias *Must* da Parte B em Done, exercitadas em homologação | Quadro do projeto |
-| CAS-05 | Checkpoint de 29/10 realizado com um projeto real | Ata de 29/10 |
+| CAS-05 | Checkpoint realizado na reunião de 29/10, com um projeto real e dados minimizados | Ata de 29/10 |
 | CAS-06 | Nenhum pull request de código acima de 1.000 linhas; nenhum sem revisão por mais de 24 h sem aviso | Histórico dos pull requests |
 | CAS-07 | Adesão às dailies no próprio dia igual ou acima de 80% | Registro das dailies |
 
@@ -220,7 +221,48 @@ Os pull requests da base técnica e da primeira fatia foram revisados e integrad
 
 **21/10 — realocação do Relatório.** A distribuição do Planning deixou catorze issues com Maria Eduarda e Caio e quatro com Daniel e Rodrigo. Ajuste: HU-05a e HU-05b com Vinicius; HU-13 com Daniel e Rodrigo, que constroem a HU-02a de que ela depende; Maria Eduarda e Caio com o ciclo da atividade à inscrição. A ordem de contenção da seção 7.2 não muda.
 
-As respostas do Instituto em 22/10 e a data confirmada do checkpoint entram em nova versão deste plano.
+**22/10 — reunião com o Instituto remarcada.** A reunião prevista para 22/10 não ocorreu e passou para 29/10 (quinta-feira), que reúne a demonstração da primeira entrega e o checkpoint. Os itens, riscos e critérios de aceitação que dependiam de 22/10 passam a essa data.
+
+**22/10 — remanejamento.** Combinado no grupo da equipe: HU-01b e HU-02a passam a Vinicius; HU-05a passa a Daniel e Rodrigo, com a HU-14 e a HU-13; HU-02b fica com Vinicius, Daniel e Rodrigo; HU-05b continua com Vinicius. A ordem de contenção da seção 7.2 passa a HU-05b, depois HU-14, depois só o aviso por e-mail da HU-02b; HU-15a e HU-15b não descem enquanto a inscrição pública puder receber dado real.
+
+**26/10 — conferência da Definition of Ready das histórias selecionadas.** As dezesseis histórias, conferidas contra os nove itens da [DoR](../../requisitos/9-dor-dod.md#91-definition-of-ready-dor), atendem aos itens 2, 4, 5, 6 e 7: avaliação técnica de cada requisito funcional na [seção 10.2.3](../../requisitos/10-backlog.md#1023-avaliacao-tecnica), critérios de aceitação em lista e requisitos não funcionais e regras de negócio ligados pela matriz. No item 1, as dependências estão na tabela da [seção 10.1](../../requisitos/10-backlog.md#101-backlog-geral); a HU-14 depende da HU-05a para o realizado do comparativo (CA-14.3) e por isso vem depois dela na ordem de construção (seção 7.3). Antes da conferência, nenhuma história com tela descrevia o estado vazio, e poucas as recusas próprias (item 9); as pendências marcadas com 🔧 não tinham responsável, e o prazo era 22/10 (item 8). Os critérios de tela estão agora na seção 10.1, e os estados comuns a todas as telas, na [RNF15](../../requisitos/8-requisitos.md#rnf15).
+
+| História | Valor (item 3) | Pendência admitida com 🔧 (item 8) | Tela (item 9) |
+|---|---|---|---|
+| HU-01a | 4 | Número de processo repetido e código do projeto único (CA-01a.1, CA-01a.3); obrigatoriedade do anexo | CA-01a.4 |
+| HU-01b | 4 | Condição de rascunho (CA-01b.3); meta pelo objetivo ou por etapa | CA-01b.5 |
+| HU-02a | 4 | — | CA-02a.4 |
+| HU-02b | 4 | Repetição do aviso depois dos 30 dias | CA-02b.5 |
+| HU-14 | 4 | Sinalização sem mudança automática de prazo (CA-14.5) | CA-14.6 |
+| HU-03a | 4 | Encontros e recorrência da atividade | CA-03a.4 |
+| HU-07a | 4 | Repetição de e-mail ou CPF; formulários que o Instituto já usa | CA-07a.7 |
+| HU-07b | 4 | Campo que identifica cadastro repetido (CA-07b.1) | CA-07b.4 |
+| HU-07c | 4 🔧 | Valor herdado | Resultado na tela pelo CA-07c.1 |
+| HU-08 | 4 | Cadastro repetido e e-mail de confirmação (CA-08.3) | CA-08.5 |
+| HU-15a | 4 🔧 | Valor por obrigação legal | CA-15a.2 |
+| HU-15b | 4 🔧 | Valor por obrigação legal; prazo de atendimento (CA-15b.3) | CA-15b.4 |
+| HU-16 | 4 🔧 | Valor por dependência técnica; perfil de administração e uma conta por pessoa; senha temporária, efeito da mudança de perfil e redefinição (CA-16.1 a CA-16.3) | CA-16.6 |
+| HU-05a | 4 | Trava por pendência administrativo-financeira; conferência do valor alcançado com a fonte | CA-05a.7 |
+| HU-05b | 4 🔧 | Valor herdado | CA-05b.2 |
+| HU-13 | 4 | — | CA-13.6 |
+
+Nenhuma pendência impede a entrada: são parâmetros, campos opcionais, regras cujo comportamento padrão já está no critério e valores provisórios, que o item 8 admite. Cada uma tem prazo na reunião de 29/10 e responsável Maria Eduarda Marques, registrados na história no quadro do projeto. Os critérios de tela foram conferidos contra a tela integrada. Voltam à sprint, nas histórias a que pertencem: o parâmetro planejado numérico e a recusa no campo da HU-01b (CA-01b.3, CA-01b.5); o aviso de falta de modalidade no formulário da atividade (HU-03a, CA-03a.4); a falha ao carregar a inscrição, hoje mostrada como inscrição não aberta (HU-07b); o aviso de alteração simultânea na mudança de perfil e de setor da conta (HU-16); e os testes de falha de carregamento nas telas de atividades, instrumentos, modalidades, projetos, requisitos e setores (RNF15).
+
+**26/10 — conferência da ata de 08/10 com o catálogo.** Cada decisão da [ata de 08/10](../atas/2026-10-08-validacao-mvp-instituto.md) foi conferida com os requisitos, as regras de negócio e os critérios de aceitação das seções 8 e 10.
+
+| Decisão de 08/10 | No catálogo | Resultado |
+|---|---|---|
+| 1. Instrumentos, projetos e metas com indicador e prazos; documentos assinados anexados | RF01 a RF04; CA-01a.2, CA-01b.3 | Diverge: a ata cita indicador e datas para a meta sair do rascunho; o catálogo segue 28/09 (meta sem parâmetros fica em rascunho) e exige também forma de comprovação e, na meta quantitativa, parâmetro com unidade 🔧 |
+| 2. Responsável e setor; acompanhamento de prazos; aviso por e-mail 30 dias antes, por domínio de teste | RF05 a RF08; CA-02a.1, CA-02b.4 | Coerente; o domínio de teste é configuração da implantação, sem requisito |
+| 3. Aditivo e mudança de período como nova versão; alteração com justificativa | RF31; RN-09, RN-13; CA-14.1, CA-14.4 | Coerente |
+| 4. Inscrição por link e QR Code, aviso de privacidade, vagas, lista de espera, cadastro repetido e inscrição presencial | RF11 a RF15, RF22, RF23, RF42; CA-07a.3, CA-07a.4, CA-08.3 | Diverge: a ata registra aviso no tema e bloqueio na decisão; o catálogo tem aviso com reaproveitamento 🔧; o e-mail de confirmação na inscrição presencial não tem critério 🔧 |
+| 5. Correção, exclusão e anonimização desde a primeira fase | RF26, RF27; HU-15a e HU-15b no MVP | Coerente |
+| 6. Relatório em PDF e planilhas; justificativa obrigatória com trava e aviso; trilha de auditoria; fotos no incremento 2 | RF35 a RF39; RN-11; CA-05a.2 | Coerente; o resultado alcançado (RF43) não consta da ata e vai à validação da área administrativo-financeira |
+| 7. Sprints de duas semanas e revisões com o Instituto | Processo (seção 4) | Não se aplica |
+
+As divergências marcadas com 🔧 estão entre as pendências da reunião de 29/10, com responsável Maria Eduarda Marques.
+
+As respostas do Instituto em 29/10 entram em nova versão deste plano.
 
 ---
 
@@ -229,3 +271,4 @@ As respostas do Instituto em 22/10 e a data confirmada do checkpoint entram em n
 | Versão | Data | Alteração | Responsável |
 |---|---|---|---|
 | 1.0 | 21/10/2026 | Emissão com o deliberado no Sprint Planning de 20/10 e na realocação de 21/10: meta, calendário, Sprint Backlog em três partes, priorização, alocação, riscos e critérios de aceitação | Vinicius |
+| 1.1 | 26/10/2026 | Reunião com o Instituto remarcada de 22/10 para 29/10 (quinta-feira), com demonstração e checkpoint; remanejamento de 22/10 no perfil da equipe, no Sprint Backlog e na alocação; nova ordem de contenção; itens, riscos e critérios de aceitação ajustados à nova data, com a HU-07b antes da reunião; horas de construção na verificação de capacidade; HU-14 depois da HU-05a na ordem de construção; prazos separados para os registros de 08/10 e 29/10 na 10.2.8; conferência da Definition of Ready das histórias selecionadas e da ata de 08/10 com o catálogo | Vinicius Vieira |

@@ -4,6 +4,7 @@
 |---|---|---|---|
 | 05/10/2026 | 1.1 | Inclusão das fontes citadas nas seções 1, 2, 3 e 8 (legislação, taxonomias de requisitos não funcionais e acessibilidade); fontes agrupadas por tema | Maria Eduarda Marques |
 | 15/10/2026 | 1.2 | Inclusão das fontes do Manifesto Ágil e Extreme Programming citadas na seção 4 | Caio Martins |
+| 26/10/2026 | 1.3 | Inclusão do Decreto nº 8.726/2016 e do Decreto distrital nº 37.843/2016, citados na regra de apuração do resultado das metas (seção 8.7), e da NIST SP 800-52 Rev. 2, citada na segurança das comunicações (RNF03) | Vinicius Vieira |
 
 Fontes citadas no site, com data de acesso para as consultadas on-line.
 
@@ -23,11 +24,17 @@ INSTITUTO CULTURAL E SOCIAL NO SETOR. **Site institucional.** Disponível em: ht
 
 ## Legislação e normas
 
+BRASIL. **Decreto nº 8.726, de 27 de abril de 2016.** Regulamenta a Lei nº 13.019, de 31 de julho de 2014, para dispor sobre regras e procedimentos do regime jurídico das parcerias celebradas entre a administração pública federal e as organizações da sociedade civil. Disponível em: https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2016/decreto/d8726.htm. Acesso em: 26 out. 2026.
+
 BRASIL. **Lei nº 8.069, de 13 de julho de 1990.** Dispõe sobre o Estatuto da Criança e do Adolescente. Disponível em: https://www.planalto.gov.br/ccivil_03/leis/l8069.htm. Acesso em: 5 out. 2026.
 
 BRASIL. **Lei nº 13.019, de 31 de julho de 2014.** Estabelece o regime jurídico das parcerias entre a administração pública e as organizações da sociedade civil (Marco Regulatório das Organizações da Sociedade Civil). Disponível em: https://www.planalto.gov.br/ccivil_03/_ato2011-2014/2014/lei/l13019.htm. Acesso em: 5 out. 2026.
 
 BRASIL. **Lei nº 13.709, de 14 de agosto de 2018.** Lei Geral de Proteção de Dados Pessoais (LGPD). Disponível em: https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2018/lei/l13709.htm. Acesso em: 5 out. 2026.
+
+DISTRITO FEDERAL. **Decreto nº 37.843, de 13 de dezembro de 2016.** Regulamenta a aplicação da Lei Nacional nº 13.019, de 31 de julho de 2014, às parcerias entre a administração pública distrital e as organizações da sociedade civil. Disponível em: https://dflegis.df.gov.br/ato.php?p=decreto-37843-de-13-de-dezembro-de-2016. Acesso em: 26 out. 2026.
+
+NATIONAL INSTITUTE OF STANDARDS AND TECHNOLOGY. **Guidelines for the Selection, Configuration, and Use of Transport Layer Security (TLS) Implementations.** NIST Special Publication 800-52 Revision 2. Gaithersburg: NIST, 2019. Disponível em: https://doi.org/10.6028/NIST.SP.800-52r2. Acesso em: 26 out. 2026.
 
 W3C. **Web Content Accessibility Guidelines (WCAG) 2.1.** W3C Recommendation, 2018. Disponível em: https://www.w3.org/TR/WCAG21/. Acesso em: 5 out. 2026.
 

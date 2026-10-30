@@ -18,6 +18,7 @@ Este histórico é o do Documento de Visão como um todo. Cada seção traz, no 
 | 05/10/2026 | 1.7 | Revisão editorial: correção de sintaxe Markdown no sumário e padronização executiva das descrições das seções | Rodrigo Henrique |
 | 20/10/2026 | 1.8 | Histórias derivadas dos requisitos funcionais, com uma história dona por requisito; requisitos de contas, modalidades e formulário de inscrição; pontos em aberto revistos contra as validações; MVP concluído na Sprint 4 | Equipe CyberSetor |
 | 21/10/2026 | 1.9 | Daily presencial às terças e quintas e escrita nos demais dias úteis (seção 7.2) | Vinicius Vieira |
+| 26/10/2026 | 1.10 | Resultado alcançado da meta no MVP e no relatório; portabilidade dos dados no lugar da exportação integral como função; requisitos divididos para verificação (RF44, RF45, RNF20) e métricas dos RNFs com ambiente, massa e restauração conjunta; conectividade com quedas pontuais; papel da área administrativo-financeira no sistema; trabalho em duplas e prototipação evolutiva como aplicados; DoR e DoD com entrada provisória, conclusão na homologação e validação pendente; cronograma com as histórias por sprint; interações de setembro e outubro (seções 1 a 10); políticas de operação sem conexão, dados pessoais, cópia de segurança e transferência explicadas na seção 2.6, com remissão nas seções 1, 3 e 6; usabilidade e estados das telas para todo o produto, com o estado vazio e as recusas de cada história nos critérios; quadro comparativo da seção 4 sem qualificar os processos | Vinicius Vieira |
 
 ## Sumário
 

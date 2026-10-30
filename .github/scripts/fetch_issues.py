@@ -2,7 +2,7 @@
 Gera as páginas de acompanhamento do site a partir das issues e do quadro do projeto.
 
 Saída (não versionada; ver .gitignore):
-  docs/entregas/debitos-u1.md               issues abertas pelo docente (rótulo "origem: professor")
+  docs/entregas/debitos-u1.md               issues abertas pelo docente
   docs/gestao/sprints/tarefas-sprint-N.md   uma página por sprint, N em SPRINTS
 
 Sprint e Situação vêm exclusivamente do quadro do projeto (campos Sprint e
@@ -15,6 +15,8 @@ import json
 import os
 import re
 import urllib.request
+from datetime import datetime
+from zoneinfo import ZoneInfo
 
 REPO_FULL = os.environ.get("GITHUB_REPOSITORY", "mdsreq-fga-unb/REQ-2026.2-T02-CyberSetor")
 TOKEN = os.environ.get("GITHUB_TOKEN")
@@ -28,6 +30,7 @@ if not TOKEN:
     raise SystemExit(0)
 
 owner, repo_name = REPO_FULL.split("/")
+LEITURA = datetime.now(ZoneInfo("America/Sao_Paulo")).strftime("%d/%m/%Y, %H:%M")
 
 QUERY = """
 query($owner: String!, $repo: String!, $after: String) {
@@ -149,9 +152,9 @@ for node in issues:
         por_sprint[s].append(node)
 
 # ---- issues do docente ----
-texto = """# Débitos e Feedbacks da Monitoria (Unidade 1)
+texto = f"""# Apontamentos do docente
 
-> As issues abertas pelo docente permanecem abertas durante a atuação da equipe e são fechadas pelo docente ou pela monitoria após a validação no site.
+> As issues abertas pelo docente permanecem abertas durante a atuação da equipe e são fechadas pelo docente ou pela monitoria após a validação no site. Leitura do quadro em {LEITURA} (horário de Brasília).
 
 | Issue | Título | Responsáveis | Situação | Acesso |
 | :--- | :--- | :--- | :---: | :---: |
@@ -169,7 +172,7 @@ with open(FEEDBACK_FILE, "w", encoding="utf-8") as f:
 for n in SPRINTS:
     texto = f"""# Acompanhamento de Tarefas — Sprint {n}
 
-> Gerado a partir das issues e do quadro do projeto a cada publicação do site. A fonte é o quadro; esta página é uma leitura.
+> Gerado a partir das issues e do quadro do projeto a cada publicação do site. A fonte é o quadro; esta página é a leitura de {LEITURA} (horário de Brasília).
 
 | Issue | Título | Tipo / Atividade de ER | Responsáveis | Situação | Acesso |
 | :--- | :--- | :--- | :--- | :---: | :---: |

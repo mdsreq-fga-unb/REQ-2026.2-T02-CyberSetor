@@ -3,8 +3,9 @@
 | Data | Versão | Descrição | Autor(es) |
 | :---: | :---: | :--- | :--- |
 | 29/09/2026 | 1.0 | Decisões por apontamento da verificação em pares e da monitoria e evidência da revisão e da validação da lista de requisitos | Equipe CyberSetor |
+| 26/10/2026 | 1.1 | Situação de cada ajuste conferida contra a versão 2.9 da seção 8: aplicado, com o lugar, ou aceito e não aplicado | Vinicius Vieira |
 
-A lista de requisitos da [seção 8](../requisitos/8-requisitos.md) foi ajustada a partir de duas revisões externas da versão 2.1: a verificação em pares feita pela equipe SevenSpecs, da mesma turma (46 apontamentos), e o retorno da monitoria (7 pontos). Cada apontamento recebeu uma decisão: Aceito, Parcialmente aceito, Não aceito ou Não aplicável. A versão revisada é a 2.4 da seção 8; o que ainda não entrou nela está indicado como previsto para a versão 2.5.
+A lista de requisitos da [seção 8](../requisitos/8-requisitos.md) foi ajustada a partir de duas revisões externas da versão 2.1: a verificação em pares feita pela equipe SevenSpecs, da mesma turma (46 apontamentos), e o retorno da monitoria (7 pontos). Cada apontamento recebeu uma decisão: Aceito, Parcialmente aceito, Não aceito ou Não aplicável. A versão revisada é a 2.4 da seção 8; para os ajustes que não entraram nela, a tabela indica onde foram aplicados depois ou se continuam aceitos e não aplicados.
 
 ## Correspondência de códigos
 
@@ -82,63 +83,63 @@ Antes da versão 2.0, as propostas de requisitos por característica de produto 
 
 ## Decisões por apontamento
 
-A última coluna indica o ajuste já presente na lista, com a versão em que entrou, ou o ajuste previsto para a versão 2.5.
+A última coluna indica o ajuste já presente na lista, com a versão em que entrou ou o requisito em que foi aplicado, ou o ajuste aceito e ainda não aplicado.
 
 | Código avaliado | Código atual | Origem | Apontamento resumido | Decisão | Ajuste ou justificativa |
 | :---: | :---: | :---: | :--- | :---: | :--- |
 | RF03 | RF04 | SevenSpecs | Reúne requisito e meta; só a meta tem dados definidos | Parcialmente aceito | Versão 2.4: RF04 registra, para cada meta, origem, indicador, parâmetro, período e frequência de apuração e forma de comprovação; requisito e meta são registros distintos e relacionados (RN-01). Não houve divisão em dois RFs: mesma história, mesmo valor e mesmo esforço. |
 | RF04 | RF05, RF06, RF08 | SevenSpecs | Várias funcionalidades numa descrição | Aceito | Versão 2.2: dividido em responsável e setor (RF05), prazo e situação (RF06) e sinalização de meta sem responsável (RF08). |
 | RF05 | RF07 | SevenSpecs | Linha do tempo usa prazo de requisito que não existe | Aceito | Versão 2.4: a linha do tempo mostra a vigência do instrumento, os prazos das metas e os requisitos que cada meta atende. |
-| RF06 | RF09 | SevenSpecs | Relação entre atividade, turma, sessão e recorrência indefinida | Parcialmente aceito | O texto citado é do RF07 avaliado. Versão 2.4: RF09 e RF14 sem turma; vagas e inscrições pertencem à atividade, e turma não vira registro próprio. Previsto para a versão 2.5: sessões e recorrência da atividade em regra de negócio. |
-| RF08 | RF10 | SevenSpecs | Sem responsável pela configuração nem gatilho das condicionais | Aceito | Versão 2.4: comprovações configuradas para cada modalidade criada pelo Instituto. Previsto para a versão 2.5: quem configura na tabela de perfis por operação (8.5.1) e condicionais da RN-04 no formato "se condição, então comprovação". |
-| RF09, RNF03 | RF11, RNF03 | SevenSpecs | Inscrição pública conflita com rejeição de toda requisição sem credencial | Aceito | Previsto para a versão 2.5: autenticação exigida só nas operações protegidas, com o formulário público e a página do link ou QR Code declarados públicos. |
+| RF06 | RF09 | SevenSpecs | Relação entre atividade, turma, sessão e recorrência indefinida | Parcialmente aceito | O texto citado é do RF07 avaliado. Versão 2.4: RF09 e RF14 sem turma; vagas e inscrições pertencem à atividade, e turma não vira registro próprio. Aceito, não aplicado: sessões e recorrência da atividade em regra de negócio; os encontros e a recorrência estão entre os pontos em aberto (seção 8.6, item 4). |
+| RF08 | RF10 | SevenSpecs | Sem responsável pela configuração nem gatilho das condicionais | Aceito | Versão 2.4: comprovações configuradas para cada modalidade criada pelo Instituto. Aceito, não aplicado: quem configura na tabela de perfis por operação (8.5.1) e condicionais da RN-04 no formato "se condição, então comprovação". |
+| RF09, RNF03 | RF11, RNF03 | SevenSpecs | Inscrição pública conflita com rejeição de toda requisição sem credencial | Aceito | Aplicado no RNF03: autenticação exigida fora das operações públicas do formulário de inscrição (RF11). |
 | RF11 | RF13 | SevenSpecs | "Garantindo o acolhimento" não é comportamento | Aceito | Versão 2.4: o RF13 descreve a inscrição, em nome da pessoa, de quem não tem celular ou conexão. |
 | RF14 | RF16 | SevenSpecs | "Interface otimizada" sem critério; lote sem regra | Aceito | Versão 2.3: expressão retirada; o lote são os inscritos da atividade (critério da HU-09); usabilidade verificada pelo RNF15. |
-| RF15 | RF17 | SevenSpecs | Uso sem conexão pressupõe dados já no aparelho | Aceito | Versão 2.3: a lista da atividade é preparada no aparelho com conexão (RF17 e critério da HU-09). Previsto para a versão 2.5: aviso quando não houver lista preparada. |
-| RF16 | RF18 | SevenSpecs | Impõe identificador gerado no dispositivo | Aceito | Previsto para a versão 2.5: mecanismo retirado do título e da descrição; ausência de perda e duplicidade medida no RNF09. |
+| RF15 | RF17 | SevenSpecs | Uso sem conexão pressupõe dados já no aparelho | Aceito | Versão 2.3: a lista da atividade é preparada no aparelho com conexão (RF17 e critério da HU-09). Aceito, não aplicado: aviso quando não houver lista preparada. |
+| RF16 | RF18 | SevenSpecs | Impõe identificador gerado no dispositivo | Aceito | Aplicado no RF18, sem o identificador gerado no aparelho, e no RNF09, que mede a ausência de perda e de duplicidade. |
 | RF17 | RF19 | SevenSpecs | "Justificativa fundamentada" sem condição de aceite | Parcialmente aceito | Versão 2.4: justificativa obrigatória, sem "fundamentada". Aprovação por responsável não adotada: o Instituto dispensou aprovação para lançamento fora do prazo (RF19, RN-13). |
 | RF17 | RF19 | SevenSpecs | Reúne lançamento, retificação e auditoria | Parcialmente aceito | Versão 2.3: auditoria fora do RF19, coberta pelo RNF02. Lançar e corrigir fora do prazo seguem juntos: mesmo gatilho, mesmas regras e mesmo valor. |
-| RF18 | RF20 | SevenSpecs | Regra de cálculo da carga horária implícita | Aceito | Versão 2.4: carga horária calculada a partir das presenças confirmadas, sem o termo "ciclo de oficinas". Previsto para a versão 2.5: fórmula e exceções em regra de negócio, com valores iniciais. |
+| RF18 | RF20 | SevenSpecs | Regra de cálculo da carga horária implícita | Aceito | Versão 2.4: carga horária calculada a partir das presenças confirmadas, sem o termo "ciclo de oficinas". Aplicado na RN-15: fórmula e exceções da carga horária, com valores iniciais. |
 | RF21 | RF23 | SevenSpecs | Reúne apresentar e registrar o aviso | Aceito | Versão 2.4: RF23 delimitado ao registro da versão do aviso apresentada, com data e hora; a apresentação é condição do registro (critérios das HU-07 e HU-08). |
-| RF22 | RF24 | SevenSpecs | Concessão e revogação juntas; sem canal de revogação | Parcialmente aceito | Versão 2.4: revogação a pedido da pessoa, registrada com data e canal. Concessão e revogação ficam no mesmo RF por serem o ciclo de vida do mesmo registro. Previsto para a versão 2.5: identificação da pessoa e momento do efeito em regra de negócio. |
+| RF22 | RF24 | SevenSpecs | Concessão e revogação juntas; sem canal de revogação | Parcialmente aceito | Versão 2.4: revogação a pedido da pessoa, registrada com data e canal. Concessão e revogação ficam no mesmo RF por serem o ciclo de vida do mesmo registro. Aceito, não aplicado: identificação da pessoa e momento do efeito em regra de negócio. |
 | RF25 | RF27 | SevenSpecs | Não define quando excluir e quando anonimizar | Aceito | Versão 2.4: condição de cada tratamento na RN-07: guarda legal preservada com acesso restrito, total reportado só como agregado, demais dados eliminados. |
-| RF26 | RF28 | SevenSpecs | "Em tempo real" sem intervalo | Parcialmente aceito | Previsto para a versão 2.5: recálculo a cada presença confirmada ou evidência vinculada, verificável pelo evento; não se fixa intervalo sem fonte. |
+| RF26 | RF28 | SevenSpecs | "Em tempo real" sem intervalo | Parcialmente aceito | Aplicado no RF28: recálculo após cada presença confirmada ou comprovação registrada, sem intervalo fixo. |
 | RF27 | RF29 | SevenSpecs | Título promete metas não lineares | Aceito | Versão 2.4: descrição com os dois tipos de apuração, cumulativa ou por marco. |
-| RF28 | RF30 | SevenSpecs | Curva planejada não definida | Aceito | Versão 2.4: referência é a proporção já decorrida do período de apuração. Previsto para a versão 2.5: periodicidade da avaliação. |
+| RF28 | RF30 | SevenSpecs | Curva planejada não definida | Aceito | Versão 2.4: referência é a proporção já decorrida do período de apuração. Aceito, não aplicado: periodicidade da avaliação. |
 | RF28 | RF30 | SevenSpecs | "Abaixo da curva" sem limiar | Aceito | Versão 2.4: limiar de 20 pontos percentuais abaixo da proporção decorrida, marcado como valor inicial. |
-| RF30 | RF32 | SevenSpecs | "Quando disponível" para a localização | Aceito | Previsto para a versão 2.5: localização registrada só quando a comprovação da modalidade exigir e o usuário autorizar. |
+| RF30 | RF32 | SevenSpecs | "Quando disponível" para a localização | Aceito | Aplicado em parte no RF32: coordenadas só quando autorizadas pelo aparelho; a ligação com a comprovação exigida pela modalidade não foi aplicada. |
 | RF31 | RF33 | SevenSpecs | Vincular e consultar juntos; descarte implícito | Parcialmente aceito | Versão 2.3: descarte de rascunho explicitado no RF33. Versão 2.4: consulta por meta ligada ao RF33 pelo critério da HU-04, sem RF próprio. |
-| RF32 | RF34 | SevenSpecs | Mistura acesso e orientação de captura; "vulneráveis" | Aceito | Previsto para a versão 2.5: RF34 só restringe o acesso às imagens de prova; orientação de enquadramento em critério da captura (RF32); termo retirado. |
+| RF32 | RF34 | SevenSpecs | Mistura acesso e orientação de captura; "vulneráveis" | Aceito | Aplicado no RF34 e no RF45: o RF34 só restringe o acesso às fotos de prova de execução, sem o termo; a orientação de enquadramento passou a requisito próprio (RF45), exibida no registro da foto. |
 | RF34 | RF36 | SevenSpecs | "Índice ordenado" sem critério | Aceito | Versão 2.4: índice das comprovações agrupado por meta e em ordem cronológica. |
 | RF35 | RF37 | SevenSpecs | "Via servidor" é implementação | Aceito | Atendido na versão 2.3: mecanismo retirado; mantido o PDF, formato do documento entregue. |
-| RF36 | RF38 | SevenSpecs | "Dados brutos" indefinido | Aceito | Atendido na versão 2.3: exportação em visão detalhada ou consolidada. Previsto para a versão 2.5: descrição com atividades, presenças e situação das metas do período. |
+| RF36 | RF38 | SevenSpecs | "Dados brutos" indefinido | Aceito | Atendido na versão 2.3: exportação em visão detalhada ou consolidada. Aplicado no critério CA-13.1 da HU-13: atividades, situação das metas e presenças do período. |
 | RF36 | RF38 | SevenSpecs | Título consolidado, descrição bruta | Aceito | Atendido na versão 2.3: título e descrição com o mesmo escopo; colunas, período e permissões nos critérios da HU-13. |
-| RF37 | RF39 | SevenSpecs | Título e descrição com escopos diferentes | Aceito | Previsto para a versão 2.5: RF39 versiona o relatório retificado, e a trilha de qualquer alteração fica só no RNF02. |
-| RNF03 | RNF03 | SevenSpecs | Reúne várias propriedades de segurança | Parcialmente aceito | Previsto para a versão 2.5: proteção das comunicações, autenticação e duração e revogação do acesso como critérios separados, verificáveis um a um. |
-| RNF03 | RNF03 | SevenSpecs | Revogação sem prazo nem comportamento sem conexão | Aceito | Previsto para a versão 2.5: revogação vale no primeiro contato do aparelho com o sistema; registros pendentes preservados; duração e inatividade com valor inicial. |
-| RNF04 | RNF04 | SevenSpecs | Métrica não cobre todo o escopo | Aceito | Previsto para a versão 2.5: métrica sobre todas as combinações de perfil, operação e escopo de dados da tabela 8.5.1. |
-| RNF04 | RNF04 | SevenSpecs | Matriz de perfis sem detalhe | Aceito | Versão 2.4: encerramento do projeto e liberação da trava do relatório na seção 8.5.1. Previsto para a versão 2.5: tabela por operação e perfil. |
-| RNF06 | RNF06 | SevenSpecs | Prazo na descrição difere da métrica | Parcialmente aceito | Previsto para a versão 2.5: prazo só na métrica, com valor inicial. Pela convenção de valor inicial da seção 8.1 não havia contradição, mas a leitura era ambígua. |
-| RNF08 | RNF08 | SevenSpecs | Integridade do arquivo não prova o conteúdo | Aceito | Previsto para a versão 2.5: conteúdo conferido contra resultado conhecido, integridade do arquivo e correção só por nova versão. |
-| RNF09 | RNF09 | SevenSpecs | Repete o comportamento de RF15 e RF16 | Aceito | Previsto para a versão 2.5: RNF09 só com a qualidade: nenhum registro feito sem conexão se perde ou se duplica. |
-| RNF10 | RNF10 | SevenSpecs | "Imediatamente" sem intervalo | Parcialmente aceito | Previsto para a versão 2.5: descarte definido pelo estado do dado e pelo evento de confirmação do envio, sem intervalo em segundos sem fonte. |
-| RNF10, RNF09, RF15 | RNF10, RNF09, RF17 | SevenSpecs | Descarte pode apagar dado necessário ao trabalho sem conexão | Aceito | Previsto para a versão 2.5: política por estado do dado; lista preparada mantida até a última sessão preparada ou prazo inicial; fim do acesso bloqueia a leitura. |
-| RNF11 | RNF11 | SevenSpecs | "Com agilidade" subjetivo | Aceito | Previsto para a versão 2.5: expressão retirada; critério só pelos parâmetros de tempo, carga e uso de processamento. |
-| RNF12 | RNF12 | SevenSpecs | "4G lenta" não reprodutível | Aceito | Previsto para a versão 2.5: condição de rede definida (latência, banda e processador) com fonte e limiar do indicador medido. |
-| RNF13 | RNF13 | SevenSpecs | "Performática" e "elevado volume" | Parcialmente aceito | Previsto para a versão 2.5: termos retirados; volume, tempo e carga simultânea na métrica. Tamanho do arquivo não entra: decorre do número de miniaturas, já limitado. |
-| RNF14 | RNF14 | SevenSpecs | Impõe compressão no cliente web | Aceito | Previsto para a versão 2.5: resultado esperado (tamanho e tempo de envio por foto), sem dizer onde a redução acontece. |
-| RNF15 | RNF15 | SevenSpecs | Critérios diferentes e subjetivos reunidos | Parcialmente aceito | Previsto para a versão 2.5: usabilidade e acessibilidade como critérios separados, cada um medido; termos subjetivos retirados. |
-| RNF16 | RNF16 | SevenSpecs | "Equivalência" e "navegadores modernos" | Parcialmente aceito | Previsto para a versão 2.5: navegadores, versões e larguras definidos. Aparelhos usados em campo ainda não levantados. |
-| RNF17 | RNF17 | SevenSpecs | Reúne restrição tecnológica e critérios de qualidade | Parcialmente aceito | Previsto para a versão 2.5: critérios separados e verificáveis um a um no mesmo RNF. No URPS+, requisito de implementação abrange linguagem e padrões obrigatórios, então é uma só categoria. |
-| RNF18 | RNF18 | SevenSpecs | "Periodicamente" nos testes de restauração | Aceito | Previsto para a versão 2.5: ensaio antes da entrada em uso, mensal até dois resultados aprovados e trimestral depois, com valor inicial. |
-| RNF18 | RNF18 | SevenSpecs | Cópia cobre o banco, não os arquivos | Aceito | Previsto para a versão 2.5: escopo com arquivos de evidência e relatórios; perda máxima e tempo de recuperação medidos na restauração do conjunto completo. |
+| RF37 | RF39 | SevenSpecs | Título e descrição com escopos diferentes | Aceito | Aceito, não aplicado: RF39 versiona o relatório retificado, e a trilha de qualquer alteração fica só no RNF02. |
+| RNF03 | RNF03 | SevenSpecs | Reúne várias propriedades de segurança | Parcialmente aceito | Aplicado na métrica do RNF03: cifragem, autenticação, duração e revogação da sessão e bloqueio por tentativas como critérios separados. |
+| RNF03 | RNF03 | SevenSpecs | Revogação sem prazo nem comportamento sem conexão | Aceito | Aplicado em parte no RNF03: revogação no servidor, com recusa da requisição seguinte, e duração e inatividade com valor inicial; a preservação dos registros pendentes sem conexão não foi aplicada. |
+| RNF04 | RNF04 | SevenSpecs | Métrica não cobre todo o escopo | Aceito | Aplicado no RNF04: métrica sobre as operações não permitidas na tabela 8.5.1 e os registros fora do escopo do perfil. |
+| RNF04 | RNF04 | SevenSpecs | Matriz de perfis sem detalhe | Aceito | Versão 2.4: encerramento do projeto e liberação da trava do relatório na seção 8.5.1. Aceito, não aplicado: tabela por operação e perfil. |
+| RNF06 | RNF06 | SevenSpecs | Prazo na descrição difere da métrica | Parcialmente aceito | Aceito, não aplicado: prazo só na métrica, com valor inicial; a descrição do RNF06 ainda cita o prazo. Pela convenção de valor inicial da seção 8.1 não havia contradição, mas a leitura era ambígua. |
+| RNF08 | RNF08 | SevenSpecs | Integridade do arquivo não prova o conteúdo | Aceito | Aplicado no RNF08: números conferidos contra massa com resultados conhecidos, integridade do arquivo e relatório fechado reemitido idêntico. |
+| RNF09 | RNF09 | SevenSpecs | Repete o comportamento de RF15 e RF16 | Aceito | Aceito, não aplicado: RNF09 só com a qualidade; a descrição ainda repete o comportamento, e a métrica mede perda e duplicidade. |
+| RNF10 | RNF10 | SevenSpecs | "Imediatamente" sem intervalo | Parcialmente aceito | Aceito, não aplicado: descarte definido pelo estado do dado; a métrica do RNF10 já parte da confirmação do envio, e a descrição mantém "imediatamente". |
+| RNF10, RNF09, RF15 | RNF10, RNF09, RF17 | SevenSpecs | Descarte pode apagar dado necessário ao trabalho sem conexão | Aceito | Aceito, não aplicado: política por estado do dado; lista preparada mantida até a última sessão preparada ou prazo inicial; fim do acesso bloqueia a leitura. |
+| RNF11 | RNF11 | SevenSpecs | "Com agilidade" subjetivo | Aceito | Aplicado em parte no RNF11: métrica por tempo, carga e uso de processamento, medida na homologação com massa de referência; a descrição mantém "ágeis". |
+| RNF12 | RNF12 | SevenSpecs | "4G lenta" não reprodutível | Aceito | Aceito, não aplicado: condição de rede definida (latência, banda e processador) com fonte e limiar do indicador medido. |
+| RNF13 | RNF13 | SevenSpecs | "Performática" e "elevado volume" | Parcialmente aceito | Aplicado em parte no RNF13: volume, tempo e gerações simultâneas na métrica; a descrição mantém "alto volume". Tamanho do arquivo não entra: decorre do número de miniaturas, já limitado. |
+| RNF14 | RNF14 | SevenSpecs | Impõe compressão no cliente web | Aceito | Aceito, não aplicado: resultado esperado sem dizer onde a redução acontece; o RNF14 ainda diz que a compressão é feita no cliente. |
+| RNF15 | RNF15 | SevenSpecs | Critérios diferentes e subjetivos reunidos | Parcialmente aceito | Aplicado em parte no RNF15: alvos de toque, largura mínima, WCAG 2.1 AA e contraste medidos um a um, e a eficiência da chamada separada no RNF20; a descrição mantém termos qualitativos. |
+| RNF16 | RNF16 | SevenSpecs | "Equivalência" e "navegadores modernos" | Parcialmente aceito | Aplicado no RNF16: navegadores, versões e larguras definidos, com valor inicial. Aparelhos usados em campo ainda não levantados. |
+| RNF17 | RNF17 | SevenSpecs | Reúne restrição tecnológica e critérios de qualidade | Parcialmente aceito | Aplicado na métrica do RNF17: tipagem estrita, linter e build verificados um a um. No URPS+, requisito de implementação abrange linguagem e padrões obrigatórios, então é uma só categoria. |
+| RNF18 | RNF18 | SevenSpecs | "Periodicamente" nos testes de restauração | Aceito | Aplicado no RNF18 com outra periodicidade: ensaio a cada 3 meses e antes de cada implantação em produção, com valor inicial. |
+| RNF18 | RNF18 | SevenSpecs | Cópia cobre o banco, não os arquivos | Aceito | Aplicado no RNF18: banco e arquivos (documentos formais, evidências e relatórios emitidos) restaurados juntos, com perda máxima e tempo de recuperação. |
 | RF01, RF04, RF07 | RF01, RF02, RF05, RF06, RF08, RF09 | Monitoria | RFs longos com regra e implementação | Aceito | Regras de negócio em subseção própria desde a versão 2.1; RF01 e RF04 divididos na versão 2.2; RF09 reescrito na versão 2.3; CP1, CP3 e CP5 em uma frase, com ator genérico, na versão 2.4. |
-| Seção 8 | Seção 8 | Monitoria | Tecnologia dentro dos requisitos | Aceito | Mecanismos retirados dos RFs na versão 2.1. Previsto para a versão 2.5: retirar os que restam nos RNFs e nas notas de domínio, com restrição de implementação só no RNF17; ficam formatos de interface (PDF, planilha aberta, e-mail). |
+| Seção 8 | Seção 8 | Monitoria | Tecnologia dentro dos requisitos | Aceito | Mecanismos retirados dos RFs na versão 2.1. Aceito, não aplicado: retirar os que restam nos RNFs e nas notas de domínio, com restrição de implementação só no RNF17; ficam formatos de interface (PDF, planilha aberta, e-mail). |
 | RF03, RF04 | RF04; RF05, RF06, RF08 | Monitoria | Quebrar RF com várias operações | Parcialmente aceito | RF04 avaliado dividido na versão 2.2. RF03 avaliado não dividido; justificativa no primeiro apontamento desta tabela. |
 | Seção 8.4 | Seções 8.4 e 8.6 | Monitoria | Planejamento na rastreabilidade | Aceito | Versão 2.4: rastreabilidade e pontos em aberto sem prioridade, prazo ou situação de execução. |
-| RNFs | RNFs | Monitoria | Métricas com origem e forma de medição | Aceito | Valores sem fonte marcados como iniciais e listados na seção 8.6; na versão 2.4, a antecedência do alerta passou a ter origem na validação com o Instituto. Previsto para a versão 2.5: forma de verificação e fonte declaradas em cada RNF. |
-| Seção 8 | Seção 8 | Monitoria | Não adicionar requisitos | Aceito | Nenhum RF novo na versão 2.4. A exportação integral dos dados, prevista na seção 2, está registrada como ponto em aberto na seção 8.6. |
-| Seções 8.2 e 8.3 | Seções 8.2 e 8.3 | Monitoria | Tabelas únicas por tipo | Parcialmente aceito | Regras de negócio em tabela única (seção 8.7). Conversão de RFs e RNFs em tabela prevista para a versão 2.5, sem mudança de conteúdo. |
+| RNFs | RNFs | Monitoria | Métricas com origem e forma de medição | Aceito | Valores sem fonte marcados como iniciais e listados na seção 8.6; na versão 2.4, a antecedência do alerta passou a ter origem na validação com o Instituto. Aplicado em parte: forma de verificação na métrica da maior parte dos RNFs; a fonte não está declarada em cada um. |
+| Seção 8 | Seção 8 | Monitoria | Não adicionar requisitos | Aceito | Nenhum RF novo na versão 2.4. A cópia integral dos dados, prevista na seção 2, passou a requisito não funcional (RNF19), entregue sob pedido e na transferência do sistema. RF40 a RF45 entraram depois, cada um com a origem declarada na seção 8.2. |
+| Seções 8.2 e 8.3 | Seções 8.2 e 8.3 | Monitoria | Tabelas únicas por tipo | Parcialmente aceito | Regras de negócio em tabela única (seção 8.7). Aplicado: RFs e RNFs em tabelas por característica de produto e por categoria (seções 8.2 e 8.3), sem mudança de conteúdo. |
 
 ## Conferência do conjunto
 
@@ -150,12 +151,12 @@ Além dos apontamentos recebidos, a lista inteira foi conferida para consistênc
 - Pontos em aberto sem situação de execução, com a trava financeira do relatório, a exportação integral e a alteração do período de execução.
 - Tabela de códigos provisórios retirada da seção 8; a correspondência está nesta página.
 
-Previsto para a versão 2.5:
+Aceito para depois da versão 2.4, com a situação na seção 8 atual:
 
-- RNFs classificados pelo URPS+, com critério verificável e fonte em cada um.
-- Notas de domínio sem tecnologia e sem repetição de RF.
-- Regras de negócio para sessões da atividade, presença única por sessão, carga horária, pedidos do titular dos dados e risco de meta.
-- Redação dos RFs de CP2, CP4, CP6, CP7 e CP8 ainda não revistos.
+- RNFs classificados pelo URPS+, com critério verificável e fonte em cada um: aceito, não aplicado; a classificação segue FURPS+ e Sommerville.
+- Notas de domínio sem tecnologia e sem repetição de RF: aceito, não aplicado.
+- Regras de negócio para sessões da atividade, presença única por sessão, carga horária, pedidos do titular dos dados e risco de meta: aplicado só para a carga horária (RN-15); as sessões da atividade estão entre os pontos em aberto (seção 8.6, item 4).
+- Redação dos RFs de CP2, CP4, CP6, CP7 e CP8 ainda não revistos: aplicado em parte, nos RF09, RF16, RF31, RF34, RF35, RF36 e RF38.
 
 ## Evidência da revisão e da validação
 
