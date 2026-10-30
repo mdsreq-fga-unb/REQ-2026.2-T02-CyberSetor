@@ -35,6 +35,7 @@ const REGISTRATION_MOCK: Registration = {
   camposMinimos: ['NOME', 'TELEFONE', 'DATA_NASCIMENTO', 'CONSENTIMENTOS'],
   camposAdicionais: ['CPF', 'EMAIL'],
   campoDuplicidade: 'CPF',
+  termoCompromisso: null,
   codigoPublico: 'abc123xyz789',
   linkPublico: '/inscrever/abc123xyz789',
 };
@@ -156,6 +157,56 @@ describe('RegistrationFormDialog', () => {
     expect(screen.getByRole('button', { name: 'Tentar de novo' })).toBeInTheDocument();
     expect(calls.some((c) => c.key === `POST /activities/${ACTIVITY.id}/registration`)).toBe(false);
   }, 10_000);
+
+  it('abre com os compromissos da turma e tira o texto na edicao', async () => {
+    const calls = await signedInAs('PRESIDENCIA_GESTAO', {
+      [`GET /activities/${ACTIVITY.id}/registration`]: () => ({
+        status: 404,
+        body: { code: 'REGISTRATION_NOT_OPENED', message: 'Inscrição não aberta' },
+      }),
+      [`POST /activities/${ACTIVITY.id}/registration`]: (body) => ({
+        status: 201,
+        body: { ...REGISTRATION_MOCK, ...(body as object) },
+      }),
+    });
+    const onSaved = vi.fn();
+    renderDialog({ onSaved });
+
+    fireEvent.change(await screen.findByLabelText('Compromissos da turma (opcional)'), {
+      target: { value: '  Chegar no horário.  ' },
+    });
+    fireEvent.click(screen.getByRole('button', { name: 'Abrir inscrição' }));
+
+    await waitFor(() => expect(onSaved).toHaveBeenCalledTimes(1));
+    expect(
+      calls.find((c) => c.key === `POST /activities/${ACTIVITY.id}/registration`)?.body,
+    ).toMatchObject({ termoCompromisso: 'Chegar no horário.' });
+  });
+
+  it('na edicao, apagar os compromissos envia null', async () => {
+    const calls = await signedInAs('PRESIDENCIA_GESTAO', {
+      [`GET /activities/${ACTIVITY.id}/registration`]: () => ({
+        status: 200,
+        body: { ...REGISTRATION_MOCK, termoCompromisso: 'Chegar no horário.' },
+      }),
+      [`PATCH /activities/${ACTIVITY.id}/registration`]: (body) => ({
+        status: 200,
+        body: { ...REGISTRATION_MOCK, ...(body as object), versao: 2 },
+      }),
+    });
+    const onSaved = vi.fn();
+    renderDialog({ onSaved });
+
+    const termo = await screen.findByLabelText('Compromissos da turma (opcional)');
+    expect(termo).toHaveValue('Chegar no horário.');
+    fireEvent.change(termo, { target: { value: '' } });
+    fireEvent.click(screen.getByRole('button', { name: 'Salvar alterações' }));
+
+    await waitFor(() => expect(onSaved).toHaveBeenCalledTimes(1));
+    expect(
+      calls.find((c) => c.key === `PATCH /activities/${ACTIVITY.id}/registration`)?.body,
+    ).toMatchObject({ termoCompromisso: null });
+  });
 
   it('edita inscricao existente com PATCH e versao', async () => {
     const calls = await signedInAs('NUCLEO_PEDAGOGICO', {

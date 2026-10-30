@@ -18,6 +18,7 @@ import {
 } from '@/components/ui/dialog';
 import { FieldGroup } from '@/components/ui/field';
 import { Input } from '@/components/ui/input';
+import { Textarea } from '@/components/ui/textarea';
 import { ApiError } from '@/lib/api';
 import {
   useFreshRegistration,
@@ -35,6 +36,7 @@ import {
 import { registrationLoadFailure } from './format';
 
 const MAX_VAGAS = 10_000;
+const MAX_TERMO = 4000;
 
 const LABELS_ADICIONAIS: Record<CampoInscricao, string> = {
   CPF: 'CPF (Cadastro de Pessoas Físicas)',
@@ -53,6 +55,10 @@ const registrationSchema = z
       .max(MAX_VAGAS, `O limite máximo é de ${MAX_VAGAS.toLocaleString('pt-BR')} vagas.`),
     camposAdicionais: z.array(z.enum(CAMPOS_ADICIONAIS)),
     campoDuplicidade: z.enum(['CPF', 'EMAIL']),
+    termoCompromisso: z
+      .string()
+      .trim()
+      .max(MAX_TERMO, `O texto tem no máximo ${MAX_TERMO.toLocaleString('pt-BR')} caracteres.`),
   })
   .refine((data) => data.camposAdicionais.includes(data.campoDuplicidade), {
     path: ['campoDuplicidade'],
@@ -69,6 +75,7 @@ const DEFAULT_VALUES: FormValues = {
   vagas: 30,
   camposAdicionais: ['EMAIL'],
   campoDuplicidade: 'EMAIL',
+  termoCompromisso: '',
 };
 
 function valuesFromRegistration(reg: Registration | null): FormValues {
@@ -78,6 +85,7 @@ function valuesFromRegistration(reg: Registration | null): FormValues {
     vagas: reg.vagas,
     camposAdicionais: [...reg.camposAdicionais],
     campoDuplicidade: reg.campoDuplicidade,
+    termoCompromisso: reg.termoCompromisso ?? '',
   };
 }
 
@@ -165,12 +173,14 @@ export function RegistrationFormDialog({
           vagas: data.vagas,
           camposAdicionais: data.camposAdicionais,
           campoDuplicidade: data.campoDuplicidade,
+          termoCompromisso: data.termoCompromisso || null,
         });
       } else {
         saved = await openMutation.mutateAsync({
           vagas: data.vagas,
           camposAdicionais: data.camposAdicionais,
           campoDuplicidade: data.campoDuplicidade,
+          ...(data.termoCompromisso && { termoCompromisso: data.termoCompromisso }),
         });
       }
       close();
@@ -411,6 +421,22 @@ export function RegistrationFormDialog({
                   </p>
                 )}
               </div>
+
+              <FormField
+                name="termoCompromisso"
+                label="Compromissos da turma (opcional)"
+                description="Com texto, o formulário mostra os compromissos e só aceita a inscrição de quem marcar que concorda. A inscrição guarda o texto aceito."
+                control={form.control}
+              >
+                {(props) => (
+                  <Textarea
+                    {...props}
+                    rows={4}
+                    disabled={!instrumentAtivo}
+                    value={props.value ?? ''}
+                  />
+                )}
+              </FormField>
 
               {/* Aviso LGPD / RNF05 */}
               <div className="flex items-start gap-3 rounded-lg border border-primary/20 bg-primary/5 p-4 text-xs text-muted-foreground">

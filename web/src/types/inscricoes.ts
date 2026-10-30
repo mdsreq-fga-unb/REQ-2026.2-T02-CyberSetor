@@ -18,6 +18,7 @@ export interface Registration {
   camposMinimos: CampoMinimo[];
   camposAdicionais: CampoInscricao[];
   campoDuplicidade: CampoDuplicidade;
+  termoCompromisso: string | null;
   codigoPublico: string;
   linkPublico: string;
 }
@@ -26,6 +27,7 @@ export interface OpenRegistrationInput {
   vagas: number;
   camposAdicionais: CampoInscricao[];
   campoDuplicidade: CampoDuplicidade;
+  termoCompromisso?: string;
 }
 
 export interface UpdateRegistrationInput {
@@ -34,4 +36,5 @@ export interface UpdateRegistrationInput {
   vagas?: number;
   camposAdicionais?: CampoInscricao[];
   campoDuplicidade?: CampoDuplicidade;
+  termoCompromisso?: string | null;
 }
