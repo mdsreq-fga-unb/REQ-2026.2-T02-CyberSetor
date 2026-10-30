@@ -25,6 +25,9 @@ interface ActivityBody {
   projetoId: string;
   titulo: string;
   data: string;
+  horaInicio: string | null;
+  horaFim: string | null;
+  cargaHorariaMinutos: number | null;
   local: string;
   modalidade: { id: string; nome: string; ativo: boolean };
   responsavel: { id: string; nome: string; ativo: boolean };
@@ -167,6 +170,8 @@ describe('Atividades do projeto (e2e)', () => {
       modalidadeId,
       responsavelId: ids[Perfil.NUCLEO_PEDAGOGICO],
       data: '2026-10-28',
+      horaInicio: '09:00',
+      horaFim: '17:00',
       local: 'Galpão Cultural SCS',
       metaIds: [meta1Id, meta2Id],
     };
@@ -197,6 +202,9 @@ describe('Atividades do projeto (e2e)', () => {
       projetoId,
       titulo: 'Oficina de música e cidadania',
       data: '2026-10-28',
+      horaInicio: '09:00',
+      horaFim: '17:00',
+      cargaHorariaMinutos: 480,
       local: 'Galpão Cultural SCS',
       modalidade: { id: modalidadeId, nome: 'Oficina contínua', ativo: true },
       responsavel: { id: ids[Perfil.NUCLEO_PEDAGOGICO], nome: 'Ana Pedagógica', ativo: true },
@@ -229,6 +237,11 @@ describe('Atividades do projeto (e2e)', () => {
     ['modalidadeId', { modalidadeId: undefined }],
     ['responsavelId', { responsavelId: 'invalido' }],
     ['data', { data: '28/10/2026' }],
+    ['horaInicio', { horaInicio: undefined }],
+    ['horaInicio', { horaInicio: '9h' }],
+    ['horaFim', { horaFim: '24:00' }],
+    ['cargaHorariaMinutos', { cargaHorariaMinutos: 0 }],
+    ['cargaHorariaMinutos', { cargaHorariaMinutos: 7.5 }],
     ['local', { local: '' }],
     ['metaIds', { metaIds: [] }],
     ['metaIds', { metaIds: undefined }],
@@ -240,6 +253,27 @@ describe('Atividades do projeto (e2e)', () => {
     expect(details.errors?.some((message) => message.startsWith(campo))).toBe(true);
     expect(await prisma.atividade.count()).toBe(0);
     expect(await prisma.atividadeMeta.count()).toBe(0);
+  });
+
+  it('aceita carga horaria menor que o intervalo e recusa a maior ou fim antes do inicio', async () => {
+    const comAlmoco = await created({ cargaHorariaMinutos: 420 });
+    expect(comAlmoco).toMatchObject({
+      horaInicio: '09:00',
+      horaFim: '17:00',
+      cargaHorariaMinutos: 420,
+    });
+
+    const maior = await post({ ...valid(), cargaHorariaMinutos: 481 }).expect(400);
+    expect(maior.body as ErrorBody).toMatchObject({
+      code: 'WORKLOAD_EXCEEDS_DURATION',
+      message: 'A carga horária não pode passar do intervalo entre início e fim (8 h).',
+    });
+
+    for (const horaFim of ['09:00', '08:30']) {
+      const res = await post({ ...valid(), horaFim }).expect(400);
+      expect((res.body as ErrorBody).code).toBe('INVALID_TIME_RANGE');
+    }
+    expect(await prisma.atividade.count()).toBe(1);
   });
 
   it('recusa data inexistente e campo desconhecido com 400', async () => {
