@@ -9,7 +9,8 @@ export function registrationStatus(inscricao: ActivityRegistrationStatus | null)
   tone: RegistrationTone;
 } {
   if (!inscricao) return { label: 'Inscrição não aberta', tone: 'none' };
-  const total = `${inscricao.inscritos} de ${inscricao.vagas}`;
+  const espera = inscricao.emEspera > 0 ? ` · ${inscricao.emEspera} na espera` : '';
+  const total = `${inscricao.inscritos} de ${inscricao.vagas}${espera}`;
   if (!inscricao.aberta) return { label: `Inscrição encerrada · ${total}`, tone: 'closed' };
   if (inscricao.inscritos >= inscricao.vagas) {
     return { label: `Vagas preenchidas · ${total}`, tone: 'full' };

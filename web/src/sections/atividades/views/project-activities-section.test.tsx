@@ -175,7 +175,7 @@ describe('ProjectActivitiesSection', () => {
       [`GET /projects/${PROJECT.id}/activities`]: () => ({
         status: 200,
         body: [
-          { ...ACTIVITY_1, inscricao: { aberta: true, vagas: 30, inscritos: 12 } },
+          { ...ACTIVITY_1, inscricao: { aberta: true, vagas: 30, inscritos: 12, emEspera: 0 } },
           ACTIVITY_2,
         ],
       }),
@@ -200,14 +200,16 @@ describe('ProjectActivitiesSection', () => {
     await signedInAs('ADMINISTRATIVO_FINANCEIRO', {
       [`GET /projects/${PROJECT.id}/activities`]: () => ({
         status: 200,
-        body: [{ ...ACTIVITY_1, inscricao: { aberta: false, vagas: 30, inscritos: 30 } }],
+        body: [
+          { ...ACTIVITY_1, inscricao: { aberta: false, vagas: 30, inscritos: 30, emEspera: 2 } },
+        ],
       }),
     });
     renderSection();
 
-    expect((await screen.findAllByText('Inscrição encerrada · 30 de 30')).length).toBeGreaterThan(
-      0,
-    );
+    expect(
+      (await screen.findAllByText('Inscrição encerrada · 30 de 30 · 2 na espera')).length,
+    ).toBeGreaterThan(0);
     expect(screen.queryByRole('button', { name: /Divulgar/ })).not.toBeInTheDocument();
   });
 
