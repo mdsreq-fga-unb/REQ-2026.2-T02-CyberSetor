@@ -121,6 +121,7 @@ export class ProjectsService {
   async reportPreview(
     projectId: string,
     { from, to }: ReportPreviewQueryDto,
+    client: Prisma.TransactionClient = this.prisma,
   ): Promise<ReportPreviewResponse> {
     toDate(from); // recusa data inexistente, como 2026-02-30
     const toDateVal = toDate(to);
@@ -131,7 +132,7 @@ export class ProjectsService {
       });
     }
 
-    const project = await this.prisma.projeto.findUnique({
+    const project = await client.projeto.findUnique({
       where: { id: projectId },
       select: {
         id: true,
@@ -144,7 +145,7 @@ export class ProjectsService {
     });
     if (!project) throw new NotFoundException('Projeto não encontrado.');
 
-    const goals = await this.prisma.meta.findMany({
+    const goals = await client.meta.findMany({
       where: { projetoId: projectId },
       orderBy: [{ ordem: 'asc' }, { criadoEm: 'asc' }],
       include: {
