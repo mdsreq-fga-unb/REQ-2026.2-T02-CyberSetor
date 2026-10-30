@@ -30,6 +30,14 @@ export class SubmitRegistrationDto {
   @MaxLength(150)
   nome!: string;
 
+  @ApiPropertyOptional({ example: 'Aninha', description: 'Como a pessoa prefere ser chamada' })
+  @ValidateIf(sent)
+  @Transform(trimString)
+  @IsString()
+  @IsNotEmpty()
+  @MaxLength(80)
+  nomePreferencia?: string;
+
   @ApiProperty({ example: '61999998888', description: 'DDD e número; pontuação é ignorada' })
   @Transform(toPhoneDigits)
   @IsString()
@@ -74,12 +82,20 @@ export class SubmitRegistrationDto {
   @IsNotEmpty()
   versaoAviso!: string;
 
+  @ApiPropertyOptional({
+    description: 'Versão do termo de compromisso aceito; vai só quando a pessoa marca o aceite',
+  })
+  @ValidateIf(sent)
+  @IsString()
+  @IsNotEmpty()
+  versaoTermo?: string;
+
   @ApiProperty({ description: 'Autorização opcional para receber comunicados' })
   @Transform(asSent)
   @IsBoolean()
   autorizaComunicados!: boolean;
 
-  @ApiProperty({ description: 'Autorização opcional de uso institucional de imagem' })
+  @ApiProperty({ description: 'Autorização opcional de uso institucional de imagem e voz' })
   @Transform(asSent)
   @IsBoolean()
   autorizaImagem!: boolean;
@@ -119,6 +135,14 @@ export class DataNoticeResponse {
   texto!: string;
 }
 
+export class CommitmentTermResponse {
+  @ApiProperty()
+  versao!: string;
+
+  @ApiProperty()
+  texto!: string;
+}
+
 export class PublicFormResponse {
   @ApiProperty({ type: PublicActivityResponse })
   atividade!: PublicActivityResponse;
@@ -137,6 +161,36 @@ export class PublicFormResponse {
 
   @ApiProperty({ type: DataNoticeResponse })
   aviso!: DataNoticeResponse;
+
+  @ApiProperty({
+    type: CommitmentTermResponse,
+    nullable: true,
+    description: 'Compromissos da turma, com aceite obrigatório; null quando a atividade não tem',
+  })
+  termo!: CommitmentTermResponse | null;
+
+  @ApiProperty({
+    nullable: true,
+    description: 'Apresentação da atividade escrita pela coordenação',
+  })
+  apresentacao!: string | null;
+
+  @ApiProperty({
+    nullable: true,
+    example: '2026-11-05',
+    description: 'Último dia para se inscrever',
+  })
+  prazoInscricao!: string | null;
+
+  @ApiProperty({
+    nullable: true,
+    example: '18:00',
+    description: 'Hora do prazo; null = fim do dia',
+  })
+  prazoHora!: string | null;
+
+  @ApiProperty({ nullable: true, example: '61999998888', description: 'WhatsApp do Instituto' })
+  contatoWhatsapp!: string | null;
 }
 
 export class SubmittedRegistrationResponse {

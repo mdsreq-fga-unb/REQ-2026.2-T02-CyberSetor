@@ -6,16 +6,31 @@ import {
   IsBoolean,
   IsEnum,
   IsInt,
+  IsNotEmpty,
+  IsString,
+  Matches,
   Max,
+  MaxLength,
   Min,
   ValidateIf,
 } from 'class-validator';
+import { Transform } from 'class-transformer';
+import { trimString } from '../common/trim.js';
 import { CampoDuplicidade, CampoInscricao } from '../generated/prisma/enums.js';
+import { toPhoneDigits } from '../public-registrations/participant-data.js';
 
 /** Campos que todo formulário pede (seção 8.5.4); não são configuráveis. */
 export const CAMPOS_MINIMOS = ['NOME', 'TELEFONE', 'DATA_NASCIMENTO', 'CONSENTIMENTOS'] as const;
 
 const MAX_VAGAS = 10_000;
+const MAX_TERMO = 4000;
+const MAX_APRESENTACAO = 2000;
+const ISO_DATE = /^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])$/;
+const PHONE = /^\d{10,11}$/;
+const HOUR = /^([01]\d|2[0-3]):[0-5]\d$/;
+
+// Campo opcional que aceita null para limpar: ausente ou null passa; com valor, é validado.
+const filled = (_obj: object, value: unknown): boolean => value !== undefined && value !== null;
 
 export class OpenRegistrationDto {
   @ApiProperty({ example: 30, minimum: 1, maximum: MAX_VAGAS })
@@ -34,6 +49,50 @@ export class OpenRegistrationDto {
   @ApiProperty({ enum: CampoDuplicidade, description: 'Precisa estar entre os campos adicionais' })
   @IsEnum(CampoDuplicidade)
   campoDuplicidade!: CampoDuplicidade;
+
+  @ApiPropertyOptional({
+    maxLength: MAX_TERMO,
+    description: 'Compromissos da turma; com termo, o formulário exige o aceite',
+  })
+  @ValidateIf((_obj, value) => value !== undefined)
+  @Transform(trimString)
+  @IsString()
+  @IsNotEmpty()
+  @MaxLength(MAX_TERMO)
+  termoCompromisso?: string;
+
+  @ApiPropertyOptional({
+    maxLength: MAX_APRESENTACAO,
+    description: 'Apresentação da atividade na página de inscrição',
+  })
+  @ValidateIf(filled)
+  @Transform(trimString)
+  @IsString()
+  @IsNotEmpty()
+  @MaxLength(MAX_APRESENTACAO)
+  apresentacao?: string;
+
+  @ApiPropertyOptional({
+    example: '2026-11-05',
+    description: 'Último dia para se inscrever, de hoje até a data da atividade',
+  })
+  @ValidateIf(filled)
+  @Matches(ISO_DATE, { message: 'prazoInscricao deve ser uma data AAAA-MM-DD' })
+  prazoInscricao?: string;
+
+  @ApiPropertyOptional({
+    example: '18:00',
+    description: 'Hora opcional do prazo; sem ela, a inscrição encerra ao fim do dia',
+  })
+  @ValidateIf(filled)
+  @Matches(HOUR, { message: 'prazoHora deve ser uma hora HH:MM' })
+  prazoHora?: string;
+
+  @ApiPropertyOptional({ example: '61999998888', description: 'WhatsApp do Instituto com DDD' })
+  @ValidateIf(filled)
+  @Transform(toPhoneDigits)
+  @Matches(PHONE, { message: 'contatoWhatsapp deve ter DDD e número, com 10 ou 11 dígitos' })
+  contatoWhatsapp?: string;
 }
 
 export class UpdateRegistrationDto {
@@ -66,6 +125,42 @@ export class UpdateRegistrationDto {
   @ValidateIf((_obj, value) => value !== undefined)
   @IsEnum(CampoDuplicidade)
   campoDuplicidade?: CampoDuplicidade;
+
+  @ApiPropertyOptional({ nullable: true, maxLength: MAX_TERMO, description: 'null tira o termo' })
+  @ValidateIf((_obj, value) => value !== undefined && value !== null)
+  @Transform(trimString)
+  @IsString()
+  @IsNotEmpty()
+  @MaxLength(MAX_TERMO)
+  termoCompromisso?: string | null;
+
+  @ApiPropertyOptional({ nullable: true, maxLength: MAX_APRESENTACAO, description: 'null tira' })
+  @ValidateIf(filled)
+  @Transform(trimString)
+  @IsString()
+  @IsNotEmpty()
+  @MaxLength(MAX_APRESENTACAO)
+  apresentacao?: string | null;
+
+  @ApiPropertyOptional({ nullable: true, example: '2026-11-05', description: 'null tira o prazo' })
+  @ValidateIf(filled)
+  @Matches(ISO_DATE, { message: 'prazoInscricao deve ser uma data AAAA-MM-DD' })
+  prazoInscricao?: string | null;
+
+  @ApiPropertyOptional({
+    nullable: true,
+    example: '18:00',
+    description: 'null volta ao fim do dia',
+  })
+  @ValidateIf(filled)
+  @Matches(HOUR, { message: 'prazoHora deve ser uma hora HH:MM' })
+  prazoHora?: string | null;
+
+  @ApiPropertyOptional({ nullable: true, example: '61999998888', description: 'null tira' })
+  @ValidateIf(filled)
+  @Transform(toPhoneDigits)
+  @Matches(PHONE, { message: 'contatoWhatsapp deve ter DDD e número, com 10 ou 11 dígitos' })
+  contatoWhatsapp?: string | null;
 }
 
 export class RegistrationResponse {
@@ -89,6 +184,29 @@ export class RegistrationResponse {
 
   @ApiProperty({ enum: CampoDuplicidade })
   campoDuplicidade!: CampoDuplicidade;
+
+  @ApiProperty({ nullable: true, description: 'Compromissos da turma' })
+  termoCompromisso!: string | null;
+
+  @ApiProperty({ nullable: true, description: 'Apresentação da atividade na página de inscrição' })
+  apresentacao!: string | null;
+
+  @ApiProperty({
+    nullable: true,
+    example: '2026-11-05',
+    description: 'Último dia para se inscrever',
+  })
+  prazoInscricao!: string | null;
+
+  @ApiProperty({
+    nullable: true,
+    example: '18:00',
+    description: 'Hora do prazo; null = fim do dia',
+  })
+  prazoHora!: string | null;
+
+  @ApiProperty({ nullable: true, example: '61999998888', description: 'WhatsApp do Instituto' })
+  contatoWhatsapp!: string | null;
 
   @ApiProperty({ description: 'Código aleatório do link público, que não revela a atividade' })
   codigoPublico!: string;

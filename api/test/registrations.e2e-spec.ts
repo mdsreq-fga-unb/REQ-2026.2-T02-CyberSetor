@@ -21,6 +21,18 @@ interface RegistrationBody {
   campoDuplicidade: string;
   codigoPublico: string;
   linkPublico: string;
+  termoCompromisso: string | null;
+  apresentacao: string | null;
+  prazoInscricao: string | null;
+  prazoHora: string | null;
+  contatoWhatsapp: string | null;
+}
+
+/** Dia no formato AAAA-MM-DD, contado a partir de hoje (UTC basta: o teste fica longe da virada). */
+function day(offset: number): string {
+  const date = new Date();
+  date.setUTCDate(date.getUTCDate() + offset);
+  return date.toISOString().slice(0, 10);
 }
 
 describe('Configuração da inscrição da atividade (e2e)', () => {
@@ -228,6 +240,141 @@ describe('Configuração da inscrição da atividade (e2e)', () => {
       .patch(path(), { versao: 1, vagas: 50 })
       .expect(409);
     expect((conflito.body as { code: string }).code).toBe('VERSION_CONFLICT');
+  });
+
+  it('abre com termo de compromisso, troca e tira o termo, com a trilha do que mudou', async () => {
+    const inscricao = await opened({ ...VALID, termoCompromisso: '  Chegar no horário.  ' });
+    expect(inscricao.termoCompromisso).toBe('Chegar no horário.');
+
+    const trocado = await as(Perfil.NUCLEO_PEDAGOGICO)
+      .patch(path(), { versao: 1, termoCompromisso: 'Chegar no horário e avisar faltas.' })
+      .expect(200);
+    expect(trocado.body as RegistrationBody).toMatchObject({
+      versao: 2,
+      termoCompromisso: 'Chegar no horário e avisar faltas.',
+    });
+    const edicao = await prisma.trilhaAuditoria.findFirstOrThrow({
+      where: { entidadeId: atividadeId, acao: 'REGISTRATION_UPDATED' },
+    });
+    expect(edicao.antes).toEqual({ termoCompromisso: 'Chegar no horário.' });
+
+    const semTermo = await as(Perfil.NUCLEO_PEDAGOGICO)
+      .patch(path(), { versao: 2, termoCompromisso: null })
+      .expect(200);
+    expect(semTermo.body as RegistrationBody).toMatchObject({ versao: 3, termoCompromisso: null });
+
+    const vazio = await as(Perfil.NUCLEO_PEDAGOGICO)
+      .patch(path(), { versao: 3, termoCompromisso: '   ' })
+      .expect(400);
+    expect((vazio.body as { code: string }).code).toBe('VALIDATION_ERROR');
+  });
+
+  it('abre com apresentacao, prazo e WhatsApp do Instituto, edita e limpa com a trilha do que mudou', async () => {
+    await prisma.atividade.update({
+      where: { id: atividadeId },
+      data: { data: new Date(`${day(30)}T00:00:00.000Z`) },
+    });
+    const inscricao = await opened({
+      ...VALID,
+      apresentacao: '  Oficina de 8 horas, com certificado.  ',
+      prazoInscricao: day(20),
+      contatoWhatsapp: '+55 (61) 99999-8888',
+    });
+    expect(inscricao).toMatchObject({
+      apresentacao: 'Oficina de 8 horas, com certificado.',
+      prazoInscricao: day(20),
+      contatoWhatsapp: '61999998888',
+    });
+
+    const editada = await as(Perfil.NUCLEO_PEDAGOGICO)
+      .patch(path(), { versao: 1, apresentacao: 'Oficina de 8 horas. Não há almoço.' })
+      .expect(200);
+    expect((editada.body as RegistrationBody).versao).toBe(2);
+    const edicao = await prisma.trilhaAuditoria.findFirstOrThrow({
+      where: { entidadeId: atividadeId, acao: 'REGISTRATION_UPDATED' },
+    });
+    expect(edicao.antes).toEqual({ apresentacao: 'Oficina de 8 horas, com certificado.' });
+
+    const limpa = await as(Perfil.NUCLEO_PEDAGOGICO)
+      .patch(path(), { versao: 2, apresentacao: null, prazoInscricao: null, contatoWhatsapp: null })
+      .expect(200);
+    expect(limpa.body as RegistrationBody).toMatchObject({
+      versao: 3,
+      apresentacao: null,
+      prazoInscricao: null,
+      contatoWhatsapp: null,
+    });
+  });
+
+  it.each([
+    ['apresentacao longa demais', { apresentacao: 'a'.repeat(2001) }],
+    ['apresentacao em branco', { apresentacao: '   ' }],
+    ['prazo fora do formato de data', { prazoInscricao: '05/11/2026' }],
+    ['WhatsApp sem DDD', { contatoWhatsapp: '99998888' }],
+  ])('recusa %s com 400', async (_caso, extra) => {
+    await as(Perfil.NUCLEO_PEDAGOGICO)
+      .post(path(), { ...VALID, ...extra })
+      .expect(400);
+    expect(await prisma.configuracaoInscricao.count()).toBe(0);
+  });
+
+  it('aceita prazo de hoje ate a data da atividade, com hora opcional, e recusa fora disso', async () => {
+    await prisma.atividade.update({
+      where: { id: atividadeId },
+      data: { data: new Date(`${day(10)}T00:00:00.000Z`) },
+    });
+    const recusa = async (extra: object) => {
+      const res = await as(Perfil.NUCLEO_PEDAGOGICO)
+        .post(path(), { ...VALID, ...extra })
+        .expect(400);
+      return (res.body as { code: string; message: string }).code;
+    };
+    expect(await recusa({ prazoInscricao: day(-2) })).toBe('DEADLINE_INVALID');
+    expect(await recusa({ prazoInscricao: day(11) })).toBe('DEADLINE_INVALID');
+    expect(await recusa({ prazoHora: '18:00' })).toBe('DEADLINE_INVALID');
+    expect(await recusa({ prazoInscricao: day(5), prazoHora: '25:00' })).toBe('VALIDATION_ERROR');
+
+    const comHora = await opened({ ...VALID, prazoInscricao: day(10), prazoHora: '18:00' });
+    expect(comHora).toMatchObject({ prazoInscricao: day(10), prazoHora: '18:00' });
+
+    const fimDoDia = await as(Perfil.NUCLEO_PEDAGOGICO)
+      .patch(path(), { versao: 1, prazoHora: null })
+      .expect(200);
+    expect(fimDoDia.body as RegistrationBody).toMatchObject({ versao: 2, prazoHora: null });
+
+    const depois = await as(Perfil.NUCLEO_PEDAGOGICO)
+      .patch(path(), { versao: 2, prazoInscricao: day(12) })
+      .expect(400);
+    expect((depois.body as { code: string }).code).toBe('DEADLINE_INVALID');
+  });
+
+  it('reabrir com o prazo vencido pede prazo novo; com ele, reabre', async () => {
+    await prisma.atividade.update({
+      where: { id: atividadeId },
+      data: { data: new Date(`${day(10)}T00:00:00.000Z`) },
+    });
+    await opened();
+    await prisma.configuracaoInscricao.update({
+      where: { atividadeId },
+      data: { aberta: false, prazoInscricao: new Date(`${day(-2)}T00:00:00.000Z`) },
+    });
+
+    const semPrazo = await as(Perfil.NUCLEO_PEDAGOGICO)
+      .patch(path(), { versao: 1, aberta: true })
+      .expect(422);
+    expect((semPrazo.body as { code: string }).code).toBe('DEADLINE_PASSED');
+    await as(Perfil.NUCLEO_PEDAGOGICO)
+      .patch(path(), { versao: 1, aberta: true, prazoInscricao: null })
+      .expect(422);
+
+    const reaberta = await as(Perfil.NUCLEO_PEDAGOGICO)
+      .patch(path(), { versao: 1, aberta: true, prazoInscricao: day(5) })
+      .expect(200);
+    expect(reaberta.body as RegistrationBody).toMatchObject({
+      versao: 2,
+      aberta: true,
+      prazoInscricao: day(5),
+    });
   });
 
   it('nao deixa tirar do formulario o campo que identifica cadastro repetido', async () => {

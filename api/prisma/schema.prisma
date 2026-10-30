@@ -268,6 +268,16 @@ model ConfiguracaoInscricao {
   vagas            Int
   camposAdicionais CampoInscricao[] @map("campos_adicionais")
   campoDuplicidade CampoDuplicidade @map("campo_duplicidade")
+  /// Compromissos da turma que a pessoa aceita para se inscrever; sem termo, não há aceite.
+  termoCompromisso String?          @map("termo_compromisso")
+  /// Apresentação da atividade na página de inscrição (descritivo da oficina); opcional.
+  apresentacao     String?
+  /// Último dia para se inscrever; o formulário encerra ao fim desse dia, no horário de Brasília.
+  prazoInscricao   DateTime?        @map("prazo_inscricao") @db.Date
+  /// Hora opcional do prazo, para encerramento decisivo; sem ela, vale o fim do dia.
+  prazoHora        DateTime?        @map("prazo_hora") @db.Time(0)
+  /// WhatsApp do Instituto para dúvidas, só dígitos com DDD; nunca o número pessoal de quem coordena.
+  contatoWhatsapp  String?          @map("contato_whatsapp") @db.VarChar(11)
   codigoPublico    String           @unique @map("codigo_publico")
   criadoEm         DateTime         @default(now()) @map("criado_em") @db.Timestamptz(3)
   atualizadoEm     DateTime         @updatedAt @map("atualizado_em") @db.Timestamptz(3)
@@ -281,17 +291,19 @@ model ConfiguracaoInscricao {
 /// para que dados de participantes não se misturem com os de quem opera o sistema (LGPD).
 /// Guarda só os campos mínimos (seção 8.5.4) e os da lista fechada da configuração (RNF05).
 model Participante {
-  id             String   @id @default(uuid()) @db.Uuid
-  versao         Int      @default(1)
-  nome           String
-  telefone       String
-  dataNascimento DateTime @map("data_nascimento") @db.Date
-  email          String?
-  cpf            String?  @db.VarChar(11)
-  bairroRegiao   String?  @map("bairro_regiao")
-  escolaridade   String?
-  criadoEm       DateTime @default(now()) @map("criado_em") @db.Timestamptz(3)
-  atualizadoEm   DateTime @updatedAt @map("atualizado_em") @db.Timestamptz(3)
+  id              String   @id @default(uuid()) @db.Uuid
+  versao          Int      @default(1)
+  nome            String
+  /// Como a pessoa prefere ser chamada; opcional (modelo do Instituto).
+  nomePreferencia String?  @map("nome_preferencia")
+  telefone        String
+  dataNascimento  DateTime @map("data_nascimento") @db.Date
+  email           String?
+  cpf             String?  @db.VarChar(11)
+  bairroRegiao    String?  @map("bairro_regiao")
+  escolaridade    String?
+  criadoEm        DateTime @default(now()) @map("criado_em") @db.Timestamptz(3)
+  atualizadoEm    DateTime @updatedAt @map("atualizado_em") @db.Timestamptz(3)
 
   inscricoes Inscricao[]
 
@@ -300,24 +312,41 @@ model Participante {
   @@map("participante")
 }
 
+/// Canal pelo qual o titular pediu a revogação de uma autorização (CA-07a.6).
+enum CanalPedido {
+  EMAIL
+  TELEFONE
+  WHATSAPP
+  PRESENCIAL
+  OUTRO
+}
+
 enum SituacaoInscricao {
   CONFIRMADA
 }
 
 model Inscricao {
-  id                  String            @id @default(uuid()) @db.Uuid
-  atividadeId         String            @map("atividade_id") @db.Uuid
-  participanteId      String            @map("participante_id") @db.Uuid
-  situacao            SituacaoInscricao @default(CONFIRMADA)
+  id                        String            @id @default(uuid()) @db.Uuid
+  atividadeId               String            @map("atividade_id") @db.Uuid
+  participanteId            String            @map("participante_id") @db.Uuid
+  situacao                  SituacaoInscricao @default(CONFIRMADA)
   /// Valor normalizado do campo que identifica cadastro repetido (e-mail ou CPF).
-  chaveDuplicidade    String            @map("chave_duplicidade")
-  versaoAviso         String            @map("versao_aviso")
-  avisoApresentadoEm  DateTime          @map("aviso_apresentado_em") @db.Timestamptz(3)
-  autorizaComunicados Boolean           @map("autoriza_comunicados")
-  autorizaImagem      Boolean           @map("autoriza_imagem")
-  responsavelNome     String?           @map("responsavel_nome")
-  responsavelTelefone String?           @map("responsavel_telefone")
-  criadoEm            DateTime          @default(now()) @map("criado_em") @db.Timestamptz(3)
+  chaveDuplicidade          String            @map("chave_duplicidade")
+  versaoAviso               String            @map("versao_aviso")
+  avisoApresentadoEm        DateTime          @map("aviso_apresentado_em") @db.Timestamptz(3)
+  autorizaComunicados       Boolean           @map("autoriza_comunicados")
+  autorizaImagem            Boolean           @map("autoriza_imagem")
+  responsavelNome           String?           @map("responsavel_nome")
+  responsavelTelefone       String?           @map("responsavel_telefone")
+  /// Texto do termo de compromisso aceito no envio, como estava naquele momento.
+  termoAceito               String?           @map("termo_aceito")
+  termoAceitoEm             DateTime?         @map("termo_aceito_em") @db.Timestamptz(3)
+  /// Revogação das autorizações a pedido do titular: data do pedido e canal; a autorização dada no envio fica como estava.
+  comunicadosRevogadosEm    DateTime?         @map("comunicados_revogados_em") @db.Date
+  comunicadosRevogacaoCanal CanalPedido?      @map("comunicados_revogacao_canal")
+  imagemRevogadaEm          DateTime?         @map("imagem_revogada_em") @db.Date
+  imagemRevogacaoCanal      CanalPedido?      @map("imagem_revogacao_canal")
+  criadoEm                  DateTime          @default(now()) @map("criado_em") @db.Timestamptz(3)
 
   atividade    Atividade    @relation(fields: [atividadeId], references: [id], onDelete: Restrict)
   participante Participante @relation(fields: [participanteId], references: [id], onDelete: Restrict)
