@@ -29,8 +29,17 @@ import { formatDate, formatSchedule } from '@/lib/br';
 import { ActivityFormDialog } from '../activity-form-dialog';
 import { RegistrationFormDialog } from '../registration-form-dialog';
 import { RegistrationShareDialog } from '../registration-share-dialog';
-import { metaBadgeLabel } from '../format';
+import { RegistrationToggleDialog } from '../registration-toggle-dialog';
+import { metaBadgeLabel, registrationStatus, type RegistrationTone } from '../format';
 import type { Registration } from '@/types/inscricoes';
+
+// Mesmos tons dos destaques da tela inicial (home-widgets).
+const TONE_CLASS: Record<RegistrationTone, string> = {
+  open: 'border-transparent bg-success/10 text-success',
+  full: 'border-transparent bg-warning/20 text-amber-800 dark:text-warning',
+  closed: 'text-muted-foreground',
+  none: 'text-muted-foreground',
+};
 
 const EDITORS: Perfil[] = ['PRESIDENCIA_GESTAO', 'NUCLEO_PEDAGOGICO'];
 
@@ -57,11 +66,13 @@ function Responsible({ activity }: { activity: Activity }) {
   );
 }
 
-function registrationText(activity: Activity): string {
-  const { inscricao } = activity;
-  if (!inscricao) return 'Inscrição não aberta';
-  const situacao = inscricao.aberta ? 'Inscrição aberta' : 'Inscrição encerrada';
-  return `${situacao} · ${inscricao.inscritos} de ${inscricao.vagas}`;
+function RegistrationBadge({ activity }: { activity: Activity }) {
+  const status = registrationStatus(activity.inscricao);
+  return (
+    <Badge variant="outline" className={TONE_CLASS[status.tone]}>
+      {status.label}
+    </Badge>
+  );
 }
 
 function RegistrationStatus({
@@ -75,9 +86,7 @@ function RegistrationStatus({
 }) {
   return (
     <div className="flex flex-col items-start gap-2">
-      <Badge variant={activity.inscricao?.aberta ? 'default' : 'outline'}>
-        {registrationText(activity)}
-      </Badge>
+      <RegistrationBadge activity={activity} />
       {activity.inscricao
         ? onShare && (
             <Button
@@ -122,7 +131,9 @@ function ActivitySummary({ activity }: { activity: Activity }) {
       <span className="text-muted-foreground md:hidden">
         <Responsible activity={activity} />
       </span>
-      <span className="text-sm md:hidden">{registrationText(activity)}</span>
+      <span className="mt-1 md:hidden">
+        <RegistrationBadge activity={activity} />
+      </span>
     </div>
   );
 }
@@ -143,6 +154,7 @@ export function ProjectActivitiesSection({
     activity: Activity;
     initialRegistration?: Registration;
   }>();
+  const registrationToggle = useDialogState<{ activity: Activity }>();
 
   const canEdit = session !== null && EDITORS.includes(session.perfil) && instrument.ativo === true;
 
@@ -242,10 +254,20 @@ export function ProjectActivitiesSection({
                                 : 'Abrir inscrição',
                               onSelect: () => registrationForm.show({ activity }),
                             },
-                            {
-                              label: 'Link e QR Code',
-                              onSelect: () => registrationShare.show({ activity }),
-                            },
+                            ...(activity.inscricao
+                              ? [
+                                  {
+                                    label: 'Link e QR Code',
+                                    onSelect: () => registrationShare.show({ activity }),
+                                  },
+                                  {
+                                    label: activity.inscricao.aberta
+                                      ? 'Encerrar inscrições'
+                                      : 'Reabrir inscrições',
+                                    onSelect: () => registrationToggle.show({ activity }),
+                                  },
+                                ]
+                              : []),
                           ]}
                         />
                       </TableCell>
@@ -294,6 +316,12 @@ export function ProjectActivitiesSection({
             });
           }
         }}
+      />
+
+      <RegistrationToggleDialog
+        activity={registrationToggle.open ? (registrationToggle.value?.activity ?? null) : null}
+        onClose={registrationToggle.close}
+        onDone={(message) => toast.add({ type: 'success', title: message })}
       />
 
       <RegistrationShareDialog
