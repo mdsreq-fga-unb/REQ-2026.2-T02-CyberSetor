@@ -63,11 +63,12 @@ const registrationSchema = z
 type FormValues = z.input<typeof registrationSchema>;
 type SchemaOutput = z.output<typeof registrationSchema>;
 
+// O formulário do Instituto pede o e-mail e não pede CPF; o repetido sai pelo e-mail.
 const DEFAULT_VALUES: FormValues = {
   aberta: true,
   vagas: 30,
-  camposAdicionais: ['CPF', 'EMAIL'],
-  campoDuplicidade: 'CPF',
+  camposAdicionais: ['EMAIL'],
+  campoDuplicidade: 'EMAIL',
 };
 
 function valuesFromRegistration(reg: Registration | null): FormValues {

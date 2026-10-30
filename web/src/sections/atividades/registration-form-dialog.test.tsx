@@ -101,7 +101,7 @@ describe('RegistrationFormDialog', () => {
     vi.unstubAllGlobals();
   });
 
-  it('abre nova inscricao com POST quando ainda nao aberta', async () => {
+  it('abre nova inscricao com POST quando ainda nao aberta, pedindo so o e-mail', async () => {
     const calls = await signedInAs('PRESIDENCIA_GESTAO', {
       [`GET /activities/${ACTIVITY.id}/registration`]: () => ({
         status: 404,
@@ -130,8 +130,8 @@ describe('RegistrationFormDialog', () => {
     expect(postCall).toBeDefined();
     expect(postCall?.body).toMatchObject({
       vagas: 30,
-      camposAdicionais: expect.arrayContaining(['CPF', 'EMAIL']),
-      campoDuplicidade: 'CPF',
+      camposAdicionais: ['EMAIL'],
+      campoDuplicidade: 'EMAIL',
     });
   });
 
