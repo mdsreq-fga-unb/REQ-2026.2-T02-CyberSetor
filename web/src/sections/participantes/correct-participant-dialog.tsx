@@ -23,7 +23,7 @@ import { dateSchema, phoneSchema } from '@/lib/schemas';
 import { useCorrectParticipant } from '@/queries/participantes';
 import type { Participant, ParticipantCorrection } from '@/types/participantes';
 
-const OPTIONAL = ['email', 'cpf', 'bairroRegiao', 'escolaridade'] as const;
+const OPTIONAL = ['nomePreferencia', 'email', 'cpf', 'bairroRegiao', 'escolaridade'] as const;
 const REQUIRED = ['nome', 'telefone', 'dataNascimento'] as const;
 
 const schema = z.object({
@@ -32,6 +32,7 @@ const schema = z.object({
     .trim()
     .min(2, 'Informe o nome completo.')
     .max(150, 'O nome tem no máximo 150 caracteres.'),
+  nomePreferencia: z.string().trim().max(80, 'Use no máximo 80 caracteres.'),
   telefone: phoneSchema(),
   dataNascimento: dateSchema('Informe a data de nascimento.', {
     notFuture: 'A data não pode ser no futuro.',
@@ -54,6 +55,7 @@ type FormValues = z.input<typeof schema>;
 function valuesOf(participant: Participant): FormValues {
   return {
     nome: participant.nome,
+    nomePreferencia: participant.nomePreferencia ?? '',
     telefone: participant.telefone,
     dataNascimento: participant.dataNascimento,
     email: participant.email ?? '',
@@ -175,6 +177,12 @@ export function CorrectParticipantDialog({
         <form noValidate onSubmit={onSubmit}>
           <FieldGroup>
             <TextField control={control} name="nome" label="Nome completo" autoComplete="off" />
+            <TextField
+              control={control}
+              name="nomePreferencia"
+              label="Nome de preferência"
+              autoComplete="off"
+            />
             <div className="grid gap-4 sm:grid-cols-2">
               <PhoneField control={control} name="telefone" label="Telefone com DDD" />
               <DateField

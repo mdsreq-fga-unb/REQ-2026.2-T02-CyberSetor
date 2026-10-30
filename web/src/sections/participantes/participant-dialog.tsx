@@ -69,6 +69,7 @@ export function ParticipantDialog({
         ) : (
           <div className="flex flex-col gap-5">
             <dl className="grid grid-cols-2 gap-3 sm:grid-cols-3">
+              <Item label="Nome de preferência" value={participant.nomePreferencia} />
               <Item label="Telefone" value={formatPhone(participant.telefone)} />
               <Item
                 label="Nascimento"

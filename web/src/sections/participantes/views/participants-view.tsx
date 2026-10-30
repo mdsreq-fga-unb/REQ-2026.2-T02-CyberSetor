@@ -148,7 +148,15 @@ export function ParticipantsView() {
                   <TableRow key={row.id}>
                     <TableCell className="px-4 py-3 whitespace-normal">
                       <div className="flex flex-col gap-1">
-                        <span className="font-medium">{row.nome}</span>
+                        <span className="font-medium">
+                          {row.nome}
+                          {row.nomePreferencia && (
+                            <span className="font-normal text-muted-foreground">
+                              {' '}
+                              ({row.nomePreferencia})
+                            </span>
+                          )}
+                        </span>
                         <span className="text-sm text-muted-foreground">
                           {row.idade} anos · {row.inscricoes}{' '}
                           {row.inscricoes === 1 ? 'inscrição' : 'inscrições'}

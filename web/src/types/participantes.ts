@@ -8,6 +8,7 @@ export interface ParticipantSummary {
   id: string;
   versao: number;
   nome: string;
+  nomePreferencia: string | null;
   idade: number;
   telefone: string;
   email: string | null;
@@ -32,6 +33,7 @@ export interface Participant {
   id: string;
   versao: number;
   nome: string;
+  nomePreferencia: string | null;
   telefone: string;
   dataNascimento: string;
   idade: number;
@@ -47,6 +49,7 @@ export interface ParticipantCorrection {
   versao: number;
   justificativa: string;
   nome?: string;
+  nomePreferencia?: string | null;
   telefone?: string;
   dataNascimento?: string;
   email?: string | null;

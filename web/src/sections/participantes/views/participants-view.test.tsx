@@ -11,6 +11,7 @@ const ANA_RESUMO: ParticipantSummary = {
   id: ANA_ID,
   versao: 1,
   nome: 'Ana Souza',
+  nomePreferencia: 'Aninha',
   idade: 36,
   telefone: '61999998888',
   email: 'ana@exemplo.test',
@@ -22,6 +23,7 @@ const ANA: Participant = {
   id: ANA_ID,
   versao: 1,
   nome: 'Ana Souza',
+  nomePreferencia: 'Aninha',
   telefone: '61999998888',
   dataNascimento: '1990-05-20',
   idade: 36,
@@ -144,6 +146,7 @@ describe('participantes', () => {
     const ficha = within(await screen.findByRole('dialog'));
     expect(await ficha.findByText('529.982.247-25')).toBeInTheDocument();
     expect(ficha.getByText('20/05/1990 (36 anos)')).toBeInTheDocument();
+    expect(ficha.getByText('Aninha')).toBeInTheDocument();
     expect(ficha.getByRole('link', { name: 'Oficina de dança' })).toBeInTheDocument();
     expect(ficha.getByText('Comunicados: sim')).toBeInTheDocument();
     expect(ficha.getByText('Uso de imagem: não')).toBeInTheDocument();
@@ -161,6 +164,7 @@ describe('participantes', () => {
     fireEvent.change(screen.getByLabelText('Telefone com DDD'), {
       target: { value: '(61) 98888-7777' },
     });
+    fireEvent.change(screen.getByLabelText('Nome de preferência'), { target: { value: '' } });
     fireEvent.change(screen.getByLabelText('Escolaridade'), { target: { value: '  ' } });
     fireEvent.change(screen.getByLabelText('Bairro ou região'), { target: { value: '' } });
     fireEvent.change(screen.getByLabelText('E-mail'), { target: { value: 'Ana@Exemplo.test' } });
@@ -174,6 +178,7 @@ describe('participantes', () => {
       versao: 1,
       justificativa: 'Pedido da titular por telefone em 28/10.',
       telefone: '61988887777',
+      nomePreferencia: null,
       bairroRegiao: null,
     });
   });
