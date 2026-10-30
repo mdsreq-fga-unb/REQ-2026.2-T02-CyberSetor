@@ -364,6 +364,31 @@ describe('formulario publico de inscricao', () => {
     expect(screen.queryByLabelText('Nome completo')).not.toBeInTheDocument();
   });
 
+  it('prazo vencido mostra quando terminou e o WhatsApp do Instituto', async () => {
+    stubApi({
+      [GET]: () => ({
+        status: 200,
+        body: {
+          ...FORM,
+          aberta: false,
+          prazoInscricao: '2026-10-01',
+          prazoHora: '18:00',
+          contatoWhatsapp: '61999998888',
+        },
+      }),
+    });
+    renderView();
+
+    expect(
+      await screen.findByText('O prazo de inscrição terminou em 01/10/2026, às 18h.'),
+    ).toBeInTheDocument();
+    expect(screen.getByRole('link', { name: /WhatsApp do Instituto/ })).toHaveAttribute(
+      'href',
+      'https://wa.me/5561999998888',
+    );
+    expect(screen.queryByLabelText('Nome completo')).not.toBeInTheDocument();
+  });
+
   it('link inexistente mostra o aviso de link invalido', async () => {
     stubApi({
       [GET]: () => ({

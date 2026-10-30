@@ -19,7 +19,14 @@ import type {
 } from '@/types/inscricao-publica';
 import type { CampoInscricao } from '@/types/inscricoes';
 import { CpfField, DateField, PhoneField, TextField } from '@/components/form/fields';
-import { ageOn, formatDate, formatPhone, isValidPhone, todayInBrasilia } from '@/lib/br';
+import {
+  ageOn,
+  formatDate,
+  formatPhone,
+  isValidPhone,
+  nowInBrasilia,
+  todayInBrasilia,
+} from '@/lib/br';
 import { cpfSchema, phoneSchema } from '@/lib/schemas';
 
 const ADULT_AGE = 18;
@@ -209,14 +216,21 @@ function Presentation({ form }: { form: PublicForm }) {
   );
 }
 
+function deadlinePassed(form: PublicForm): boolean {
+  if (!form.prazoInscricao) return false;
+  return nowInBrasilia() > `${form.prazoInscricao} ${form.prazoHora ?? '23:59'}`;
+}
+
 function Message({
   title,
   text,
   activity,
+  contact,
 }: {
   title: string;
   text: string;
   activity?: PublicActivity;
+  contact?: string | null;
 }) {
   return (
     <Card>
@@ -228,6 +242,11 @@ function Message({
       </CardHeader>
       <CardContent>
         <p className="text-center text-sm text-muted-foreground">{text}</p>
+        {contact && (
+          <p className="mt-3 text-center text-sm">
+            Dúvidas: <WhatsAppLink digits={contact} />
+          </p>
+        )}
       </CardContent>
     </Card>
   );
@@ -510,11 +529,17 @@ export function PublicRegistrationView({ codigo }: { codigo: string }) {
   }
 
   if (closed || !form.data.aberta) {
+    const { prazoInscricao, prazoHora } = form.data;
     return (
       <Message
         title="Inscrições encerradas"
-        text="Esta atividade não está recebendo inscrições no momento. Fale com a equipe do Instituto."
+        text={
+          prazoInscricao && deadlinePassed(form.data)
+            ? `O prazo de inscrição terminou em ${formatDeadline(prazoInscricao, prazoHora)}.`
+            : 'Esta atividade não está recebendo inscrições no momento. Fale com a equipe do Instituto.'
+        }
         activity={form.data.atividade}
+        contact={form.data.contatoWhatsapp}
       />
     );
   }

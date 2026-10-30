@@ -62,6 +62,21 @@ export function todayInBrasilia(now: Date = new Date()): string {
   return new Intl.DateTimeFormat('en-CA', { timeZone: TIME_ZONE }).format(now);
 }
 
+/** Agora no fuso de Brasília, no formato "AAAA-MM-DD HH:MM", como a API compara o prazo. */
+export function nowInBrasilia(now: Date = new Date()): string {
+  const parts = new Intl.DateTimeFormat('en-CA', {
+    timeZone: TIME_ZONE,
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+    hour: '2-digit',
+    minute: '2-digit',
+    hourCycle: 'h23',
+  }).formatToParts(now);
+  const part = (type: string) => parts.find((p) => p.type === type)?.value ?? '';
+  return `${part('year')}-${part('month')}-${part('day')} ${part('hour')}:${part('minute')}`;
+}
+
 /** Idade completa em anos, com as datas no formato AAAA-MM-DD. */
 export function ageOn(birthDate: string, today: string): number {
   const [by, bm, bd] = birthDate.split('-').map(Number);
