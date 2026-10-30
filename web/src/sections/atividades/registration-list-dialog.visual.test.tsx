@@ -31,7 +31,7 @@ function person(index: number, nome: string, espera: number | null): RegisteredP
 }
 
 const LIST: RegistrationList = {
-  vagas: 2,
+  vagas: 3,
   confirmadas: 2,
   emEspera: 2,
   inscricoes: [

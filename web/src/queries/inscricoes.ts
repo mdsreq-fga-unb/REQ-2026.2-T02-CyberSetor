@@ -112,3 +112,26 @@ export function useUpdateRegistration(activityId: string) {
       ]),
   });
 }
+
+/** Promoção manual: o Núcleo confirma a vaga de quem está na espera (HU-07c). */
+export function useConfirmFromWaitlist(activityId: string) {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: (inscricaoId: string) =>
+      authorizedRequest<RegistrationList>(
+        `/activities/${encodeURIComponent(activityId)}/registrations/${encodeURIComponent(
+          inscricaoId,
+        )}/confirmation`,
+        { method: 'POST' },
+      ),
+    onSuccess: () =>
+      Promise.all([
+        queryClient.invalidateQueries({ queryKey: ['atividades', activityId, 'inscritos'] }),
+        // A lista de atividades mostra os inscritos e a espera.
+        queryClient.invalidateQueries({
+          queryKey: ['projetos'],
+          predicate: (query) => query.queryKey[2] === 'atividades',
+        }),
+      ]),
+  });
+}

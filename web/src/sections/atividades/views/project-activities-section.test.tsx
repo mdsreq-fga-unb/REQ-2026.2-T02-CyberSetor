@@ -364,6 +364,51 @@ describe('ProjectActivitiesSection', () => {
     expect(within(espera).getByText('Bruno Lima', { exact: false })).toBeInTheDocument();
     expect(within(espera).getByText('Menor')).toBeInTheDocument();
     expect(within(espera).getByText(/Responsável: Carla Lima/)).toBeInTheDocument();
+    expect(screen.queryByRole('button', { name: /Confirmar vaga/ })).not.toBeInTheDocument();
+  });
+
+  it('com vaga livre, o Nucleo confirma a vaga de quem esta na espera', async () => {
+    const lista = (confirmadas: RegisteredPerson[], espera: RegisteredPerson[]) => ({
+      status: 200,
+      body: {
+        vagas: 2,
+        confirmadas: confirmadas.length,
+        emEspera: espera.length,
+        inscricoes: [...confirmadas, ...espera],
+      },
+    });
+    const ana = person('Ana Souza', 'CONFIRMADA', null);
+    const bruno = person('Bruno Lima', 'LISTA_ESPERA', 1);
+    const brunoConfirmado = { ...bruno, situacao: 'CONFIRMADA' as const, posicaoEspera: null };
+    let confirmed = false;
+    await signedInAs('NUCLEO_PEDAGOGICO', {
+      [`GET /projects/${PROJECT.id}/activities`]: () => ({
+        status: 200,
+        body: [{ ...ACTIVITY_1, inscricao: { aberta: true, vagas: 2, inscritos: 1, emEspera: 1 } }],
+      }),
+      [`GET /activities/${ACTIVITY_1.id}/registrations`]: () =>
+        confirmed ? lista([ana, brunoConfirmado], []) : lista([ana], [bruno]),
+      [`POST /activities/${ACTIVITY_1.id}/registrations/${encodeURIComponent(bruno.id)}/confirmation`]:
+        () => {
+          confirmed = true;
+          return lista([ana, brunoConfirmado], []);
+        },
+    });
+    renderSection();
+
+    fireEvent.click(
+      await screen.findByRole('button', { name: `Ações da atividade ${ACTIVITY_1.titulo}` }),
+    );
+    fireEvent.click(await screen.findByRole('menuitem', { name: 'Ver inscritos' }));
+    // A ação aparece na linha no celular e numa coluna no desktop; o jsdom não aplica o CSS.
+    fireEvent.click(
+      (await screen.findAllByRole('button', { name: 'Confirmar vaga de Bruno Lima' }))[0]!,
+    );
+
+    expect(
+      await screen.findByRole('region', { name: 'Vagas confirmadas (2)' }),
+    ).toBeInTheDocument();
+    expect(screen.queryByRole('region', { name: /Lista de espera/ })).not.toBeInTheDocument();
   });
 
   it('perfil de consulta (ADMINISTRATIVO_FINANCEIRO) consulta mas nao altera', async () => {

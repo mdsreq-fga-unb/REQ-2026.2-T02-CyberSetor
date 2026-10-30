@@ -4,6 +4,7 @@ import { useDeferredValue, useState } from 'react';
 import { SearchIcon } from 'lucide-react';
 import { ListError, TableSkeleton } from '@/components/list/list-states';
 import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
 import {
   Dialog,
   DialogContent,
@@ -23,11 +24,13 @@ import {
 } from '@/components/ui/table';
 import { ApiError } from '@/lib/api';
 import { formatDateTime, formatPhone } from '@/lib/br';
-import { useRegistrationList } from '@/queries/inscricoes';
+import { toast } from '@/components/ui/toast';
+import { useConfirmFromWaitlist, useRegistrationList } from '@/queries/inscricoes';
 import type { Activity } from '@/types/atividades';
 import type { RegisteredPerson } from '@/types/inscricoes';
 
 const COLUMNS = 3;
+const WAITING_COLUMNS = 4;
 
 function loadFailure(error: unknown): string {
   if (error instanceof ApiError && error.status === 403) {
@@ -44,16 +47,45 @@ function Authorizations({ person }: { person: RegisteredPerson }) {
   return given.length > 0 ? `Autoriza ${given.join(' e ')}` : 'Sem autorizações';
 }
 
+function ConfirmButton({
+  person,
+  disabled,
+  onConfirm,
+  className,
+}: {
+  person: RegisteredPerson;
+  disabled: boolean;
+  onConfirm: (person: RegisteredPerson) => void;
+  className?: string;
+}) {
+  return (
+    <Button
+      variant="outline"
+      className={className}
+      disabled={disabled}
+      onClick={() => onConfirm(person)}
+      aria-label={`Confirmar vaga de ${person.nome}`}
+    >
+      Confirmar vaga
+    </Button>
+  );
+}
+
 function PeopleTable({
   caption,
   people,
   loading,
   waiting,
+  onConfirm,
+  confirming,
 }: {
   caption: string;
   people: RegisteredPerson[];
   loading: boolean;
   waiting: boolean;
+  /** Na espera, com vaga livre: confirma a vaga da pessoa. */
+  onConfirm?: (person: RegisteredPerson) => void;
+  confirming?: string | null;
 }) {
   return (
     <Table aria-busy={loading}>
@@ -69,11 +101,16 @@ function PeopleTable({
           <TableHead scope="col" className="hidden w-44 md:table-cell">
             Inscrita em
           </TableHead>
+          {onConfirm && (
+            <TableHead scope="col" className="hidden w-36 px-4 md:table-cell">
+              <span className="sr-only">Ações</span>
+            </TableHead>
+          )}
         </TableRow>
       </TableHeader>
       <TableBody>
         {loading ? (
-          <TableSkeleton columns={COLUMNS} rows={2} />
+          <TableSkeleton columns={onConfirm ? WAITING_COLUMNS : COLUMNS} rows={2} />
         ) : (
           people.map((person) => (
             <TableRow key={person.id}>
@@ -103,12 +140,29 @@ function PeopleTable({
                   <span className="text-sm text-muted-foreground md:hidden">
                     {formatPhone(person.telefone)} · {formatDateTime(person.inscritoEm)}
                   </span>
+                  {onConfirm && (
+                    <ConfirmButton
+                      className="mt-1 self-start md:hidden"
+                      person={person}
+                      disabled={Boolean(confirming)}
+                      onConfirm={onConfirm}
+                    />
+                  )}
                 </div>
               </TableCell>
               <TableCell className="hidden md:table-cell">{formatPhone(person.telefone)}</TableCell>
               <TableCell className="hidden md:table-cell">
                 {formatDateTime(person.inscritoEm)}
               </TableCell>
+              {onConfirm && (
+                <TableCell className="hidden px-4 text-right md:table-cell">
+                  <ConfirmButton
+                    person={person}
+                    disabled={Boolean(confirming)}
+                    onConfirm={onConfirm}
+                  />
+                </TableCell>
+              )}
             </TableRow>
           ))
         )}
@@ -130,6 +184,27 @@ export function RegistrationListDialog({
   const [busca, setBusca] = useState('');
   const deferred = useDeferredValue(busca);
   const list = useRegistrationList(activity?.id, deferred, open);
+  const confirm = useConfirmFromWaitlist(activity?.id ?? '');
+  const [confirming, setConfirming] = useState<string | null>(null);
+  const freeVacancy = list.data ? list.data.confirmadas < list.data.vagas : false;
+
+  async function confirmVacancy(person: RegisteredPerson) {
+    setConfirming(person.id);
+    try {
+      await confirm.mutateAsync(person.id);
+      toast.add({ type: 'success', title: `Vaga de ${person.nome} confirmada` });
+    } catch (error) {
+      toast.add({
+        type: 'error',
+        title:
+          error instanceof ApiError
+            ? error.message
+            : 'Não foi possível confirmar a vaga. Tente de novo.',
+      });
+    } finally {
+      setConfirming(null);
+    }
+  }
   const searching = deferred.trim() !== '';
   const people = list.data?.inscricoes ?? [];
   const confirmed = people.filter((person) => person.situacao === 'CONFIRMADA');
@@ -209,6 +284,8 @@ export function RegistrationListDialog({
                     people={waiting}
                     loading={false}
                     waiting
+                    onConfirm={freeVacancy ? (person) => void confirmVacancy(person) : undefined}
+                    confirming={confirming}
                   />
                 )}
               </section>
