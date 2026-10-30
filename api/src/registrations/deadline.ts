@@ -26,3 +26,16 @@ export function withinDeadline(
 ): boolean {
   return prazo === null || nowInBrasilia(now) <= deadlineOf(prazo, hora);
 }
+
+/** O mesmo teste sobre as colunas do banco (data e hora guardadas em UTC, sem fuso). */
+export function storedWithinDeadline(
+  prazo: Date | null,
+  hora: Date | null,
+  now: Date = new Date(),
+): boolean {
+  return withinDeadline(
+    prazo ? prazo.toISOString().slice(0, 10) : null,
+    hora ? hora.toISOString().slice(11, 16) : null,
+    now,
+  );
+}

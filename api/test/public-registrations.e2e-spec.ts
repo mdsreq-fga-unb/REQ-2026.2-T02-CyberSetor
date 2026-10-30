@@ -322,4 +322,29 @@ describe('Formulário público de inscrição (e2e)', () => {
     const inativo = await server().get(`/v1/public/registrations/${outroCodigo}`).expect(200);
     expect((inativo.body as { aberta: boolean }).aberta).toBe(false);
   });
+
+  it('prazo vencido fecha o formulario e recusa o envio; dentro do prazo segue aberto', async () => {
+    const ontem = new Date();
+    ontem.setUTCDate(ontem.getUTCDate() - 2);
+    await prisma.configuracaoInscricao.update({
+      where: { atividadeId },
+      data: { prazoInscricao: new Date(`${ontem.toISOString().slice(0, 10)}T00:00:00.000Z`) },
+    });
+    const vencida = await server().get(`/v1/public/registrations/${codigo}`).expect(200);
+    expect((vencida.body as { aberta: boolean }).aberta).toBe(false);
+    const recusa = await enviar(ADULTO).expect(409);
+    expect((recusa.body as ErrorBody).code).toBe('REGISTRATION_CLOSED');
+
+    const amanha = new Date();
+    amanha.setUTCDate(amanha.getUTCDate() + 2);
+    await prisma.configuracaoInscricao.update({
+      where: { codigoPublico: outroCodigo },
+      data: {
+        prazoInscricao: new Date(`${amanha.toISOString().slice(0, 10)}T00:00:00.000Z`),
+        prazoHora: new Date('1970-01-01T18:00:00.000Z'),
+      },
+    });
+    const aberta = await server().get(`/v1/public/registrations/${outroCodigo}`).expect(200);
+    expect((aberta.body as { aberta: boolean }).aberta).toBe(true);
+  });
 });

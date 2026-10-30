@@ -10,6 +10,7 @@ import { AutorTipo, CampoInscricao } from '../generated/prisma/enums.js';
 import { todayInBrasilia } from '../goals/goal-deadline.js';
 import { PrismaService } from '../prisma/prisma.service.js';
 import { CAMPOS_MINIMOS } from '../registrations/registrations.dto.js';
+import { storedWithinDeadline } from '../registrations/deadline.js';
 import { termVersion } from '../registrations/term.js';
 import { DATA_NOTICE } from './notice.js';
 import { ageOn, birthDateProblem, isValidCpf } from './participant-data.js';
@@ -56,7 +57,11 @@ function publicActivity(config: ConfigWithActivity) {
 }
 
 function isOpen(config: ConfigWithActivity): boolean {
-  return config.aberta && config.atividade.projeto.instrumento.ativo;
+  return (
+    config.aberta &&
+    config.atividade.projeto.instrumento.ativo &&
+    storedWithinDeadline(config.prazoInscricao, config.prazoHora)
+  );
 }
 
 function invalid(code: string, message: string, details: object = {}): BadRequestException {
