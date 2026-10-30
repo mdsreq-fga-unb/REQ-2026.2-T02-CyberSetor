@@ -14,6 +14,11 @@ const FORM: PublicForm = {
     texto:
       'O Instituto usa os dados deste formulário para a sua inscrição na atividade e para a prestação de contas da parceria que a financia.',
   },
+  termo: {
+    versao: 'a1b2c3d4e5f60718',
+    texto:
+      '1. Chegar no horário combinado.\n2. Avisar a equipe quando não puder vir.\n3. Cuidar do material e do espaço.',
+  },
 };
 
 describe.each([

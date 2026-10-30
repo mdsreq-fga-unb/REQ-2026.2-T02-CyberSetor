@@ -12,6 +12,8 @@ export interface PublicForm {
   camposMinimos: string[];
   camposAdicionais: CampoInscricao[];
   aviso: { versao: string; texto: string };
+  /** Compromissos da turma, com aceite obrigatório; null quando a atividade não tem. */
+  termo: { versao: string; texto: string } | null;
 }
 
 export interface PublicSubmission {
@@ -24,6 +26,7 @@ export interface PublicSubmission {
   bairroRegiao?: string;
   escolaridade?: string;
   versaoAviso: string;
+  versaoTermo?: string;
   autorizaComunicados: boolean;
   autorizaImagem: boolean;
   responsavelNome?: string;

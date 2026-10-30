@@ -11,7 +11,10 @@ const FORM: PublicForm = {
   camposMinimos: ['NOME', 'TELEFONE', 'DATA_NASCIMENTO', 'CONSENTIMENTOS'],
   camposAdicionais: ['CPF'],
   aviso: { versao: '2026-10-28-provisoria', texto: 'O Instituto usa os dados para a inscrição.' },
+  termo: null,
 };
+
+const TERMO = { versao: 'a1b2c3d4e5f60718', texto: 'Chegar no horário.\nAvisar quando faltar.' };
 
 type Route = (body: unknown) => { status: number; body?: unknown };
 
@@ -147,6 +150,80 @@ describe('formulario publico de inscricao', () => {
       nome: 'Ana Souza',
       nomePreferencia: 'Aninha',
     });
+  });
+
+  it('sem termo, nao mostra os compromissos nem manda versao de termo', async () => {
+    stubApi({ [GET]: () => ({ status: 200, body: FORM }) });
+    renderView();
+
+    await screen.findByLabelText('CPF');
+    expect(screen.queryByText('Compromissos da turma')).not.toBeInTheDocument();
+    expect(
+      screen.queryByLabelText('Li os compromissos acima e concordo com todos'),
+    ).not.toBeInTheDocument();
+  });
+
+  it('com termo, mostra os compromissos e so envia com o aceite, junto da versao', async () => {
+    const calls = stubApi({
+      [GET]: () => ({ status: 200, body: { ...FORM, termo: TERMO } }),
+      [POST]: () => ({
+        status: 201,
+        body: {
+          situacao: 'CONFIRMADA',
+          atividade: FORM.atividade,
+          inscritoEm: '2026-10-30T13:00:00.000Z',
+        },
+      }),
+    });
+    renderView();
+
+    await screen.findByLabelText('CPF');
+    expect(screen.getByRole('heading', { name: 'Compromissos da turma' })).toBeInTheDocument();
+    expect(screen.getByText(/Avisar quando faltar/)).toBeInTheDocument();
+    fillAdult();
+    fireEvent.click(screen.getByRole('button', { name: 'Confirmar inscrição' }));
+
+    expect(
+      await screen.findByText('Marque que concorda com os compromissos da turma.'),
+    ).toBeInTheDocument();
+    expect(calls.some((call) => call.key === POST)).toBe(false);
+
+    fireEvent.click(screen.getByLabelText('Li os compromissos acima e concordo com todos'));
+    fireEvent.click(screen.getByRole('button', { name: 'Confirmar inscrição' }));
+
+    await screen.findByRole('heading', { name: 'Inscrição confirmada' });
+    expect(calls.find((call) => call.key === POST)?.body).toMatchObject({
+      versaoTermo: TERMO.versao,
+    });
+  });
+
+  it('termo alterado durante o preenchimento recarrega o texto e pede o aceite de novo', async () => {
+    let versao = TERMO.versao;
+    const calls = stubApi({
+      [GET]: () => ({ status: 200, body: { ...FORM, termo: { ...TERMO, versao } } }),
+      [POST]: () => {
+        versao = 'f0e1d2c3b4a59687';
+        return {
+          status: 400,
+          body: {
+            code: 'TERM_OUTDATED',
+            message: 'Os compromissos da turma mudaram. Leia o texto atual e envie de novo.',
+          },
+        };
+      },
+    });
+    renderView();
+
+    await screen.findByLabelText('CPF');
+    fillAdult();
+    fireEvent.click(screen.getByLabelText('Li os compromissos acima e concordo com todos'));
+    fireEvent.click(screen.getByRole('button', { name: 'Confirmar inscrição' }));
+
+    expect(await screen.findByRole('alert')).toHaveTextContent('Os compromissos da turma mudaram.');
+    expect(
+      screen.getByLabelText('Li os compromissos acima e concordo com todos'),
+    ).not.toBeChecked();
+    expect(calls.filter((call) => call.key === GET).length).toBeGreaterThan(1);
   });
 
   it('menor de 18 anos ve e precisa preencher o responsavel legal antes de enviar', async () => {

@@ -41,6 +41,7 @@ interface FormValues {
   cpf: string;
   bairroRegiao: string;
   escolaridade: string;
+  aceiteTermo: boolean;
   autorizaComunicados: boolean;
   autorizaImagem: boolean;
   responsavelNome: string;
@@ -56,6 +57,7 @@ const EMPTY: FormValues = {
   cpf: '',
   bairroRegiao: '',
   escolaridade: '',
+  aceiteTermo: false,
   autorizaComunicados: false,
   autorizaImagem: false,
   responsavelNome: '',
@@ -67,7 +69,7 @@ function isMinor(birthDate: string): boolean {
 }
 
 /** Valida só os campos que a atividade pede; todos os pedidos são obrigatórios. */
-function schemaFor(asked: CampoInscricao[]) {
+function schemaFor(asked: CampoInscricao[], hasTerm: boolean) {
   const has = (campo: CampoInscricao) => asked.includes(campo);
   const required = (message: string) => z.string().trim().min(1, message);
   const optional = z.string();
@@ -86,6 +88,9 @@ function schemaFor(asked: CampoInscricao[]) {
       cpf: has('CPF') ? cpfSchema('Informe o seu CPF.') : optional,
       bairroRegiao: has('BAIRRO_REGIAO') ? required('Informe o bairro ou a região.') : optional,
       escolaridade: has('ESCOLARIDADE') ? required('Informe a escolaridade.') : optional,
+      aceiteTermo: hasTerm
+        ? z.literal(true, { message: 'Marque que concorda com os compromissos da turma.' })
+        : z.boolean(),
       autorizaComunicados: z.boolean(),
       autorizaImagem: z.boolean(),
       responsavelNome: optional,
@@ -117,6 +122,7 @@ function submissionOf(values: FormValues, form: PublicForm): PublicSubmission {
     telefone: values.telefone,
     dataNascimento: values.dataNascimento,
     versaoAviso: form.aviso.versao,
+    ...(form.termo && values.aceiteTermo && { versaoTermo: form.termo.versao }),
     autorizaComunicados: values.autorizaComunicados,
     autorizaImagem: values.autorizaImagem,
   };
@@ -177,7 +183,7 @@ function Consent({
   label,
   control,
 }: {
-  name: 'autorizaComunicados' | 'autorizaImagem';
+  name: 'aceiteTermo' | 'autorizaComunicados' | 'autorizaImagem';
   label: string;
   control: Control<FormValues>;
 }) {
@@ -185,21 +191,31 @@ function Consent({
     <Controller
       name={name}
       control={control}
-      render={({ field }) => (
-        <label
-          htmlFor={name}
-          className="flex min-h-12 cursor-pointer items-center gap-3 rounded-md border border-input p-3 text-sm"
-        >
-          <input
-            id={name}
-            type="checkbox"
-            checked={field.value}
-            onChange={(event) => field.onChange(event.target.checked)}
-            onBlur={field.onBlur}
-            className="size-5 shrink-0 accent-primary"
-          />
-          <span>{label}</span>
-        </label>
+      render={({ field, fieldState }) => (
+        <div className="flex flex-col gap-1">
+          <label
+            htmlFor={name}
+            className="flex min-h-12 cursor-pointer items-center gap-3 rounded-md border border-input p-3 text-sm"
+          >
+            <input
+              id={name}
+              ref={field.ref}
+              type="checkbox"
+              checked={field.value}
+              onChange={(event) => field.onChange(event.target.checked)}
+              onBlur={field.onBlur}
+              aria-invalid={fieldState.invalid || undefined}
+              aria-describedby={fieldState.error ? `${name}-erro` : undefined}
+              className="size-5 shrink-0 accent-primary"
+            />
+            <span>{label}</span>
+          </label>
+          {fieldState.error && (
+            <p id={`${name}-erro`} className="text-sm text-destructive">
+              {fieldState.error.message}
+            </p>
+          )}
+        </div>
       )}
     />
   );
@@ -220,7 +236,11 @@ function RegistrationForm({
 }) {
   const submit = useSubmitRegistration(codigo);
   const [failure, setFailure] = useState<string | null>(null);
-  const schema = useMemo(() => schemaFor(form.camposAdicionais), [form.camposAdicionais]);
+  const hasTerm = form.termo !== null;
+  const schema = useMemo(
+    () => schemaFor(form.camposAdicionais, hasTerm),
+    [form.camposAdicionais, hasTerm],
+  );
   const methods = useForm<FormValues>({ resolver: zodResolver(schema), defaultValues: EMPTY });
   const birthDate = useWatch({ control: methods.control, name: 'dataNascimento' });
   const minor = isMinor(birthDate);
@@ -231,7 +251,13 @@ function RegistrationForm({
       onSubmitted(await submit.mutateAsync(submissionOf(values, form)));
     } catch (error) {
       if (error instanceof ApiError && error.code === 'REGISTRATION_CLOSED') return onClosed();
-      if (error instanceof ApiError && error.code === 'NOTICE_OUTDATED') onNoticeChanged();
+      if (
+        error instanceof ApiError &&
+        (error.code === 'NOTICE_OUTDATED' || error.code === 'TERM_OUTDATED')
+      ) {
+        methods.setValue('aceiteTermo', false);
+        onNoticeChanged();
+      }
       setFailure(failureOf(error));
     }
   }
@@ -301,6 +327,22 @@ function RegistrationForm({
                   autoComplete="off"
                 />
               </div>
+            )}
+
+            {form.termo && (
+              <section aria-labelledby="termo-titulo" className="flex flex-col gap-2">
+                <h2 id="termo-titulo" className="text-sm font-medium">
+                  Compromissos da turma
+                </h2>
+                <p className="rounded-md border border-input p-3 text-sm whitespace-pre-line">
+                  {form.termo.texto}
+                </p>
+                <Consent
+                  name="aceiteTermo"
+                  label="Li os compromissos acima e concordo com todos"
+                  control={control}
+                />
+              </section>
             )}
 
             <section
