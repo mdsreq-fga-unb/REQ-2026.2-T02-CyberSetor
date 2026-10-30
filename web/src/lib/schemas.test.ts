@@ -1,4 +1,4 @@
-import { decimalSchema, moneySchema } from './schemas';
+import { decimalSchema, moneySchema, timeSchema } from './schemas';
 
 describe('regras dos campos', () => {
   it.each([
@@ -26,5 +26,12 @@ describe('regras dos campos', () => {
     expect(schema.safeParse('0').success).toBe(false);
     expect(schema.safeParse('12.555').success).toBe(false);
     expect(decimalSchema('Informe o número.').safeParse('0').success).toBe(true);
+  });
+
+  it('hora no formato do seletor nativo', () => {
+    expect(timeSchema().safeParse('09:00').success).toBe(true);
+    expect(timeSchema().safeParse('23:59').success).toBe(true);
+    expect(timeSchema().safeParse('24:00').success).toBe(false);
+    expect(timeSchema().safeParse('9:00').success).toBe(false);
   });
 });

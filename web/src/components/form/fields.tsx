@@ -187,6 +187,21 @@ export function DecimalField<T extends FieldValues, N extends Path<T>, O extends
   return <NumberField {...props} />;
 }
 
+/** Hora no seletor nativo do navegador; guarda HH:MM. */
+export function TimeField<T extends FieldValues, N extends Path<T>, O extends FieldValues = T>({
+  control,
+  name,
+  label,
+  description,
+  ...input
+}: FieldProps<T, N, O>) {
+  return (
+    <FormField control={control} name={name} label={label} description={description}>
+      {(props) => <Input {...input} {...props} value={props.value ?? ''} type="time" />}
+    </FormField>
+  );
+}
+
 /**
  * Data no seletor nativo do navegador, que no celular abre o calendário do sistema e guarda
  * AAAA-MM-DD. Com `notFuture`, o limite é hoje em Brasília.
