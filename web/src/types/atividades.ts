@@ -45,6 +45,10 @@ export interface ActivityInput {
   modalidadeId: string;
   responsavelId: string;
   data: string;
+  horaInicio: string;
+  horaFim: string;
+  /** Nulo: a API usa o intervalo entre início e fim. */
+  cargaHorariaMinutos: number | null;
   local: string;
   metaIds: string[];
 }

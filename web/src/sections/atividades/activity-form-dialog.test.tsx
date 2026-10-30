@@ -196,6 +196,8 @@ describe('ActivityFormDialog', () => {
     expect(screen.getByText('Escolha a modalidade.')).toBeInTheDocument();
     expect(screen.getByText('Informe a data completa.')).toBeInTheDocument();
     expect(screen.getByText('Informe o local.')).toBeInTheDocument();
+    expect(screen.getByText('Informe a hora de início.')).toBeInTheDocument();
+    expect(screen.getByText('Informe a hora de fim.')).toBeInTheDocument();
     expect(screen.getByText('Escolha o responsável.')).toBeInTheDocument();
     expect(screen.getByText('Selecione ao menos uma meta.')).toBeInTheDocument();
   });
@@ -257,6 +259,11 @@ describe('ActivityFormDialog', () => {
     fireEvent.change(screen.getByRole('textbox', { name: 'Local' }), {
       target: { value: 'Sala 2' },
     });
+    fireEvent.change(screen.getByLabelText('Hora de início'), { target: { value: '14:00' } });
+    fireEvent.change(screen.getByLabelText('Hora de fim'), { target: { value: '17:30' } });
+    expect(
+      screen.getByText('Em branco, vale o intervalo: 3 h 30 min. Menos, se houver pausa.'),
+    ).toBeInTheDocument();
     fireEvent.change(screen.getByRole('combobox', { name: 'Responsável pela atividade' }), {
       target: { value: RESPONSIBLE_1.id },
     });
@@ -272,6 +279,9 @@ describe('ActivityFormDialog', () => {
       titulo: 'Oficina Nova',
       modalidadeId: MODALITY_ACTIVE.id,
       data: '2026-05-15',
+      horaInicio: '14:00',
+      horaFim: '17:30',
+      cargaHorariaMinutos: null,
       local: 'Sala 2',
       responsavelId: RESPONSIBLE_1.id,
       metaIds: [GOAL_1.id, GOAL_2.id],
@@ -300,6 +310,9 @@ describe('ActivityFormDialog', () => {
       MODALITY_ACTIVE.id,
     );
     expect(screen.getByLabelText('Data de realização')).toHaveValue(ACTIVITY.data);
+    expect(screen.getByLabelText('Hora de início')).toHaveValue('09:00');
+    expect(screen.getByLabelText('Hora de fim')).toHaveValue('17:00');
+    expect(screen.getByRole('textbox', { name: 'Carga horária (horas)' })).toHaveValue('7');
     expect(screen.getByRole('textbox', { name: 'Local' })).toHaveValue(ACTIVITY.local);
     expect(screen.getByRole('combobox', { name: 'Responsável pela atividade' })).toHaveValue(
       RESPONSIBLE_1.id,
@@ -318,6 +331,62 @@ describe('ActivityFormDialog', () => {
       titulo: 'Oficina Atualizada',
       versao: 1,
     });
+  });
+
+  it('recusa fim antes do inicio e carga horaria maior que o intervalo', async () => {
+    await signedInAs('PRESIDENCIA_GESTAO', baseRoutes());
+    renderDialog({ activity: ACTIVITY });
+    await screen.findByText('Oficina Formativa');
+
+    fireEvent.change(screen.getByLabelText('Hora de fim'), { target: { value: '08:00' } });
+    fireEvent.click(screen.getByRole('button', { name: 'Salvar atividade' }));
+    expect(
+      await screen.findByText('A hora de fim deve ser depois da hora de início.'),
+    ).toBeInTheDocument();
+
+    fireEvent.change(screen.getByLabelText('Hora de fim'), { target: { value: '12:00' } });
+    fireEvent.click(screen.getByRole('button', { name: 'Salvar atividade' }));
+    expect(
+      await screen.findByText('A carga horária não pode passar do intervalo entre início e fim.'),
+    ).toBeInTheDocument();
+  });
+
+  it('carga igual ao intervalo fica em branco e atividade sem horario exige inicio e fim', async () => {
+    const calls = await signedInAs(
+      'PRESIDENCIA_GESTAO',
+      baseRoutes({
+        [`PATCH /activities/${ACTIVITY.id}`]: (body) => ({
+          status: 200,
+          body: { ...ACTIVITY, ...(body as object), versao: 2 },
+        }),
+      }),
+    );
+    const semHorario: Activity = {
+      ...ACTIVITY,
+      horaInicio: null,
+      horaFim: null,
+      cargaHorariaMinutos: null,
+    };
+    renderDialog({ activity: semHorario });
+    await screen.findByText('Oficina Formativa');
+
+    fireEvent.click(screen.getByRole('button', { name: 'Salvar atividade' }));
+    expect(await screen.findByText('Informe a hora de início.')).toBeInTheDocument();
+
+    fireEvent.change(screen.getByLabelText('Hora de início'), { target: { value: '19:00' } });
+    fireEvent.change(screen.getByLabelText('Hora de fim'), { target: { value: '21:00' } });
+    fireEvent.change(screen.getByRole('textbox', { name: 'Carga horária (horas)' }), {
+      target: { value: '1,5' },
+    });
+    fireEvent.click(screen.getByRole('button', { name: 'Salvar atividade' }));
+
+    await waitFor(() =>
+      expect(calls.find((c) => c.key === `PATCH /activities/${ACTIVITY.id}`)?.body).toMatchObject({
+        horaInicio: '19:00',
+        horaFim: '21:00',
+        cargaHorariaMinutos: 90,
+      }),
+    );
   });
 
   it('exibe modalidade inativa no select de edicao com indicacao', async () => {
