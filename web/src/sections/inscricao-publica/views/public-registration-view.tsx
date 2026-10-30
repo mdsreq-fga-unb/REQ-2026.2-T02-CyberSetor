@@ -370,8 +370,8 @@ function RegistrationForm({
                 name="autorizaImagem"
                 label={
                   minor
-                    ? 'O responsável legal autoriza o uso da imagem do participante em materiais do Instituto'
-                    : 'Autorizo o uso da minha imagem em materiais do Instituto'
+                    ? 'O responsável legal autoriza o uso da imagem e da voz do participante em materiais do Instituto'
+                    : 'Autorizo o uso da minha imagem e da minha voz em materiais do Instituto'
                 }
                 control={control}
               />

@@ -88,7 +88,9 @@ describe('formulario publico de inscricao', () => {
     expect(screen.getByText('O Instituto usa os dados para a inscrição.')).toBeInTheDocument();
     expect(screen.getByLabelText('Quero receber comunicados do Instituto')).not.toBeChecked();
     expect(
-      screen.getByLabelText('Autorizo o uso da minha imagem em materiais do Instituto'),
+      screen.getByLabelText(
+        'Autorizo o uso da minha imagem e da minha voz em materiais do Instituto',
+      ),
     ).not.toBeChecked();
     expect(screen.queryByLabelText('Nome do responsável')).not.toBeInTheDocument();
   });
@@ -236,7 +238,7 @@ describe('formulario publico de inscricao', () => {
     expect(await screen.findByLabelText('Nome do responsável')).toBeInTheDocument();
     expect(
       screen.getByLabelText(
-        'O responsável legal autoriza o uso da imagem do participante em materiais do Instituto',
+        'O responsável legal autoriza o uso da imagem e da voz do participante em materiais do Instituto',
       ),
     ).not.toBeChecked();
     fireEvent.click(screen.getByRole('button', { name: 'Confirmar inscrição' }));

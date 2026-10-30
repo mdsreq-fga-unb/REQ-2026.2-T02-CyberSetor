@@ -102,7 +102,7 @@ export function ParticipantDialog({
                     </div>
                     <div className="flex flex-wrap gap-2">
                       <Authorization label="Comunicados" given={inscricao.autorizaComunicados} />
-                      <Authorization label="Uso de imagem" given={inscricao.autorizaImagem} />
+                      <Authorization label="Imagem e voz" given={inscricao.autorizaImagem} />
                     </div>
                     {inscricao.termoAceitoEm && (
                       <p className="text-sm text-muted-foreground">

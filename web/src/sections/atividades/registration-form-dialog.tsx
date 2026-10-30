@@ -352,7 +352,7 @@ export function RegistrationFormDialog({
                   <li className="flex items-center gap-2">
                     <input type="checkbox" checked disabled className="size-4" />
                     <span>
-                      Aviso sobre o uso dos dados e as autorizações de comunicados e de imagem
+                      Aviso sobre o uso dos dados e as autorizações de comunicados e de imagem e voz
                     </span>
                   </li>
                 </ul>

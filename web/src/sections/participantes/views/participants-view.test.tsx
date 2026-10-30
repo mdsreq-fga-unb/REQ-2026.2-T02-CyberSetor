@@ -151,7 +151,7 @@ describe('participantes', () => {
     expect(ficha.getByText(/Compromissos da turma aceitos em/)).toBeInTheDocument();
     expect(ficha.getByRole('link', { name: 'Oficina de dança' })).toBeInTheDocument();
     expect(ficha.getByText('Comunicados: sim')).toBeInTheDocument();
-    expect(ficha.getByText('Uso de imagem: não')).toBeInTheDocument();
+    expect(ficha.getByText('Imagem e voz: não')).toBeInTheDocument();
   });
 
   it('corrige so o que mudou, com a justificativa, e avisa', async () => {
