@@ -348,6 +348,35 @@ describe('Configuração da inscrição da atividade (e2e)', () => {
     expect((depois.body as { code: string }).code).toBe('DEADLINE_INVALID');
   });
 
+  it('reabrir com o prazo vencido pede prazo novo; com ele, reabre', async () => {
+    await prisma.atividade.update({
+      where: { id: atividadeId },
+      data: { data: new Date(`${day(10)}T00:00:00.000Z`) },
+    });
+    await opened();
+    await prisma.configuracaoInscricao.update({
+      where: { atividadeId },
+      data: { aberta: false, prazoInscricao: new Date(`${day(-2)}T00:00:00.000Z`) },
+    });
+
+    const semPrazo = await as(Perfil.NUCLEO_PEDAGOGICO)
+      .patch(path(), { versao: 1, aberta: true })
+      .expect(422);
+    expect((semPrazo.body as { code: string }).code).toBe('DEADLINE_PASSED');
+    await as(Perfil.NUCLEO_PEDAGOGICO)
+      .patch(path(), { versao: 1, aberta: true, prazoInscricao: null })
+      .expect(422);
+
+    const reaberta = await as(Perfil.NUCLEO_PEDAGOGICO)
+      .patch(path(), { versao: 1, aberta: true, prazoInscricao: day(5) })
+      .expect(200);
+    expect(reaberta.body as RegistrationBody).toMatchObject({
+      versao: 2,
+      aberta: true,
+      prazoInscricao: day(5),
+    });
+  });
+
   it('nao deixa tirar do formulario o campo que identifica cadastro repetido', async () => {
     await opened();
 

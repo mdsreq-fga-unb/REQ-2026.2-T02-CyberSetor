@@ -3,13 +3,14 @@ import {
   ConflictException,
   Injectable,
   NotFoundException,
+  UnprocessableEntityException,
 } from '@nestjs/common';
 import { randomBytes } from 'node:crypto';
 import type { Actor } from '../accounts/accounts.service.js';
 import { AuditTrailService } from '../audit/audit-trail.service.js';
 import { Prisma } from '../generated/prisma/client.js';
 import { AutorTipo } from '../generated/prisma/enums.js';
-import { deadlineOf, nowInBrasilia } from './deadline.js';
+import { deadlineOf, nowInBrasilia, withinDeadline } from './deadline.js';
 import { PrismaService } from '../prisma/prisma.service.js';
 import {
   CAMPOS_MINIMOS,
@@ -213,7 +214,19 @@ export class RegistrationsService {
           changes.contatoWhatsapp === undefined ? before.contatoWhatsapp : changes.contatoWhatsapp,
       };
       assertKeyAsked(next.camposAdicionais, next.campoDuplicidade);
-      if (next.prazoInscricao !== before.prazoInscricao || next.prazoHora !== before.prazoHora) {
+      const prazoMudou =
+        next.prazoInscricao !== before.prazoInscricao || next.prazoHora !== before.prazoHora;
+      if (
+        changes.aberta === true &&
+        !withinDeadline(before.prazoInscricao, before.prazoHora) &&
+        (!prazoMudou || next.prazoInscricao === null)
+      ) {
+        throw new UnprocessableEntityException({
+          code: 'DEADLINE_PASSED',
+          message: 'O prazo de inscrição já terminou. Informe um prazo novo para reabrir.',
+        });
+      }
+      if (prazoMudou) {
         assertDeadline(next.prazoInscricao, next.prazoHora, atividade.data);
       }
       const changed = FIELDS.filter((field) => !same(field, before, next));
