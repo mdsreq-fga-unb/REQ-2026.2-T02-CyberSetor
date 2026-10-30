@@ -9,6 +9,7 @@ const FORM: PublicForm = {
   atividade: { titulo: 'Oficina de serigrafia', data: '2026-11-10', local: 'Setor Comercial Sul' },
   aberta: true,
   vagasEsgotadas: false,
+  listaEspera: true,
   camposMinimos: ['NOME', 'TELEFONE', 'DATA_NASCIMENTO', 'CONSENTIMENTOS'],
   camposAdicionais: ['CPF'],
   aviso: { versao: '2026-10-28-provisoria', texto: 'O Instituto usa os dados para a inscrição.' },
@@ -307,6 +308,39 @@ describe('formulario publico de inscricao', () => {
       await screen.findByRole('heading', { name: 'Você está na lista de espera' }),
     ).toBeInTheDocument();
     expect(screen.getByText(/Sua posição: 3º lugar\./)).toBeInTheDocument();
+  });
+
+  it('sem lista de espera e com as vagas esgotadas, mostra o aviso sem o formulario', async () => {
+    stubApi({
+      [GET]: () => ({
+        status: 200,
+        body: { ...FORM, vagasEsgotadas: true, listaEspera: false },
+      }),
+    });
+    renderView();
+
+    expect(await screen.findByRole('heading', { name: 'Vagas esgotadas' })).toBeInTheDocument();
+    expect(screen.queryByRole('button', { name: 'Confirmar inscrição' })).not.toBeInTheDocument();
+  });
+
+  it('vagas esgotadas durante o preenchimento trocam para o aviso de vagas esgotadas', async () => {
+    stubApi({
+      [GET]: () => ({ status: 200, body: { ...FORM, listaEspera: false } }),
+      [POST]: () => ({
+        status: 409,
+        body: {
+          code: 'REGISTRATION_FULL',
+          message: 'As vagas desta atividade já foram preenchidas.',
+        },
+      }),
+    });
+    renderView();
+
+    await screen.findByLabelText('CPF');
+    fillAdult();
+    fireEvent.click(screen.getByRole('button', { name: 'Confirmar inscrição' }));
+
+    expect(await screen.findByRole('heading', { name: 'Vagas esgotadas' })).toBeInTheDocument();
   });
 
   it('menor de 18 anos ve e precisa preencher o responsavel legal antes de enviar', async () => {

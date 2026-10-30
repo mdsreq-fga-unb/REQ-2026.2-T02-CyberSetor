@@ -18,6 +18,10 @@ export interface Registration {
   camposMinimos: CampoMinimo[];
   camposAdicionais: CampoInscricao[];
   campoDuplicidade: CampoDuplicidade;
+  /** Com as vagas preenchidas, novas inscrições entram na lista de espera. */
+  listaEspera: boolean;
+  /** Com mais vagas, a espera é confirmada pela ordem de chegada. */
+  promocaoAutomatica: boolean;
   termoCompromisso: string | null;
   /** Apresentação da atividade na página de inscrição. */
   apresentacao: string | null;
@@ -35,6 +39,8 @@ export interface OpenRegistrationInput {
   vagas: number;
   camposAdicionais: CampoInscricao[];
   campoDuplicidade: CampoDuplicidade;
+  listaEspera?: boolean;
+  promocaoAutomatica?: boolean;
   termoCompromisso?: string;
   apresentacao?: string;
   prazoInscricao?: string;
@@ -48,6 +54,8 @@ export interface UpdateRegistrationInput {
   vagas?: number;
   camposAdicionais?: CampoInscricao[];
   campoDuplicidade?: CampoDuplicidade;
+  listaEspera?: boolean;
+  promocaoAutomatica?: boolean;
   termoCompromisso?: string | null;
   apresentacao?: string | null;
   prazoInscricao?: string | null;

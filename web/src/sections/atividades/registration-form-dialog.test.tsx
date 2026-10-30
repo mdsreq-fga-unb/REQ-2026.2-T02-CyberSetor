@@ -38,6 +38,8 @@ const REGISTRATION_MOCK: Registration = {
   camposMinimos: ['NOME', 'TELEFONE', 'DATA_NASCIMENTO', 'CONSENTIMENTOS'],
   camposAdicionais: ['CPF', 'EMAIL'],
   campoDuplicidade: 'CPF',
+  listaEspera: true,
+  promocaoAutomatica: true,
   termoCompromisso: null,
   apresentacao: null,
   prazoInscricao: null,
@@ -366,6 +368,59 @@ describe('RegistrationFormDialog', () => {
       versao: 1,
       vagas: 45,
     });
+  });
+
+  it('lista de espera e promocao vem ligadas; sem lista, a promocao fica desligada e vai como esta', async () => {
+    const calls = await signedInAs('NUCLEO_PEDAGOGICO', {
+      [`GET /activities/${ACTIVITY.id}/registration`]: () => ({
+        status: 404,
+        body: { code: 'REGISTRATION_NOT_OPENED', message: 'Inscrição não aberta' },
+      }),
+      [`POST /activities/${ACTIVITY.id}/registration`]: (body) => ({
+        status: 201,
+        body: { ...REGISTRATION_MOCK, ...(body as object) },
+      }),
+    });
+    const onSaved = vi.fn();
+    renderDialog({ onSaved });
+
+    const lista = await screen.findByRole('checkbox', { name: /Abrir lista de espera/ });
+    const promocao = screen.getByRole('checkbox', { name: /Confirmar a espera sozinha/ });
+    expect(lista).toBeChecked();
+    expect(promocao).toBeChecked();
+    fireEvent.click(lista);
+    expect(promocao).toBeDisabled();
+    expect(screen.getByText(/não aceita novas inscrições/)).toBeInTheDocument();
+    fireEvent.click(screen.getByRole('button', { name: 'Abrir inscrição' }));
+
+    await waitFor(() => expect(onSaved).toHaveBeenCalledTimes(1));
+    const postCall = calls.find((c) => c.key === `POST /activities/${ACTIVITY.id}/registration`);
+    expect(postCall?.body).toMatchObject({ listaEspera: false, promocaoAutomatica: true });
+  });
+
+  it('na edicao, desligar a promocao automatica vai no PATCH', async () => {
+    const calls = await signedInAs('NUCLEO_PEDAGOGICO', {
+      [`GET /activities/${ACTIVITY.id}/registration`]: () => ({
+        status: 200,
+        body: REGISTRATION_MOCK,
+      }),
+      [`PATCH /activities/${ACTIVITY.id}/registration`]: (body) => ({
+        status: 200,
+        body: { ...REGISTRATION_MOCK, ...(body as object), versao: 2 },
+      }),
+    });
+    const onSaved = vi.fn();
+    renderDialog({ onSaved });
+
+    fireEvent.click(await screen.findByRole('checkbox', { name: /Confirmar a espera sozinha/ }));
+    expect(
+      screen.getByText('O Núcleo escolhe quem confirmar, na lista de inscritos.'),
+    ).toBeInTheDocument();
+    fireEvent.click(screen.getByRole('button', { name: 'Salvar alterações' }));
+
+    await waitFor(() => expect(onSaved).toHaveBeenCalledTimes(1));
+    const patchCall = calls.find((c) => c.key === `PATCH /activities/${ACTIVITY.id}/registration`);
+    expect(patchCall?.body).toMatchObject({ listaEspera: true, promocaoAutomatica: false });
   });
 
   it('recusa vagas menor que 1 ou vazio sem chamar a API', async () => {

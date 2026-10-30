@@ -300,12 +300,14 @@ function RegistrationForm({
   codigo,
   onSubmitted,
   onClosed,
+  onFull,
   onNoticeChanged,
 }: {
   form: PublicForm;
   codigo: string;
   onSubmitted: (result: SubmittedRegistration) => void;
   onClosed: () => void;
+  onFull: () => void;
   onNoticeChanged: () => void;
 }) {
   const submit = useSubmitRegistration(codigo);
@@ -325,6 +327,7 @@ function RegistrationForm({
       onSubmitted(await submit.mutateAsync(submissionOf(values, form)));
     } catch (error) {
       if (error instanceof ApiError && error.code === 'REGISTRATION_CLOSED') return onClosed();
+      if (error instanceof ApiError && error.code === 'REGISTRATION_FULL') return onFull();
       if (
         error instanceof ApiError &&
         (error.code === 'NOTICE_OUTDATED' || error.code === 'TERM_OUTDATED')
@@ -479,6 +482,7 @@ export function PublicRegistrationView({ codigo }: { codigo: string }) {
   const form = usePublicForm(codigo);
   const [submitted, setSubmitted] = useState<SubmittedRegistration | null>(null);
   const [closed, setClosed] = useState(false);
+  const [full, setFull] = useState(false);
 
   if (submitted) {
     const waiting = submitted.posicaoEspera !== null;
@@ -544,6 +548,17 @@ export function PublicRegistrationView({ codigo }: { codigo: string }) {
     );
   }
 
+  if (full || (form.data.aberta && form.data.vagasEsgotadas && !form.data.listaEspera)) {
+    return (
+      <Message
+        title="Vagas esgotadas"
+        text="As vagas desta atividade já foram preenchidas. Fale com a equipe do Instituto para saber de novas turmas."
+        activity={form.data.atividade}
+        contact={form.data.contatoWhatsapp}
+      />
+    );
+  }
+
   if (closed || !form.data.aberta) {
     const { prazoInscricao, prazoHora } = form.data;
     return (
@@ -566,6 +581,7 @@ export function PublicRegistrationView({ codigo }: { codigo: string }) {
       codigo={codigo}
       onSubmitted={setSubmitted}
       onClosed={() => setClosed(true)}
+      onFull={() => setFull(true)}
       onNoticeChanged={() => void form.refetch()}
     />
   );

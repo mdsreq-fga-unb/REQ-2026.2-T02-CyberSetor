@@ -38,6 +38,8 @@ const REGISTRATION_OPEN: Registration = {
   camposMinimos: ['NOME', 'TELEFONE', 'DATA_NASCIMENTO', 'CONSENTIMENTOS'],
   camposAdicionais: ['CPF', 'EMAIL'],
   campoDuplicidade: 'CPF',
+  listaEspera: true,
+  promocaoAutomatica: true,
   termoCompromisso: null,
   apresentacao: null,
   prazoInscricao: null,

@@ -11,6 +11,8 @@ export interface PublicForm {
   aberta: boolean;
   /** Vagas preenchidas: a próxima inscrição entra na lista de espera. */
   vagasEsgotadas: boolean;
+  /** Com as vagas esgotadas: true entra na lista de espera; false não aceita o envio. */
+  listaEspera: boolean;
   camposMinimos: string[];
   camposAdicionais: CampoInscricao[];
   aviso: { versao: string; texto: string };
