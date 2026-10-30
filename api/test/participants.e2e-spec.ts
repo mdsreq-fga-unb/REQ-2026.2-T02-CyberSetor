@@ -26,6 +26,7 @@ interface ErrorBody {
 interface Summary {
   id: string;
   nome: string;
+  nomePreferencia: string | null;
   idade: number;
   inscricoes: number;
   ultimaAtividade: { titulo: string } | null;
@@ -35,6 +36,7 @@ interface Participant {
   id: string;
   versao: number;
   nome: string;
+  nomePreferencia: string | null;
   telefone: string;
   cpf: string | null;
   email: string | null;
@@ -231,6 +233,13 @@ describe('Participantes: busca, ficha e correção a pedido do titular (e2e)', (
     expect(await busca('(61) 97777')).toEqual(['Bruno Lima']);
     expect(await busca('ANA@exemplo')).toEqual(['Ana Souza']);
     expect(await busca('ninguem')).toEqual([]);
+
+    await prisma.participante.update({
+      where: { id: bruno },
+      data: { nomePreferencia: 'Bruninho' },
+    });
+    expect(await busca('bruninho')).toEqual(['Bruno Lima']);
+    expect(todos[0].nomePreferencia).toBeNull();
   });
 
   it('ficha com as inscricoes, as autorizacoes e o responsavel', async () => {
@@ -273,6 +282,14 @@ describe('Participantes: busca, ficha e correção a pedido do titular (e2e)', (
     for (const valor of ['Lima', '61988887777', CPF_NOVO, CPF_ANA]) {
       expect(registro).not.toContain(valor);
     }
+  });
+
+  it('corrige e apaga o nome de preferencia a pedido do titular', async () => {
+    const res = await corrige(ana, { nomePreferencia: 'Aninha' }).expect(200);
+    expect(res.body as Participant).toMatchObject({ versao: 2, nomePreferencia: 'Aninha' });
+
+    const apagado = await corrige(ana, { versao: 2, nomePreferencia: null }).expect(200);
+    expect(apagado.body as Participant).toMatchObject({ versao: 3, nomePreferencia: null });
   });
 
   it('sem justificativa a correcao e recusada no campo da justificativa', async () => {

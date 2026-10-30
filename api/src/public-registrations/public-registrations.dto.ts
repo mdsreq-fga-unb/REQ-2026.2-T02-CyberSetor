@@ -30,6 +30,14 @@ export class SubmitRegistrationDto {
   @MaxLength(150)
   nome!: string;
 
+  @ApiPropertyOptional({ example: 'Aninha', description: 'Como a pessoa prefere ser chamada' })
+  @ValidateIf(sent)
+  @Transform(trimString)
+  @IsString()
+  @IsNotEmpty()
+  @MaxLength(80)
+  nomePreferencia?: string;
+
   @ApiProperty({ example: '61999998888', description: 'DDD e número; pontuação é ignorada' })
   @Transform(toPhoneDigits)
   @IsString()

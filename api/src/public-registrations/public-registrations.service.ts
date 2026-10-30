@@ -115,6 +115,7 @@ export class PublicRegistrationsService {
         const participante = await tx.participante.create({
           data: {
             nome: data.nome,
+            nomePreferencia: data.nomePreferencia ?? null,
             telefone: data.telefone,
             dataNascimento: new Date(`${data.dataNascimento}T00:00:00.000Z`),
             email: data.email ?? null,

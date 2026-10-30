@@ -28,6 +28,7 @@ const MIN_PHONE_SEARCH = 3;
 
 const FIELDS = [
   'nome',
+  'nomePreferencia',
   'telefone',
   'dataNascimento',
   'email',
@@ -73,6 +74,7 @@ function isoDate(date: Date): string {
 function valuesOf(row: ParticipantRow): Values {
   return {
     nome: row.nome,
+    nomePreferencia: row.nomePreferencia,
     telefone: row.telefone,
     dataNascimento: isoDate(row.dataNascimento),
     email: row.email,
@@ -88,6 +90,7 @@ function toResponse(row: ParticipantRow, today: string): ParticipantResponse {
     id: row.id,
     versao: row.versao,
     nome: row.nome,
+    nomePreferencia: row.nomePreferencia,
     telefone: row.telefone,
     dataNascimento: values.dataNascimento!,
     idade: ageOn(values.dataNascimento!, today),
@@ -139,6 +142,7 @@ export class ParticipantsService {
       ? {
           OR: [
             { nome: { contains: literal, mode: 'insensitive' } },
+            { nomePreferencia: { contains: literal, mode: 'insensitive' } },
             { email: { contains: literal.toLowerCase() } },
             ...(digits.length >= MIN_PHONE_SEARCH ? [{ telefone: { contains: digits } }] : []),
           ],
@@ -165,6 +169,7 @@ export class ParticipantsService {
         id: row.id,
         versao: row.versao,
         nome: row.nome,
+        nomePreferencia: row.nomePreferencia,
         idade: ageOn(isoDate(row.dataNascimento), today),
         telefone: row.telefone,
         email: row.email,

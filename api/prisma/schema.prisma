@@ -276,17 +276,19 @@ model ConfiguracaoInscricao {
 /// para que dados de participantes não se misturem com os de quem opera o sistema (LGPD).
 /// Guarda só os campos mínimos (seção 8.5.4) e os da lista fechada da configuração (RNF05).
 model Participante {
-  id             String   @id @default(uuid()) @db.Uuid
-  versao         Int      @default(1)
-  nome           String
-  telefone       String
-  dataNascimento DateTime @map("data_nascimento") @db.Date
-  email          String?
-  cpf            String?  @db.VarChar(11)
-  bairroRegiao   String?  @map("bairro_regiao")
-  escolaridade   String?
-  criadoEm       DateTime @default(now()) @map("criado_em") @db.Timestamptz(3)
-  atualizadoEm   DateTime @updatedAt @map("atualizado_em") @db.Timestamptz(3)
+  id              String   @id @default(uuid()) @db.Uuid
+  versao          Int      @default(1)
+  nome            String
+  /// Como a pessoa prefere ser chamada; opcional (modelo do Instituto).
+  nomePreferencia String?  @map("nome_preferencia")
+  telefone        String
+  dataNascimento  DateTime @map("data_nascimento") @db.Date
+  email           String?
+  cpf             String?  @db.VarChar(11)
+  bairroRegiao    String?  @map("bairro_regiao")
+  escolaridade    String?
+  criadoEm        DateTime @default(now()) @map("criado_em") @db.Timestamptz(3)
+  atualizadoEm    DateTime @updatedAt @map("atualizado_em") @db.Timestamptz(3)
 
   inscricoes Inscricao[]
 

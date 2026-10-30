@@ -193,6 +193,17 @@ describe('Formulário público de inscrição (e2e)', () => {
     expect(trilha.depois).toEqual({ atividadeId, situacao: 'CONFIRMADA' });
   });
 
+  it('guarda o nome de preferencia quando informado; sem ele, fica vazio', async () => {
+    await enviar({ ...ADULTO, nomePreferencia: '  Aninha  ' }).expect(201);
+    await enviar({ ...ADULTO, cpf: '111.444.777-35' }).expect(201);
+
+    const nomes = await prisma.participante.findMany({
+      orderBy: { criadoEm: 'asc' },
+      select: { nomePreferencia: true },
+    });
+    expect(nomes.map((item) => item.nomePreferencia)).toEqual(['Aninha', null]);
+  });
+
   it('menor de 18 anos exige o responsavel legal, e adulto nao guarda responsavel', async () => {
     const menor = { ...ADULTO, dataNascimento: bornYearsAgo(15), cpf: '111.444.777-35' };
     const semResponsavel = await enviar(menor).expect(400);
@@ -244,6 +255,7 @@ describe('Formulário público de inscrição (e2e)', () => {
     ['nascimento no futuro', { ...ADULTO, dataNascimento: '2999-01-01' }, 'INVALID_BIRTH_DATE'],
     ['campo pedido nulo', { ...ADULTO, cpf: null }, 'VALIDATION_ERROR'],
     ['autorizacao em texto', { ...ADULTO, autorizaImagem: 'false' }, 'VALIDATION_ERROR'],
+    ['nome de preferencia em branco', { ...ADULTO, nomePreferencia: '  ' }, 'VALIDATION_ERROR'],
   ])('recusa %s com 400', async (_caso, body, code) => {
     const res = await enviar(body).expect(400);
     expect((res.body as ErrorBody).code).toBe(code);

@@ -25,7 +25,9 @@ const sent = (_obj: object, value: unknown): boolean => value !== undefined;
 const filled = (_obj: object, value: unknown): boolean => value !== undefined && value !== null;
 
 export class ListParticipantsQuery {
-  @ApiPropertyOptional({ description: 'Parte do nome, do telefone ou do e-mail' })
+  @ApiPropertyOptional({
+    description: 'Parte do nome, do nome de preferência, do telefone ou do e-mail',
+  })
   @IsOptional()
   @Transform(trimString)
   @IsString()
@@ -53,6 +55,14 @@ export class CorrectParticipantDto {
   @MinLength(2)
   @MaxLength(150)
   nome?: string;
+
+  @ApiPropertyOptional({ nullable: true })
+  @ValidateIf(filled)
+  @Transform(trimString)
+  @IsString()
+  @IsNotEmpty()
+  @MaxLength(80)
+  nomePreferencia?: string | null;
 
   @ApiPropertyOptional({ description: 'DDD e número; pontuação e +55 são ignorados' })
   @ValidateIf(sent)
@@ -117,6 +127,9 @@ export class ParticipantSummaryResponse {
   @ApiProperty()
   nome!: string;
 
+  @ApiProperty({ nullable: true })
+  nomePreferencia!: string | null;
+
   @ApiProperty({ description: 'Idade completa hoje, em Brasília' })
   idade!: number;
 
@@ -178,6 +191,9 @@ export class ParticipantResponse {
 
   @ApiProperty()
   nome!: string;
+
+  @ApiProperty({ nullable: true })
+  nomePreferencia!: string | null;
 
   @ApiProperty()
   telefone!: string;
