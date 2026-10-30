@@ -23,6 +23,19 @@ interface Submitted {
   posicaoEspera: number | null;
 }
 
+interface ListBody {
+  vagas: number;
+  confirmadas: number;
+  emEspera: number;
+  inscricoes: {
+    nome: string;
+    situacao: string;
+    posicaoEspera: number | null;
+    menor: boolean;
+    responsavelNome: string | null;
+  }[];
+}
+
 const pessoa = (n: number) => ({
   nome: `Pessoa ${n}`,
   telefone: `619999900${String(n).padStart(2, '0')}`,
@@ -39,6 +52,7 @@ describe('Vagas, lista de espera e inscritos da atividade (e2e)', () => {
   const tokens = {} as Record<Perfil, string>;
   const ids = {} as Record<Perfil, string>;
   let atividadeId: string;
+  let outraAtividadeId: string;
   let projetoId: string;
 
   beforeAll(async () => {
@@ -106,6 +120,7 @@ describe('Vagas, lista de espera e inscritos da atividade (e2e)', () => {
         },
       });
     atividadeId = (await nova('Oficina de serigrafia')).id;
+    outraAtividadeId = (await nova('Oficina de fotografia')).id;
     await prisma.configuracaoInscricao.create({
       data: {
         atividadeId,
@@ -123,6 +138,38 @@ describe('Vagas, lista de espera e inscritos da atividade (e2e)', () => {
 
   const server = () => request(app.getHttpServer());
   const enviar = (n: number) => server().post(`/v1/public/registrations/${CODIGO}`).send(pessoa(n));
+  const as = (perfil: Perfil) => ({
+    get: (url: string) => server().get(url).set('Authorization', `Bearer ${tokens[perfil]}`),
+    patch: (url: string, body: object) =>
+      server().patch(url).set('Authorization', `Bearer ${tokens[perfil]}`).send(body),
+  });
+  const listPath = () => `/v1/activities/${atividadeId}/registrations`;
+
+  /** Inscrição gravada direto no banco, na ordem das chamadas (economiza o limite por IP). */
+  async function inscrever(n: number, situacao: SituacaoInscricao, menor = false) {
+    const participante = await prisma.participante.create({
+      data: {
+        nome: `Pessoa ${n}`,
+        telefone: `619999900${String(n).padStart(2, '0')}`,
+        dataNascimento: new Date(menor ? '2015-01-10T00:00:00.000Z' : '1990-05-20T00:00:00.000Z'),
+        email: `pessoa${n}@exemplo.com`,
+      },
+    });
+    await prisma.inscricao.create({
+      data: {
+        atividadeId,
+        participanteId: participante.id,
+        situacao,
+        chaveDuplicidade: `pessoa${n}@exemplo.com`,
+        versaoAviso: DATA_NOTICE.versao,
+        avisoApresentadoEm: new Date(),
+        autorizaComunicados: false,
+        autorizaImagem: false,
+        responsavelNome: menor ? 'Responsável Legal' : null,
+        responsavelTelefone: menor ? '61988887777' : null,
+      },
+    });
+  }
 
   it('confirma enquanto ha vaga e, esgotadas, coloca na espera em ordem de chegada (CA-07c.1, CA-07c.2)', async () => {
     const respostas: Submitted[] = [];
@@ -167,5 +214,54 @@ describe('Vagas, lista de espera e inscritos da atividade (e2e)', () => {
     expect(
       await prisma.inscricao.count({ where: { situacao: SituacaoInscricao.CONFIRMADA } }),
     ).toBe(1);
+  });
+
+  it('lista os inscritos ao Nucleo, com busca, menor e responsavel; os demais veem so os totais', async () => {
+    await inscrever(1, SituacaoInscricao.CONFIRMADA);
+    await inscrever(2, SituacaoInscricao.CONFIRMADA, true);
+    await inscrever(3, SituacaoInscricao.LISTA_ESPERA);
+
+    const lista = (await as(Perfil.NUCLEO_PEDAGOGICO).get(listPath()).expect(200)).body as ListBody;
+    expect(lista).toMatchObject({ vagas: 2, confirmadas: 2, emEspera: 1 });
+    expect(lista.inscricoes[1]).toMatchObject({
+      nome: 'Pessoa 2',
+      menor: true,
+      responsavelNome: 'Responsável Legal',
+    });
+    const busca = (
+      await as(Perfil.NUCLEO_PEDAGOGICO).get(`${listPath()}?busca=pessoa%203`).expect(200)
+    ).body as ListBody;
+    expect(busca.inscricoes.map((i) => i.nome)).toEqual(['Pessoa 3']);
+    expect(busca.emEspera).toBe(1);
+
+    for (const perfil of [
+      Perfil.PRESIDENCIA_GESTAO,
+      Perfil.ADMINISTRATIVO_FINANCEIRO,
+      Perfil.CONCEDENTE_AUDITORIA,
+      Perfil.ADMINISTRACAO_SISTEMA,
+    ]) {
+      await as(perfil).get(listPath()).expect(403);
+    }
+    const atividades = (
+      await as(Perfil.ADMINISTRATIVO_FINANCEIRO)
+        .get(`/v1/projects/${projetoId}/activities`)
+        .expect(200)
+    ).body as { id: string; inscricao: object | null }[];
+    expect(atividades.find((a) => a.id === atividadeId)?.inscricao).toEqual({
+      aberta: true,
+      vagas: 2,
+      inscritos: 2,
+      emEspera: 1,
+    });
+  });
+
+  it('responde 404 para atividade sem inscricao aberta ou inexistente', async () => {
+    const semInscricao = await as(Perfil.NUCLEO_PEDAGOGICO)
+      .get(`/v1/activities/${outraAtividadeId}/registrations`)
+      .expect(404);
+    expect((semInscricao.body as { code: string }).code).toBe('REGISTRATION_NOT_OPENED');
+    await as(Perfil.NUCLEO_PEDAGOGICO)
+      .get('/v1/activities/00000000-0000-4000-8000-000000000000/registrations')
+      .expect(404);
   });
 });
