@@ -269,6 +269,8 @@ model ConfiguracaoInscricao {
   apresentacao     String?
   /// Último dia para se inscrever; o formulário encerra ao fim desse dia, no horário de Brasília.
   prazoInscricao   DateTime?        @map("prazo_inscricao") @db.Date
+  /// Hora opcional do prazo, para encerramento decisivo; sem ela, vale o fim do dia.
+  prazoHora        DateTime?        @map("prazo_hora") @db.Time(0)
   /// WhatsApp do Instituto para dúvidas, só dígitos com DDD; nunca o número pessoal de quem coordena.
   contatoWhatsapp  String?          @map("contato_whatsapp") @db.VarChar(11)
   codigoPublico    String           @unique @map("codigo_publico")

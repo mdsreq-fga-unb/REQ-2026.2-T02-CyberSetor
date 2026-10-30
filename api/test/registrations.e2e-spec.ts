@@ -24,6 +24,7 @@ interface RegistrationBody {
   termoCompromisso: string | null;
   apresentacao: string | null;
   prazoInscricao: string | null;
+  prazoHora: string | null;
   contatoWhatsapp: string | null;
 }
 
@@ -315,6 +316,36 @@ describe('Configuração da inscrição da atividade (e2e)', () => {
       .post(path(), { ...VALID, ...extra })
       .expect(400);
     expect(await prisma.configuracaoInscricao.count()).toBe(0);
+  });
+
+  it('aceita prazo de hoje ate a data da atividade, com hora opcional, e recusa fora disso', async () => {
+    await prisma.atividade.update({
+      where: { id: atividadeId },
+      data: { data: new Date(`${day(10)}T00:00:00.000Z`) },
+    });
+    const recusa = async (extra: object) => {
+      const res = await as(Perfil.NUCLEO_PEDAGOGICO)
+        .post(path(), { ...VALID, ...extra })
+        .expect(400);
+      return (res.body as { code: string; message: string }).code;
+    };
+    expect(await recusa({ prazoInscricao: day(-2) })).toBe('DEADLINE_INVALID');
+    expect(await recusa({ prazoInscricao: day(11) })).toBe('DEADLINE_INVALID');
+    expect(await recusa({ prazoHora: '18:00' })).toBe('DEADLINE_INVALID');
+    expect(await recusa({ prazoInscricao: day(5), prazoHora: '25:00' })).toBe('VALIDATION_ERROR');
+
+    const comHora = await opened({ ...VALID, prazoInscricao: day(10), prazoHora: '18:00' });
+    expect(comHora).toMatchObject({ prazoInscricao: day(10), prazoHora: '18:00' });
+
+    const fimDoDia = await as(Perfil.NUCLEO_PEDAGOGICO)
+      .patch(path(), { versao: 1, prazoHora: null })
+      .expect(200);
+    expect(fimDoDia.body as RegistrationBody).toMatchObject({ versao: 2, prazoHora: null });
+
+    const depois = await as(Perfil.NUCLEO_PEDAGOGICO)
+      .patch(path(), { versao: 2, prazoInscricao: day(12) })
+      .expect(400);
+    expect((depois.body as { code: string }).code).toBe('DEADLINE_INVALID');
   });
 
   it('nao deixa tirar do formulario o campo que identifica cadastro repetido', async () => {

@@ -27,6 +27,7 @@ const MAX_TERMO = 4000;
 const MAX_APRESENTACAO = 2000;
 const ISO_DATE = /^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])$/;
 const PHONE = /^\d{10,11}$/;
+const HOUR = /^([01]\d|2[0-3]):[0-5]\d$/;
 
 // Campo opcional que aceita null para limpar: ausente ou null passa; com valor, é validado.
 const filled = (_obj: object, value: unknown): boolean => value !== undefined && value !== null;
@@ -78,6 +79,14 @@ export class OpenRegistrationDto {
   @ValidateIf(filled)
   @Matches(ISO_DATE, { message: 'prazoInscricao deve ser uma data AAAA-MM-DD' })
   prazoInscricao?: string;
+
+  @ApiPropertyOptional({
+    example: '18:00',
+    description: 'Hora opcional do prazo; sem ela, a inscrição encerra ao fim do dia',
+  })
+  @ValidateIf(filled)
+  @Matches(HOUR, { message: 'prazoHora deve ser uma hora HH:MM' })
+  prazoHora?: string;
 
   @ApiPropertyOptional({ example: '61999998888', description: 'WhatsApp do Instituto com DDD' })
   @ValidateIf(filled)
@@ -138,6 +147,15 @@ export class UpdateRegistrationDto {
   @Matches(ISO_DATE, { message: 'prazoInscricao deve ser uma data AAAA-MM-DD' })
   prazoInscricao?: string | null;
 
+  @ApiPropertyOptional({
+    nullable: true,
+    example: '18:00',
+    description: 'null volta ao fim do dia',
+  })
+  @ValidateIf(filled)
+  @Matches(HOUR, { message: 'prazoHora deve ser uma hora HH:MM' })
+  prazoHora?: string | null;
+
   @ApiPropertyOptional({ nullable: true, example: '61999998888', description: 'null tira' })
   @ValidateIf(filled)
   @Transform(toPhoneDigits)
@@ -179,6 +197,13 @@ export class RegistrationResponse {
     description: 'Último dia para se inscrever',
   })
   prazoInscricao!: string | null;
+
+  @ApiProperty({
+    nullable: true,
+    example: '18:00',
+    description: 'Hora do prazo; null = fim do dia',
+  })
+  prazoHora!: string | null;
 
   @ApiProperty({ nullable: true, example: '61999998888', description: 'WhatsApp do Instituto' })
   contatoWhatsapp!: string | null;

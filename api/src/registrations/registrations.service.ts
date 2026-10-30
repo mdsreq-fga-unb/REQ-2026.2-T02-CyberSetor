@@ -9,6 +9,7 @@ import type { Actor } from '../accounts/accounts.service.js';
 import { AuditTrailService } from '../audit/audit-trail.service.js';
 import { Prisma } from '../generated/prisma/client.js';
 import { AutorTipo } from '../generated/prisma/enums.js';
+import { deadlineOf, nowInBrasilia } from './deadline.js';
 import { PrismaService } from '../prisma/prisma.service.js';
 import {
   CAMPOS_MINIMOS,
@@ -27,6 +28,7 @@ const FIELDS = [
   'termoCompromisso',
   'apresentacao',
   'prazoInscricao',
+  'prazoHora',
   'contatoWhatsapp',
 ] as const;
 type Field = (typeof FIELDS)[number];
@@ -37,6 +39,14 @@ function isoDate(date: Date | null): string | null {
 
 function toDate(isoDay: string | null): Date | null {
   return isoDay ? new Date(`${isoDay}T00:00:00.000Z`) : null;
+}
+
+function hourOf(time: Date | null): string | null {
+  return time ? time.toISOString().slice(11, 16) : null;
+}
+
+function toTime(hour: string | null): Date | null {
+  return hour ? new Date(`1970-01-01T${hour}:00.000Z`) : null;
 }
 
 function toResponse(row: RegistrationRow): RegistrationResponse {
@@ -51,6 +61,7 @@ function toResponse(row: RegistrationRow): RegistrationResponse {
     termoCompromisso: row.termoCompromisso,
     apresentacao: row.apresentacao,
     prazoInscricao: isoDate(row.prazoInscricao),
+    prazoHora: hourOf(row.prazoHora),
     contatoWhatsapp: row.contatoWhatsapp,
     codigoPublico: row.codigoPublico,
     linkPublico: `/inscrever/${row.codigoPublico}`,
@@ -66,6 +77,34 @@ function assertKeyAsked(campos: readonly string[], chave: string): void {
     throw new BadRequestException({
       code: 'DUPLICATE_KEY_NOT_ASKED',
       message: 'O campo que identifica cadastro repetido precisa estar entre os campos pedidos.',
+    });
+  }
+}
+
+/**
+ * O prazo vai de agora (Brasília) até a data da atividade, inclusive; a hora é opcional e só
+ * existe junto da data.
+ */
+function assertDeadline(
+  prazo: string | null,
+  hora: string | null,
+  atividadeData: Date,
+  now: Date = new Date(),
+): void {
+  if (prazo === null) {
+    if (hora !== null) {
+      throw new BadRequestException({
+        code: 'DEADLINE_INVALID',
+        message: 'Informe a data do prazo antes da hora.',
+      });
+    }
+    return;
+  }
+  const dataAtividade = isoDate(atividadeData)!;
+  if (deadlineOf(prazo, hora) < nowInBrasilia(now) || prazo > dataAtividade) {
+    throw new BadRequestException({
+      code: 'DEADLINE_INVALID',
+      message: `O prazo de inscrição precisa ir de agora até a data da atividade, ${dataAtividade.split('-').reverse().join('/')}.`,
     });
   }
 }
@@ -96,7 +135,8 @@ export class RegistrationsService {
   ): Promise<RegistrationResponse> {
     assertKeyAsked(data.camposAdicionais, data.campoDuplicidade);
     return this.prisma.$transaction(async (tx) => {
-      await this.assertEditableActivity(tx, atividadeId);
+      const atividade = await this.assertEditableActivity(tx, atividadeId);
+      assertDeadline(data.prazoInscricao ?? null, data.prazoHora ?? null, atividade.data);
       const existing = await tx.configuracaoInscricao.count({ where: { atividadeId } });
       if (existing > 0) {
         throw new ConflictException({
@@ -113,6 +153,7 @@ export class RegistrationsService {
           termoCompromisso: data.termoCompromisso ?? null,
           apresentacao: data.apresentacao ?? null,
           prazoInscricao: toDate(data.prazoInscricao ?? null),
+          prazoHora: toTime(data.prazoHora ?? null),
           contatoWhatsapp: data.contatoWhatsapp ?? null,
           codigoPublico: randomBytes(12).toString('base64url'),
         },
@@ -140,7 +181,7 @@ export class RegistrationsService {
     actor: Actor,
   ): Promise<RegistrationResponse> {
     return this.prisma.$transaction(async (tx) => {
-      await this.assertEditableActivity(tx, atividadeId);
+      const atividade = await this.assertEditableActivity(tx, atividadeId);
       const current = await tx.configuracaoInscricao.findUnique({ where: { atividadeId } });
       if (!current) {
         throw new NotFoundException({
@@ -167,10 +208,14 @@ export class RegistrationsService {
           changes.apresentacao === undefined ? before.apresentacao : changes.apresentacao,
         prazoInscricao:
           changes.prazoInscricao === undefined ? before.prazoInscricao : changes.prazoInscricao,
+        prazoHora: changes.prazoHora === undefined ? before.prazoHora : changes.prazoHora,
         contatoWhatsapp:
           changes.contatoWhatsapp === undefined ? before.contatoWhatsapp : changes.contatoWhatsapp,
       };
       assertKeyAsked(next.camposAdicionais, next.campoDuplicidade);
+      if (next.prazoInscricao !== before.prazoInscricao || next.prazoHora !== before.prazoHora) {
+        assertDeadline(next.prazoInscricao, next.prazoHora, atividade.data);
+      }
       const changed = FIELDS.filter((field) => !same(field, before, next));
       if (changed.length === 0) return before;
 
@@ -184,6 +229,7 @@ export class RegistrationsService {
           termoCompromisso: next.termoCompromisso,
           apresentacao: next.apresentacao,
           prazoInscricao: toDate(next.prazoInscricao),
+          prazoHora: toTime(next.prazoHora),
           contatoWhatsapp: next.contatoWhatsapp,
           versao: { increment: 1 },
         },
@@ -226,10 +272,10 @@ export class RegistrationsService {
   private async assertEditableActivity(
     tx: Prisma.TransactionClient,
     atividadeId: string,
-  ): Promise<void> {
+  ): Promise<{ data: Date }> {
     const atividade = await tx.atividade.findUnique({
       where: { id: atividadeId },
-      select: { projeto: { select: { instrumento: { select: { ativo: true } } } } },
+      select: { data: true, projeto: { select: { instrumento: { select: { ativo: true } } } } },
     });
     if (!atividade) throw new NotFoundException('Atividade não encontrada.');
     if (!atividade.projeto.instrumento.ativo) {
@@ -238,6 +284,7 @@ export class RegistrationsService {
         message: 'O instrumento está inativo e não abre nem altera inscrições.',
       });
     }
+    return { data: atividade.data };
   }
 
   private versionConflict(): ConflictException {
