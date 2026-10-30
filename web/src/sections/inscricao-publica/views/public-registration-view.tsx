@@ -19,7 +19,7 @@ import type {
 } from '@/types/inscricao-publica';
 import type { CampoInscricao } from '@/types/inscricoes';
 import { CpfField, DateField, PhoneField, TextField } from '@/components/form/fields';
-import { ageOn, formatDate, isValidPhone, todayInBrasilia } from '@/lib/br';
+import { ageOn, formatDate, formatPhone, isValidPhone, todayInBrasilia } from '@/lib/br';
 import { cpfSchema, phoneSchema } from '@/lib/schemas';
 
 const ADULT_AGE = 18;
@@ -154,6 +154,61 @@ function ActivitySummary({ activity }: { activity: PublicActivity }) {
   );
 }
 
+/** "05/11/2026, às 18h" ou, sem hora, "05/11/2026, às 23h59". */
+function formatDeadline(prazo: string, hora: string | null): string {
+  const [h, m] = (hora ?? '23:59').split(':');
+  return `${formatDate(prazo)}, às ${Number(h)}h${m === '00' ? '' : m}`;
+}
+
+function WhatsAppLink({ digits }: { digits: string }) {
+  return (
+    <a
+      href={`https://wa.me/55${digits}`}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="font-medium text-primary underline-offset-4 hover:underline"
+    >
+      WhatsApp do Instituto: {formatPhone(digits)}
+    </a>
+  );
+}
+
+/** O que a coordenação escreveu sobre a atividade, o prazo e o contato; some quando não há. */
+function Presentation({ form }: { form: PublicForm }) {
+  const { apresentacao, prazoInscricao, prazoHora, contatoWhatsapp } = form;
+  if (!apresentacao && !prazoInscricao && !contatoWhatsapp) return null;
+  return (
+    <div className="flex flex-col gap-4">
+      {apresentacao && (
+        <section aria-labelledby="sobre-atividade" className="flex flex-col gap-2">
+          <h2 id="sobre-atividade" className="text-base font-medium">
+            Sobre a atividade
+          </h2>
+          <p className="text-sm whitespace-pre-line">{apresentacao}</p>
+        </section>
+      )}
+      {(prazoInscricao || contatoWhatsapp) && (
+        <dl className="grid grid-cols-1 gap-3 rounded-lg bg-muted p-3 text-sm sm:grid-cols-2">
+          {prazoInscricao && (
+            <div className="flex flex-col gap-0.5">
+              <dt className="text-xs text-muted-foreground">Inscrições até</dt>
+              <dd className="font-medium">{formatDeadline(prazoInscricao, prazoHora)}</dd>
+            </div>
+          )}
+          {contatoWhatsapp && (
+            <div className="flex flex-col gap-0.5">
+              <dt className="text-xs text-muted-foreground">Dúvidas</dt>
+              <dd>
+                <WhatsAppLink digits={contatoWhatsapp} />
+              </dd>
+            </div>
+          )}
+        </dl>
+      )}
+    </div>
+  );
+}
+
 function Message({
   title,
   text,
@@ -278,7 +333,8 @@ function RegistrationForm({
         </CardTitle>
         <ActivitySummary activity={form.atividade} />
       </CardHeader>
-      <CardContent>
+      <CardContent className="flex flex-col gap-6">
+        <Presentation form={form} />
         <form noValidate onSubmit={onSubmit}>
           <FieldGroup>
             <TextField name="nome" label="Nome completo" control={control} autoComplete="name" />

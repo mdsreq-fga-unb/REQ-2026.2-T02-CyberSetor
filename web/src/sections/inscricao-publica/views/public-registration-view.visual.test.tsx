@@ -27,8 +27,8 @@ const FORM: PublicForm = {
 };
 
 describe.each([
-  ['celular', 360, 1600],
-  ['desktop', 1280, 1400],
+  ['celular', 360, 2000],
+  ['desktop', 1280, 1700],
 ])('formulario publico no %s', (device, width, height) => {
   beforeEach(async () => {
     await page.viewport(width, height);

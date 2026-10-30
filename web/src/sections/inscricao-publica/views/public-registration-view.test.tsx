@@ -158,6 +158,51 @@ describe('formulario publico de inscricao', () => {
     });
   });
 
+  it('mostra a apresentacao, o prazo com a hora e o link do WhatsApp do Instituto', async () => {
+    stubApi({
+      [GET]: () => ({
+        status: 200,
+        body: {
+          ...FORM,
+          apresentacao: 'Oficina de 8 horas.\nLeve uma camiseta clara.',
+          prazoInscricao: '2026-11-08',
+          prazoHora: '18:00',
+          contatoWhatsapp: '61999998888',
+        },
+      }),
+    });
+    renderView();
+
+    expect(
+      await screen.findByRole('heading', { level: 2, name: 'Sobre a atividade' }),
+    ).toBeInTheDocument();
+    expect(screen.getByText(/Leve uma camiseta clara/)).toBeInTheDocument();
+    expect(screen.getByText('08/11/2026, às 18h')).toBeInTheDocument();
+    expect(screen.getByRole('link', { name: /WhatsApp do Instituto/ })).toHaveAttribute(
+      'href',
+      'https://wa.me/5561999998888',
+    );
+  });
+
+  it('sem apresentacao, prazo nem contato, a pagina fica como antes', async () => {
+    stubApi({ [GET]: () => ({ status: 200, body: FORM }) });
+    renderView();
+
+    await screen.findByRole('heading', { level: 1, name: /Oficina de serigrafia/ });
+    expect(screen.queryByText('Sobre a atividade')).not.toBeInTheDocument();
+    expect(screen.queryByText('Inscrições até')).not.toBeInTheDocument();
+    expect(screen.queryByRole('link', { name: /WhatsApp/ })).not.toBeInTheDocument();
+  });
+
+  it('prazo sem hora vale ate as 23h59', async () => {
+    stubApi({
+      [GET]: () => ({ status: 200, body: { ...FORM, prazoInscricao: '2026-11-08' } }),
+    });
+    renderView();
+
+    expect(await screen.findByText('08/11/2026, às 23h59')).toBeInTheDocument();
+  });
+
   it('sem termo, nao mostra os compromissos nem manda versao de termo', async () => {
     stubApi({ [GET]: () => ({ status: 200, body: FORM }) });
     renderView();
