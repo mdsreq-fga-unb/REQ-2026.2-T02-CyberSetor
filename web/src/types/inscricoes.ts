@@ -54,3 +54,5 @@ export interface UpdateRegistrationInput {
   prazoHora?: string | null;
   contatoWhatsapp?: string | null;
 }
+
+export type SituacaoInscricao = 'CONFIRMADA' | 'LISTA_ESPERA';

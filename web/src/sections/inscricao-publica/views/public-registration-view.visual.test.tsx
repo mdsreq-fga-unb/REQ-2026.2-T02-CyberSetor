@@ -7,6 +7,7 @@ import { PublicRegistrationView } from './public-registration-view';
 const FORM: PublicForm = {
   atividade: { titulo: 'Oficina de serigrafia', data: '2026-11-10', local: 'Setor Comercial Sul' },
   aberta: true,
+  vagasEsgotadas: false,
   camposMinimos: ['NOME', 'TELEFONE', 'DATA_NASCIMENTO', 'CONSENTIMENTOS'],
   camposAdicionais: ['CPF', 'EMAIL'],
   aviso: {

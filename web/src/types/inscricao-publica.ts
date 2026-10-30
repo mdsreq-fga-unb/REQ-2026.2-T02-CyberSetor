@@ -1,4 +1,4 @@
-import type { CampoInscricao } from './inscricoes';
+import type { CampoInscricao, SituacaoInscricao } from './inscricoes';
 
 export interface PublicActivity {
   titulo: string;
@@ -9,6 +9,8 @@ export interface PublicActivity {
 export interface PublicForm {
   atividade: PublicActivity;
   aberta: boolean;
+  /** Vagas preenchidas: a próxima inscrição entra na lista de espera. */
+  vagasEsgotadas: boolean;
   camposMinimos: string[];
   camposAdicionais: CampoInscricao[];
   aviso: { versao: string; texto: string };
@@ -41,7 +43,9 @@ export interface PublicSubmission {
 }
 
 export interface SubmittedRegistration {
-  situacao: string;
+  situacao: SituacaoInscricao;
+  /** Posição na lista de espera; nula quando a vaga foi confirmada. */
+  posicaoEspera: number | null;
   atividade: PublicActivity;
   inscritoEm: string;
 }

@@ -1,7 +1,7 @@
 'use client';
 
 import { zodResolver } from '@hookform/resolvers/zod';
-import { CircleCheckIcon } from 'lucide-react';
+import { CircleCheckIcon, HourglassIcon } from 'lucide-react';
 import { useMemo, useState, type FormEvent } from 'react';
 import { Controller, useForm, useWatch, type Control } from 'react-hook-form';
 import { z } from 'zod';
@@ -351,6 +351,12 @@ function RegistrationForm({
           <h1>Inscrição: {form.atividade.titulo}</h1>
         </CardTitle>
         <ActivitySummary activity={form.atividade} />
+        {form.vagasEsgotadas && (
+          <p role="status" className="text-sm font-medium">
+            As vagas já foram preenchidas. Quem se inscrever agora entra na lista de espera, pela
+            ordem de chegada.
+          </p>
+        )}
       </CardHeader>
       <CardContent className="flex flex-col gap-6">
         <Presentation form={form} />
@@ -475,16 +481,26 @@ export function PublicRegistrationView({ codigo }: { codigo: string }) {
   const [closed, setClosed] = useState(false);
 
   if (submitted) {
+    const waiting = submitted.posicaoEspera !== null;
+    const Icon = waiting ? HourglassIcon : CircleCheckIcon;
     return (
       <Card>
         <CardHeader className="items-center text-center">
-          <CircleCheckIcon aria-hidden="true" className="size-10 text-primary" />
+          <Icon aria-hidden="true" className="size-10 text-primary" />
           <CardTitle className="text-xl">
-            <h1>Inscrição confirmada</h1>
+            <h1>{waiting ? 'Você está na lista de espera' : 'Inscrição confirmada'}</h1>
           </CardTitle>
           <CardDescription>{submitted.atividade.titulo}</CardDescription>
         </CardHeader>
         <CardContent className="flex flex-col gap-2 text-center text-sm">
+          {waiting ? (
+            <p className="text-base font-medium">
+              Sua posição: {submitted.posicaoEspera}º lugar. Se abrir uma vaga, o Instituto chama
+              pela ordem da lista.
+            </p>
+          ) : (
+            <p className="text-base font-medium">Sua vaga está garantida.</p>
+          )}
           <p>
             {formatDate(submitted.atividade.data)} · {submitted.atividade.local}
           </p>

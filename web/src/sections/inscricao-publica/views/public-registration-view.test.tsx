@@ -8,6 +8,7 @@ const CODIGO = 'codigoPublicoA01';
 const FORM: PublicForm = {
   atividade: { titulo: 'Oficina de serigrafia', data: '2026-11-10', local: 'Setor Comercial Sul' },
   aberta: true,
+  vagasEsgotadas: false,
   camposMinimos: ['NOME', 'TELEFONE', 'DATA_NASCIMENTO', 'CONSENTIMENTOS'],
   camposAdicionais: ['CPF'],
   aviso: { versao: '2026-10-28-provisoria', texto: 'O Instituto usa os dados para a inscrição.' },
@@ -106,6 +107,7 @@ describe('formulario publico de inscricao', () => {
         status: 201,
         body: {
           situacao: 'CONFIRMADA',
+          posicaoEspera: null,
           atividade: FORM.atividade,
           inscritoEm: '2026-10-28T13:00:00.000Z',
         },
@@ -121,6 +123,7 @@ describe('formulario publico de inscricao', () => {
     expect(
       await screen.findByRole('heading', { name: 'Inscrição confirmada' }),
     ).toBeInTheDocument();
+    expect(screen.getByText('Sua vaga está garantida.')).toBeInTheDocument();
     expect(calls.find((call) => call.key === POST)?.body).toEqual({
       nome: 'Ana Souza',
       telefone: '61999998888',
@@ -139,6 +142,7 @@ describe('formulario publico de inscricao', () => {
         status: 201,
         body: {
           situacao: 'CONFIRMADA',
+          posicaoEspera: null,
           atividade: FORM.atividade,
           inscritoEm: '2026-10-30T13:00:00.000Z',
         },
@@ -221,6 +225,7 @@ describe('formulario publico de inscricao', () => {
         status: 201,
         body: {
           situacao: 'CONFIRMADA',
+          posicaoEspera: null,
           atividade: FORM.atividade,
           inscritoEm: '2026-10-30T13:00:00.000Z',
         },
@@ -275,6 +280,33 @@ describe('formulario publico de inscricao', () => {
       screen.getByLabelText('Li os compromissos acima e concordo com todos'),
     ).not.toBeChecked();
     expect(calls.filter((call) => call.key === GET).length).toBeGreaterThan(1);
+  });
+
+  it('com as vagas esgotadas, avisa da lista de espera e mostra a posicao depois do envio', async () => {
+    stubApi({
+      [GET]: () => ({ status: 200, body: { ...FORM, vagasEsgotadas: true } }),
+      [POST]: () => ({
+        status: 201,
+        body: {
+          situacao: 'LISTA_ESPERA',
+          posicaoEspera: 3,
+          atividade: FORM.atividade,
+          inscritoEm: '2026-10-28T13:00:00.000Z',
+        },
+      }),
+    });
+    renderView();
+
+    expect(
+      await screen.findByText(/As vagas já foram preenchidas\. Quem se inscrever agora entra/),
+    ).toBeInTheDocument();
+    fillAdult();
+    fireEvent.click(screen.getByRole('button', { name: 'Confirmar inscrição' }));
+
+    expect(
+      await screen.findByRole('heading', { name: 'Você está na lista de espera' }),
+    ).toBeInTheDocument();
+    expect(screen.getByText(/Sua posição: 3º lugar\./)).toBeInTheDocument();
   });
 
   it('menor de 18 anos ve e precisa preencher o responsavel legal antes de enviar', async () => {
