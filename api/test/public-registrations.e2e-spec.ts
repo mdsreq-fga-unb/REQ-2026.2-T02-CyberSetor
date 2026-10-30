@@ -1,5 +1,6 @@
 import { INestApplication } from '@nestjs/common';
 import { Test } from '@nestjs/testing';
+import { ThrottlerGuard } from '@nestjs/throttler';
 import request from 'supertest';
 import type { App } from 'supertest/types.js';
 import { PasswordService } from '../src/accounts/password.service.js';
@@ -47,7 +48,11 @@ describe('Formulário público de inscrição (e2e)', () => {
   let outroCodigo: string;
 
   beforeAll(async () => {
-    const moduleRef = await Test.createTestingModule({ imports: [AppModule] }).compile();
+    // O limite de envios por IP tem a sua própria suíte; aqui ele só atrapalharia a contagem.
+    const moduleRef = await Test.createTestingModule({ imports: [AppModule] })
+      .overrideGuard(ThrottlerGuard)
+      .useValue({ canActivate: () => true })
+      .compile();
     app = moduleRef.createNestApplication();
     setupApp(app, { corsOrigin: '' });
     await app.init();
