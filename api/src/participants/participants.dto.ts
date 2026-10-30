@@ -166,6 +166,9 @@ export class ParticipantRegistrationResponse {
   @ApiProperty()
   autorizaImagem!: boolean;
 
+  @ApiProperty({ nullable: true, description: 'Quando aceitou os compromissos da turma' })
+  termoAceitoEm!: Date | null;
+
   @ApiProperty({ nullable: true })
   responsavelNome!: string | null;
 

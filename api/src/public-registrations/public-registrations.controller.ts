@@ -63,7 +63,7 @@ export class PublicRegistrationsController {
   @ApiCreatedResponse({ type: SubmittedRegistrationResponse })
   @ApiBadRequestResponse({
     description:
-      'Campo inválido, NOTICE_OUTDATED, FIELD_NOT_ASKED, MISSING_FIELDS, INVALID_CPF, INVALID_BIRTH_DATE ou GUARDIAN_REQUIRED',
+      'Campo inválido, NOTICE_OUTDATED, TERM_NOT_ACCEPTED, TERM_OUTDATED, FIELD_NOT_ASKED, MISSING_FIELDS, INVALID_CPF, INVALID_BIRTH_DATE ou GUARDIAN_REQUIRED',
   })
   @ApiConflictResponse({ description: 'REGISTRATION_CLOSED ou ALREADY_REGISTERED' })
   @ApiNotFoundResponse({ description: 'REGISTRATION_LINK_NOT_FOUND' })

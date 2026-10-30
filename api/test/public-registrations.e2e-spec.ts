@@ -14,6 +14,7 @@ import {
 } from '../src/generated/prisma/enums.js';
 import { PrismaService } from '../src/prisma/prisma.service.js';
 import { DATA_NOTICE } from '../src/public-registrations/notice.js';
+import { termVersion } from '../src/registrations/term.js';
 
 const ADULTO = {
   nome: 'Ana Souza',
@@ -152,6 +153,7 @@ describe('Formulário público de inscrição (e2e)', () => {
       camposMinimos: ['NOME', 'TELEFONE', 'DATA_NASCIMENTO', 'CONSENTIMENTOS'],
       camposAdicionais: ['CPF'],
       aviso: { versao: DATA_NOTICE.versao, texto: DATA_NOTICE.texto },
+      termo: null,
     });
   });
 
@@ -202,6 +204,41 @@ describe('Formulário público de inscrição (e2e)', () => {
       select: { nomePreferencia: true },
     });
     expect(nomes.map((item) => item.nomePreferencia)).toEqual(['Aninha', null]);
+  });
+
+  it('com termo de compromisso, exige o aceite do texto atual e guarda o texto aceito', async () => {
+    const termo = 'Chegar no horário.\nAvisar quando faltar.';
+    await prisma.configuracaoInscricao.update({
+      where: { atividadeId },
+      data: { termoCompromisso: termo },
+    });
+    const form = await server().get(`/v1/public/registrations/${codigo}`).expect(200);
+    expect((form.body as { termo: unknown }).termo).toEqual({
+      versao: termVersion(termo),
+      texto: termo,
+    });
+
+    const semAceite = await enviar(ADULTO).expect(400);
+    expect((semAceite.body as ErrorBody).code).toBe('TERM_NOT_ACCEPTED');
+    const antigo = await enviar({ ...ADULTO, versaoTermo: termVersion('Outro texto') }).expect(400);
+    expect((antigo.body as ErrorBody).code).toBe('TERM_OUTDATED');
+    expect(await prisma.inscricao.count()).toBe(0);
+
+    await enviar({ ...ADULTO, versaoTermo: termVersion(termo) }).expect(201);
+    const inscricao = await prisma.inscricao.findFirstOrThrow();
+    expect(inscricao.termoAceito).toBe(termo);
+    expect(inscricao.termoAceitoEm).toBeInstanceOf(Date);
+  });
+
+  it('sem termo, a inscricao nao guarda aceite e recusa versao de termo enviada', async () => {
+    const res = await enviar({ ...ADULTO, versaoTermo: termVersion('Texto removido') }).expect(400);
+    expect((res.body as ErrorBody).code).toBe('TERM_OUTDATED');
+
+    await enviar(ADULTO).expect(201);
+    expect(await prisma.inscricao.findFirstOrThrow()).toMatchObject({
+      termoAceito: null,
+      termoAceitoEm: null,
+    });
   });
 
   it('menor de 18 anos exige o responsavel legal, e adulto nao guarda responsavel', async () => {

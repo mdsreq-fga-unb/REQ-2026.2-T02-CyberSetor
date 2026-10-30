@@ -82,6 +82,14 @@ export class SubmitRegistrationDto {
   @IsNotEmpty()
   versaoAviso!: string;
 
+  @ApiPropertyOptional({
+    description: 'Versão do termo de compromisso aceito; vai só quando a pessoa marca o aceite',
+  })
+  @ValidateIf(sent)
+  @IsString()
+  @IsNotEmpty()
+  versaoTermo?: string;
+
   @ApiProperty({ description: 'Autorização opcional para receber comunicados' })
   @Transform(asSent)
   @IsBoolean()
@@ -127,6 +135,14 @@ export class DataNoticeResponse {
   texto!: string;
 }
 
+export class CommitmentTermResponse {
+  @ApiProperty()
+  versao!: string;
+
+  @ApiProperty()
+  texto!: string;
+}
+
 export class PublicFormResponse {
   @ApiProperty({ type: PublicActivityResponse })
   atividade!: PublicActivityResponse;
@@ -145,6 +161,13 @@ export class PublicFormResponse {
 
   @ApiProperty({ type: DataNoticeResponse })
   aviso!: DataNoticeResponse;
+
+  @ApiProperty({
+    type: CommitmentTermResponse,
+    nullable: true,
+    description: 'Compromissos da turma, com aceite obrigatório; null quando a atividade não tem',
+  })
+  termo!: CommitmentTermResponse | null;
 }
 
 export class SubmittedRegistrationResponse {

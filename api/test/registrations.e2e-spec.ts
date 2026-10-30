@@ -21,6 +21,7 @@ interface RegistrationBody {
   campoDuplicidade: string;
   codigoPublico: string;
   linkPublico: string;
+  termoCompromisso: string | null;
 }
 
 describe('Configuração da inscrição da atividade (e2e)', () => {
@@ -228,6 +229,33 @@ describe('Configuração da inscrição da atividade (e2e)', () => {
       .patch(path(), { versao: 1, vagas: 50 })
       .expect(409);
     expect((conflito.body as { code: string }).code).toBe('VERSION_CONFLICT');
+  });
+
+  it('abre com termo de compromisso, troca e tira o termo, com a trilha do que mudou', async () => {
+    const inscricao = await opened({ ...VALID, termoCompromisso: '  Chegar no horário.  ' });
+    expect(inscricao.termoCompromisso).toBe('Chegar no horário.');
+
+    const trocado = await as(Perfil.NUCLEO_PEDAGOGICO)
+      .patch(path(), { versao: 1, termoCompromisso: 'Chegar no horário e avisar faltas.' })
+      .expect(200);
+    expect(trocado.body as RegistrationBody).toMatchObject({
+      versao: 2,
+      termoCompromisso: 'Chegar no horário e avisar faltas.',
+    });
+    const edicao = await prisma.trilhaAuditoria.findFirstOrThrow({
+      where: { entidadeId: atividadeId, acao: 'REGISTRATION_UPDATED' },
+    });
+    expect(edicao.antes).toEqual({ termoCompromisso: 'Chegar no horário.' });
+
+    const semTermo = await as(Perfil.NUCLEO_PEDAGOGICO)
+      .patch(path(), { versao: 2, termoCompromisso: null })
+      .expect(200);
+    expect(semTermo.body as RegistrationBody).toMatchObject({ versao: 3, termoCompromisso: null });
+
+    const vazio = await as(Perfil.NUCLEO_PEDAGOGICO)
+      .patch(path(), { versao: 3, termoCompromisso: '   ' })
+      .expect(400);
+    expect((vazio.body as { code: string }).code).toBe('VALIDATION_ERROR');
   });
 
   it('nao deixa tirar do formulario o campo que identifica cadastro repetido', async () => {

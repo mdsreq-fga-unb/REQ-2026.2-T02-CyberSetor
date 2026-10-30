@@ -246,7 +246,11 @@ describe('Participantes: busca, ficha e correção a pedido do titular (e2e)', (
     const ficha = (await nucleo().get(`/v1/participants/${ana}`).expect(200)).body as Participant;
     expect(ficha).toMatchObject({ nome: 'Ana Souza', cpf: CPF_ANA, versao: 1 });
     expect(ficha.inscricoes.map((i) => i.atividade.titulo)).toEqual(['Dança', 'Serigrafia']);
-    expect(ficha.inscricoes[0]).toMatchObject({ autorizaImagem: false, responsavelNome: null });
+    expect(ficha.inscricoes[0]).toMatchObject({
+      autorizaImagem: false,
+      responsavelNome: null,
+      termoAceitoEm: null,
+    });
     await nucleo().get('/v1/participants/00000000-0000-4000-8000-000000000000').expect(404);
   });
 

@@ -104,6 +104,7 @@ function toResponse(row: ParticipantRow, today: string): ParticipantResponse {
       inscritoEm: inscricao.criadoEm,
       autorizaComunicados: inscricao.autorizaComunicados,
       autorizaImagem: inscricao.autorizaImagem,
+      termoAceitoEm: inscricao.termoAceitoEm,
       responsavelNome: inscricao.responsavelNome,
       responsavelTelefone: inscricao.responsavelTelefone,
       atividade: {

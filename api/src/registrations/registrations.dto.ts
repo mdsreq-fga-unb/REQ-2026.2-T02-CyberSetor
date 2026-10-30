@@ -6,16 +6,22 @@ import {
   IsBoolean,
   IsEnum,
   IsInt,
+  IsNotEmpty,
+  IsString,
   Max,
+  MaxLength,
   Min,
   ValidateIf,
 } from 'class-validator';
+import { Transform } from 'class-transformer';
+import { trimString } from '../common/trim.js';
 import { CampoDuplicidade, CampoInscricao } from '../generated/prisma/enums.js';
 
 /** Campos que todo formulário pede (seção 8.5.4); não são configuráveis. */
 export const CAMPOS_MINIMOS = ['NOME', 'TELEFONE', 'DATA_NASCIMENTO', 'CONSENTIMENTOS'] as const;
 
 const MAX_VAGAS = 10_000;
+const MAX_TERMO = 4000;
 
 export class OpenRegistrationDto {
   @ApiProperty({ example: 30, minimum: 1, maximum: MAX_VAGAS })
@@ -34,6 +40,17 @@ export class OpenRegistrationDto {
   @ApiProperty({ enum: CampoDuplicidade, description: 'Precisa estar entre os campos adicionais' })
   @IsEnum(CampoDuplicidade)
   campoDuplicidade!: CampoDuplicidade;
+
+  @ApiPropertyOptional({
+    maxLength: MAX_TERMO,
+    description: 'Compromissos da turma; com termo, o formulário exige o aceite',
+  })
+  @ValidateIf((_obj, value) => value !== undefined)
+  @Transform(trimString)
+  @IsString()
+  @IsNotEmpty()
+  @MaxLength(MAX_TERMO)
+  termoCompromisso?: string;
 }
 
 export class UpdateRegistrationDto {
@@ -66,6 +83,14 @@ export class UpdateRegistrationDto {
   @ValidateIf((_obj, value) => value !== undefined)
   @IsEnum(CampoDuplicidade)
   campoDuplicidade?: CampoDuplicidade;
+
+  @ApiPropertyOptional({ nullable: true, maxLength: MAX_TERMO, description: 'null tira o termo' })
+  @ValidateIf((_obj, value) => value !== undefined && value !== null)
+  @Transform(trimString)
+  @IsString()
+  @IsNotEmpty()
+  @MaxLength(MAX_TERMO)
+  termoCompromisso?: string | null;
 }
 
 export class RegistrationResponse {
@@ -89,6 +114,9 @@ export class RegistrationResponse {
 
   @ApiProperty({ enum: CampoDuplicidade })
   campoDuplicidade!: CampoDuplicidade;
+
+  @ApiProperty({ nullable: true, description: 'Compromissos da turma' })
+  termoCompromisso!: string | null;
 
   @ApiProperty({ description: 'Código aleatório do link público, que não revela a atividade' })
   codigoPublico!: string;

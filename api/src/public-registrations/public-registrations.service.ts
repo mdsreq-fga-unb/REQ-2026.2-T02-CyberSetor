@@ -10,6 +10,7 @@ import { AutorTipo, CampoInscricao } from '../generated/prisma/enums.js';
 import { todayInBrasilia } from '../goals/goal-deadline.js';
 import { PrismaService } from '../prisma/prisma.service.js';
 import { CAMPOS_MINIMOS } from '../registrations/registrations.dto.js';
+import { termVersion } from '../registrations/term.js';
 import { DATA_NOTICE } from './notice.js';
 import { ageOn, birthDateProblem, isValidCpf } from './participant-data.js';
 import type {
@@ -77,6 +78,9 @@ export class PublicRegistrationsService {
       camposMinimos: [...CAMPOS_MINIMOS],
       camposAdicionais: [...config.camposAdicionais].sort(),
       aviso: { versao: DATA_NOTICE.versao, texto: DATA_NOTICE.texto },
+      termo: config.termoCompromisso
+        ? { versao: termVersion(config.termoCompromisso), texto: config.termoCompromisso }
+        : null,
     };
   }
 
@@ -98,6 +102,7 @@ export class PublicRegistrationsService {
         'O aviso de tratamento de dados mudou. Leia o aviso atual e envie de novo.',
       );
     }
+    this.assertTermAccepted(config.termoCompromisso, data.versaoTermo);
     this.assertFieldsMatchConfig(config.camposAdicionais, data);
     const guardian = this.guardianOf(data);
     if (data.cpf !== undefined && !isValidCpf(data.cpf)) {
@@ -135,6 +140,8 @@ export class PublicRegistrationsService {
             autorizaImagem: data.autorizaImagem,
             responsavelNome: guardian?.nome ?? null,
             responsavelTelefone: guardian?.telefone ?? null,
+            termoAceito: config.termoCompromisso,
+            termoAceitoEm: config.termoCompromisso ? new Date() : null,
           },
         });
         await this.audit.record(
@@ -174,6 +181,22 @@ export class PublicRegistrationsService {
       });
     }
     return config;
+  }
+
+  /** Com termo, o envio traz a versão aceita, que precisa ser a do texto atual. */
+  private assertTermAccepted(termo: string | null, versaoTermo: string | undefined): void {
+    if (termo && versaoTermo === undefined) {
+      throw invalid(
+        'TERM_NOT_ACCEPTED',
+        'Leia e aceite os compromissos da turma para se inscrever.',
+      );
+    }
+    if (versaoTermo !== undefined && (!termo || versaoTermo !== termVersion(termo))) {
+      throw invalid(
+        'TERM_OUTDATED',
+        'Os compromissos da turma mudaram. Leia o texto atual e envie de novo.',
+      );
+    }
   }
 
   /** Só entram os campos pedidos pela atividade, e todos os pedidos são obrigatórios (RNF05). */

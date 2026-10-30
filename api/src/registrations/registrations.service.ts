@@ -19,7 +19,13 @@ import {
 
 type RegistrationRow = Prisma.ConfiguracaoInscricaoGetPayload<object>;
 
-const FIELDS = ['aberta', 'vagas', 'camposAdicionais', 'campoDuplicidade'] as const;
+const FIELDS = [
+  'aberta',
+  'vagas',
+  'camposAdicionais',
+  'campoDuplicidade',
+  'termoCompromisso',
+] as const;
 type Field = (typeof FIELDS)[number];
 
 function toResponse(row: RegistrationRow): RegistrationResponse {
@@ -31,6 +37,7 @@ function toResponse(row: RegistrationRow): RegistrationResponse {
     camposMinimos: [...CAMPOS_MINIMOS],
     camposAdicionais: [...row.camposAdicionais].sort(),
     campoDuplicidade: row.campoDuplicidade,
+    termoCompromisso: row.termoCompromisso,
     codigoPublico: row.codigoPublico,
     linkPublico: `/inscrever/${row.codigoPublico}`,
   };
@@ -89,6 +96,7 @@ export class RegistrationsService {
           vagas: data.vagas,
           camposAdicionais: data.camposAdicionais,
           campoDuplicidade: data.campoDuplicidade,
+          termoCompromisso: data.termoCompromisso ?? null,
           codigoPublico: randomBytes(12).toString('base64url'),
         },
       });
@@ -134,6 +142,10 @@ export class RegistrationsService {
           ? [...changes.camposAdicionais].sort()
           : before.camposAdicionais,
         campoDuplicidade: changes.campoDuplicidade ?? before.campoDuplicidade,
+        termoCompromisso:
+          changes.termoCompromisso === undefined
+            ? before.termoCompromisso
+            : changes.termoCompromisso,
       };
       assertKeyAsked(next.camposAdicionais, next.campoDuplicidade);
       const changed = FIELDS.filter((field) => !same(field, before, next));
@@ -146,6 +158,7 @@ export class RegistrationsService {
           vagas: next.vagas,
           camposAdicionais: next.camposAdicionais,
           campoDuplicidade: next.campoDuplicidade,
+          termoCompromisso: next.termoCompromisso,
           versao: { increment: 1 },
         },
       });
