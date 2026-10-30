@@ -1,6 +1,13 @@
 'use client';
 
-import { CheckIcon, CopyIcon, DownloadIcon, ExternalLinkIcon, QrCodeIcon } from 'lucide-react';
+import {
+  CheckIcon,
+  CopyIcon,
+  DownloadIcon,
+  ExternalLinkIcon,
+  MessageCircleIcon,
+  QrCodeIcon,
+} from 'lucide-react';
 import { useEffect, useRef, useState } from 'react';
 import { ListError } from '@/components/list/list-states';
 import { Badge } from '@/components/ui/badge';
@@ -14,11 +21,13 @@ import {
   DialogTitle,
 } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
+import { Textarea } from '@/components/ui/textarea';
 import { downloadDataUrl, generateQrCodeDataUrl } from '@/lib/qrcode';
 import { useRegistration } from '@/queries/inscricoes';
 import type { Activity } from '@/types/atividades';
 import type { Registration } from '@/types/inscricoes';
 import { registrationLoadFailure } from './format';
+import { shareMessage, whatsappShareUrl } from './share-message';
 
 export function RegistrationShareDialog({
   open,
@@ -37,9 +46,10 @@ export function RegistrationShareDialog({
   const registrationQuery = useRegistration(activityId, open && !initialRegistration);
   const registration = initialRegistration ?? registrationQuery.data;
 
-  const [copied, setCopied] = useState(false);
+  const [copied, setCopied] = useState<'link' | 'message' | null>(null);
   const [generated, setGenerated] = useState<{ forUrl: string; dataUrl: string } | null>(null);
   const [qrError, setQrError] = useState(false);
+  const [editedMessage, setEditedMessage] = useState<{ forUrl: string; text: string } | null>(null);
   const copyTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const fullUrl =
@@ -48,6 +58,12 @@ export function RegistrationShareDialog({
       : (registration?.linkPublico ?? '');
 
   const qrDataUrl = generated?.forUrl === fullUrl ? generated.dataUrl : null;
+  const message =
+    editedMessage?.forUrl === fullUrl
+      ? editedMessage.text
+      : activity && fullUrl
+        ? shareMessage(activity, fullUrl)
+        : '';
 
   useEffect(() => {
     return () => {
@@ -76,35 +92,41 @@ export function RegistrationShareDialog({
     };
   }, [open, fullUrl]);
 
-  function copyInputFallback() {
-    const input = document.getElementById('link-publico-input') as HTMLInputElement | null;
-    if (input) {
-      input.select();
+  function markCopied(what: 'link' | 'message') {
+    setCopied(what);
+    if (copyTimeoutRef.current) clearTimeout(copyTimeoutRef.current);
+    copyTimeoutRef.current = setTimeout(() => setCopied(null), 2500);
+  }
+
+  function copyFieldFallback(fieldId: string, what: 'link' | 'message') {
+    const field = document.getElementById(fieldId) as HTMLInputElement | HTMLTextAreaElement | null;
+    if (field) {
+      field.select();
       try {
         document.execCommand('copy');
-        setCopied(true);
-        if (copyTimeoutRef.current) clearTimeout(copyTimeoutRef.current);
-        copyTimeoutRef.current = setTimeout(() => setCopied(false), 2500);
+        markCopied(what);
       } catch {
         // Fallback silencioso
       }
     }
   }
 
-  async function handleCopy() {
-    if (!fullUrl) return;
+  async function copyText(text: string, fieldId: string, what: 'link' | 'message') {
+    if (!text) return;
     try {
       if (typeof navigator !== 'undefined' && navigator.clipboard?.writeText) {
-        await navigator.clipboard.writeText(fullUrl);
-        setCopied(true);
-        if (copyTimeoutRef.current) clearTimeout(copyTimeoutRef.current);
-        copyTimeoutRef.current = setTimeout(() => setCopied(false), 2500);
+        await navigator.clipboard.writeText(text);
+        markCopied(what);
       } else {
-        copyInputFallback();
+        copyFieldFallback(fieldId, what);
       }
     } catch {
-      copyInputFallback();
+      copyFieldFallback(fieldId, what);
     }
+  }
+
+  function handleCopy() {
+    return copyText(fullUrl, 'link-publico-input', 'link');
   }
 
   function handleDownload() {
@@ -120,7 +142,8 @@ export function RegistrationShareDialog({
 
   function handleClose() {
     if (copyTimeoutRef.current) clearTimeout(copyTimeoutRef.current);
-    setCopied(false);
+    setCopied(null);
+    setEditedMessage(null);
     onClose();
   }
 
@@ -205,7 +228,7 @@ export function RegistrationShareDialog({
                   onClick={handleCopy}
                   className="h-12 min-h-12 shrink-0 sm:w-36"
                 >
-                  {copied ? (
+                  {copied === 'link' ? (
                     <>
                       <CheckIcon data-icon="inline-start" className="size-4" />
                       Copiado!
@@ -219,6 +242,59 @@ export function RegistrationShareDialog({
                 </Button>
               </div>
             </div>
+
+            {registration.aberta && (
+              <div className="flex flex-col gap-1.5">
+                <label htmlFor="mensagem-divulgacao" className="text-sm font-medium">
+                  Mensagem para divulgar
+                </label>
+                <p id="mensagem-divulgacao-ajuda" className="text-xs text-muted-foreground">
+                  Ajuste o texto se quiser e envie pelo WhatsApp ou copie para outros canais.
+                </p>
+                <Textarea
+                  id="mensagem-divulgacao"
+                  aria-describedby="mensagem-divulgacao-ajuda"
+                  rows={5}
+                  value={message}
+                  onChange={(event) =>
+                    setEditedMessage({ forUrl: fullUrl, text: event.target.value })
+                  }
+                />
+                <div className="flex flex-col gap-2 sm:flex-row">
+                  <Button
+                    type="button"
+                    variant="outline"
+                    onClick={() => void copyText(message, 'mensagem-divulgacao', 'message')}
+                    disabled={!message.trim()}
+                    className="h-12 min-h-12"
+                  >
+                    {copied === 'message' ? (
+                      <>
+                        <CheckIcon data-icon="inline-start" className="size-4" />
+                        Mensagem copiada!
+                      </>
+                    ) : (
+                      <>
+                        <CopyIcon data-icon="inline-start" className="size-4" />
+                        Copiar mensagem
+                      </>
+                    )}
+                  </Button>
+                  <Button
+                    type="button"
+                    variant="outline"
+                    disabled={!message.trim()}
+                    onClick={() =>
+                      window.open(whatsappShareUrl(message), '_blank', 'noopener,noreferrer')
+                    }
+                    className="h-12 min-h-12"
+                  >
+                    <MessageCircleIcon data-icon="inline-start" className="size-4" />
+                    Enviar pelo WhatsApp
+                  </Button>
+                </div>
+              </div>
+            )}
 
             {/* Visualização do QR Code */}
             <div className="flex flex-col items-center justify-center rounded-xl border border-border bg-muted/20 p-6 text-center">
