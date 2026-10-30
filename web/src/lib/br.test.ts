@@ -3,7 +3,10 @@ import {
   formatCpf,
   formatDate,
   formatDateTime,
+  formatDuration,
   formatPhone,
+  formatSchedule,
+  formatTime,
   isValidCpf,
   phoneDigits,
 } from './br';
@@ -47,5 +50,14 @@ describe('formatos brasileiros', () => {
 
   it('data e hora de Brasilia', () => {
     expect(formatDateTime('2026-10-27T13:05:00.000Z')).toBe('27/10/2026, 10:05');
+  });
+
+  it('hora, duracao e horario com carga horaria', () => {
+    expect(formatTime('09:00')).toBe('9h');
+    expect(formatTime('13:30')).toBe('13h30');
+    expect(formatDuration(480)).toBe('8 h');
+    expect(formatDuration(210)).toBe('3 h 30 min');
+    expect(formatDuration(45)).toBe('45 min');
+    expect(formatSchedule('09:00', '17:00', 420)).toBe('9h às 17h · 7 h');
   });
 });
