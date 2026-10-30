@@ -33,7 +33,16 @@ const WITH_DETAILS = {
 type ActivityRow = Prisma.AtividadeGetPayload<{ include: typeof WITH_DETAILS }>;
 type ProjectWithInstrument = Prisma.ProjetoGetPayload<{ include: { instrumento: true } }>;
 
-const SCALAR_FIELDS = ['titulo', 'modalidadeId', 'responsavelId', 'data', 'local'] as const;
+const SCALAR_FIELDS = [
+  'titulo',
+  'modalidadeId',
+  'responsavelId',
+  'data',
+  'horaInicio',
+  'horaFim',
+  'cargaHorariaMinutos',
+  'local',
+] as const;
 
 interface Schedule {
   horaInicio: string | null;
@@ -41,7 +50,7 @@ interface Schedule {
   cargaHorariaMinutos: number | null;
 }
 
-interface ActivityValues {
+interface ActivityValues extends Schedule {
   titulo: string;
   modalidadeId: string;
   responsavelId: string;
@@ -156,6 +165,9 @@ function valuesOf(activity: ActivityResponse): ActivityValues {
     modalidadeId: activity.modalidade.id,
     responsavelId: activity.responsavel.id,
     data: activity.data,
+    horaInicio: activity.horaInicio,
+    horaFim: activity.horaFim,
+    cargaHorariaMinutos: activity.cargaHorariaMinutos,
     local: activity.local,
     metaIds: activity.metas.map((meta) => meta.id),
   };
@@ -294,6 +306,13 @@ export class ActivitiesService {
         modalidadeId: changes.modalidadeId ?? before.modalidadeId,
         responsavelId: changes.responsavelId ?? before.responsavelId,
         data: changes.data ?? before.data,
+        ...scheduleOf(
+          changes.horaInicio ?? before.horaInicio,
+          changes.horaFim ?? before.horaFim,
+          changes.cargaHorariaMinutos === undefined
+            ? before.cargaHorariaMinutos
+            : changes.cargaHorariaMinutos,
+        ),
         local: changes.local ?? before.local,
         metaIds: changes.metaIds ?? before.metaIds,
       };
@@ -320,6 +339,9 @@ export class ActivitiesService {
           modalidadeId: next.modalidadeId,
           responsavelId: next.responsavelId,
           data: toDate(next.data),
+          horaInicio: toTime(next.horaInicio),
+          horaFim: toTime(next.horaFim),
+          cargaHorariaMinutos: next.cargaHorariaMinutos,
           local: next.local,
           versao: { increment: 1 },
         },

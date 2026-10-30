@@ -276,6 +276,63 @@ describe('Atividades do projeto (e2e)', () => {
     expect(await prisma.atividade.count()).toBe(1);
   });
 
+  it('edita o horario, recalcula a carga quando pedida e grava so o que mudou', async () => {
+    const atividade = await created();
+    const path = `/v1/activities/${atividade.id}`;
+
+    const res = await as(Perfil.NUCLEO_PEDAGOGICO)
+      .patch(path, { versao: 1, horaInicio: '13:30', horaFim: '17:00', cargaHorariaMinutos: null })
+      .expect(200);
+    expect(res.body).toMatchObject({
+      versao: 2,
+      horaInicio: '13:30',
+      horaFim: '17:00',
+      cargaHorariaMinutos: 210,
+    });
+
+    const edicao = await prisma.trilhaAuditoria.findFirstOrThrow({
+      where: { entidadeId: atividade.id, acao: 'ACTIVITY_UPDATED' },
+    });
+    expect(edicao.antes).toEqual({ horaInicio: '09:00', cargaHorariaMinutos: 480 });
+    expect(edicao.depois).toEqual({ horaInicio: '13:30', cargaHorariaMinutos: 210 });
+
+    const encurtada = await as(Perfil.NUCLEO_PEDAGOGICO)
+      .patch(path, { versao: 2, horaFim: '15:00' })
+      .expect(400);
+    expect((encurtada.body as ErrorBody).code).toBe('WORKLOAD_EXCEEDS_DURATION');
+  });
+
+  it('atividade anterior ao horario aparece sem ele e so recebe inicio e fim juntos', async () => {
+    const atividade = await created();
+    await prisma.atividade.update({
+      where: { id: atividade.id },
+      data: { horaInicio: null, horaFim: null, cargaHorariaMinutos: null },
+    });
+    const path = `/v1/activities/${atividade.id}`;
+
+    const antiga = await as(Perfil.NUCLEO_PEDAGOGICO).get(path).expect(200);
+    expect(antiga.body).toMatchObject({
+      horaInicio: null,
+      horaFim: null,
+      cargaHorariaMinutos: null,
+    });
+
+    await as(Perfil.NUCLEO_PEDAGOGICO)
+      .patch(path, { versao: 1, titulo: 'Sem horário' })
+      .expect(200);
+    for (const parcial of [{ horaInicio: '09:00' }, { cargaHorariaMinutos: 60 }]) {
+      const res = await as(Perfil.NUCLEO_PEDAGOGICO)
+        .patch(path, { versao: 2, ...parcial })
+        .expect(400);
+      expect((res.body as ErrorBody).code).toBe('SCHEDULE_INCOMPLETE');
+    }
+
+    const completa = await as(Perfil.NUCLEO_PEDAGOGICO)
+      .patch(path, { versao: 2, horaInicio: '19:00', horaFim: '21:00' })
+      .expect(200);
+    expect(completa.body).toMatchObject({ versao: 3, cargaHorariaMinutos: 120 });
+  });
+
   it('recusa data inexistente e campo desconhecido com 400', async () => {
     await post({ ...valid(), data: '2026-02-30' }).expect(400);
     await post({ ...valid(), versao: 2 }).expect(400);
