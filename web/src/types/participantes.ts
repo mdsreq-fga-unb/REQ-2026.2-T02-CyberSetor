@@ -1,3 +1,5 @@
+import type { SituacaoInscricao } from './inscricoes';
+
 export const AUTORIZACOES = ['COMUNICADOS', 'IMAGEM'] as const;
 
 export type Autorizacao = (typeof AUTORIZACOES)[number];
@@ -38,7 +40,7 @@ export interface ParticipantSummary {
 
 export interface ParticipantRegistration {
   id: string;
-  situacao: 'CONFIRMADA';
+  situacao: SituacaoInscricao;
   inscritoEm: string;
   autorizaComunicados: boolean;
   autorizaImagem: boolean;

@@ -3,8 +3,8 @@
 import { useDeferredValue, useState } from 'react';
 import { SearchIcon } from 'lucide-react';
 import { ListError, TableSkeleton } from '@/components/list/list-states';
+import { RowActionsMenu, type RowAction } from '@/components/list/row-actions-menu';
 import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
 import {
   Dialog,
   DialogContent,
@@ -22,15 +22,22 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table';
-import { ApiError } from '@/lib/api';
-import { formatDateTime, formatPhone } from '@/lib/br';
 import { toast } from '@/components/ui/toast';
+import { ApiError } from '@/lib/api';
+import { formatDate, formatDateTime, formatPhone } from '@/lib/br';
 import { useConfirmFromWaitlist, useRegistrationList } from '@/queries/inscricoes';
 import type { Activity } from '@/types/atividades';
-import type { RegisteredPerson } from '@/types/inscricoes';
+import type { RegisteredPerson, SituacaoInscricao } from '@/types/inscricoes';
+import { CANAL_LABEL } from '../participantes/format';
+import { CancelRegistrationDialog } from './cancel-registration-dialog';
 
 const COLUMNS = 3;
-const WAITING_COLUMNS = 4;
+
+const CAPTION: Record<SituacaoInscricao, string> = {
+  CONFIRMADA: 'Pessoas com vaga confirmada, pela ordem de chegada.',
+  LISTA_ESPERA: 'Pessoas na lista de espera, pela posição.',
+  CANCELADA: 'Inscrições canceladas, que não ocupam vaga.',
+};
 
 function loadFailure(error: unknown): string {
   if (error instanceof ApiError && error.status === 403) {
@@ -47,49 +54,21 @@ function Authorizations({ person }: { person: RegisteredPerson }) {
   return given.length > 0 ? `Autoriza ${given.join(' e ')}` : 'Sem autorizações';
 }
 
-function ConfirmButton({
-  person,
-  disabled,
-  onConfirm,
-  className,
-}: {
-  person: RegisteredPerson;
-  disabled: boolean;
-  onConfirm: (person: RegisteredPerson) => void;
-  className?: string;
-}) {
-  return (
-    <Button
-      variant="outline"
-      className={className}
-      disabled={disabled}
-      onClick={() => onConfirm(person)}
-      aria-label={`Confirmar vaga de ${person.nome}`}
-    >
-      Confirmar vaga
-    </Button>
-  );
-}
-
 function PeopleTable({
-  caption,
+  situacao,
   people,
   loading,
-  waiting,
-  onConfirm,
-  confirming,
+  actionsFor,
 }: {
-  caption: string;
+  situacao: SituacaoInscricao;
   people: RegisteredPerson[];
   loading: boolean;
-  waiting: boolean;
-  /** Na espera, com vaga livre: confirma a vaga da pessoa. */
-  onConfirm?: (person: RegisteredPerson) => void;
-  confirming?: string | null;
+  actionsFor?: (person: RegisteredPerson) => RowAction[];
 }) {
+  const waiting = situacao === 'LISTA_ESPERA';
   return (
     <Table aria-busy={loading}>
-      <TableCaption className="sr-only">{caption}</TableCaption>
+      <TableCaption className="sr-only">{CAPTION[situacao]}</TableCaption>
       <TableHeader>
         <TableRow>
           <TableHead scope="col" className="px-4">
@@ -101,8 +80,8 @@ function PeopleTable({
           <TableHead scope="col" className="hidden w-44 md:table-cell">
             Inscrita em
           </TableHead>
-          {onConfirm && (
-            <TableHead scope="col" className="hidden w-36 px-4 md:table-cell">
+          {actionsFor && (
+            <TableHead scope="col" className="w-16 px-4">
               <span className="sr-only">Ações</span>
             </TableHead>
           )}
@@ -110,7 +89,7 @@ function PeopleTable({
       </TableHeader>
       <TableBody>
         {loading ? (
-          <TableSkeleton columns={onConfirm ? WAITING_COLUMNS : COLUMNS} rows={2} />
+          <TableSkeleton columns={actionsFor ? COLUMNS + 1 : COLUMNS} rows={2} />
         ) : (
           people.map((person) => (
             <TableRow key={person.id}>
@@ -137,30 +116,29 @@ function PeopleTable({
                       )}
                     </span>
                   )}
+                  {person.cancelamento && (
+                    <span className="text-sm text-muted-foreground">
+                      Cancelada a pedido em {formatDate(person.cancelamento.pedidoEm)} ·{' '}
+                      {CANAL_LABEL[person.cancelamento.canal]}
+                    </span>
+                  )}
                   <span className="text-sm text-muted-foreground md:hidden">
                     {formatPhone(person.telefone)} · {formatDateTime(person.inscritoEm)}
                   </span>
-                  {onConfirm && (
-                    <ConfirmButton
-                      className="mt-1 self-start md:hidden"
-                      person={person}
-                      disabled={Boolean(confirming)}
-                      onConfirm={onConfirm}
-                    />
-                  )}
                 </div>
               </TableCell>
               <TableCell className="hidden md:table-cell">{formatPhone(person.telefone)}</TableCell>
               <TableCell className="hidden md:table-cell">
                 {formatDateTime(person.inscritoEm)}
               </TableCell>
-              {onConfirm && (
-                <TableCell className="hidden px-4 text-right md:table-cell">
-                  <ConfirmButton
-                    person={person}
-                    disabled={Boolean(confirming)}
-                    onConfirm={onConfirm}
-                  />
+              {actionsFor && (
+                <TableCell className="px-4 text-right">
+                  {actionsFor(person).length > 0 && (
+                    <RowActionsMenu
+                      label={`Ações de ${person.nome}`}
+                      actions={actionsFor(person)}
+                    />
+                  )}
                 </TableCell>
               )}
             </TableRow>
@@ -171,7 +149,10 @@ function PeopleTable({
   );
 }
 
-/** Inscritos da atividade: vagas confirmadas e lista de espera, para o Núcleo (HU-07c, RNF04). */
+/**
+ * Inscritos da atividade, para o Núcleo (HU-07c, RNF04): vagas confirmadas, lista de espera e
+ * canceladas, com a confirmação da vaga de quem espera e o cancelamento a pedido da pessoa.
+ */
 export function RegistrationListDialog({
   open,
   activity,
@@ -185,11 +166,10 @@ export function RegistrationListDialog({
   const deferred = useDeferredValue(busca);
   const list = useRegistrationList(activity?.id, deferred, open);
   const confirm = useConfirmFromWaitlist(activity?.id ?? '');
-  const [confirming, setConfirming] = useState<string | null>(null);
+  const [cancelling, setCancelling] = useState<RegisteredPerson | null>(null);
   const freeVacancy = list.data ? list.data.confirmadas < list.data.vagas : false;
 
   async function confirmVacancy(person: RegisteredPerson) {
-    setConfirming(person.id);
     try {
       await confirm.mutateAsync(person.id);
       toast.add({ type: 'success', title: `Vaga de ${person.nome} confirmada` });
@@ -201,98 +181,143 @@ export function RegistrationListDialog({
             ? error.message
             : 'Não foi possível confirmar a vaga. Tente de novo.',
       });
-    } finally {
-      setConfirming(null);
     }
   }
+
+  function actionsFor(person: RegisteredPerson): RowAction[] {
+    const actions: RowAction[] = [];
+    if (person.situacao === 'LISTA_ESPERA' && freeVacancy) {
+      actions.push({
+        label: 'Confirmar vaga',
+        disabled: confirm.isPending,
+        onSelect: () => void confirmVacancy(person),
+      });
+    }
+    actions.push({
+      label: 'Cancelar inscrição',
+      destructive: true,
+      onSelect: () => setCancelling(person),
+    });
+    return actions;
+  }
+
   const searching = deferred.trim() !== '';
   const people = list.data?.inscricoes ?? [];
-  const confirmed = people.filter((person) => person.situacao === 'CONFIRMADA');
-  const waiting = people.filter((person) => person.situacao === 'LISTA_ESPERA');
+  const of = (situacao: SituacaoInscricao) =>
+    people.filter((person) => person.situacao === situacao);
 
   return (
-    <Dialog
-      open={open}
-      onOpenChange={(next) => {
-        if (!next) {
-          setBusca('');
-          onClose();
-        }
-      }}
-    >
-      <DialogContent className="max-h-[calc(100dvh-2rem)] overflow-y-auto sm:max-w-3xl">
-        <DialogHeader>
-          <DialogTitle>Inscritos: {activity?.titulo}</DialogTitle>
-          <DialogDescription>
-            {list.data
-              ? `${list.data.confirmadas} de ${list.data.vagas} vagas confirmadas · ${list.data.emEspera} na lista de espera`
-              : 'Vagas confirmadas e lista de espera, pela ordem de chegada.'}
-          </DialogDescription>
-        </DialogHeader>
+    <>
+      <Dialog
+        open={open}
+        onOpenChange={(next) => {
+          if (!next) {
+            setBusca('');
+            onClose();
+          }
+        }}
+      >
+        <DialogContent className="max-h-[calc(100dvh-2rem)] overflow-y-auto sm:max-w-3xl">
+          <DialogHeader>
+            <DialogTitle>Inscritos: {activity?.titulo}</DialogTitle>
+            <DialogDescription>
+              {list.data
+                ? `${list.data.confirmadas} de ${list.data.vagas} vagas confirmadas · ${list.data.emEspera} na lista de espera`
+                : 'Vagas confirmadas e lista de espera, pela ordem de chegada.'}
+            </DialogDescription>
+          </DialogHeader>
 
-        {list.error && !list.data ? (
-          <ListError message={loadFailure(list.error)} />
-        ) : (
-          <div className="flex flex-col gap-4">
-            <div className="relative">
-              <SearchIcon
-                aria-hidden
-                className="pointer-events-none absolute top-1/2 left-3 size-4 -translate-y-1/2 text-muted-foreground"
-              />
-              <Input
-                type="search"
-                value={busca}
-                onChange={(event) => setBusca(event.target.value)}
-                placeholder="Nome, telefone ou e-mail"
-                aria-label="Buscar inscrito por nome, telefone ou e-mail"
-                className="pl-9"
-              />
-            </div>
-
-            <section aria-labelledby="inscritos-confirmados" className="flex flex-col gap-2">
-              <h3 id="inscritos-confirmados" className="text-sm font-medium">
-                Vagas confirmadas ({list.data?.confirmadas ?? 0})
-              </h3>
-              {!list.isPending && confirmed.length === 0 ? (
-                <p className="text-sm text-muted-foreground">
-                  {searching
-                    ? 'Ninguém encontrado com vaga confirmada.'
-                    : 'Nenhuma inscrição ainda.'}
-                </p>
-              ) : (
-                <PeopleTable
-                  caption="Pessoas com vaga confirmada, pela ordem de chegada."
-                  people={confirmed}
-                  loading={list.isPending}
-                  waiting={false}
+          {list.error && !list.data ? (
+            <ListError message={loadFailure(list.error)} />
+          ) : (
+            <div className="flex flex-col gap-4">
+              <div className="relative">
+                <SearchIcon
+                  aria-hidden
+                  className="pointer-events-none absolute top-1/2 left-3 size-4 -translate-y-1/2 text-muted-foreground"
                 />
-              )}
-            </section>
+                <Input
+                  type="search"
+                  value={busca}
+                  onChange={(event) => setBusca(event.target.value)}
+                  placeholder="Nome, telefone ou e-mail"
+                  aria-label="Buscar inscrito por nome, telefone ou e-mail"
+                  className="pl-9"
+                />
+              </div>
 
-            {(list.data?.emEspera ?? 0) > 0 && (
-              <section aria-labelledby="inscritos-espera" className="flex flex-col gap-2">
-                <h3 id="inscritos-espera" className="text-sm font-medium">
-                  Lista de espera ({list.data?.emEspera})
+              <section aria-labelledby="inscritos-confirmados" className="flex flex-col gap-2">
+                <h3 id="inscritos-confirmados" className="text-sm font-medium">
+                  Vagas confirmadas ({list.data?.confirmadas ?? 0})
                 </h3>
-                {waiting.length === 0 ? (
+                {!list.isPending && of('CONFIRMADA').length === 0 ? (
                   <p className="text-sm text-muted-foreground">
-                    Ninguém encontrado na lista de espera.
+                    {searching
+                      ? 'Ninguém encontrado com vaga confirmada.'
+                      : 'Nenhuma vaga confirmada.'}
                   </p>
                 ) : (
                   <PeopleTable
-                    caption="Pessoas na lista de espera, pela posição."
-                    people={waiting}
-                    loading={false}
-                    waiting
-                    onConfirm={freeVacancy ? (person) => void confirmVacancy(person) : undefined}
-                    confirming={confirming}
+                    situacao="CONFIRMADA"
+                    people={of('CONFIRMADA')}
+                    loading={list.isPending}
+                    actionsFor={actionsFor}
                   />
                 )}
               </section>
-            )}
-          </div>
-        )}
-      </DialogContent>
-    </Dialog>
+
+              {(list.data?.emEspera ?? 0) > 0 && (
+                <section aria-labelledby="inscritos-espera" className="flex flex-col gap-2">
+                  <h3 id="inscritos-espera" className="text-sm font-medium">
+                    Lista de espera ({list.data?.emEspera})
+                  </h3>
+                  {of('LISTA_ESPERA').length === 0 ? (
+                    <p className="text-sm text-muted-foreground">
+                      Ninguém encontrado na lista de espera.
+                    </p>
+                  ) : (
+                    <PeopleTable
+                      situacao="LISTA_ESPERA"
+                      people={of('LISTA_ESPERA')}
+                      loading={false}
+                      actionsFor={actionsFor}
+                    />
+                  )}
+                </section>
+              )}
+
+              {(list.data?.canceladas ?? 0) > 0 && (
+                <section aria-labelledby="inscritos-canceladas" className="flex flex-col gap-2">
+                  <h3 id="inscritos-canceladas" className="text-sm font-medium">
+                    Canceladas ({list.data?.canceladas})
+                  </h3>
+                  {of('CANCELADA').length === 0 ? (
+                    <p className="text-sm text-muted-foreground">
+                      Ninguém encontrado entre as canceladas.
+                    </p>
+                  ) : (
+                    <PeopleTable
+                      situacao="CANCELADA"
+                      people={of('CANCELADA')}
+                      loading={false}
+                      actionsFor={() => []}
+                    />
+                  )}
+                </section>
+              )}
+            </div>
+          )}
+        </DialogContent>
+      </Dialog>
+
+      <CancelRegistrationDialog
+        activityId={activity?.id ?? ''}
+        person={cancelling}
+        onClose={() => setCancelling(null)}
+        onCancelled={(person) =>
+          toast.add({ type: 'success', title: `Inscrição de ${person.nome} cancelada` })
+        }
+      />
+    </>
   );
 }

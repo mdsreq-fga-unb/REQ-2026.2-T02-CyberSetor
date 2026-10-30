@@ -1,3 +1,5 @@
+import type { CanalPedido } from './participantes';
+
 export const CAMPOS_MINIMOS = ['NOME', 'TELEFONE', 'DATA_NASCIMENTO', 'CONSENTIMENTOS'] as const;
 
 export type CampoMinimo = (typeof CAMPOS_MINIMOS)[number];
@@ -63,7 +65,7 @@ export interface UpdateRegistrationInput {
   contatoWhatsapp?: string | null;
 }
 
-export type SituacaoInscricao = 'CONFIRMADA' | 'LISTA_ESPERA';
+export type SituacaoInscricao = 'CONFIRMADA' | 'LISTA_ESPERA' | 'CANCELADA';
 
 /** Pessoa inscrita na atividade, como o Núcleo Pedagógico vê (HU-07c). */
 export interface RegisteredPerson {
@@ -81,11 +83,19 @@ export interface RegisteredPerson {
   autorizaImagem: boolean;
   responsavelNome: string | null;
   responsavelTelefone: string | null;
+  /** Cancelamento ou desistência: data do pedido e canal. */
+  cancelamento: { pedidoEm: string; canal: CanalPedido } | null;
+}
+
+export interface CancelRegistrationInput {
+  canal: CanalPedido;
+  pedidoEm: string;
 }
 
 export interface RegistrationList {
   vagas: number;
   confirmadas: number;
   emEspera: number;
+  canceladas: number;
   inscricoes: RegisteredPerson[];
 }

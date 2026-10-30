@@ -27,6 +27,7 @@ function person(index: number, nome: string, espera: number | null): RegisteredP
     autorizaImagem: index === 0,
     responsavelNome: espera === 2 ? 'Carla Mendes' : null,
     responsavelTelefone: espera === 2 ? '61988887777' : null,
+    cancelamento: null,
   };
 }
 
@@ -34,11 +35,17 @@ const LIST: RegistrationList = {
   vagas: 3,
   confirmadas: 2,
   emEspera: 2,
+  canceladas: 1,
   inscricoes: [
     person(0, 'Ana Souza', null),
     person(1, 'Bruno Lima', null),
     person(2, 'Davi Rocha', 1),
     person(3, 'Elisa Mendes', 2),
+    {
+      ...person(4, 'Fábio Costa', null),
+      situacao: 'CANCELADA',
+      cancelamento: { pedidoEm: '2026-10-29', canal: 'WHATSAPP' },
+    },
   ],
 };
 

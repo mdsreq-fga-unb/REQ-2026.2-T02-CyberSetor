@@ -98,6 +98,7 @@ function person(
     autorizaImagem: false,
     responsavelNome: null,
     responsavelTelefone: null,
+    cancelamento: null,
   };
 }
 
@@ -336,6 +337,7 @@ describe('ProjectActivitiesSection', () => {
           vagas: 1,
           confirmadas: 1,
           emEspera: 1,
+          canceladas: 0,
           inscricoes: [
             person('Ana Souza', 'CONFIRMADA', null),
             {
@@ -364,19 +366,77 @@ describe('ProjectActivitiesSection', () => {
     expect(within(espera).getByText('Bruno Lima', { exact: false })).toBeInTheDocument();
     expect(within(espera).getByText('Menor')).toBeInTheDocument();
     expect(within(espera).getByText(/Responsável: Carla Lima/)).toBeInTheDocument();
-    expect(screen.queryByRole('button', { name: /Confirmar vaga/ })).not.toBeInTheDocument();
+
+    // Sem vaga livre, a pessoa da espera só pode ter a inscrição cancelada.
+    fireEvent.click(within(espera).getByRole('button', { name: 'Ações de Bruno Lima' }));
+    expect(await screen.findByRole('menuitem', { name: 'Cancelar inscrição' })).toBeInTheDocument();
+    expect(screen.queryByRole('menuitem', { name: 'Confirmar vaga' })).not.toBeInTheDocument();
+  });
+
+  const lista = (
+    confirmadas: RegisteredPerson[],
+    espera: RegisteredPerson[],
+    canceladas: RegisteredPerson[] = [],
+  ) => ({
+    status: 200,
+    body: {
+      vagas: 2,
+      confirmadas: confirmadas.length,
+      emEspera: espera.length,
+      canceladas: canceladas.length,
+      inscricoes: [...confirmadas, ...espera, ...canceladas],
+    },
+  });
+
+  async function openRegistrations() {
+    fireEvent.click(
+      await screen.findByRole('button', { name: `Ações da atividade ${ACTIVITY_1.titulo}` }),
+    );
+    fireEvent.click(await screen.findByRole('menuitem', { name: 'Ver inscritos' }));
+  }
+
+  it('cancela a inscricao com o canal e a data do pedido e mostra a cancelada a parte', async () => {
+    const ana = person('Ana Souza', 'CONFIRMADA', null);
+    const anaCancelada = {
+      ...ana,
+      situacao: 'CANCELADA' as const,
+      cancelamento: { pedidoEm: '2026-10-29', canal: 'WHATSAPP' as const },
+    };
+    let cancelled = false;
+    const calls = await signedInAs('NUCLEO_PEDAGOGICO', {
+      [`GET /projects/${PROJECT.id}/activities`]: () => ({
+        status: 200,
+        body: [{ ...ACTIVITY_1, inscricao: { aberta: true, vagas: 2, inscritos: 1, emEspera: 0 } }],
+      }),
+      [`GET /activities/${ACTIVITY_1.id}/registrations`]: () =>
+        cancelled ? lista([], [], [anaCancelada]) : lista([ana], []),
+      [`POST /activities/${ACTIVITY_1.id}/registrations/${encodeURIComponent(ana.id)}/cancellation`]:
+        () => {
+          cancelled = true;
+          return lista([], [], [anaCancelada]);
+        },
+    });
+    renderSection();
+
+    await openRegistrations();
+    fireEvent.click(await screen.findByRole('button', { name: 'Ações de Ana Souza' }));
+    fireEvent.click(await screen.findByRole('menuitem', { name: 'Cancelar inscrição' }));
+    expect(await screen.findByText(/A vaga de Ana Souza fica livre/)).toBeInTheDocument();
+    fireEvent.change(screen.getByLabelText('Canal do pedido'), { target: { value: 'WHATSAPP' } });
+    fireEvent.change(screen.getByLabelText('Data do pedido'), { target: { value: '2026-10-29' } });
+    fireEvent.click(screen.getByRole('button', { name: 'Cancelar inscrição' }));
+
+    const canceladas = await screen.findByRole('region', { name: 'Canceladas (1)' });
+    expect(
+      within(canceladas).getByText('Cancelada a pedido em 29/10/2026 · WhatsApp'),
+    ).toBeInTheDocument();
+    expect(calls.find((c) => c.key.endsWith('/cancellation'))?.body).toEqual({
+      canal: 'WHATSAPP',
+      pedidoEm: '2026-10-29',
+    });
   });
 
   it('com vaga livre, o Nucleo confirma a vaga de quem esta na espera', async () => {
-    const lista = (confirmadas: RegisteredPerson[], espera: RegisteredPerson[]) => ({
-      status: 200,
-      body: {
-        vagas: 2,
-        confirmadas: confirmadas.length,
-        emEspera: espera.length,
-        inscricoes: [...confirmadas, ...espera],
-      },
-    });
     const ana = person('Ana Souza', 'CONFIRMADA', null);
     const bruno = person('Bruno Lima', 'LISTA_ESPERA', 1);
     const brunoConfirmado = { ...bruno, situacao: 'CONFIRMADA' as const, posicaoEspera: null };
@@ -396,14 +456,9 @@ describe('ProjectActivitiesSection', () => {
     });
     renderSection();
 
-    fireEvent.click(
-      await screen.findByRole('button', { name: `Ações da atividade ${ACTIVITY_1.titulo}` }),
-    );
-    fireEvent.click(await screen.findByRole('menuitem', { name: 'Ver inscritos' }));
-    // A ação aparece na linha no celular e numa coluna no desktop; o jsdom não aplica o CSS.
-    fireEvent.click(
-      (await screen.findAllByRole('button', { name: 'Confirmar vaga de Bruno Lima' }))[0]!,
-    );
+    await openRegistrations();
+    fireEvent.click(await screen.findByRole('button', { name: 'Ações de Bruno Lima' }));
+    fireEvent.click(await screen.findByRole('menuitem', { name: 'Confirmar vaga' }));
 
     expect(
       await screen.findByRole('region', { name: 'Vagas confirmadas (2)' }),

@@ -113,6 +113,13 @@ export function ParticipantDialog({
                       >
                         {inscricao.atividade.titulo}
                       </Link>
+                      {inscricao.situacao !== 'CONFIRMADA' && (
+                        <Badge variant="outline">
+                          {inscricao.situacao === 'LISTA_ESPERA'
+                            ? 'Na lista de espera'
+                            : 'Cancelada'}
+                        </Badge>
+                      )}
                       <span className="text-xs text-muted-foreground">
                         {formatDate(inscricao.atividade.data)} · inscrição em{' '}
                         {formatDateTime(inscricao.inscritoEm)}

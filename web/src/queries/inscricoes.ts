@@ -2,6 +2,7 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { authorizedRequest } from '@/auth/session';
 import { ApiError } from '@/lib/api';
 import type {
+  CancelRegistrationInput,
   OpenRegistrationInput,
   Registration,
   RegistrationList,
@@ -127,6 +128,30 @@ export function useConfirmFromWaitlist(activityId: string) {
     onSuccess: () =>
       Promise.all([
         queryClient.invalidateQueries({ queryKey: ['atividades', activityId, 'inscritos'] }),
+        // A lista de atividades mostra os inscritos e a espera.
+        queryClient.invalidateQueries({
+          queryKey: ['projetos'],
+          predicate: (query) => query.queryKey[2] === 'atividades',
+        }),
+      ]),
+  });
+}
+
+/** Cancelamento ou desistência registrado pelo Núcleo; a vaga liberada anda a espera. */
+export function useCancelRegistration(activityId: string) {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: ({ inscricaoId, data }: { inscricaoId: string; data: CancelRegistrationInput }) =>
+      authorizedRequest<RegistrationList>(
+        `/activities/${encodeURIComponent(activityId)}/registrations/${encodeURIComponent(
+          inscricaoId,
+        )}/cancellation`,
+        { method: 'POST', body: data },
+      ),
+    onSuccess: () =>
+      Promise.all([
+        queryClient.invalidateQueries({ queryKey: ['atividades', activityId, 'inscritos'] }),
+        queryClient.invalidateQueries({ queryKey: ['participantes'] }),
         // A lista de atividades mostra os inscritos e a espera.
         queryClient.invalidateQueries({
           queryKey: ['projetos'],
