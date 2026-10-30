@@ -1,5 +1,5 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { cleanup, fireEvent, render, screen, within } from '@testing-library/react';
+import { cleanup, fireEvent, render, screen, waitFor, within } from '@testing-library/react';
 import { clearLocalSession, signIn } from '@/auth/session';
 import { Toaster } from '@/components/ui/toast';
 import type { Participant, ParticipantSummary } from '@/types/participantes';
@@ -39,6 +39,8 @@ const ANA: Participant = {
       autorizaComunicados: true,
       autorizaImagem: false,
       termoAceitoEm: '2026-10-28T13:00:00.000Z',
+      comunicadosRevogacao: null,
+      imagemRevogacao: null,
       responsavelNome: null,
       responsavelTelefone: null,
       atividade: { id: 'a2', titulo: 'Oficina de dança', data: '2026-11-20' },
@@ -89,6 +91,7 @@ function renderView() {
 const LIST = 'GET /participants';
 const GET = `GET /participants/${ANA_ID}`;
 const PATCH = `PATCH /participants/${ANA_ID}`;
+const REVOKE = `POST /participants/${ANA_ID}/registrations/i1/revocations`;
 
 async function openCorrection() {
   fireEvent.click(await screen.findByRole('button', { name: 'Ações de Ana Souza' }));
@@ -152,6 +155,54 @@ describe('participantes', () => {
     expect(ficha.getByRole('link', { name: 'Oficina de dança' })).toBeInTheDocument();
     expect(ficha.getByText('Comunicados: sim')).toBeInTheDocument();
     expect(ficha.getByText('Imagem e voz: não')).toBeInTheDocument();
+  });
+
+  it('registra a revogacao dos comunicados com canal e data, e a ficha mostra a revogacao', async () => {
+    const revogada = {
+      ...ANA,
+      inscricoes: [
+        { ...ANA.inscricoes[0], comunicadosRevogacao: { pedidoEm: '2026-10-29', canal: 'EMAIL' } },
+      ],
+    };
+    const calls = await signedInAs('NUCLEO_PEDAGOGICO', {
+      [LIST]: () => ({ status: 200, body: [ANA_RESUMO] }),
+      [GET]: () => ({ status: 200, body: ANA }),
+      [REVOKE]: () => ({ status: 200, body: revogada }),
+    });
+    renderView();
+
+    fireEvent.click(await screen.findByRole('button', { name: 'Ações de Ana Souza' }));
+    fireEvent.click(await screen.findByRole('menuitem', { name: 'Ver ficha' }));
+    fireEvent.click(await screen.findByRole('button', { name: 'Registrar revogação' }));
+
+    expect(await screen.findByRole('heading', { name: 'Registrar revogação' })).toBeInTheDocument();
+    // Só a autorização dada e não revogada aparece para escolha.
+    const autorizacao = screen.getByLabelText('Autorização');
+    expect(
+      within(autorizacao)
+        .getAllByRole('option')
+        .map((o) => o.textContent),
+    ).toEqual(['Comunicados']);
+    fireEvent.click(screen.getByRole('button', { name: 'Registrar revogação' }));
+    expect(await screen.findByText('Escolha o canal do pedido.')).toBeInTheDocument();
+    expect(calls.some((call) => call.key === REVOKE)).toBe(false);
+
+    fireEvent.change(screen.getByLabelText('Canal do pedido'), { target: { value: 'EMAIL' } });
+    fireEvent.change(screen.getByLabelText('Data do pedido'), { target: { value: '2026-10-29' } });
+    fireEvent.click(screen.getByRole('button', { name: 'Registrar revogação' }));
+
+    expect(await screen.findByText('Revogação registrada')).toBeInTheDocument();
+    expect(calls.find((call) => call.key === REVOKE)?.body).toEqual({
+      autorizacao: 'COMUNICADOS',
+      canal: 'EMAIL',
+      pedidoEm: '2026-10-29',
+    });
+    expect(
+      await screen.findByText('Comunicados: revogada em 29/10/2026 (e-mail)'),
+    ).toBeInTheDocument();
+    await waitFor(() =>
+      expect(screen.queryByRole('button', { name: 'Registrar revogação' })).not.toBeInTheDocument(),
+    );
   });
 
   it('corrige so o que mudou, com a justificativa, e avisa', async () => {
