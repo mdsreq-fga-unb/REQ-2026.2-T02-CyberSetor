@@ -24,6 +24,10 @@ export interface Activity {
   responsavel: ActivityResponsavel;
   titulo: string;
   data: string;
+  /** HH:MM; nulos nas atividades cadastradas antes do horário. */
+  horaInicio: string | null;
+  horaFim: string | null;
+  cargaHorariaMinutos: number | null;
   local: string;
   metas: ActivityMeta[];
   /** Nulo enquanto a inscrição não foi aberta. */
@@ -41,6 +45,10 @@ export interface ActivityInput {
   modalidadeId: string;
   responsavelId: string;
   data: string;
+  horaInicio: string;
+  horaFim: string;
+  /** Nulo: a API usa o intervalo entre início e fim. */
+  cargaHorariaMinutos: number | null;
   local: string;
   metaIds: string[];
 }

@@ -2,9 +2,9 @@
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useEffect, useMemo, useState, type FormEvent } from 'react';
-import { useForm } from 'react-hook-form';
+import { useForm, useWatch } from 'react-hook-form';
 import { z } from 'zod';
-import { DateField, TextField } from '@/components/form/fields';
+import { DateField, DecimalField, TextField, TimeField } from '@/components/form/fields';
 import { FormField } from '@/components/form-field';
 import { Button } from '@/components/ui/button';
 import {
@@ -18,15 +18,29 @@ import {
 import { FieldGroup } from '@/components/ui/field';
 import { NativeSelect, NativeSelectOption } from '@/components/ui/native-select';
 import { ApiError } from '@/lib/api';
-import { dateSchema } from '@/lib/schemas';
+import { dateSchema, decimalSchema, timeSchema } from '@/lib/schemas';
 import { useEligibleResponsibles, useFreshActivity, useSaveActivity } from '@/queries/atividades';
 import { useGoals } from '@/queries/metas';
 import { useModalities } from '@/queries/modalidades';
 import type { Activity } from '@/types/atividades';
 import type { Project } from '@/types/projetos';
-import { formatDate } from '@/lib/br';
+import { formatDate, formatDuration, minutesOfDay } from '@/lib/br';
 
 const DATE = dateSchema();
+const START = timeSchema('Informe a hora de início.');
+const END = timeSchema('Informe a hora de fim.');
+const WORKLOAD = decimalSchema('Informe a carga horária em horas, como 7,5.', { positive: true });
+const BOTH_TIMES = z.object({ horaInicio: START, horaFim: END });
+
+/** Minutos entre início e fim, ou nulo enquanto as duas horas não estão completas. */
+function durationOf(horaInicio: string, horaFim: string): number | null {
+  if (!BOTH_TIMES.safeParse({ horaInicio, horaFim }).success) return null;
+  return minutesOfDay(horaFim) - minutesOfDay(horaInicio);
+}
+
+function hoursToMinutes(hours: string): number {
+  return Math.round(Number(hours) * 60);
+}
 
 function schemaFor(project: Project, saved: Activity | null) {
   const term = `${formatDate(project.inicio)} a ${formatDate(project.fim)}`;
@@ -41,6 +55,9 @@ function schemaFor(project: Project, saved: Activity | null) {
       modalidadeId: z.string().min(1, 'Escolha a modalidade.'),
       responsavelId: z.string().min(1, 'Escolha o responsável.'),
       data: DATE,
+      horaInicio: START,
+      horaFim: END,
+      cargaHoras: z.union([z.literal(''), WORKLOAD]),
       local: z
         .string()
         .trim()
@@ -56,7 +73,28 @@ function schemaFor(project: Project, saved: Activity | null) {
         message: `A data deve estar dentro do período de execução do projeto, de ${term}.`,
         when: (payload) => z.object({ data: DATE }).safeParse(payload.value).success,
       },
-    );
+    )
+    .refine((values) => (durationOf(values.horaInicio, values.horaFim) ?? 0) > 0, {
+      path: ['horaFim'],
+      message: 'A hora de fim deve ser depois da hora de início.',
+      when: (payload) => BOTH_TIMES.safeParse(payload.value).success,
+    })
+    .refine(
+      (values) => {
+        const duration = durationOf(values.horaInicio, values.horaFim) ?? 0;
+        return !values.cargaHoras || hoursToMinutes(values.cargaHoras) <= duration;
+      },
+      {
+        path: ['cargaHoras'],
+        message: 'A carga horária não pode passar do intervalo entre início e fim.',
+        when: (payload) =>
+          BOTH_TIMES.extend({ cargaHoras: WORKLOAD }).safeParse(payload.value).success,
+      },
+    )
+    .transform(({ cargaHoras, ...values }) => ({
+      ...values,
+      cargaHorariaMinutos: cargaHoras ? hoursToMinutes(cargaHoras) : null,
+    }));
 }
 
 type Schema = ReturnType<typeof schemaFor>;
@@ -68,6 +106,9 @@ const EMPTY: FormValues = {
   modalidadeId: '',
   responsavelId: '',
   data: '',
+  horaInicio: '',
+  horaFim: '',
+  cargaHoras: '',
   local: '',
   metaIds: [],
 };
@@ -76,8 +117,19 @@ const FIELD_BY_CODE: Partial<Record<string, FieldName>> = {
   INVALID_MODALITY: 'modalidadeId',
   INVALID_RESPONSIBLE: 'responsavelId',
   OUTSIDE_PROJECT_PERIOD: 'data',
+  SCHEDULE_INCOMPLETE: 'horaInicio',
+  INVALID_TIME_RANGE: 'horaFim',
+  WORKLOAD_EXCEEDS_DURATION: 'cargaHoras',
   META_OUTSIDE_PROJECT: 'metaIds',
 };
+
+/** Carga igual ao intervalo fica em branco: é o padrão, e acompanha a troca de horário. */
+function workloadHours(activity: Activity): string {
+  const { horaInicio, horaFim, cargaHorariaMinutos } = activity;
+  if (!horaInicio || !horaFim || cargaHorariaMinutos === null) return '';
+  if (cargaHorariaMinutos === durationOf(horaInicio, horaFim)) return '';
+  return String(Number((cargaHorariaMinutos / 60).toFixed(2)));
+}
 
 function valuesOf(activity: Activity | null): FormValues {
   if (!activity) return EMPTY;
@@ -86,6 +138,9 @@ function valuesOf(activity: Activity | null): FormValues {
     modalidadeId: activity.modalidade.id,
     responsavelId: activity.responsavel.id,
     data: activity.data,
+    horaInicio: activity.horaInicio ?? '',
+    horaFim: activity.horaFim ?? '',
+    cargaHoras: workloadHours(activity),
     local: activity.local,
     metaIds: activity.metas.map((m) => m.id),
   };
@@ -131,6 +186,12 @@ export function ActivityFormDialog({
   useEffect(() => {
     if (open) form.reset(valuesOf(activity));
   }, [open, activity, form]);
+
+  const [horaInicio, horaFim] = useWatch({
+    control: form.control,
+    name: ['horaInicio', 'horaFim'],
+  });
+  const duration = durationOf(horaInicio, horaFim);
 
   const unavailableResponsible =
     editing &&
@@ -240,6 +301,24 @@ export function ActivityFormDialog({
                 max={project.fim}
               />
               <TextField control={form.control} name="local" label="Local" autoComplete="off" />
+            </div>
+
+            <div className="grid gap-4 sm:grid-cols-3">
+              <TimeField control={form.control} name="horaInicio" label="Hora de início" />
+              <TimeField control={form.control} name="horaFim" label="Hora de fim" />
+              <DecimalField
+                control={form.control}
+                name="cargaHoras"
+                label="Carga horária (horas)"
+                placeholder={
+                  duration && duration > 0 ? String(duration / 60).replace('.', ',') : ''
+                }
+                description={
+                  duration && duration > 0
+                    ? `Em branco, vale o intervalo: ${formatDuration(duration)}. Menos, se houver pausa.`
+                    : 'Em branco, vale o intervalo entre início e fim.'
+                }
+              />
             </div>
 
             <FormField

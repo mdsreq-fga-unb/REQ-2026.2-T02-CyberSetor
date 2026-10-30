@@ -7,6 +7,7 @@ import { isValidCpf, isValidPhone, todayInBrasilia } from './br';
  */
 
 const ISO_DATE = /^\d{4}-\d{2}-\d{2}$/;
+const HH_MM = /^([01]\d|2[0-3]):[0-5]\d$/;
 const DECIMAL = /^\d+(\.\d{1,2})?$/;
 const MAX_MONEY_DIGITS = 12;
 
@@ -30,6 +31,11 @@ export function dateSchema(
 ) {
   const date = z.string().regex(ISO_DATE, message);
   return notFuture ? date.refine((value) => value <= todayInBrasilia(), notFuture) : date;
+}
+
+/** Hora HH:MM, como o seletor nativo guarda. */
+export function timeSchema(message = 'Informe a hora.') {
+  return z.string().regex(HH_MM, message);
 }
 
 /** Valor em reais maior que zero; sai com duas casas ("150000.00"), como a API guarda. */

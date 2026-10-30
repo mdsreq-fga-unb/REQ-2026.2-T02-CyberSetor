@@ -94,3 +94,28 @@ export function formatMoney(value: string): string {
 export function formatDateTime(value: string): string {
   return DATE_TIME.format(new Date(value));
 }
+
+/** Minutos desde a meia-noite de uma hora HH:MM. */
+export function minutesOfDay(time: string): number {
+  const [hours, minutes] = time.split(':').map(Number);
+  return hours * 60 + minutes;
+}
+
+/** HH:MM para "9h" ou "9h30". */
+export function formatTime(time: string): string {
+  const [hours, minutes] = time.split(':');
+  return `${Number(hours)}h${minutes === '00' ? '' : minutes}`;
+}
+
+/** Duração em minutos para "8 h", "3 h 30 min" ou "45 min". */
+export function formatDuration(total: number): string {
+  const hours = Math.floor(total / 60);
+  const minutes = total % 60;
+  if (hours === 0) return `${minutes} min`;
+  return minutes === 0 ? `${hours} h` : `${hours} h ${minutes} min`;
+}
+
+/** Horário com a carga horária: "9h às 17h · 8 h". */
+export function formatSchedule(start: string, end: string, workloadMinutes: number): string {
+  return `${formatTime(start)} às ${formatTime(end)} · ${formatDuration(workloadMinutes)}`;
+}

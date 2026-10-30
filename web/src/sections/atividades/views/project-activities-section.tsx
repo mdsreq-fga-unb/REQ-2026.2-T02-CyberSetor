@@ -25,7 +25,7 @@ import { useActivities } from '@/queries/atividades';
 import type { Activity } from '@/types/atividades';
 import type { Instrument } from '@/types/instrumentos';
 import type { Project } from '@/types/projetos';
-import { formatDate } from '@/lib/br';
+import { formatDate, formatSchedule } from '@/lib/br';
 import { ActivityFormDialog } from '../activity-form-dialog';
 import { RegistrationFormDialog } from '../registration-form-dialog';
 import { RegistrationShareDialog } from '../registration-share-dialog';
@@ -39,6 +39,13 @@ function loadFailure(error: unknown): string {
     return 'O seu perfil não consulta atividades.';
   }
   return 'Não foi possível carregar as atividades. Tente de novo.';
+}
+
+/** Data e, quando houver, horário e carga horária: "28/10/2026 · 9h às 17h · 8 h". */
+function whenOf(activity: Activity): string {
+  const { data, horaInicio, horaFim, cargaHorariaMinutos } = activity;
+  if (!horaInicio || !horaFim || cargaHorariaMinutos === null) return formatDate(data);
+  return `${formatDate(data)} · ${formatSchedule(horaInicio, horaFim, cargaHorariaMinutos)}`;
 }
 
 function Responsible({ activity }: { activity: Activity }) {
@@ -110,7 +117,7 @@ function ActivitySummary({ activity }: { activity: Activity }) {
           ))}
       </div>
       <span className="text-muted-foreground md:hidden">
-        {formatDate(activity.data)} · {activity.local}
+        {whenOf(activity)} · {activity.local}
       </span>
       <span className="text-muted-foreground md:hidden">
         <Responsible activity={activity} />
@@ -180,7 +187,7 @@ export function ProjectActivitiesSection({
                   Atividade
                 </TableHead>
                 <TableHead scope="col" className="hidden md:table-cell">
-                  Data e local
+                  Data, horário e local
                 </TableHead>
                 <TableHead scope="col" className="hidden md:table-cell">
                   Responsável
@@ -206,7 +213,7 @@ export function ProjectActivitiesSection({
                     </TableCell>
                     <TableCell className="hidden md:table-cell">
                       <div className="flex flex-col gap-1">
-                        <span>{formatDate(activity.data)}</span>
+                        <span>{whenOf(activity)}</span>
                         <span className="text-muted-foreground">{activity.local}</span>
                       </div>
                     </TableCell>
