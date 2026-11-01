@@ -302,6 +302,7 @@ model Participante {
 
 enum SituacaoInscricao {
   CONFIRMADA
+  LISTA_ESPERA
 }
 
 model Inscricao {
@@ -309,6 +310,7 @@ model Inscricao {
   atividadeId         String            @map("atividade_id") @db.Uuid
   participanteId      String            @map("participante_id") @db.Uuid
   situacao            SituacaoInscricao @default(CONFIRMADA)
+  posicaoEspera       Int?              @map("posicao_espera")
   /// Valor normalizado do campo que identifica cadastro repetido (e-mail ou CPF).
   chaveDuplicidade    String            @map("chave_duplicidade")
   versaoAviso         String            @map("versao_aviso")
@@ -324,6 +326,7 @@ model Inscricao {
 
   @@unique([atividadeId, chaveDuplicidade])
   @@index([participanteId])
+  @@index([atividadeId, situacao, criadoEm])
   @@map("inscricao")
 }
 

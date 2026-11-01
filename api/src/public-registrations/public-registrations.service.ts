@@ -6,7 +6,7 @@ import {
 } from '@nestjs/common';
 import { AuditTrailService } from '../audit/audit-trail.service.js';
 import { Prisma } from '../generated/prisma/client.js';
-import { AutorTipo, CampoInscricao } from '../generated/prisma/enums.js';
+import { AutorTipo, CampoInscricao, SituacaoInscricao } from '../generated/prisma/enums.js';
 import { todayInBrasilia } from '../goals/goal-deadline.js';
 import { PrismaService } from '../prisma/prisma.service.js';
 import { CAMPOS_MINIMOS } from '../registrations/registrations.dto.js';
@@ -107,10 +107,35 @@ export class PublicRegistrationsService {
 
     try {
       return await this.prisma.$transaction(async (tx) => {
+        await tx.$queryRaw`SELECT 1 FROM configuracao_inscricao WHERE atividade_id = ${config.atividadeId}::uuid FOR UPDATE`;
+
         const repeated = await tx.inscricao.count({
           where: { atividadeId: config.atividadeId, chaveDuplicidade: chave },
         });
         if (repeated > 0) throw this.alreadyRegistered();
+
+        const confirmados = await tx.inscricao.count({
+          where: {
+            atividadeId: config.atividadeId,
+            situacao: SituacaoInscricao.CONFIRMADA,
+          },
+        });
+
+        let situacao: SituacaoInscricao;
+        let posicaoEspera: number | null = null;
+
+        if (confirmados < config.vagas) {
+          situacao = SituacaoInscricao.CONFIRMADA;
+        } else {
+          situacao = SituacaoInscricao.LISTA_ESPERA;
+          const emEspera = await tx.inscricao.count({
+            where: {
+              atividadeId: config.atividadeId,
+              situacao: SituacaoInscricao.LISTA_ESPERA,
+            },
+          });
+          posicaoEspera = emEspera + 1;
+        }
 
         const participante = await tx.participante.create({
           data: {
@@ -127,6 +152,8 @@ export class PublicRegistrationsService {
           data: {
             atividadeId: config.atividadeId,
             participanteId: participante.id,
+            situacao,
+            posicaoEspera,
             chaveDuplicidade: chave,
             versaoAviso: DATA_NOTICE.versao,
             avisoApresentadoEm: new Date(),
@@ -142,13 +169,20 @@ export class PublicRegistrationsService {
             acao: 'REGISTRATION_SUBMITTED',
             entidade: 'inscricao',
             entidadeId: inscricao.id,
-            depois: { atividadeId: config.atividadeId, situacao: inscricao.situacao },
+            depois: {
+              atividadeId: config.atividadeId,
+              situacao: inscricao.situacao,
+              ...(inscricao.posicaoEspera !== null
+                ? { posicaoEspera: inscricao.posicaoEspera }
+                : {}),
+            },
             correlationId,
           },
           tx,
         );
         return {
           situacao: inscricao.situacao,
+          posicaoEspera: inscricao.posicaoEspera,
           atividade: publicActivity(config),
           inscritoEm: inscricao.criadoEm.toISOString(),
         };

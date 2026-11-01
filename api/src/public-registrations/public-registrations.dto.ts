@@ -140,8 +140,15 @@ export class PublicFormResponse {
 }
 
 export class SubmittedRegistrationResponse {
-  @ApiProperty({ example: 'CONFIRMADA' })
+  @ApiProperty({ example: 'CONFIRMADA', enum: ['CONFIRMADA', 'LISTA_ESPERA'] })
   situacao!: string;
+
+  @ApiPropertyOptional({
+    example: 1,
+    nullable: true,
+    description: 'Posição na lista de espera por ordem de chegada; nulo se vaga confirmada',
+  })
+  posicaoEspera?: number | null;
 
   @ApiProperty({ type: PublicActivityResponse })
   atividade!: PublicActivityResponse;

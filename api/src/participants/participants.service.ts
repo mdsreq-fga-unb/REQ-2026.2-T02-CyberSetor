@@ -98,6 +98,7 @@ function toResponse(row: ParticipantRow, today: string): ParticipantResponse {
     inscricoes: row.inscricoes.map((inscricao) => ({
       id: inscricao.id,
       situacao: inscricao.situacao,
+      posicaoEspera: inscricao.posicaoEspera,
       inscritoEm: inscricao.criadoEm,
       autorizaComunicados: inscricao.autorizaComunicados,
       autorizaImagem: inscricao.autorizaImagem,

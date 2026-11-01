@@ -1,5 +1,6 @@
 import { INestApplication } from '@nestjs/common';
 import { Test } from '@nestjs/testing';
+import { ThrottlerGuard } from '@nestjs/throttler';
 import request from 'supertest';
 import type { App } from 'supertest/types.js';
 import { PasswordService } from '../src/accounts/password.service.js';
@@ -47,7 +48,11 @@ describe('Formulário público de inscrição (e2e)', () => {
   let outroCodigo: string;
 
   beforeAll(async () => {
-    const moduleRef = await Test.createTestingModule({ imports: [AppModule] }).compile();
+    // O limite de envios por IP tem a sua própria suíte; aqui ele só atrapalharia a contagem.
+    const moduleRef = await Test.createTestingModule({ imports: [AppModule] })
+      .overrideGuard(ThrottlerGuard)
+      .useValue({ canActivate: () => true })
+      .compile();
     app = moduleRef.createNestApplication();
     setupApp(app, { corsOrigin: '' });
     await app.init();
@@ -267,5 +272,75 @@ describe('Formulário público de inscrição (e2e)', () => {
     await prisma.instrumento.update({ where: { id: instrumentoId }, data: { ativo: false } });
     const inativo = await server().get(`/v1/public/registrations/${outroCodigo}`).expect(200);
     expect((inativo.body as { aberta: boolean }).aberta).toBe(false);
+  });
+
+  it('confirma vaga quando dentro do limite e envia para lista de espera com posicao quando esgotado (HU-07c, CA-07c.1, CA-07c.2)', async () => {
+    await prisma.configuracaoInscricao.update({
+      where: { atividadeId },
+      data: { vagas: 2 },
+    });
+
+    const res1 = await enviar({ ...ADULTO, nome: 'Pessoa Um', cpf: '10000000019' }).expect(201);
+    expect(res1.body).toMatchObject({
+      situacao: 'CONFIRMADA',
+      posicaoEspera: null,
+    });
+
+    const res2 = await enviar({ ...ADULTO, nome: 'Pessoa Dois', cpf: '10000000108' }).expect(201);
+    expect(res2.body).toMatchObject({
+      situacao: 'CONFIRMADA',
+      posicaoEspera: null,
+    });
+
+    const res3 = await enviar({ ...ADULTO, nome: 'Pessoa Tres', cpf: '10000000280' }).expect(201);
+    expect(res3.body).toMatchObject({
+      situacao: 'LISTA_ESPERA',
+      posicaoEspera: 1,
+    });
+
+    const res4 = await enviar({ ...ADULTO, nome: 'Pessoa Quatro', cpf: '10000000361' }).expect(201);
+    expect(res4.body).toMatchObject({
+      situacao: 'LISTA_ESPERA',
+      posicaoEspera: 2,
+    });
+
+    const trilhas = await prisma.trilhaAuditoria.findMany({
+      where: { entidade: 'inscricao' },
+      orderBy: { criadoEm: 'asc' },
+    });
+    expect(trilhas).toHaveLength(4);
+    expect(trilhas[0].depois).toMatchObject({ situacao: 'CONFIRMADA' });
+    expect(trilhas[0].depois).not.toHaveProperty('posicaoEspera');
+    expect(trilhas[2].depois).toMatchObject({ situacao: 'LISTA_ESPERA', posicaoEspera: 1 });
+    expect(trilhas[3].depois).toMatchObject({ situacao: 'LISTA_ESPERA', posicaoEspera: 2 });
+  });
+
+  it('disputa concorrente pela ultima vaga garante que apenas uma confirma e as demais entram na fila (RNF01, RF14)', async () => {
+    await prisma.configuracaoInscricao.update({
+      where: { atividadeId },
+      data: { vagas: 1 },
+    });
+
+    const envios = [
+      enviar({ ...ADULTO, nome: 'Concorrente 1', cpf: '10000000019' }),
+      enviar({ ...ADULTO, nome: 'Concorrente 2', cpf: '10000000108' }),
+      enviar({ ...ADULTO, nome: 'Concorrente 3', cpf: '10000000280' }),
+    ];
+
+    const respostas = await Promise.all(envios);
+    expect(respostas.every((r) => r.status === 201)).toBe(true);
+
+    const corpos = respostas.map(
+      (r) => r.body as { situacao: string; posicaoEspera: number | null },
+    );
+    const confirmadas = corpos.filter((c) => c.situacao === 'CONFIRMADA');
+    const espera = corpos.filter((c) => c.situacao === 'LISTA_ESPERA');
+
+    expect(confirmadas).toHaveLength(1);
+    expect(confirmadas[0].posicaoEspera).toBeNull();
+
+    expect(espera).toHaveLength(2);
+    const posicoes = espera.map((e) => e.posicaoEspera).sort();
+    expect(posicoes).toEqual([1, 2]);
   });
 });

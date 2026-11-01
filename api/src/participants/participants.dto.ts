@@ -144,6 +144,12 @@ export class ParticipantRegistrationResponse {
   @ApiProperty({ enum: SituacaoInscricao })
   situacao!: SituacaoInscricao;
 
+  @ApiPropertyOptional({
+    nullable: true,
+    description: 'Posição na lista de espera; nulo quando a vaga foi confirmada',
+  })
+  posicaoEspera!: number | null;
+
   @ApiProperty()
   inscritoEm!: Date;
 
