@@ -27,6 +27,7 @@ import type { Instrument } from '@/types/instrumentos';
 import type { Project } from '@/types/projetos';
 import { formatActivityWhen } from '@/lib/br';
 import { ActivityFormDialog } from '../activity-form-dialog';
+import { AssistedRegistrationDialog } from '../assisted-registration-dialog';
 import { RegistrationFormDialog } from '../registration-form-dialog';
 import { RegistrationListDialog } from '../registration-list-dialog';
 import { RegistrationShareDialog } from '../registration-share-dialog';
@@ -150,6 +151,7 @@ export function ProjectActivitiesSection({
   }>();
   const registrationToggle = useDialogState<{ activity: Activity }>();
   const registrationList = useDialogState<Activity>();
+  const assistedRegistration = useDialogState<{ activity: Activity }>();
 
   const canEdit = session !== null && EDITORS.includes(session.perfil) && instrument.ativo === true;
   // Os nomes dos inscritos são só do Núcleo Pedagógico, mesmo com o instrumento inativo (RNF04).
@@ -177,6 +179,12 @@ export function ProjectActivitiesSection({
       }
     }
     if (seesNames && activity.inscricao) {
+      if (activity.inscricao.aberta) {
+        actions.push({
+          label: 'Nova inscrição presencial',
+          onSelect: () => assistedRegistration.show({ activity }),
+        });
+      }
       actions.push({ label: 'Ver inscritos', onSelect: () => registrationList.show(activity) });
     }
     return actions;
@@ -342,6 +350,12 @@ export function ProjectActivitiesSection({
             ? () => registrationForm.show({ activity: registrationShare.value!.activity })
             : undefined
         }
+      />
+
+      <AssistedRegistrationDialog
+        open={assistedRegistration.open}
+        activity={assistedRegistration.value?.activity ?? null}
+        onClose={assistedRegistration.close}
       />
     </section>
   );
