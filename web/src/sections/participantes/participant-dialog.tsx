@@ -100,6 +100,13 @@ export function ParticipantDialog({
                       </span>
                     </div>
                     <div className="flex flex-wrap gap-2">
+                      <Badge
+                        variant={inscricao.situacao === 'CONFIRMADA' ? 'default' : 'secondary'}
+                      >
+                        {inscricao.situacao === 'CONFIRMADA'
+                          ? 'Confirmada'
+                          : `Lista de espera · ${inscricao.posicaoEspera ?? '—'}º`}
+                      </Badge>
                       <Authorization label="Comunicados" given={inscricao.autorizaComunicados} />
                       <Authorization label="Uso de imagem" given={inscricao.autorizaImagem} />
                     </div>

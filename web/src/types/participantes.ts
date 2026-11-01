@@ -17,7 +17,8 @@ export interface ParticipantSummary {
 
 export interface ParticipantRegistration {
   id: string;
-  situacao: 'CONFIRMADA';
+  situacao: 'CONFIRMADA' | 'LISTA_ESPERA';
+  posicaoEspera?: number | null;
   inscritoEm: string;
   autorizaComunicados: boolean;
   autorizaImagem: boolean;

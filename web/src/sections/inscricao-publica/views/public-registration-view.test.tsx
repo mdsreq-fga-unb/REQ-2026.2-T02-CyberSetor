@@ -123,6 +123,32 @@ describe('formulario publico de inscricao', () => {
     });
   });
 
+  it('quando vagas esgotadas, recebe situacao LISTA_ESPERA e informa a posicao na tela (HU-07c, CA-07c.1)', async () => {
+    stubApi({
+      [GET]: () => ({ status: 200, body: FORM }),
+      [POST]: () => ({
+        status: 201,
+        body: {
+          situacao: 'LISTA_ESPERA',
+          posicaoEspera: 3,
+          atividade: FORM.atividade,
+          inscritoEm: '2026-10-28T13:00:00.000Z',
+        },
+      }),
+    });
+    renderView();
+
+    await screen.findByLabelText('CPF');
+    fillAdult();
+    fireEvent.click(screen.getByRole('button', { name: 'Confirmar inscrição' }));
+
+    expect(
+      await screen.findByRole('heading', { name: 'Inscrição na lista de espera' }),
+    ).toBeInTheDocument();
+    expect(screen.getByText('Você está na 3ª posição da lista de espera')).toBeInTheDocument();
+    expect(screen.getByText(/As vagas principais foram preenchidas/)).toBeInTheDocument();
+  });
+
   it('menor de 18 anos ve e precisa preencher o responsavel legal antes de enviar', async () => {
     const calls = stubApi({ [GET]: () => ({ status: 200, body: FORM }) });
     renderView();

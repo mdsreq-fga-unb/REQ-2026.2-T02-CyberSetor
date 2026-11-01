@@ -61,7 +61,10 @@ function registrationText(activity: Activity): string {
   const { inscricao } = activity;
   if (!inscricao) return 'Inscrição não aberta';
   const situacao = inscricao.aberta ? 'Inscrição aberta' : 'Inscrição encerrada';
-  return `${situacao} · ${inscricao.inscritos} de ${inscricao.vagas}`;
+  const confirmados = inscricao.confirmados ?? Math.min(inscricao.inscritos, inscricao.vagas);
+  const listaEspera = inscricao.listaEspera ?? Math.max(0, inscricao.inscritos - inscricao.vagas);
+  const esperaTexto = listaEspera > 0 ? ` (${listaEspera} na espera)` : '';
+  return `${situacao} · ${confirmados} de ${inscricao.vagas}${esperaTexto}`;
 }
 
 function RegistrationStatus({

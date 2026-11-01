@@ -1,7 +1,7 @@
 'use client';
 
 import { zodResolver } from '@hookform/resolvers/zod';
-import { CircleCheckIcon } from 'lucide-react';
+import { CircleCheckIcon, ClockIcon } from 'lucide-react';
 import { useMemo, useState, type FormEvent } from 'react';
 import { Controller, useForm, useWatch, type Control } from 'react-hook-form';
 import { z } from 'zod';
@@ -347,21 +347,33 @@ export function PublicRegistrationView({ codigo }: { codigo: string }) {
   const [closed, setClosed] = useState(false);
 
   if (submitted) {
+    const isWaitlist = submitted.situacao === 'LISTA_ESPERA';
     return (
       <Card>
         <CardHeader className="items-center text-center">
-          <CircleCheckIcon aria-hidden="true" className="size-10 text-primary" />
+          {isWaitlist ? (
+            <ClockIcon aria-hidden="true" className="size-10 text-amber-600 dark:text-amber-500" />
+          ) : (
+            <CircleCheckIcon aria-hidden="true" className="size-10 text-primary" />
+          )}
           <CardTitle className="text-xl">
-            <h1>Inscrição confirmada</h1>
+            <h1>{isWaitlist ? 'Inscrição na lista de espera' : 'Inscrição confirmada'}</h1>
           </CardTitle>
           <CardDescription>{submitted.atividade.titulo}</CardDescription>
         </CardHeader>
-        <CardContent className="flex flex-col gap-2 text-center text-sm">
+        <CardContent className="flex flex-col gap-3 text-center text-sm">
+          {isWaitlist && typeof submitted.posicaoEspera === 'number' && (
+            <div className="rounded-md bg-amber-500/10 p-2 font-medium text-amber-700 dark:text-amber-400">
+              Você está na {submitted.posicaoEspera}ª posição da lista de espera
+            </div>
+          )}
           <p>
             {formatDate(submitted.atividade.data)} · {submitted.atividade.local}
           </p>
           <p className="text-muted-foreground">
-            Se tiver dúvidas ou quiser cancelar, fale com a equipe do Instituto.
+            {isWaitlist
+              ? 'As vagas principais foram preenchidas. Caso surja uma vaga, a equipe do Instituto entrará em contato.'
+              : 'Se tiver dúvidas ou quiser cancelar, fale com a equipe do Instituto.'}
           </p>
         </CardContent>
       </Card>

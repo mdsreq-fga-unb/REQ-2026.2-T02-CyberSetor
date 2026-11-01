@@ -30,7 +30,8 @@ export interface PublicSubmission {
 }
 
 export interface SubmittedRegistration {
-  situacao: string;
+  situacao: 'CONFIRMADA' | 'LISTA_ESPERA' | string;
+  posicaoEspera?: number | null;
   atividade: PublicActivity;
   inscritoEm: string;
 }

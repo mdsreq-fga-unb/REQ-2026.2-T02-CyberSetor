@@ -38,6 +38,8 @@ export interface ActivityRegistrationStatus {
   aberta: boolean;
   vagas: number;
   inscritos: number;
+  confirmados?: number;
+  listaEspera?: number;
 }
 
 export interface ActivityInput {
