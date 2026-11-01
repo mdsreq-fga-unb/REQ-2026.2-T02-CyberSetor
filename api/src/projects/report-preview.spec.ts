@@ -230,15 +230,28 @@ describe('Prévia do Relatório de Execução - reportPreview (unitário)', () =
     expect(res.metas[4].resultado?.valorAlcancado).toBeNull();
     expect(res.metas[4].resultado?.descricao).toBe('Certificação obtida com sucesso');
 
-    // Último resultado até o fim do período, sem limite inferior (CA-05a.1)
+    // Filtra metas que intersectam o período solicitado e busca último resultado até `to` (CA-05a.1)
     expect(prismaMock.meta.findMany).toHaveBeenCalledTimes(1);
     const lastCall = prismaMock.meta.findMany.mock.lastCall as unknown as [
       {
-        where: { projetoId: string };
+        where: unknown;
         include: { resultados: { where: { dataReferencia: unknown } } };
       },
     ];
-    expect(lastCall[0].where).toEqual({ projetoId });
+    expect(lastCall[0].where).toEqual({
+      projetoId,
+      AND: [
+        {
+          OR: [
+            { periodoInicio: null },
+            { periodoInicio: { lte: new Date('2026-06-30T00:00:00.000Z') } },
+          ],
+        },
+        {
+          OR: [{ periodoFim: null }, { periodoFim: { gte: new Date('2026-01-01T00:00:00.000Z') } }],
+        },
+      ],
+    });
     expect(lastCall[0].include.resultados.where).toEqual({
       dataReferencia: { lte: new Date('2026-06-30T00:00:00.000Z') },
     });

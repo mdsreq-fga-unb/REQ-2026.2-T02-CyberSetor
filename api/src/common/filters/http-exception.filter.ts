@@ -30,7 +30,6 @@ const CODIGO_POR_STATUS: Partial<Record<number, string>> = {
 };
 
 const LIMIAR_ERRO_DO_SERVIDOR: number = HttpStatus.INTERNAL_SERVER_ERROR;
-const STATUS_VALIDACAO: number = HttpStatus.BAD_REQUEST;
 
 @Catch()
 export class HttpExceptionFilter implements ExceptionFilter {
@@ -45,7 +44,6 @@ export class HttpExceptionFilter implements ExceptionFilter {
     const status: number =
       exception instanceof HttpException ? exception.getStatus() : LIMIAR_ERRO_DO_SERVIDOR;
     const ehErroDoServidor = status >= LIMIAR_ERRO_DO_SERVIDOR;
-    const ehValidacao = status === STATUS_VALIDACAO;
 
     const envelope: ErrorEnvelope = {
       code:
@@ -54,7 +52,7 @@ export class HttpExceptionFilter implements ExceptionFilter {
         (ehErroDoServidor ? 'INTERNAL_ERROR' : 'HTTP_ERROR'),
       message: ehErroDoServidor ? 'Erro interno. Tente novamente.' : this.mensagemDe(exception),
       correlationId,
-      details: ehValidacao ? this.detalhesDeValidacao(exception) : {},
+      details: ehErroDoServidor ? {} : this.detalhesDe(exception),
     };
 
     if (ehErroDoServidor) {
@@ -91,11 +89,13 @@ export class HttpExceptionFilter implements ExceptionFilter {
     return 'Erro na requisição.';
   }
 
-  private detalhesDeValidacao(exception: unknown): Record<string, unknown> {
+  private detalhesDe(exception: unknown): Record<string, unknown> {
     if (!(exception instanceof HttpException)) return {};
-    const body = exception.getResponse() as { message?: unknown; details?: unknown };
+    const raw = exception.getResponse();
+    if (typeof raw !== 'object' || raw === null) return {};
+    const body = raw as { message?: unknown; details?: unknown };
     if (Array.isArray(body.message)) return { errors: body.message };
-    // Recusa de regra com detalhe próprio (ex.: quais campos faltam).
+    // Recusa de regra com detalhe próprio (ex.: campos faltantes no 400 ou pendências no 422).
     return body.details && typeof body.details === 'object'
       ? (body.details as Record<string, unknown>)
       : {};
