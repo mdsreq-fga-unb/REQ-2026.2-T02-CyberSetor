@@ -139,6 +139,41 @@ describe('RegistrationShareDialog', () => {
     });
   });
 
+  it('oferece a mensagem pronta, editavel, para copiar ou enviar pelo WhatsApp', async () => {
+    const writeTextMock = vi.fn().mockResolvedValue(undefined);
+    Object.assign(navigator, { clipboard: { writeText: writeTextMock } });
+    const openMock = vi.spyOn(window, 'open').mockReturnValue(null);
+
+    renderShareDialog({ initialRegistration: REGISTRATION_OPEN });
+
+    const field = (await screen.findByLabelText('Mensagem para divulgar')) as HTMLTextAreaElement;
+    expect(field.value).toContain(`Inscrições abertas: ${ACTIVITY.titulo}`);
+    expect(field.value).toContain('10/05/2026 · Galpão SCS');
+    expect(field.value).toContain('/inscrever/xyz987654321');
+
+    fireEvent.change(field, { target: { value: 'Vem pra oficina! /inscrever/xyz987654321' } });
+    fireEvent.click(screen.getByRole('button', { name: /Copiar mensagem/ }));
+    await waitFor(() => {
+      expect(writeTextMock).toHaveBeenCalledWith('Vem pra oficina! /inscrever/xyz987654321');
+      expect(screen.getByText('Mensagem copiada!')).toBeInTheDocument();
+    });
+
+    fireEvent.click(screen.getByRole('button', { name: /Enviar pelo WhatsApp/ }));
+    expect(openMock).toHaveBeenCalledWith(
+      'https://wa.me/?text=Vem%20pra%20oficina!%20%2Finscrever%2Fxyz987654321',
+      '_blank',
+      'noopener,noreferrer',
+    );
+    openMock.mockRestore();
+  });
+
+  it('nao oferece mensagem de divulgacao com a inscricao encerrada', async () => {
+    renderShareDialog({ initialRegistration: REGISTRATION_CLOSED });
+
+    expect(await screen.findByText(/As inscrições estão encerradas/)).toBeInTheDocument();
+    expect(screen.queryByLabelText('Mensagem para divulgar')).not.toBeInTheDocument();
+  });
+
   it('exibe aviso visual quando a inscricao esta encerrada', async () => {
     renderShareDialog({ initialRegistration: REGISTRATION_CLOSED });
 
