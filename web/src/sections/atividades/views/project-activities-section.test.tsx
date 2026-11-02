@@ -211,6 +211,93 @@ describe('ProjectActivitiesSection', () => {
     expect(screen.queryByRole('button', { name: /Divulgar/ })).not.toBeInTheDocument();
   });
 
+  it('mostra quando as vagas foram preenchidas com a inscricao ainda aberta', async () => {
+    await signedInAs('NUCLEO_PEDAGOGICO', {
+      [`GET /projects/${PROJECT.id}/activities`]: () => ({
+        status: 200,
+        body: [{ ...ACTIVITY_1, inscricao: { aberta: true, vagas: 30, inscritos: 30 } }],
+      }),
+    });
+    renderSection();
+
+    expect((await screen.findAllByText('Vagas preenchidas · 30 de 30')).length).toBeGreaterThan(0);
+  });
+
+  it('encerra a inscricao pelo menu da atividade com a versao atual', async () => {
+    let aberta = true;
+    const calls = await signedInAs('NUCLEO_PEDAGOGICO', {
+      [`GET /projects/${PROJECT.id}/activities`]: () => ({
+        status: 200,
+        body: [{ ...ACTIVITY_1, inscricao: { aberta, vagas: 30, inscritos: 12 } }],
+      }),
+      [`GET /activities/${ACTIVITY_1.id}/registration`]: () => ({
+        status: 200,
+        body: { atividadeId: ACTIVITY_1.id, versao: 4, aberta, vagas: 30 },
+      }),
+      [`PATCH /activities/${ACTIVITY_1.id}/registration`]: (body) => {
+        aberta = (body as { aberta: boolean }).aberta;
+        return { status: 200, body: { atividadeId: ACTIVITY_1.id, versao: 5, aberta, vagas: 30 } };
+      },
+    });
+    renderSection();
+
+    fireEvent.click(
+      await screen.findByRole('button', { name: `Ações da atividade ${ACTIVITY_1.titulo}` }),
+    );
+    fireEvent.click(await screen.findByRole('menuitem', { name: 'Encerrar inscrições' }));
+    expect(await screen.findByText(/Quem já se inscreveu continua inscrito/)).toBeInTheDocument();
+    fireEvent.click(screen.getByRole('button', { name: 'Encerrar inscrições' }));
+
+    expect((await screen.findAllByText('Inscrição encerrada · 12 de 30')).length).toBeGreaterThan(
+      0,
+    );
+    expect(calls.find((c) => c.key.startsWith('PATCH'))?.body).toEqual({
+      versao: 4,
+      aberta: false,
+    });
+  });
+
+  it('oferece reabrir a inscricao encerrada e mostra a recusa do servidor', async () => {
+    await signedInAs('NUCLEO_PEDAGOGICO', {
+      [`GET /projects/${PROJECT.id}/activities`]: () => ({
+        status: 200,
+        body: [{ ...ACTIVITY_1, inscricao: { aberta: false, vagas: 30, inscritos: 12 } }],
+      }),
+      [`GET /activities/${ACTIVITY_1.id}/registration`]: () => ({
+        status: 200,
+        body: { atividadeId: ACTIVITY_1.id, versao: 2, aberta: false, vagas: 30 },
+      }),
+      [`PATCH /activities/${ACTIVITY_1.id}/registration`]: () => ({
+        status: 403,
+        body: { code: 'FORBIDDEN', message: 'Sem permissão' },
+      }),
+    });
+    renderSection();
+
+    fireEvent.click(
+      await screen.findByRole('button', { name: `Ações da atividade ${ACTIVITY_1.titulo}` }),
+    );
+    fireEvent.click(await screen.findByRole('menuitem', { name: 'Reabrir inscrições' }));
+    fireEvent.click(await screen.findByRole('button', { name: 'Reabrir inscrições' }));
+
+    expect(await screen.findByRole('alert')).toHaveTextContent(
+      'O seu perfil não tem permissão para alterar a inscrição desta atividade.',
+    );
+  });
+
+  it('atividade sem inscricao nao oferece encerrar nem link', async () => {
+    await signedInAs('NUCLEO_PEDAGOGICO', {
+      [`GET /projects/${PROJECT.id}/activities`]: () => ({ status: 200, body: [ACTIVITY_1] }),
+    });
+    renderSection();
+
+    fireEvent.click(
+      await screen.findByRole('button', { name: `Ações da atividade ${ACTIVITY_1.titulo}` }),
+    );
+    expect(await screen.findByRole('menuitem', { name: 'Abrir inscrição' })).toBeInTheDocument();
+    expect(screen.queryByRole('menuitem', { name: /Encerrar|Link e QR Code/ })).toBeNull();
+  });
+
   it('perfil de consulta (ADMINISTRATIVO_FINANCEIRO) consulta mas nao altera', async () => {
     await signedInAs('ADMINISTRATIVO_FINANCEIRO', {
       [`GET /projects/${PROJECT.id}/activities`]: () => ({
