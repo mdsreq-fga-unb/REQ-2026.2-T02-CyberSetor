@@ -15,6 +15,7 @@ import { PrismaModule } from './prisma/prisma.module.js';
 import { ProjectsModule } from './projects/projects.module.js';
 import { PublicRegistrationsModule } from './public-registrations/public-registrations.module.js';
 import { RegistrationsModule } from './registrations/registrations.module.js';
+import { ReportsModule } from './reports/reports.module.js';
 import { RequirementsModule } from './requirements/requirements.module.js';
 import { SectorsModule } from './sectors/sectors.module.js';
 import { StorageModule } from './storage/storage.module.js';
@@ -38,6 +39,7 @@ import { StorageModule } from './storage/storage.module.js';
     ActivitiesModule,
     RequirementsModule,
     GoalsModule,
+    ReportsModule,
     SectorsModule,
     RegistrationsModule,
     PublicRegistrationsModule,

@@ -423,6 +423,38 @@ describe('Resultado alcançado da meta e parâmetro planejado numérico (e2e)', 
       });
     });
 
+    it('inclui apenas metas cujo periodo intersecta o intervalo solicitado', async () => {
+      const metaSem1 = await goal({ periodoInicio: '2025-01-10', periodoFim: '2025-06-30' });
+      const metaSem2 = await goal({ periodoInicio: '2025-07-01', periodoFim: '2025-12-20' });
+      await record(tokens[Perfil.NUCLEO_PEDAGOGICO], metaSem1.id, {
+        dataReferencia: '2025-06-20',
+        descricao: 'Meta do 1º semestre cumprida.',
+        valorAlcancado: 120,
+      }).expect(201);
+
+      const janJun2025 = await preview(
+        tokens[Perfil.PRESIDENCIA_GESTAO],
+        'from=2025-01-01&to=2025-06-30',
+      ).expect(200);
+      expect((janJun2025.body as { metas: { id: string }[] }).metas.map((m) => m.id)).toEqual([
+        metaSem1.id,
+      ]);
+
+      const julDez2025 = await preview(
+        tokens[Perfil.PRESIDENCIA_GESTAO],
+        'from=2025-07-01&to=2025-12-31',
+      ).expect(200);
+      expect((julDez2025.body as { metas: { id: string }[] }).metas.map((m) => m.id)).toEqual([
+        metaSem2.id,
+      ]);
+
+      const julDez2026 = await preview(
+        tokens[Perfil.PRESIDENCIA_GESTAO],
+        'from=2026-07-01&to=2026-12-31',
+      ).expect(200);
+      expect((julDez2026.body as { metas: { id: string }[] }).metas).toEqual([]);
+    });
+
     it('recusa periodo invertido ou mal formado, projeto inexistente e perfis sem leitura', async () => {
       const gestaoToken = tokens[Perfil.PRESIDENCIA_GESTAO];
       const invertido = await preview(gestaoToken, 'from=2026-06-30&to=2026-01-01').expect(400);
