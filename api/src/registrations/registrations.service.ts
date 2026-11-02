@@ -101,6 +101,12 @@ function assertDeadline(
     }
     return;
   }
+  if (isoDate(toDate(prazo)) !== prazo) {
+    throw new BadRequestException({
+      code: 'DEADLINE_INVALID',
+      message: 'Confira a data do prazo; ela não existe no calendário.',
+    });
+  }
   const dataAtividade = isoDate(atividadeData)!;
   if (deadlineOf(prazo, hora) < nowInBrasilia(now) || prazo > dataAtividade) {
     throw new BadRequestException({

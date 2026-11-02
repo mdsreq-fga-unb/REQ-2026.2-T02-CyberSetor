@@ -332,6 +332,7 @@ describe('Configuração da inscrição da atividade (e2e)', () => {
     expect(await recusa({ prazoInscricao: day(-2) })).toBe('DEADLINE_INVALID');
     expect(await recusa({ prazoInscricao: day(11) })).toBe('DEADLINE_INVALID');
     expect(await recusa({ prazoHora: '18:00' })).toBe('DEADLINE_INVALID');
+    expect(await recusa({ prazoInscricao: '2026-02-30' })).toBe('DEADLINE_INVALID');
     expect(await recusa({ prazoInscricao: day(5), prazoHora: '25:00' })).toBe('VALIDATION_ERROR');
 
     const comHora = await opened({ ...VALID, prazoInscricao: day(10), prazoHora: '18:00' });
