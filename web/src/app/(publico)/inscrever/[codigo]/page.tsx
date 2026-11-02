@@ -6,7 +6,7 @@ import type { PublicForm } from '@/types/inscricao-publica';
 
 const SITE = 'Instituto No Setor';
 
-/** Prévia do link nas redes e no WhatsApp: nome da atividade, data, local e situação. */
+/** Prévia do link no WhatsApp e nas outras redes (Open Graph e Twitter Card): nome da atividade, data, local e situação. */
 export async function generateMetadata({
   params,
 }: {
@@ -28,6 +28,7 @@ export async function generateMetadata({
       title,
       description,
       openGraph: { title, description, siteName: SITE, locale: 'pt_BR', type: 'website' },
+      twitter: { card: 'summary', title, description },
     };
   } catch {
     return { ...base, title: `Inscrição | ${SITE}` };
