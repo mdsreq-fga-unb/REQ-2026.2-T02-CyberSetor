@@ -215,7 +215,13 @@ export class RegistrationsService {
           changes.apresentacao === undefined ? before.apresentacao : changes.apresentacao,
         prazoInscricao:
           changes.prazoInscricao === undefined ? before.prazoInscricao : changes.prazoInscricao,
-        prazoHora: changes.prazoHora === undefined ? before.prazoHora : changes.prazoHora,
+        // Tirar a data tira também a hora, que só existe junto dela.
+        prazoHora:
+          changes.prazoHora !== undefined
+            ? changes.prazoHora
+            : changes.prazoInscricao === null
+              ? null
+              : before.prazoHora,
         contatoWhatsapp:
           changes.contatoWhatsapp === undefined ? before.contatoWhatsapp : changes.contatoWhatsapp,
       };

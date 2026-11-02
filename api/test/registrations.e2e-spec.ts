@@ -347,6 +347,19 @@ describe('Configuração da inscrição da atividade (e2e)', () => {
       .patch(path(), { versao: 2, prazoInscricao: day(12) })
       .expect(400);
     expect((depois.body as { code: string }).code).toBe('DEADLINE_INVALID');
+
+    const comHoraDeNovo = await as(Perfil.NUCLEO_PEDAGOGICO)
+      .patch(path(), { versao: 2, prazoHora: '18:00' })
+      .expect(200);
+    expect(comHoraDeNovo.body as RegistrationBody).toMatchObject({ versao: 3, prazoHora: '18:00' });
+    const semPrazo = await as(Perfil.NUCLEO_PEDAGOGICO)
+      .patch(path(), { versao: 3, prazoInscricao: null })
+      .expect(200);
+    expect(semPrazo.body as RegistrationBody).toMatchObject({
+      versao: 4,
+      prazoInscricao: null,
+      prazoHora: null,
+    });
   });
 
   it('reabrir com o prazo vencido pede prazo novo; com ele, reabre', async () => {
