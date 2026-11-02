@@ -2,7 +2,7 @@
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import { ShieldCheckIcon } from 'lucide-react';
-import { useEffect, useRef, useState, type FormEvent } from 'react';
+import { useEffect, useMemo, useRef, useState, type FormEvent } from 'react';
 import { useForm, useWatch } from 'react-hook-form';
 import { z } from 'zod';
 import { DateField, PhoneField } from '@/components/form/fields';
@@ -50,56 +50,59 @@ const LABELS_ADICIONAIS: Record<CampoInscricao, string> = {
   ESCOLARIDADE: 'Escolaridade',
 };
 
-const registrationSchema = z
-  .object({
-    aberta: z.boolean(),
-    vagas: z.coerce
-      .number({ message: 'Informe o número de vagas.' })
-      .int('O número de vagas deve ser um número inteiro.')
-      .min(1, 'Informe ao menos 1 vaga.')
-      .max(MAX_VAGAS, `O limite máximo é de ${MAX_VAGAS.toLocaleString('pt-BR')} vagas.`),
-    camposAdicionais: z.array(z.enum(CAMPOS_ADICIONAIS)),
-    campoDuplicidade: z.enum(['CPF', 'EMAIL']),
-    termoCompromisso: z
-      .string()
-      .trim()
-      .max(MAX_TERMO, `O texto tem no máximo ${MAX_TERMO.toLocaleString('pt-BR')} caracteres.`),
-    apresentacao: z
-      .string()
-      .trim()
-      .max(
-        MAX_APRESENTACAO,
-        `O texto tem no máximo ${MAX_APRESENTACAO.toLocaleString('pt-BR')} caracteres.`,
-      ),
-    prazoInscricao: z
-      .string()
-      .refine((value) => value === '' || ISO_DATE.test(value), 'Informe a data completa.')
-      .refine(
-        (value) => value === '' || value >= todayInBrasilia(),
-        'O prazo não pode ser uma data que já passou.',
-      ),
-    prazoHora: z
-      .string()
-      .refine((value) => value === '' || HOUR.test(value), 'Informe a hora, como 18:00.'),
-    contatoWhatsapp: z
-      .string()
-      .refine(
-        (value) => value === '' || isValidPhone(value),
-        'Informe o WhatsApp com DDD, como (61) 99999-8888.',
-      ),
-  })
-  .refine((data) => data.camposAdicionais.includes(data.campoDuplicidade), {
-    path: ['campoDuplicidade'],
-    message:
-      'O dado escolhido para evitar inscrição em dobro precisa estar entre os dados pedidos.',
-  })
-  .refine((data) => data.prazoHora === '' || data.prazoInscricao !== '', {
-    path: ['prazoInscricao'],
-    message: 'Informe a data do prazo para usar a hora.',
-  });
+// O prazo já gravado continua valendo na edição, mesmo vencido: só um prazo novo precisa ser futuro.
+const registrationSchemaFor = (prazoSalvo: string | null) =>
+  z
+    .object({
+      aberta: z.boolean(),
+      vagas: z.coerce
+        .number({ message: 'Informe o número de vagas.' })
+        .int('O número de vagas deve ser um número inteiro.')
+        .min(1, 'Informe ao menos 1 vaga.')
+        .max(MAX_VAGAS, `O limite máximo é de ${MAX_VAGAS.toLocaleString('pt-BR')} vagas.`),
+      camposAdicionais: z.array(z.enum(CAMPOS_ADICIONAIS)),
+      campoDuplicidade: z.enum(['CPF', 'EMAIL']),
+      termoCompromisso: z
+        .string()
+        .trim()
+        .max(MAX_TERMO, `O texto tem no máximo ${MAX_TERMO.toLocaleString('pt-BR')} caracteres.`),
+      apresentacao: z
+        .string()
+        .trim()
+        .max(
+          MAX_APRESENTACAO,
+          `O texto tem no máximo ${MAX_APRESENTACAO.toLocaleString('pt-BR')} caracteres.`,
+        ),
+      prazoInscricao: z
+        .string()
+        .refine((value) => value === '' || ISO_DATE.test(value), 'Informe a data completa.')
+        .refine(
+          (value) => value === '' || value === prazoSalvo || value >= todayInBrasilia(),
+          'O prazo não pode ser uma data que já passou.',
+        ),
+      prazoHora: z
+        .string()
+        .refine((value) => value === '' || HOUR.test(value), 'Informe a hora, como 18:00.'),
+      contatoWhatsapp: z
+        .string()
+        .refine(
+          (value) => value === '' || isValidPhone(value),
+          'Informe o WhatsApp com DDD, como (61) 99999-8888.',
+        ),
+    })
+    .refine((data) => data.camposAdicionais.includes(data.campoDuplicidade), {
+      path: ['campoDuplicidade'],
+      message:
+        'O dado escolhido para evitar inscrição em dobro precisa estar entre os dados pedidos.',
+    })
+    .refine((data) => data.prazoHora === '' || data.prazoInscricao !== '', {
+      path: ['prazoInscricao'],
+      message: 'Informe a data do prazo para usar a hora.',
+    });
 
-type FormValues = z.input<typeof registrationSchema>;
-type SchemaOutput = z.output<typeof registrationSchema>;
+type RegistrationSchema = ReturnType<typeof registrationSchemaFor>;
+type FormValues = z.input<RegistrationSchema>;
+type SchemaOutput = z.output<RegistrationSchema>;
 
 // O formulário do Instituto pede o e-mail e não pede CPF; o repetido sai pelo e-mail.
 const DEFAULT_VALUES: FormValues = {
@@ -166,8 +169,10 @@ export function RegistrationFormDialog({
   const existing = currentRegistration ?? registrationQuery.data ?? null;
   const isEditing = existing !== null;
 
+  const prazoSalvo = existing?.prazoInscricao ?? null;
+  const resolver = useMemo(() => zodResolver(registrationSchemaFor(prazoSalvo)), [prazoSalvo]);
   const form = useForm<FormValues, unknown, SchemaOutput>({
-    resolver: zodResolver(registrationSchema),
+    resolver,
     defaultValues: DEFAULT_VALUES,
   });
 

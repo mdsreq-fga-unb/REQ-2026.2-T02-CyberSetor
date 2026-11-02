@@ -259,6 +259,52 @@ describe('RegistrationFormDialog', () => {
     expect(onSaved).not.toHaveBeenCalled();
   });
 
+  it('na edicao, o prazo ja vencido nao impede salvar outra mudanca', async () => {
+    const calls = await signedInAs('NUCLEO_PEDAGOGICO', {
+      [`GET /activities/${ACTIVITY.id}/registration`]: () => ({
+        status: 200,
+        body: { ...REGISTRATION_MOCK, aberta: false, prazoInscricao: '2026-05-01' },
+      }),
+      [`PATCH /activities/${ACTIVITY.id}/registration`]: (body) => ({
+        status: 200,
+        body: { ...REGISTRATION_MOCK, ...(body as object), versao: 2 },
+      }),
+    });
+    const onSaved = vi.fn();
+    renderDialog({ onSaved });
+
+    const apresentacao = await screen.findByLabelText('Texto de apresentação');
+    await waitFor(() => expect(screen.getByLabelText('Inscrições até')).toHaveValue('2026-05-01'));
+    fireEvent.change(apresentacao, { target: { value: 'Oficina para iniciantes.' } });
+    fireEvent.click(screen.getByRole('button', { name: 'Salvar alterações' }));
+
+    await waitFor(() => expect(onSaved).toHaveBeenCalledTimes(1));
+    expect(
+      calls.find((c) => c.key === `PATCH /activities/${ACTIVITY.id}/registration`)?.body,
+    ).toMatchObject({ prazoInscricao: '2026-05-01', apresentacao: 'Oficina para iniciantes.' });
+  });
+
+  it('na edicao, trocar o prazo por outra data que ja passou e recusado', async () => {
+    await signedInAs('NUCLEO_PEDAGOGICO', {
+      [`GET /activities/${ACTIVITY.id}/registration`]: () => ({
+        status: 200,
+        body: { ...REGISTRATION_MOCK, aberta: false, prazoInscricao: '2026-05-01' },
+      }),
+    });
+    const onSaved = vi.fn();
+    renderDialog({ onSaved });
+
+    const prazo = await screen.findByLabelText('Inscrições até');
+    await waitFor(() => expect(prazo).toHaveValue('2026-05-01'));
+    fireEvent.change(prazo, { target: { value: '2026-04-30' } });
+    fireEvent.click(screen.getByRole('button', { name: 'Salvar alterações' }));
+
+    expect(
+      await screen.findByText('O prazo não pode ser uma data que já passou.'),
+    ).toBeInTheDocument();
+    expect(onSaved).not.toHaveBeenCalled();
+  });
+
   it('na edicao, apagar os compromissos envia null', async () => {
     const calls = await signedInAs('PRESIDENCIA_GESTAO', {
       [`GET /activities/${ACTIVITY.id}/registration`]: () => ({
