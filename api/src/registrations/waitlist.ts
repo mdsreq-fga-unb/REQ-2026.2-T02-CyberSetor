@@ -1,6 +1,7 @@
 import { Prisma } from '../generated/prisma/client.js';
 import { AutorTipo, CanalPedido, SituacaoInscricao } from '../generated/prisma/enums.js';
 import type { AuditTrailService } from '../audit/audit-trail.service.js';
+import { todayInBrasilia } from '../goals/goal-deadline.js';
 
 /**
  * Vagas e lista de espera da inscrição (HU-07c, RF14, RF15).
@@ -10,15 +11,19 @@ import type { AuditTrailService } from '../audit/audit-trail.service.js';
  * A posição na espera não é guardada; sai da ordem de chegada entre as inscrições em espera.
  */
 
-/** Trava a configuração da atividade até o fim da transação e devolve as regras em vigor. */
+/**
+ * Trava a configuração da atividade até o fim da transação e devolve as regras em vigor; `null`
+ * quando a inscrição da atividade nunca foi aberta.
+ */
 export async function lockRegistration(
   tx: Prisma.TransactionClient,
   atividadeId: string,
-): Promise<{ vagas: number; listaEspera: boolean; promocaoAutomatica: boolean }> {
+): Promise<{ vagas: number; listaEspera: boolean; promocaoAutomatica: boolean } | null> {
   const [row] = await tx.$queryRaw<
     { vagas: number; lista_espera: boolean; promocao_automatica: boolean }[]
   >`
     SELECT "vagas", "lista_espera", "promocao_automatica" FROM "configuracao_inscricao" WHERE "atividade_id" = ${atividadeId}::uuid FOR UPDATE`;
+  if (!row) return null;
   return {
     vagas: row.vagas,
     listaEspera: row.lista_espera,
@@ -26,16 +31,33 @@ export async function lockRegistration(
   };
 }
 
-/** Situação da próxima inscrição: confirmada enquanto houver vaga; depois, lista de espera. */
+/** Há vaga confirmada livre: menos confirmadas que vagas. */
+export async function hasVacancy(
+  tx: Prisma.TransactionClient,
+  atividadeId: string,
+  vagas: number,
+): Promise<boolean> {
+  const confirmadas = await tx.inscricao.count({
+    where: { atividadeId, situacao: SituacaoInscricao.CONFIRMADA },
+  });
+  return confirmadas < vagas;
+}
+
+/**
+ * Situação da próxima inscrição: confirmada enquanto houver vaga e ninguém esperando; com gente na
+ * espera, a vaga livre é de quem espera (pela promoção ou pela escolha do Núcleo), e a nova entra
+ * no fim da fila.
+ */
 export async function nextSituation(
   tx: Prisma.TransactionClient,
   atividadeId: string,
   vagas: number,
 ): Promise<SituacaoInscricao> {
-  const confirmadas = await tx.inscricao.count({
-    where: { atividadeId, situacao: SituacaoInscricao.CONFIRMADA },
+  if (!(await hasVacancy(tx, atividadeId, vagas))) return SituacaoInscricao.LISTA_ESPERA;
+  const esperando = await tx.inscricao.count({
+    where: { atividadeId, situacao: SituacaoInscricao.LISTA_ESPERA },
   });
-  return confirmadas < vagas ? SituacaoInscricao.CONFIRMADA : SituacaoInscricao.LISTA_ESPERA;
+  return esperando > 0 ? SituacaoInscricao.LISTA_ESPERA : SituacaoInscricao.CONFIRMADA;
 }
 
 /** Posição (1, 2, …) de uma inscrição em espera, pela ordem de chegada. */
@@ -63,17 +85,16 @@ export async function confirmFromWaitlist(
   atividadeId: string,
   inscricaoId: string,
   actor: { usuarioId: string; correlationId: string },
-): Promise<'NOT_FOUND' | 'NOT_WAITING' | 'NO_VACANCY' | null> {
-  const { vagas } = await lockRegistration(tx, atividadeId);
+): Promise<'NOT_OPENED' | 'NOT_FOUND' | 'NOT_WAITING' | 'NO_VACANCY' | null> {
+  const regras = await lockRegistration(tx, atividadeId);
+  if (!regras) return 'NOT_OPENED';
   const inscricao = await tx.inscricao.findFirst({
     where: { id: inscricaoId, atividadeId },
     select: { situacao: true },
   });
   if (!inscricao) return 'NOT_FOUND';
   if (inscricao.situacao !== SituacaoInscricao.LISTA_ESPERA) return 'NOT_WAITING';
-  if ((await nextSituation(tx, atividadeId, vagas)) !== SituacaoInscricao.CONFIRMADA) {
-    return 'NO_VACANCY';
-  }
+  if (!(await hasVacancy(tx, atividadeId, regras.vagas))) return 'NO_VACANCY';
   await tx.inscricao.update({
     where: { id: inscricaoId },
     data: { situacao: SituacaoInscricao.CONFIRMADA },
@@ -96,7 +117,9 @@ export async function confirmFromWaitlist(
 
 /**
  * Cancelamento ou desistência registrado pelo Núcleo, com a data do pedido e o canal. A vaga
- * confirmada que se libera vai para a espera quando a promoção automática estiver ligada.
+ * confirmada que se libera vai para a espera quando a promoção automática estiver ligada. A chave
+ * de duplicidade sai da inscrição cancelada: a pessoa pode se inscrever de novo, e o cancelamento
+ * continua na lista e na trilha.
  */
 export async function cancelRegistration(
   tx: Prisma.TransactionClient,
@@ -105,18 +128,21 @@ export async function cancelRegistration(
   inscricaoId: string,
   pedido: { canal: CanalPedido; pedidoEm: string },
   actor: { usuarioId: string; correlationId: string },
-): Promise<'NOT_FOUND' | 'ALREADY_CANCELLED' | null> {
+): Promise<'NOT_OPENED' | 'NOT_FOUND' | 'ALREADY_CANCELLED' | 'BEFORE_REGISTRATION' | null> {
   const regras = await lockRegistration(tx, atividadeId);
+  if (!regras) return 'NOT_OPENED';
   const inscricao = await tx.inscricao.findFirst({
     where: { id: inscricaoId, atividadeId },
-    select: { situacao: true },
+    select: { situacao: true, criadoEm: true },
   });
   if (!inscricao) return 'NOT_FOUND';
   if (inscricao.situacao === SituacaoInscricao.CANCELADA) return 'ALREADY_CANCELLED';
+  if (pedido.pedidoEm < todayInBrasilia(inscricao.criadoEm)) return 'BEFORE_REGISTRATION';
   await tx.inscricao.update({
     where: { id: inscricaoId },
     data: {
       situacao: SituacaoInscricao.CANCELADA,
+      chaveDuplicidade: null,
       canceladaEm: new Date(`${pedido.pedidoEm}T00:00:00.000Z`),
       cancelamentoCanal: pedido.canal,
     },

@@ -271,13 +271,6 @@ export class RegistrationsService {
         },
       });
       if (updated.count === 0) throw this.versionConflict();
-      // Ligar a promoção também confirma a espera nas vagas que estiverem livres.
-      if (
-        next.promocaoAutomatica &&
-        (changed.includes('vagas') || changed.includes('promocaoAutomatica'))
-      ) {
-        await promoteWaitlist(tx, this.audit, atividadeId, next.vagas, actor);
-      }
 
       const inscricao = toResponse(
         await tx.configuracaoInscricao.findUniqueOrThrow({ where: { atividadeId } }),
@@ -300,6 +293,14 @@ export class RegistrationsService {
         },
         tx,
       );
+      // Ligar a promoção também confirma a espera nas vagas que estiverem livres; a trilha
+      // registra a alteração antes das promoções que ela causou.
+      if (
+        next.promocaoAutomatica &&
+        (changed.includes('vagas') || changed.includes('promocaoAutomatica'))
+      ) {
+        await promoteWaitlist(tx, this.audit, atividadeId, next.vagas, actor);
+      }
       return inscricao;
     });
   }

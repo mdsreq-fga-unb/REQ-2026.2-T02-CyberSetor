@@ -165,7 +165,7 @@ export class ParticipantSummaryResponse {
   @ApiProperty({ nullable: true })
   email!: string | null;
 
-  @ApiProperty()
+  @ApiProperty({ description: 'Inscrições com vaga confirmada' })
   inscricoes!: number;
 
   @ApiProperty({

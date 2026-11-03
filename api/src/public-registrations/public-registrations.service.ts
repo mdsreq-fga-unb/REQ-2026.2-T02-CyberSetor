@@ -85,13 +85,11 @@ export class PublicRegistrationsService {
 
   async form(codigo: string): Promise<PublicFormResponse> {
     const config = await this.findConfig(codigo);
-    const confirmadas = await this.prisma.inscricao.count({
-      where: { atividadeId: config.atividadeId, situacao: SituacaoInscricao.CONFIRMADA },
-    });
+    const situacao = await nextSituation(this.prisma, config.atividadeId, config.vagas);
     return {
       atividade: publicActivity(config),
       aberta: isOpen(config),
-      vagasEsgotadas: confirmadas >= config.vagas,
+      vagasEsgotadas: situacao === SituacaoInscricao.LISTA_ESPERA,
       listaEspera: config.listaEspera,
       camposMinimos: [...CAMPOS_MINIMOS],
       camposAdicionais: [...config.camposAdicionais].sort(),
@@ -135,6 +133,7 @@ export class PublicRegistrationsService {
     try {
       return await this.prisma.$transaction(async (tx) => {
         const regras = await lockRegistration(tx, config.atividadeId);
+        if (!regras) throw this.linkNotFound();
         const repeated = await tx.inscricao.count({
           where: { atividadeId: config.atividadeId, chaveDuplicidade: chave },
         });
@@ -209,13 +208,15 @@ export class PublicRegistrationsService {
       where: { codigoPublico: codigo },
       include: WITH_ACTIVITY,
     });
-    if (!config) {
-      throw new NotFoundException({
-        code: 'REGISTRATION_LINK_NOT_FOUND',
-        message: 'Link de inscrição inválido. Confira o endereço com o Instituto.',
-      });
-    }
+    if (!config) throw this.linkNotFound();
     return config;
+  }
+
+  private linkNotFound(): NotFoundException {
+    return new NotFoundException({
+      code: 'REGISTRATION_LINK_NOT_FOUND',
+      message: 'Link de inscrição inválido. Confira o endereço com o Instituto.',
+    });
   }
 
   /** Com termo, o envio traz a versão aceita, que precisa ser a do texto atual. */

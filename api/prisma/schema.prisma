@@ -339,8 +339,8 @@ model Inscricao {
   atividadeId               String            @map("atividade_id") @db.Uuid
   participanteId            String            @map("participante_id") @db.Uuid
   situacao                  SituacaoInscricao @default(CONFIRMADA)
-  /// Valor normalizado do campo que identifica cadastro repetido (e-mail ou CPF).
-  chaveDuplicidade          String            @map("chave_duplicidade")
+  /// Valor normalizado do campo que identifica cadastro repetido (e-mail ou CPF); nulo na inscrição cancelada, para a pessoa poder se inscrever de novo.
+  chaveDuplicidade          String?           @map("chave_duplicidade")
   versaoAviso               String            @map("versao_aviso")
   avisoApresentadoEm        DateTime          @map("aviso_apresentado_em") @db.Timestamptz(3)
   autorizaComunicados       Boolean           @map("autoriza_comunicados")

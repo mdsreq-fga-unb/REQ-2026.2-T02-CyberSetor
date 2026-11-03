@@ -12,6 +12,7 @@ import {
   SituacaoInscricao,
   TipoInstrumento,
 } from '../src/generated/prisma/enums.js';
+import { todayInBrasilia } from '../src/goals/goal-deadline.js';
 import { PrismaService } from '../src/prisma/prisma.service.js';
 import { DATA_NOTICE } from '../src/public-registrations/notice.js';
 
@@ -240,6 +241,15 @@ describe('Vagas, lista de espera e inscritos da atividade (e2e)', () => {
       antes: { situacao: 'LISTA_ESPERA' },
       depois: { situacao: 'CONFIRMADA' },
     });
+    const ordem = await prisma.trilhaAuditoria.findMany({
+      where: { acao: { in: ['REGISTRATION_UPDATED', 'REGISTRATION_PROMOTED'] } },
+      orderBy: { criadoEm: 'asc' },
+      select: { acao: true },
+    });
+    expect(ordem.map((linha) => linha.acao)).toEqual([
+      'REGISTRATION_UPDATED',
+      'REGISTRATION_PROMOTED',
+    ]);
 
     await as(Perfil.NUCLEO_PEDAGOGICO).patch(config, { versao: 2, vagas: 1 }).expect(200);
 
@@ -298,7 +308,7 @@ describe('Vagas, lista de espera e inscritos da atividade (e2e)', () => {
     const idDe = async (n: number) =>
       (
         await prisma.inscricao.findFirstOrThrow({
-          where: { chaveDuplicidade: `pessoa${n}@exemplo.com` },
+          where: { participante: { email: `pessoa${n}@exemplo.com` } },
         })
       ).id;
     const confirmar = (perfil: Perfil, id: string) =>
@@ -331,7 +341,7 @@ describe('Vagas, lista de espera e inscritos da atividade (e2e)', () => {
     const idDe = async (n: number) =>
       (
         await prisma.inscricao.findFirstOrThrow({
-          where: { chaveDuplicidade: `pessoa${n}@exemplo.com` },
+          where: { participante: { email: `pessoa${n}@exemplo.com` } },
         })
       ).id;
     const cancelar = (perfil: Perfil, id: string, body: object) =>
@@ -339,7 +349,7 @@ describe('Vagas, lista de espera e inscritos da atividade (e2e)', () => {
         .post(`${listPath()}/${id}/cancellation`)
         .set('Authorization', `Bearer ${tokens[perfil]}`)
         .send(body);
-    const PEDIDO = { canal: 'WHATSAPP', pedidoEm: '2026-10-29' };
+    const PEDIDO = { canal: 'WHATSAPP', pedidoEm: todayInBrasilia() };
 
     beforeEach(async () => {
       await inscrever(1, SituacaoInscricao.CONFIRMADA);
@@ -400,6 +410,51 @@ describe('Vagas, lista de espera e inscritos da atividade (e2e)', () => {
       );
     });
 
+    it('quem cancelou pode se inscrever de novo, e o cancelamento continua na lista', async () => {
+      await cancelar(Perfil.NUCLEO_PEDAGOGICO, await idDe(3), PEDIDO).expect(200);
+
+      const volta = (await enviar(3).expect(201)).body as Submitted;
+
+      expect(volta).toMatchObject({ situacao: 'LISTA_ESPERA', posicaoEspera: 2 });
+      const lista = (await as(Perfil.NUCLEO_PEDAGOGICO).get(listPath()).expect(200))
+        .body as ListBody & { canceladas: number };
+      expect(lista).toMatchObject({ confirmadas: 2, emEspera: 2, canceladas: 1 });
+      expect(lista.inscricoes.filter((i) => i.nome === 'Pessoa 3').map((i) => i.situacao)).toEqual([
+        'LISTA_ESPERA',
+        'CANCELADA',
+      ]);
+      await enviar(3).expect(409);
+    });
+
+    it('sem promocao automatica, a vaga liberada fica para a espera, e nao para quem chega pelo link', async () => {
+      await prisma.configuracaoInscricao.update({
+        where: { atividadeId },
+        data: { promocaoAutomatica: false },
+      });
+      await cancelar(Perfil.NUCLEO_PEDAGOGICO, await idDe(1), PEDIDO).expect(200);
+
+      const form = await server().get(`/v1/public/registrations/${CODIGO}`).expect(200);
+      expect(form.body).toMatchObject({ vagasEsgotadas: true, listaEspera: true });
+      const nova = (await enviar(5).expect(201)).body as Submitted;
+      expect(nova).toMatchObject({ situacao: 'LISTA_ESPERA', posicaoEspera: 3 });
+
+      const escolhida = await server()
+        .post(`${listPath()}/${await idDe(4)}/confirmation`)
+        .set('Authorization', `Bearer ${tokens[Perfil.NUCLEO_PEDAGOGICO]}`)
+        .expect(200);
+      expect(escolhida.body).toMatchObject({ confirmadas: 2, emEspera: 2 });
+    });
+
+    it('recusa data do pedido anterior a inscricao', async () => {
+      const antes = await cancelar(Perfil.NUCLEO_PEDAGOGICO, await idDe(1), {
+        ...PEDIDO,
+        pedidoEm: '2020-01-01',
+      }).expect(400);
+
+      expect((antes.body as { code: string }).code).toBe('INVALID_REQUEST_DATE');
+      expect(await prisma.inscricao.count({ where: { situacao: 'CANCELADA' } })).toBe(0);
+    });
+
     it('recusa cancelamento repetido, data futura, canal fora da lista, inexistente e outro perfil', async () => {
       await cancelar(Perfil.NUCLEO_PEDAGOGICO, await idDe(1), PEDIDO).expect(200);
 
@@ -440,6 +495,21 @@ describe('Vagas, lista de espera e inscritos da atividade (e2e)', () => {
     ).body as ListBody;
     expect(busca.inscricoes.map((i) => i.nome)).toEqual(['Pessoa 3']);
     expect(busca.emEspera).toBe(1);
+    await prisma.participante.updateMany({
+      where: { nome: 'Pessoa 1' },
+      data: { nomePreferencia: 'Jojo' },
+    });
+    const preferencia = (
+      await as(Perfil.NUCLEO_PEDAGOGICO).get(`${listPath()}?busca=jojo`).expect(200)
+    ).body as ListBody;
+    expect(preferencia.inscricoes.map((i) => i.nome)).toEqual(['Pessoa 1']);
+    const participantes = (await as(Perfil.NUCLEO_PEDAGOGICO).get('/v1/participants').expect(200))
+      .body as { nome: string; inscricoes: number }[];
+    expect(participantes.map((p) => [p.nome, p.inscricoes])).toEqual([
+      ['Pessoa 1', 1],
+      ['Pessoa 2', 1],
+      ['Pessoa 3', 0],
+    ]);
 
     for (const perfil of [
       Perfil.PRESIDENCIA_GESTAO,
@@ -467,6 +537,15 @@ describe('Vagas, lista de espera e inscritos da atividade (e2e)', () => {
       .get(`/v1/activities/${outraAtividadeId}/registrations`)
       .expect(404);
     expect((semInscricao.body as { code: string }).code).toBe('REGISTRATION_NOT_OPENED');
+    const id = '00000000-0000-4000-8000-000000000000';
+    for (const acao of ['cancellation', 'confirmation']) {
+      const res = await server()
+        .post(`/v1/activities/${outraAtividadeId}/registrations/${id}/${acao}`)
+        .set('Authorization', `Bearer ${tokens[Perfil.NUCLEO_PEDAGOGICO]}`)
+        .send({ canal: 'WHATSAPP', pedidoEm: todayInBrasilia() })
+        .expect(404);
+      expect((res.body as { code: string }).code).toBe('REGISTRATION_NOT_OPENED');
+    }
     await as(Perfil.NUCLEO_PEDAGOGICO)
       .get('/v1/activities/00000000-0000-4000-8000-000000000000/registrations')
       .expect(404);

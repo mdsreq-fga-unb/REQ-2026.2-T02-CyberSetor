@@ -6,15 +6,16 @@ import {
 } from '@nestjs/common';
 import type { Actor } from '../accounts/accounts.service.js';
 import { AuditTrailService } from '../audit/audit-trail.service.js';
+import type { Prisma } from '../generated/prisma/client.js';
 import { SituacaoInscricao } from '../generated/prisma/enums.js';
 import { todayInBrasilia } from '../goals/goal-deadline.js';
 import { PrismaService } from '../prisma/prisma.service.js';
-import { ageOn, onlyDigits } from '../public-registrations/participant-data.js';
+import { participantSearch } from '../participants/participant-search.js';
+import { ageOn } from '../public-registrations/participant-data.js';
 import type { CancelRegistrationDto, RegistrationListResponse } from './registration-list.dto.js';
 import { cancelRegistration, confirmFromWaitlist } from './waitlist.js';
 
 const ADULT_AGE = 18;
-const MIN_PHONE_SEARCH = 3;
 
 const ORDER: Record<SituacaoInscricao, number> = {
   [SituacaoInscricao.CONFIRMADA]: 0,
@@ -46,11 +47,18 @@ export class RegistrationListService {
         message: 'Confira a data do pedido; ela não pode ser futura.',
       });
     }
-    await this.assertEditable(atividadeId);
-    const refused = await this.prisma.$transaction((tx) =>
-      cancelRegistration(tx, this.audit, atividadeId, inscricaoId, dto, actor),
-    );
+    const refused = await this.prisma.$transaction(async (tx) => {
+      await assertEditable(tx, atividadeId);
+      return cancelRegistration(tx, this.audit, atividadeId, inscricaoId, dto, actor);
+    });
+    if (refused === 'NOT_OPENED') throw notOpened();
     if (refused === 'NOT_FOUND') throw new NotFoundException('Inscrição não encontrada.');
+    if (refused === 'BEFORE_REGISTRATION') {
+      throw new BadRequestException({
+        code: 'INVALID_REQUEST_DATE',
+        message: 'Confira a data do pedido; ela não pode ser anterior à inscrição.',
+      });
+    }
     if (refused === 'ALREADY_CANCELLED') {
       throw new ConflictException({
         code: 'ALREADY_CANCELLED',
@@ -66,10 +74,11 @@ export class RegistrationListService {
     inscricaoId: string,
     actor: Actor,
   ): Promise<RegistrationListResponse> {
-    await this.assertEditable(atividadeId);
-    const refused = await this.prisma.$transaction((tx) =>
-      confirmFromWaitlist(tx, this.audit, atividadeId, inscricaoId, actor),
-    );
+    const refused = await this.prisma.$transaction(async (tx) => {
+      await assertEditable(tx, atividadeId);
+      return confirmFromWaitlist(tx, this.audit, atividadeId, inscricaoId, actor);
+    });
+    if (refused === 'NOT_OPENED') throw notOpened();
     if (refused === 'NOT_FOUND') throw new NotFoundException('Inscrição não encontrada.');
     if (refused === 'NOT_WAITING') {
       throw new ConflictException({
@@ -94,11 +103,19 @@ export class RegistrationListService {
     if (!config) {
       const count = await this.prisma.atividade.count({ where: { id: atividadeId } });
       if (count === 0) throw new NotFoundException('Atividade não encontrada.');
-      throw new NotFoundException({
-        code: 'REGISTRATION_NOT_OPENED',
-        message: 'A inscrição desta atividade ainda não foi aberta.',
-      });
+      throw notOpened();
     }
+    const search = participantSearch(busca);
+    const found = search
+      ? new Set(
+          (
+            await this.prisma.inscricao.findMany({
+              where: { atividadeId, participante: search },
+              select: { id: true },
+            })
+          ).map(({ id }) => id),
+        )
+      : null;
     const rows = await this.prisma.inscricao.findMany({
       where: { atividadeId },
       orderBy: { ordemChegada: 'asc' },
@@ -147,32 +164,29 @@ export class RegistrationListService {
       confirmadas: inscricoes.length - espera - canceladas,
       emEspera: espera,
       canceladas,
-      inscricoes: inscricoes.filter(matches(busca)),
+      inscricoes: found ? inscricoes.filter(({ id }) => found.has(id)) : inscricoes,
     };
-  }
-
-  private async assertEditable(atividadeId: string): Promise<void> {
-    const atividade = await this.prisma.atividade.findUnique({
-      where: { id: atividadeId },
-      select: { projeto: { select: { instrumento: { select: { ativo: true } } } } },
-    });
-    if (!atividade) throw new NotFoundException('Atividade não encontrada.');
-    if (!atividade.projeto.instrumento.ativo) {
-      throw new ConflictException({
-        code: 'INSTRUMENT_INACTIVE',
-        message: 'O instrumento está inativo e não altera inscrições.',
-      });
-    }
   }
 }
 
-/** Mesma busca da lista de participantes: nome, e-mail ou, com três dígitos, telefone. */
-function matches(busca?: string) {
-  const text = busca?.trim().toLocaleLowerCase('pt-BR') ?? '';
-  const digits = onlyDigits(text);
-  return (row: { nome: string; email: string | null; telefone: string }): boolean =>
-    !text ||
-    row.nome.toLocaleLowerCase('pt-BR').includes(text) ||
-    (row.email?.includes(text) ?? false) ||
-    (digits.length >= MIN_PHONE_SEARCH && row.telefone.includes(digits));
+/** Instrumento inativo não altera inscrições; lido dentro da transação que grava. */
+async function assertEditable(tx: Prisma.TransactionClient, atividadeId: string): Promise<void> {
+  const atividade = await tx.atividade.findUnique({
+    where: { id: atividadeId },
+    select: { projeto: { select: { instrumento: { select: { ativo: true } } } } },
+  });
+  if (!atividade) throw new NotFoundException('Atividade não encontrada.');
+  if (!atividade.projeto.instrumento.ativo) {
+    throw new ConflictException({
+      code: 'INSTRUMENT_INACTIVE',
+      message: 'O instrumento está inativo e não altera inscrições.',
+    });
+  }
+}
+
+function notOpened(): NotFoundException {
+  return new NotFoundException({
+    code: 'REGISTRATION_NOT_OPENED',
+    message: 'A inscrição desta atividade ainda não foi aberta.',
+  });
 }
