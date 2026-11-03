@@ -140,6 +140,24 @@ describe('Formulário público de inscrição (e2e)', () => {
   const enviar = (body: object, cod = codigo) =>
     server().post(`/v1/public/registrations/${cod}`).send(body);
 
+  it('mostra o horario e a carga horaria da atividade no formulario e na confirmacao', async () => {
+    await prisma.atividade.update({
+      where: { id: atividadeId },
+      data: {
+        horaInicio: new Date('1970-01-01T14:00:00.000Z'),
+        horaFim: new Date('1970-01-01T17:30:00.000Z'),
+        cargaHorariaMinutos: 210,
+      },
+    });
+    const horario = { horaInicio: '14:00', horaFim: '17:30', cargaHorariaMinutos: 210 };
+
+    const form = await server().get(`/v1/public/registrations/${codigo}`).expect(200);
+    expect((form.body as { atividade: object }).atividade).toMatchObject(horario);
+
+    const enviada = await enviar(ADULTO).expect(201);
+    expect((enviada.body as { atividade: object }).atividade).toMatchObject(horario);
+  });
+
   it('abre o formulario sem login, com a atividade, os campos e o aviso de dados', async () => {
     const res = await server().get(`/v1/public/registrations/${codigo}`).expect(200);
 
@@ -147,6 +165,9 @@ describe('Formulário público de inscrição (e2e)', () => {
       atividade: {
         titulo: 'Oficina de serigrafia',
         data: '2026-11-10',
+        horaInicio: null,
+        horaFim: null,
+        cargaHorariaMinutos: null,
         local: 'Setor Comercial Sul',
       },
       aberta: true,
