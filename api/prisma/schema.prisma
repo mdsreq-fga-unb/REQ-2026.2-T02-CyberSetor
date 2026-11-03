@@ -488,13 +488,10 @@ model Relatorio {
   orgaoConcedente     String          @map("orgao_concedente")
   numeroProcesso      String          @map("numero_processo")
   emitidoPorNome      String          @map("emitido_por_nome")
-  /// PDF gerado uma vez e guardado; o SHA-256 confere o arquivo entregue (RNF08).
-  pdfChave            String?         @unique @map("pdf_chave")
-  pdfSha256           String?         @map("pdf_sha256") @db.Char(64)
-  pdfGeradoEm         DateTime?       @map("pdf_gerado_em") @db.Timestamptz(3)
 
   projeto           Projeto         @relation(fields: [projetoId], references: [id], onDelete: Restrict)
   emitidoPor        Usuario         @relation(fields: [emitidoPorId], references: [id], onDelete: Restrict)
+  pdf               RelatorioPdf?
   relatorioAnterior Relatorio?      @relation("HistoricoVersoesRelatorio", fields: [relatorioAnteriorId], references: [id], onDelete: Restrict)
   retificacao       Relatorio?      @relation("HistoricoVersoesRelatorio")
   metas             RelatorioMeta[]
@@ -503,6 +500,19 @@ model Relatorio {
   @@index([projetoId])
   @@index([emitidoPorId])
   @@map("relatorio")
+}
+
+/// PDF de uma versão emitida, gerado uma vez e guardado à parte: a versão fechada não muda (RNF08).
+/// O SHA-256 confere o arquivo entregue.
+model RelatorioPdf {
+  relatorioId String   @id @map("relatorio_id") @db.Uuid
+  chave       String   @unique
+  sha256      String   @db.Char(64)
+  geradoEm    DateTime @map("gerado_em") @db.Timestamptz(3)
+
+  relatorio Relatorio @relation(fields: [relatorioId], references: [id], onDelete: Restrict)
+
+  @@map("relatorio_pdf")
 }
 
 /// Cópia imutável da meta e do resultado apurado na emissão daquela versão do relatório (RNF08).

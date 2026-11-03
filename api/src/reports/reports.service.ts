@@ -29,6 +29,7 @@ import type {
 const WITH_DETAILS = {
   emitidoPor: { select: { id: true, pessoa: { select: { nome: true } } } },
   metas: { orderBy: { metaOrdem: 'asc' } },
+  pdf: { select: { sha256: true, geradoEm: true } },
 } satisfies Prisma.RelatorioInclude;
 
 type ReportRow = Prisma.RelatorioGetPayload<{ include: typeof WITH_DETAILS }>;
@@ -39,7 +40,7 @@ export function isoDate(date: Date): string {
   return date.toISOString().slice(0, 10);
 }
 
-function brIsoDate(iso: string): string {
+export function brIsoDate(iso: string): string {
   return iso.split('-').reverse().join('/');
 }
 
@@ -92,10 +93,7 @@ function toResponse(row: ReportRow): ReportResponse {
     },
     criadoEm: row.criadoEm.toISOString(),
     metas: row.metas.map(toGoalItemResponse),
-    pdf:
-      row.pdfSha256 && row.pdfGeradoEm
-        ? { sha256: row.pdfSha256, geradoEm: row.pdfGeradoEm.toISOString() }
-        : null,
+    pdf: row.pdf ? { sha256: row.pdf.sha256, geradoEm: row.pdf.geradoEm.toISOString() } : null,
   };
 }
 

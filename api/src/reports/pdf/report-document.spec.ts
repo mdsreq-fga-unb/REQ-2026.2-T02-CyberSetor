@@ -1,7 +1,9 @@
+import { createRequire } from 'node:module';
+import { dirname, join } from 'node:path';
 import { describe, expect, it } from 'vitest';
 import type { ReportGoalItemResponse } from '../reports.dto.js';
 import { buildReportDocument, type ReportForPdf } from './report-document.js';
-import { ReportPdfRenderer } from './report-pdf.renderer.js';
+import { fontAccessAllowed, ReportPdfRenderer } from './report-pdf.renderer.js';
 
 function goal(overrides: Partial<ReportGoalItemResponse> = {}): ReportGoalItemResponse {
   return {
@@ -127,5 +129,29 @@ describe('gerador do PDF (RNF08)', () => {
     await expect(
       renderer.render({ ...document, content: [{ image: 'https://exemplo.test/logo.png' }] }),
     ).rejects.toThrow();
+  });
+
+  it('justificativa maior que uma pagina continua na pagina seguinte, sem cortar', async () => {
+    const longa = 'Calendário reduzido pela reforma do galpão e remarcação das turmas. '.repeat(
+      400,
+    );
+    const pdf = await new ReportPdfRenderer().render(
+      buildReportDocument({
+        ...REPORT,
+        metas: [goal({ metaObjetivo: 'Objetivo longo '.repeat(200), justificativa: longa })],
+      }),
+    );
+
+    const pages = pdf.body.toString('latin1').match(/\/Type \/Page\b(?!s)/g) ?? [];
+    expect(pages.length).toBeGreaterThan(3);
+  });
+
+  it('so le arquivos dentro da pasta das fontes', () => {
+    const font = createRequire(import.meta.url).resolve('pdfmake/fonts/Roboto/Roboto-Regular.ttf');
+    expect(fontAccessAllowed(font)).toBe(true);
+    expect(fontAccessAllowed(join(dirname(font), '..', '..', '..', '..', 'etc', 'passwd'))).toBe(
+      false,
+    );
+    expect(fontAccessAllowed(`${dirname(font)}-evil/Roboto-Regular.ttf`)).toBe(false);
   });
 });

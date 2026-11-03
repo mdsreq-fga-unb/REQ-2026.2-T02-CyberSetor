@@ -2,6 +2,7 @@ import type pdfmake from 'pdfmake';
 import type { Content, TableCell } from 'pdfmake';
 import type { AlcanceMeta, OrigemMeta, TipoInstrumento } from '../../generated/prisma/enums.js';
 import type { ReportGoalItemResponse } from '../reports.dto.js';
+import { brIsoDate as brDate } from '../reports.service.js';
 
 export type ReportDocument = Parameters<typeof pdfmake.createPdf>[0];
 
@@ -56,10 +57,6 @@ const DATE_TIME = new Intl.DateTimeFormat('pt-BR', {
   hour: '2-digit',
   minute: '2-digit',
 });
-
-function brDate(iso: string): string {
-  return iso.split('-').reverse().join('/');
-}
 
 function quantity(value: number | null, unidade: string | null): string {
   if (value === null) return '—';
@@ -149,7 +146,7 @@ function goalsTable(metas: ReportGoalItemResponse[]): Content {
     {
       table: {
         headerRows: 1,
-        dontBreakRows: true,
+        // O objetivo da meta é texto livre: a linha pode passar de uma página.
         widths: ['*', 62, 62, 40, 70],
         body: [head, ...rows],
       },
@@ -176,8 +173,9 @@ function details(metas: ReportGoalItemResponse[]): Content {
           ? [{ text: [{ text: 'Justificativa: ', bold: true }, meta.justificativa] }]
           : []),
       ],
+      // Descrição, resultado e justificativa são texto livre, sem limite: o bloco quebra de página
+      // em vez de sair cortado no PDF, que é gravado uma vez só.
       margin: [0, 0, 0, 10],
-      unbreakable: true,
     })),
   ];
 }

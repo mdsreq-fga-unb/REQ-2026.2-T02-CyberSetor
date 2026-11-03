@@ -243,8 +243,6 @@ describe('PDF do relatório de execução (e2e)', () => {
     await as(Perfil.PRESIDENCIA_GESTAO)
       .get(`/v1/projects/${projetoId}/reports/${MISSING}/pdf`)
       .expect(404);
-    expect(
-      await prisma.relatorio.count({ where: { id: report.id, pdfChave: { not: null } } }),
-    ).toBe(0);
+    expect(await prisma.relatorioPdf.count({ where: { relatorioId: report.id } })).toBe(0);
   });
 });

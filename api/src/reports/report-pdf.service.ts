@@ -1,10 +1,16 @@
-import { Inject, Injectable, NotFoundException, ServiceUnavailableException } from '@nestjs/common';
+import {
+  Inject,
+  Injectable,
+  Logger,
+  NotFoundException,
+  ServiceUnavailableException,
+} from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { randomUUID } from 'node:crypto';
 import type { Actor } from '../accounts/accounts.service.js';
 import { AuditTrailService } from '../audit/audit-trail.service.js';
 import type { EnvironmentVariables } from '../config/env.validation.js';
-import type { Prisma } from '../generated/prisma/client.js';
+import { Prisma } from '../generated/prisma/client.js';
 import { AutorTipo } from '../generated/prisma/enums.js';
 import { PrismaService } from '../prisma/prisma.service.js';
 import { FILE_STORAGE, type FileStorage } from '../storage/file-storage.js';
@@ -18,6 +24,7 @@ const PDF_CONTENT_TYPE = 'application/pdf';
 const WITH_PDF_DATA = {
   metas: { orderBy: { metaOrdem: 'asc' } },
   relatorioAnterior: { select: { versao: true } },
+  pdf: true,
 } satisfies Prisma.RelatorioInclude;
 
 type ReportPdfRow = Prisma.RelatorioGetPayload<{ include: typeof WITH_PDF_DATA }>;
@@ -26,15 +33,6 @@ interface StoredPdf {
   chave: string;
   sha256: string;
   geradoEm: Date;
-}
-
-function storedOf(row: {
-  pdfChave: string | null;
-  pdfSha256: string | null;
-  pdfGeradoEm: Date | null;
-}): StoredPdf | null {
-  if (!row.pdfChave || !row.pdfSha256 || !row.pdfGeradoEm) return null;
-  return { chave: row.pdfChave, sha256: row.pdfSha256, geradoEm: row.pdfGeradoEm };
 }
 
 function toPdfData(row: ReportPdfRow): ReportForPdf {
@@ -60,6 +58,10 @@ function fileName(row: ReportPdfRow): string {
   return `relatorio-${codigo}-${isoDate(row.periodoInicio)}-a-${isoDate(row.periodoFim)}-v${row.versao}.pdf`;
 }
 
+function stackOf(error: unknown): string {
+  return error instanceof Error ? (error.stack ?? error.message) : String(error);
+}
+
 function generationFailed(): ServiceUnavailableException {
   return new ServiceUnavailableException({
     code: 'REPORT_PDF_FAILED',
@@ -73,7 +75,10 @@ function generationFailed(): ServiceUnavailableException {
  */
 @Injectable()
 export class ReportPdfService {
+  private readonly logger = new Logger(ReportPdfService.name);
   private readonly urlTtlSeconds: number;
+  /** Geração em andamento por relatório: pedidos simultâneos esperam o mesmo PDF. */
+  private readonly inflight = new Map<string, Promise<StoredPdf>>();
 
   constructor(
     private readonly prisma: PrismaService,
@@ -97,13 +102,19 @@ export class ReportPdfService {
     });
     if (!row) throw new NotFoundException('Relatório não encontrado.');
 
-    const stored = storedOf(row) ?? (await this.generate(row, actor));
+    const stored = row.pdf ?? (await this.generateOnce(row, actor));
     const nomeArquivo = fileName(row);
-    const url = await this.storage.signedUrl(
-      { key: stored.chave, fileName: nomeArquivo, contentType: PDF_CONTENT_TYPE },
-      this.urlTtlSeconds,
-      baseUrl,
-    );
+    let url: string;
+    try {
+      url = await this.storage.signedUrl(
+        { key: stored.chave, fileName: nomeArquivo, contentType: PDF_CONTENT_TYPE },
+        this.urlTtlSeconds,
+        baseUrl,
+      );
+    } catch (error) {
+      this.logger.error(`Falha ao assinar o link do PDF do relatório ${row.id}`, stackOf(error));
+      throw generationFailed();
+    }
     return {
       url,
       expiraEm: new Date(Date.now() + this.urlTtlSeconds * 1000),
@@ -113,6 +124,14 @@ export class ReportPdfService {
     };
   }
 
+  private generateOnce(row: ReportPdfRow, actor: Actor): Promise<StoredPdf> {
+    const running = this.inflight.get(row.id);
+    if (running) return running;
+    const generation = this.generate(row, actor).finally(() => this.inflight.delete(row.id));
+    this.inflight.set(row.id, generation);
+    return generation;
+  }
+
   private async generate(row: ReportPdfRow, actor: Actor): Promise<StoredPdf> {
     const chave = `relatorios/${row.projetoId}/${row.id}/${randomUUID()}.pdf`;
     let sha256: string;
@@ -120,7 +139,8 @@ export class ReportPdfService {
       const pdf = await this.renderer.render(buildReportDocument(toPdfData(row)));
       sha256 = pdf.sha256;
       await this.storage.put(chave, pdf.body, PDF_CONTENT_TYPE);
-    } catch {
+    } catch (error) {
+      this.logger.error(`Falha ao gerar ou guardar o PDF do relatório ${row.id}`, stackOf(error));
       throw generationFailed();
     }
 
@@ -136,36 +156,35 @@ export class ReportPdfService {
     return recorded;
   }
 
-  /** Grava o primeiro PDF da versão; com dois pedidos ao mesmo tempo, vale o que gravou antes. */
-  private record(row: ReportPdfRow, pdf: StoredPdf, actor: Actor): Promise<StoredPdf> {
-    return this.prisma.$transaction(async (tx) => {
-      const updated = await tx.relatorio.updateMany({
-        where: { id: row.id, pdfChave: null },
-        data: { pdfChave: pdf.chave, pdfSha256: pdf.sha256, pdfGeradoEm: pdf.geradoEm },
-      });
-      if (updated.count === 0) {
-        const winner = storedOf(
-          await tx.relatorio.findUniqueOrThrow({
-            where: { id: row.id },
-            select: { pdfChave: true, pdfSha256: true, pdfGeradoEm: true },
-          }),
+  /**
+   * Grava o primeiro PDF da versão numa tabela à parte, sem tocar na versão fechada (RNF08); com dois
+   * pedidos ao mesmo tempo (em outra instância da API), vale o que gravou antes.
+   */
+  private async record(row: ReportPdfRow, pdf: StoredPdf, actor: Actor): Promise<StoredPdf> {
+    try {
+      return await this.prisma.$transaction(async (tx) => {
+        await tx.relatorioPdf.create({ data: { relatorioId: row.id, ...pdf } });
+        await this.audit.record(
+          {
+            autorTipo: AutorTipo.USUARIO,
+            usuarioId: actor.usuarioId,
+            acao: 'REPORT_PDF_GENERATED',
+            entidade: 'relatorio',
+            entidadeId: row.id,
+            depois: { versao: row.versao, sha256: pdf.sha256 },
+            correlationId: actor.correlationId,
+          },
+          tx,
         );
-        if (winner) return winner;
-        throw generationFailed();
+        return pdf;
+      });
+    } catch (error) {
+      if (!(error instanceof Prisma.PrismaClientKnownRequestError) || error.code !== 'P2002') {
+        throw error;
       }
-      await this.audit.record(
-        {
-          autorTipo: AutorTipo.USUARIO,
-          usuarioId: actor.usuarioId,
-          acao: 'REPORT_PDF_GENERATED',
-          entidade: 'relatorio',
-          entidadeId: row.id,
-          depois: { versao: row.versao, sha256: pdf.sha256 },
-          correlationId: actor.correlationId,
-        },
-        tx,
-      );
-      return pdf;
-    });
+      const winner = await this.prisma.relatorioPdf.findUnique({ where: { relatorioId: row.id } });
+      if (winner) return winner;
+      throw generationFailed();
+    }
   }
 }
