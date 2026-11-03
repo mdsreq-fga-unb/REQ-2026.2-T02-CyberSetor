@@ -23,6 +23,7 @@ import {
   RegistrationResponse,
   UpdateRegistrationDto,
 } from './registrations.dto.js';
+import { AssistedRegistrationsService } from './assisted-registrations.service.js';
 import { RegistrationsService } from './registrations.service.js';
 
 function actorOf(user: ValidSession, res: Response): Actor {
@@ -33,7 +34,10 @@ function actorOf(user: ValidSession, res: Response): Actor {
 @ApiBearerAuth()
 @Controller('activities/:id/registration')
 export class RegistrationsController {
-  constructor(private readonly registrations: RegistrationsService) {}
+  constructor(
+    private readonly registrations: RegistrationsService,
+    private readonly assisted: AssistedRegistrationsService,
+  ) {}
 
   @Get()
   @Profiles(...INSTRUMENT_READERS)
@@ -90,6 +94,6 @@ export class RegistrationsController {
     @CurrentUser() user: ValidSession,
     @Res({ passthrough: true }) res: Response,
   ): Promise<AssistedRegistrationResponse> {
-    return this.registrations.createAssisted(id, body, actorOf(user, res));
+    return this.assisted.create(id, body, actorOf(user, res));
   }
 }

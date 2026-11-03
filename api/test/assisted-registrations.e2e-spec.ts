@@ -13,9 +13,11 @@ import {
   TipoInstrumento,
 } from '../src/generated/prisma/enums.js';
 import type { DuplicateCheckResponse } from '../src/participants/participants.dto.js';
+import type { Prisma } from '../src/generated/prisma/client.js';
 import { PrismaService } from '../src/prisma/prisma.service.js';
 import { DATA_NOTICE } from '../src/public-registrations/notice.js';
 import type { AssistedRegistrationResponse } from '../src/registrations/registrations.dto.js';
+import { termVersion } from '../src/registrations/term.js';
 
 interface ErrorResponse {
   code: string;
@@ -188,9 +190,7 @@ describe('Inscrição presencial assistida e detecção de duplicidade (HU-08 / 
     });
 
     it('retorna existe: false quando CPF e e-mail não existem', async () => {
-      const res = await nucleo()
-        .post('/v1/participants/check-duplicate')
-        .send({ cpf: CPF_ADULTO });
+      const res = await nucleo().post('/v1/participants/check-duplicate').send({ cpf: CPF_ADULTO });
 
       expect(res.status).toBe(200);
       const body = res.body as DuplicateCheckResponse;
@@ -431,6 +431,125 @@ describe('Inscrição presencial assistida e detecção de duplicidade (HU-08 / 
       const body2 = res2.body as AssistedRegistrationResponse;
       expect(body2.situacao).toBe(SituacaoInscricao.LISTA_ESPERA);
       expect(body2.posicaoEspera).toBe(1);
+    });
+
+    /** Atividade nova com a mesma origem da primeira e a configuração pedida. */
+    async function atividadeCom(config: Partial<Prisma.ConfiguracaoInscricaoUncheckedCreateInput>) {
+      const base = await prisma.atividade.findUniqueOrThrow({ where: { id: atividadeId } });
+      const atividade = await prisma.atividade.create({
+        data: {
+          projetoId: base.projetoId,
+          modalidadeId: base.modalidadeId,
+          responsavelId: base.responsavelId,
+          titulo: `Oficina ${Math.random()}`,
+          data: base.data,
+          local: base.local,
+        },
+      });
+      await prisma.configuracaoInscricao.create({
+        data: {
+          atividadeId: atividade.id,
+          vagas: 10,
+          camposAdicionais: [CampoInscricao.EMAIL],
+          campoDuplicidade: CampoDuplicidade.EMAIL,
+          codigoPublico: `codigo-${atividade.id.slice(0, 8)}`,
+          aberta: true,
+          ...config,
+        },
+      });
+      return `/v1/activities/${atividade.id}/registration/assisted`;
+    }
+
+    const adulto = (n: number) => ({
+      nome: `Pessoa Presencial ${n}`,
+      telefone: '61990000000',
+      dataNascimento: bornYearsAgo(30),
+      email: `presencial${n}@exemplo.com`,
+      versaoAviso: DATA_NOTICE.versao,
+      autorizaComunicados: false,
+      autorizaImagem: false,
+    });
+
+    it('com compromissos da turma, exige o aceite tambem na inscricao presencial', async () => {
+      const termo = 'Chegar no horário.';
+      const path = await atividadeCom({ termoCompromisso: termo });
+
+      const sem = await nucleo().post(path, adulto(1));
+      expect(sem.status).toBe(400);
+      expect((sem.body as { code: string }).code).toBe('TERM_NOT_ACCEPTED');
+
+      const com = await nucleo().post(path, { ...adulto(1), versaoTermo: termVersion(termo) });
+      expect(com.status).toBe(201);
+      const inscricao = await prisma.inscricao.findUniqueOrThrow({
+        where: { id: (com.body as AssistedRegistrationResponse).id },
+      });
+      expect(inscricao).toMatchObject({
+        termoAceito: termo,
+        criadoPorId: userIds[Perfil.NUCLEO_PEDAGOGICO],
+      });
+    });
+
+    it('prazo vencido encerra tambem a inscricao presencial', async () => {
+      const path = await atividadeCom({ prazoInscricao: new Date('2020-01-01T00:00:00.000Z') });
+
+      const res = await nucleo().post(path, adulto(2));
+
+      expect(res.status).toBe(409);
+      expect((res.body as { code: string }).code).toBe('REGISTRATION_CLOSED');
+    });
+
+    it('vagas esgotadas sem lista de espera respondem como no formulario publico', async () => {
+      const path = await atividadeCom({ vagas: 1, listaEspera: false });
+      await nucleo().post(path, adulto(3)).expect(201);
+
+      const res = await nucleo().post(path, adulto(4));
+
+      expect(res.status).toBe(409);
+      expect((res.body as { code: string }).code).toBe('REGISTRATION_FULL');
+    });
+
+    it('reaproveitar cadastro sem o dado pedido exige o dado e completa o cadastro', async () => {
+      const path = await atividadeCom({});
+      const semEmail = await prisma.participante.create({
+        data: {
+          nome: 'Joana Sem Email',
+          telefone: '61977776666',
+          dataNascimento: new Date('1990-01-01T00:00:00.000Z'),
+        },
+      });
+      const reuso = {
+        reaproveitarParticipanteId: semEmail.id,
+        versaoAviso: DATA_NOTICE.versao,
+        autorizaComunicados: false,
+        autorizaImagem: false,
+      };
+
+      const falta = await nucleo().post(path, reuso);
+      expect(falta.status).toBe(400);
+      expect((falta.body as { code: string }).code).toBe('MISSING_FIELDS');
+
+      const completo = await nucleo().post(path, { ...reuso, email: 'joana@exemplo.com' });
+      expect(completo.status).toBe(201);
+      expect(
+        (await prisma.participante.findUniqueOrThrow({ where: { id: semEmail.id } })).email,
+      ).toBe('joana@exemplo.com');
+    });
+
+    it('a checagem de duplicidade devolve so o nome e os contatos mascarados', async () => {
+      const res = await nucleo()
+        .post('/v1/participants/check-duplicate')
+        .send({ cpf: CPF_EXISTENTE });
+
+      const participante = (res.body as DuplicateCheckResponse).participante;
+      expect(Object.keys(participante ?? {}).sort()).toEqual([
+        'camposDisponiveis',
+        'cpfMascarado',
+        'emailMascarado',
+        'id',
+        'nome',
+        'telefoneMascarado',
+      ]);
+      expect(participante?.telefoneMascarado).toBe('(**) *****-7777');
     });
   });
 });
