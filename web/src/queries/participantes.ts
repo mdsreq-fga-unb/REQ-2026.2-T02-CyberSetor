@@ -59,6 +59,30 @@ export function useRevokeAuthorization() {
   });
 }
 
+export interface DuplicateCheckParticipant {
+  id: string;
+  nome: string;
+  telefoneMascarado: string;
+  emailMascarado?: string | null;
+  cpfMascarado?: string | null;
+  camposDisponiveis: string[];
+}
+
+export interface DuplicateCheckResponse {
+  existe: boolean;
+  participante?: DuplicateCheckParticipant | null;
+}
+
+export async function checkParticipantDuplicate(data: {
+  cpf?: string;
+  email?: string;
+}): Promise<DuplicateCheckResponse> {
+  return authorizedRequest<DuplicateCheckResponse>('/participants/check-duplicate', {
+    method: 'POST',
+    body: data,
+  });
+}
+
 export function useCorrectParticipant() {
   const queryClient = useQueryClient();
   return useMutation({

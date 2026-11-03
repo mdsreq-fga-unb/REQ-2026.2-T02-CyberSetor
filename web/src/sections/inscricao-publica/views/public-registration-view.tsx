@@ -3,7 +3,7 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { CircleCheckIcon, HourglassIcon } from 'lucide-react';
 import { useMemo, useState, type FormEvent } from 'react';
-import { Controller, useForm, useWatch, type Control } from 'react-hook-form';
+import { useForm, useWatch } from 'react-hook-form';
 import { z } from 'zod';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
@@ -11,140 +11,19 @@ import { Field, FieldGroup } from '@/components/ui/field';
 import { Skeleton } from '@/components/ui/skeleton';
 import { ApiError } from '@/lib/api';
 import { usePublicForm, useSubmitRegistration } from '@/queries/inscricao-publica';
-import type {
-  PublicActivity,
-  PublicForm,
-  PublicSubmission,
-  SubmittedRegistration,
-} from '@/types/inscricao-publica';
+import type { PublicActivity, PublicForm, SubmittedRegistration } from '@/types/inscricao-publica';
 import type { CampoInscricao } from '@/types/inscricoes';
-import { CpfField, DateField, PhoneField, TextField } from '@/components/form/fields';
 import {
-  ageOn,
-  deadlinePassed,
-  formatActivityWhen,
-  formatDeadline,
-  formatPhone,
-  isValidPhone,
-  todayInBrasilia,
-} from '@/lib/br';
-import { cpfSchema, ISO_DATE, phoneSchema } from '@/lib/schemas';
-
-const ADULT_AGE = 18;
-
-const FIELD_OF = {
-  EMAIL: 'email',
-  CPF: 'cpf',
-  BAIRRO_REGIAO: 'bairroRegiao',
-  ESCOLARIDADE: 'escolaridade',
-} as const satisfies Record<CampoInscricao, string>;
-
-interface FormValues {
-  nome: string;
-  nomePreferencia: string;
-  telefone: string;
-  dataNascimento: string;
-  email: string;
-  cpf: string;
-  bairroRegiao: string;
-  escolaridade: string;
-  aceiteTermo: boolean;
-  autorizaComunicados: boolean;
-  autorizaImagem: boolean;
-  responsavelNome: string;
-  responsavelTelefone: string;
-}
-
-const EMPTY: FormValues = {
-  nome: '',
-  nomePreferencia: '',
-  telefone: '',
-  dataNascimento: '',
-  email: '',
-  cpf: '',
-  bairroRegiao: '',
-  escolaridade: '',
-  aceiteTermo: false,
-  autorizaComunicados: false,
-  autorizaImagem: false,
-  responsavelNome: '',
-  responsavelTelefone: '',
-};
-
-function isMinor(birthDate: string): boolean {
-  return ISO_DATE.test(birthDate) && ageOn(birthDate, todayInBrasilia()) < ADULT_AGE;
-}
-
-/** Valida só os campos que a atividade pede; todos os pedidos são obrigatórios. */
-function schemaFor(asked: CampoInscricao[], hasTerm: boolean) {
-  const has = (campo: CampoInscricao) => asked.includes(campo);
-  const required = (message: string) => z.string().trim().min(1, message);
-  const optional = z.string();
-  return z
-    .object({
-      nome: required('Informe o seu nome.').max(150, 'O nome tem no máximo 150 caracteres.'),
-      nomePreferencia: z.string().max(80, 'Use no máximo 80 caracteres.'),
-      telefone: phoneSchema(),
-      dataNascimento: z
-        .string()
-        .regex(ISO_DATE, 'Informe a data de nascimento.')
-        .refine((value) => value <= todayInBrasilia(), 'A data não pode ser no futuro.'),
-      email: has('EMAIL')
-        ? required('Informe o seu e-mail.').pipe(z.email('Informe um e-mail válido.'))
-        : optional,
-      cpf: has('CPF') ? cpfSchema('Informe o seu CPF.') : optional,
-      bairroRegiao: has('BAIRRO_REGIAO') ? required('Informe o bairro ou a região.') : optional,
-      escolaridade: has('ESCOLARIDADE') ? required('Informe a escolaridade.') : optional,
-      aceiteTermo: hasTerm
-        ? z.literal(true, { message: 'Marque que concorda com os compromissos da turma.' })
-        : z.boolean(),
-      autorizaComunicados: z.boolean(),
-      autorizaImagem: z.boolean(),
-      responsavelNome: optional,
-      responsavelTelefone: optional,
-    })
-    .superRefine((values, ctx) => {
-      if (!isMinor(values.dataNascimento)) return;
-      if (values.responsavelNome.trim().length < 2) {
-        ctx.addIssue({
-          code: 'custom',
-          path: ['responsavelNome'],
-          message: 'Informe o nome do responsável legal.',
-        });
-      }
-      if (!isValidPhone(values.responsavelTelefone)) {
-        ctx.addIssue({
-          code: 'custom',
-          path: ['responsavelTelefone'],
-          message: 'Informe o telefone do responsável com DDD.',
-        });
-      }
-    });
-}
-
-/** Monta o envio só com o que a atividade pede, para não coletar dado a mais (RNF05). */
-function submissionOf(values: FormValues, form: PublicForm): PublicSubmission {
-  const body: PublicSubmission = {
-    nome: values.nome.trim(),
-    telefone: values.telefone,
-    dataNascimento: values.dataNascimento,
-    versaoAviso: form.aviso.versao,
-    ...(form.termo && values.aceiteTermo && { versaoTermo: form.termo.versao }),
-    autorizaComunicados: values.autorizaComunicados,
-    autorizaImagem: values.autorizaImagem,
-  };
-  const nomePreferencia = values.nomePreferencia.trim();
-  if (nomePreferencia) body.nomePreferencia = nomePreferencia;
-  for (const campo of form.camposAdicionais) {
-    const name = FIELD_OF[campo];
-    body[name] = values[name].trim();
-  }
-  if (isMinor(values.dataNascimento)) {
-    body.responsavelNome = values.responsavelNome.trim();
-    body.responsavelTelefone = values.responsavelTelefone;
-  }
-  return body;
-}
+  Consent,
+  EMPTY_REGISTRATION,
+  guardianRule,
+  isMinor,
+  registrationShape,
+  submissionOf,
+  type RegistrationFormValues,
+} from '../registration-form';
+import { CpfField, DateField, PhoneField, TextField } from '@/components/form/fields';
+import { deadlinePassed, formatActivityWhen, formatDeadline, formatPhone } from '@/lib/br';
 
 function failureOf(error: unknown): string {
   if (!(error instanceof ApiError)) return 'Não foi possível falar com o servidor. Tente de novo.';
@@ -241,49 +120,6 @@ function Message({
   );
 }
 
-function Consent({
-  name,
-  label,
-  control,
-}: {
-  name: 'aceiteTermo' | 'autorizaComunicados' | 'autorizaImagem';
-  label: string;
-  control: Control<FormValues>;
-}) {
-  return (
-    <Controller
-      name={name}
-      control={control}
-      render={({ field, fieldState }) => (
-        <div className="flex flex-col gap-1">
-          <label
-            htmlFor={name}
-            className="flex min-h-12 cursor-pointer items-center gap-3 rounded-md border border-input p-3 text-sm"
-          >
-            <input
-              id={name}
-              ref={field.ref}
-              type="checkbox"
-              checked={field.value}
-              onChange={(event) => field.onChange(event.target.checked)}
-              onBlur={field.onBlur}
-              aria-invalid={fieldState.invalid || undefined}
-              aria-describedby={fieldState.error ? `${name}-erro` : undefined}
-              className="size-5 shrink-0 accent-primary"
-            />
-            <span>{label}</span>
-          </label>
-          {fieldState.error && (
-            <p id={`${name}-erro`} className="text-sm text-destructive">
-              {fieldState.error.message}
-            </p>
-          )}
-        </div>
-      )}
-    />
-  );
-}
-
 function RegistrationForm({
   form,
   codigo,
@@ -303,15 +139,18 @@ function RegistrationForm({
   const [failure, setFailure] = useState<string | null>(null);
   const hasTerm = form.termo !== null;
   const schema = useMemo(
-    () => schemaFor(form.camposAdicionais, hasTerm),
+    () => z.object(registrationShape(form.camposAdicionais, hasTerm)).superRefine(guardianRule),
     [form.camposAdicionais, hasTerm],
   );
-  const methods = useForm<FormValues>({ resolver: zodResolver(schema), defaultValues: EMPTY });
+  const methods = useForm<RegistrationFormValues>({
+    resolver: zodResolver(schema),
+    defaultValues: EMPTY_REGISTRATION,
+  });
   const birthDate = useWatch({ control: methods.control, name: 'dataNascimento' });
   const minor = isMinor(birthDate);
   const asks = (campo: CampoInscricao) => form.camposAdicionais.includes(campo);
 
-  async function onValid(values: FormValues) {
+  async function onValid(values: RegistrationFormValues) {
     try {
       onSubmitted(await submit.mutateAsync(submissionOf(values, form)));
     } catch (error) {

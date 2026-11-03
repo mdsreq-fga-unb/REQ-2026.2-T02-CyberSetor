@@ -99,3 +99,34 @@ export interface RegistrationList {
   canceladas: number;
   inscricoes: RegisteredPerson[];
 }
+
+/** Inscrição presencial registrada pelo Núcleo (HU-08). */
+export interface CreateAssistedRegistrationInput {
+  reaproveitarParticipanteId?: string;
+  nome?: string;
+  nomePreferencia?: string;
+  telefone?: string;
+  dataNascimento?: string;
+  email?: string;
+  cpf?: string;
+  bairroRegiao?: string;
+  escolaridade?: string;
+  versaoAviso: string;
+  versaoTermo?: string;
+  autorizaComunicados: boolean;
+  autorizaImagem: boolean;
+  responsavelNome?: string;
+  responsavelTelefone?: string;
+}
+
+export interface AssistedRegistrationResponse {
+  id: string;
+  situacao: SituacaoInscricao;
+  posicaoEspera?: number | null;
+  reaproveitouParticipante: boolean;
+  participante: {
+    id: string;
+    nome: string;
+  };
+  inscritoEm: string;
+}

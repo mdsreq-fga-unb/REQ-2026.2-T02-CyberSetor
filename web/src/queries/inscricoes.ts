@@ -2,7 +2,9 @@ import { useMutation, useQuery, useQueryClient, type QueryClient } from '@tansta
 import { authorizedRequest } from '@/auth/session';
 import { ApiError } from '@/lib/api';
 import type {
+  AssistedRegistrationResponse,
   CancelRegistrationInput,
+  CreateAssistedRegistrationInput,
   OpenRegistrationInput,
   Registration,
   RegistrationList,
@@ -169,4 +171,25 @@ function refreshAfterChange(
     queryClient.invalidateQueries({ queryKey: ['participantes'] }),
     queryClient.invalidateQueries(PROJECT_ACTIVITIES),
   ]);
+}
+
+/** Inscrição presencial registrada pelo Núcleo (HU-08). */
+export function useCreateAssistedRegistration(activityId: string) {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: (data: CreateAssistedRegistrationInput) =>
+      authorizedRequest<AssistedRegistrationResponse>(
+        `/activities/${encodeURIComponent(activityId)}/registration/assisted`,
+        {
+          method: 'POST',
+          body: data,
+        },
+      ),
+    onSuccess: () =>
+      Promise.all([
+        queryClient.invalidateQueries({ queryKey: registrationListsKey(activityId) }),
+        queryClient.invalidateQueries({ queryKey: ['participantes'] }),
+        queryClient.invalidateQueries(PROJECT_ACTIVITIES),
+      ]),
+  });
 }
