@@ -94,6 +94,8 @@ plugins:
 
 exclude_docs: |
   *.txt
+  # Atas com o cliente em versão preliminar, fora do site até a conferência do Instituto
+  gestao/atas/2026-10-29-checkpoint-instituto.md
 
 nav:
   - Início: index.md
