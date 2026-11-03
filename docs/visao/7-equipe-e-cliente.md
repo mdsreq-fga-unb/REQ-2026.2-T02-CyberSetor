@@ -11,10 +11,13 @@
 | 05/10/2026 | 1.6 | Revisão editorial: aplicação de espaçamentos e formatação em tópicos estruturados para maior fluidez de leitura, preservando a íntegra das validações e argumentações | Rodrigo Henrique |
 | 06/10/2026 | 1.7 | Daily no próprio dia, até o fim do dia, em vez de até as 12h | Vinicius Vieira |
 | 07/10/2026 | 1.8 | Especificação dos papéis de Engenharia de Requisitos de cada integrante na composição da equipe e remoção de menções operacionais genéricas | Daniel Batista e Maria Eduarda Marques |
+| 19/10/2026 | 1.9 | Composição da equipe atualizada para cinco integrantes | Maria Eduarda Marques |
+| 21/10/2026 | 1.10 | Daily presencial às terças e quintas e escrita nos demais dias úteis | Vinicius Vieira |
+| 26/10/2026 | 1.11 | Interações de 21/09, 28/09 e 08/10 com o Instituto; alinhamento técnico de 15/10 e reunião de 22/10, remarcada para 29/10, registrados como encontros que não ocorreram; ausência registrada sem exigência de motivo; atas de 08/09 e 15/09 ligadas na tabela; trabalho em duplas com revisão por outra dupla (7.1); validação da interface pela demonstração em homologação (7.3); termos do Instituto nas notas de domínio da seção 8 | Vinicius Vieira |
 
 ## 7.1 Composição da Equipe
 
-A equipe é formada por seis estudantes de Engenharia de Software. Todos atuam ativamente como engenheiros de requisitos e desenvolvedores, assumindo responsabilidades de condução e orquestração nas seis atividades de Engenharia de Requisitos (elicitação, análise, declaração, representação, verificação e validação, organização e atualização), integradas aos papéis ágeis do ScrumXP (Product Owner interno e Scrum Master).
+A equipe é formada por cinco estudantes de Engenharia de Software. Todos atuam ativamente como engenheiros de requisitos e desenvolvedores, assumindo responsabilidades de condução e orquestração nas seis atividades de Engenharia de Requisitos (elicitação, análise, declaração, representação, verificação e validação, organização e atualização), integradas aos papéis ágeis do ScrumXP (Product Owner interno e Scrum Master).
 
 !!! note "Duas pessoas chamadas Maria Eduarda"
     **Maria Eduarda Marques** é a integrante da equipe e Product Owner interno. **Maria Eduarda, do núcleo pedagógico**, é uma das representantes do Instituto, e vem sempre com essa identificação institucional; seu sobrenome não é registrado porque a equipe não o tem confirmado.
@@ -24,20 +27,19 @@ A equipe é formada por seis estudantes de Engenharia de Software. Todos atuam a
 | Maria Eduarda Denis Duarte Marques | 232014502 | [@mariadenis](https://github.com/mariadenis) | Líder da equipe · Product Owner interno · Elicitação e Descoberta | Condução da interlocução, agendamento e elicitação contínua com o Instituto; gestão e ordenação do Product Backlog com base no valor de negócio validado com o cliente; declaração e validação de requisitos. |
 | Vinicius Angelo de Brito Vieira | 190118059 | [@viniciusvieira00](https://github.com/viniciusvieira00) | Scrum Master · Organização e Atualização · Análise e Consenso | Facilitação das cerimônias ágeis; remoção de impedimentos; gestão e organização do Product Backlog e rastreabilidade; orquestração da verificação e revisão por pares; análise documental e consenso de regras de negócio. |
 | Rodrigo Henrique Donato de Souza | 241012374 | [@Fofodoido](https://github.com/Fofodoido) | Engenharia de Requisitos: Representação · Análise e Consenso | Condução da modelagem de processos de negócio na notação BPMN; análise de consenso e intervenção social; análise de consistência de regras e documentos do Instituto; declaração e verificação de requisitos. |
-| Lucas de Paula Leal | 232004480 | [@lucaspaulaleal](https://github.com/lucaspaulaleal) | Engenharia de Requisitos: Elicitação e Descoberta · Declaração | Apoio e registro técnico das sessões de elicitação e entrevistas; consolidação de evidências; declaração de histórias de usuário e critérios de aceitação; análise de estratégias de engenharia de software e verificação. |
 | Daniel da Silva Batista | 231011201 | [@daniboycam](https://github.com/daniboycam) | Engenharia de Requisitos: Representação · Análise de Negócio | Elaboração e evolução dos modelos visuais de representação sistêmica (Rich Picture e Mapa de Stakeholders); análise do cenário atual do negócio e fluxos operacionais; declaração e verificação de requisitos. |
 | Caio Flávio de Lima Martins Junior | 231011168 | [@caioflmjr](https://github.com/caioflmjr) | Engenharia de Requisitos: Declaração · Organização e Rastreabilidade | Estruturação e declaração de requisitos (histórias de usuário, critérios de aceitação, DoR e DoD); manutenção da rastreabilidade e cronograma de requisitos; especificação de requisitos não funcionais e verificação. |
 
 ### 7.1.1 Responsabilidades por atividade de Engenharia de Requisitos
 
-**Todos os seis integrantes atuam como engenheiros de requisitos.** As seis atividades de Engenharia de Requisitos não são etapas lineares com donos exclusivos: são práticas iterativas e entrelaçadas, que ocorrem em paralelo, se retroalimentam e são revisitadas ao longo do projeto. A equipe participa de todas.
+**Todos os cinco integrantes atuam como engenheiros de requisitos.** As seis atividades de Engenharia de Requisitos não são etapas lineares com donos exclusivos: são práticas iterativas e entrelaçadas, que ocorrem em paralelo, se retroalimentam e são revisitadas ao longo do projeto. A equipe participa de todas.
 
 O que a tabela abaixo registra é **quem conduz cada atividade e responde por sua evidência** — o papel de orquestração descrito no livro-texto, em que o engenheiro de software coordena a atividade sem atuar sozinho, apoiado pela contribuição dos demais. A coluna não é lista de exclusividade: ninguém está impedido de participar de uma atividade por não constar dela, e quem consta não a executa sozinho.
 
 | Atividade de ER | Quem conduz e responde pela evidência | Como a equipe participa | Evidência |
 |---|---|---|---|
 | **Elicitação e descoberta** | Maria Eduarda Marques (interlocução e agendamento) | A ata de cada sessão é publicada neste site, e as questões que dela surgem entram no refinamento semanal | Atas de reunião com o cliente; roteiros de entrevista; notas de observação direta |
-| **Análise e consenso** | Vinicius Vieira e Rodrigo Henrique (documentos do cliente) | Achados discutidos no refinamento semanal, onde a equipe fecha o entendimento | Análise da planilha-template; glossário de termos do Instituto; registro de lacunas |
+| **Análise e consenso** | Vinicius Vieira e Rodrigo Henrique (documentos do cliente) | Achados discutidos no refinamento semanal, onde a equipe fecha o entendimento | Análise da planilha-template; termos do Instituto nas notas de domínio da seção 8; registro de lacunas |
 | **Declaração** | Cada dupla, no bloco atribuído | Todas as duplas redigem histórias e critérios de aceitação | Histórias de usuário e critérios de aceitação no GitHub Projects |
 | **Representação** | Rodrigo Henrique (BPMN) · Daniel Batista (Rich Picture e mapa de stakeholders) | Diagramas revisados pela equipe antes de publicados | Diagramas publicados neste site |
 | **Verificação e validação** | Vinicius Vieira organiza a revisão cruzada; a validação cabe ao Instituto, por área competente — ver §7.3 | Cada dupla revisa o material de outra dupla | Registro da revisão por par; ata da sessão de validação |
@@ -47,20 +49,20 @@ A nomenclatura das seis atividades segue o livro-texto da disciplina (MARSICANO,
 
 **O papel do cliente.** O Instituto No Setor **valida as entregas**, **indica o valor dos itens e participa da ordenação do Product Backlog** e é a fonte primária dos requisitos. O Product Owner interno **propõe** a ordenação a partir desse valor e a mantém atualizada entre os encontros; a proposta vale até o Instituto confirmá-la, e uma entrega avaliada apenas por essa via fica registrada como *pendente de validação externa*. Quem valida cada conjunto de funcionalidades está na seção 7.3.1.
 
-O Product Owner interno é a mitigação para duas limitações conhecidas: a dependência da disponibilidade do Product Owner, no Scrum, e a dependência do cliente presente, no XP. O Instituto No Setor não dispõe de equipe de tecnologia e atua com agenda reduzida, e por isso não funcionaria como cliente presente no sentido literal. As responsabilidades técnicas no desenvolvimento serão distribuídas a partir da matriz de competências, com programação em pares desde a Sprint 1.
+O Product Owner interno é a mitigação para duas limitações conhecidas: a dependência da disponibilidade do Product Owner, no Scrum, e a dependência do cliente presente, no XP. O Instituto No Setor não dispõe de equipe de tecnologia e atua com agenda reduzida, e por isso não funcionaria como cliente presente no sentido literal. As responsabilidades técnicas no desenvolvimento serão distribuídas a partir da matriz de competências, com o trabalho em duplas por épico e revisão de cada pull request por outra dupla; as sessões em dupla ficam registradas na coautoria dos commits.
 
 ## 7.2 Comunicação
 
 **Ferramentas**
 
-- **WhatsApp:** comunidade *CyberSetor - Requisitos*, com três grupos: *Avisos*, para comunicados; *CyberSetor - Geral*, para discussão e decisões; e *Dailys*, exclusivo para a daily assíncrona. É também o canal de mensagens com as representantes do Instituto.
+- **WhatsApp:** comunidade *CyberSetor - Requisitos*, com três grupos: *Avisos*, para comunicados; *CyberSetor - Geral*, para discussão e decisões; e *Dailys*, exclusivo para a daily escrita. É também o canal de mensagens com as representantes do Instituto.
 - **Google Meet:** todas as reuniões da equipe e as videochamadas com o Instituto, com gravação e ata gerada automaticamente. Gravações e transcrições brutas funcionam exclusivamente como apoio interno restrito no Google Drive; o registro oficial é a ata sintética elaborada pelo relator, revisada para controle de dados sensíveis (LGPD) e publicada neste site — ver a [política de registro, acesso e publicação](../gestao/atas/index.md#politica-de-registro-acesso-e-publicacao).
 - **GitHub:** repositório do projeto, Product Backlog e Sprint Backlog no GitHub Projects e Issues, feedback do professor por issues e publicação deste site.
 - **Google Docs:** rascunho colaborativo do documento. A entrega é o site; o rascunho não substitui a publicação.
 
 **Reuniões e frequência**
 
-- **Daily assíncrona:** todo dia útil, no próprio dia, até o fim do dia, no grupo *Dailys*, com o que foi feito, o que será feito e os impedimentos. Impedimento declarado é resolvido ou escalado pelo Scrum Master em até 24 horas.
+- **Daily:** presencial às terças e quintas, na aula ou na reunião da equipe; nos demais dias úteis, escrita no grupo *Dailys*, no próprio dia, até o fim do dia, com o que foi feito, o que será feito e os impedimentos. Impedimento declarado é resolvido ou escalado pelo Scrum Master em até 24 horas.
 - **Sprint Planning:** na primeira terça-feira de cada sprint, cerca de uma hora, no Google Meet.
 - **Refinamento do backlog:** semanal, cerca de trinta minutos, no Google Meet. É onde a Engenharia de Requisitos acontece no dia a dia.
 - **Sprint Review:** na última terça-feira de cada sprint, cerca de uma hora, com o incremento demonstrado e o retorno incorporado ao backlog. Quando o Instituto não puder estar presente, a avaliação é provisória e a confirmação fica para a validação semanal seguinte (§7.3).
@@ -76,16 +78,19 @@ As interlocutoras atuais são **Maria Clara e Maria Eduarda, do núcleo pedagóg
 |---|---|---|
 | 20/08/2026 | Videoconferência | Primeira reunião: contexto e dores |
 | 02/09/2026 | Mensagem | Concordância **preliminar** com a proposta de solução — ver §7.3.2 |
-| 08/09/2026 | Presencial, na sede | Elicitação aprofundada, com observação direta e análise de documentos |
-| 15/09/2026 | Videoconferência | Levantamento com a área de projetos, a coordenação administrativo-financeira e o núcleo pedagógico: rotina administrativa, matriz de aquisição, separação de acesso por área e necessidades de painel e de comprovação em campo |
+| [08/09/2026](../gestao/atas/2026-09-08-reuniao-presencial-instituto.md) | Presencial, na sede | Elicitação aprofundada, com observação direta e análise de documentos |
+| [15/09/2026](../gestao/atas/2026-09-15-reuniao-alinhamento-instituto.md) | Videoconferência | Levantamento com a área de projetos, a coordenação administrativo-financeira e o núcleo pedagógico: rotina administrativa, matriz de aquisição, separação de acesso por área e necessidades de painel e de comprovação em campo |
+| [21/09/2026](../gestao/atas/2026-09-21-reuniao-presencial-instituto.md) | Presencial, na sede | Levantamento de processos com a coordenação de execução, a presidência e o núcleo pedagógico: fluxo de compras, contratações e prestação de contas, Matriz de Aquisição e planilhas de projetos em andamento |
+| [28/09/2026](../gestao/atas/2026-09-28-validacao-mvp-instituto.md) | Videoconferência | Validação das histórias e priorização do MVP com o núcleo pedagógico (diretora pedagógica e Maria Eduarda): parcerias e metas como base do MVP, inscrições no MVP, evidências no incremento 2 — ver seção 10.2.8 |
+| [08/10/2026](../gestao/atas/2026-10-08-validacao-mvp-instituto.md) | Videoconferência | Validação do recorte do MVP com Maria Eduarda, do núcleo pedagógico: parcerias e metas, aditivos e auditoria, inscrições, direitos do titular e prestação de contas; evidências no incremento 2 |
 
-A tabela acima registra apenas encontros realizados: intenção e convite não entram nela. A cadência acordada é **semanal**. Quando um encontro não ocorre por incompatibilidade com o calendário do Instituto, a ausência é registrada com o motivo, em vez de a cadência ser reescrita: é assim que a tabela acima permanece fiel ao que aconteceu.
+A tabela acima registra apenas encontros realizados: intenção e convite não entram nela. Dois encontros combinados não ocorreram: o alinhamento técnico sobre a estrutura do banco de dados, previsto na reunião de 08/10 para 15/10/2026, e a reunião de 22/10/2026, remarcada para 29/10/2026. A cadência acordada é **semanal**. Quando um encontro não ocorre, a ausência é registrada, em vez de a cadência ser reescrita: é assim que a tabela acima permanece fiel ao que aconteceu.
 
 ## 7.3 Processo de Validação
 
 A validação dos requisitos e da solução é um processo contínuo e centrado no cliente, estruturado em torno das interações e conversas de validação com as representantes do Instituto No Setor:
 
-1. **Validação com prototipação leve:** nas fases iniciais e a cada novo fluxo concebido, telas e navegações preliminares são apresentadas às representantes para validar a adequação da interface e do fluxo operacional antes do desenvolvimento completo.
+1. **Validação da interface em homologação:** a cada fluxo construído, as telas são demonstradas às representantes no ambiente de homologação, que funciona como protótipo evolutivo; os esboços de tela orientam a dupla antes da construção e não substituem essa demonstração.
 2. **Demonstração do MVP funcional mínimo:** com o avanço do desenvolvimento, as iterações e incrementos são demonstrados e exercitados com cenários reais das oficinas e eventos do Instituto, confirmando se o comportamento construído resolve de fato os gargalos de registro e prestação de contas.
 3. **Identificação conjunta de ambiguidades, inconsistências e omissões:** a equipe e as interlocutoras analisam ativamente cada funcionalidade demonstrada para identificar lacunas de regras de negócio, comportamentos inesperados ou fluxos ausentes.
 4. **Registro em ata e refinamento contínuo:** os apontamentos e acordos estabelecidos nas conversas de validação são formalmente sintetizados em ata de reunião, alimentando o refinamento imediato do Product Backlog e o planejamento das sprints seguintes.
@@ -116,6 +121,6 @@ A consulta à área administrativo-financeira e à Diretoria de Projetos integra
 
 **Cobre:** em 02/09/2026, após ler a **proposta de solução**, as representantes do núcleo pedagógico do Instituto manifestaram concordância com o problema identificado. Isso confirma o problema descrito na seção 1.4 e os objetivos da seção 2 **como ponto de partida**.
 
-**Não cobre:** a manifestação foi por mensagem, **antes** da elicitação presencial aprofundada de 08/09/2026, e é portanto **preliminar**. Ela não valida o que só foi descoberto depois — em particular o reposicionamento do centro do produto para o ciclo do projeto financiado, a estrutura organizacional real do Instituto e o modelo de requisito/meta com indicador e parâmetro de aferição. Esses achados constam da ata de 08/09, que está em conferência pelo Instituto e cuja validação formal permanece pendente.
+**Não cobre:** a manifestação foi por mensagem, **antes** da elicitação presencial aprofundada de 08/09/2026, e é portanto **preliminar**. Ela não valida o que só foi descoberto depois — em particular o reposicionamento do centro do produto para o ciclo do projeto financiado, a estrutura organizacional real do Instituto e o modelo de requisito/meta com indicador e parâmetro de aferição. Esses achados constam da [ata de 08/09](../gestao/atas/2026-09-08-reuniao-presencial-instituto.md).
 
 Uma aprovação anterior não se estende automaticamente a fatos posteriores.

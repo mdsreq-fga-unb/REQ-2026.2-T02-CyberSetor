@@ -5,7 +5,7 @@
 | Campo | Conteúdo |
 |---|---|
 | **Código do documento** | C25 |
-| **Versão** | 1.0 |
+| **Versão** | 1.2 |
 | **Data de emissão** | 9 de outubro de 2026 |
 | **Projeto** | CyberSetor — sistema de gestão do ciclo de projetos financiados |
 | **Cliente** | Instituto Cultural e Social No Setor |
@@ -15,7 +15,7 @@
 | **Período da Sprint** | 06/10/2026 (terça-feira) a 20/10/2026 (terça-feira) — 2 semanas |
 | **Elaboração** | Vinicius Angelo de Brito Vieira (Scrum Master) |
 | **Product Owner** | Maria Eduarda Denis Duarte Marques |
-| **Situação** | Emitido com o deliberado na Sprint Planning de 07/10/2026 e nos encaminhamentos de 08/10 e 09/10 |
+| **Situação** | Emitido com o deliberado na Sprint Planning de 07/10/2026 e nos encaminhamentos de 08/10 e 09/10; resultado registrado depois da Sprint Review de 20/10/2026 |
 
 ---
 
@@ -123,8 +123,7 @@ O fluxo de branches por componente e os pontos de publicação do site, em vigor
 
 | Integrante | Papel | Foco nesta Sprint |
 |---|---|---|
-| Vinicius Vieira | Scrum Master · dupla com Lucas | Integração e publicação da Unidade 2; fluxo de branches e base técnica; épicos Pessoas e Presença em campo |
-| Lucas de Paula Leal | Dupla com Vinicius | Dojo pendente; épicos Pessoas e Presença em campo; aba Entregas da revisão editorial; seção 4 com Caio |
+| Vinicius Vieira | Scrum Master | Integração e publicação da Unidade 2; fluxo de branches e base técnica; épicos Pessoas e Presença em campo |
 | Maria Eduarda Marques | Product Owner · dupla com Caio | Atas e conferência com o Instituto; alinhamento técnico de 15/10; épicos Relatório e Atividade |
 | Caio Martins | Dupla com Maria Eduarda | Seção 4 (apontamentos do docente); alcance do MVP no cronograma; épicos Relatório e Atividade |
 | Daniel Batista | Dupla com Rodrigo | Épicos Requisito e meta e Evidência; primeira fatia vertical (HU-01); lições aprendidas e papéis de ER já publicados |
@@ -149,15 +148,15 @@ O Product Backlog (épicos, histórias, priorização e MVP) está na [seção 1
 | ID | Item | Atividade de ER | Responsáveis | MoSCoW | Prazo |
 |---|---|---|---|---|---|
 | U01 | Integrar os pull requests aprovados da Sprint 2 e publicar a Unidade 2 na versão marcada: pull request consolidado da homologação, tag `u2-2026-10-13` e execução manual da publicação antes da aula | Organização e atualização | Vinicius | Must | 13/10, 8h |
-| U02 | Seção 4: responder aos apontamentos do docente sobre a abordagem ágil, o OpenUP, o quadro comparativo e o ScrumXP, com comentário na issue do docente | Verificação e validação | Caio e Lucas | Must | 12/10 |
+| U02 | Seção 4: responder aos apontamentos do docente sobre a abordagem ágil, o OpenUP, o quadro comparativo e o ScrumXP, com comentário na issue do docente | Verificação e validação | Caio | Must | 12/10 |
 | U03 | Síntese de entregas da Unidade 2: catálogo, situação, checklist, rastreamento das Atividades 2 a 4 e vídeo | Organização e atualização | Rodrigo | Must | 12/10 |
 | U04 | Atas de 28/09 e 08/10 conferidas pelo Instituto; correções da ata de 08/10 publicadas | Organização e atualização | Maria Eduarda | Must | 12/10 |
 | U05 | Vídeo da Unidade 2: exigência conferida no Plano de Ensino; roteiro, gravação com os seis integrantes e publicação | Não se aplica | Equipe | Must | 12/10 |
 | U06 | Checklist da Unidade 2 no README, com o link do vídeo | Organização e atualização | Rodrigo | Must | 12/10 |
 | U07 | Alcance do MVP no cronograma (seção 6.3) alinhado à seção 10 e à confirmação de 08/10 | Verificação e validação | Caio | Must | 12/10 |
-| U08 | Revisão editorial: pull request das seções 1, 2, 3, 5 e 7 e das páginas de apoio integrado à homologação; abas Requisitos e Entregas | Organização e atualização | Equipe revisa; Daniel (Requisitos) e Lucas (Entregas) | Should | 12/10 |
+| U08 | Revisão editorial: pull request das seções 1, 2, 3, 5 e 7 e das páginas de apoio integrado à homologação; abas Requisitos e Entregas | Organização e atualização | Equipe revisa; Daniel (Requisitos); aba Entregas a redistribuir | Should | 12/10 |
 | U09 | Seção 10: registro da confirmação de 08/10 na 10.2.8; seção 8: só os ajustes já decididos da Atividade 3 | Organização e atualização | Vinicius | Should | 12/10 |
-| U10 | Comentários nas issues do docente com a localização de cada ajuste, depois da publicação | Organização e atualização | Vinicius; Caio e Lucas (seção 4) | Should | 13/10 |
+| U10 | Comentários nas issues do docente com a localização de cada ajuste, depois da publicação | Organização e atualização | Vinicius; Caio (seção 4) | Should | 13/10 |
 
 **Parte B — Base técnica e construção** (de 13/10 a 20/10)
 
@@ -170,13 +169,13 @@ O Product Backlog (épicos, histórias, priorização e MVP) está na [seção 1
 | B05 | Ambiente local por Compose; homologação da API e do front publicada; endereço no site; backup com teste de restauração | Não se aplica | Vinicius | Should | 20/10 |
 | H01 | Histórias da primeira entrega conferidas contra a DoR pela dupla dona, divididas onde preciso (HU-05, HU-13 e o cadastro da atividade da HU-03), com as sub-issues de construção abertas | Declaração | duplas donas | Must | 13/10 |
 | H02 | Primeira fatia vertical da HU-01 (cadastrar instrumento, projeto e meta) em andamento na API e no front | Declaração | Daniel e Rodrigo | Should | 20/10 |
-| H03 | Primeira fatia vertical da HU-07 (inscrição por link) em andamento | Declaração | Vinicius e Lucas | Could | 20/10 |
+| H03 | Primeira fatia vertical da HU-07 (inscrição por link) em andamento | Declaração | Vinicius | Could | 20/10 |
 
 **Parte C — Pendências que continuam**
 
 | ID | Item | Atividade de ER | Responsáveis | MoSCoW | Prazo |
 |---|---|---|---|---|---|
-| P01 | Dojo pendente da Sprint 1: pull request e fechamento dos registros dos dojos | Organização e atualização | Lucas, com apoio de Vinicius | Should | 16/10 |
+| P01 | Dojo pendente da Sprint 1: pull request e fechamento dos registros dos dojos | Organização e atualização | Sem responsável; destino do dojo a decidir na Review 3 | Should | 16/10 |
 | P02 | Plano da Sprint 3 publicado | Organização e atualização | Vinicius | Must | 12/10 |
 | P03 | Alinhamento técnico com o Instituto (15/10): tabelas, campos de inscrição, perfis de acesso; perguntas dos documentos-modelo por escrito | Elicitação e descoberta | Vinicius, Daniel e Maria Eduarda | Should | 15/10 |
 | P04 | Preparação da Review 3 e da revisão da primeira entrega com o Instituto | Organização e atualização | Vinicius e Maria Eduarda | Should | 20/10 |
@@ -210,7 +209,7 @@ A ordem é a da seção 10.2.6, confirmada pelo Instituto em 08/10. Dentro de ca
 
 | Dupla | Integrantes | Itens | Fundamento da alocação |
 |---|---|---|---|
-| **Pessoas, Presença em campo e coordenação** | Vinicius Vieira · Lucas de Paula Leal | U01, U09, U10, B01 a B05, H03, P01 a P04; U02 e U08 (Lucas) | Scrum Master responde pela integração, pela publicação e pela infraestrutura; Lucas conclui o dojo e a aba Entregas |
+| **Pessoas, Presença em campo e coordenação** | Vinicius Vieira | U01, U09, U10, B01 a B05, H03, P02 a P04 | Scrum Master responde pela integração, pela publicação e pela infraestrutura |
 | **Relatório, Atividade e interlocução** | Maria Eduarda Marques · Caio Martins | U04, P03 (Maria Eduarda); U02, U07 (Caio); H01 nos seus épicos | Product Owner conduz a conferência com o Instituto; Caio responde pela seção 4 e pelo cronograma |
 | **Requisito e meta, Evidência** | Daniel Batista · Rodrigo Henrique Donato | U03, U06 (Rodrigo); U08 aba Requisitos (Daniel); H01 nos seus épicos; H02 | Donos do primeiro épico da construção; primeira fatia vertical na HU-01 |
 | **Equipe** | — | U05; revisão de pull request em até 24 horas por integrante de outra dupla, com aviso no grupo | Decisões de 06/10 e 07/10 |
@@ -227,7 +226,7 @@ A ordem é a da seção 10.2.6, confirmada pelo Instituto em 08/10. Dentro de ca
 | R04 | Decisões da base técnica (gerenciador de pacotes, lint, Compose) sem fechamento, atrasando os esqueletos | Média | Médio | Propostas registradas na tarefa de base técnica; fechamento por mensagem até 13/10, sem reunião | Vinicius |
 | R05 | Exigência do vídeo da Unidade 2 não confirmada no Plano de Ensino | Média | Baixo | Conferir antes de gravar; se não exigido, o item cai | Equipe |
 | R06 | Sem permissão de administrador no repositório: proteção de branch e método de merge único indisponíveis | Alta | Médio | Guarda de branches, verificação de push e acordo de trabalho publicados; *squash* desabilitado pela interface | Vinicius |
-| R07 | Dojo pendente atrasa a entrada de Lucas na construção | Média | Médio | Sessão de apoio marcada; dojo concluído até 16/10 | Lucas e Vinicius |
+| R07 | Capacidade reduzida com a equipe de cinco integrantes: épicos Pessoas e Presença em campo e base técnica concentrados no Scrum Master | Alta | Alto | Redistribuir os itens na Review 3; o que não couber vai para a Sprint 4, com registro | Vinicius |
 | R08 | Dados pessoais em capturas, atas ou documentos do Instituto | Média | Alto | Revisão de dados sensíveis antes de publicar; documentos-modelo do Instituto não se publicam | Maria Eduarda e Vinicius |
 
 ---
@@ -251,12 +250,59 @@ A ordem é a da seção 10.2.6, confirmada pelo Instituto em 08/10. Dentro de ca
 
 | Tema | Encaminhamento | Situação |
 |---|---|---|
-| Segundo épico de cada dupla (ata de 07/10, P2) | Daniel e Rodrigo: Evidência, pela ligação da evidência à meta; Caio e Maria Eduarda: Atividade; Vinicius e Lucas: Presença em campo, pela ligação da inscrição à presença | Definido em 09/10 |
+| Segundo épico de cada dupla (ata de 07/10, P2) | Daniel e Rodrigo: Evidência, pela ligação da evidência à meta; Caio e Maria Eduarda: Atividade; Vinicius: Presença em campo, pela ligação da inscrição à presença | Definido em 09/10 |
 | Confirmação do MVP pelo Instituto (ata de 07/10, A4) | Reunião de 08/10 com o núcleo pedagógico: oito capacidades confirmadas; alinhamento técnico em 15/10; revisão da primeira entrega por volta de 21/10 | Feito em 08/10 |
 | Fluxo de branches e publicação (ata de 07/10, D3) | Em vigor desde 09/10: `docs-homologacao`, congelamento do deploy, tag da Unidade 1, linhas da API e do front | Feito em 09/10 |
 | Tags de entrega automáticas (ata de 07/10, D4) | Sem origem declarada nem pull request; tratada como proposta a avaliar depois da Unidade 2, fora desta sprint | Proposta |
 | Sub-tarefas da base técnica (ata de 07/10, D9) | Cinco sub-tarefas abertas, uma concluída (linhas de código); donos por dupla definidos no refinamento | Abertas em 09/10 |
 | Ajustes restantes da lista de requisitos (Atividade 3) | Só o já decidido entra antes de 13/10; lacunas dos documentos-modelo vão ao Instituto por escrito | 🔧 A confirmar |
+| Saída de integrante | Lucas de Paula Leal deixou a equipe em 13/10/2026; a equipe passa a cinco integrantes. Vinicius segue sem dupla nos épicos Pessoas e Presença em campo; aba Entregas da revisão editorial e dojo pendente a decidir na Review 3 | Registrado em 19/10 |
+
+---
+
+## 12. Resultado da Sprint
+
+Meta **parcialmente atingida** (ata de 20/10/2026, D1): a Unidade 2 foi publicada antes de 13/10, o MVP foi confirmado pelo Instituto e o ambiente local e a base técnica foram definidos e integrados; a homologação e as primeiras histórias ficaram em pull request e passaram à [Sprint 4](sprint-4.md).
+
+### 12.1 Critérios de aceitação da Sprint
+
+| ID | Resultado | Evidência |
+|---|---|---|
+| CAS-01 | Atingido | [Síntese de entregas da Unidade 2](../../entregas/unidade-2.md), com o vídeo, publicada na versão de 13/10 |
+| CAS-02 | Parcial | MVP confirmado em 08/10 ([ata de 08/10](../atas/2026-10-08-validacao-mvp-instituto.md)); conferência da ata pelo Instituto e registro na seção 10.2.8 passaram à Sprint 4 |
+| CAS-03 | Parcial | [Seção 4](../../visao/4-estrategia-esw.md) revista em 13/10 (versão 1.6); a resposta ao docente passou à Sprint 4 |
+| CAS-04 | Atingido | Base técnica da API e do front integrada, com integração contínua (ata de 20/10, D1) |
+| CAS-05 | Parcial | Backlog reestruturado em vinte e cinco histórias, uma por ator e resultado, dezesseis delas no MVP (ata de 20/10, D2; [seção 10.1](../../requisitos/10-backlog.md#101-backlog-geral)), ratificado pela revisão do pull request; a migração das issues das histórias passou à Sprint 4 |
+| CAS-06 | Não atingido | Homologação publicada em 21/10, já na Sprint 4 ([Ambientes do produto](../processo-scrumxp.md#ambientes-do-produto)) |
+| CAS-07 | Atingido | Adesão de 84% às dailies ([registro das dailies](../dailies.md)) |
+| CAS-08 | Não atingido | Demora na revisão dos pull requests registrada na Retrospectiva; revisão em até 24 horas com aviso geral (ata de 20/10, D5) |
+
+### 12.2 Itens do Sprint Backlog
+
+| ID | Resultado | Observação |
+|---|---|---|
+| U01 | Concluído | Unidade 2 publicada antes da aula de 13/10 |
+| U02 | Levado à Sprint 4 (C05) | Seção 4 revista em 13/10; resposta ao docente pendente |
+| U03 | Concluído | Síntese com catálogo, situação, checklist e vídeo |
+| U04 | Levado à Sprint 4 (C02) | Atas de 28/09 e 08/10 em conferência pelo Instituto |
+| U05 | Concluído | Vídeo publicado na síntese de entregas da Unidade 2 |
+| U06 | Concluído | Checklist da Unidade 2 com o link do vídeo |
+| U07 | Concluído | [Seção 6.3](../../visao/6-cronograma.md) alinhada à seção 10.2.6 |
+| U08 | Concluído | Revisão das seções 1, 2, 3, 5 e 7 e das páginas de apoio publicada com a Unidade 2; as abas Requisitos e Entregas não tiveram revisão própria |
+| U09 | Levado à Sprint 4 (C02) | Registro de 08/10 na seção 10.2.8 depois da conferência da ata |
+| U10 | Levado à Sprint 4 (C05) | Resposta ao docente sobre a seção 4 |
+| B01 | Concluído | Em 09/10 |
+| B02 | Concluído | Esqueleto da API integrado |
+| B03 | Concluído | Esqueleto do front integrado |
+| B04 | Levado à Sprint 4 (A01) | Autenticação e perfis em pull request no fim da sprint |
+| B05 | Levado à Sprint 4 (A03) | Ambiente local definido; homologação, backup e endereço no site passaram à Sprint 4 |
+| H01 | Levado à Sprint 4 (A02) | Substituído pela reestruturação em histórias derivadas (ata de 20/10, D2) |
+| H02 | Levado à Sprint 4 (A01) | Cadastro do instrumento (HU-01a) em pull request no fim da sprint |
+| H03 | Levado à Sprint 4 (B05) | Inscrição com Maria Eduarda e Caio |
+| P01 | Concluído | Dojos D1 e D2 com a entrega de cada integrante concluída em 19/10 ([Matriz de competências](../matriz-competencias.md#dojos-de-nivelamento)) |
+| P02 | Concluído | Este plano, publicado com a Unidade 2 |
+| P03 | Levado à Sprint 4 (A04) | O alinhamento técnico de 15/10 não ocorreu; as perguntas passaram à reunião com o Instituto |
+| P04 | Concluído | Review 3 em 20/10; a revisão da primeira entrega com o Instituto passou à Sprint 4 (A04) |
 
 ---
 
@@ -280,3 +326,5 @@ A ordem é a da seção 10.2.6, confirmada pelo Instituto em 08/10. Dentro de ca
 | Versão | Data | Alteração | Responsável |
 |---|---|---|---|
 | 1.0 | 09/10/2026 | Emissão com o deliberado na Sprint Planning de 07/10 e nos encaminhamentos de 08/10 (confirmação do MVP) e 09/10 (fluxo de branches, linhas de código, segundo épico de cada dupla): meta, calendário, Sprint Backlog em três partes, priorização, alocação, riscos e critérios de aceitação | Vinicius |
+| 1.1 | 19/10/2026 | Saída de um integrante: perfil da equipe, Sprint Backlog, alocação e segundo épico atualizados para cinco integrantes; risco R07 substituído pelo de capacidade reduzida | Maria Eduarda Marques |
+| 1.2 | 26/10/2026 | Resultado da Sprint: critérios de aceitação e itens do Sprint Backlog avaliados a partir da Review de 20/10 | Vinicius Vieira |

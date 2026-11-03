@@ -6,6 +6,7 @@
 | 09/09/2026 | 1.1 | Verificação e publicação do site separadas por workflow | Vinicius Vieira |
 | 05/10/2026 | 2.0 | Branches por componente: documentação na `main` com homologação, API e web em linhas próprias; congelamento e marcação das entregas; controles da equipe na ausência de proteção de branch | Vinicius Vieira |
 | 07/10/2026 | 2.1 | Título de commit sem acentos; *rebase* para conflitos, sem *squash*; prazo de 24 horas para revisão de pull request | Maria Eduarda Marques |
+| 26/10/2026 | 2.2 | A `web-develop` publica a homologação do front; revisão por integrante de outra dupla ou pelo integrante independente | Vinicius Vieira |
 
 Acordo de trabalho da equipe para este repositório. O objetivo é que o histórico de commits e de pull requests seja a evidência do processo, e que ninguém dependa de memória para saber como contribuir.
 
@@ -21,7 +22,7 @@ A entrega da disciplina é este site, publicado pelo GitHub Pages a partir da pa
 | `docs-homologacao` | Documentação revisada, ainda não publicada | `docs/<assunto>`, `main` | Nada |
 | `api-develop` | API em integração | `feat/api/HU-xx-<assunto>`, `test/api/<assunto>`, `refactor/api/<assunto>`, `chore/api/<assunto>`, `api` | Homologação da API |
 | `api` | API em produção | `api-develop`, `fix/api-<assunto>` | Produção da API |
-| `web-develop` | Front em integração | `feat/web/HU-xx-<assunto>`, `test/web/<assunto>`, `refactor/web/<assunto>`, `chore/web/<assunto>`, `web` | Prévia do front |
+| `web-develop` | Front em integração | `feat/web/HU-xx-<assunto>`, `test/web/<assunto>`, `refactor/web/<assunto>`, `chore/web/<assunto>`, `web` | Homologação do front |
 | `web` | Front em produção | `web-develop`, `fix/web-<assunto>` | Produção do front |
 
 As linhas da API e do front não têm história comum com a `main` nem entre si: só contêm o próprio código e a própria configuração de integração contínua. Por isso não existe pull request de código para a documentação, da documentação para o código ou entre API e front. As seis branches da tabela não se apagam; as de trabalho são curtas e apagadas depois do merge. Não há branch por ambiente além das de produção da tabela: endereços e segredos de cada ambiente ficam na configuração da hospedagem.
@@ -38,12 +39,12 @@ O repositório não tem proteção de branch, que depende de permissão de admin
 1. Partir da homologação atualizada: `git switch docs-homologacao && git pull && git switch -c docs/<assunto>`.
 2. Commitar em fatias, com `mkdocs build --strict` passando antes do push.
 3. Abrir o pull request com base `docs-homologacao` e `Refs #N` no corpo.
-4. Aguardar a aprovação de um integrante de outra dupla, que confere o site compilado: pelo artefato `site` do `build-check` ou com `mkdocs serve` na própria máquina.
+4. Aguardar a aprovação de um integrante de outra dupla ou do integrante independente, que confere o site compilado: pelo artefato `site` do `build-check` ou com `mkdocs serve` na própria máquina.
 5. Fazer o merge pelo pull request e apagar a branch.
 
 ### Código
 
-A branch de trabalho sai da branch de integração do componente (`api-develop` ou `web-develop`) e volta para ela em pull request, com a verificação de código aprovada e a revisão de um integrante de outra dupla. O nome leva o componente (`feat/api/HU-01-cadastro-de-meta`) e a história. O ciclo é de dias, não de semanas: história grande se divide em mais de um pull request. A ida para produção é um pull request de `api-develop` para `api` (ou de `web-develop` para `web`), revisado como os demais.
+A branch de trabalho sai da branch de integração do componente (`api-develop` ou `web-develop`) e volta para ela em pull request, com a verificação de código aprovada e a revisão de um integrante de outra dupla ou do integrante independente. O nome leva o componente (`feat/api/HU-01-cadastro-de-meta`) e a história. O ciclo é de dias, não de semanas: história grande se divide em mais de um pull request. A ida para produção é um pull request de `api-develop` para `api` (ou de `web-develop` para `web`), revisado como os demais.
 
 ### Correções
 
@@ -98,9 +99,9 @@ Co-authored-by: Nome Sobrenome <email-da-conta@exemplo.com>
 
 Toda mudança entra por pull request; edição feita pela interface web direto na `main` é push sem revisão e não é usada. O corpo segue o modelo do repositório: o que mudou, qual seção do template é afetada, confirmação de que o build passou e quem revisa.
 
-A revisão é registrada no próprio pull request: um integrante de outra dupla aprova antes do merge, e o autor não faz merge sem essa aprovação. O merge é feito pelo botão do pull request, com o método *merge commit*, que preserva os commits de cada pessoa e as linhas de coautoria. Merge local seguido de push não deixa o registro da revisão. *Squash* não é usado. Conflito com a branch de destino se resolve com *rebase* da branch de trabalho sobre ela, antes do merge.
+A revisão é registrada no próprio pull request: um integrante de outra dupla ou o integrante independente aprova antes do merge, e o autor não faz merge sem essa aprovação. O merge é feito pelo botão do pull request, com o método *merge commit*, que preserva os commits de cada pessoa e as linhas de coautoria. Merge local seguido de push não deixa o registro da revisão. *Squash* não é usado. Conflito com a branch de destino se resolve com *rebase* da branch de trabalho sobre ela, antes do merge.
 
-Quem é pedido como revisor tem até 24 horas para revisar. Passado o prazo, o autor avisa no grupo da equipe, e a revisão pode ser repassada a outro integrante de outra dupla.
+Quem é pedido como revisor tem até 24 horas para revisar. Passado o prazo, o autor avisa no grupo da equipe, e a revisão pode ser repassada a outro integrante de outra dupla ou ao integrante independente.
 
 ## Integração contínua
 

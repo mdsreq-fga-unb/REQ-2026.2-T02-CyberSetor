@@ -8,6 +8,9 @@
 | 07/09/2026 | 1.3 | Adequação da classificação do Ciclo de Vida | Equipe CyberSetor |
 | 17/09/2026 | 1.4 | Cadência de validação com o Instituto alinhada à seção 7.2 | Equipe CyberSetor |
 | 05/10/2026 | 1.5 | Revisão editorial: formatação direta, preservando toda a fundamentação teórica, citações e quadros comparativos | Rodrigo Henrique |
+| 13/10/2026 | 1.6 | Revisão conceitual: neutralidade no quadro comparativo, OpenUP iterativo, Scrum como framework, ScrumXP como processo adaptado e alinhamento de cadências | Caio Martins |
+| 19/10/2026 | 1.7 | Equipe atual de cinco integrantes | Maria Eduarda Marques |
+| 26/10/2026 | 1.8 | Programação em pares por duplas de épico, com o detalhe na página de processo; MVP centrado em parcerias, metas e prestação de contas, com a presença nos incrementos; refatoração dentro da história, coberta pelos testes; documentação de requisitos do ScrumXP com o fluxo da tela e o protótipo evolutivo na homologação; justificativa sem superlativos; quadro comparativo pelo que cada processo exige da equipe; síntese e alternativas descartadas pelos fatores do contexto | Vinicius Vieira |
 
 A partir do cenário diagnosticado na Seção 1 e da solução proposta na Seção 2, a equipe CyberSetor estabeleceu as decisões de estratégia de engenharia de software para o atendimento ao Instituto No Setor nas três camadas metodológicas distinguidas pelo referencial da disciplina: **abordagem**, **ciclo de vida** e **processo**.
 
@@ -15,21 +18,21 @@ A partir do cenário diagnosticado na Seção 1 e da solução proposta na Seç�
 
 ## 4.1 Estratégia Priorizada
 
-A estratégia para o projeto adota o **ScrumXP** como processo de desenvolvimento, fundamentando-se em uma abordagem **Ágil** e em um ciclo de vida **Ágil**. Essa combinação foi desenhada para conectar o contexto real da organização atendida à dinâmica acadêmica da disciplina, garantindo entregas frequentes com alto valor agregado, mitigação contínua de riscos e excelência técnica.
+A estratégia para o projeto adota o **ScrumXP** como processo de desenvolvimento, fundamentando-se em uma abordagem **Ágil** e em um ciclo de vida **Ágil**. Essa combinação foi desenhada para conectar o contexto real da organização atendida à dinâmica acadêmica da disciplina, com entregas frequentes validadas com o Instituto, riscos tratados a cada sprint e código verificado por testes.
 
 | Abordagem | Ciclo de Vida | Processo |
 |---|---|---|
 | **Ágil** | **Ágil** | **ScrumXP** |
 
 ### Abordagem: Ágil
-A abordagem Ágil prioriza indivíduos e interações, software em funcionamento e colaboração contínua com os *stakeholders* em detrimento de processos engessados e documentação exaustiva prévia, mostrando-se ideal para a adaptação rápida às demandas em campo no Setor Comercial Sul (SCS).
+A abordagem Ágil valoriza indivíduos e interações mais que processos e ferramentas, software em funcionamento mais que documentação abrangente, e colaboração com o cliente mais que negociação de contratos (BECK et al., 2001). Ao equilibrar esses valores sem desconsiderar a importância de processos sustentáveis e de documentação viva e suficiente, essa abordagem mostra-se ideal para a adaptação rápida às demandas em campo no Setor Comercial Sul (SCS).
 
 **Por que escolher a Abordagem Ágil?**
 
-- **Adaptação a Requisitos Emergentes:** Permite ajustar o escopo e o nível de detalhamento dos requisitos conforme novas necessidades emergem da convivência em campo com o parceiro, superando a rigidez da abordagem Preditiva (Dirigida por Planos).
+- **Adaptação a Requisitos Emergentes:** Permite ajustar o escopo e o nível de detalhamento dos requisitos conforme novas necessidades emergem da convivência em campo com o parceiro; na abordagem Preditiva (Dirigida por Planos), essas mudanças passam pela revisão do plano.
 - **Entregas Incrementais de Valor:** Disponibiliza funcionalidades essenciais para validação precoce e contínua com a coordenação pedagógica, sem postergar a visibilidade da solução funcional para o término do semestre.
-- **Foco no Usuário de Campo:** Prioriza atender às necessidades operacionais reais (como chamada e presença em oficinas culturais e mutirões), calibrando a interface de acordo com o nível de letramento digital de quem atua na ponta.
-- **Leveza Metodológica frente à Abordagem Híbrida:** Elimina a sobrecarga de manter especificações formais pesadas em paralelo aos ritos ágeis, concentrando a capacidade técnica de uma equipe de seis membros na entrega de valor para a organização.
+- **Foco no Usuário do Instituto:** Prioriza as necessidades operacionais reais: o MVP trata das parcerias, das metas e da prestação de contas, e a chamada e a presença em oficinas e mutirões vêm nos incrementos seguintes ([seção 10.2.6](../requisitos/10-backlog.md#1026-mvp-e-incrementos)), calibrando a interface de acordo com o nível de letramento digital de quem atua na ponta.
+- **Equilíbrio Metodológico frente à Abordagem Preditiva ou Híbrida:** Adequa o esforço de especificação à capacidade produtiva de uma equipe de cinco membros, mantendo a documentação viva, rastreável e focada na entrega de valor funcional direto para a organização.
   
 ### Ciclo de Vida: Ágil
 O Ciclo de Vida Ágil estrutura o desenvolvimento em ciclos temporais curtos, regulares e de duração fixa (timeboxes/sprints quinzenais). Cada ciclo repete iterativamente todas as atividades essenciais da engenharia de software — elicitação, análise, projeto, codificação e testes —, gerando ao final de cada período um incremento funcional utilizável, testado e de valor demonstrável (MARSICANO, 2026).
@@ -38,12 +41,12 @@ Conforme o referencial da disciplina, o ciclo de vida ágil é um *superset* que
 
 **Por que escolher o Ciclo de Vida Ágil?**
 
-- **Sincronia com Marcos Acadêmicos (Releases Fixas):** Adapta-se perfeitamente aos quatro pontos de controle da disciplina mantendo datas e recursos fixos, usando o escopo como variável de ajuste para garantir software funcional homologado a cada release.
+- **Sincronia com Marcos Acadêmicos (Releases Fixas):** Acompanha os quatro pontos de controle da disciplina mantendo datas e recursos fixos, usando o escopo como variável de ajuste para garantir software funcional homologado a cada release.
 - **Feedback Contínuo Baseado em Evidências:** Promove validações frequentes a cada 2 semanas diretamente com os educadores e gestores do Instituto No Setor por meio de incrementos executáveis, reduzindo divergências entre o problema real e a solução.
-- **Mitigação Precoce de Riscos Sociotécnicos:** Expõe precocemente desafios de integração técnica, usabilidade e modelagem de regras de negócio, permitindo refatorações contínuas e evolução adaptativa da arquitetura sem retrabalho tardio.
+- **Mitigação Precoce de Riscos Sociotécnicos:** Expõe precocemente desafios de integração técnica, usabilidade e modelagem de regras de negócio, permitindo ajustar a arquitetura a cada sprint, sem retrabalho tardio.
 
 ### Processo: ScrumXP
-O **ScrumXP** resulta da união de dois processos ágeis consagrados: o **Scrum**, que atua como arcabouço de gestão fornecendo papéis, timeboxes, cerimônias e foco no valor do negócio; e o **eXtreme Programming (XP)**, que fornece as práticas técnicas de engenharia de software para garantir que o código seja limpo, testável e sustentável (MARSICANO, 2026). O Scrum responde por *quando* e por *quem* o trabalho é executado; o XP responde por *como* a solução é tecnicamente construída.
+O **ScrumXP** adotado pelo projeto é um **processo adaptado pela equipe**, que integra o *framework* de governança ágil **Scrum** (SCHWABER; SUTHERLAND, 2020) às práticas rigorosas de engenharia de software do **eXtreme Programming (XP)** (BECK; ANDRES, 2004; MARSICANO, 2026). Como o Scrum é intencionalmente incompleto — fornecendo a estrutura de papéis, eventos (cerimônias) e artefatos de gestão sem prescrever métodos de codificação —, a equipe complementa esse framework com as práticas técnicas do XP (programação em pares, integração contínua, testes de aceitação e refatoração), assegurando a sustentabilidade da base de código.
 
 #### Etapas do ScrumXP para o Projeto
 
@@ -58,20 +61,20 @@ O **ScrumXP** resulta da união de dois processos ágeis consagrados: o **Scrum*
    - **Objetivo:** Projetar, implementar e testar incrementos funcionais priorizados com alto padrão de qualidade de código.
    - **Atividades:**
      - Realizar Sprint Planning com seleção e estimativa dos itens do Sprint Backlog.
-     - Implementar funcionalidades com sessões de programação em pares (*Pair Programming*).
-     - Assegurar a integração contínua (*Continuous Integration*) e a refatoração constante do código.
+     - Implementar as histórias em duplas por épico, com sessões síncronas de programação em pares (*Pair Programming*) quando a dupla trabalha junta e revisão por outra dupla quando o trabalho é individual.
+     - Manter a integração contínua (*Continuous Integration*) e refatorar dentro da história, com a mudança coberta pelos testes.
 
 3. **Revisão e Validação com o Cliente (Sprint Review)**
-   - **Objetivo:** Demonstrar o incremento funcional construído e validar o cumprimento dos critérios de aceitação.
+   - **Objetivo:** Demonstrar o incremento funcional construído e validar com o Instituto o cumprimento dos critérios de aceitação ao final de cada sprint.
    - **Atividades:**
-     - Apresentar o software em funcionamento às lideranças e educadores da organização.
-     - Coletar feedbacks e percepções de usabilidade dos usuários.
+     - Apresentar o software em funcionamento às lideranças e educadores da organização na Sprint Review, ao final de cada sprint; quando o Instituto não puder estar presente, a avaliação fica provisória até a validação semanal seguinte, conforme a seção 7.
+     - Coletar feedbacks e percepções de usabilidade dos usuários de forma contínua.
      - Repriorizar e refinar o Product Backlog com base no retorno obtido.
 
 4. **Melhoria Contínua e Transição (Retrospectiva e Fechamento)**
-   - **Objetivo:** Aperfeiçoar os processos internos de trabalho da equipe e consolidar a entrega do marco da disciplina.
+   - **Objetivo:** Aperfeiçoar os processos de trabalho ao término de cada sprint e consolidar as entregas dos marcos acadêmicos.
    - **Atividades:**
-     - Executar a Sprint Retrospective para analisar sucessos, gargalos e planos de ação.
+     - Executar a Sprint Retrospective ao final de cada sprint quinzenal para analisar sucessos, gargalos e planos de ação de melhoria contínua da equipe.
      - Atualizar a documentação viva no repositório e registrar as lições aprendidas.
      - Gerar as tags de versão e disponibilizar o incremento no ambiente de testes.
 
@@ -81,10 +84,10 @@ O **ScrumXP** resulta da união de dois processos ágeis consagrados: o **Scrum*
   - *Sprints de Duas Semanas:* Timeboxes fixos que conferem cadência e ritmo sustentável à equipe.
   - *Cerimônias Essenciais:* Reuniões de Planejamento de Sprint, Revisões com validação direta do cliente e Retrospectivas de processo.
 - **Práticas Técnicas de Engenharia (XP):**
-  - *Programação em Pares (Pair Programming):* Pareamento estruturado entre membros da equipe para nivelar conhecimentos técnicos e reduzir a densidade de defeitos.
+  - *Programação em Pares (Pair Programming):* Aplicada por duplas, uma por épico, na forma descrita na [página de processo](../gestao/processo-scrumxp.md#praticas-de-xp).
   - *Integração Contínua (CI):* Automação de compilação, checagem de estilo e execução de suítes de testes a cada pull request.
   - *Testes de Aceitação:* Cenários verificáveis estruturados a partir dos critérios de aceitação das histórias de usuário.
-  - *Propriedade Coletiva e Refatoração:* Todo membro da equipe é responsável pela qualidade geral da base de código, simplificando o design sempre que oportuno.
+  - *Propriedade Coletiva e Refatoração:* Todo membro da equipe é responsável pela qualidade geral da base de código; a refatoração é feita dentro da história, coberta pelos testes.
 
 ---
 
@@ -94,27 +97,27 @@ A tabela a seguir compara o **OpenUP** (processo ágil baseado em arquitetura do
 
 | Critério | OpenUP (Open Unified Process) | ScrumXP (Scrum + Extreme Programming) |
 |---|---|---|
-| **Foco Principal** | Estabilidade arquitetural precoce, controle formal de riscos e documentação disciplinada por fases. | Ritmo sustentável, valor funcional entregue em ciclos curtos e feedback contínuo. |
-| **Estrutura de Fases** | 4 fases lineares estruturadas (Iniciação, Elaboração, Construção e Transição) com iterações internas. | Sprints curtas e iterativas de 2 semanas, guiadas pelo Product Backlog e cerimônias ágeis. |
-| **Foco em Arquitetura** | Forte: a arquitetura executável mínima deve ser estabilizada e validada na fase de Elaboração. | Evolutiva: arquitetura mínima necessária que se expande a cada sprint via refatoração contínua. |
-| **Flexibilidade de Requisitos** | Moderada: requisitos são refinados por fase; mudanças arquiteturais tardias exigem alto esforço. | Alta: o backlog é repriorizado a cada sprint com base no feedback real do cliente. |
-| **Práticas Técnicas de Engenharia** | Genéricas: prescreve orientações conceituais e casos de uso, sem detalhar rotinas de codificação. | Robustas e prescritivas: embutidas no processo (Pair Programming, CI, TDD e Testes de Aceitação). |
-| **Documentação de Requisitos** | Formal por fase, com ênfase em Casos de Uso, Especificações Suplementares e Arquitetura. | Viva e enxuta: Histórias de Usuário, critérios de aceitação estruturados e protótipos de baixa fidelidade. |
-| **Colaboração com o Cliente** | Concentrada nos marcos de transição de fase e na aprovação formal de especificações. | Constante e direta ao final de cada sprint, mediada por software em funcionamento. |
-| **Curva de Aprendizado da Equipe** | Moderada a alta: requer disciplina na divisão formal de fases e modelagem prévia de arquitetura. | Baixa a moderada: curva acelerada pelo pareamento técnico diário e cerimônias enxutas. |
-| **Aplicação no Contexto do Projeto** | **Desfavorável:** Exigiria congelamento de arquitetura antes da equipe dominar as particularidades operacionais da organização. | **Ideal:** Conecta a restrição de quatro entregas acadêmicas a sprints curtas, nivelando a inexperiência da equipe pelas práticas do XP. |
+| **Foco Principal** | Estabilidade arquitetural progressiva, controle sistemático de riscos e governança orientada a casos de uso. | Ritmo sustentável, valor funcional entregue em ciclos curtos e feedback contínuo baseado em histórias de usuário. |
+| **Estrutura de Fases** | Quatro fases estruturadas (Iniciação, Elaboração, Construção e Transição), executadas de forma iterativa e incremental com iterações curtas cobrindo todas as disciplinas. | Ciclos iterativos e incrementais curtos (sprints de 2 semanas) guiados pelo Product Backlog e cerimônias ágeis. |
+| **Foco em Arquitetura** | Arquitetura executável progressivamente estabelecida e validada ao longo das iterações da fase de Elaboração, visando mitigar os principais riscos técnicos. | Arquitetura mínima evolutiva que se estabelece incrementalmente a cada sprint, apoiada por refatoração dentro da história e testes automatizados. |
+| **Flexibilidade de Requisitos** | Requisitos são refinados iterativamente ao longo das fases; casos de uso e especificações suplementares são detalhados conforme o ciclo avança. | Backlog dinâmico repriorizado a cada sprint com base em histórias de usuário e feedback direto do cliente. |
+| **Práticas Técnicas de Engenharia** | Prescreve orientações conceituais de análise e projeto orientados a objetos e casos de uso, sem detalhar rotinas diárias de codificação em pares. | Práticas prescritivas e contínuas de engenharia integradas ao dia a dia (trabalho em duplas, integração contínua e testes de aceitação). |
+| **Documentação de Requisitos** | Estruturada e formal por fase, centrada em Casos de Uso, Modelo de Dados e Arquitetura Executável. | Viva, enxuta e rastreável: histórias de usuário, critérios de aceitação com o fluxo da tela e protótipo evolutivo na homologação. |
+| **Colaboração com o Cliente** | Contínua ao longo de todas as iterações, complementada por marcos formais de avaliação de objetivos no encerramento de cada fase. | Contínua e direta ao final de cada sprint quinzenal, mediada pela demonstração de software em funcionamento. |
+| **O que exige da equipe** | Domínio da modelagem de casos de uso e das disciplinas do processo unificado. | Domínio das cerimônias do Scrum e das práticas do XP (trabalho em duplas, integração contínua e testes). |
+| **Aplicação no Contexto do Projeto** | Concentra na Elaboração a modelagem de casos de uso e a validação da arquitetura, antes da construção. | Distribui a modelagem e a validação pelas sprints, com as histórias refinadas a cada Planning e as práticas do XP aplicadas na construção. |
 
-> **Síntese da Comparação:** Embora o OpenUP seja um processo ágil sólido, sua exigência de validação arquitetural prévia (fase de Elaboração) representa um risco para um projeto semestral com requisitos emergentes. O ScrumXP oferece a leveza gerencial necessária e provê as práticas técnicas essenciais para o contexto da organização.
+> **Síntese da Comparação:** Os dois processos são iterativos e incrementais e poderiam conduzir o projeto. A escolha do ScrumXP se apoia em três fatores do contexto: sprints de duas semanas acompanham as quatro entregas do semestre; os requisitos são mantidos como histórias de usuário com critérios de aceitação, e não como casos de uso; e as práticas do XP ajudam a nivelar uma equipe de cinco estudantes com conhecimento técnico desigual. O OpenUP teria a vantagem de validar a arquitetura mais cedo; no ScrumXP, esse risco é tratado pela base técnica construída antes das histórias e pelos testes automatizados.
 
 ---
 
 ## 4.3 Justificativa
 
 ### Sinergia Metodológica: Scrum + XP
-O Scrum isolado fornece excelente governança e comunicação com stakeholders, mas é agnóstico em relação à engenharia de software, o que pode comprometer a sustentabilidade técnica do produto. Por outro lado, o XP provê excelência técnica e disciplina de desenvolvimento, mas carece de uma estrutura de papéis organizacionais amplamente compreendida por clientes externos. A união no **ScrumXP** elimina as fraquezas de ambos os modelos, unindo cadência de gestão e excelência de código.
+O Scrum isolado fornece governança e comunicação com stakeholders, mas é agnóstico em relação à engenharia de software, o que pode comprometer a sustentabilidade técnica do produto. Por outro lado, o XP provê práticas técnicas e disciplina de desenvolvimento, mas carece de uma estrutura de papéis organizacionais amplamente compreendida por clientes externos. O **ScrumXP** combina os dois: a cadência de gestão do Scrum e as práticas de código do XP.
 
 ### Coerência com os Valores da Engenharia de Requisitos
-Conforme registrado por Marsicano (2026, §5.4.1), os sete valores fundamentais da Engenharia de Requisitos adotados na disciplina — **Comunicação, Feedback, Simplicidade, Coragem, Respeito, Compromisso e Confiança** — são adaptações diretas do eXtreme Programming e do Scrum (acrescidos do valor Confiança). Adotar o ScrumXP não é apenas uma escolha operacional, mas uma decisão de **coerência metodológica integral** com a base conceitual da disciplina.
+Conforme registrado por Marsicano (2026, §5.4.1), os sete valores fundamentais da Engenharia de Requisitos adotados na disciplina — **Comunicação, Feedback, Simplicidade, Coragem, Respeito, Compromisso e Confiança** — são adaptações diretas do eXtreme Programming e do Scrum (acrescidos do valor Confiança). Adotar o ScrumXP mantém o processo da equipe alinhado a essa base conceitual.
 
 ### Pilares de Decisão para o Projeto
 
@@ -125,13 +128,13 @@ Conforme registrado por Marsicano (2026, §5.4.1), os sete valores fundamentais 
 3. **Requisitos Emergentes e Validação Precoce:**
    - O domínio de prestação de contas, gestão de oficinas e controle de presenças possui regras específicas que são refinadas ao longo do contato com os educadores. O ciclo de vida ágil permite adaptar os requisitos sem sobrecusto de renegociação documental.
 4. **Foco no Núcleo de Maior Impacto Social:**
-   - O parceiro necessita prioritariamente resolver a fragilidade no registro de frequência e consolidação de indicadores para editais. O Product Backlog priorizado por valor garante que o MVP (núcleo da solução) seja implementado e homologado antes de funcionalidades acessórias.
+   - O parceiro precisa, antes de tudo, registrar as parcerias e as metas e prestar contas ao concedente; o MVP prioriza esse núcleo, e o registro de presença vem nos incrementos seguintes ([seção 10.2.6](../requisitos/10-backlog.md#1026-mvp-e-incrementos)). O Product Backlog priorizado por valor garante que o MVP (núcleo da solução) seja implementado e homologado antes de funcionalidades acessórias.
 
 ### Gestão de Riscos do Processo Selecionado
 
 > **Risco Mapeado:** O XP preconiza a presença integral do cliente (*On-site Customer*). Contudo, os representantes da organização possuem agendas concorridas e equipe reduzida.
 
-> **Estratégia de Mitigação:** A equipe definiu um membro no papel de **Product Owner Interno**, encarregado de canalizar dúvidas, organizar pautas enxutas e assegurar comunicação assíncrona entre as reuniões semanais de validação, resguardando o tempo do parceiro.
+> **Estratégia de Mitigação:** A equipe definiu um membro no papel de **Product Owner Interno**, encarregado de canalizar dúvidas, organizar pautas enxutas e assegurar comunicação assíncrona entre as validações semanais e as Sprint Reviews ao final de cada sprint, resguardando o tempo do parceiro.
 
 ### Análise de Alternativas Descartadas
 
@@ -140,8 +143,8 @@ A tabela a seguir consolida os critérios que justificaram o descarte formal das
 | Abordagem / Processo | Motivo Principal do Descarte |
 |---|---|
 | **Cascata (Waterfall) e Modelo V** | Pressupõem estabilidade total de requisitos desde o início e verificação formal tardia. Incompatíveis com a descoberta contínua de requisitos e as entregas parciais do semestre. |
-| **Processo Unificado Completo (RUP)** | Sobrecarga de artefatos formais, fases extensas e curva de aprendizado burocrática inviável para uma equipe de seis estudantes em ambiente universitário. |
-| **OpenUP (Open Unified Process)** | Exige estabilização arquitetural prematura nas fases iniciais (Elaboração), momento em que o entendimento do domínio social ainda está em maturação pela equipe. |
+| **Processo Unificado Completo (RUP)** | Conjunto extenso de papéis e artefatos, dimensionado para projetos e equipes maiores que uma equipe de cinco estudantes em um semestre. |
+| **OpenUP (Open Unified Process)** | Iterativo e adequado a equipes pequenas, mas organiza os requisitos em casos de uso e as iterações em fases com marcos próprios; o projeto mantém os requisitos em histórias de usuário e precisa de iterações alinhadas às quatro entregas do semestre. |
 | **Espiral (Boehm)** | Modelo orientado a projetos de grande porte com riscos críticos (aeroespaciais, defesa), demandando especialização em análise formal de riscos e alto custo gerencial. |
 | **Feature Driven Development (FDD)** | Pressupõe equipe previamente sênior em modelagem orientada a objetos e domínio de negócio mapeado logo na largada do projeto. |
 | **Kanban Isolado** | Embora ágil, prioriza fluxo contínuo para suporte e manutenção, carecendo de ritos temporais para sincronizar os prazos pedagógicos das quatro entregas do semestre. |
