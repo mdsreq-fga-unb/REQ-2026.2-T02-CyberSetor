@@ -7,12 +7,13 @@ import {
 import { hhmm } from '../activities/activities.service.js';
 import { AuditTrailService } from '../audit/audit-trail.service.js';
 import { Prisma } from '../generated/prisma/client.js';
-import { AutorTipo, CampoInscricao } from '../generated/prisma/enums.js';
+import { AutorTipo, CampoInscricao, SituacaoInscricao } from '../generated/prisma/enums.js';
 import { todayInBrasilia } from '../goals/goal-deadline.js';
 import { PrismaService } from '../prisma/prisma.service.js';
 import { CAMPOS_MINIMOS } from '../registrations/registrations.dto.js';
 import { storedWithinDeadline } from '../registrations/deadline.js';
 import { termVersion } from '../registrations/term.js';
+import { lockRegistration, nextSituation, waitlistPosition } from '../registrations/waitlist.js';
 import { DATA_NOTICE } from './notice.js';
 import { ageOn, birthDateProblem, isValidCpf } from './participant-data.js';
 import type {
@@ -84,9 +85,12 @@ export class PublicRegistrationsService {
 
   async form(codigo: string): Promise<PublicFormResponse> {
     const config = await this.findConfig(codigo);
+    const situacao = await nextSituation(this.prisma, config.atividadeId, config.vagas);
     return {
       atividade: publicActivity(config),
       aberta: isOpen(config),
+      vagasEsgotadas: situacao === SituacaoInscricao.LISTA_ESPERA,
+      listaEspera: config.listaEspera,
       camposMinimos: [...CAMPOS_MINIMOS],
       camposAdicionais: [...config.camposAdicionais].sort(),
       aviso: { versao: DATA_NOTICE.versao, texto: DATA_NOTICE.texto },
@@ -128,11 +132,20 @@ export class PublicRegistrationsService {
 
     try {
       return await this.prisma.$transaction(async (tx) => {
+        const regras = await lockRegistration(tx, config.atividadeId);
+        if (!regras) throw this.linkNotFound();
         const repeated = await tx.inscricao.count({
           where: { atividadeId: config.atividadeId, chaveDuplicidade: chave },
         });
         if (repeated > 0) throw this.alreadyRegistered();
 
+        const situacao = await nextSituation(tx, config.atividadeId, regras.vagas);
+        if (situacao === SituacaoInscricao.LISTA_ESPERA && !regras.listaEspera) {
+          throw new ConflictException({
+            code: 'REGISTRATION_FULL',
+            message: 'As vagas desta atividade já foram preenchidas.',
+          });
+        }
         const participante = await tx.participante.create({
           data: {
             nome: data.nome,
@@ -149,6 +162,7 @@ export class PublicRegistrationsService {
           data: {
             atividadeId: config.atividadeId,
             participanteId: participante.id,
+            situacao,
             chaveDuplicidade: chave,
             versaoAviso: DATA_NOTICE.versao,
             avisoApresentadoEm: new Date(),
@@ -173,6 +187,10 @@ export class PublicRegistrationsService {
         );
         return {
           situacao: inscricao.situacao,
+          posicaoEspera:
+            inscricao.situacao === SituacaoInscricao.LISTA_ESPERA
+              ? await waitlistPosition(tx, config.atividadeId, inscricao.ordemChegada)
+              : null,
           atividade: publicActivity(config),
           inscritoEm: inscricao.criadoEm.toISOString(),
         };
@@ -190,13 +208,15 @@ export class PublicRegistrationsService {
       where: { codigoPublico: codigo },
       include: WITH_ACTIVITY,
     });
-    if (!config) {
-      throw new NotFoundException({
-        code: 'REGISTRATION_LINK_NOT_FOUND',
-        message: 'Link de inscrição inválido. Confira o endereço com o Instituto.',
-      });
-    }
+    if (!config) throw this.linkNotFound();
     return config;
+  }
+
+  private linkNotFound(): NotFoundException {
+    return new NotFoundException({
+      code: 'REGISTRATION_LINK_NOT_FOUND',
+      message: 'Link de inscrição inválido. Confira o endereço com o Instituto.',
+    });
   }
 
   /** Com termo, o envio traz a versão aceita, que precisa ser a do texto atual. */

@@ -7,15 +7,11 @@ import {
 import type { Actor } from '../accounts/accounts.service.js';
 import { AuditTrailService } from '../audit/audit-trail.service.js';
 import { Prisma } from '../generated/prisma/client.js';
-import { AutorTipo, CampoInscricao } from '../generated/prisma/enums.js';
+import { AutorTipo, CampoInscricao, SituacaoInscricao } from '../generated/prisma/enums.js';
 import { todayInBrasilia } from '../goals/goal-deadline.js';
 import { PrismaService } from '../prisma/prisma.service.js';
-import {
-  ageOn,
-  birthDateProblem,
-  isValidCpf,
-  onlyDigits,
-} from '../public-registrations/participant-data.js';
+import { participantSearch } from './participant-search.js';
+import { ageOn, birthDateProblem, isValidCpf } from '../public-registrations/participant-data.js';
 import type {
   CorrectParticipantDto,
   ParticipantResponse,
@@ -25,7 +21,6 @@ import type {
 
 const ADULT_AGE = 18;
 const LIST_LIMIT = 200;
-const MIN_PHONE_SEARCH = 3;
 
 const FIELDS = [
   'nome',
@@ -147,20 +142,7 @@ export class ParticipantsService {
   ) {}
 
   async list(busca?: string): Promise<ParticipantSummaryResponse[]> {
-    const text = busca?.trim() ?? '';
-    const digits = onlyDigits(text);
-    // % e _ são curingas do ILIKE: a busca procura o texto como foi digitado.
-    const literal = text.replace(/[\\%_]/g, (char) => `\\${char}`);
-    const where: Prisma.ParticipanteWhereInput = text
-      ? {
-          OR: [
-            { nome: { contains: literal, mode: 'insensitive' } },
-            { nomePreferencia: { contains: literal, mode: 'insensitive' } },
-            { email: { contains: literal.toLowerCase() } },
-            ...(digits.length >= MIN_PHONE_SEARCH ? [{ telefone: { contains: digits } }] : []),
-          ],
-        }
-      : {};
+    const where = participantSearch(busca) ?? {};
     const today = todayInBrasilia();
     const rows = await this.prisma.participante.findMany({
       where,
@@ -168,7 +150,8 @@ export class ParticipantsService {
       // Um a mais que o limite avisa a tela de que a lista foi cortada.
       take: LIST_LIMIT + 1,
       include: {
-        _count: { select: { inscricoes: true } },
+        // Inscrições com vaga confirmada, como na atividade e no painel (RF14).
+        _count: { select: { inscricoes: { where: { situacao: SituacaoInscricao.CONFIRMADA } } } },
         inscricoes: {
           orderBy: { criadoEm: 'desc' },
           take: 1,
@@ -245,13 +228,16 @@ export class ParticipantsService {
         // A chave de cadastro repetido da inscrição guarda o e-mail ou o CPF: acompanha a correção.
         // A chave guardada diz qual dado ela copiou, mesmo que a configuração tenha mudado depois.
         // Dado apagado a pedido do titular não fica na chave: ela passa a ser um marcador da inscrição.
+        // A inscrição cancelada não tem chave e continua sem ela.
         for (const inscricao of current.inscricoes) {
           const field =
-            inscricao.chaveDuplicidade === before.email
-              ? 'email'
-              : inscricao.chaveDuplicidade === before.cpf
-                ? 'cpf'
-                : null;
+            inscricao.chaveDuplicidade === null
+              ? null
+              : inscricao.chaveDuplicidade === before.email
+                ? 'email'
+                : inscricao.chaveDuplicidade === before.cpf
+                  ? 'cpf'
+                  : null;
           if (field && changed.includes(field)) {
             await tx.inscricao.update({
               where: { id: inscricao.id },
