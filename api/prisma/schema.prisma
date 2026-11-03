@@ -162,10 +162,10 @@ model Meta {
   criadoEm           DateTime            @default(now()) @map("criado_em") @db.Timestamptz(3)
   atualizadoEm       DateTime            @updatedAt @map("atualizado_em") @db.Timestamptz(3)
 
-  projeto     Projeto         @relation(fields: [projetoId], references: [id], onDelete: Restrict)
-  responsavel Usuario?        @relation(fields: [responsavelId], references: [id], onDelete: Restrict)
-  setor       Setor?          @relation(fields: [setorId], references: [id], onDelete: Restrict)
-  requisitos  MetaRequisito[]
+  projeto        Projeto         @relation(fields: [projetoId], references: [id], onDelete: Restrict)
+  responsavel    Usuario?        @relation(fields: [responsavelId], references: [id], onDelete: Restrict)
+  setor          Setor?          @relation(fields: [setorId], references: [id], onDelete: Restrict)
+  requisitos     MetaRequisito[]
   atividades     AtividadeMeta[]
   resultados     ResultadoMeta[]
   relatorioMetas RelatorioMeta[]
@@ -472,15 +472,22 @@ model TrilhaAuditoria {
 /// Relatório de execução do objeto por período (RF36, RF39, RNF08).
 /// Cada versão é imutável (append-only); a retificação cria nova versão no mesmo período.
 model Relatorio {
-  id                  String   @id @default(uuid()) @db.Uuid
-  projetoId           String   @map("projeto_id") @db.Uuid
-  versao              Int      @default(1)
-  periodoInicio       DateTime @map("periodo_inicio") @db.Date
-  periodoFim          DateTime @map("periodo_fim") @db.Date
-  relatorioAnteriorId String?  @unique @map("relatorio_anterior_id") @db.Uuid
-  motivoRetificacao   String?  @map("motivo_retificacao") @db.Text
-  emitidoPorId        String   @map("emitido_por_id") @db.Uuid
-  criadoEm            DateTime @default(now()) @map("criado_em") @db.Timestamptz(3)
+  id                  String          @id @default(uuid()) @db.Uuid
+  projetoId           String          @map("projeto_id") @db.Uuid
+  versao              Int             @default(1)
+  periodoInicio       DateTime        @map("periodo_inicio") @db.Date
+  periodoFim          DateTime        @map("periodo_fim") @db.Date
+  relatorioAnteriorId String?         @unique @map("relatorio_anterior_id") @db.Uuid
+  motivoRetificacao   String?         @map("motivo_retificacao") @db.Text
+  emitidoPorId        String          @map("emitido_por_id") @db.Uuid
+  criadoEm            DateTime        @default(now()) @map("criado_em") @db.Timestamptz(3)
+  /// Cabeçalho congelado na emissão (RNF08): editar o projeto ou o instrumento depois não muda a versão.
+  projetoCodigo       String          @map("projeto_codigo")
+  projetoTitulo       String          @map("projeto_titulo")
+  instrumentoTipo     TipoInstrumento @map("instrumento_tipo")
+  orgaoConcedente     String          @map("orgao_concedente")
+  numeroProcesso      String          @map("numero_processo")
+  emitidoPorNome      String          @map("emitido_por_nome")
 
   projeto           Projeto         @relation(fields: [projetoId], references: [id], onDelete: Restrict)
   emitidoPor        Usuario         @relation(fields: [emitidoPorId], references: [id], onDelete: Restrict)

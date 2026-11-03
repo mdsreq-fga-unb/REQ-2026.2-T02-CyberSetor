@@ -126,6 +126,27 @@ function assertPeriodFinished(to: string): void {
   }
 }
 
+/** Cabeçalho do relatório congelado na emissão, para o PDF não mudar com edições depois (RNF08). */
+async function headerSnapshot(
+  tx: Prisma.TransactionClient,
+  projeto: { codigo: string; titulo: string },
+  instrument: InstrumentRow,
+  usuarioId: string,
+) {
+  const emissor = await tx.usuario.findUniqueOrThrow({
+    where: { id: usuarioId },
+    select: { pessoa: { select: { nome: true } } },
+  });
+  return {
+    projetoCodigo: projeto.codigo,
+    projetoTitulo: projeto.titulo,
+    instrumentoTipo: instrument.tipo,
+    orgaoConcedente: instrument.orgaoConcedente,
+    numeroProcesso: instrument.numeroProcesso,
+    emitidoPorNome: emissor.pessoa.nome,
+  };
+}
+
 function snapshotGoalInput(
   item: EvaluatedReportGoal,
 ): Prisma.RelatorioMetaCreateWithoutRelatorioInput {
@@ -230,6 +251,7 @@ export class ReportsService {
             periodoInicio,
             periodoFim,
             emitidoPorId: actor.usuarioId,
+            ...(await headerSnapshot(tx, preview.projeto, instrument, actor.usuarioId)),
             metas: {
               create: metas.map(snapshotGoalInput),
             },
@@ -319,6 +341,12 @@ export class ReportsService {
             relatorioAnteriorId: anterior.id,
             motivoRetificacao: data.motivo,
             emitidoPorId: actor.usuarioId,
+            ...(await headerSnapshot(
+              tx,
+              anterior.projeto,
+              anterior.projeto.instrumento,
+              actor.usuarioId,
+            )),
             metas: {
               create: metas.map(snapshotGoalInput),
             },
