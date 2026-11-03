@@ -128,6 +128,65 @@ describe('ProjectReportsSection', () => {
     expect(await screen.findByLabelText('SHA-256 do arquivo')).toHaveValue(SHA);
     expect(screen.getByRole('link', { name: /Baixar PDF/ })).toHaveAttribute('href', LINK.url);
     expect(calls.filter((call) => call === PDF)).toHaveLength(1);
+    // A linha ganha o hash com a resposta do PDF, sem ler a lista de novo.
+    expect(screen.getAllByText('SHA-256 a3f1c9e07b5d…').length).toBeGreaterThan(0);
+    expect(calls.filter((call) => call === LIST)).toHaveLength(1);
+  });
+
+  it('com o dialogo aberto, renova o link antes de expirar', async () => {
+    vi.useFakeTimers({ shouldAdvanceTime: true });
+    try {
+      let renewed = 0;
+      await signedInAs('PRESIDENCIA_GESTAO', {
+        [LIST]: () => ({ status: 200, body: [REPORT] }),
+        [PDF]: () => {
+          renewed += 1;
+          return { status: 200, body: { ...LINK, url: `${LINK.url}?v=${renewed}` } };
+        },
+      });
+      renderSection();
+
+      fireEvent.click(
+        await screen.findByRole('button', {
+          name: 'Ações do relatório de 01/01/2025 a 30/06/2025, versão 1',
+        }),
+      );
+      fireEvent.click(await screen.findByRole('menuitem', { name: 'Baixar PDF' }));
+      expect(await screen.findByRole('link', { name: /Baixar PDF/ })).toHaveAttribute(
+        'href',
+        `${LINK.url}?v=1`,
+      );
+
+      await vi.advanceTimersByTimeAsync(4 * 60 * 1000);
+
+      await vi.waitFor(() =>
+        expect(screen.getByRole('link', { name: /Baixar PDF/ })).toHaveAttribute(
+          'href',
+          `${LINK.url}?v=2`,
+        ),
+      );
+    } finally {
+      vi.useRealTimers();
+    }
+  });
+
+  it('falha ao carregar a lista oferece tentar de novo', async () => {
+    let attempts = 0;
+    await signedInAs('PRESIDENCIA_GESTAO', {
+      [LIST]: () => {
+        attempts += 1;
+        return attempts === 1
+          ? { status: 500, body: { code: 'INTERNAL', message: 'erro' } }
+          : { status: 200, body: [REPORT] };
+      },
+    });
+    renderSection();
+
+    expect(await screen.findByRole('alert')).toHaveTextContent(
+      'Não foi possível carregar os relatórios emitidos.',
+    );
+    fireEvent.click(screen.getByRole('button', { name: 'Tentar de novo' }));
+    expect((await screen.findAllByText('01/01/2025 a 30/06/2025')).length).toBeGreaterThan(0);
   });
 
   it('falha na geracao mostra o motivo e permite tentar de novo', async () => {

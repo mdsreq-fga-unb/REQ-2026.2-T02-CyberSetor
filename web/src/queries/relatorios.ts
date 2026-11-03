@@ -1,4 +1,4 @@
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { authorizedRequest } from '@/auth/session';
 import type {
   FinalizeReportInput,
@@ -58,14 +58,36 @@ export function useFinalizeReport(projectId: string) {
   });
 }
 
-/** Pede o link do PDF; a primeira vez gera e guarda o arquivo, então a lista ganha o hash. */
-export function useOpenReportPdf(projectId: string) {
+/** O link assinado vale 5 minutos; a consulta se renova antes disso enquanto o diálogo está aberto. */
+const PDF_LINK_REFRESH_MS = 4 * 60 * 1000;
+
+export function reportPdfKey(projectId: string, reportId: string) {
+  return [...reportsKey(projectId), reportId, 'pdf'] as const;
+}
+
+/**
+ * Link do PDF da versão; a primeira leitura gera e guarda o arquivo, e a linha da lista ganha o
+ * hash sem outra leitura da lista.
+ */
+export function useReportPdf(projectId: string, reportId: string | undefined, enabled: boolean) {
   const queryClient = useQueryClient();
-  return useMutation({
-    mutationFn: (reportId: string) =>
-      authorizedRequest<ReportPdfLink>(
-        `/projects/${encodeURIComponent(projectId)}/reports/${encodeURIComponent(reportId)}/pdf`,
-      ),
-    onSuccess: () => queryClient.invalidateQueries({ queryKey: reportsKey(projectId) }),
+  return useQuery({
+    queryKey: reportPdfKey(projectId, reportId ?? ''),
+    queryFn: async () => {
+      const link = await authorizedRequest<ReportPdfLink>(
+        `/projects/${encodeURIComponent(projectId)}/reports/${encodeURIComponent(reportId!)}/pdf`,
+      );
+      queryClient.setQueryData<Report[]>(reportsKey(projectId), (reports) =>
+        reports?.map((report) =>
+          report.id === reportId && !report.pdf
+            ? { ...report, pdf: { sha256: link.sha256, geradoEm: link.geradoEm } }
+            : report,
+        ),
+      );
+      return link;
+    },
+    enabled: Boolean(reportId && enabled),
+    staleTime: PDF_LINK_REFRESH_MS,
+    refetchInterval: PDF_LINK_REFRESH_MS,
   });
 }

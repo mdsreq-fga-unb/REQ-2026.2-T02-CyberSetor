@@ -1,7 +1,6 @@
 'use client';
 
 import { DownloadIcon } from 'lucide-react';
-import { useEffect } from 'react';
 import { ListError } from '@/components/list/list-states';
 import { Button, buttonVariants } from '@/components/ui/button';
 import {
@@ -15,7 +14,7 @@ import {
 import { Input } from '@/components/ui/input';
 import { ApiError } from '@/lib/api';
 import { formatDate, formatDateTime } from '@/lib/br';
-import { useOpenReportPdf } from '@/queries/relatorios';
+import { useReportPdf } from '@/queries/relatorios';
 import type { Report } from '@/types/relatorios';
 
 function failureOf(error: unknown): string {
@@ -31,26 +30,21 @@ function failureOf(error: unknown): string {
 /** Prepara o PDF da versão e entrega o link, com o SHA-256 para conferência (RF37, RNF08). */
 export function ReportPdfDialog({
   projectId,
+  open,
   report,
   onClose,
 }: {
   projectId: string;
+  open: boolean;
+  /** Fica com a última versão aberta depois de fechar, para o conteúdo não sumir na animação. */
   report: Report | null;
   onClose: () => void;
 }) {
-  const openPdf = useOpenReportPdf(projectId);
-  const { mutate, reset } = openPdf;
-  const reportId = report?.id;
-
-  useEffect(() => {
-    if (reportId) mutate(reportId);
-    else reset();
-  }, [reportId, mutate, reset]);
-
-  const link = openPdf.data;
+  const pdf = useReportPdf(projectId, report?.id, open);
+  const link = pdf.data;
 
   return (
-    <Dialog open={report !== null} onOpenChange={(next) => !next && onClose()}>
+    <Dialog open={open} onOpenChange={(next) => !next && onClose()}>
       <DialogContent>
         <DialogHeader>
           <DialogTitle>PDF do relatório</DialogTitle>
@@ -60,12 +54,12 @@ export function ReportPdfDialog({
           </DialogDescription>
         </DialogHeader>
 
-        {openPdf.isPending && (
+        {pdf.isPending && (
           <p role="status" className="text-sm text-muted-foreground">
             Preparando o PDF…
           </p>
         )}
-        {openPdf.isError && <ListError message={failureOf(openPdf.error)} />}
+        {pdf.isError && !link && <ListError message={failureOf(pdf.error)} />}
         {link && (
           <div className="flex flex-col gap-3 text-sm">
             <p>
@@ -94,8 +88,8 @@ export function ReportPdfDialog({
           <Button variant="outline" onClick={onClose}>
             Fechar
           </Button>
-          {openPdf.isError && reportId && (
-            <Button onClick={() => mutate(reportId)}>Tentar de novo</Button>
+          {pdf.isError && !link && (
+            <Button onClick={() => void pdf.refetch()}>Tentar de novo</Button>
           )}
           {link && (
             <a

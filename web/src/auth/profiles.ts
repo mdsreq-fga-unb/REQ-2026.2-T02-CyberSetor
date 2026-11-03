@@ -24,6 +24,13 @@ export const PROFILES_WITHOUT_SECTOR: readonly Perfil[] = [
   'CONCEDENTE_AUDITORIA',
 ];
 
+// Leem e baixam os relatórios emitidos, como na API (INSTRUMENT_READERS).
+export const REPORT_READERS: readonly Perfil[] = [
+  'PRESIDENCIA_GESTAO',
+  'NUCLEO_PEDAGOGICO',
+  'ADMINISTRATIVO_FINANCEIRO',
+];
+
 export function hasSector(perfil: string): boolean {
   return !PROFILES_WITHOUT_SECTOR.includes(perfil as Perfil);
 }

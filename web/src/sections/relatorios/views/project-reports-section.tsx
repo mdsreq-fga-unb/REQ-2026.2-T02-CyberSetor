@@ -6,6 +6,7 @@ import { ListCard, ListEmpty, ListError, TableSkeleton } from '@/components/list
 import { RowActionsMenu } from '@/components/list/row-actions-menu';
 import { usePagination } from '@/components/list/use-pagination';
 import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
 import {
   Table,
   TableBody,
@@ -66,7 +67,7 @@ function PdfStatus({ report }: { report: Report }) {
 /** Versões emitidas do Relatório de Execução do Objeto, com o PDF de cada uma (HU-05b). */
 export function ProjectReportsSection({ projectId }: { projectId: string }) {
   const reports = useReports(projectId);
-  const pagination = usePagination(reports.data ?? []);
+  const pagination = usePagination(reports.data);
   const pdfDialog = useDialogState<Report>();
 
   return (
@@ -81,7 +82,12 @@ export function ProjectReportsSection({ projectId }: { projectId: string }) {
       </div>
 
       {reports.error && !reports.data ? (
-        <ListError message={loadFailure(reports.error)} />
+        <div className="flex flex-col gap-3">
+          <ListError message={loadFailure(reports.error)} />
+          <Button variant="outline" className="self-start" onClick={() => void reports.refetch()}>
+            Tentar de novo
+          </Button>
+        </div>
       ) : reports.data?.length === 0 ? (
         <ListEmpty
           icon={FileCheckIcon}
@@ -160,7 +166,8 @@ export function ProjectReportsSection({ projectId }: { projectId: string }) {
 
       <ReportPdfDialog
         projectId={projectId}
-        report={pdfDialog.open ? (pdfDialog.value ?? null) : null}
+        open={pdfDialog.open}
+        report={pdfDialog.value}
         onClose={pdfDialog.close}
       />
     </section>

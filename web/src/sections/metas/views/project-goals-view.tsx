@@ -12,6 +12,8 @@ import {
 import { Fragment, useMemo } from 'react';
 import Link from 'next/link';
 import { useSession } from '@/auth/hooks/use-session';
+import { REPORT_READERS } from '@/auth/profiles';
+import type { Perfil } from '@/auth/types';
 import { ListPagination } from '@/components/list/list-pagination';
 import { ListCard, ListEmpty, ListError, TableSkeleton } from '@/components/list/list-states';
 import { RowActionsMenu, type RowAction } from '@/components/list/row-actions-menu';
@@ -517,7 +519,9 @@ export function ProjectGoalsView({
         />
       )}
 
-      {project.data && <ProjectReportsSection projectId={projectId} />}
+      {project.data && session && REPORT_READERS.includes(session.perfil as Perfil) && (
+        <ProjectReportsSection projectId={projectId} />
+      )}
 
       {requirements.data && project.data && (
         <GoalFormDialog
