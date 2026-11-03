@@ -100,6 +100,13 @@ model Modalidade {
   @@map("modalidade")
 }
 
+/// Documento que gera nova versão do plano de trabalho (RF31, RN-09).
+enum TipoVersaoPlano {
+  TERMO_ADITIVO
+  APOSTILA
+  OFICIO
+}
+
 model Projeto {
   id            String   @id @default(uuid()) @db.Uuid
   versao        Int      @default(1)
@@ -112,11 +119,12 @@ model Projeto {
   criadoEm      DateTime @default(now()) @map("criado_em") @db.Timestamptz(3)
   atualizadoEm  DateTime @updatedAt @map("atualizado_em") @db.Timestamptz(3)
 
-  instrumento Instrumento @relation(fields: [instrumentoId], references: [id], onDelete: Restrict)
-  coordenador Usuario     @relation(fields: [coordenadorId], references: [id], onDelete: Restrict)
-  metas       Meta[]
-  atividades  Atividade[]
-  relatorios  Relatorio[]
+  instrumento  Instrumento   @relation(fields: [instrumentoId], references: [id], onDelete: Restrict)
+  coordenador  Usuario       @relation(fields: [coordenadorId], references: [id], onDelete: Restrict)
+  metas        Meta[]
+  atividades   Atividade[]
+  relatorios   Relatorio[]
+  planoVersoes PlanoVersao[]
 
   @@unique([instrumentoId, codigo])
   @@index([coordenadorId])
@@ -162,13 +170,14 @@ model Meta {
   criadoEm           DateTime            @default(now()) @map("criado_em") @db.Timestamptz(3)
   atualizadoEm       DateTime            @updatedAt @map("atualizado_em") @db.Timestamptz(3)
 
-  projeto        Projeto         @relation(fields: [projetoId], references: [id], onDelete: Restrict)
-  responsavel    Usuario?        @relation(fields: [responsavelId], references: [id], onDelete: Restrict)
-  setor          Setor?          @relation(fields: [setorId], references: [id], onDelete: Restrict)
+  projeto        Projeto           @relation(fields: [projetoId], references: [id], onDelete: Restrict)
+  responsavel    Usuario?          @relation(fields: [responsavelId], references: [id], onDelete: Restrict)
+  setor          Setor?            @relation(fields: [setorId], references: [id], onDelete: Restrict)
   requisitos     MetaRequisito[]
   atividades     AtividadeMeta[]
   resultados     ResultadoMeta[]
   relatorioMetas RelatorioMeta[]
+  planoVersoes   PlanoVersaoMeta[]
 
   @@index([projetoId])
   @@index([responsavelId])
@@ -445,6 +454,7 @@ model Usuario {
   eventos              TrilhaAuditoria[]      @relation("autor")
   previas              TrilhaAuditoria[]      @relation("previa")
   relatorios           Relatorio[]
+  planoVersoes         PlanoVersao[]          @relation("planoVersaoAutor")
   inscricoesAssistidas Inscricao[]            @relation("inscricaoCriadaPor")
 
   @@map("usuario")
@@ -563,4 +573,52 @@ model RelatorioMeta {
   @@index([metaId])
   @@index([resultadoMetaId])
   @@map("relatorio_meta")
+}
+
+/// Versão do plano de trabalho registrada por termo aditivo, apostila ou ofício (RF31, RN-09).
+/// A versão 1 é a pactuação original e não tem linha: esta tabela guarda só o que mudou depois dela.
+model PlanoVersao {
+  id                  String          @id @default(uuid()) @db.Uuid
+  projetoId           String          @map("projeto_id") @db.Uuid
+  numero              Int
+  tipo                TipoVersaoPlano
+  dataDocumento       DateTime        @map("data_documento") @db.Date
+  /// Número ou referência do documento de origem (CA-14.1).
+  documentoOrigem     String          @map("documento_origem")
+  /// Publicação do ofício (CA-14.4).
+  publicacao          String?
+  justificativa       String?
+  /// Vigência anterior e nova, quando o ofício muda o período de execução (CA-14.4).
+  vigenciaFimAnterior DateTime?       @map("vigencia_fim_anterior") @db.Date
+  vigenciaFimNova     DateTime?       @map("vigencia_fim_nova") @db.Date
+  registradoPorId     String          @map("registrado_por_id") @db.Uuid
+  criadoEm            DateTime        @default(now()) @map("criado_em") @db.Timestamptz(3)
+
+  projeto       Projeto           @relation(fields: [projetoId], references: [id], onDelete: Restrict)
+  registradoPor Usuario           @relation("planoVersaoAutor", fields: [registradoPorId], references: [id], onDelete: Restrict)
+  metas         PlanoVersaoMeta[]
+
+  @@unique([projetoId, numero])
+  @@index([registradoPorId])
+  @@map("plano_versao")
+}
+
+/// Previsto de uma meta antes e depois de uma versão do plano: a primeira linha de cada meta guarda a pactuação original (CA-14.2, CA-14.3).
+model PlanoVersaoMeta {
+  id                  String    @id @default(uuid()) @db.Uuid
+  versaoId            String    @map("versao_id") @db.Uuid
+  metaId              String    @map("meta_id") @db.Uuid
+  parametroAntes      String?   @map("parametro_antes")
+  parametroDepois     String?   @map("parametro_depois")
+  periodoInicioAntes  DateTime? @map("periodo_inicio_antes") @db.Date
+  periodoInicioDepois DateTime? @map("periodo_inicio_depois") @db.Date
+  periodoFimAntes     DateTime? @map("periodo_fim_antes") @db.Date
+  periodoFimDepois    DateTime? @map("periodo_fim_depois") @db.Date
+
+  versao PlanoVersao @relation(fields: [versaoId], references: [id], onDelete: Restrict)
+  meta   Meta        @relation(fields: [metaId], references: [id], onDelete: Restrict)
+
+  @@unique([versaoId, metaId])
+  @@index([metaId])
+  @@map("plano_versao_meta")
 }
