@@ -318,3 +318,366 @@ a.cs-card:focus {
     font-size: 0.95rem;
   }
 }
+
+/* ---- Histórico e evolução (visao/historico.md, gerada por hooks/historico.py) ---- */
+.hist-andamento {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(8.5rem, 1fr));
+  gap: 0.6rem;
+  margin: 0.8rem 0 1.2rem;
+}
+
+.md-typeset a.hist-faixa {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  padding: 0.6rem 0.7rem;
+  border: 1px solid var(--md-default-fg-color--lightest);
+  border-radius: 0.3rem;
+  color: var(--md-default-fg-color);
+  background: var(--md-default-bg-color);
+}
+
+.md-typeset a.hist-faixa:hover,
+.md-typeset a.hist-faixa:focus-visible {
+  border-color: var(--md-typeset-a-color);
+}
+
+.hist-faixa--corrente {
+  box-shadow: inset 0 3px 0 var(--md-accent-fg-color);
+}
+
+.md-typeset a.hist-faixa--ativa {
+  border-color: var(--md-typeset-a-color);
+  background: var(--md-accent-fg-color--transparent);
+}
+
+.hist-faixa__nome {
+  font-weight: 600;
+}
+
+.hist-faixa__periodo,
+.hist-faixa__numeros {
+  font-size: 0.68rem;
+  color: var(--md-default-fg-color--light);
+}
+
+.hist-faixa__barra {
+  display: block;
+  height: 0.35rem;
+  border-radius: 0.2rem;
+  background: var(--md-default-fg-color--lightest);
+  overflow: hidden;
+}
+
+.hist-faixa__barra > span {
+  display: block;
+  height: 100%;
+  background: var(--md-accent-fg-color);
+}
+
+.md-typeset .grid.cards.hist-resumo {
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 9rem), 1fr));
+}
+
+.md-typeset .grid.cards.hist-resumo > ul > li {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+  border-left: 3px solid var(--md-accent-fg-color);
+}
+
+.hist-filtros {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  padding: 0.8rem;
+  margin: 0.6rem 0 1rem;
+  border: 1px solid var(--md-default-fg-color--lightest);
+  border-radius: 0.3rem;
+  font-size: 0.7rem;
+}
+
+.hist-filtros label {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  font-weight: 600;
+}
+
+.hist-filtros select,
+.hist-filtros input,
+.hist-filtros button {
+  font: inherit;
+  font-weight: 400;
+  padding: 0.3rem 0.45rem;
+  border: 1px solid var(--md-default-fg-color--lighter);
+  border-radius: 0.2rem;
+  background: var(--md-default-bg-color);
+  color: var(--md-default-fg-color);
+  max-width: 100%;
+}
+
+.hist-filtros input[type="search"] {
+  font-size: 0.8rem;
+  padding: 0.5rem 0.6rem;
+}
+
+.hist-filtros input[type="search"]:focus,
+.hist-filtros select:focus {
+  outline: 2px solid var(--md-accent-fg-color);
+  outline-offset: 1px;
+}
+
+.hist-filtros__tipos {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+}
+
+.hist-filtros button.hist-tipo {
+  border-radius: 1rem;
+  padding: 0.2rem 0.7rem;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.hist-tipo span {
+  font-weight: 400;
+  color: var(--md-default-fg-color--light);
+}
+
+.hist-filtros button.hist-tipo[aria-pressed="true"] {
+  border-color: var(--md-accent-fg-color);
+  background: var(--md-accent-fg-color);
+  color: #fff;
+}
+
+.hist-filtros button.hist-tipo[aria-pressed="true"] span {
+  color: inherit;
+}
+
+
+.hist-filtros__grade {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(9rem, 1fr));
+  gap: 0.5rem 0.8rem;
+}
+
+.hist-filtros__rodape {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.6rem;
+}
+
+.hist-filtros__status {
+  margin: 0 !important;
+  color: var(--md-default-fg-color--light);
+}
+
+.hist-filtros button[data-limpar] {
+  cursor: pointer;
+}
+
+.hist-filtros button[data-limpar]:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+.hist-grupo[hidden],
+.hist-item[hidden] {
+  display: none !important;
+}
+
+.md-typeset .hist-grupo__titulo {
+  margin-top: 1.2rem;
+  padding-bottom: 0.2rem;
+  border-bottom: 1px solid var(--md-default-fg-color--lightest);
+}
+
+.hist-item {
+  position: relative;
+  margin: 0;
+  padding: 0.4rem 0 0.6rem 1.1rem;
+  border-left: 2px solid var(--md-default-fg-color--lightest);
+}
+
+.hist-item::before {
+  content: "";
+  position: absolute;
+  left: -0.33rem;
+  top: 0.75rem;
+  width: 0.55rem;
+  height: 0.55rem;
+  border-radius: 50%;
+  background: var(--md-default-fg-color--light);
+}
+
+.hist-item--versao::before { background: var(--md-accent-fg-color); }
+.hist-item--ata-cliente::before { background: #2e7d32; }
+.hist-item--marco::before { background: #b26a00; }
+
+.md-typeset .hist-item p {
+  margin: 0.2rem 0;
+}
+
+.md-typeset .hist-item__meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  align-items: center;
+  font-size: 0.68rem;
+  color: var(--md-default-fg-color--light);
+}
+
+.hist-chip {
+  padding: 0.02rem 0.45rem;
+  border-radius: 1rem;
+  border: 1px solid var(--md-default-fg-color--lighter);
+  font-weight: 600;
+}
+
+.hist-chip--versao { border-color: var(--md-typeset-a-color); color: var(--md-typeset-a-color); }
+
+.md-typeset .hist-item__rodape {
+  font-size: 0.68rem;
+  color: var(--md-default-fg-color--light);
+}
+
+.hist-codigo {
+  font-family: var(--md-code-font-family);
+  padding: 0 0.3rem;
+  border-radius: 0.2rem;
+  background: var(--md-code-bg-color);
+}
+
+@media screen and (max-width: 44.9375em) {
+  .hist-andamento {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+
+
+.hist-resumo__rotulo,
+.hist-resumo__detalhe {
+  font-size: 0.66rem;
+  color: var(--md-default-fg-color--light);
+}
+
+.hist-resumo__rotulo {
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  font-weight: 600;
+}
+
+.hist-resumo__valor {
+  font-size: 0.95rem;
+}
+
+.md-typeset ol.hist-marcos {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 8rem), 1fr));
+  gap: 0.5rem 1rem;
+  margin: 0 0 1.2rem;
+  padding: 0.6rem 0 0;
+  list-style: none;
+  border-top: 2px solid var(--md-default-fg-color--lightest);
+}
+
+.md-typeset ol.hist-marcos > li.hist-marcos__item {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  padding-left: 1rem;
+  font-size: 0.66rem;
+  line-height: 1.35;
+}
+
+/* Ponto do marco: cheio = realizado, anel = previsto, cheio com halo = hoje. */
+.md-typeset ol.hist-marcos > li.hist-marcos__item::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.22rem;
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 50%;
+  border: 2px solid var(--md-typeset-a-color);
+  box-sizing: border-box;
+}
+
+.md-typeset ol.hist-marcos > li.hist-marcos__item--feito::before {
+  background: var(--md-typeset-a-color);
+}
+
+.md-typeset ol.hist-marcos > li.hist-marcos__item--hoje::before {
+  background: var(--md-accent-fg-color);
+  border-color: var(--md-accent-fg-color);
+  box-shadow: 0 0 0 3px var(--md-accent-fg-color--transparent);
+}
+
+.md-typeset ol.hist-marcos > li span {
+  color: var(--md-default-fg-color--light);
+}
+
+
+/* ---- Selos de situação dos requisitos e histórias (seções 8 e 10) ---- */
+.selo {
+  display: inline-block;
+  margin: 0.1rem 0.15rem;
+  padding: 0 0.45rem;
+  border-radius: 1rem;
+  border: 1px solid currentColor;
+  font-size: 0.62rem;
+  font-weight: 600;
+  line-height: 1.5;
+  white-space: nowrap;
+  vertical-align: middle;
+}
+
+[data-md-color-scheme="default"] .selo--a-fazer { color: #4a4f5a; }
+[data-md-color-scheme="default"] .selo--em-andamento { color: #8a5a00; background: #fff4dc; }
+[data-md-color-scheme="default"] .selo--concluido { color: #1b6b2a; background: #e6f4ea; }
+[data-md-color-scheme="default"] .selo--retirado { color: #8e1b1b; text-decoration: line-through; }
+[data-md-color-scheme="slate"] .selo--a-fazer { color: #c9ccd2; }
+[data-md-color-scheme="slate"] .selo--em-andamento { color: #ffcf73; }
+[data-md-color-scheme="slate"] .selo--concluido { color: #7fd99a; }
+[data-md-color-scheme="slate"] .selo--retirado { color: #ff9a9a; text-decoration: line-through; }
+
+.selos-legenda {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.4rem 1rem;
+  padding: 0.5rem 0.7rem;
+  margin: 0.4rem 0 1rem;
+  border: 1px solid var(--md-default-fg-color--lightest);
+  border-radius: 0.3rem;
+  font-size: 0.7rem;
+}
+
+.md-typeset .selos-legenda p {
+  margin: 0;
+}
+
+.selos-legenda select {
+  font: inherit;
+  margin-left: 0.3rem;
+  padding: 0.2rem 0.3rem;
+  border: 1px solid var(--md-default-fg-color--lighter);
+  border-radius: 0.2rem;
+  background: var(--md-default-bg-color);
+  color: var(--md-default-fg-color);
+}
+
+.selos-legenda__status {
+  color: var(--md-default-fg-color--light);
+}
+
+.md-typeset tr[hidden],
+.md-typeset details[hidden] {
+  display: none;
+}

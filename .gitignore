@@ -10,3 +10,4 @@ venv/
 # Saída, não fonte: o deploy e o build-check as regeram a cada execução.
 docs/entregas/debitos-u1.md
 docs/gestao/sprints/tarefas-sprint-*.md
+situacao-historias.json
