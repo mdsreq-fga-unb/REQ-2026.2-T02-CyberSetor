@@ -1,8 +1,21 @@
-import { Body, Controller, Get, Param, ParseUUIDPipe, Patch, Query, Res } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  HttpCode,
+  HttpStatus,
+  Param,
+  ParseUUIDPipe,
+  Patch,
+  Post,
+  Query,
+  Res,
+} from '@nestjs/common';
 import {
   ApiBadRequestResponse,
   ApiBearerAuth,
   ApiConflictResponse,
+  ApiNotFoundResponse,
   ApiOkResponse,
   ApiTags,
 } from '@nestjs/swagger';
@@ -17,6 +30,7 @@ import {
   ListParticipantsQuery,
   ParticipantResponse,
   ParticipantSummaryResponse,
+  RevokeAuthorizationDto,
 } from './participants.dto.js';
 import { ParticipantsService } from './participants.service.js';
 
@@ -62,5 +76,22 @@ export class ParticipantsController {
     @Res({ passthrough: true }) res: Response,
   ): Promise<ParticipantResponse> {
     return this.participants.correct(id, body, actorOf(user, res));
+  }
+
+  /** Revogação de autorização pedida pelo titular, com data e canal (CA-07a.6). */
+  @Post(':id/registrations/:inscricaoId/revocations')
+  @HttpCode(HttpStatus.OK)
+  @ApiOkResponse({ type: ParticipantResponse })
+  @ApiBadRequestResponse({ description: 'Campo inválido ou INVALID_REQUEST_DATE' })
+  @ApiNotFoundResponse({ description: 'Inscrição de outro participante ou inexistente' })
+  @ApiConflictResponse({ description: 'AUTHORIZATION_NOT_GIVEN, ALREADY_REVOKED' })
+  revoke(
+    @Param('id', ParseUUIDPipe) id: string,
+    @Param('inscricaoId', ParseUUIDPipe) inscricaoId: string,
+    @Body() body: RevokeAuthorizationDto,
+    @CurrentUser() user: ValidSession,
+    @Res({ passthrough: true }) res: Response,
+  ): Promise<ParticipantResponse> {
+    return this.participants.revoke(id, inscricaoId, body, actorOf(user, res));
   }
 }

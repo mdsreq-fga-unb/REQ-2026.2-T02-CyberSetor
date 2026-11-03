@@ -1,5 +1,6 @@
 import { INestApplication } from '@nestjs/common';
 import { Test } from '@nestjs/testing';
+import { ThrottlerGuard } from '@nestjs/throttler';
 import request from 'supertest';
 import type { App } from 'supertest/types.js';
 import { PasswordService } from '../src/accounts/password.service.js';
@@ -13,6 +14,7 @@ import {
 } from '../src/generated/prisma/enums.js';
 import { PrismaService } from '../src/prisma/prisma.service.js';
 import { DATA_NOTICE } from '../src/public-registrations/notice.js';
+import { termVersion } from '../src/registrations/term.js';
 
 const ADULTO = {
   nome: 'Ana Souza',
@@ -47,7 +49,11 @@ describe('Formulário público de inscrição (e2e)', () => {
   let outroCodigo: string;
 
   beforeAll(async () => {
-    const moduleRef = await Test.createTestingModule({ imports: [AppModule] }).compile();
+    // O limite de envios por IP tem a sua própria suíte; aqui ele só atrapalharia a contagem.
+    const moduleRef = await Test.createTestingModule({ imports: [AppModule] })
+      .overrideGuard(ThrottlerGuard)
+      .useValue({ canActivate: () => true })
+      .compile();
     app = moduleRef.createNestApplication();
     setupApp(app, { corsOrigin: '' });
     await app.init();
@@ -147,6 +153,34 @@ describe('Formulário público de inscrição (e2e)', () => {
       camposMinimos: ['NOME', 'TELEFONE', 'DATA_NASCIMENTO', 'CONSENTIMENTOS'],
       camposAdicionais: ['CPF'],
       aviso: { versao: DATA_NOTICE.versao, texto: DATA_NOTICE.texto },
+      termo: null,
+      apresentacao: null,
+      prazoInscricao: null,
+      prazoHora: null,
+      contatoWhatsapp: null,
+    });
+  });
+
+  it('devolve a apresentacao, o prazo e o WhatsApp do Instituto', async () => {
+    const prazo = new Date();
+    prazo.setUTCDate(prazo.getUTCDate() + 3);
+    const dia = prazo.toISOString().slice(0, 10);
+    await prisma.configuracaoInscricao.update({
+      where: { atividadeId },
+      data: {
+        apresentacao: 'Oficina de 8 horas, com certificado.',
+        prazoInscricao: new Date(`${dia}T00:00:00.000Z`),
+        prazoHora: new Date('1970-01-01T18:00:00.000Z'),
+        contatoWhatsapp: '61999998888',
+      },
+    });
+    const comTudo = await server().get(`/v1/public/registrations/${codigo}`).expect(200);
+    expect(comTudo.body).toMatchObject({
+      aberta: true,
+      apresentacao: 'Oficina de 8 horas, com certificado.',
+      prazoInscricao: dia,
+      prazoHora: '18:00',
+      contatoWhatsapp: '61999998888',
     });
   });
 
@@ -186,6 +220,52 @@ describe('Formulário público de inscrição (e2e)', () => {
       usuarioId: null,
     });
     expect(trilha.depois).toEqual({ atividadeId, situacao: 'CONFIRMADA' });
+  });
+
+  it('guarda o nome de preferencia quando informado; sem ele, fica vazio', async () => {
+    await enviar({ ...ADULTO, nomePreferencia: '  Aninha  ' }).expect(201);
+    await enviar({ ...ADULTO, cpf: '111.444.777-35' }).expect(201);
+
+    const nomes = await prisma.participante.findMany({
+      orderBy: { criadoEm: 'asc' },
+      select: { nomePreferencia: true },
+    });
+    expect(nomes.map((item) => item.nomePreferencia)).toEqual(['Aninha', null]);
+  });
+
+  it('com termo de compromisso, exige o aceite do texto atual e guarda o texto aceito', async () => {
+    const termo = 'Chegar no horário.\nAvisar quando faltar.';
+    await prisma.configuracaoInscricao.update({
+      where: { atividadeId },
+      data: { termoCompromisso: termo },
+    });
+    const form = await server().get(`/v1/public/registrations/${codigo}`).expect(200);
+    expect((form.body as { termo: unknown }).termo).toEqual({
+      versao: termVersion(termo),
+      texto: termo,
+    });
+
+    const semAceite = await enviar(ADULTO).expect(400);
+    expect((semAceite.body as ErrorBody).code).toBe('TERM_NOT_ACCEPTED');
+    const antigo = await enviar({ ...ADULTO, versaoTermo: termVersion('Outro texto') }).expect(400);
+    expect((antigo.body as ErrorBody).code).toBe('TERM_OUTDATED');
+    expect(await prisma.inscricao.count()).toBe(0);
+
+    await enviar({ ...ADULTO, versaoTermo: termVersion(termo) }).expect(201);
+    const inscricao = await prisma.inscricao.findFirstOrThrow();
+    expect(inscricao.termoAceito).toBe(termo);
+    expect(inscricao.termoAceitoEm).toBeInstanceOf(Date);
+  });
+
+  it('sem termo, a inscricao nao guarda aceite e recusa versao de termo enviada', async () => {
+    const res = await enviar({ ...ADULTO, versaoTermo: termVersion('Texto removido') }).expect(400);
+    expect((res.body as ErrorBody).code).toBe('TERM_OUTDATED');
+
+    await enviar(ADULTO).expect(201);
+    expect(await prisma.inscricao.findFirstOrThrow()).toMatchObject({
+      termoAceito: null,
+      termoAceitoEm: null,
+    });
   });
 
   it('menor de 18 anos exige o responsavel legal, e adulto nao guarda responsavel', async () => {
@@ -239,6 +319,7 @@ describe('Formulário público de inscrição (e2e)', () => {
     ['nascimento no futuro', { ...ADULTO, dataNascimento: '2999-01-01' }, 'INVALID_BIRTH_DATE'],
     ['campo pedido nulo', { ...ADULTO, cpf: null }, 'VALIDATION_ERROR'],
     ['autorizacao em texto', { ...ADULTO, autorizaImagem: 'false' }, 'VALIDATION_ERROR'],
+    ['nome de preferencia em branco', { ...ADULTO, nomePreferencia: '  ' }, 'VALIDATION_ERROR'],
   ])('recusa %s com 400', async (_caso, body, code) => {
     const res = await enviar(body).expect(400);
     expect((res.body as ErrorBody).code).toBe(code);
@@ -267,5 +348,30 @@ describe('Formulário público de inscrição (e2e)', () => {
     await prisma.instrumento.update({ where: { id: instrumentoId }, data: { ativo: false } });
     const inativo = await server().get(`/v1/public/registrations/${outroCodigo}`).expect(200);
     expect((inativo.body as { aberta: boolean }).aberta).toBe(false);
+  });
+
+  it('prazo vencido fecha o formulario e recusa o envio; dentro do prazo segue aberto', async () => {
+    const ontem = new Date();
+    ontem.setUTCDate(ontem.getUTCDate() - 2);
+    await prisma.configuracaoInscricao.update({
+      where: { atividadeId },
+      data: { prazoInscricao: new Date(`${ontem.toISOString().slice(0, 10)}T00:00:00.000Z`) },
+    });
+    const vencida = await server().get(`/v1/public/registrations/${codigo}`).expect(200);
+    expect((vencida.body as { aberta: boolean }).aberta).toBe(false);
+    const recusa = await enviar(ADULTO).expect(409);
+    expect((recusa.body as ErrorBody).code).toBe('REGISTRATION_CLOSED');
+
+    const amanha = new Date();
+    amanha.setUTCDate(amanha.getUTCDate() + 2);
+    await prisma.configuracaoInscricao.update({
+      where: { codigoPublico: outroCodigo },
+      data: {
+        prazoInscricao: new Date(`${amanha.toISOString().slice(0, 10)}T00:00:00.000Z`),
+        prazoHora: new Date('1970-01-01T18:00:00.000Z'),
+      },
+    });
+    const aberta = await server().get(`/v1/public/registrations/${outroCodigo}`).expect(200);
+    expect((aberta.body as { aberta: boolean }).aberta).toBe(true);
   });
 });
