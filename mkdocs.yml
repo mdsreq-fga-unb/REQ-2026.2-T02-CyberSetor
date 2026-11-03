@@ -56,6 +56,13 @@ theme:
 extra_css:
   - assets/stylesheets/extra.css
 
+extra_javascript:
+  - assets/javascripts/historico.js
+
+hooks:
+  - hooks/historico.py
+  - hooks/selos.py
+
 markdown_extensions:
   - abbr
   - admonition
@@ -116,6 +123,7 @@ nav:
           - Unidade 2: licoes-aprendidas/unidade-2.md
       - Anexo B1 · Modelo do processo atual (BPMN): requisitos/b1-bpmn-processo-atual.md
   - Gestão do projeto:
+      - Histórico e evolução: gestao/historico.md
       - Processo e ritos (ScrumXP): gestao/processo-scrumxp.md
       - Boas práticas no GitHub: gestao/boas-praticas-github.md
       - Matriz de competências e stack: gestao/matriz-competencias.md
