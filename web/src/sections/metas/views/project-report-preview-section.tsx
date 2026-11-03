@@ -39,18 +39,18 @@ interface ProjectReportPreviewSectionProps {
   instrumentActive?: boolean;
 }
 
+// Tons de situação pelos tokens success e warning, como nas atividades e no painel.
 function ReachBadge({ reach, draft }: { reach: GoalReach | null; draft: boolean }) {
   if (draft) return <Badge variant="outline">Rascunho, fora da apuração</Badge>;
   if (reach === 'CUMPRIDA') {
-    return (
-      <Badge className="bg-emerald-600 text-white hover:bg-emerald-600 dark:bg-emerald-600">
-        {REACHES.CUMPRIDA}
-      </Badge>
-    );
+    return <Badge className="bg-success text-success-foreground">{REACHES.CUMPRIDA}</Badge>;
   }
   if (reach === 'PARCIALMENTE_CUMPRIDA') {
     return (
-      <Badge className="border border-amber-500/30 bg-amber-500/15 text-amber-900 dark:bg-amber-500/20 dark:text-amber-300">
+      <Badge
+        variant="outline"
+        className="border-transparent bg-warning/20 text-amber-800 dark:text-warning"
+      >
         {REACHES.PARCIALMENTE_CUMPRIDA}
       </Badge>
     );
@@ -83,6 +83,14 @@ function reachedText(goal: ReportPreviewGoal): string {
 
 function percentText(goal: ReportPreviewGoal): string {
   return goal.percentual === null ? '—' : `${formatNumber(goal.percentual)}%`;
+}
+
+function previewFailure(error: unknown): string {
+  if (error instanceof ApiError && error.status === 403) {
+    return 'O seu perfil não consulta a prévia do relatório.';
+  }
+  if (error instanceof ApiError && [400, 404, 422].includes(error.status)) return error.message;
+  return 'Não foi possível carregar a prévia do relatório. Tente de novo.';
 }
 
 function mergeUnresolvedPendencias(
@@ -316,15 +324,7 @@ export function ProjectReportPreviewSection({
           </div>
         )}
 
-        {hasPeriod && !isPeriodReversed && isError && (
-          <ListError
-            message={
-              error instanceof Error
-                ? error.message
-                : 'Não foi possível carregar a prévia do relatório. Tente de novo.'
-            }
-          />
-        )}
+        {hasPeriod && !isPeriodReversed && isError && <ListError message={previewFailure(error)} />}
 
         {hasPeriod && !isPeriodReversed && data && (
           <>
@@ -339,9 +339,9 @@ export function ProjectReportPreviewSection({
                 {isBlockedAfterAttempt && unresolvedBlockedPendencias.length > 0 && (
                   <div
                     role="alert"
-                    className="flex flex-col gap-2 rounded-lg border border-amber-500/40 bg-amber-500/10 p-4 text-sm"
+                    className="flex flex-col gap-2 rounded-lg border border-warning/60 bg-warning/10 p-4 text-sm"
                   >
-                    <div className="flex items-center gap-2 font-semibold text-amber-950 dark:text-amber-200">
+                    <div className="flex items-center gap-2 font-semibold">
                       <TriangleAlertIcon className="size-4 shrink-0" aria-hidden="true" />
                       <span>Finalização do relatório bloqueada</span>
                     </div>
@@ -361,9 +361,8 @@ export function ProjectReportPreviewSection({
                       ))}
                     </ul>
                     <p className="text-xs text-muted-foreground">
-                      A direção e a coordenação permanecem notificadas das pendências; a trava
-                      atinge apenas a finalização do relatório e os registros de metas, resultados,
-                      atividades e demais áreas continuam liberados.
+                      A trava atinge apenas a finalização do relatório: os registros de metas,
+                      resultados, atividades e demais áreas continuam liberados.
                     </p>
                   </div>
                 )}
@@ -373,9 +372,12 @@ export function ProjectReportPreviewSection({
                   !emittedReport && (
                     <div
                       role="status"
-                      className="flex items-center gap-2 rounded-lg border border-emerald-600/30 bg-emerald-500/10 p-4 text-sm text-emerald-950 dark:text-emerald-200"
+                      className="flex items-center gap-2 rounded-lg border border-success/40 bg-success/10 p-4 text-sm"
                     >
-                      <CircleCheckIcon className="size-4 shrink-0" aria-hidden="true" />
+                      <CircleCheckIcon
+                        className="size-4 shrink-0 text-success"
+                        aria-hidden="true"
+                      />
                       <span>
                         Todas as justificativas pendentes foram preenchidas. A finalização do
                         relatório está liberada.
@@ -386,9 +388,9 @@ export function ProjectReportPreviewSection({
                 {coordinator && clientPendencias.length > 0 && (
                   <div
                     role="status"
-                    className="flex flex-col gap-1.5 rounded-lg border border-amber-500/30 bg-amber-500/10 p-4 text-sm"
+                    className="flex flex-col gap-1.5 rounded-lg border border-warning/60 bg-warning/10 p-4 text-sm"
                   >
-                    <span className="font-semibold text-amber-950 dark:text-amber-200">
+                    <span className="font-semibold">
                       Pendências para finalização do relatório neste período
                     </span>
                     <p className="text-muted-foreground">
@@ -412,10 +414,10 @@ export function ProjectReportPreviewSection({
                 {emittedReport && (
                   <div
                     role="status"
-                    className="flex flex-col gap-1 rounded-lg border border-emerald-600/30 bg-emerald-500/10 p-4 text-sm"
+                    className="flex flex-col gap-1 rounded-lg border border-success/40 bg-success/10 p-4 text-sm"
                   >
-                    <div className="flex items-center gap-2 font-semibold text-emerald-950 dark:text-emerald-200">
-                      <FileCheckIcon className="size-4 shrink-0" aria-hidden="true" />
+                    <div className="flex items-center gap-2 font-semibold">
+                      <FileCheckIcon className="size-4 shrink-0 text-success" aria-hidden="true" />
                       <span>Relatório finalizado — Versão {emittedReport.versao}</span>
                     </div>
                     <p className="text-muted-foreground">

@@ -512,7 +512,7 @@ export function ProjectGoalsView({
       {project.data && (
         <ProjectReportPreviewSection
           projectId={projectId}
-          instrumentActive={instrument.data?.ativo ?? true}
+          instrumentActive={instrument.data?.ativo === true}
         />
       )}
 

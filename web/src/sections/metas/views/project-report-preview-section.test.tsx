@@ -612,6 +612,32 @@ describe('ProjectReportPreviewSection', () => {
     expect(screen.queryByRole('button', { name: 'Finalizar relatório' })).not.toBeInTheDocument();
   });
 
+  it('falha inesperada da previa mostra a mensagem padrao, sem o texto cru do servidor', async () => {
+    vi.stubGlobal(
+      'fetch',
+      vi.fn(async (url: string, init: RequestInit = {}) => {
+        const path = new URL(url).pathname.replace(/^\/v1/, '');
+        if ((init.method ?? 'GET') === 'POST' && path === '/auth/login') {
+          return json(200, {
+            accessToken: 'token-teste',
+            perfil: 'PRESIDENCIA_GESTAO',
+            deveTrocarSenha: false,
+          });
+        }
+        return json(500, { code: 'INTERNAL', message: 'TypeError: detalhe interno' });
+      }),
+    );
+
+    await signIn('gestao@instituto.org.br', 'senha-longa');
+    renderComponent();
+    selectPeriod();
+
+    expect(await screen.findByRole('alert')).toHaveTextContent(
+      'Não foi possível carregar a prévia do relatório. Tente de novo.',
+    );
+    expect(screen.queryByText(/detalhe interno/)).not.toBeInTheDocument();
+  });
+
   it('exibe erro retornado pela API quando o período já foi finalizado ou ainda não encerrou', async () => {
     vi.stubGlobal(
       'fetch',
