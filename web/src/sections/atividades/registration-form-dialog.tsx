@@ -62,6 +62,8 @@ const registrationSchemaFor = (prazoSalvo: string | null) =>
         .max(MAX_VAGAS, `O limite máximo é de ${MAX_VAGAS.toLocaleString('pt-BR')} vagas.`),
       camposAdicionais: z.array(z.enum(CAMPOS_ADICIONAIS)),
       campoDuplicidade: z.enum(['CPF', 'EMAIL']),
+      listaEspera: z.boolean(),
+      promocaoAutomatica: z.boolean(),
       termoCompromisso: z
         .string()
         .trim()
@@ -110,6 +112,8 @@ const DEFAULT_VALUES: FormValues = {
   vagas: 30,
   camposAdicionais: ['EMAIL'],
   campoDuplicidade: 'EMAIL',
+  listaEspera: true,
+  promocaoAutomatica: true,
   termoCompromisso: '',
   apresentacao: '',
   prazoInscricao: '',
@@ -124,6 +128,8 @@ function valuesFromRegistration(reg: Registration | null): FormValues {
     vagas: reg.vagas,
     camposAdicionais: [...reg.camposAdicionais],
     campoDuplicidade: reg.campoDuplicidade,
+    listaEspera: reg.listaEspera,
+    promocaoAutomatica: reg.promocaoAutomatica,
     termoCompromisso: reg.termoCompromisso ?? '',
     apresentacao: reg.apresentacao ?? '',
     prazoInscricao: reg.prazoInscricao ?? '',
@@ -218,6 +224,8 @@ export function RegistrationFormDialog({
           vagas: data.vagas,
           camposAdicionais: data.camposAdicionais,
           campoDuplicidade: data.campoDuplicidade,
+          listaEspera: data.listaEspera,
+          promocaoAutomatica: data.listaEspera && data.promocaoAutomatica,
           termoCompromisso: data.termoCompromisso || null,
           apresentacao: data.apresentacao || null,
           prazoInscricao: data.prazoInscricao || null,
@@ -229,6 +237,8 @@ export function RegistrationFormDialog({
           vagas: data.vagas,
           camposAdicionais: data.camposAdicionais,
           campoDuplicidade: data.campoDuplicidade,
+          listaEspera: data.listaEspera,
+          promocaoAutomatica: data.listaEspera && data.promocaoAutomatica,
           ...(data.termoCompromisso && { termoCompromisso: data.termoCompromisso }),
           ...(data.apresentacao && { apresentacao: data.apresentacao }),
           ...(data.prazoInscricao && { prazoInscricao: data.prazoInscricao }),
@@ -289,6 +299,16 @@ export function RegistrationFormDialog({
     control: form.control,
     name: 'aberta',
     defaultValue: DEFAULT_VALUES.aberta,
+  });
+  const listaEsperaValue = useWatch({
+    control: form.control,
+    name: 'listaEspera',
+    defaultValue: DEFAULT_VALUES.listaEspera,
+  });
+  const promocaoValue = useWatch({
+    control: form.control,
+    name: 'promocaoAutomatica',
+    defaultValue: DEFAULT_VALUES.promocaoAutomatica,
   });
 
   function handleChaveDuplicidadeChange(chave: CampoDuplicidade) {
@@ -400,6 +420,44 @@ export function RegistrationFormDialog({
                   />
                 )}
               </FormField>
+
+              <fieldset className="flex flex-col gap-3 rounded-lg border border-border p-4">
+                <legend className="px-1 text-sm font-medium">Quando as vagas acabarem</legend>
+                <label className="flex min-h-12 cursor-pointer items-start gap-3">
+                  <input
+                    type="checkbox"
+                    checked={listaEsperaValue}
+                    disabled={!instrumentAtivo}
+                    onChange={(e) => form.setValue('listaEspera', e.target.checked)}
+                    className="mt-1 size-4 accent-primary"
+                  />
+                  <span className="flex flex-col">
+                    <span>Abrir lista de espera</span>
+                    <span className="text-sm text-muted-foreground">
+                      {listaEsperaValue
+                        ? 'Quem se inscrever depois entra na espera, pela ordem de chegada.'
+                        : 'O formulário avisa que as vagas acabaram e não aceita novas inscrições.'}
+                    </span>
+                  </span>
+                </label>
+                <label className="flex min-h-12 cursor-pointer items-start gap-3">
+                  <input
+                    type="checkbox"
+                    checked={listaEsperaValue && promocaoValue}
+                    disabled={!instrumentAtivo || !listaEsperaValue}
+                    onChange={(e) => form.setValue('promocaoAutomatica', e.target.checked)}
+                    className="mt-1 size-4 accent-primary"
+                  />
+                  <span className="flex flex-col">
+                    <span>Confirmar a espera sozinha quando houver vaga</span>
+                    <span className="text-sm text-muted-foreground">
+                      {listaEsperaValue && promocaoValue
+                        ? 'Ao aumentar as vagas, as primeiras da espera passam a confirmadas.'
+                        : 'O Núcleo escolhe quem confirmar, na lista de inscritos.'}
+                    </span>
+                  </span>
+                </label>
+              </fieldset>
 
               {/* Campos mínimos informativos */}
               <div className="flex flex-col gap-2 rounded-lg border border-muted bg-muted/30 p-4">

@@ -1,9 +1,11 @@
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient, type QueryClient } from '@tanstack/react-query';
 import { authorizedRequest } from '@/auth/session';
 import { ApiError } from '@/lib/api';
 import type {
+  CancelRegistrationInput,
   OpenRegistrationInput,
   Registration,
+  RegistrationList,
   UpdateRegistrationInput,
 } from '@/types/inscricoes';
 
@@ -37,6 +39,39 @@ export function useRegistration(activityId?: string, enabled = true) {
   });
 }
 
+/** Prefixo das listas de inscritos da atividade, com qualquer busca. */
+export function registrationListsKey(activityId: string) {
+  return ['atividades', activityId, 'inscritos'] as const;
+}
+
+export function registrationListKey(activityId: string, busca = '') {
+  return [...registrationListsKey(activityId), busca] as const;
+}
+
+/** A lista de atividades mostra a situação da inscrição, os inscritos e a espera. */
+const PROJECT_ACTIVITIES = {
+  queryKey: ['projetos'],
+  predicate: (query: { queryKey: readonly unknown[] }) => query.queryKey[2] === 'atividades',
+};
+
+/** Inscritos da atividade: só o Núcleo Pedagógico (seção 8.5.1, RNF04). */
+export function useRegistrationList(activityId: string | undefined, busca: string, enabled = true) {
+  const query = busca.trim();
+  return useQuery({
+    queryKey: registrationListKey(activityId ?? '', query),
+    queryFn: () =>
+      authorizedRequest<RegistrationList>(
+        `/activities/${encodeURIComponent(activityId!)}/registrations${
+          query ? `?busca=${encodeURIComponent(query)}` : ''
+        }`,
+      ),
+    enabled: Boolean(activityId && enabled),
+    // A lista anterior fica na tela só durante a troca da busca; outra atividade carrega do zero.
+    placeholderData: (previous, previousQuery) =>
+      previousQuery?.queryKey[1] === activityId ? previous : undefined,
+  });
+}
+
 export function useFreshRegistration() {
   return (activityId: string): Promise<Registration> =>
     authorizedRequest<Registration>(`/activities/${encodeURIComponent(activityId)}/registration`);
@@ -56,11 +91,10 @@ export function useOpenRegistration(activityId: string) {
     onSuccess: () =>
       Promise.all([
         queryClient.invalidateQueries({ queryKey: registrationKey(activityId) }),
-        // A lista de atividades mostra a situação da inscrição e os inscritos.
-        queryClient.invalidateQueries({
-          queryKey: ['projetos'],
-          predicate: (query) => query.queryKey[2] === 'atividades',
-        }),
+        // Mais vagas promovem a lista de espera, e a ficha do participante mostra a situação.
+        queryClient.invalidateQueries({ queryKey: registrationListsKey(activityId) }),
+        queryClient.invalidateQueries({ queryKey: ['participantes'] }),
+        queryClient.invalidateQueries(PROJECT_ACTIVITIES),
       ]),
   });
 }
@@ -79,11 +113,60 @@ export function useUpdateRegistration(activityId: string) {
     onSuccess: () =>
       Promise.all([
         queryClient.invalidateQueries({ queryKey: registrationKey(activityId) }),
-        // A lista de atividades mostra a situação da inscrição e os inscritos.
-        queryClient.invalidateQueries({
-          queryKey: ['projetos'],
-          predicate: (query) => query.queryKey[2] === 'atividades',
-        }),
+        // Mais vagas promovem a lista de espera, e a ficha do participante mostra a situação.
+        queryClient.invalidateQueries({ queryKey: registrationListsKey(activityId) }),
+        queryClient.invalidateQueries({ queryKey: ['participantes'] }),
+        queryClient.invalidateQueries(PROJECT_ACTIVITIES),
       ]),
   });
+}
+
+/** Promoção manual: o Núcleo confirma a vaga de quem está na espera (HU-07c). */
+export function useConfirmFromWaitlist(activityId: string) {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: (inscricaoId: string) =>
+      authorizedRequest<RegistrationList>(
+        `/activities/${encodeURIComponent(activityId)}/registrations/${encodeURIComponent(
+          inscricaoId,
+        )}/confirmation`,
+        { method: 'POST' },
+      ),
+    onSuccess: (list) => refreshAfterChange(queryClient, activityId, list),
+  });
+}
+
+/** Cancelamento ou desistência registrado pelo Núcleo; a vaga liberada anda a espera. */
+export function useCancelRegistration(activityId: string) {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: ({ inscricaoId, data }: { inscricaoId: string; data: CancelRegistrationInput }) =>
+      authorizedRequest<RegistrationList>(
+        `/activities/${encodeURIComponent(activityId)}/registrations/${encodeURIComponent(
+          inscricaoId,
+        )}/cancellation`,
+        { method: 'POST', body: data },
+      ),
+    onSuccess: (list) => refreshAfterChange(queryClient, activityId, list),
+  });
+}
+
+/**
+ * Depois de confirmar ou cancelar, a resposta já é a lista completa: ela entra no cache sem busca, e
+ * só as listas com busca, a ficha do participante e as atividades do projeto são relidas.
+ */
+function refreshAfterChange(
+  queryClient: QueryClient,
+  activityId: string,
+  list: RegistrationList,
+): Promise<unknown> {
+  queryClient.setQueryData(registrationListKey(activityId), list);
+  return Promise.all([
+    queryClient.invalidateQueries({
+      queryKey: registrationListsKey(activityId),
+      predicate: (query) => query.queryKey[3] !== '',
+    }),
+    queryClient.invalidateQueries({ queryKey: ['participantes'] }),
+    queryClient.invalidateQueries(PROJECT_ACTIVITIES),
+  ]);
 }

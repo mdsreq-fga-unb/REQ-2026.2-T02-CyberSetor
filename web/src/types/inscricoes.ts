@@ -1,3 +1,5 @@
+import type { CanalPedido } from './participantes';
+
 export const CAMPOS_MINIMOS = ['NOME', 'TELEFONE', 'DATA_NASCIMENTO', 'CONSENTIMENTOS'] as const;
 
 export type CampoMinimo = (typeof CAMPOS_MINIMOS)[number];
@@ -18,6 +20,10 @@ export interface Registration {
   camposMinimos: CampoMinimo[];
   camposAdicionais: CampoInscricao[];
   campoDuplicidade: CampoDuplicidade;
+  /** Com as vagas preenchidas, novas inscrições entram na lista de espera. */
+  listaEspera: boolean;
+  /** Com mais vagas, a espera é confirmada pela ordem de chegada. */
+  promocaoAutomatica: boolean;
   termoCompromisso: string | null;
   /** Apresentação da atividade na página de inscrição. */
   apresentacao: string | null;
@@ -35,6 +41,8 @@ export interface OpenRegistrationInput {
   vagas: number;
   camposAdicionais: CampoInscricao[];
   campoDuplicidade: CampoDuplicidade;
+  listaEspera?: boolean;
+  promocaoAutomatica?: boolean;
   termoCompromisso?: string;
   apresentacao?: string;
   prazoInscricao?: string;
@@ -48,9 +56,46 @@ export interface UpdateRegistrationInput {
   vagas?: number;
   camposAdicionais?: CampoInscricao[];
   campoDuplicidade?: CampoDuplicidade;
+  listaEspera?: boolean;
+  promocaoAutomatica?: boolean;
   termoCompromisso?: string | null;
   apresentacao?: string | null;
   prazoInscricao?: string | null;
   prazoHora?: string | null;
   contatoWhatsapp?: string | null;
+}
+
+export type SituacaoInscricao = 'CONFIRMADA' | 'LISTA_ESPERA' | 'CANCELADA';
+
+/** Pessoa inscrita na atividade, como o Núcleo Pedagógico vê (HU-07c). */
+export interface RegisteredPerson {
+  id: string;
+  participanteId: string;
+  nome: string;
+  idade: number;
+  menor: boolean;
+  telefone: string;
+  email: string | null;
+  situacao: SituacaoInscricao;
+  posicaoEspera: number | null;
+  inscritoEm: string;
+  autorizaComunicados: boolean;
+  autorizaImagem: boolean;
+  responsavelNome: string | null;
+  responsavelTelefone: string | null;
+  /** Cancelamento ou desistência: data do pedido e canal. */
+  cancelamento: { pedidoEm: string; canal: CanalPedido } | null;
+}
+
+export interface CancelRegistrationInput {
+  canal: CanalPedido;
+  pedidoEm: string;
+}
+
+export interface RegistrationList {
+  vagas: number;
+  confirmadas: number;
+  emEspera: number;
+  canceladas: number;
+  inscricoes: RegisteredPerson[];
 }
