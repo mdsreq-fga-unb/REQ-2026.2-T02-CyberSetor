@@ -13,7 +13,9 @@ import { PrismaService } from '../prisma/prisma.service.js';
 import { participantSearch } from './participant-search.js';
 import { ageOn, birthDateProblem, isValidCpf } from '../public-registrations/participant-data.js';
 import type {
+  CheckDuplicateDto,
   CorrectParticipantDto,
+  DuplicateCheckResponse,
   ParticipantResponse,
   ParticipantSummaryResponse,
   RevokeAuthorizationDto,
@@ -175,6 +177,64 @@ export class ParticipantsService {
           : null,
       };
     });
+  }
+
+  async checkDuplicate(dto: CheckDuplicateDto): Promise<DuplicateCheckResponse> {
+    const cpf = dto.cpf ? onlyDigits(dto.cpf) : undefined;
+    const email = dto.email ? dto.email.trim().toLowerCase() : undefined;
+
+    if (!cpf && !email) {
+      return { existe: false, participante: null };
+    }
+
+    if (cpf && email) {
+      const porCpf = await this.prisma.participante.findUnique({ where: { cpf } });
+      const porEmail = await this.prisma.participante.findFirst({ where: { email } });
+      if (porCpf && porEmail && porCpf.id !== porEmail.id) {
+        throw new ConflictException({
+          code: 'AMBIGUOUS_DUPLICATE_KEY',
+          message: 'O CPF e o e-mail informados pertencem a cadastros diferentes.',
+        });
+      }
+    }
+
+    const conditions: Prisma.ParticipanteWhereInput[] = [];
+    if (cpf) conditions.push({ cpf });
+    if (email) conditions.push({ email });
+
+    const row = await this.prisma.participante.findFirst({
+      where: { OR: conditions },
+    });
+
+    if (!row) {
+      return { existe: false, participante: null };
+    }
+
+    const camposDisponiveis: string[] = ['nome', 'telefone', 'dataNascimento'];
+    if (row.email) camposDisponiveis.push('email');
+    if (row.cpf) camposDisponiveis.push('cpf');
+    if (row.bairroRegiao) camposDisponiveis.push('bairroRegiao');
+    if (row.escolaridade) camposDisponiveis.push('escolaridade');
+
+    const maskPhone = (t: string) => (t.length >= 4 ? `+55 ** *****-${t.slice(-4)}` : '***');
+    const maskEmail = (e: string) => {
+      const parts = e.split('@');
+      if (parts.length !== 2 || parts[0].length <= 2) return `***@${parts[1] ?? '***'}`;
+      return `${parts[0][0]}***${parts[0].slice(-1)}@${parts[1]}`;
+    };
+    const maskCpf = (c: string) => (c.length === 11 ? `***.***.${c.slice(6, 9)}-**` : '***');
+
+    return {
+      existe: true,
+      participante: {
+        id: row.id,
+        nome: row.nome,
+        telefoneMascarado: maskPhone(row.telefone),
+        emailMascarado: row.email ? maskEmail(row.email) : null,
+        cpfMascarado: row.cpf ? maskCpf(row.cpf) : null,
+        camposDisponiveis,
+      },
+    };
   }
 
   async get(id: string): Promise<ParticipantResponse> {

@@ -4,20 +4,24 @@ import {
   ArrayUnique,
   IsArray,
   IsBoolean,
+  IsEmail,
   IsEnum,
   IsInt,
   IsNotEmpty,
+  IsOptional,
   IsString,
+  IsUUID,
   Matches,
   Max,
   MaxLength,
   Min,
+  MinLength,
   ValidateIf,
 } from 'class-validator';
 import { Transform } from 'class-transformer';
 import { trimString } from '../common/trim.js';
-import { CampoDuplicidade, CampoInscricao } from '../generated/prisma/enums.js';
-import { toPhoneDigits } from '../public-registrations/participant-data.js';
+import { CampoDuplicidade, CampoInscricao, SituacaoInscricao } from '../generated/prisma/enums.js';
+import { toDigits, toLowerTrim, toPhoneDigits } from '../public-registrations/participant-data.js';
 
 /** Campos que todo formulário pede (seção 8.5.4); não são configuráveis. */
 export const CAMPOS_MINIMOS = ['NOME', 'TELEFONE', 'DATA_NASCIMENTO', 'CONSENTIMENTOS'] as const;
@@ -262,4 +266,129 @@ export class RegistrationResponse {
     description: 'Caminho do formulário público no front',
   })
   linkPublico!: string;
+}
+
+const notReused = (obj: CreateAssistedRegistrationDto): boolean => !obj.reaproveitarParticipanteId;
+const notReusedWithEmail = (obj: CreateAssistedRegistrationDto): boolean =>
+  !obj.reaproveitarParticipanteId && obj.email !== undefined;
+const notReusedWithCpf = (obj: CreateAssistedRegistrationDto): boolean =>
+  !obj.reaproveitarParticipanteId && obj.cpf !== undefined;
+const notReusedWithBairro = (obj: CreateAssistedRegistrationDto): boolean =>
+  !obj.reaproveitarParticipanteId && obj.bairroRegiao !== undefined;
+const notReusedWithEscolaridade = (obj: CreateAssistedRegistrationDto): boolean =>
+  !obj.reaproveitarParticipanteId && obj.escolaridade !== undefined;
+
+export class CreateAssistedRegistrationDto {
+  @ApiPropertyOptional({
+    description:
+      'ID do participante existente, caso o operador opte por reaproveitar o cadastro (CA-08.3, RF22)',
+  })
+  @IsOptional()
+  @IsUUID()
+  reaproveitarParticipanteId?: string;
+
+  @ApiPropertyOptional({ example: 'Ana Souza' })
+  @ValidateIf(notReused)
+  @Transform(trimString)
+  @IsString()
+  @MinLength(2)
+  @MaxLength(150)
+  nome?: string;
+
+  @ApiPropertyOptional({ example: '61999998888', description: 'DDD e número' })
+  @ValidateIf(notReused)
+  @Transform(toPhoneDigits)
+  @IsString()
+  @Matches(PHONE, { message: 'telefone deve ter DDD e número, com 10 ou 11 dígitos' })
+  telefone?: string;
+
+  @ApiPropertyOptional({ example: '2008-05-20', format: 'date' })
+  @ValidateIf(notReused)
+  @Matches(ISO_DATE, { message: 'dataNascimento deve estar no formato AAAA-MM-DD' })
+  dataNascimento?: string;
+
+  @ApiPropertyOptional({ example: 'ana@exemplo.com' })
+  @ValidateIf(notReusedWithEmail)
+  @Transform(toLowerTrim)
+  @IsEmail({}, { message: 'email inválido' })
+  @MaxLength(254)
+  email?: string;
+
+  @ApiPropertyOptional({ example: '529.982.247-25' })
+  @ValidateIf(notReusedWithCpf)
+  @Transform(toDigits)
+  @IsString()
+  cpf?: string;
+
+  @ApiPropertyOptional({ example: 'Asa Sul' })
+  @ValidateIf(notReusedWithBairro)
+  @Transform(trimString)
+  @IsString()
+  @IsNotEmpty()
+  @MaxLength(120)
+  bairroRegiao?: string;
+
+  @ApiPropertyOptional({ example: 'Ensino médio completo' })
+  @ValidateIf(notReusedWithEscolaridade)
+  @Transform(trimString)
+  @IsString()
+  @IsNotEmpty()
+  @MaxLength(120)
+  escolaridade?: string;
+
+  @ApiProperty({ description: 'Versão do aviso de tratamento de dados apresentada' })
+  @IsString()
+  @IsNotEmpty()
+  versaoAviso!: string;
+
+  @ApiProperty({ description: 'Autorização opcional para comunicados' })
+  @IsBoolean()
+  autorizaComunicados!: boolean;
+
+  @ApiProperty({ description: 'Autorização opcional de uso institucional de imagem e voz' })
+  @IsBoolean()
+  autorizaImagem!: boolean;
+
+  @ApiPropertyOptional({ description: 'Obrigatório para menor de 18 anos' })
+  @IsOptional()
+  @Transform(trimString)
+  @IsString()
+  @MinLength(2)
+  @MaxLength(150)
+  responsavelNome?: string;
+
+  @ApiPropertyOptional({ description: 'Obrigatório para menor de 18 anos' })
+  @IsOptional()
+  @Transform(toPhoneDigits)
+  @IsString()
+  @Matches(PHONE, { message: 'responsavelTelefone deve ter DDD e número, com 10 ou 11 dígitos' })
+  responsavelTelefone?: string;
+}
+
+export class AssistedRegistrationParticipantSummary {
+  @ApiProperty()
+  id!: string;
+
+  @ApiProperty()
+  nome!: string;
+}
+
+export class AssistedRegistrationResponse {
+  @ApiProperty()
+  id!: string;
+
+  @ApiProperty({ enum: SituacaoInscricao })
+  situacao!: SituacaoInscricao;
+
+  @ApiPropertyOptional({ nullable: true })
+  posicaoEspera?: number | null;
+
+  @ApiProperty()
+  reaproveitouParticipante!: boolean;
+
+  @ApiProperty({ type: AssistedRegistrationParticipantSummary })
+  participante!: AssistedRegistrationParticipantSummary;
+
+  @ApiProperty()
+  inscritoEm!: string;
 }

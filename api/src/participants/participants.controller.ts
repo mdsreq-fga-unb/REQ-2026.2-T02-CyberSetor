@@ -26,7 +26,9 @@ import { Profiles } from '../auth/decorators.js';
 import type { ValidSession } from '../auth/session.service.js';
 import { Perfil } from '../generated/prisma/enums.js';
 import {
+  CheckDuplicateDto,
   CorrectParticipantDto,
+  DuplicateCheckResponse,
   ListParticipantsQuery,
   ParticipantResponse,
   ParticipantSummaryResponse,
@@ -54,6 +56,16 @@ export class ParticipantsController {
   })
   list(@Query() query: ListParticipantsQuery): Promise<ParticipantSummaryResponse[]> {
     return this.participants.list(query.busca);
+  }
+
+  @Post('check-duplicate')
+  @HttpCode(HttpStatus.OK)
+  @ApiOkResponse({
+    type: DuplicateCheckResponse,
+    description: 'Verifica existência prévia por CPF ou e-mail sem expor dados na URL (CA-08.3, RF22, RNF05)',
+  })
+  checkDuplicate(@Body() body: CheckDuplicateDto): Promise<DuplicateCheckResponse> {
+    return this.participants.checkDuplicate(body);
   }
 
   @Get(':id')

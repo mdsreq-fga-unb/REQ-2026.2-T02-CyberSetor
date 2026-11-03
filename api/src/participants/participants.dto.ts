@@ -36,6 +36,48 @@ export class ListParticipantsQuery {
   busca?: string;
 }
 
+export class CheckDuplicateDto {
+  @ApiPropertyOptional({ description: 'CPF a verificar (pontuação ignorada)' })
+  @IsOptional()
+  @Transform(toDigits)
+  @IsString()
+  cpf?: string;
+
+  @ApiPropertyOptional({ description: 'E-mail a verificar' })
+  @IsOptional()
+  @Transform(toLowerTrim)
+  @IsEmail({}, { message: 'email inválido' })
+  email?: string;
+}
+
+export class DuplicateCheckParticipant {
+  @ApiProperty()
+  id!: string;
+
+  @ApiProperty()
+  nome!: string;
+
+  @ApiProperty({ description: 'Telefone mascarado para confirmação verbal' })
+  telefoneMascarado!: string;
+
+  @ApiPropertyOptional({ nullable: true, description: 'E-mail mascarado para confirmação verbal' })
+  emailMascarado?: string | null;
+
+  @ApiPropertyOptional({ nullable: true, description: 'CPF mascarado para confirmação verbal' })
+  cpfMascarado?: string | null;
+
+  @ApiProperty({ isArray: true, description: 'Campos preenchidos no cadastro do participante' })
+  camposDisponiveis!: string[];
+}
+
+export class DuplicateCheckResponse {
+  @ApiProperty()
+  existe!: boolean;
+
+  @ApiPropertyOptional({ type: DuplicateCheckParticipant, nullable: true })
+  participante?: DuplicateCheckParticipant | null;
+}
+
 export class CorrectParticipantDto {
   @ApiProperty({ description: 'Versão lida; correção sobre versão antiga é recusada com 409' })
   @IsInt()

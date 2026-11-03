@@ -9,12 +9,17 @@ import { randomBytes } from 'node:crypto';
 import type { Actor } from '../accounts/accounts.service.js';
 import { AuditTrailService } from '../audit/audit-trail.service.js';
 import { Prisma } from '../generated/prisma/client.js';
-import { AutorTipo } from '../generated/prisma/enums.js';
+import { AutorTipo, CampoInscricao, SituacaoInscricao } from '../generated/prisma/enums.js';
 import { deadlineOf, nowInBrasilia, withinDeadline } from './deadline.js';
+import { todayInBrasilia } from '../goals/goal-deadline.js';
 import { PrismaService } from '../prisma/prisma.service.js';
-import { promoteWaitlist } from './waitlist.js';
+import { DATA_NOTICE } from '../public-registrations/notice.js';
+import { ageOn, birthDateProblem, isValidCpf } from '../public-registrations/participant-data.js';
+import { lockRegistration, nextSituation, waitlistPosition } from './waitlist.js';
 import {
   CAMPOS_MINIMOS,
+  type AssistedRegistrationResponse,
+  type CreateAssistedRegistrationDto,
   type OpenRegistrationDto,
   type RegistrationResponse,
   type UpdateRegistrationDto,
@@ -335,6 +340,249 @@ export class RegistrationsService {
     return new ConflictException({
       code: 'VERSION_CONFLICT',
       message: 'A inscrição foi alterada por outra pessoa. Recarregue e tente de novo.',
+    });
+  }
+
+  /** Inscrição presencial assistida pelo Núcleo (CA-08.1 a CA-08.5, RF13, RF14, RF15, RF22). */
+  async createAssisted(
+    atividadeId: string,
+    data: CreateAssistedRegistrationDto,
+    actor: Actor,
+  ): Promise<AssistedRegistrationResponse> {
+    const config = await this.prisma.configuracaoInscricao.findUnique({
+      where: { atividadeId },
+      include: {
+        atividade: {
+          select: {
+            projeto: { select: { instrumento: { select: { ativo: true } } } },
+          },
+        },
+      },
+    });
+
+    if (!config) {
+      await this.assertActivityExists(this.prisma, atividadeId);
+      throw new NotFoundException({
+        code: 'REGISTRATION_NOT_OPENED',
+        message: 'A inscrição desta atividade ainda não foi aberta.',
+      });
+    }
+
+    if (!config.aberta || !config.atividade.projeto.instrumento.ativo) {
+      throw new ConflictException({
+        code: 'REGISTRATION_CLOSED',
+        message: 'As inscrições desta atividade estão encerradas.',
+      });
+    }
+
+    // Regra de encerramento por prazo
+    const prazo = deadlineOf(config.prazoInscricao, config.prazoHora);
+    if (!withinDeadline(prazo, nowInBrasilia())) {
+      throw new ConflictException({
+        code: 'REGISTRATION_CLOSED',
+        message: 'O prazo de inscrição desta atividade terminou.',
+      });
+    }
+
+    if (data.versaoAviso !== DATA_NOTICE.versao) {
+      throw new BadRequestException({
+        code: 'NOTICE_OUTDATED',
+        message: 'O aviso de tratamento de dados mudou. Leia o aviso atual e envie de novo.',
+      });
+    }
+
+    const today = todayInBrasilia();
+
+    return this.prisma.$transaction(async (tx) => {
+      const regras = await lockRegistration(tx, atividadeId);
+
+      let participanteId: string;
+      let participanteNome: string;
+      let chave: string;
+
+      if (data.reaproveitarParticipanteId) {
+        const existente = await tx.participante.findUnique({
+          where: { id: data.reaproveitarParticipanteId },
+        });
+        if (!existente) {
+          throw new NotFoundException({
+            code: 'PARTICIPANT_NOT_FOUND',
+            message: 'Participante para reaproveitamento não encontrado.',
+          });
+        }
+
+        const chaveExtraida = config.campoDuplicidade === 'EMAIL' ? existente.email : existente.cpf;
+        if (!chaveExtraida) {
+          throw new BadRequestException({
+            code: 'DUPLICATE_KEY_MISSING',
+            message: 'O cadastro existente não possui o dado identificador desta atividade.',
+          });
+        }
+        chave = chaveExtraida;
+
+        // Validação se o participante reaproveitado supre os campos da atividade
+        const FIELD_OF: Record<CampoInscricao, keyof typeof existente> = {
+          EMAIL: 'email',
+          CPF: 'cpf',
+          BAIRRO_REGIAO: 'bairroRegiao',
+          ESCOLARIDADE: 'escolaridade',
+        };
+        for (const campo of config.camposAdicionais) {
+          const prop = FIELD_OF[campo];
+          if (!existente[prop] && !data[prop as keyof CreateAssistedRegistrationDto]) {
+            throw new BadRequestException({
+              code: 'MISSING_FIELDS',
+              message: `O cadastro reaproveitado não possui o campo ${campo}, obrigatório nesta atividade.`,
+            });
+          }
+        }
+
+        const birthDateStr = existente.dataNascimento.toISOString().slice(0, 10);
+        if (ageOn(birthDateStr, today) < 18) {
+          if (!data.responsavelNome || !data.responsavelTelefone) {
+            throw new BadRequestException({
+              code: 'GUARDIAN_REQUIRED',
+              message: 'Para menores de 18 anos, informe o nome e o telefone do responsável legal.',
+            });
+          }
+        }
+
+        participanteId = existente.id;
+        participanteNome = existente.nome;
+      } else {
+        if (!data.nome || !data.telefone || !data.dataNascimento) {
+          throw new BadRequestException({
+            code: 'MISSING_FIELDS',
+            message: 'Nome, telefone e data de nascimento são obrigatórios.',
+          });
+        }
+
+        const birthProblem = birthDateProblem(data.dataNascimento, today);
+        if (birthProblem) {
+          throw new BadRequestException({
+            code: 'INVALID_BIRTH_DATE',
+            message: birthProblem,
+          });
+        }
+
+        if (ageOn(data.dataNascimento, today) < 18) {
+          if (!data.responsavelNome || !data.responsavelTelefone) {
+            throw new BadRequestException({
+              code: 'GUARDIAN_REQUIRED',
+              message: 'Para menores de 18 anos, informe o nome e o telefone do responsável legal.',
+            });
+          }
+        }
+
+        if (config.camposAdicionais.includes(CampoInscricao.EMAIL) && !data.email) {
+          throw new BadRequestException({
+            code: 'MISSING_FIELDS',
+            message: 'O campo e-mail é obrigatório nesta atividade.',
+          });
+        }
+
+        if (config.camposAdicionais.includes(CampoInscricao.CPF)) {
+          if (!data.cpf) {
+            throw new BadRequestException({
+              code: 'MISSING_FIELDS',
+              message: 'O campo CPF é obrigatório nesta atividade.',
+            });
+          }
+          if (!isValidCpf(data.cpf)) {
+            throw new BadRequestException({
+              code: 'INVALID_CPF',
+              message: 'CPF inválido. Confira os números.',
+            });
+          }
+        }
+
+        chave = config.campoDuplicidade === 'EMAIL' ? data.email! : data.cpf!;
+
+        const novo = await tx.participante.create({
+          data: {
+            nome: data.nome,
+            telefone: data.telefone,
+            dataNascimento: new Date(`${data.dataNascimento}T00:00:00.000Z`),
+            email: data.email ?? null,
+            cpf: data.cpf ?? null,
+            bairroRegiao: data.bairroRegiao ?? null,
+            escolaridade: data.escolaridade ?? null,
+          },
+        });
+        participanteId = novo.id;
+        participanteNome = novo.nome;
+      }
+
+      const repeated = await tx.inscricao.count({
+        where: { atividadeId, chaveDuplicidade: chave },
+      });
+      if (repeated > 0) {
+        throw new ConflictException({
+          code: 'ALREADY_REGISTERED',
+          message: 'Já existe uma inscrição com estes dados nesta atividade.',
+        });
+      }
+
+      const situacao = await nextSituation(tx, atividadeId, regras.vagas);
+      if (situacao === SituacaoInscricao.LISTA_ESPERA && !regras.listaEspera) {
+        throw new ConflictException({
+          code: 'REGISTRATION_CLOSED',
+          message: 'As vagas desta atividade foram preenchidas.',
+        });
+      }
+
+      const inscricao = await tx.inscricao.create({
+        data: {
+          atividadeId,
+          participanteId,
+          criadoPorId: actor.usuarioId,
+          situacao,
+          chaveDuplicidade: chave,
+          versaoAviso: data.versaoAviso,
+          avisoApresentadoEm: new Date(),
+          autorizaComunicados: data.autorizaComunicados,
+          autorizaImagem: data.autorizaImagem,
+          responsavelNome: data.responsavelNome ?? null,
+          responsavelTelefone: data.responsavelTelefone ?? null,
+          termoAceito: config.termoCompromisso ? config.termoCompromisso : null,
+          termoAceitoEm: config.termoCompromisso ? new Date() : null,
+        },
+      });
+
+      const posicaoEspera =
+        situacao === SituacaoInscricao.LISTA_ESPERA
+          ? await waitlistPosition(tx, atividadeId, inscricao.ordemChegada)
+          : null;
+
+      await this.audit.record(
+        {
+          autorTipo: AutorTipo.USUARIO,
+          usuarioId: actor.usuarioId,
+          acao: 'ASSISTED_REGISTRATION_CREATED',
+          entidade: 'inscricao',
+          entidadeId: inscricao.id,
+          depois: {
+            atividadeId,
+            situacao: inscricao.situacao,
+            ...(posicaoEspera !== null ? { posicaoEspera } : {}),
+            reaproveitou: Boolean(data.reaproveitarParticipanteId),
+          },
+          correlationId: actor.correlationId,
+        },
+        tx,
+      );
+
+      return {
+        id: inscricao.id,
+        situacao: inscricao.situacao,
+        posicaoEspera,
+        reaproveitouParticipante: Boolean(data.reaproveitarParticipanteId),
+        participante: {
+          id: participanteId,
+          nome: participanteNome,
+        },
+        inscritoEm: inscricao.criadoEm.toISOString(),
+      };
     });
   }
 }
