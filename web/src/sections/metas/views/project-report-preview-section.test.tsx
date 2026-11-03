@@ -168,6 +168,7 @@ function buildEmittedReport(justificativas: FinalizeReportInput['justificativas'
     motivoRetificacao: null,
     emitidoPor: { id: 'usr-gestao', nome: 'Diretora Helena' },
     criadoEm: '2026-07-01T14:30:00.000Z',
+    pdf: null,
     metas: MOCK_PREVIEW.metas
       .filter((m) => !m.rascunho && m.resultado && m.status)
       .map((m) => ({

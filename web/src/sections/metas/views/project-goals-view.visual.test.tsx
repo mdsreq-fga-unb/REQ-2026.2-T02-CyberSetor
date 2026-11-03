@@ -148,6 +148,7 @@ describe.each([
           return json({ accessToken: 't', perfil: 'PRESIDENCIA_GESTAO', deveTrocarSenha: false });
         }
         if (url.endsWith('/activities')) return json([]);
+        if (url.endsWith('/reports')) return json([]);
         if (url.endsWith('/auth/session')) {
           return json({ usuarioId: 'gestao', perfil: 'PRESIDENCIA_GESTAO', setor: null });
         }

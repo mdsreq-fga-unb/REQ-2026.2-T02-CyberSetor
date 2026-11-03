@@ -12,6 +12,8 @@ import {
 import { Fragment, useMemo } from 'react';
 import Link from 'next/link';
 import { useSession } from '@/auth/hooks/use-session';
+import { REPORT_READERS } from '@/auth/profiles';
+import type { Perfil } from '@/auth/types';
 import { ListPagination } from '@/components/list/list-pagination';
 import { ListCard, ListEmpty, ListError, TableSkeleton } from '@/components/list/list-states';
 import { RowActionsMenu, type RowAction } from '@/components/list/row-actions-menu';
@@ -41,6 +43,7 @@ import { useRequirements } from '@/queries/requisitos';
 import { useCurrentUser } from '@/queries/sessao';
 import { paths } from '@/routes/paths';
 import { ProjectActivitiesSection } from '@/sections/atividades/views/project-activities-section';
+import { ProjectReportsSection } from '@/sections/relatorios/views/project-reports-section';
 import { ProjectReportPreviewSection } from './project-report-preview-section';
 import type { Goal } from '@/types/metas';
 import type { Project } from '@/types/projetos';
@@ -514,6 +517,10 @@ export function ProjectGoalsView({
           projectId={projectId}
           instrumentActive={instrument.data?.ativo === true}
         />
+      )}
+
+      {project.data && session && REPORT_READERS.includes(session.perfil as Perfil) && (
+        <ProjectReportsSection projectId={projectId} />
       )}
 
       {requirements.data && project.data && (

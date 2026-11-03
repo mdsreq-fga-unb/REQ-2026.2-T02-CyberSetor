@@ -87,6 +87,18 @@ export interface ReportGoalItem {
   justificativa: string | null;
 }
 
+/** PDF guardado da versão; o SHA-256 confere o arquivo recebido. */
+export interface ReportPdf {
+  sha256: string;
+  geradoEm: string;
+}
+
+export interface ReportPdfLink extends ReportPdf {
+  url: string;
+  expiraEm: string;
+  nomeArquivo: string;
+}
+
 export interface Report {
   id: string;
   projetoId: string;
@@ -98,4 +110,5 @@ export interface Report {
   emitidoPor: { id: string; nome: string };
   criadoEm: string;
   metas: ReportGoalItem[];
+  pdf: ReportPdf | null;
 }

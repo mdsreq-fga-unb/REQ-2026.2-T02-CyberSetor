@@ -150,6 +150,7 @@ function page(
     }),
     [`GET /projects/${PROJECT.id}`]: () => ({ status: 200, body: PROJECT }),
     [`GET ${GOALS}`]: () => ({ status: 200, body: goals }),
+    [`GET /projects/${PROJECT.id}/reports`]: () => ({ status: 200, body: [] }),
     ...extra,
   };
 }
@@ -217,6 +218,20 @@ describe('metas do projeto', () => {
     );
     expect(screen.queryByRole('button', { name: 'Nova meta' })).not.toBeInTheDocument();
     expect(screen.queryByRole('button', { name: /Ações da meta/ })).not.toBeInTheDocument();
+  });
+
+  it('relatorios emitidos aparecem so para quem le relatorios, sem aviso de erro para os demais', async () => {
+    await signedInAs('ADMINISTRATIVO_FINANCEIRO', page([COMPLETA]));
+    renderView();
+    expect(await screen.findByRole('heading', { name: 'Relatórios emitidos' })).toBeInTheDocument();
+    cleanup();
+    clearLocalSession();
+
+    const calls = await signedInAs('CONCEDENTE_AUDITORIA', page([COMPLETA]));
+    renderView();
+    expect((await screen.findAllByText(new RegExp(COMPLETA.objetivo))).length).toBeGreaterThan(0);
+    expect(screen.queryByRole('heading', { name: 'Relatórios emitidos' })).not.toBeInTheDocument();
+    expect(calls).not.toContain(`GET /projects/${PROJECT.id}/reports`);
   });
 
   it('cadastra a meta com os requisitos marcados e os parametros de afericao', async () => {
