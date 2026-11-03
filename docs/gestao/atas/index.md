@@ -34,6 +34,7 @@ Registro das reuniões da equipe e das interações com o cliente. Desde 27/08/2
 | [21/09/2026](2026-09-21-reuniao-presencial-instituto.md) | Presencial, na sede do Instituto | Imersão operacional e análise prática de projetos reais com Franci, Rafael, Maria Eduarda e Maria Clara: apresentação do fluxo de trabalho por Franci, centralidade e fragilidade da Matriz de Aquisição, gargalos no Google Drive e visão de dashboard da Presidência |
 | [28/09/2026](2026-09-28-validacao-mvp-instituto.md) | Videoconferência | Validação do MVP e priorização por MoSCoW com Maria Clara Novaes (diretora pedagógica) e Maria Eduarda (Duda — Núcleo Pedagógico): parcerias e metas como base do MVP, inscrições públicas e assistidas no MVP, evidências no segundo incremento, aviso de vencimento com 30 dias |
 | [08/10/2026](2026-10-08-validacao-mvp-instituto.md) | Videoconferência | Validação do MVP com Maria Eduarda (Duda — Núcleo Pedagógico): parcerias e metas, aditivos e auditoria, inscrições, direitos do titular e prestação de contas; evidências fotográficas no segundo incremento; sprints de duas semanas e alinhamentos técnicos às quintas-feiras |
+| 29/10/2026 | Videoconferência | Checkpoint com demonstração na homologação para Maria Clara Novaes e Maria Eduarda (Duda — Núcleo Pedagógico): cadastros de participantes mantidos, cadastro já existente identificado na nova inscrição, avisos por e-mail, campos personalizados no formulário e acesso administrativo estendido; ata em conferência pelo Instituto |
 
 ## Política de registro, acesso e publicação
 
