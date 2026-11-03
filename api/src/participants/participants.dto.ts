@@ -293,6 +293,57 @@ export class ParticipantResponse {
   @ApiProperty({ nullable: true })
   escolaridade!: string | null;
 
+  @ApiProperty({
+    nullable: true,
+    description: 'Quando os dados pessoais foram anonimizados (HU-15b); nulo enquanto não foram',
+  })
+  anonimizadoEm!: Date | null;
+
   @ApiProperty({ type: [ParticipantRegistrationResponse] })
   inscricoes!: ParticipantRegistrationResponse[];
+}
+
+export const MOTIVOS_ELIMINACAO = ['PEDIDO_TITULAR', 'FIM_FINALIDADE'] as const;
+export type MotivoEliminacao = (typeof MOTIVOS_ELIMINACAO)[number];
+
+/** Exclusão ou anonimização a pedido do titular ou ao fim da finalidade (HU-15b, RF27). */
+export class EraseParticipantDto {
+  @ApiProperty({ description: 'Versão lida; pedido sobre versão antiga é recusado com 409' })
+  @IsInt()
+  @Min(1)
+  versao!: number;
+
+  @ApiProperty({ enum: MOTIVOS_ELIMINACAO })
+  @IsEnum(MOTIVOS_ELIMINACAO, { message: 'motivo deve ser PEDIDO_TITULAR ou FIM_FINALIDADE' })
+  motivo!: MotivoEliminacao;
+
+  @ApiProperty({ enum: CanalPedido, description: 'Por onde chegou o pedido ou o aviso de fim' })
+  @IsEnum(CanalPedido)
+  canal!: CanalPedido;
+
+  @ApiProperty({ format: 'date', description: 'Data do pedido; não pode ser futura (RNF06)' })
+  @Matches(ISO_DATE, { message: 'pedidoEm deve estar no formato AAAA-MM-DD' })
+  pedidoEm!: string;
+}
+
+/** O que o pedido faz com cada classe de dado, antes de confirmar (CA-15b.4). */
+export class ErasurePlanResponse {
+  @ApiProperty({
+    enum: ['EXCLUIR', 'ANONIMIZAR'],
+    description:
+      'EXCLUIR quando não há inscrição em atividade já realizada; senão, ANONIMIZAR (RN-07)',
+  })
+  acao!: 'EXCLUIR' | 'ANONIMIZAR';
+
+  @ApiProperty({ type: [String], description: 'Dados apagados' })
+  excluidos!: string[];
+
+  @ApiProperty({ type: [String], description: 'Dados reduzidos ao que compõe os totais' })
+  anonimizados!: string[];
+
+  @ApiProperty({ type: [String], description: 'Registros preservados, com o fundamento' })
+  preservados!: string[];
+
+  @ApiProperty({ description: 'Inscrições em atividade futura, que são canceladas' })
+  inscricoesCanceladas!: number;
 }
