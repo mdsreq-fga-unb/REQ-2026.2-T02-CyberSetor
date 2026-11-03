@@ -101,6 +101,7 @@ function toResponse(row: ParticipantRow, today: string): ParticipantResponse {
     cpf: row.cpf,
     bairroRegiao: row.bairroRegiao,
     escolaridade: row.escolaridade,
+    anonimizadoEm: row.anonimizadoEm,
     inscricoes: row.inscricoes.map((inscricao) => ({
       id: inscricao.id,
       situacao: inscricao.situacao,
@@ -150,6 +151,13 @@ function maskCpf(cpf: string): string {
   return `***.***.${cpf.slice(6, 9)}-**`;
 }
 
+function anonymized(): ConflictException {
+  return new ConflictException({
+    code: 'ALREADY_ANONYMIZED',
+    message: 'Os dados desta pessoa foram anonimizados e não são mais corrigidos.',
+  });
+}
+
 /**
  * Participantes inscritos pelo formulário público, para o Núcleo Pedagógico: busca, ficha com
  * as inscrições e correção a pedido do titular (HU-15a, RF26). A trilha guarda quem corrigiu,
@@ -163,7 +171,11 @@ export class ParticipantsService {
   ) {}
 
   async list(busca?: string): Promise<ParticipantSummaryResponse[]> {
-    const where = participantSearch(busca) ?? {};
+    // Quem foi anonimizado sai da busca: a ficha não tem mais dado de contato (HU-15b).
+    const where: Prisma.ParticipanteWhereInput = {
+      anonimizadoEm: null,
+      ...participantSearch(busca),
+    };
     const today = todayInBrasilia();
     const rows = await this.prisma.participante.findMany({
       where,
@@ -257,6 +269,7 @@ export class ParticipantsService {
           include: WITH_REGISTRATIONS,
         });
         if (!current) throw new NotFoundException('Participante não encontrado.');
+        if (current.anonimizadoEm) throw anonymized();
         if (current.versao !== dto.versao) throw this.versionConflict();
 
         const before = valuesOf(current);
@@ -349,6 +362,11 @@ export class ParticipantsService {
       });
       if (!inscricao)
         throw new NotFoundException('Inscrição não encontrada para este participante.');
+      const owner = await tx.participante.findUniqueOrThrow({
+        where: { id },
+        select: { anonimizadoEm: true },
+      });
+      if (owner.anonimizadoEm) throw anonymized();
       const given = comunicados ? inscricao.autorizaComunicados : inscricao.autorizaImagem;
       if (!given) {
         throw new ConflictException({

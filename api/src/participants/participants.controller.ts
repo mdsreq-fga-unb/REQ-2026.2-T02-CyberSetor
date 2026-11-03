@@ -28,12 +28,15 @@ import { Perfil } from '../generated/prisma/enums.js';
 import {
   CheckDuplicateDto,
   CorrectParticipantDto,
+  EraseParticipantDto,
+  ErasurePlanResponse,
   DuplicateCheckResponse,
   ListParticipantsQuery,
   ParticipantResponse,
   ParticipantSummaryResponse,
   RevokeAuthorizationDto,
 } from './participants.dto.js';
+import { ParticipantErasureService } from './participant-erasure.service.js';
 import { ParticipantsService } from './participants.service.js';
 
 function actorOf(user: ValidSession, res: Response): Actor {
@@ -46,7 +49,10 @@ function actorOf(user: ValidSession, res: Response): Actor {
 @Controller('participants')
 @Profiles(Perfil.NUCLEO_PEDAGOGICO)
 export class ParticipantsController {
-  constructor(private readonly participants: ParticipantsService) {}
+  constructor(
+    private readonly participants: ParticipantsService,
+    private readonly erasure: ParticipantErasureService,
+  ) {}
 
   @Get()
   @ApiOkResponse({
@@ -89,6 +95,29 @@ export class ParticipantsController {
     @Res({ passthrough: true }) res: Response,
   ): Promise<ParticipantResponse> {
     return this.participants.correct(id, body, actorOf(user, res));
+  }
+
+  /** O que a exclusão ou a anonimização faria com cada classe de dado (HU-15b, CA-15b.4). */
+  @Get(':id/erasure')
+  @ApiOkResponse({ type: ErasurePlanResponse })
+  @ApiConflictResponse({ description: 'ALREADY_ANONYMIZED' })
+  erasurePlan(@Param('id', ParseUUIDPipe) id: string): Promise<ErasurePlanResponse> {
+    return this.erasure.plan(id);
+  }
+
+  /** Exclusão ou anonimização a pedido do titular ou ao fim da finalidade (HU-15b, RF27, RN-07). */
+  @Post(':id/erasure')
+  @HttpCode(HttpStatus.OK)
+  @ApiOkResponse({ type: ErasurePlanResponse, description: 'O que foi feito com cada classe' })
+  @ApiBadRequestResponse({ description: 'Campo inválido ou INVALID_REQUEST_DATE' })
+  @ApiConflictResponse({ description: 'VERSION_CONFLICT, ALREADY_ANONYMIZED' })
+  erase(
+    @Param('id', ParseUUIDPipe) id: string,
+    @Body() body: EraseParticipantDto,
+    @CurrentUser() user: ValidSession,
+    @Res({ passthrough: true }) res: Response,
+  ): Promise<ErasurePlanResponse> {
+    return this.erasure.erase(id, body, actorOf(user, res));
   }
 
   /** Revogação de autorização pedida pelo titular, com data e canal (CA-07a.6). */
