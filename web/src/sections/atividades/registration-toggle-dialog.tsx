@@ -17,7 +17,7 @@ import {
 } from '@/components/ui/alert-dialog';
 import { FieldGroup } from '@/components/ui/field';
 import { ApiError } from '@/lib/api';
-import { deadlinePassed, formatDeadline, todayInBrasilia } from '@/lib/br';
+import { deadlinePassed, formatDate, formatDeadline, todayInBrasilia } from '@/lib/br';
 import { dateSchema, HH_MM } from '@/lib/schemas';
 import { useFreshRegistration, useUpdateRegistration } from '@/queries/inscricoes';
 import type { Activity } from '@/types/atividades';
@@ -93,14 +93,35 @@ export function RegistrationToggleDialog({
     onClose();
   }
 
+  /** Hora já passada hoje ou prazo depois da atividade são recusados antes de chamar a API. */
+  function deadlineProblem({ prazoInscricao, prazoHora }: DeadlineValues): boolean {
+    if (prazoHora && deadlinePassed(prazoInscricao, prazoHora)) {
+      form.setError('prazoHora', { message: 'Esse horário de hoje já passou.' });
+      return true;
+    }
+    if (activity && prazoInscricao > activity.data) {
+      form.setError('prazoInscricao', {
+        message: `O prazo vai até a data da atividade, ${formatDate(activity.data)}.`,
+      });
+      return true;
+    }
+    return false;
+  }
+
   async function save(deadline?: DeadlineValues) {
     if (!activity) return;
+    if (deadline && deadlineProblem(deadline)) return;
     setBusy(true);
     setFailure(null);
     try {
       // A lista não traz a versão da configuração; a leitura imediata evita salvar sobre outra.
       const { versao, prazoInscricao, prazoHora } = await freshRegistration(activity.id);
-      if (action === 'reopen' && !deadline && deadlinePassed(prazoInscricao, prazoHora)) {
+      if (
+        action === 'reopen' &&
+        !deadline &&
+        prazoInscricao &&
+        deadlinePassed(prazoInscricao, prazoHora)
+      ) {
         setExpiredAt(formatDeadline(prazoInscricao, prazoHora));
         return;
       }

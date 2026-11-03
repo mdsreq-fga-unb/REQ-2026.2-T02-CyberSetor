@@ -44,4 +44,16 @@ describe('regras dos campos', () => {
     expect(passada.error?.issues[0].message).toBe('Não pode ser no passado.');
     expect(schema.safeParse('').error?.issues[0].message).toBe('Informe a data.');
   });
+
+  it('notPast e notFuture juntos aceitam so hoje', () => {
+    const schema = dateSchema('Informe a data.', {
+      notPast: 'Não pode ser no passado.',
+      notFuture: 'Não pode ser no futuro.',
+    });
+    expect(schema.safeParse(todayInBrasilia()).success).toBe(true);
+    expect(schema.safeParse('2020-01-01').error?.issues[0].message).toBe(
+      'Não pode ser no passado.',
+    );
+    expect(schema.safeParse('2099-12-31').error?.issues[0].message).toBe('Não pode ser no futuro.');
+  });
 });

@@ -2,6 +2,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { cleanup, fireEvent, render, screen, waitFor, within } from '@testing-library/react';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import { clearLocalSession, signIn } from '@/auth/session';
+import { todayInBrasilia } from '@/lib/br';
 import type { Activity } from '@/types/atividades';
 import type { RegisteredPerson, SituacaoInscricao } from '@/types/inscricoes';
 import type { Instrument } from '@/types/instrumentos';
@@ -326,6 +327,19 @@ describe('ProjectActivitiesSection', () => {
     fireEvent.click(screen.getByRole('button', { name: 'Reabrir inscrições' }));
     expect(await screen.findByText('Informe a data do prazo novo.')).toBeInTheDocument();
 
+    // Depois da atividade e hora de hoje que já passou são recusados sem chamar a API.
+    fireEvent.change(screen.getByLabelText('Inscrições até'), { target: { value: dia(31) } });
+    fireEvent.click(screen.getByRole('button', { name: 'Reabrir inscrições' }));
+    expect(await screen.findByText(/O prazo vai até a data da atividade/)).toBeInTheDocument();
+    fireEvent.change(screen.getByLabelText('Inscrições até'), {
+      target: { value: todayInBrasilia() },
+    });
+    fireEvent.change(screen.getByLabelText('Hora do prazo'), { target: { value: '00:00' } });
+    fireEvent.click(screen.getByRole('button', { name: 'Reabrir inscrições' }));
+    expect(await screen.findByText('Esse horário de hoje já passou.')).toBeInTheDocument();
+    expect(patch()).toBeUndefined();
+
+    fireEvent.change(screen.getByLabelText('Hora do prazo'), { target: { value: '' } });
     fireEvent.change(screen.getByLabelText('Inscrições até'), { target: { value: dia(5) } });
     fireEvent.click(screen.getByRole('button', { name: 'Reabrir inscrições' }));
 

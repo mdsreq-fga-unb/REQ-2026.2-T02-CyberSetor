@@ -29,10 +29,11 @@ export function dateSchema(
   message = 'Informe a data completa.',
   { notFuture, notPast }: { notFuture?: string; notPast?: string } = {},
 ) {
-  const date = z.string().regex(ISO_DATE, message);
-  if (notFuture) return date.refine((value) => value <= todayInBrasilia(), notFuture);
-  if (notPast) return date.refine((value) => value >= todayInBrasilia(), notPast);
-  return date;
+  return z
+    .string()
+    .regex(ISO_DATE, message)
+    .refine((value) => !notFuture || value <= todayInBrasilia(), notFuture)
+    .refine((value) => !notPast || value >= todayInBrasilia(), notPast);
 }
 
 /** Hora HH:MM, como o seletor nativo guarda. */

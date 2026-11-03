@@ -553,7 +553,7 @@ export function PublicRegistrationView({ codigo }: { codigo: string }) {
       <Message
         title="Inscrições encerradas"
         text={
-          deadlinePassed(prazoInscricao, prazoHora)
+          prazoInscricao && deadlinePassed(prazoInscricao, prazoHora)
             ? `O prazo de inscrição terminou em ${formatDeadline(prazoInscricao, prazoHora)}.`
             : 'Esta atividade não está recebendo inscrições no momento. Fale com a equipe do Instituto.'
         }

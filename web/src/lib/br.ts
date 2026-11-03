@@ -145,7 +145,7 @@ export function deadlinePassed(
   prazo: string | null,
   hora: string | null,
   now = new Date(),
-): prazo is string {
+): boolean {
   if (!prazo) return false;
   return nowInBrasilia(now) > `${prazo} ${hora ?? '23:59'}`;
 }
