@@ -11,6 +11,7 @@
 | 19/10/2026 | 2.2 | HU-03: modalidade escolhida entre as cadastradas pelo Instituto, como no RF09 e na validação de 28/09; requisitos não funcionais do cadastro da atividade (RNF02, RNF04, RNF15, RNF16) | Maria Eduarda Marques |
 | 20/10/2026 | 2.3 | Histórias derivadas dos requisitos funcionais por regras explícitas: quinze histórias passam a vinte e cinco, cada requisito com uma única história; critérios de aceitação ampliados para cobrir o texto dos requisitos; administração de contas (RF40), cadastro de modalidades (RF41) e configuração do formulário de inscrição (RF42); personas ligadas aos perfis; correspondência entre as histórias validadas e as derivadas; avaliação técnica de RF40 a RF42; requisitos não funcionais de todo o produto na Definition of Done | Equipe CyberSetor |
 | 26/10/2026 | 2.4 | Resultado alcançado da meta no relatório (CA-05a.1, CA-05a.6; RF43 no MVP); parâmetro planejado na condição de rascunho da meta quantitativa (CA-01b.3); período da meta dentro da execução do projeto (CA-01b.4); justificativa para reabrir meta concluída (CA-02a.3); dados da atividade (CA-03a.3); comparativo das metas repactuadas (RF44) e orientação de enquadramento (RF45) como requisitos próprios; controle de acesso por perfil (RNF04) e usabilidade das telas (RNF15) entre os requisitos de todo o produto, fora das linhas das histórias; estado vazio e recusas próprias nos critérios de cada história com tela; origem e conferência do resultado alcançado (10.2.6); gargalos atendidos pelo MVP e pelos incrementos (10.2.6); requisitos não funcionais das histórias conforme a matriz 8.4.2; portabilidade dos dados e eficiência do registro de presença entre os evolutivos (RNF19, RNF20); alcance da validação na 10.2.8: MVP aprovado pelo núcleo pedagógico; relatório e planilha aguardam a área administrativo-financeira; hipótese do primeiro recorte e ordem de contenção (10.2.6); valor herdado das derivadas com resultado diferente marcado como inicial (10.2.2); requisitos associados exigíveis na conclusão da história (10.2.7); edição de meta fora da nova vigência (CA-14.5); minimização de dados no relatório e na correção a pedido do titular (RNF05); registro de 28/09 sem a marca de minuto da gravação (10.2.8) | Vinicius Vieira |
+| 30/10/2026 | 2.5 | HU-07d (apresentação da inscrição, RF46) no backlog geral, com valor herdado da HU-07 e esforço técnico propostos 🔧 até a validação com o Instituto em 05/11/2026 | Vinicius Vieira |
 
 ---
 
@@ -46,6 +47,7 @@ Uma história dividida mantém o número e recebe uma letra (HU-01a, HU-01b). Ca
 | Pessoas | **HU-07a** Inscrever-se em atividade pelo formulário público | [RF11](8-requisitos.md#rf11), [RF23](8-requisitos.md#rf23), [RF24](8-requisitos.md#rf24), [RF25](8-requisitos.md#rf25) | HU-03a |
 | Pessoas | **HU-07b** Abrir a inscrição: configurar o formulário e gerar link e QR Code | [RF12](8-requisitos.md#rf12), [RF42](8-requisitos.md#rf42) | HU-03a |
 | Pessoas | **HU-07c** Saber se conseguiu a vaga ou a posição na lista de espera | [RF14](8-requisitos.md#rf14), [RF15](8-requisitos.md#rf15) | HU-07a |
+| Pessoas | **HU-07d** Apresentar a inscrição com texto, prazo e contato 🔧 | [RF46](8-requisitos.md#rf46) | HU-07b |
 | Pessoas | **HU-08** Inscrever presencialmente pessoa sem celular | [RF13](8-requisitos.md#rf13), [RF22](8-requisitos.md#rf22) | HU-07a, HU-07b, HU-07c |
 | Pessoas | **HU-06** Consultar histórico e carga horária de pessoa | [RF20](8-requisitos.md#rf20), [RF21](8-requisitos.md#rf21) | HU-07a, HU-09a |
 | Pessoas | **HU-15a** Corrigir dados a pedido do titular | [RF26](8-requisitos.md#rf26) | HU-07a |
@@ -299,6 +301,24 @@ Personas das histórias e perfis da [seção 8.5.1](8-requisitos.md#851-perfis-d
 
     **Requisitos não funcionais e regras de negócio:** —
 
+<a id="hu-07d"></a>
+??? note "HU-07d · Apresentar a inscrição com texto, prazo e contato 🔧"
+    Como coordenador pedagógico, quero escrever a apresentação da atividade e informar o prazo e o contato do Instituto na página de inscrição, para que quem recebe o link entenda a atividade e saiba a quem perguntar.
+
+    **Critérios de aceitação**
+
+    - CA-07d.1 Ao abrir ou editar a inscrição, o coordenador escreve a apresentação da atividade (até 2.000 caracteres 🔧), informa o prazo de inscrição (a data e, se quiser, a hora) e o WhatsApp do Instituto para dúvidas; todos são opcionais.
+    - CA-07d.2 A página de inscrição mostra, acima do formulário, o título, a data e o local da atividade (e o horário, quando a atividade o tiver), seguidos da apresentação, do prazo e do WhatsApp que houver; o WhatsApp abre a conversa com o Instituto.
+    - CA-07d.3 Ao fim do prazo, no horário de Brasília (sem hora informada, às 23h59 da data), o link mostra que as inscrições terminaram, com a data do prazo e o WhatsApp, e recusa o envio de quem estava com a página aberta.
+    - CA-07d.4 Prazo no passado, prazo depois da data da atividade e hora sem data são recusados no campo, com o motivo.
+    - CA-07d.5 Sem apresentação, prazo nem WhatsApp, a página de inscrição continua como antes.
+    - CA-07d.6 A alteração da apresentação, do prazo ou do WhatsApp fica na trilha de auditoria, só com o que mudou.
+    - CA-07d.7 Reabrir uma inscrição com o prazo vencido pede um prazo novo; sem ele, a reabertura é recusada com o motivo.
+
+    **Requisitos não funcionais e regras de negócio:** RNF02, RNF12, RNF15
+
+    Comportamento padrão a confirmar com o Instituto em 05/11/2026 🔧: o contato é o WhatsApp do Instituto, reabrir com o prazo vencido pede prazo novo e o prazo vai até a data da atividade.
+
 <a id="hu-08"></a>
 ??? note "HU-08 · Inscrever presencialmente pessoa sem celular"
     Como coordenador ou educador, quero inscrever presencialmente uma pessoa que não tem celular ou conexão, para que ela participe nas mesmas condições de quem se inscreve pelo link.
@@ -453,6 +473,7 @@ O Instituto deu o valor a quatorze das quinze histórias apresentadas na valida�
 | HU-12 | HU-12 | 2 | Urgência | Mesmo motivo da HU-09: sincronização sem conexão fica para depois. |
 | HU-06 | HU-06 | 2 | Impacto para os usuários | "Sonho do pedagógico", mas não é prioridade no contexto geral do Instituto. |
 | HU-07 | HU-07a, HU-07b, HU-07c | 4 | Abrangência de uso | "Seria excelente": facilitaria o controle de inscritos e de metas para todas as equipes. |
+| HU-07 | HU-07d | 4 🔧 | Abrangência de uso | Herdado da HU-07: no checkpoint de 29/10/2026, o Instituto disse que as perguntas são fixas e "a única variação… é o descritivo"; confirmar em 05/11/2026. |
 | HU-08 | HU-08 | 4 | Abrangência de uso | Mesmo valor das inscrições por link ("seria excelente"); para a equipe, garante acesso a quem não tem celular. |
 | HU-15 | HU-15a, HU-15b | 4 🔧 | Obrigação legal | Obrigação legal (LGPD, art. 18); não foi votada em 28/09 e entrou no recorte confirmado em 08/10/2026. |
 | — | HU-16 | 4 🔧 | Dependência de outra função | Sem valor atribuído pelo Instituto 🔧; as contas e os perfis são condição do acesso por perfil, que vale para todo o produto (RNF04). |
@@ -506,6 +527,7 @@ O Instituto deu o valor a quatorze das quinze histórias apresentadas na valida�
 | [RF43](8-requisitos.md#rf43) | Registrar o resultado alcançado da meta | 1 | 1 | 1 | 1,0 | **1** |
 | [RF44](8-requisitos.md#rf44) | Comparar metas repactuadas | 2 | 1 | 1 | 1,3 | **1** |
 | [RF45](8-requisitos.md#rf45) | Orientar o enquadramento de fotos | 1 | 1 | 1 | 1,0 | **1** |
+| [RF46](8-requisitos.md#rf46) | Apresentar a inscrição | 2 | 1 | 1 | 1,3 | **1** 🔧 |
 
 ??? note "Fundamentação técnica por requisito"
     - **RF01:** CRUD administrativo padrão em Next.js e PostgreSQL (stack consolidada).
@@ -553,6 +575,7 @@ O Instituto deu o valor a quatorze das quinze histórias apresentadas na valida�
     - **RF43:** Registro na própria meta, com data de referência; o percentual sai do parâmetro planejado numérico, sem fórmula por meta.
     - **RF44:** Consulta sobre as versões do plano já guardadas pelo RF31, sem cálculo novo.
     - **RF45:** Texto de orientação na tela de captura da foto.
+    - **RF46:** Campos opcionais na configuração da inscrição e o encerramento pelo prazo na mesma verificação que já decide se o formulário público está aberto.
 
 ### 10.2.4 Tabela consolidada
 
@@ -603,6 +626,7 @@ O Instituto deu o valor a quatorze das quinze histórias apresentadas na valida�
 | [RF43](8-requisitos.md#rf43) | HU-05a | 4 | 1 | MVP |
 | [RF44](8-requisitos.md#rf44) | HU-14 | 4 | 1 | MVP |
 | [RF45](8-requisitos.md#rf45) | HU-04b | 4 | 1 | Incremento 2 |
+| [RF46](8-requisitos.md#rf46) | HU-07d | 4 🔧 | 1 🔧 | MVP 🔧 |
 
 ### 10.2.5 Matriz 4 × 4
 
@@ -610,7 +634,7 @@ Linhas: valor de negócio. Colunas: esforço técnico. Em negrito, os requisitos
 
 | Valor \ Esforço | 1 | 2 | 3 | 4 |
 | :---: | :--- | :--- | :--- | :--- |
-| **4** | **RF01**, **RF02**, **RF03**, **RF05**, **RF06**, **RF09**, **RF12**, **RF13**, RF19, **RF23**, **RF24**, **RF26** 🔧, **RF35**, **RF38**, **RF39**, **RF40** 🔧, **RF41**, **RF43**, **RF44**, RF45 | **RF04**, **RF07**, **RF08**, **RF11**, **RF14**, **RF15**, **RF22**, **RF25**, **RF31**, RF33, **RF36**, **RF42** | RF10, **RF27** 🔧, RF32, RF34, **RF37** | — |
+| **4** | **RF01**, **RF02**, **RF03**, **RF05**, **RF06**, **RF09**, **RF12**, **RF13**, RF19, **RF23**, **RF24**, **RF26** 🔧, **RF35**, **RF38**, **RF39**, **RF40** 🔧, **RF41**, **RF43**, **RF44**, RF45, **RF46** 🔧 | **RF04**, **RF07**, **RF08**, **RF11**, **RF14**, **RF15**, **RF22**, **RF25**, **RF31**, RF33, **RF36**, **RF42** | RF10, **RF27** 🔧, RF32, RF34, **RF37** | — |
 | **3** | RF29 | RF28, RF30 | — | — |
 | **2** | RF21 | RF20 | RF16, RF17, RF18 | — |
 | **1** | — | — | — | — |
@@ -628,7 +652,7 @@ Se a capacidade da sprint não comportar o recorte inteiro, descem para a sprint
 
 | Incremento | Épicos e histórias | Requisitos funcionais |
 | :--- | :--- | :--- |
-| **MVP** | Requisito e meta: HU-01a, HU-01b, HU-02a, HU-02b, HU-14 · Atividade: HU-03a · Pessoas: HU-07a, HU-07b, HU-07c, HU-08, HU-15a, HU-15b, HU-16 · Relatório: HU-05a, HU-05b, HU-13 | RF01 a RF09, RF11 a RF15, RF22 a RF27, RF31, RF35 a RF44 |
+| **MVP** | Requisito e meta: HU-01a, HU-01b, HU-02a, HU-02b, HU-14 · Atividade: HU-03a · Pessoas: HU-07a, HU-07b, HU-07c, HU-07d 🔧, HU-08, HU-15a, HU-15b, HU-16 · Relatório: HU-05a, HU-05b, HU-13 | RF01 a RF09, RF11 a RF15, RF22 a RF27, RF31, RF35 a RF44, RF46 🔧 |
 | Incremento 2 | Atividade: HU-03b · Evidência: HU-04a, HU-04b | RF10, RF32 a RF34, RF45 |
 | Incremento 3 | Presença em campo: HU-09a, HU-10 | RF16, RF19 |
 | Posterior | Presença em campo: HU-09b, HU-12 · Pessoas: HU-06 · Requisito e meta: HU-11 | RF17, RF18, RF20, RF21, RF28 a RF30 |
@@ -639,7 +663,7 @@ Se a capacidade da sprint não comportar o recorte inteiro, descem para a sprint
 | :---: | :--- | :--- |
 | **G01** | Todos os requisitos (RF01 a RF04) | — |
 | **G02** | RF05 a RF08; o controle interno de chamados não tem RF | — |
-| **G03** | Cadastro de atividades e inscrições (RF09, RF11 a RF15, RF41) | Comprovações e evidências (RF10, RF32 a RF34, RF45) no incremento 2; presença on-line e lançamento fora do prazo (RF16, RF19) no incremento 3; operação sem conexão e carga horária (RF17, RF18, RF20) depois |
+| **G03** | Cadastro de atividades e inscrições (RF09, RF11 a RF15, RF41, RF46 🔧) | Comprovações e evidências (RF10, RF32 a RF34, RF45) no incremento 2; presença on-line e lançamento fora do prazo (RF16, RF19) no incremento 3; operação sem conexão e carga horária (RF17, RF18, RF20) depois |
 | **G04** | Inscrição e direitos do titular (RF11, RF22 a RF27, RF42) | Ficha da pessoa (RF21) depois |
 | **G05** | Versionamento do plano e comparativo das metas repactuadas (RF31, RF44) | Progresso calculado, apuração e alerta de risco (RF28 a RF30) depois; o painel da Presidência não tem RF |
 | **G06** | Relatório com resultado alcançado e justificativas, PDF e planilha (RF35 a RF39, RF43) | Índice de evidências no relatório (RF36) e miniaturas no PDF (RF37) no incremento 2 |
