@@ -1,0 +1,142 @@
+import { ApiError } from '@/lib/api';
+import type { GoalReach } from '@/types/metas';
+import type {
+  ReportJustificationInput,
+  ReportPendencia,
+  ReportPendenciaMotivo,
+  ReportPreviewGoal,
+} from '@/types/relatorios';
+
+export const REPORT_JUSTIFICATION_MAX_LENGTH = 2000;
+
+const VALID_REACHES: readonly GoalReach[] = ['CUMPRIDA', 'PARCIALMENTE_CUMPRIDA', 'NAO_CUMPRIDA'];
+
+const VALID_MOTIVOS: readonly ReportPendenciaMotivo[] = [
+  'SEM_RESULTADO_REGISTRADO',
+  'SEM_JUSTIFICATIVA',
+];
+
+export function requiresJustification(reach: GoalReach | null): boolean {
+  return reach === 'PARCIALMENTE_CUMPRIDA' || reach === 'NAO_CUMPRIDA';
+}
+
+function isRecord(value: unknown): value is Record<string, unknown> {
+  return typeof value === 'object' && value !== null;
+}
+
+function isGoalReach(value: unknown): value is GoalReach {
+  return typeof value === 'string' && VALID_REACHES.includes(value as GoalReach);
+}
+
+function isPendenciaMotivo(value: unknown): value is ReportPendenciaMotivo {
+  return typeof value === 'string' && VALID_MOTIVOS.includes(value as ReportPendenciaMotivo);
+}
+
+export function readReportPendencias(details: unknown): ReportPendencia[] {
+  if (!isRecord(details) || !Array.isArray(details.pendencias)) return [];
+
+  const result: ReportPendencia[] = [];
+  for (const item of details.pendencias) {
+    if (!isRecord(item)) continue;
+    if (
+      typeof item.metaId !== 'string' ||
+      typeof item.ordem !== 'number' ||
+      typeof item.descricao !== 'string' ||
+      !isPendenciaMotivo(item.motivo)
+    ) {
+      continue;
+    }
+
+    result.push({
+      metaId: item.metaId,
+      ordem: item.ordem,
+      descricao: item.descricao,
+      motivo: item.motivo,
+      alcance: isGoalReach(item.alcance) ? item.alcance : null,
+      percentual: typeof item.percentual === 'number' ? item.percentual : null,
+    });
+  }
+
+  return result;
+}
+
+/**
+ * Avalia quais pendências ainda impedem a finalização do relatório no período,
+ * combinando as metas ativas da prévia (excluindo rascunhos conforme RN-02)
+ * com as justificativas já digitadas na tela.
+ */
+export function computePendingReportItems(
+  goals: readonly ReportPreviewGoal[],
+  justifications: Readonly<Record<string, string>>,
+): ReportPendencia[] {
+  const pendencias: ReportPendencia[] = [];
+
+  for (const goal of goals) {
+    if (goal.rascunho) continue;
+
+    if (!goal.resultado || !goal.status) {
+      pendencias.push({
+        metaId: goal.id,
+        ordem: goal.ordem,
+        descricao: goal.descricao,
+        motivo: 'SEM_RESULTADO_REGISTRADO',
+        alcance: null,
+        percentual: null,
+      });
+      continue;
+    }
+
+    if (requiresJustification(goal.status)) {
+      const texto = (justifications[goal.id] ?? '').trim();
+      if (!texto) {
+        pendencias.push({
+          metaId: goal.id,
+          ordem: goal.ordem,
+          descricao: goal.descricao,
+          motivo: 'SEM_JUSTIFICATIVA',
+          alcance: goal.status,
+          percentual: goal.percentual,
+        });
+      }
+    }
+  }
+
+  return pendencias;
+}
+
+export function buildJustificationPayload(
+  goals: readonly ReportPreviewGoal[],
+  justifications: Readonly<Record<string, string>>,
+): ReportJustificationInput[] | undefined {
+  const items: ReportJustificationInput[] = [];
+
+  for (const goal of goals) {
+    if (goal.rascunho || !requiresJustification(goal.status)) continue;
+    const texto = (justifications[goal.id] ?? '').trim();
+    if (texto.length > 0) {
+      items.push({ metaId: goal.id, texto });
+    }
+  }
+
+  return items.length > 0 ? items : undefined;
+}
+
+export function pendenciaReasonText(item: ReportPendencia): string {
+  if (item.motivo === 'SEM_RESULTADO_REGISTRADO') {
+    return 'sem resultado registrado no período';
+  }
+  return 'meta não atingida integralmente sem justificativa registrada';
+}
+
+export function finalizeFailureMessage(error: unknown): string {
+  if (!(error instanceof ApiError)) {
+    return 'Não foi possível falar com o servidor para finalizar o relatório. Tente de novo.';
+  }
+  if (error.status === 403) {
+    return 'Apenas o perfil Presidência e Gestão de Projetos pode finalizar relatórios.';
+  }
+  if ([400, 404, 409, 422].includes(error.status)) {
+    return error.message;
+  }
+  return 'Não foi possível finalizar o relatório. Tente de novo.';
+}
