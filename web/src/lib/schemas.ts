@@ -6,8 +6,8 @@ import { isValidCpf, isValidPhone, todayInBrasilia } from './br';
  * `components/form` guardam esse mesmo valor, então a regra e o envio não convertem nada.
  */
 
-const ISO_DATE = /^\d{4}-\d{2}-\d{2}$/;
-const HH_MM = /^([01]\d|2[0-3]):[0-5]\d$/;
+export const ISO_DATE = /^\d{4}-\d{2}-\d{2}$/;
+export const HH_MM = /^([01]\d|2[0-3]):[0-5]\d$/;
 const DECIMAL = /^\d+(\.\d{1,2})?$/;
 const MAX_MONEY_DIGITS = 12;
 
@@ -24,13 +24,16 @@ export function cpfSchema(
   return z.string().min(1, required).refine(isValidCpf, invalid);
 }
 
-/** Data AAAA-MM-DD; com `notFuture`, até hoje em Brasília. */
+/** Data AAAA-MM-DD; com `notFuture`, até hoje em Brasília; com `notPast`, de hoje em diante. */
 export function dateSchema(
   message = 'Informe a data completa.',
-  { notFuture }: { notFuture?: string } = {},
+  { notFuture, notPast }: { notFuture?: string; notPast?: string } = {},
 ) {
-  const date = z.string().regex(ISO_DATE, message);
-  return notFuture ? date.refine((value) => value <= todayInBrasilia(), notFuture) : date;
+  return z
+    .string()
+    .regex(ISO_DATE, message)
+    .refine((value) => !notFuture || value <= todayInBrasilia(), notFuture)
+    .refine((value) => !notPast || value >= todayInBrasilia(), notPast);
 }
 
 /** Hora HH:MM, como o seletor nativo guarda. */

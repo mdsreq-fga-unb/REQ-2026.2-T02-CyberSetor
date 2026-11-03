@@ -1,4 +1,5 @@
-import { decimalSchema, moneySchema, timeSchema } from './schemas';
+import { todayInBrasilia } from './br';
+import { dateSchema, decimalSchema, moneySchema, timeSchema } from './schemas';
 
 describe('regras dos campos', () => {
   it.each([
@@ -33,5 +34,26 @@ describe('regras dos campos', () => {
     expect(timeSchema().safeParse('23:59').success).toBe(true);
     expect(timeSchema().safeParse('24:00').success).toBe(false);
     expect(timeSchema().safeParse('9:00').success).toBe(false);
+  });
+
+  it('data de hoje em diante com notPast', () => {
+    const schema = dateSchema('Informe a data.', { notPast: 'Não pode ser no passado.' });
+    expect(schema.safeParse(todayInBrasilia()).success).toBe(true);
+    expect(schema.safeParse('2099-12-31').success).toBe(true);
+    const passada = schema.safeParse('2020-01-01');
+    expect(passada.error?.issues[0].message).toBe('Não pode ser no passado.');
+    expect(schema.safeParse('').error?.issues[0].message).toBe('Informe a data.');
+  });
+
+  it('notPast e notFuture juntos aceitam so hoje', () => {
+    const schema = dateSchema('Informe a data.', {
+      notPast: 'Não pode ser no passado.',
+      notFuture: 'Não pode ser no futuro.',
+    });
+    expect(schema.safeParse(todayInBrasilia()).success).toBe(true);
+    expect(schema.safeParse('2020-01-01').error?.issues[0].message).toBe(
+      'Não pode ser no passado.',
+    );
+    expect(schema.safeParse('2099-12-31').error?.issues[0].message).toBe('Não pode ser no futuro.');
   });
 });

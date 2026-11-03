@@ -134,3 +134,30 @@ export function formatDuration(total: number): string {
 export function formatSchedule(start: string, end: string, workloadMinutes: number): string {
   return `${formatTime(start)} às ${formatTime(end)} · ${formatDuration(workloadMinutes)}`;
 }
+
+/** Prazo de inscrição: "05/11/2026, às 18h" ou, sem hora, "05/11/2026, às 23h59". */
+export function formatDeadline(prazo: string, hora: string | null): string {
+  return `${formatDate(prazo)}, às ${formatTime(hora ?? '23:59')}`;
+}
+
+/** O prazo vale até o fim do minuto informado (sem hora, 23h59), no horário de Brasília. */
+export function deadlinePassed(
+  prazo: string | null,
+  hora: string | null,
+  now = new Date(),
+): boolean {
+  if (!prazo) return false;
+  return nowInBrasilia(now) > `${prazo} ${hora ?? '23:59'}`;
+}
+
+/** Data e, quando houver, horário e carga horária: "28/10/2026 · 9h às 17h · 8 h". */
+export function formatActivityWhen(activity: {
+  data: string;
+  horaInicio: string | null;
+  horaFim: string | null;
+  cargaHorariaMinutos: number | null;
+}): string {
+  const { data, horaInicio, horaFim, cargaHorariaMinutos } = activity;
+  if (!horaInicio || !horaFim || cargaHorariaMinutos === null) return formatDate(data);
+  return `${formatDate(data)} · ${formatSchedule(horaInicio, horaFim, cargaHorariaMinutos)}`;
+}

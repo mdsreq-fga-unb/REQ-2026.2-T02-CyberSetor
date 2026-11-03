@@ -3,6 +3,10 @@ import type { CampoInscricao, SituacaoInscricao } from './inscricoes';
 export interface PublicActivity {
   titulo: string;
   data: string;
+  /** Nulos nas atividades cadastradas antes do horário. */
+  horaInicio: string | null;
+  horaFim: string | null;
+  cargaHorariaMinutos: number | null;
   local: string;
 }
 

@@ -5,7 +5,7 @@ import { ShieldCheckIcon } from 'lucide-react';
 import { useEffect, useMemo, useRef, useState, type FormEvent } from 'react';
 import { useForm, useWatch } from 'react-hook-form';
 import { z } from 'zod';
-import { DateField, PhoneField } from '@/components/form/fields';
+import { DateField, PhoneField, TimeField } from '@/components/form/fields';
 import { FormField } from '@/components/form-field';
 import { ListError } from '@/components/list/list-states';
 import { Button } from '@/components/ui/button';
@@ -22,6 +22,7 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { ApiError } from '@/lib/api';
 import { formatDate, isValidPhone, todayInBrasilia } from '@/lib/br';
+import { HH_MM, ISO_DATE } from '@/lib/schemas';
 import {
   useFreshRegistration,
   useOpenRegistration,
@@ -40,8 +41,6 @@ import { registrationLoadFailure } from './format';
 const MAX_VAGAS = 10_000;
 const MAX_TERMO = 4000;
 const MAX_APRESENTACAO = 2000;
-const ISO_DATE = /^\d{4}-\d{2}-\d{2}$/;
-const HOUR = /^([01]\d|2[0-3]):[0-5]\d$/;
 
 const LABELS_ADICIONAIS: Record<CampoInscricao, string> = {
   CPF: 'CPF (Cadastro de Pessoas Físicas)',
@@ -84,7 +83,7 @@ const registrationSchemaFor = (prazoSalvo: string | null) =>
         ),
       prazoHora: z
         .string()
-        .refine((value) => value === '' || HOUR.test(value), 'Informe a hora, como 18:00.'),
+        .refine((value) => value === '' || HH_MM.test(value), 'Informe a hora, como 18:00.'),
       contatoWhatsapp: z
         .string()
         .refine(
@@ -594,21 +593,13 @@ export function RegistrationFormDialog({
                     max={activity?.data}
                     disabled={!instrumentAtivo}
                   />
-                  <FormField
+                  <TimeField
+                    control={form.control}
                     name="prazoHora"
                     label="Hora do prazo"
                     description="Sem hora, as inscrições vão até as 23h59."
-                    control={form.control}
-                  >
-                    {(props) => (
-                      <Input
-                        {...props}
-                        type="time"
-                        disabled={!instrumentAtivo}
-                        value={props.value ?? ''}
-                      />
-                    )}
-                  </FormField>
+                    disabled={!instrumentAtivo}
+                  />
                 </div>
                 <PhoneField
                   control={form.control}

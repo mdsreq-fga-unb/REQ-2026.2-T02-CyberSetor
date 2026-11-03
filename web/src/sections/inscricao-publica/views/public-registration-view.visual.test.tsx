@@ -5,7 +5,14 @@ import type { PublicForm } from '@/types/inscricao-publica';
 import { PublicRegistrationView } from './public-registration-view';
 
 const FORM: PublicForm = {
-  atividade: { titulo: 'Oficina de serigrafia', data: '2026-11-10', local: 'Setor Comercial Sul' },
+  atividade: {
+    titulo: 'Oficina de serigrafia',
+    data: '2026-11-10',
+    horaInicio: '14:00',
+    horaFim: '17:30',
+    cargaHorariaMinutos: 210,
+    local: 'Setor Comercial Sul',
+  },
   aberta: true,
   vagasEsgotadas: false,
   listaEspera: true,

@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import { apiRequest } from '@/lib/api';
-import { formatDate } from '@/lib/br';
+import { formatActivityWhen } from '@/lib/br';
 import { PublicRegistrationView } from '@/sections/inscricao-publica/views/public-registration-view';
 import type { PublicForm } from '@/types/inscricao-publica';
 
@@ -18,9 +18,9 @@ export async function generateMetadata({
     const form = await apiRequest<PublicForm>(
       `/public/registrations/${encodeURIComponent(codigo)}`,
     );
-    const { titulo, data, local } = form.atividade;
+    const { titulo, local } = form.atividade;
     const title = `Inscrição: ${titulo} | ${SITE}`;
-    const description = `${formatDate(data)} · ${local}. ${
+    const description = `${formatActivityWhen(form.atividade)} · ${local}. ${
       form.aberta ? 'Inscrições abertas.' : 'Inscrições encerradas.'
     }`;
     return {
