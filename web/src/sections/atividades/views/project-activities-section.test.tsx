@@ -501,9 +501,11 @@ describe('ProjectActivitiesSection', () => {
     expect(
       within(canceladas).getByText('Cancelada a pedido em 29/10/2026 · WhatsApp'),
     ).toBeInTheDocument();
-    expect(
-      within(canceladas).queryByRole('columnheader', { name: 'Ações' }),
-    ).not.toBeInTheDocument();
+    // A cancelada só abre a ficha.
+    fireEvent.click(within(canceladas).getByRole('button', { name: 'Ações de Ana Souza' }));
+    expect(await screen.findByRole('menuitem', { name: 'Ver ficha' })).toBeInTheDocument();
+    expect(screen.queryByRole('menuitem', { name: 'Cancelar inscrição' })).not.toBeInTheDocument();
+    fireEvent.keyDown(document.activeElement ?? document.body, { key: 'Escape' });
     expect(calls.find((c) => c.key.endsWith('/cancellation'))?.body).toEqual({
       canal: 'WHATSAPP',
       pedidoEm: '2026-10-29',
@@ -601,7 +603,7 @@ describe('ProjectActivitiesSection', () => {
     expect(await screen.findByText('Caio Reis')).toBeInTheDocument();
   });
 
-  it('com o instrumento inativo, o Nucleo ve os inscritos sem confirmar nem cancelar', async () => {
+  it('com o instrumento inativo, o Nucleo ve os inscritos e abre a ficha, sem confirmar nem cancelar', async () => {
     await signedInAs('NUCLEO_PEDAGOGICO', {
       [`GET /projects/${PROJECT.id}/activities`]: () => ({
         status: 200,
@@ -609,14 +611,34 @@ describe('ProjectActivitiesSection', () => {
       }),
       [`GET /activities/${ACTIVITY_1.id}/registrations`]: () =>
         lista([person('Ana Souza', 'CONFIRMADA', null)], [person('Bruno Lima', 'LISTA_ESPERA', 1)]),
+      [`GET /participants/${encodeURIComponent('participante-Ana Souza')}`]: () => ({
+        status: 200,
+        body: {
+          id: 'participante-Ana Souza',
+          versao: 1,
+          nome: 'Ana Souza',
+          nomePreferencia: null,
+          telefone: '61999998888',
+          dataNascimento: '1990-05-20',
+          idade: 36,
+          email: null,
+          cpf: null,
+          bairroRegiao: null,
+          escolaridade: null,
+          inscricoes: [],
+        },
+      }),
     });
     renderSection({ ...INSTRUMENT, ativo: false });
 
     await openRegistrations();
+    fireEvent.click(await screen.findByRole('button', { name: 'Ações de Ana Souza' }));
 
-    expect(await screen.findByText('Ana Souza')).toBeInTheDocument();
-    expect(screen.queryByRole('button', { name: /Ações de / })).not.toBeInTheDocument();
-    expect(screen.queryByRole('columnheader', { name: 'Ações' })).not.toBeInTheDocument();
+    expect(screen.queryByRole('menuitem', { name: 'Cancelar inscrição' })).not.toBeInTheDocument();
+    expect(screen.queryByRole('menuitem', { name: 'Confirmar vaga' })).not.toBeInTheDocument();
+    fireEvent.click(await screen.findByRole('menuitem', { name: 'Ver ficha' }));
+    // A ficha abre sobre a lista, com o título no nome da pessoa.
+    expect(await screen.findByRole('heading', { name: 'Ana Souza' })).toBeInTheDocument();
   });
 
   it('perfil de consulta (ADMINISTRATIVO_FINANCEIRO) consulta mas nao altera', async () => {

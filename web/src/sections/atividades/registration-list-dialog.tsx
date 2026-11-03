@@ -29,6 +29,8 @@ import { useConfirmFromWaitlist, useRegistration, useRegistrationList } from '@/
 import type { Activity } from '@/types/atividades';
 import type { RegisteredPerson, SituacaoInscricao } from '@/types/inscricoes';
 import { CANAL_LABEL } from '../participantes/format';
+import { useDialogState } from '@/hooks/use-dialog-state';
+import { ParticipantRecord } from '../participantes/participant-record';
 import { CancelRegistrationDialog } from './cancel-registration-dialog';
 
 const COLUMNS = 3;
@@ -177,6 +179,7 @@ export function RegistrationListDialog({
   const registration = useRegistration(activity?.id, open && editable);
   const confirm = useConfirmFromWaitlist(activity?.id ?? '');
   const [cancelling, setCancelling] = useState<RegisteredPerson | null>(null);
+  const record = useDialogState<string>();
   const freeVacancy = list.data ? list.data.confirmadas < list.data.vagas : false;
 
   async function confirmVacancy(person: RegisteredPerson) {
@@ -188,10 +191,12 @@ export function RegistrationListDialog({
     }
   }
 
-  const actionsFor = editable ? actionsOf : undefined;
-
-  function actionsOf(person: RegisteredPerson): RowAction[] {
-    const actions: RowAction[] = [];
+  // A ficha abre mesmo com o instrumento inativo; confirmar e cancelar só com ele ativo.
+  function actionsFor(person: RegisteredPerson): RowAction[] {
+    const actions: RowAction[] = [
+      { label: 'Ver ficha', onSelect: () => record.show(person.participanteId) },
+    ];
+    if (!editable || person.situacao === 'CANCELADA') return actions;
     if (person.situacao === 'LISTA_ESPERA' && freeVacancy) {
       actions.push({
         label: 'Confirmar vaga',
@@ -302,7 +307,12 @@ export function RegistrationListDialog({
                       Ninguém encontrado entre as canceladas.
                     </p>
                   ) : (
-                    <PeopleTable situacao="CANCELADA" people={of('CANCELADA')} loading={false} />
+                    <PeopleTable
+                      situacao="CANCELADA"
+                      people={of('CANCELADA')}
+                      loading={false}
+                      actionsFor={actionsFor}
+                    />
                   )}
                 </section>
               )}
@@ -326,6 +336,8 @@ export function RegistrationListDialog({
           toast.add({ type: 'success', title: `Inscrição de ${person.nome} cancelada` })
         }
       />
+
+      <ParticipantRecord open={record.open} participantId={record.value} onClose={record.close} />
     </>
   );
 }
