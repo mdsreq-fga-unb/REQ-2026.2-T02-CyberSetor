@@ -4,6 +4,8 @@ Gera as páginas de acompanhamento do site a partir das issues e do quadro do pr
 Saída (não versionada; ver .gitignore):
   docs/entregas/debitos-u1.md               issues abertas pelo docente
   docs/gestao/sprints/tarefas-sprint-N.md   uma página por sprint, N em SPRINTS
+  situacao-historias.json                   situação de cada história (HU-..), lida pelos
+                                            selos das seções 8 e 10 (hooks/historico.py)
 
 Sprint e Situação vêm exclusivamente do quadro do projeto (campos Sprint e
 Status). Rótulos não representam situação. O token padrão das Actions não lê
@@ -22,6 +24,7 @@ REPO_FULL = os.environ.get("GITHUB_REPOSITORY", "mdsreq-fga-unb/REQ-2026.2-T02-C
 TOKEN = os.environ.get("GITHUB_TOKEN")
 FEEDBACK_FILE = "docs/entregas/debitos-u1.md"
 SPRINT_FILE = "docs/gestao/sprints/tarefas-sprint-{n}.md"
+SITUACAO_FILE = "situacao-historias.json"
 SPRINTS = [1, 2, 3, 4]  # páginas geradas; acrescentar aqui e no nav do mkdocs.yml a cada sprint
 PROFESSOR = "marsicanogeorge"
 
@@ -38,7 +41,7 @@ query($owner: String!, $repo: String!, $after: String) {
     issues(first: 100, after: $after, orderBy: {field: CREATED_AT, direction: ASC}) {
       pageInfo { hasNextPage endCursor }
       nodes {
-        number title state url
+        number title state stateReason url
         author { login }
         assignees(first: 10) { nodes { login } }
         labels(first: 20) { nodes { name } }
@@ -191,6 +194,32 @@ for n in SPRINTS:
     with open(caminho, "w", encoding="utf-8") as f:
         f.write(texto)
 
+# ---- situação das histórias, para os selos das seções 8 e 10 ----
+HISTORIA = re.compile(r"^(HU-\d{2}[a-z]?)\s*:")
+
+
+def selo(node, campos):
+    """A fazer, em andamento, concluída ou retirada do escopo, pelo quadro e pelo fechamento."""
+    status = (campos.get("status") or "").lower()
+    if node["state"] == "CLOSED":
+        return "retirado" if node.get("stateReason") == "NOT_PLANNED" else "concluido"
+    if status == "done":
+        return "concluido"
+    if status in ("in progress", "em revisão", "aguardando"):
+        return "em-andamento"
+    return "a-fazer"
+
+
+historias = {}
+for node in issues:
+    m = HISTORIA.match(node["title"])
+    if m and not e_do_professor(node):
+        historias[m.group(1)] = {"situacao": selo(node, campos_do_quadro(node)), "issue": node["number"]}
+with open(SITUACAO_FILE, "w", encoding="utf-8") as f:
+    json.dump({"leitura": LEITURA, "com_quadro": com_quadro > 0, "historias": historias},
+              f, ensure_ascii=False, indent=1, sort_keys=True)
+
 print(f"Issues lidas: {len(issues)}; com campos do quadro: {com_quadro}")
+print(f"Gerado: {SITUACAO_FILE} ({len(historias)} histórias)")
 print(f"Gerado: {FEEDBACK_FILE} ({len(feedback)}) e "
       + ", ".join(f"sprint {n} ({len(por_sprint[n])})" for n in SPRINTS))
