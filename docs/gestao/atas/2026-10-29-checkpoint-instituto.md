@@ -12,7 +12,8 @@ Versão **preliminar**, sujeita à conferência do Instituto antes da publicaç�
 | **Horário** | Início às 16h30 |
 | **Formato** | Remoto, Google Meet |
 | **Participantes — Instituto** | Maria Clara Novaes (Núcleo Pedagógico) e Maria Eduarda (Duda — Núcleo Pedagógico) |
-| **Participantes — CyberSetor** | Vinicius Vieira e Maria Eduarda Marques |
+| **Participantes — CyberSetor** | Vinicius Vieira, Maria Eduarda Marques e Caio Martins |
+| **Ausentes** | Daniel Batista e Rodrigo Henrique Donato |
 | **Condução** | Vinicius Vieira e Maria Eduarda Marques |
 | **Relatoria** | Maria Eduarda Marques |
 | **Registro** | Gravação e anotações automáticas, arquivadas no Drive restrito da equipe |
@@ -110,4 +111,4 @@ Primeiro checkpoint com o Instituto, com a demonstração do sistema no ambiente
 
 | Versão | Data | Autor | Descrição |
 |---|---|---|---|
-| 0.1 | 03/11/2026 | Maria Eduarda Marques | Elaboração inicial a partir das anotações automáticas da reunião, com revisão de dados sensíveis; aguarda a conferência do Instituto |
+| 0.1 | 03/11/2026 | Maria Eduarda Marques | Elaboração inicial a partir das anotações automáticas da reunião, com revisão de dados sensíveis; participação de Caio Martins e data da próxima reunião (05/11) confirmadas pela equipe; aguarda a conferência do Instituto |
