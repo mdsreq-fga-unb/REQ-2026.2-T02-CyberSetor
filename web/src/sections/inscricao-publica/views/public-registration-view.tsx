@@ -482,10 +482,9 @@ export function PublicRegistrationView({ codigo }: { codigo: string }) {
   const form = usePublicForm(codigo);
   const [submitted, setSubmitted] = useState<SubmittedRegistration | null>(null);
   const [closed, setClosed] = useState(false);
-  const [full, setFull] = useState(false);
 
   if (submitted) {
-    const waiting = submitted.posicaoEspera !== null;
+    const waiting = submitted.situacao === 'LISTA_ESPERA';
     const Icon = waiting ? HourglassIcon : CircleCheckIcon;
     return (
       <Card>
@@ -548,7 +547,7 @@ export function PublicRegistrationView({ codigo }: { codigo: string }) {
     );
   }
 
-  if (full || (form.data.aberta && form.data.vagasEsgotadas && !form.data.listaEspera)) {
+  if (form.data.aberta && form.data.vagasEsgotadas && !form.data.listaEspera) {
     return (
       <Message
         title="Vagas esgotadas"
@@ -581,7 +580,7 @@ export function PublicRegistrationView({ codigo }: { codigo: string }) {
       codigo={codigo}
       onSubmitted={setSubmitted}
       onClosed={() => setClosed(true)}
-      onFull={() => setFull(true)}
+      onFull={() => void form.refetch()}
       onNoticeChanged={() => void form.refetch()}
     />
   );

@@ -323,14 +323,44 @@ describe('formulario publico de inscricao', () => {
     expect(screen.queryByRole('button', { name: 'Confirmar inscrição' })).not.toBeInTheDocument();
   });
 
-  it('vagas esgotadas durante o preenchimento trocam para o aviso de vagas esgotadas', async () => {
+  it('vagas esgotadas durante o preenchimento releem o formulario e mostram o aviso', async () => {
+    let esgotadas = false;
+    const calls = stubApi({
+      [GET]: () => ({
+        status: 200,
+        body: { ...FORM, listaEspera: false, vagasEsgotadas: esgotadas },
+      }),
+      [POST]: () => {
+        esgotadas = true;
+        return {
+          status: 409,
+          body: {
+            code: 'REGISTRATION_FULL',
+            message: 'As vagas desta atividade já foram preenchidas.',
+          },
+        };
+      },
+    });
+    renderView();
+
+    await screen.findByLabelText('CPF');
+    fillAdult();
+    fireEvent.click(screen.getByRole('button', { name: 'Confirmar inscrição' }));
+
+    expect(await screen.findByRole('heading', { name: 'Vagas esgotadas' })).toBeInTheDocument();
+    // O aviso vem do formulário relido: se a vaga voltar, a próxima leitura mostra o formulário.
+    expect(calls.filter((c) => c.key === GET)).toHaveLength(2);
+  });
+
+  it('a tela de sucesso segue a situacao da inscricao, mesmo sem a posicao na resposta', async () => {
     stubApi({
-      [GET]: () => ({ status: 200, body: { ...FORM, listaEspera: false } }),
+      [GET]: () => ({ status: 200, body: FORM }),
       [POST]: () => ({
-        status: 409,
+        status: 201,
         body: {
-          code: 'REGISTRATION_FULL',
-          message: 'As vagas desta atividade já foram preenchidas.',
+          situacao: 'CONFIRMADA',
+          atividade: FORM.atividade,
+          inscritoEm: '2026-10-28T13:00:00.000Z',
         },
       }),
     });
@@ -340,7 +370,10 @@ describe('formulario publico de inscricao', () => {
     fillAdult();
     fireEvent.click(screen.getByRole('button', { name: 'Confirmar inscrição' }));
 
-    expect(await screen.findByRole('heading', { name: 'Vagas esgotadas' })).toBeInTheDocument();
+    expect(
+      await screen.findByRole('heading', { name: 'Inscrição confirmada' }),
+    ).toBeInTheDocument();
+    expect(screen.queryByText(/Sua posição/)).not.toBeInTheDocument();
   });
 
   it('menor de 18 anos ve e precisa preencher o responsavel legal antes de enviar', async () => {

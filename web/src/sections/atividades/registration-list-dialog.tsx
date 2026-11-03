@@ -25,7 +25,7 @@ import {
 import { toast } from '@/components/ui/toast';
 import { ApiError } from '@/lib/api';
 import { formatDate, formatDateTime, formatPhone } from '@/lib/br';
-import { useConfirmFromWaitlist, useRegistrationList } from '@/queries/inscricoes';
+import { useConfirmFromWaitlist, useRegistration, useRegistrationList } from '@/queries/inscricoes';
 import type { Activity } from '@/types/atividades';
 import type { RegisteredPerson, SituacaoInscricao } from '@/types/inscricoes';
 import { CANAL_LABEL } from '../participantes/format';
@@ -133,12 +133,7 @@ function PeopleTable({
               </TableCell>
               {actionsFor && (
                 <TableCell className="px-4 text-right">
-                  {actionsFor(person).length > 0 && (
-                    <RowActionsMenu
-                      label={`Ações de ${person.nome}`}
-                      actions={actionsFor(person)}
-                    />
-                  )}
+                  <PersonActions person={person} actions={actionsFor(person)} />
                 </TableCell>
               )}
             </TableRow>
@@ -149,6 +144,17 @@ function PeopleTable({
   );
 }
 
+function PersonActions({ person, actions }: { person: RegisteredPerson; actions: RowAction[] }) {
+  return actions.length > 0 ? (
+    <RowActionsMenu label={`Ações de ${person.nome}`} actions={actions} />
+  ) : null;
+}
+
+function confirmFailure(error: unknown): string {
+  if (error instanceof ApiError && [403, 404, 409].includes(error.status)) return error.message;
+  return 'Não foi possível confirmar a vaga. Tente de novo.';
+}
+
 /**
  * Inscritos da atividade, para o Núcleo (HU-07c, RNF04): vagas confirmadas, lista de espera e
  * canceladas, com a confirmação da vaga de quem espera e o cancelamento a pedido da pessoa.
@@ -156,15 +162,19 @@ function PeopleTable({
 export function RegistrationListDialog({
   open,
   activity,
+  editable,
   onClose,
 }: {
   open: boolean;
   activity: Activity | null;
+  /** Instrumento ativo: confirmar e cancelar ficam disponíveis. */
+  editable: boolean;
   onClose: () => void;
 }) {
   const [busca, setBusca] = useState('');
   const deferred = useDeferredValue(busca);
   const list = useRegistrationList(activity?.id, deferred, open);
+  const registration = useRegistration(activity?.id, open && editable);
   const confirm = useConfirmFromWaitlist(activity?.id ?? '');
   const [cancelling, setCancelling] = useState<RegisteredPerson | null>(null);
   const freeVacancy = list.data ? list.data.confirmadas < list.data.vagas : false;
@@ -174,17 +184,13 @@ export function RegistrationListDialog({
       await confirm.mutateAsync(person.id);
       toast.add({ type: 'success', title: `Vaga de ${person.nome} confirmada` });
     } catch (error) {
-      toast.add({
-        type: 'error',
-        title:
-          error instanceof ApiError
-            ? error.message
-            : 'Não foi possível confirmar a vaga. Tente de novo.',
-      });
+      toast.add({ type: 'error', title: confirmFailure(error) });
     }
   }
 
-  function actionsFor(person: RegisteredPerson): RowAction[] {
+  const actionsFor = editable ? actionsOf : undefined;
+
+  function actionsOf(person: RegisteredPerson): RowAction[] {
     const actions: RowAction[] = [];
     if (person.situacao === 'LISTA_ESPERA' && freeVacancy) {
       actions.push({
@@ -296,12 +302,7 @@ export function RegistrationListDialog({
                       Ninguém encontrado entre as canceladas.
                     </p>
                   ) : (
-                    <PeopleTable
-                      situacao="CANCELADA"
-                      people={of('CANCELADA')}
-                      loading={false}
-                      actionsFor={() => []}
-                    />
+                    <PeopleTable situacao="CANCELADA" people={of('CANCELADA')} loading={false} />
                   )}
                 </section>
               )}
@@ -313,6 +314,13 @@ export function RegistrationListDialog({
       <CancelRegistrationDialog
         activityId={activity?.id ?? ''}
         person={cancelling}
+        vacancyGoesTo={
+          (list.data?.emEspera ?? 0) === 0
+            ? 'livre'
+            : registration.data?.promocaoAutomatica
+              ? 'espera'
+              : 'escolha'
+        }
         onClose={() => setCancelling(null)}
         onCancelled={(person) =>
           toast.add({ type: 'success', title: `Inscrição de ${person.nome} cancelada` })

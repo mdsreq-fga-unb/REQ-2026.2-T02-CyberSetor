@@ -370,7 +370,7 @@ describe('RegistrationFormDialog', () => {
     });
   });
 
-  it('lista de espera e promocao vem ligadas; sem lista, a promocao fica desligada e vai como esta', async () => {
+  it('lista de espera e promocao vem ligadas; sem lista, a promocao vai desligada', async () => {
     const calls = await signedInAs('NUCLEO_PEDAGOGICO', {
       [`GET /activities/${ACTIVITY.id}/registration`]: () => ({
         status: 404,
@@ -390,12 +390,16 @@ describe('RegistrationFormDialog', () => {
     expect(promocao).toBeChecked();
     fireEvent.click(lista);
     expect(promocao).toBeDisabled();
+    expect(promocao).not.toBeChecked();
     expect(screen.getByText(/não aceita novas inscrições/)).toBeInTheDocument();
+    expect(
+      screen.queryByText(/as primeiras da espera passam a confirmadas/),
+    ).not.toBeInTheDocument();
     fireEvent.click(screen.getByRole('button', { name: 'Abrir inscrição' }));
 
     await waitFor(() => expect(onSaved).toHaveBeenCalledTimes(1));
     const postCall = calls.find((c) => c.key === `POST /activities/${ACTIVITY.id}/registration`);
-    expect(postCall?.body).toMatchObject({ listaEspera: false, promocaoAutomatica: true });
+    expect(postCall?.body).toMatchObject({ listaEspera: false, promocaoAutomatica: false });
   });
 
   it('na edicao, desligar a promocao automatica vai no PATCH', async () => {

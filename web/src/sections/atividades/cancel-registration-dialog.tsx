@@ -40,15 +40,28 @@ function failureOf(error: unknown): string {
   return 'Não foi possível cancelar a inscrição. Tente de novo.';
 }
 
+const VACANCY_OUTCOME: Record<'espera' | 'escolha' | 'livre', (nome: string) => string> = {
+  espera: (nome) => `A vaga de ${nome} passa para a primeira da lista de espera.`,
+  escolha: (nome) =>
+    `A vaga de ${nome} fica livre para o Núcleo confirmar alguém da lista de espera.`,
+  livre: (nome) => `A vaga de ${nome} fica livre para uma nova inscrição.`,
+};
+
 /** Cancelamento ou desistência pedido pela pessoa, com a data e o canal do pedido (HU-07c). */
 export function CancelRegistrationDialog({
   activityId,
   person,
+  vacancyGoesTo,
   onClose,
   onCancelled,
 }: {
   activityId: string;
   person: RegisteredPerson | null;
+  /**
+   * Destino da vaga confirmada que se libera: a primeira da espera (promoção automática), a escolha
+   * do Núcleo entre quem espera, ou vaga livre no formulário quando ninguém espera.
+   */
+  vacancyGoesTo: 'espera' | 'escolha' | 'livre';
   onClose: () => void;
   onCancelled: (person: RegisteredPerson) => void;
 }) {
@@ -84,22 +97,19 @@ export function CancelRegistrationDialog({
   }
 
   const control = form.control;
-  const releasesVacancy = person?.situacao === 'CONFIRMADA';
+  const submitting = form.formState.isSubmitting;
+  const name = person?.nome ?? 'A pessoa';
+  const outcome =
+    person?.situacao !== 'CONFIRMADA'
+      ? `${name} sai da lista de espera.`
+      : VACANCY_OUTCOME[vacancyGoesTo](name);
 
   return (
-    <Dialog
-      open={person !== null}
-      onOpenChange={(next) => !next && !form.formState.isSubmitting && close()}
-    >
+    <Dialog open={person !== null} onOpenChange={(next) => !next && !submitting && close()}>
       <DialogContent className="max-h-[calc(100dvh-2rem)] overflow-y-auto sm:max-w-lg">
         <DialogHeader>
           <DialogTitle>Cancelar inscrição</DialogTitle>
-          <DialogDescription>
-            {releasesVacancy
-              ? `A vaga de ${person?.nome} fica livre e, com a promoção automática, passa para a primeira da lista de espera.`
-              : `${person?.nome ?? 'A pessoa'} sai da lista de espera.`}{' '}
-            O cancelamento não pode ser desfeito.
-          </DialogDescription>
+          <DialogDescription>{outcome} O cancelamento não pode ser desfeito.</DialogDescription>
         </DialogHeader>
         <form noValidate onSubmit={onSubmit}>
           <FieldGroup>
@@ -124,11 +134,11 @@ export function CancelRegistrationDialog({
               </p>
             )}
             <DialogFooter>
-              <Button type="button" variant="outline" onClick={close}>
+              <Button type="button" variant="outline" onClick={close} disabled={submitting}>
                 Voltar
               </Button>
-              <Button type="submit" variant="destructive" disabled={form.formState.isSubmitting}>
-                {form.formState.isSubmitting ? 'Cancelando…' : 'Cancelar inscrição'}
+              <Button type="submit" variant="destructive" disabled={submitting}>
+                {submitting ? 'Cancelando…' : 'Cancelar inscrição'}
               </Button>
             </DialogFooter>
           </FieldGroup>

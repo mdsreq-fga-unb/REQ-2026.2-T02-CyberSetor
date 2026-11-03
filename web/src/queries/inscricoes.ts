@@ -1,4 +1,4 @@
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient, type QueryClient } from '@tanstack/react-query';
 import { authorizedRequest } from '@/auth/session';
 import { ApiError } from '@/lib/api';
 import type {
@@ -39,9 +39,20 @@ export function useRegistration(activityId?: string, enabled = true) {
   });
 }
 
-export function registrationListKey(activityId: string, busca = '') {
-  return ['atividades', activityId, 'inscritos', busca] as const;
+/** Prefixo das listas de inscritos da atividade, com qualquer busca. */
+export function registrationListsKey(activityId: string) {
+  return ['atividades', activityId, 'inscritos'] as const;
 }
+
+export function registrationListKey(activityId: string, busca = '') {
+  return [...registrationListsKey(activityId), busca] as const;
+}
+
+/** A lista de atividades mostra a situação da inscrição, os inscritos e a espera. */
+const PROJECT_ACTIVITIES = {
+  queryKey: ['projetos'],
+  predicate: (query: { queryKey: readonly unknown[] }) => query.queryKey[2] === 'atividades',
+};
 
 /** Inscritos da atividade: só o Núcleo Pedagógico (seção 8.5.1, RNF04). */
 export function useRegistrationList(activityId: string | undefined, busca: string, enabled = true) {
@@ -55,7 +66,9 @@ export function useRegistrationList(activityId: string | undefined, busca: strin
         }`,
       ),
     enabled: Boolean(activityId && enabled),
-    placeholderData: (previous) => previous,
+    // A lista anterior fica na tela só durante a troca da busca; outra atividade carrega do zero.
+    placeholderData: (previous, previousQuery) =>
+      previousQuery?.queryKey[1] === activityId ? previous : undefined,
   });
 }
 
@@ -78,13 +91,10 @@ export function useOpenRegistration(activityId: string) {
     onSuccess: () =>
       Promise.all([
         queryClient.invalidateQueries({ queryKey: registrationKey(activityId) }),
-        // Mais vagas promovem a lista de espera.
-        queryClient.invalidateQueries({ queryKey: ['atividades', activityId, 'inscritos'] }),
-        // A lista de atividades mostra a situação da inscrição e os inscritos.
-        queryClient.invalidateQueries({
-          queryKey: ['projetos'],
-          predicate: (query) => query.queryKey[2] === 'atividades',
-        }),
+        // Mais vagas promovem a lista de espera, e a ficha do participante mostra a situação.
+        queryClient.invalidateQueries({ queryKey: registrationListsKey(activityId) }),
+        queryClient.invalidateQueries({ queryKey: ['participantes'] }),
+        queryClient.invalidateQueries(PROJECT_ACTIVITIES),
       ]),
   });
 }
@@ -103,13 +113,10 @@ export function useUpdateRegistration(activityId: string) {
     onSuccess: () =>
       Promise.all([
         queryClient.invalidateQueries({ queryKey: registrationKey(activityId) }),
-        // Mais vagas promovem a lista de espera.
-        queryClient.invalidateQueries({ queryKey: ['atividades', activityId, 'inscritos'] }),
-        // A lista de atividades mostra a situação da inscrição e os inscritos.
-        queryClient.invalidateQueries({
-          queryKey: ['projetos'],
-          predicate: (query) => query.queryKey[2] === 'atividades',
-        }),
+        // Mais vagas promovem a lista de espera, e a ficha do participante mostra a situação.
+        queryClient.invalidateQueries({ queryKey: registrationListsKey(activityId) }),
+        queryClient.invalidateQueries({ queryKey: ['participantes'] }),
+        queryClient.invalidateQueries(PROJECT_ACTIVITIES),
       ]),
   });
 }
@@ -125,15 +132,7 @@ export function useConfirmFromWaitlist(activityId: string) {
         )}/confirmation`,
         { method: 'POST' },
       ),
-    onSuccess: () =>
-      Promise.all([
-        queryClient.invalidateQueries({ queryKey: ['atividades', activityId, 'inscritos'] }),
-        // A lista de atividades mostra os inscritos e a espera.
-        queryClient.invalidateQueries({
-          queryKey: ['projetos'],
-          predicate: (query) => query.queryKey[2] === 'atividades',
-        }),
-      ]),
+    onSuccess: (list) => refreshAfterChange(queryClient, activityId, list),
   });
 }
 
@@ -148,15 +147,26 @@ export function useCancelRegistration(activityId: string) {
         )}/cancellation`,
         { method: 'POST', body: data },
       ),
-    onSuccess: () =>
-      Promise.all([
-        queryClient.invalidateQueries({ queryKey: ['atividades', activityId, 'inscritos'] }),
-        queryClient.invalidateQueries({ queryKey: ['participantes'] }),
-        // A lista de atividades mostra os inscritos e a espera.
-        queryClient.invalidateQueries({
-          queryKey: ['projetos'],
-          predicate: (query) => query.queryKey[2] === 'atividades',
-        }),
-      ]),
+    onSuccess: (list) => refreshAfterChange(queryClient, activityId, list),
   });
+}
+
+/**
+ * Depois de confirmar ou cancelar, a resposta já é a lista completa: ela entra no cache sem busca, e
+ * só as listas com busca, a ficha do participante e as atividades do projeto são relidas.
+ */
+function refreshAfterChange(
+  queryClient: QueryClient,
+  activityId: string,
+  list: RegistrationList,
+): Promise<unknown> {
+  queryClient.setQueryData(registrationListKey(activityId), list);
+  return Promise.all([
+    queryClient.invalidateQueries({
+      queryKey: registrationListsKey(activityId),
+      predicate: (query) => query.queryKey[3] !== '',
+    }),
+    queryClient.invalidateQueries({ queryKey: ['participantes'] }),
+    queryClient.invalidateQueries(PROJECT_ACTIVITIES),
+  ]);
 }

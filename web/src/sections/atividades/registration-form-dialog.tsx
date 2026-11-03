@@ -225,7 +225,7 @@ export function RegistrationFormDialog({
           camposAdicionais: data.camposAdicionais,
           campoDuplicidade: data.campoDuplicidade,
           listaEspera: data.listaEspera,
-          promocaoAutomatica: data.promocaoAutomatica,
+          promocaoAutomatica: data.listaEspera && data.promocaoAutomatica,
           termoCompromisso: data.termoCompromisso || null,
           apresentacao: data.apresentacao || null,
           prazoInscricao: data.prazoInscricao || null,
@@ -238,7 +238,7 @@ export function RegistrationFormDialog({
           camposAdicionais: data.camposAdicionais,
           campoDuplicidade: data.campoDuplicidade,
           listaEspera: data.listaEspera,
-          promocaoAutomatica: data.promocaoAutomatica,
+          promocaoAutomatica: data.listaEspera && data.promocaoAutomatica,
           ...(data.termoCompromisso && { termoCompromisso: data.termoCompromisso }),
           ...(data.apresentacao && { apresentacao: data.apresentacao }),
           ...(data.prazoInscricao && { prazoInscricao: data.prazoInscricao }),
@@ -451,7 +451,7 @@ export function RegistrationFormDialog({
                   <span className="flex flex-col">
                     <span>Confirmar a espera sozinha quando houver vaga</span>
                     <span className="text-sm text-muted-foreground">
-                      {promocaoValue
+                      {listaEsperaValue && promocaoValue
                         ? 'Ao aumentar as vagas, as primeiras da espera passam a confirmadas.'
                         : 'O Núcleo escolhe quem confirmar, na lista de inscritos.'}
                     </span>

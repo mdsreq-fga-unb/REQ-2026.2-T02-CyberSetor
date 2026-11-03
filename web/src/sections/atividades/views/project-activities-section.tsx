@@ -335,6 +335,7 @@ export function ProjectActivitiesSection({
       <RegistrationListDialog
         open={registrationList.open}
         activity={registrationList.value}
+        editable={instrument.ativo === true}
         onClose={registrationList.close}
       />
 

@@ -1,5 +1,5 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { cleanup, fireEvent, render, screen, within } from '@testing-library/react';
+import { cleanup, fireEvent, render, screen, waitFor, within } from '@testing-library/react';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import { clearLocalSession, signIn } from '@/auth/session';
 import type { Activity } from '@/types/atividades';
@@ -72,7 +72,9 @@ const ACTIVITY_2: Activity = {
   ],
 };
 
-type Route = (body: unknown) => { status: number; body?: unknown };
+type Route = (
+  body: unknown,
+) => { status: number; body?: unknown } | Promise<{ status: number; body?: unknown }>;
 
 function json(status: number, body?: unknown): Response {
   return new Response(body === undefined ? null : JSON.stringify(body), { status });
@@ -115,7 +117,7 @@ async function signedInAs(perfil: string, routes: Record<string, Route>) {
       }
       const route = routes[key];
       if (!route) return json(404, { code: 'NOT_FOUND', message: key });
-      const result = route(body);
+      const result = await route(body);
       return json(result.status, result.body);
     }),
   );
@@ -421,7 +423,9 @@ describe('ProjectActivitiesSection', () => {
     await openRegistrations();
     fireEvent.click(await screen.findByRole('button', { name: 'Ações de Ana Souza' }));
     fireEvent.click(await screen.findByRole('menuitem', { name: 'Cancelar inscrição' }));
-    expect(await screen.findByText(/A vaga de Ana Souza fica livre/)).toBeInTheDocument();
+    expect(
+      await screen.findByText(/A vaga de Ana Souza fica livre para uma nova inscrição/),
+    ).toBeInTheDocument();
     fireEvent.change(screen.getByLabelText('Canal do pedido'), { target: { value: 'WHATSAPP' } });
     fireEvent.change(screen.getByLabelText('Data do pedido'), { target: { value: '2026-10-29' } });
     fireEvent.click(screen.getByRole('button', { name: 'Cancelar inscrição' }));
@@ -430,6 +434,9 @@ describe('ProjectActivitiesSection', () => {
     expect(
       within(canceladas).getByText('Cancelada a pedido em 29/10/2026 · WhatsApp'),
     ).toBeInTheDocument();
+    expect(
+      within(canceladas).queryByRole('columnheader', { name: 'Ações' }),
+    ).not.toBeInTheDocument();
     expect(calls.find((c) => c.key.endsWith('/cancellation'))?.body).toEqual({
       canal: 'WHATSAPP',
       pedidoEm: '2026-10-29',
@@ -464,6 +471,85 @@ describe('ProjectActivitiesSection', () => {
       await screen.findByRole('region', { name: 'Vagas confirmadas (2)' }),
     ).toBeInTheDocument();
     expect(screen.queryByRole('region', { name: /Lista de espera/ })).not.toBeInTheDocument();
+  });
+
+  it('sem promocao automatica, o cancelamento avisa que o Nucleo escolhe quem confirmar', async () => {
+    const ana = person('Ana Souza', 'CONFIRMADA', null);
+    const bruno = person('Bruno Lima', 'LISTA_ESPERA', 1);
+    await signedInAs('NUCLEO_PEDAGOGICO', {
+      [`GET /projects/${PROJECT.id}/activities`]: () => ({
+        status: 200,
+        body: [{ ...ACTIVITY_1, inscricao: { aberta: true, vagas: 1, inscritos: 1, emEspera: 1 } }],
+      }),
+      [`GET /activities/${ACTIVITY_1.id}/registrations`]: () => lista([ana], [bruno]),
+      [`GET /activities/${ACTIVITY_1.id}/registration`]: () => ({
+        status: 200,
+        body: { promocaoAutomatica: false, listaEspera: true },
+      }),
+    });
+    renderSection();
+
+    await openRegistrations();
+    fireEvent.click(await screen.findByRole('button', { name: 'Ações de Ana Souza' }));
+    fireEvent.click(await screen.findByRole('menuitem', { name: 'Cancelar inscrição' }));
+
+    expect(
+      await screen.findByText(/fica livre para o Núcleo confirmar alguém da lista de espera/),
+    ).toBeInTheDocument();
+    expect(screen.queryByText(/passa para a primeira da lista de espera/)).not.toBeInTheDocument();
+  });
+
+  it('ao trocar de atividade, a lista de inscritos nao mostra as pessoas da anterior', async () => {
+    let releaseSecond: () => void = () => undefined;
+    await signedInAs('NUCLEO_PEDAGOGICO', {
+      [`GET /projects/${PROJECT.id}/activities`]: () => ({
+        status: 200,
+        body: [
+          { ...ACTIVITY_1, inscricao: { aberta: true, vagas: 2, inscritos: 1, emEspera: 0 } },
+          { ...ACTIVITY_2, inscricao: { aberta: true, vagas: 2, inscritos: 1, emEspera: 0 } },
+        ],
+      }),
+      [`GET /activities/${ACTIVITY_1.id}/registrations`]: () =>
+        lista([person('Ana Souza', 'CONFIRMADA', null)], []),
+      [`GET /activities/${ACTIVITY_2.id}/registrations`]: () =>
+        new Promise((resolve) => {
+          releaseSecond = () => resolve(lista([person('Caio Reis', 'CONFIRMADA', null)], []));
+        }),
+    });
+    renderSection();
+
+    await openRegistrations();
+    expect(await screen.findByText('Ana Souza')).toBeInTheDocument();
+    fireEvent.keyDown(screen.getByRole('dialog'), { key: 'Escape' });
+    await waitFor(() => expect(screen.queryByRole('dialog')).not.toBeInTheDocument());
+
+    fireEvent.click(
+      await screen.findByRole('button', { name: `Ações da atividade ${ACTIVITY_2.titulo}` }),
+    );
+    fireEvent.click(await screen.findByRole('menuitem', { name: 'Ver inscritos' }));
+
+    expect(await screen.findByText(`Inscritos: ${ACTIVITY_2.titulo}`)).toBeInTheDocument();
+    expect(screen.queryByText('Ana Souza')).not.toBeInTheDocument();
+    releaseSecond();
+    expect(await screen.findByText('Caio Reis')).toBeInTheDocument();
+  });
+
+  it('com o instrumento inativo, o Nucleo ve os inscritos sem confirmar nem cancelar', async () => {
+    await signedInAs('NUCLEO_PEDAGOGICO', {
+      [`GET /projects/${PROJECT.id}/activities`]: () => ({
+        status: 200,
+        body: [{ ...ACTIVITY_1, inscricao: { aberta: true, vagas: 2, inscritos: 1, emEspera: 1 } }],
+      }),
+      [`GET /activities/${ACTIVITY_1.id}/registrations`]: () =>
+        lista([person('Ana Souza', 'CONFIRMADA', null)], [person('Bruno Lima', 'LISTA_ESPERA', 1)]),
+    });
+    renderSection({ ...INSTRUMENT, ativo: false });
+
+    await openRegistrations();
+
+    expect(await screen.findByText('Ana Souza')).toBeInTheDocument();
+    expect(screen.queryByRole('button', { name: /Ações de / })).not.toBeInTheDocument();
+    expect(screen.queryByRole('columnheader', { name: 'Ações' })).not.toBeInTheDocument();
   });
 
   it('perfil de consulta (ADMINISTRATIVO_FINANCEIRO) consulta mas nao altera', async () => {

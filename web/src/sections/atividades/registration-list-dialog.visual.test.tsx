@@ -79,7 +79,7 @@ describe.each([
     const client = new QueryClient({ defaultOptions: { queries: { retry: false } } });
     await render(
       <QueryClientProvider client={client}>
-        <RegistrationListDialog open activity={ACTIVITY} onClose={() => undefined} />
+        <RegistrationListDialog open activity={ACTIVITY} editable onClose={() => undefined} />
       </QueryClientProvider>,
     );
 
