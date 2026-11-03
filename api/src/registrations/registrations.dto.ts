@@ -1,4 +1,10 @@
-import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
+import {
+  ApiProperty,
+  ApiPropertyOptional,
+  IntersectionType,
+  PartialType,
+  PickType,
+} from '@nestjs/swagger';
 import {
   ArrayMaxSize,
   ArrayUnique,
@@ -7,7 +13,9 @@ import {
   IsEnum,
   IsInt,
   IsNotEmpty,
+  IsOptional,
   IsString,
+  IsUUID,
   Matches,
   Max,
   MaxLength,
@@ -16,8 +24,9 @@ import {
 } from 'class-validator';
 import { Transform } from 'class-transformer';
 import { trimString } from '../common/trim.js';
-import { CampoDuplicidade, CampoInscricao } from '../generated/prisma/enums.js';
+import { CampoDuplicidade, CampoInscricao, SituacaoInscricao } from '../generated/prisma/enums.js';
 import { toPhoneDigits } from '../public-registrations/participant-data.js';
+import { SubmitRegistrationDto } from '../public-registrations/public-registrations.dto.js';
 
 /** Campos que todo formulário pede (seção 8.5.4); não são configuráveis. */
 export const CAMPOS_MINIMOS = ['NOME', 'TELEFONE', 'DATA_NASCIMENTO', 'CONSENTIMENTOS'] as const;
@@ -262,4 +271,67 @@ export class RegistrationResponse {
     description: 'Caminho do formulário público no front',
   })
   linkPublico!: string;
+}
+
+/**
+ * Inscrição presencial registrada pelo Núcleo (HU-08): os mesmos campos e regras do formulário
+ * público. Com `reaproveitarParticipanteId`, os dados pessoais vêm do cadastro existente, e o envio
+ * só completa os campos que a atividade pede e o cadastro não tem.
+ */
+export class CreateAssistedRegistrationDto extends IntersectionType(
+  PartialType(
+    PickType(SubmitRegistrationDto, [
+      'nome',
+      'nomePreferencia',
+      'telefone',
+      'dataNascimento',
+      'email',
+      'cpf',
+      'bairroRegiao',
+      'escolaridade',
+    ] as const),
+  ),
+  PickType(SubmitRegistrationDto, [
+    'versaoAviso',
+    'versaoTermo',
+    'autorizaComunicados',
+    'autorizaImagem',
+    'responsavelNome',
+    'responsavelTelefone',
+  ] as const),
+) {
+  @ApiPropertyOptional({
+    description: 'Cadastro existente a reaproveitar, achado pela checagem de duplicidade (CA-08.3)',
+  })
+  @IsOptional()
+  @IsUUID()
+  reaproveitarParticipanteId?: string;
+}
+
+export class AssistedRegistrationParticipantSummary {
+  @ApiProperty()
+  id!: string;
+
+  @ApiProperty()
+  nome!: string;
+}
+
+export class AssistedRegistrationResponse {
+  @ApiProperty()
+  id!: string;
+
+  @ApiProperty({ enum: SituacaoInscricao })
+  situacao!: SituacaoInscricao;
+
+  @ApiPropertyOptional({ nullable: true })
+  posicaoEspera?: number | null;
+
+  @ApiProperty()
+  reaproveitouParticipante!: boolean;
+
+  @ApiProperty({ type: AssistedRegistrationParticipantSummary })
+  participante!: AssistedRegistrationParticipantSummary;
+
+  @ApiProperty()
+  inscritoEm!: string;
 }

@@ -14,12 +14,16 @@ import { ACTIVITY_EDITORS } from '../activities/activities.service.js';
 import { CurrentUser } from '../auth/authenticated-user.js';
 import { Profiles } from '../auth/decorators.js';
 import type { ValidSession } from '../auth/session.service.js';
+import { Perfil } from '../generated/prisma/enums.js';
 import { INSTRUMENT_READERS } from '../instruments/instruments.controller.js';
 import {
+  AssistedRegistrationResponse,
+  CreateAssistedRegistrationDto,
   OpenRegistrationDto,
   RegistrationResponse,
   UpdateRegistrationDto,
 } from './registrations.dto.js';
+import { AssistedRegistrationsService } from './assisted-registrations.service.js';
 import { RegistrationsService } from './registrations.service.js';
 
 function actorOf(user: ValidSession, res: Response): Actor {
@@ -30,7 +34,10 @@ function actorOf(user: ValidSession, res: Response): Actor {
 @ApiBearerAuth()
 @Controller('activities/:id/registration')
 export class RegistrationsController {
-  constructor(private readonly registrations: RegistrationsService) {}
+  constructor(
+    private readonly registrations: RegistrationsService,
+    private readonly assisted: AssistedRegistrationsService,
+  ) {}
 
   @Get()
   @Profiles(...INSTRUMENT_READERS)
@@ -70,5 +77,23 @@ export class RegistrationsController {
     @Res({ passthrough: true }) res: Response,
   ): Promise<RegistrationResponse> {
     return this.registrations.update(id, body, actorOf(user, res));
+  }
+
+  /** Inscrição presencial assistida: restrita ao Núcleo Pedagógico (CA-08.1, RF13, RNF04). */
+  @Post('assisted')
+  @Profiles(Perfil.NUCLEO_PEDAGOGICO)
+  @ApiCreatedResponse({ type: AssistedRegistrationResponse })
+  @ApiBadRequestResponse({
+    description:
+      'MISSING_FIELDS, INVALID_BIRTH_DATE, GUARDIAN_REQUIRED, INVALID_CPF, NOTICE_OUTDATED',
+  })
+  @ApiConflictResponse({ description: 'ALREADY_REGISTERED ou REGISTRATION_CLOSED' })
+  createAssisted(
+    @Param('id', ParseUUIDPipe) id: string,
+    @Body() body: CreateAssistedRegistrationDto,
+    @CurrentUser() user: ValidSession,
+    @Res({ passthrough: true }) res: Response,
+  ): Promise<AssistedRegistrationResponse> {
+    return this.assisted.create(id, body, actorOf(user, res));
   }
 }

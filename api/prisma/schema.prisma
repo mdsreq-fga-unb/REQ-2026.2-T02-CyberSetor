@@ -360,14 +360,17 @@ model Inscricao {
   cancelamentoCanal         CanalPedido?      @map("cancelamento_canal")
   /// Ordem de chegada, atribuída depois da trava da configuração: decide a vaga e a posição na espera (RF15).
   ordemChegada              Int               @default(autoincrement()) @map("ordem_chegada")
+  criadoPorId               String?           @map("criado_por_id") @db.Uuid
   criadoEm                  DateTime          @default(now()) @map("criado_em") @db.Timestamptz(3)
 
   atividade    Atividade    @relation(fields: [atividadeId], references: [id], onDelete: Restrict)
   participante Participante @relation(fields: [participanteId], references: [id], onDelete: Restrict)
+  criadoPor    Usuario?     @relation("inscricaoCriadaPor", fields: [criadoPorId], references: [id], onDelete: Restrict)
 
   @@unique([atividadeId, chaveDuplicidade])
   @@index([participanteId])
   @@index([atividadeId, situacao, ordemChegada])
+  @@index([criadoPorId])
   @@map("inscricao")
 }
 
@@ -440,6 +443,7 @@ model Usuario {
   eventos             TrilhaAuditoria[]      @relation("autor")
   previas             TrilhaAuditoria[]      @relation("previa")
   relatorios          Relatorio[]
+  inscricoesAssistidas Inscricao[]           @relation("inscricaoCriadaPor")
 
   @@map("usuario")
 }
