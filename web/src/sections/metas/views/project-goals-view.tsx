@@ -41,6 +41,7 @@ import { useRequirements } from '@/queries/requisitos';
 import { useCurrentUser } from '@/queries/sessao';
 import { paths } from '@/routes/paths';
 import { ProjectActivitiesSection } from '@/sections/atividades/views/project-activities-section';
+import { ProjectReportsSection } from '@/sections/relatorios/views/project-reports-section';
 import { ProjectReportPreviewSection } from './project-report-preview-section';
 import type { Goal } from '@/types/metas';
 import type { Project } from '@/types/projetos';
@@ -515,6 +516,8 @@ export function ProjectGoalsView({
           instrumentActive={instrument.data?.ativo === true}
         />
       )}
+
+      {project.data && <ProjectReportsSection projectId={projectId} />}
 
       {requirements.data && project.data && (
         <GoalFormDialog

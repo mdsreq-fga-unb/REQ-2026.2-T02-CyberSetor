@@ -1,6 +1,11 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { authorizedRequest } from '@/auth/session';
-import type { FinalizeReportInput, Report, ReportPreview } from '@/types/relatorios';
+import type {
+  FinalizeReportInput,
+  Report,
+  ReportPdfLink,
+  ReportPreview,
+} from '@/types/relatorios';
 
 export function reportPreviewKey(projectId: string, from?: string, to?: string) {
   return ['report-preview', projectId, from, to] as const;
@@ -50,5 +55,17 @@ export function useFinalizeReport(projectId: string) {
         queryClient.invalidateQueries({ queryKey: reportsKey(projectId) }),
         queryClient.invalidateQueries({ queryKey: ['report-preview', projectId] }),
       ]),
+  });
+}
+
+/** Pede o link do PDF; a primeira vez gera e guarda o arquivo, então a lista ganha o hash. */
+export function useOpenReportPdf(projectId: string) {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: (reportId: string) =>
+      authorizedRequest<ReportPdfLink>(
+        `/projects/${encodeURIComponent(projectId)}/reports/${encodeURIComponent(reportId)}/pdf`,
+      ),
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: reportsKey(projectId) }),
   });
 }
