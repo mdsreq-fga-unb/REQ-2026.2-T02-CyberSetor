@@ -1,6 +1,6 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { cleanup, fireEvent, render, screen, waitFor, within } from '@testing-library/react';
-import { afterEach, describe, expect, it, vi } from 'vitest';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { clearLocalSession, signIn } from '@/auth/session';
 import type { Perfil } from '@/auth/types';
 import { Toaster } from '@/components/ui/toast';
@@ -223,6 +223,14 @@ function selectPeriod(from = '2026-01-01', to = '2026-06-30') {
 }
 
 describe('ProjectReportPreviewSection', () => {
+  // Sem sessão, a tela tenta renovar o login: a resposta fica no teste, sem rede de verdade.
+  beforeEach(() => {
+    vi.stubGlobal(
+      'fetch',
+      vi.fn(async () => json(401, { code: 'UNAUTHENTICATED', message: 'Sem sessão' })),
+    );
+  });
+
   afterEach(() => {
     cleanup();
     clearLocalSession();
@@ -243,7 +251,9 @@ describe('ProjectReportPreviewSection', () => {
   });
 
   it('avisa quando a data inicial é posterior à data final e bloqueia a chamada à API', () => {
-    const fetchSpy = vi.fn();
+    const fetchSpy = vi.fn<(url: string) => Promise<Response>>(async () =>
+      json(401, { code: 'UNAUTHENTICATED', message: 'Sem sessão' }),
+    );
     vi.stubGlobal('fetch', fetchSpy);
 
     renderComponent();
@@ -254,7 +264,9 @@ describe('ProjectReportPreviewSection', () => {
       screen.getByText('A data inicial não pode ser posterior à data final.'),
     ).toBeInTheDocument();
     expect(screen.getByText('Intervalo de datas inválido')).toBeInTheDocument();
-    expect(fetchSpy).not.toHaveBeenCalled();
+    expect(fetchSpy.mock.calls.map(([url]) => String(url))).not.toContainEqual(
+      expect.stringContaining('/report-preview'),
+    );
   });
 
   it('renderiza a tabela de metas com cumprimento e badges correspondentes após preencher o período', async () => {
