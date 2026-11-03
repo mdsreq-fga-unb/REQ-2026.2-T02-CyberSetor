@@ -31,6 +31,7 @@ const ANA: Participant = {
   cpf: '52998224725',
   bairroRegiao: 'Asa Sul',
   escolaridade: null,
+  anonimizadoEm: null,
   inscricoes: [
     {
       id: 'i1',
@@ -203,6 +204,72 @@ describe('participantes', () => {
     await waitFor(() =>
       expect(screen.queryByRole('button', { name: 'Registrar revogação' })).not.toBeInTheDocument(),
     );
+  });
+
+  it('mostra o que sera excluido e preservado antes de anonimizar, e envia o pedido', async () => {
+    const ERASURE = `${GET}/erasure`;
+    const ERASE = `POST /participants/${ANA_ID}/erasure`;
+    const plan = {
+      acao: 'ANONIMIZAR',
+      excluidos: ['Identificação e contato'],
+      anonimizados: ['Data de nascimento, reduzida ao ano'],
+      preservados: ['Inscrições em atividades realizadas'],
+      inscricoesCanceladas: 1,
+    };
+    const calls = await signedInAs('NUCLEO_PEDAGOGICO', {
+      [LIST]: () => ({ status: 200, body: [ANA_RESUMO] }),
+      [GET]: () => ({ status: 200, body: ANA }),
+      [ERASURE]: () => ({ status: 200, body: plan }),
+      [ERASE]: () => ({ status: 200, body: plan }),
+    });
+    renderView();
+
+    fireEvent.click(await screen.findByRole('button', { name: 'Ações de Ana Souza' }));
+    fireEvent.click(await screen.findByRole('menuitem', { name: 'Ver ficha' }));
+    // O botão só habilita com a ficha carregada.
+    await screen.findByText('Comunicados: sim');
+    fireEvent.click(screen.getByRole('button', { name: 'Excluir ou anonimizar' }));
+
+    expect(await screen.findByText('Identificação e contato')).toBeInTheDocument();
+    expect(screen.getByText('Inscrições em atividades realizadas')).toBeInTheDocument();
+    expect(screen.getByText(/A inscrição em atividade futura é cancelada/)).toBeInTheDocument();
+    fireEvent.click(screen.getByRole('button', { name: 'Anonimizar dados' }));
+    expect(await screen.findByText('Escolha o canal do pedido.')).toBeInTheDocument();
+    expect(calls.some((call) => call.key === ERASE)).toBe(false);
+
+    fireEvent.change(screen.getByLabelText('Canal do pedido'), { target: { value: 'EMAIL' } });
+    fireEvent.change(screen.getByLabelText('Data do pedido'), { target: { value: '2026-10-29' } });
+    fireEvent.click(screen.getByRole('button', { name: 'Anonimizar dados' }));
+
+    expect(await screen.findByText('Dados anonimizados')).toBeInTheDocument();
+    expect(calls.find((call) => call.key === ERASE)?.body).toEqual({
+      versao: 1,
+      motivo: 'PEDIDO_TITULAR',
+      canal: 'EMAIL',
+      pedidoEm: '2026-10-29',
+    });
+  });
+
+  it('ficha anonimizada nao oferece correcao nem novo pedido', async () => {
+    await signedInAs('NUCLEO_PEDAGOGICO', {
+      [LIST]: () => ({ status: 200, body: [ANA_RESUMO] }),
+      [GET]: () => ({
+        status: 200,
+        body: {
+          ...ANA,
+          nome: 'Participante anonimizado',
+          anonimizadoEm: '2026-10-30T13:00:00.000Z',
+        },
+      }),
+    });
+    renderView();
+
+    fireEvent.click(await screen.findByRole('button', { name: 'Ações de Ana Souza' }));
+    fireEvent.click(await screen.findByRole('menuitem', { name: 'Ver ficha' }));
+
+    expect(await screen.findByText(/Dados pessoais anonimizados em/)).toBeInTheDocument();
+    expect(screen.queryByRole('button', { name: 'Corrigir dados' })).not.toBeInTheDocument();
+    expect(screen.queryByRole('button', { name: 'Excluir ou anonimizar' })).not.toBeInTheDocument();
   });
 
   it('corrige so o que mudou, com a justificativa, e avisa', async () => {

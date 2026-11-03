@@ -625,6 +625,7 @@ describe('ProjectActivitiesSection', () => {
           cpf: null,
           bairroRegiao: null,
           escolaridade: null,
+          anonimizadoEm: null,
           inscricoes: [],
         },
       }),

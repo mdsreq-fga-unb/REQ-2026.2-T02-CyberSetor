@@ -66,6 +66,8 @@ export interface Participant {
   cpf: string | null;
   bairroRegiao: string | null;
   escolaridade: string | null;
+  /** Quando os dados pessoais foram anonimizados (HU-15b); nulo enquanto não foram. */
+  anonimizadoEm: string | null;
   inscricoes: ParticipantRegistration[];
 }
 
@@ -81,4 +83,25 @@ export interface ParticipantCorrection {
   cpf?: string | null;
   bairroRegiao?: string | null;
   escolaridade?: string | null;
+}
+
+export const MOTIVOS_ELIMINACAO = ['PEDIDO_TITULAR', 'FIM_FINALIDADE'] as const;
+
+export type MotivoEliminacao = (typeof MOTIVOS_ELIMINACAO)[number];
+
+/** Exclusão ou anonimização a pedido do titular ou ao fim da finalidade (HU-15b, RF27). */
+export interface ErasureInput {
+  versao: number;
+  motivo: MotivoEliminacao;
+  canal: CanalPedido;
+  pedidoEm: string;
+}
+
+/** O que o pedido faz com cada classe de dado, com o fundamento (CA-15b.4, RN-07). */
+export interface ErasurePlan {
+  acao: 'EXCLUIR' | 'ANONIMIZAR';
+  excluidos: string[];
+  anonimizados: string[];
+  preservados: string[];
+  inscricoesCanceladas: number;
 }

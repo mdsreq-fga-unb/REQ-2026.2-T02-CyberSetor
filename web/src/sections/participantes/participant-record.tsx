@@ -5,6 +5,7 @@ import { toast } from '@/components/ui/toast';
 import { useParticipant } from '@/queries/participantes';
 import type { ParticipantRegistration } from '@/types/participantes';
 import { CorrectParticipantDialog } from './correct-participant-dialog';
+import { EraseParticipantDialog } from './erase-participant-dialog';
 import { ParticipantDialog } from './participant-dialog';
 import { RevokeAuthorizationDialog } from './revoke-authorization-dialog';
 
@@ -28,11 +29,13 @@ export function ParticipantRecord({
   const participant = useParticipant(participantId);
   const [correctingNow, setCorrecting] = useState<boolean | null>(null);
   const [revoking, setRevoking] = useState<ParticipantRegistration | null>(null);
+  const [erasing, setErasing] = useState(false);
   const correcting = correctingNow ?? startCorrecting;
 
   function closeAll() {
     setCorrecting(null);
     setRevoking(null);
+    setErasing(false);
     onClose();
   }
 
@@ -40,13 +43,26 @@ export function ParticipantRecord({
     <>
       <ParticipantDialog
         // Enquanto a ficha carrega, ou se ela falhar, mostra a ficha mesmo vindo de "Corrigir dados".
-        open={open && !revoking && (!correcting || !participant.data)}
+        open={open && !revoking && !erasing && (!correcting || !participant.data)}
         participant={participant.data}
         loading={participant.isPending}
         failed={participant.isError}
         onClose={closeAll}
         onCorrect={() => setCorrecting(true)}
         onRevoke={setRevoking}
+        onErase={() => setErasing(true)}
+      />
+      <EraseParticipantDialog
+        open={open && erasing}
+        participant={participant.data ?? null}
+        onClose={() => setErasing(false)}
+        onErased={(plan) => {
+          toast.add({
+            type: 'success',
+            title: plan.acao === 'EXCLUIR' ? 'Dados excluídos' : 'Dados anonimizados',
+          });
+          closeAll();
+        }}
       />
       <RevokeAuthorizationDialog
         open={open && Boolean(revoking)}
