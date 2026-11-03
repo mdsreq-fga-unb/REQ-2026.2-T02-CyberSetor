@@ -1,6 +1,8 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { authorizedRequest } from '@/auth/session';
 import type {
+  ErasureInput,
+  ErasurePlan,
   Participant,
   ParticipantCorrection,
   ParticipantSummary,
@@ -95,5 +97,37 @@ export function useCorrectParticipant() {
       queryClient.setQueryData(participantKey(participant.id), participant);
       return queryClient.invalidateQueries({ queryKey: ['participantes', 'lista'] });
     },
+  });
+}
+
+/** O que a exclusão ou a anonimização faria, lido de novo a cada abertura do diálogo. */
+export function useErasurePlan(id: string | null, enabled: boolean) {
+  return useQuery({
+    queryKey: [...participantKey(id ?? ''), 'eliminacao'] as const,
+    queryFn: () =>
+      authorizedRequest<ErasurePlan>(`/participants/${encodeURIComponent(id!)}/erasure`),
+    enabled: Boolean(id && enabled),
+    staleTime: 0,
+  });
+}
+
+export function useEraseParticipant() {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: ({ id, data }: { id: string; data: ErasureInput }) =>
+      authorizedRequest<ErasurePlan>(`/participants/${encodeURIComponent(id)}/erasure`, {
+        method: 'POST',
+        body: data,
+      }),
+    // A ficha, a lista de participantes e as listas de inscritos mudam (a vaga futura se libera).
+    onSuccess: () =>
+      Promise.all([
+        queryClient.invalidateQueries({ queryKey: ['participantes'] }),
+        queryClient.invalidateQueries({ queryKey: ['atividades'] }),
+        queryClient.invalidateQueries({
+          queryKey: ['projetos'],
+          predicate: (query) => query.queryKey[2] === 'atividades',
+        }),
+      ]),
   });
 }

@@ -56,6 +56,7 @@ export function ParticipantDialog({
   onClose,
   onCorrect,
   onRevoke,
+  onErase,
 }: {
   open: boolean;
   participant: Participant | undefined;
@@ -64,7 +65,9 @@ export function ParticipantDialog({
   onClose: () => void;
   onCorrect: () => void;
   onRevoke: (registration: ParticipantRegistration) => void;
+  onErase: () => void;
 }) {
+  const anonymized = Boolean(participant?.anonimizadoEm);
   return (
     <Dialog open={open} onOpenChange={(next) => !next && onClose()}>
       <DialogContent className="max-h-[calc(100dvh-2rem)] overflow-y-auto sm:max-w-2xl">
@@ -165,13 +168,27 @@ export function ParticipantDialog({
           </div>
         )}
 
+        {anonymized && participant?.anonimizadoEm && (
+          <p role="status" className="text-sm text-muted-foreground">
+            Dados pessoais anonimizados em {formatDateTime(participant.anonimizadoEm)}. As
+            inscrições ficam para os totais da prestação de contas.
+          </p>
+        )}
+
         <DialogFooter>
           <Button variant="outline" onClick={onClose}>
             Fechar
           </Button>
-          <Button onClick={onCorrect} disabled={!participant}>
-            Corrigir dados
-          </Button>
+          {!anonymized && (
+            <>
+              <Button variant="outline" onClick={onErase} disabled={!participant}>
+                Excluir ou anonimizar
+              </Button>
+              <Button onClick={onCorrect} disabled={!participant}>
+                Corrigir dados
+              </Button>
+            </>
+          )}
         </DialogFooter>
       </DialogContent>
     </Dialog>
