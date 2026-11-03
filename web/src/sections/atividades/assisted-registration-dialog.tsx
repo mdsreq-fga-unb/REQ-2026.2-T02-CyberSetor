@@ -213,7 +213,7 @@ export function AssistedRegistrationDialog({
   return (
     <Dialog open={open} onOpenChange={(next) => !next && !submitting && close()}>
       <DialogContent className="max-h-[calc(100dvh-2rem)] overflow-y-auto sm:max-w-xl">
-        <DialogHeader>
+        <DialogHeader className="pr-10">
           <DialogTitle className="flex items-center gap-2">
             <UserPlusIcon className="size-5 text-primary" aria-hidden="true" />
             Inscrição presencial
