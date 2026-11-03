@@ -11,7 +11,12 @@ import { AutorTipo, CampoInscricao, SituacaoInscricao } from '../generated/prism
 import { todayInBrasilia } from '../goals/goal-deadline.js';
 import { PrismaService } from '../prisma/prisma.service.js';
 import { participantSearch } from './participant-search.js';
-import { ageOn, birthDateProblem, isValidCpf } from '../public-registrations/participant-data.js';
+import {
+  ageOn,
+  birthDateProblem,
+  isValidCpf,
+  onlyDigits,
+} from '../public-registrations/participant-data.js';
 import type {
   CheckDuplicateDto,
   CorrectParticipantDto,
@@ -131,6 +136,20 @@ function invalid(code: string, message: string, details: object = {}): BadReques
   return new BadRequestException({ code, message, details });
 }
 
+/** Final do telefone, para a pessoa confirmar que é o dela. */
+function maskPhone(telefone: string): string {
+  return `(**) *****-${telefone.slice(-4)}`;
+}
+
+function maskEmail(email: string): string {
+  const [user = '', domain = ''] = email.split('@');
+  return user.length <= 2 ? `***@${domain}` : `${user[0]}***${user.slice(-1)}@${domain}`;
+}
+
+function maskCpf(cpf: string): string {
+  return `***.***.${cpf.slice(6, 9)}-**`;
+}
+
 /**
  * Participantes inscritos pelo formulário público, para o Núcleo Pedagógico: busca, ficha com
  * as inscrições e correção a pedido do titular (HU-15a, RF26). A trilha guarda quem corrigiu,
@@ -179,51 +198,28 @@ export class ParticipantsService {
     });
   }
 
+  /**
+   * Cadastro já existente pelo CPF ou pelo e-mail, para a inscrição presencial (CA-08.3, RF22): só
+   * o nome e os contatos mascarados, para a confirmação verbal (RNF05, minimização).
+   */
   async checkDuplicate(dto: CheckDuplicateDto): Promise<DuplicateCheckResponse> {
     const cpf = dto.cpf ? onlyDigits(dto.cpf) : undefined;
-    const email = dto.email ? dto.email.trim().toLowerCase() : undefined;
-
-    if (!cpf && !email) {
-      return { existe: false, participante: null };
+    const email = dto.email || undefined;
+    // A mesma pessoa pode ter mais de um cadastro (um por inscrição pública): vale o mais recente.
+    const latest = (where: Prisma.ParticipanteWhereInput) =>
+      this.prisma.participante.findFirst({ where, orderBy: { criadoEm: 'desc' } });
+    const [porCpf, porEmail] = await Promise.all([
+      cpf ? latest({ cpf }) : null,
+      email ? latest({ email }) : null,
+    ]);
+    if (porCpf && porEmail && porCpf.id !== porEmail.id) {
+      throw new ConflictException({
+        code: 'AMBIGUOUS_DUPLICATE_KEY',
+        message: 'O CPF e o e-mail informados pertencem a cadastros diferentes.',
+      });
     }
-
-    if (cpf && email) {
-      const porCpf = await this.prisma.participante.findUnique({ where: { cpf } });
-      const porEmail = await this.prisma.participante.findFirst({ where: { email } });
-      if (porCpf && porEmail && porCpf.id !== porEmail.id) {
-        throw new ConflictException({
-          code: 'AMBIGUOUS_DUPLICATE_KEY',
-          message: 'O CPF e o e-mail informados pertencem a cadastros diferentes.',
-        });
-      }
-    }
-
-    const conditions: Prisma.ParticipanteWhereInput[] = [];
-    if (cpf) conditions.push({ cpf });
-    if (email) conditions.push({ email });
-
-    const row = await this.prisma.participante.findFirst({
-      where: { OR: conditions },
-    });
-
-    if (!row) {
-      return { existe: false, participante: null };
-    }
-
-    const camposDisponiveis: string[] = ['nome', 'telefone', 'dataNascimento'];
-    if (row.email) camposDisponiveis.push('email');
-    if (row.cpf) camposDisponiveis.push('cpf');
-    if (row.bairroRegiao) camposDisponiveis.push('bairroRegiao');
-    if (row.escolaridade) camposDisponiveis.push('escolaridade');
-
-    const maskPhone = (t: string) => (t.length >= 4 ? `+55 ** *****-${t.slice(-4)}` : '***');
-    const maskEmail = (e: string) => {
-      const parts = e.split('@');
-      if (parts.length !== 2 || parts[0].length <= 2) return `***@${parts[1] ?? '***'}`;
-      return `${parts[0][0]}***${parts[0].slice(-1)}@${parts[1]}`;
-    };
-    const maskCpf = (c: string) => (c.length === 11 ? `***.***.${c.slice(6, 9)}-**` : '***');
-
+    const row = porCpf ?? porEmail;
+    if (!row) return { existe: false, participante: null };
     return {
       existe: true,
       participante: {
@@ -232,7 +228,9 @@ export class ParticipantsService {
         telefoneMascarado: maskPhone(row.telefone),
         emailMascarado: row.email ? maskEmail(row.email) : null,
         cpfMascarado: row.cpf ? maskCpf(row.cpf) : null,
-        camposDisponiveis,
+        camposDisponiveis: (['email', 'cpf', 'bairroRegiao', 'escolaridade'] as const).filter(
+          (campo) => row[campo] !== null,
+        ),
       },
     };
   }

@@ -62,7 +62,8 @@ export class ParticipantsController {
   @HttpCode(HttpStatus.OK)
   @ApiOkResponse({
     type: DuplicateCheckResponse,
-    description: 'Verifica existência prévia por CPF ou e-mail sem expor dados na URL (CA-08.3, RF22, RNF05)',
+    description:
+      'Verifica existência prévia por CPF ou e-mail sem expor dados na URL (CA-08.3, RF22, RNF05)',
   })
   checkDuplicate(@Body() body: CheckDuplicateDto): Promise<DuplicateCheckResponse> {
     return this.participants.checkDuplicate(body);
