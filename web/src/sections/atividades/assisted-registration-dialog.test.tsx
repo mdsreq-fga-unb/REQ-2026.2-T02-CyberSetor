@@ -66,6 +66,10 @@ async function signedInAs(perfil: string, routes: Record<string, Route>) {
           deveTrocarSenha: false,
         });
       }
+      if (routes[key]) {
+        const res = routes[key](body, parsed.searchParams);
+        return json(res.status, res.body);
+      }
       if (key === 'GET /activities/00000000-0000-4000-8000-000000000060/registration') {
         return json(200, {
           atividadeId: '00000000-0000-4000-8000-000000000060',
@@ -79,35 +83,8 @@ async function signedInAs(perfil: string, routes: Record<string, Route>) {
           linkPublico: '/inscrever/abc123xyz789',
         });
       }
-      if (key === 'GET /public/registrations/abc123xyz789') {
-        return json(200, {
-          atividade: {
-            titulo: 'Oficina de Teatro — Turma A',
-            data: '2026-11-20',
-            local: 'Galpão Cultural',
-          },
-          aberta: true,
-          vagasEsgotadas: false,
-          listaEspera: true,
-          camposMinimos: ['NOME', 'TELEFONE', 'DATA_NASCIMENTO', 'CONSENTIMENTOS'],
-          camposAdicionais: ['CPF', 'EMAIL'],
-          aviso: {
-            versao: '2026-10-30-provisoria',
-            texto: 'Aviso oficial do Instituto Cultural e Social No Setor.',
-          },
-          termo: null,
-          apresentacao: null,
-          prazoInscricao: null,
-          prazoHora: null,
-          contatoWhatsapp: null,
-        });
-      }
-      const handler = routes[key];
-      if (!handler) {
-        return json(404, { message: `Sem mock para ${key}` });
-      }
-      const res = handler(body, parsed.searchParams);
-      return json(res.status, res.body);
+      if (key === FORM_PATH) return json(200, PUBLIC_FORM);
+      return json(404, { message: `Sem mock para ${key}` });
     }),
   );
   await signIn('edu@instituto.test', 's');
@@ -138,6 +115,58 @@ function renderDialog({
   );
 }
 
+const FORM_PATH = 'GET /public/registrations/abc123xyz789';
+const SUBMIT_PATH = 'POST /activities/00000000-0000-4000-8000-000000000060/registration/assisted';
+
+const PUBLIC_FORM = {
+  atividade: {
+    titulo: 'Oficina de Teatro — Turma A',
+    data: '2026-11-20',
+    local: 'Galpão Cultural',
+  },
+  aberta: true,
+  vagasEsgotadas: false,
+  listaEspera: true,
+  camposMinimos: ['NOME', 'TELEFONE', 'DATA_NASCIMENTO', 'CONSENTIMENTOS'],
+  camposAdicionais: ['CPF', 'EMAIL'],
+  aviso: {
+    versao: '2026-10-30-provisoria',
+    texto: 'Aviso oficial do Instituto Cultural e Social No Setor.',
+  },
+  termo: null,
+  apresentacao: null,
+  prazoInscricao: null,
+  prazoHora: null,
+  contatoWhatsapp: null,
+};
+
+const CREATED = {
+  status: 201,
+  body: {
+    id: 'insc-1',
+    situacao: 'CONFIRMADA',
+    posicaoEspera: null,
+    reaproveitouParticipante: false,
+    participante: { id: 'part-1', nome: 'Carlos Adulto' },
+    inscritoEm: '2026-11-01T10:00:00.000Z',
+  },
+};
+
+async function fillAdult() {
+  fireEvent.change(await screen.findByLabelText('Nome completo'), {
+    target: { value: 'Carlos Adulto' },
+  });
+  fireEvent.change(screen.getByLabelText('Telefone com DDD'), { target: { value: '61981112233' } });
+  fireEvent.change(screen.getByLabelText('Data de nascimento'), {
+    target: { value: '1998-04-10' },
+  });
+  fireEvent.change(screen.getByLabelText('CPF'), { target: { value: '529.982.247-25' } });
+  fireEvent.change(screen.getByLabelText('E-mail'), { target: { value: 'carlos@exemplo.com' } });
+}
+
+const submitted = (calls: { key: string; body: unknown }[]) =>
+  calls.find((c) => c.key === SUBMIT_PATH)?.body as Record<string, unknown> | undefined;
+
 describe('AssistedRegistrationDialog (HU-08)', () => {
   afterEach(() => {
     cleanup();
@@ -145,182 +174,161 @@ describe('AssistedRegistrationDialog (HU-08)', () => {
     vi.restoreAllMocks();
   });
 
-  it('renderiza título, campos de identificação, aviso dinâmico para leitura e operador logado', async () => {
-    await signedInAs('NUCLEO_PEDAGOGICO', {});
+  it('mostra os campos pedidos e o aviso de dados, que precisa ser confirmado antes de enviar', async () => {
+    const calls = await signedInAs('NUCLEO_PEDAGOGICO', { [SUBMIT_PATH]: () => CREATED });
     renderDialog();
 
-    expect(screen.getByText(/Inscrição Presencial Assistida/i)).toBeInTheDocument();
+    expect(await screen.findByText(/Aviso oficial do Instituto/)).toBeInTheDocument();
+    expect(screen.getByLabelText('CPF')).toBeInTheDocument();
+    expect(screen.getByLabelText('E-mail')).toBeInTheDocument();
+    const aviso = screen.getByRole('checkbox', { name: /Li o aviso para a pessoa/ });
+    expect(aviso).not.toBeChecked();
+
+    await fillAdult();
+    fireEvent.click(screen.getByRole('button', { name: 'Concluir inscrição' }));
+
     expect(
-      screen.getByText(/Inscrever participante em Oficina de Teatro — Turma A/i),
+      await screen.findByText('Confirme que leu o aviso de tratamento de dados para a pessoa.'),
     ).toBeInTheDocument();
-    expect(screen.getByLabelText(/Nome completo \*/i)).toBeInTheDocument();
-    expect(screen.getByLabelText(/Telefone com DDD \*/i)).toBeInTheDocument();
-    expect(screen.getByLabelText(/Data de nascimento \*/i)).toBeInTheDocument();
-    expect(screen.getByLabelText(/CPF do participante \*/i)).toBeInTheDocument();
-    expect(screen.getByText(/Núcleo Pedagógico/i)).toBeInTheDocument();
-
-    // CA-08.4: Apresentação do aviso de tratamento de dados para leitura verbal
-    await waitFor(() => {
-      expect(
-        screen.getByText(/Aviso oficial do Instituto Cultural e Social No Setor/i),
-      ).toBeInTheDocument();
-    });
+    expect(submitted(calls)).toBeUndefined();
   });
 
-  it('exibe dinamicamente campos de responsável quando participante for menor de 18 anos', async () => {
-    await signedInAs('NUCLEO_PEDAGOGICO', {});
-    renderDialog();
-
-    // Digita data de alguém com 16 anos (nascido em 2010)
-    const birthInput = screen.getByLabelText(/Data de nascimento \*/i);
-    fireEvent.change(birthInput, { target: { value: '2010-05-15' } });
-
-    await waitFor(() => {
-      expect(
-        screen.getByText(/Participante menor de 18 anos — dados do responsável obrigatórios/i),
-      ).toBeInTheDocument();
-      expect(screen.getByLabelText(/Nome do responsável legal \*/i)).toBeInTheDocument();
-      expect(screen.getByLabelText(/Telefone do responsável \*/i)).toBeInTheDocument();
-    });
-  });
-
-  it('exibe aviso prévio de lista de espera quando as vagas estão esgotadas (CA-08.5)', async () => {
-    await signedInAs('NUCLEO_PEDAGOGICO', {});
-    renderDialog({ activity: ACTIVITY_FULL });
-
-    // Vagas esgotadas com 2 pessoas na espera -> próxima posição = 3ª
-    expect(
-      screen.getByText(/Vagas esgotadas: Esta inscrição entrará na Lista de Espera/i),
-    ).toBeInTheDocument();
-    expect(screen.getByText(/3ª posição/i)).toBeInTheDocument();
-  });
-
-  it('detecta duplicidade via POST com dados mascarados e reaproveita cadastro existente (CA-08.3, RNF05)', async () => {
-    await signedInAs('NUCLEO_PEDAGOGICO', {
-      'POST /participants/check-duplicate': (body) => {
-        const payload = body as { cpf?: string };
-        if (payload.cpf === '52998224725') {
-          return {
-            status: 200,
-            body: {
-              existe: true,
-              participante: {
-                id: 'part-uuid-1',
-                nome: 'Maria da Silva',
-                telefoneMascarado: '61 9****-7777',
-                cpfMascarado: '529.***.***-25',
-                emailMascarado: 'm***@teste.com',
-                camposDisponiveis: ['cpf', 'email', 'telefone'],
-              },
-            },
-          };
-        }
-        return { status: 200, body: { existe: false, participante: null } };
-      },
-    });
-
-    renderDialog();
-
-    const cpfInput = screen.getByLabelText(/CPF do participante \*/i);
-    fireEvent.change(cpfInput, { target: { value: '52998224725' } });
-
-    // Aguarda debounce e exibição do aviso com dados mascarados
-    await waitFor(() => {
-      expect(screen.getByText(/Cadastro existente detectado na base/i)).toBeInTheDocument();
-      expect(screen.getByText(/Maria da Silva/i)).toBeInTheDocument();
-      expect(screen.getByText(/61 9\*\*\*\*-7777/i)).toBeInTheDocument();
-    });
-
-    // Clica em Reaproveitar cadastro
-    const reaproveitarBtn = screen.getByRole('button', { name: /Reaproveitar cadastro/i });
-    fireEvent.click(reaproveitarBtn);
-
-    // Nome é preenchido e travado
-    expect(screen.getByText(/Reaproveitando cadastro de/i)).toBeInTheDocument();
-    const nomeInput = screen.getByLabelText(/Nome completo \*/i);
-    expect(nomeInput).toHaveValue('Maria da Silva');
-    expect(nomeInput).toBeDisabled();
-  });
-
-  it('submete inscrição assistida com sucesso informando vaga garantida', async () => {
+  it('envia os dados pedidos com a versao do aviso lido', async () => {
     const onSuccess = vi.fn();
-    const calls = await signedInAs('NUCLEO_PEDAGOGICO', {
-      'POST /activities/00000000-0000-4000-8000-000000000060/registration/assisted': () => ({
-        status: 201,
-        body: {
-          id: 'insc-1',
-          situacao: 'CONFIRMADA',
-          posicaoEspera: null,
-          reaproveitouParticipante: false,
-          participante: { id: 'part-1', nome: 'Carlos Adulto' },
-          inscritoEm: '2026-11-01T10:00:00.000Z',
-        },
-      }),
-    });
-
+    const calls = await signedInAs('NUCLEO_PEDAGOGICO', { [SUBMIT_PATH]: () => CREATED });
     renderDialog({ onSuccess });
 
-    fireEvent.change(screen.getByLabelText(/Nome completo \*/i), {
-      target: { value: 'Carlos Adulto' },
-    });
-    fireEvent.change(screen.getByLabelText(/Telefone com DDD \*/i), {
-      target: { value: '61981112233' },
-    });
-    fireEvent.change(screen.getByLabelText(/Data de nascimento \*/i), {
-      target: { value: '1998-04-10' },
-    });
-    fireEvent.change(screen.getByLabelText(/CPF do participante \*/i), {
-      target: { value: '52998224725' },
-    });
+    await fillAdult();
+    fireEvent.click(screen.getByRole('checkbox', { name: /Li o aviso para a pessoa/ }));
+    fireEvent.click(screen.getByRole('button', { name: 'Concluir inscrição' }));
 
-    // Submete formulário
-    fireEvent.click(screen.getByRole('button', { name: /Concluir inscrição/i }));
-
-    await waitFor(() => {
-      expect(onSuccess).toHaveBeenCalled();
+    await waitFor(() => expect(onSuccess).toHaveBeenCalled());
+    expect(submitted(calls)).toEqual({
+      nome: 'Carlos Adulto',
+      telefone: '61981112233',
+      dataNascimento: '1998-04-10',
+      cpf: '52998224725',
+      email: 'carlos@exemplo.com',
+      versaoAviso: '2026-10-30-provisoria',
+      autorizaComunicados: false,
+      autorizaImagem: false,
     });
-
-    const submitCall = calls.find((c) =>
-      c.key.includes('/activities/00000000-0000-4000-8000-000000000060/registration/assisted'),
-    );
-    expect(submitCall).toBeDefined();
-    const body = submitCall?.body as Record<string, unknown>;
-    expect(body.nome).toBe('Carlos Adulto');
-    expect(body.cpf).toBe('52998224725');
   });
 
-  it('exibe alerta de erro quando participante já possui inscrição na atividade', async () => {
+  it('com compromissos da turma, exige o aceite e envia a versao do texto', async () => {
+    const calls = await signedInAs('NUCLEO_PEDAGOGICO', {
+      [FORM_PATH]: () => ({
+        status: 200,
+        body: { ...PUBLIC_FORM, termo: { versao: 'termo-v1', texto: 'Chegar no horário.' } },
+      }),
+      [SUBMIT_PATH]: () => CREATED,
+    });
+    renderDialog();
+
+    await fillAdult();
+    fireEvent.click(screen.getByRole('checkbox', { name: /Li o aviso para a pessoa/ }));
+    fireEvent.click(screen.getByRole('button', { name: 'Concluir inscrição' }));
+    expect(
+      await screen.findByText('Marque que concorda com os compromissos da turma.'),
+    ).toBeInTheDocument();
+
+    fireEvent.click(screen.getByRole('checkbox', { name: /ouviu os compromissos/ }));
+    fireEvent.click(screen.getByRole('button', { name: 'Concluir inscrição' }));
+
+    await waitFor(() => expect(submitted(calls)).toMatchObject({ versaoTermo: 'termo-v1' }));
+  });
+
+  it('pede o responsavel legal quando a pessoa e menor de 18 anos', async () => {
+    await signedInAs('NUCLEO_PEDAGOGICO', {});
+    renderDialog();
+
+    fireEvent.change(await screen.findByLabelText('Data de nascimento'), {
+      target: { value: '2012-05-15' },
+    });
+
+    expect(
+      await screen.findByText('Menor de 18 anos: informe o responsável legal.'),
+    ).toBeInTheDocument();
+    expect(screen.getByLabelText('Nome do responsável')).toBeInTheDocument();
+  });
+
+  it('com as vagas esgotadas, avisa antes da posicao na lista de espera (CA-08.5)', async () => {
     await signedInAs('NUCLEO_PEDAGOGICO', {
-      'POST /activities/00000000-0000-4000-8000-000000000060/registration/assisted': () => ({
-        status: 409,
+      [FORM_PATH]: () => ({ status: 200, body: { ...PUBLIC_FORM, vagasEsgotadas: true } }),
+    });
+    renderDialog({ activity: ACTIVITY_FULL });
+
+    expect(await screen.findByText(/esta inscrição entra na lista de espera/)).toBeInTheDocument();
+    expect(screen.getByText('3ª posição')).toBeInTheDocument();
+  });
+
+  it('reaproveita o cadastro achado e envia so o dado pedido que falta nele (CA-08.3)', async () => {
+    const calls = await signedInAs('NUCLEO_PEDAGOGICO', {
+      'POST /participants/check-duplicate': () => ({
+        status: 200,
         body: {
-          code: 'ALREADY_REGISTERED',
-          message: 'Já existe uma inscrição com estes dados nesta atividade.',
+          existe: true,
+          participante: {
+            id: 'part-uuid-1',
+            nome: 'Maria da Silva',
+            telefoneMascarado: '(**) *****-7777',
+            cpfMascarado: '***.***.247-**',
+            emailMascarado: null,
+            camposDisponiveis: ['cpf'],
+          },
+        },
+      }),
+      [SUBMIT_PATH]: () => CREATED,
+    });
+    renderDialog();
+
+    fireEvent.change(await screen.findByLabelText('CPF'), { target: { value: '52998224725' } });
+    expect(await screen.findByText(/\(\*\*\) \*\*\*\*\*-7777/)).toBeInTheDocument();
+    fireEvent.click(screen.getByRole('button', { name: 'Reaproveitar cadastro' }));
+
+    expect(screen.getByText(/Reaproveitando o cadastro de/)).toBeInTheDocument();
+    expect(screen.queryByLabelText('Nome completo')).not.toBeInTheDocument();
+    expect(screen.queryByLabelText('CPF')).not.toBeInTheDocument();
+    fireEvent.change(screen.getByLabelText('E-mail'), { target: { value: 'maria@exemplo.com' } });
+    fireEvent.click(screen.getByRole('checkbox', { name: /Li o aviso para a pessoa/ }));
+    fireEvent.click(screen.getByRole('button', { name: 'Concluir inscrição' }));
+
+    await waitFor(() =>
+      expect(submitted(calls)).toEqual({
+        reaproveitarParticipanteId: 'part-uuid-1',
+        email: 'maria@exemplo.com',
+        versaoAviso: '2026-10-30-provisoria',
+        autorizaComunicados: false,
+        autorizaImagem: false,
+      }),
+    );
+  });
+
+  it('inscricao repetida mostra a recusa, e falha inesperada a mensagem padrao', async () => {
+    let status = 409;
+    await signedInAs('NUCLEO_PEDAGOGICO', {
+      [SUBMIT_PATH]: () => ({
+        status,
+        body: {
+          code: status === 409 ? 'ALREADY_REGISTERED' : 'INTERNAL',
+          message: 'detalhe interno',
         },
       }),
     });
-
     renderDialog();
 
-    fireEvent.change(screen.getByLabelText(/Nome completo \*/i), {
-      target: { value: 'Carlos Adulto' },
-    });
-    fireEvent.change(screen.getByLabelText(/Telefone com DDD \*/i), {
-      target: { value: '61981112233' },
-    });
-    fireEvent.change(screen.getByLabelText(/Data de nascimento \*/i), {
-      target: { value: '1998-04-10' },
-    });
-    fireEvent.change(screen.getByLabelText(/CPF do participante \*/i), {
-      target: { value: '52998224725' },
-    });
+    await fillAdult();
+    fireEvent.click(screen.getByRole('checkbox', { name: /Li o aviso para a pessoa/ }));
+    fireEvent.click(screen.getByRole('button', { name: 'Concluir inscrição' }));
+    expect(
+      await screen.findByText('Esta pessoa já possui inscrição ativa nesta atividade.'),
+    ).toBeInTheDocument();
 
-    fireEvent.click(screen.getByRole('button', { name: /Concluir inscrição/i }));
-
-    await waitFor(() => {
-      expect(
-        screen.getByText(/Esta pessoa já possui inscrição ativa nesta atividade/i),
-      ).toBeInTheDocument();
-    });
+    status = 500;
+    fireEvent.click(screen.getByRole('button', { name: 'Concluir inscrição' }));
+    expect(
+      await screen.findByText('Não foi possível registrar a inscrição. Tente de novo.'),
+    ).toBeInTheDocument();
+    expect(screen.queryByText('detalhe interno')).not.toBeInTheDocument();
   });
 });

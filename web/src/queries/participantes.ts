@@ -82,7 +82,6 @@ export async function checkParticipantDuplicate(data: {
     body: data,
   });
 }
-}
 
 export function useCorrectParticipant() {
   const queryClient = useQueryClient();

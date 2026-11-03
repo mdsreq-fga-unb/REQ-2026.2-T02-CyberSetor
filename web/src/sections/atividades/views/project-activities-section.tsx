@@ -179,7 +179,7 @@ export function ProjectActivitiesSection({
       }
     }
     if (seesNames && activity.inscricao) {
-      if (activity.inscricao.aberta) {
+      if (activity.inscricao.aberta && instrument.ativo === true) {
         actions.push({
           label: 'Nova inscrição presencial',
           onSelect: () => assistedRegistration.show({ activity }),

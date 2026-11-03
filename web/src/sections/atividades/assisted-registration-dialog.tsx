@@ -2,12 +2,10 @@
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import { AlertCircleIcon, CheckCircle2Icon, RotateCcwIcon, UserPlusIcon } from 'lucide-react';
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useForm, useWatch } from 'react-hook-form';
 import { z } from 'zod';
-import { useSession } from '@/auth/hooks/use-session';
 import { CpfField, DateField, PhoneField, TextField } from '@/components/form/fields';
-import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import {
   Dialog,
@@ -17,106 +15,123 @@ import {
   DialogHeader,
   DialogTitle,
 } from '@/components/ui/dialog';
-import { Field, FieldGroup } from '@/components/ui/field';
+import { FieldGroup } from '@/components/ui/field';
+import { Skeleton } from '@/components/ui/skeleton';
 import { toast } from '@/components/ui/toast';
 import { ApiError } from '@/lib/api';
-import { ageOn, isValidCpf, isValidPhone, todayInBrasilia } from '@/lib/br';
-import { phoneSchema } from '@/lib/schemas';
+import { isValidCpf } from '@/lib/br';
 import { usePublicForm } from '@/queries/inscricao-publica';
 import { useCreateAssistedRegistration, useRegistration } from '@/queries/inscricoes';
 import { checkParticipantDuplicate, type DuplicateCheckParticipant } from '@/queries/participantes';
 import type { Activity } from '@/types/atividades';
-import type { AssistedRegistrationResponse, CampoInscricao } from '@/types/inscricoes';
+import type { PublicForm } from '@/types/inscricao-publica';
+import type {
+  AssistedRegistrationResponse,
+  CampoInscricao,
+  CreateAssistedRegistrationInput,
+} from '@/types/inscricoes';
+import {
+  Consent,
+  consentsOf,
+  EMPTY_REGISTRATION,
+  FIELD_OF,
+  guardianRule,
+  isMinor,
+  registrationShape,
+  submissionOf,
+  type RegistrationFormValues,
+} from '../inscricao-publica/registration-form';
 
-const ADULT_AGE = 18;
-const ISO_DATE = /^\d{4}-\d{2}-\d{2}$/;
-const FALLBACK_NOTICE = {
-  versao: '2026-10-30-provisoria',
-  texto:
-    'O Instituto Cultural e Social No Setor usa os dados deste formulário para a sua inscrição ' +
-    'na atividade e para a prestação de contas da parceria que a financia. Os dados ficam ' +
-    'acessíveis só à equipe pedagógica, são guardados pelo prazo legal da prestação de contas ' +
-    'e não são compartilhados para outros fins. As autorizações de comunicados e de uso de ' +
-    'imagem e voz são opcionais e podem ser revogadas a qualquer momento junto ao Instituto. ' +
-    'Você pode pedir a correção, a exclusão ou a anonimização dos seus dados.',
-};
+type FormValues = RegistrationFormValues & { avisoLido: boolean };
 
-function isMinor(birthDate: string): boolean {
-  return ISO_DATE.test(birthDate) && ageOn(birthDate, todayInBrasilia()) < ADULT_AGE;
-}
+const NOTHING_ASKED: CampoInscricao[] = [];
 
-function buildAssistedSchema(hasTerm: boolean) {
+function schemaFor(
+  asked: readonly CampoInscricao[],
+  hasTerm: boolean,
+  reusing: DuplicateCheckParticipant | null,
+) {
   return z
     .object({
-      nome: z.string().trim().min(2, 'Informe o nome completo.').max(150),
-      nomePreferencia: z.string().max(80, 'Use no máximo 80 caracteres.').optional(),
-      telefone: phoneSchema(),
-      dataNascimento: z
-        .string()
-        .regex(ISO_DATE, 'Informe a data de nascimento no formato AAAA-MM-DD.')
-        .refine((v) => v <= todayInBrasilia(), 'A data não pode ser no futuro.'),
-      email: z.string().optional(),
-      cpf: z.string().optional(),
-      bairroRegiao: z.string().optional(),
-      escolaridade: z.string().optional(),
+      ...registrationShape(asked, hasTerm, reusing ?? undefined),
       avisoLido: z
         .boolean()
-        .refine(
-          (val) => val === true,
-          'É obrigatório confirmar a leitura e apresentação verbal do aviso.',
-        ),
-      aceiteTermo: z.boolean().optional(),
-      autorizaComunicados: z.boolean(),
-      autorizaImagem: z.boolean(),
-      responsavelNome: z.string().optional(),
-      responsavelTelefone: z.string().optional(),
+        .refine(Boolean, 'Confirme que leu o aviso de tratamento de dados para a pessoa.'),
     })
-    .superRefine((data, ctx) => {
-      if (isMinor(data.dataNascimento)) {
-        if (!data.responsavelNome || data.responsavelNome.trim().length < 2) {
-          ctx.addIssue({
-            code: 'custom',
-            path: ['responsavelNome'],
-            message: 'Informe o nome do responsável legal para participantes menores de 18 anos.',
-          });
-        }
-        if (!data.responsavelTelefone || !isValidPhone(data.responsavelTelefone)) {
-          ctx.addIssue({
-            code: 'custom',
-            path: ['responsavelTelefone'],
-            message: 'Informe o telefone do responsável legal com DDD.',
-          });
-        }
-      }
-      if (hasTerm && !data.aceiteTermo) {
-        ctx.addIssue({
-          code: 'custom',
-          path: ['aceiteTermo'],
-          message: 'É obrigatório confirmar a apresentação e o aceite dos compromissos da turma.',
-        });
-      }
-    });
+    .superRefine(guardianRule);
 }
 
-type FormValues = z.infer<ReturnType<typeof buildAssistedSchema>>;
+const DEFAULT_VALUES: FormValues = { ...EMPTY_REGISTRATION, avisoLido: false };
 
-const DEFAULT_VALUES: FormValues = {
-  nome: '',
-  nomePreferencia: '',
-  telefone: '',
-  dataNascimento: '',
-  email: '',
-  cpf: '',
-  bairroRegiao: '',
-  escolaridade: '',
-  avisoLido: true,
-  aceiteTermo: false,
-  autorizaComunicados: false,
-  autorizaImagem: false,
-  responsavelNome: '',
-  responsavelTelefone: '',
-};
+// Mesmo tom de aviso das atividades e do painel (tokens warning).
+const WARNING_BOX = 'rounded-md border border-warning/60 bg-warning/10 p-3 text-sm';
 
+function failureOf(error: unknown): string {
+  if (!(error instanceof ApiError)) return 'Não foi possível falar com o servidor. Tente de novo.';
+  if (error.code === 'ALREADY_REGISTERED') {
+    return 'Esta pessoa já possui inscrição ativa nesta atividade.';
+  }
+  if (error.code === 'GUARDIAN_REQUIRED') {
+    return 'O cadastro é de menor de 18 anos: informe o nome e o telefone do responsável legal.';
+  }
+  if ([400, 404, 409].includes(error.status)) return error.message;
+  return 'Não foi possível registrar a inscrição. Tente de novo.';
+}
+
+/** Envio com cadastro reaproveitado: só o que o cadastro não tem e a atividade pede (RNF05). */
+function reuseSubmission(
+  values: FormValues,
+  form: PublicForm,
+  person: DuplicateCheckParticipant,
+): CreateAssistedRegistrationInput {
+  const body: CreateAssistedRegistrationInput = {
+    reaproveitarParticipanteId: person.id,
+    ...consentsOf(values, form),
+  };
+  for (const campo of form.camposAdicionais) {
+    const name = FIELD_OF[campo];
+    if (!person.camposDisponiveis.includes(name)) body[name] = values[name].trim();
+  }
+  if (values.responsavelNome.trim()) {
+    body.responsavelNome = values.responsavelNome.trim();
+    body.responsavelTelefone = values.responsavelTelefone;
+  }
+  return body;
+}
+
+/** Cadastro já existente pela chave de duplicidade da atividade, sem PII na URL (CA-08.3, RNF05). */
+function useDuplicate(open: boolean, key: CampoInscricao | undefined, value: string) {
+  const [found, setFound] = useState<DuplicateCheckParticipant | null>(null);
+  useEffect(() => {
+    if (!open || !key) return;
+    const digits = value.replace(/\D/g, '');
+    const email = value.trim().toLowerCase();
+    const query =
+      key === 'CPF' && digits.length === 11 && isValidCpf(digits)
+        ? { cpf: digits }
+        : key === 'EMAIL' && /^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)
+          ? { email }
+          : null;
+    let active = true;
+    const timer = setTimeout(() => {
+      if (!query) return setFound(null);
+      // A checagem prévia não impede a inscrição: a API recusa o repetido de qualquer forma.
+      checkParticipantDuplicate(query)
+        .then((res) => active && setFound(res.existe ? (res.participante ?? null) : null))
+        .catch(() => undefined);
+    }, 400);
+    return () => {
+      active = false;
+      clearTimeout(timer);
+    };
+  }, [open, key, value]);
+  return [found, setFound] as const;
+}
+
+/**
+ * Inscrição presencial registrada pelo Núcleo (HU-08): os mesmos campos e regras do formulário
+ * público, com o aviso de dados lido para a pessoa e o reaproveitamento de cadastro existente.
+ */
 export function AssistedRegistrationDialog({
   open,
   activity,
@@ -128,492 +143,276 @@ export function AssistedRegistrationDialog({
   onClose: () => void;
   onSuccess?: (res: AssistedRegistrationResponse) => void;
 }) {
-  const { session } = useSession();
-  const createAssisted = useCreateAssistedRegistration(activity?.id ?? '');
-  const registrationQuery = useRegistration(activity?.id, open && Boolean(activity?.id));
-  const publicForm = usePublicForm(registrationQuery.data?.codigoPublico ?? '');
+  const create = useCreateAssistedRegistration(activity?.id ?? '');
+  const registration = useRegistration(activity?.id, open);
+  const publicForm = usePublicForm(registration.data?.codigoPublico ?? '');
+  const form = publicForm.data;
+  const asked = form?.camposAdicionais ?? NOTHING_ASKED;
+  const key = registration.data?.campoDuplicidade;
+  const [reusing, setReusing] = useState<DuplicateCheckParticipant | null>(null);
+  const [failure, setFailure] = useState<string | null>(null);
 
-  const [duplicateParticipant, setDuplicateParticipant] =
-    useState<DuplicateCheckParticipant | null>(null);
-  const [isReusing, setIsReusing] = useState(false);
-  const [serverError, setServerError] = useState<string | null>(null);
-
-  const hasTerm = Boolean(publicForm.data?.termo);
-  const noticeVersion = publicForm.data?.aviso.versao ?? FALLBACK_NOTICE.versao;
-  const noticeText = publicForm.data?.aviso.texto ?? FALLBACK_NOTICE.texto;
-
-  const vagasEsgotadas =
-    publicForm.data?.vagasEsgotadas ??
-    (activity?.inscricao
-      ? (activity.inscricao.inscritos ?? 0) >= (activity.inscricao.vagas ?? 0)
-      : false);
-  const proximaPosicao =
-    ((activity?.inscricao as unknown as { emEspera?: number; listaEspera?: number })?.emEspera ??
-      (activity?.inscricao as unknown as { emEspera?: number; listaEspera?: number })?.listaEspera ??
-      0) + 1;
-
-  const {
-    register,
-    handleSubmit,
-    control,
-    setValue,
-    reset,
-    formState: { errors, isSubmitting },
-  } = useForm<FormValues>({
-    resolver: zodResolver(buildAssistedSchema(hasTerm)),
+  const termo = Boolean(form?.termo);
+  const schema = useMemo(() => schemaFor(asked, termo, reusing), [asked, termo, reusing]);
+  // O useForm relê as opções a cada render: o resolver acompanha o esquema atual.
+  const methods = useForm<FormValues>({
+    resolver: zodResolver(schema),
     defaultValues: DEFAULT_VALUES,
   });
-
+  const { control } = methods;
   const birthDate = useWatch({ control, name: 'dataNascimento' });
-  const cpfValue = useWatch({ control, name: 'cpf' });
-  const emailValue = useWatch({ control, name: 'email' });
+  const keyValue = useWatch({ control, name: key === 'CPF' ? 'cpf' : 'email' });
+  const [duplicate, setDuplicate] = useDuplicate(open && !reusing, key, keyValue ?? '');
 
-  const askedFields: CampoInscricao[] = registrationQuery.data?.camposAdicionais ?? [
-    'CPF',
-    'EMAIL',
-  ];
-  const keyField = registrationQuery.data?.campoDuplicidade ?? 'CPF';
+  const nextPosition = (activity?.inscricao?.emEspera ?? 0) + 1;
+  const showsField = (campo: CampoInscricao) =>
+    asked.includes(campo) && !reusing?.camposDisponiveis.includes(FIELD_OF[campo]);
 
-  const handleClose = () => {
-    reset(DEFAULT_VALUES);
-    setDuplicateParticipant(null);
-    setIsReusing(false);
-    setServerError(null);
+  function close() {
+    methods.reset(DEFAULT_VALUES);
+    setReusing(null);
+    setDuplicate(null);
+    setFailure(null);
     onClose();
-  };
+  }
 
-  // Consulta duplicidade em tempo real (POST com payload JSON sem PII em URL - RNF05)
-  useEffect(() => {
-    if (!open || isReusing) return;
-
-    let active = true;
-    const timer = setTimeout(async () => {
-      try {
-        if (keyField === 'CPF') {
-          const digits = (cpfValue ?? '').replace(/\D/g, '');
-          if (digits.length === 11 && isValidCpf(digits)) {
-            const res = await checkParticipantDuplicate({ cpf: digits });
-            if (active && res.existe && res.participante) {
-              setDuplicateParticipant(res.participante);
-            } else if (active) {
-              setDuplicateParticipant(null);
-            }
-          } else if (active) {
-            setDuplicateParticipant(null);
-          }
-        } else if (keyField === 'EMAIL') {
-          const trimmed = (emailValue ?? '').trim().toLowerCase();
-          if (trimmed.includes('@') && trimmed.includes('.')) {
-            const res = await checkParticipantDuplicate({ email: trimmed });
-            if (active && res.existe && res.participante) {
-              setDuplicateParticipant(res.participante);
-            } else if (active) {
-              setDuplicateParticipant(null);
-            }
-          } else if (active) {
-            setDuplicateParticipant(null);
-          }
-        }
-      } catch {
-        // Falhas silenciosas de checagem prévia não impedem o fluxo
-      }
-    }, 400);
-
-    return () => {
-      active = false;
-      clearTimeout(timer);
-    };
-  }, [open, keyField, cpfValue, emailValue, isReusing]);
-
-  const handleApplyReuse = () => {
-    if (!duplicateParticipant) return;
-    setValue('nome', duplicateParticipant.nome);
-    setIsReusing(true);
-  };
-
-  const handleCancelReuse = () => {
-    setIsReusing(false);
-  };
-
-  const onSubmit = async (values: FormValues) => {
-    if (!activity) return;
-    setServerError(null);
-
+  async function onValid(values: FormValues) {
+    if (!form) return;
+    setFailure(null);
     try {
-      const response = await createAssisted.mutateAsync({
-        reaproveitarParticipanteId: isReusing ? duplicateParticipant?.id : undefined,
-        nome: values.nome,
-        nomePreferencia: values.nomePreferencia?.trim() || undefined,
-        telefone: values.telefone,
-        dataNascimento: values.dataNascimento,
-        email: values.email || undefined,
-        cpf: values.cpf || undefined,
-        bairroRegiao: values.bairroRegiao || undefined,
-        escolaridade: values.escolaridade || undefined,
-        versaoAviso: noticeVersion,
-        autorizaComunicados: values.autorizaComunicados,
-        autorizaImagem: values.autorizaImagem,
-        responsavelNome: isMinor(values.dataNascimento) ? values.responsavelNome : undefined,
-        responsavelTelefone: isMinor(values.dataNascimento)
-          ? values.responsavelTelefone
-          : undefined,
-      });
-
-      if (response.situacao === 'CONFIRMADA') {
-        toast.add({
-          type: 'success',
-          title: `Inscrição de "${response.participante.nome}" confirmada!`,
-          description: 'Vaga garantida na atividade.',
-        });
-      } else {
-        toast.add({
-          type: 'info',
-          title: `Inscrição de "${response.participante.nome}" na lista de espera!`,
-          description: `Participante colocado na ${response.posicaoEspera}ª posição.`,
-        });
-      }
-
+      const response = await create.mutateAsync(
+        reusing ? reuseSubmission(values, form, reusing) : submissionOf(values, form),
+      );
+      toast.add(
+        response.situacao === 'CONFIRMADA'
+          ? { type: 'success', title: `Vaga de ${response.participante.nome} confirmada` }
+          : {
+              type: 'info',
+              title: `${response.participante.nome} entrou na lista de espera`,
+              description: `Posição ${response.posicaoEspera}º.`,
+            },
+      );
       onSuccess?.(response);
-      handleClose();
-    } catch (err) {
-      if (err instanceof ApiError) {
-        if (err.code === 'ALREADY_REGISTERED') {
-          setServerError('Esta pessoa já possui inscrição ativa nesta atividade.');
-        } else if (err.code === 'GUARDIAN_REQUIRED') {
-          setServerError('Dados do responsável legal são obrigatórios para menores de 18 anos.');
-        } else if (err.code === 'MISSING_FIELDS') {
-          setServerError('Preencha todos os campos obrigatórios exigidos pela atividade.');
-        } else if (err.code === 'REGISTRATION_CLOSED') {
-          setServerError('As inscrições para esta atividade estão encerradas.');
-        } else {
-          setServerError(err.message);
-        }
-      } else {
-        setServerError('Não foi possível registrar a inscrição. Tente novamente.');
+      close();
+    } catch (error) {
+      if (
+        error instanceof ApiError &&
+        (error.code === 'NOTICE_OUTDATED' || error.code === 'TERM_OUTDATED')
+      ) {
+        methods.setValue('avisoLido', false);
+        methods.setValue('aceiteTermo', false);
+        void publicForm.refetch();
       }
+      setFailure(failureOf(error));
     }
-  };
+  }
 
-  if (!activity) return null;
+  const submitting = methods.formState.isSubmitting;
+  const minor = !reusing && isMinor(birthDate);
 
   return (
-    <Dialog open={open} onOpenChange={(v) => !v && handleClose()}>
-      <DialogContent className="max-w-xl max-h-[90vh] overflow-y-auto">
+    <Dialog open={open} onOpenChange={(next) => !next && !submitting && close()}>
+      <DialogContent className="max-h-[calc(100dvh-2rem)] overflow-y-auto sm:max-w-xl">
         <DialogHeader>
-          <div className="flex items-center gap-2 text-primary font-medium text-sm">
-            <UserPlusIcon className="size-4" aria-hidden="true" />
-            <span>Inscrição Presencial Assistida</span>
-          </div>
-          <DialogTitle className="text-xl">Inscrever participante em {activity.titulo}</DialogTitle>
+          <DialogTitle className="flex items-center gap-2">
+            <UserPlusIcon className="size-5 text-primary" aria-hidden="true" />
+            Inscrição presencial
+          </DialogTitle>
           <DialogDescription>
-            Preencha os dados do participante sem celular ou conexão. O registro será associado ao
-            seu usuário para fins de auditoria.
+            {activity?.titulo}: para quem se inscreve com a equipe, sem o link. A inscrição fica
+            registrada com o seu usuário.
           </DialogDescription>
         </DialogHeader>
 
-        {/* Banner prévio de Lista de Espera se vagas esgotadas (CA-08.5) */}
-        {vagasEsgotadas && (
-          <div
-            role="status"
-            aria-live="polite"
-            className="flex items-start gap-2.5 p-3 rounded-md bg-warning/20 border border-warning/40 text-foreground text-sm"
-          >
-            <AlertCircleIcon
-              className="size-5 shrink-0 text-amber-700 dark:text-warning mt-0.5"
-              aria-hidden="true"
-            />
-            <div className="space-y-0.5">
-              <p className="font-semibold text-amber-900 dark:text-warning">
-                Vagas esgotadas: Esta inscrição entrará na Lista de Espera
-              </p>
-              <p className="text-xs text-amber-800 dark:text-muted-foreground">
-                Ao concluir o cadastro presencial, o participante será posicionado na{' '}
-                <strong>{proximaPosicao}ª posição</strong> da lista de espera.
-              </p>
+        {!form || !key ? (
+          publicForm.isError || registration.isError ? (
+            <p role="alert" className="text-sm text-destructive">
+              Não foi possível carregar a configuração da inscrição. Feche e tente de novo.
+            </p>
+          ) : (
+            <div className="flex flex-col gap-3" aria-busy="true">
+              <Skeleton className="h-12 w-full" />
+              <Skeleton className="h-12 w-full" />
+              <Skeleton className="h-24 w-full" />
             </div>
-          </div>
-        )}
-
-        {serverError && (
-          <div
-            role="alert"
-            className="flex items-start gap-2 p-3 text-sm rounded-md bg-destructive/10 text-destructive border border-destructive/20"
-          >
-            <AlertCircleIcon className="size-4 shrink-0 mt-0.5" aria-hidden="true" />
-            <span>{serverError}</span>
-          </div>
-        )}
-
-        <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-          <FieldGroup className="space-y-3">
-            <div className="text-sm font-semibold text-foreground/80 border-b pb-1">
-              1. Identificação do participante
-            </div>
-
-            {isReusing && duplicateParticipant && (
-              <div className="flex items-center justify-between p-2.5 rounded-md bg-muted/60 border text-sm">
-                <div className="flex items-center gap-2">
-                  <CheckCircle2Icon className="size-4 text-success" aria-hidden="true" />
-                  <span>
-                    Reaproveitando cadastro de <strong>{duplicateParticipant.nome}</strong>
-                  </span>
-                </div>
-                <Button
-                  type="button"
-                  variant="ghost"
-                  onClick={handleCancelReuse}
-                  className="min-h-12 px-3 text-xs text-muted-foreground hover:text-foreground"
-                >
-                  <RotateCcwIcon className="size-3.5 mr-1" aria-hidden="true" />
-                  Desfazer
-                </Button>
+          )
+        ) : (
+          <form noValidate onSubmit={methods.handleSubmit(onValid)} className="flex flex-col gap-5">
+            {form.vagasEsgotadas && (
+              <div role="status" className={`flex items-start gap-2 ${WARNING_BOX}`}>
+                <AlertCircleIcon className="mt-0.5 size-4 shrink-0" aria-hidden="true" />
+                <p>
+                  {form.listaEspera ? (
+                    <>
+                      Vagas esgotadas: esta inscrição entra na lista de espera, na{' '}
+                      <strong>{nextPosition}ª posição</strong>.
+                    </>
+                  ) : (
+                    'Vagas esgotadas, e a atividade não tem lista de espera: a inscrição será recusada.'
+                  )}
+                </p>
               </div>
             )}
 
-            <TextField control={control} name="nome" label="Nome completo *" disabled={isReusing} />
-
-            <TextField
-              control={control}
-              name="nomePreferencia"
-              label="Como prefere ser chamado(a)? (opcional)"
-              disabled={isReusing}
-            />
-
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-              <PhoneField
-                control={control}
-                name="telefone"
-                label="Telefone com DDD *"
-                disabled={isReusing}
-              />
-
-              <DateField
-                control={control}
-                name="dataNascimento"
-                label="Data de nascimento *"
-                disabled={isReusing}
-              />
-            </div>
-
-            {/* Aviso dinâmico de Menor de 18 anos */}
-            {isMinor(birthDate) && (
-              <div className="p-3 rounded-md bg-warning/15 border border-warning/30 space-y-3">
-                <div className="flex items-center gap-2 text-xs font-medium text-amber-800 dark:text-warning">
-                  <AlertCircleIcon className="size-4 shrink-0" aria-hidden="true" />
-                  <span>Participante menor de 18 anos — dados do responsável obrigatórios</span>
+            <FieldGroup>
+              {reusing ? (
+                <div className="flex flex-wrap items-center justify-between gap-2 rounded-md border bg-muted/60 p-3 text-sm">
+                  <span className="flex items-center gap-2">
+                    <CheckCircle2Icon className="size-4 text-success" aria-hidden="true" />
+                    Reaproveitando o cadastro de <strong>{reusing.nome}</strong>
+                  </span>
+                  <Button
+                    type="button"
+                    variant="ghost"
+                    className="h-12"
+                    onClick={() => setReusing(null)}
+                  >
+                    <RotateCcwIcon data-icon="inline-start" aria-hidden="true" />
+                    Desfazer
+                  </Button>
                 </div>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              ) : (
+                <>
+                  <TextField control={control} name="nome" label="Nome completo" />
                   <TextField
                     control={control}
-                    name="responsavelNome"
-                    label="Nome do responsável legal *"
+                    name="nomePreferencia"
+                    label="Como prefere ser chamada (opcional)"
                   />
+                  <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                    <PhoneField control={control} name="telefone" label="Telefone com DDD" />
+                    <DateField control={control} name="dataNascimento" label="Data de nascimento" />
+                  </div>
+                </>
+              )}
+
+              {showsField('CPF') && <CpfField control={control} name="cpf" label="CPF" />}
+              {showsField('EMAIL') && (
+                <TextField control={control} name="email" type="email" label="E-mail" />
+              )}
+
+              {duplicate && !reusing && (
+                <section
+                  aria-label="Cadastro já existente"
+                  className={`flex flex-col gap-3 ${WARNING_BOX}`}
+                >
+                  <p>
+                    Já existe o cadastro de <strong>{duplicate.nome}</strong> (telefone{' '}
+                    {duplicate.telefoneMascarado}
+                    {duplicate.emailMascarado && `, e-mail ${duplicate.emailMascarado}`}
+                    {duplicate.cpfMascarado && `, CPF ${duplicate.cpfMascarado}`}). Confirme com a
+                    pessoa se é ela.
+                  </p>
+                  <div className="flex flex-wrap gap-2">
+                    <Button type="button" className="h-12" onClick={() => setReusing(duplicate)}>
+                      Reaproveitar cadastro
+                    </Button>
+                    <Button
+                      type="button"
+                      variant="outline"
+                      className="h-12"
+                      onClick={() => setDuplicate(null)}
+                    >
+                      Não é a mesma pessoa
+                    </Button>
+                  </div>
+                </section>
+              )}
+
+              {showsField('BAIRRO_REGIAO') && (
+                <TextField
+                  control={control}
+                  name="bairroRegiao"
+                  label="Bairro ou região administrativa"
+                />
+              )}
+              {showsField('ESCOLARIDADE') && (
+                <TextField control={control} name="escolaridade" label="Escolaridade" />
+              )}
+
+              {(minor || reusing) && (
+                <div className={`flex flex-col gap-3 ${WARNING_BOX}`}>
+                  <p>
+                    {reusing
+                      ? 'Se a pessoa for menor de 18 anos, informe o responsável legal.'
+                      : 'Menor de 18 anos: informe o responsável legal.'}
+                  </p>
+                  <TextField control={control} name="responsavelNome" label="Nome do responsável" />
                   <PhoneField
                     control={control}
                     name="responsavelTelefone"
-                    label="Telefone do responsável *"
+                    label="Telefone do responsável com DDD"
                   />
                 </div>
-              </div>
-            )}
-
-            {/* Chave de duplicidade da atividade */}
-            {keyField === 'CPF' && (
-              <CpfField
-                control={control}
-                name="cpf"
-                label="CPF do participante *"
-                disabled={isReusing}
-              />
-            )}
-
-            {keyField === 'EMAIL' && (
-              <TextField
-                control={control}
-                name="email"
-                type="email"
-                label="E-mail do participante *"
-                disabled={isReusing}
-              />
-            )}
-
-            {/* Card de Aviso se detectar duplicidade na digitação (RNF05 com dados mascarados) */}
-            {duplicateParticipant && !isReusing && (
-              <div
-                role="region"
-                aria-label="Aviso de cadastro repetido"
-                className="p-3.5 rounded-md bg-warning/15 border border-warning/30 text-sm space-y-2.5"
-              >
-                <div className="flex items-start gap-2">
-                  <AlertCircleIcon className="size-5 text-amber-700 dark:text-warning shrink-0 mt-0.5" />
-                  <div className="space-y-1">
-                    <p className="font-semibold text-amber-900 dark:text-warning">
-                      Cadastro existente detectado na base
-                    </p>
-                    <p className="text-xs text-foreground/80 leading-relaxed">
-                      Encontramos o cadastro de <strong>{duplicateParticipant.nome}</strong> (tel:{' '}
-                      {duplicateParticipant.telefoneMascarado}
-                      {duplicateParticipant.cpfMascarado
-                        ? ` · CPF: ${duplicateParticipant.cpfMascarado}`
-                        : ''}
-                      {duplicateParticipant.emailMascarado
-                        ? ` · e-mail: ${duplicateParticipant.emailMascarado}`
-                        : ''}
-                      ). Confirme verbalmente com o participante para reaproveitar os dados sem
-                      duplicidade.
-                    </p>
-                  </div>
-                </div>
-                <div className="flex flex-wrap gap-2 pt-1">
-                  <Button
-                    type="button"
-                    onClick={handleApplyReuse}
-                    className="min-h-12 px-4"
-                  >
-                    Reaproveitar cadastro
-                  </Button>
-                  <Button
-                    type="button"
-                    variant="outline"
-                    onClick={() => {
-                      setValue(keyField === 'CPF' ? 'cpf' : 'email', '');
-                      setDuplicateParticipant(null);
-                    }}
-                    className="min-h-12 px-4"
-                  >
-                    Corrigir {keyField === 'CPF' ? 'CPF' : 'E-mail'}
-                  </Button>
-                </div>
-              </div>
-            )}
-
-            {/* Demais campos adicionais pedidos pela atividade */}
-            {askedFields.includes('BAIRRO_REGIAO') && (
-              <TextField
-                control={control}
-                name="bairroRegiao"
-                label="Bairro ou Região Administrativa"
-                disabled={isReusing}
-              />
-            )}
-
-            {askedFields.includes('ESCOLARIDADE') && (
-              <TextField
-                control={control}
-                name="escolaridade"
-                label="Escolaridade"
-                disabled={isReusing}
-              />
-            )}
-          </FieldGroup>
-
-          <FieldGroup className="space-y-3 pt-2">
-            <div className="text-sm font-semibold text-foreground/80 border-b pb-1">
-              2. Consentimentos e Apresentação (LGPD)
-            </div>
-
-            {/* Apresentação do Aviso de Privacidade para leitura verbal (CA-08.4) */}
-            <div className="rounded-md border bg-muted/40 p-3 space-y-1.5 text-xs text-muted-foreground max-h-32 overflow-y-auto">
-              <p className="font-semibold text-foreground">
-                Aviso de Tratamento de Dados (apresentar verbalmente):
-              </p>
-              <p className="leading-relaxed">{noticeText}</p>
-            </div>
-
-            <Field className="space-y-1">
-              <label className="flex items-start gap-2.5 text-xs text-muted-foreground cursor-pointer min-h-12 py-1">
-                <input
-                  type="checkbox"
-                  {...register('avisoLido')}
-                  className="mt-0.5 size-4 rounded border-gray-300 text-primary focus:ring-primary shrink-0"
-                />
-                <span>
-                  Confirmo que <strong>li e apresentei verbalmente</strong> o Aviso de Tratamento de
-                  Dados ao participante/responsável legal antes da coleta. *
-                </span>
-              </label>
-              {errors.avisoLido && (
-                <span className="text-xs text-destructive">{errors.avisoLido.message}</span>
               )}
-            </Field>
+            </FieldGroup>
 
-            {/* Termo de Compromisso da Turma quando configurado */}
-            {hasTerm && publicForm.data?.termo && (
-              <div className="space-y-2 pt-1 border-t">
-                <div className="rounded-md border bg-muted/40 p-3 space-y-1 text-xs text-muted-foreground max-h-28 overflow-y-auto">
-                  <p className="font-semibold text-foreground">Compromissos da turma:</p>
-                  <p className="whitespace-pre-wrap leading-relaxed">
-                    {publicForm.data.termo.texto}
-                  </p>
-                </div>
-                <Field className="space-y-1">
-                  <label className="flex items-start gap-2.5 text-xs text-muted-foreground cursor-pointer min-h-12 py-1">
-                    <input
-                      type="checkbox"
-                      {...register('aceiteTermo')}
-                      className="mt-0.5 size-4 rounded border-gray-300 text-primary focus:ring-primary shrink-0"
-                    />
-                    <span>
-                      Confirmo a apresentação e o <strong>aceite dos compromissos da turma</strong>{' '}
-                      pelo participante. *
-                    </span>
-                  </label>
-                  {errors.aceiteTermo && (
-                    <span className="text-xs text-destructive">{errors.aceiteTermo.message}</span>
-                  )}
-                </Field>
-              </div>
+            <section aria-labelledby="aviso-presencial" className="flex flex-col gap-2">
+              <h3 id="aviso-presencial" className="text-sm font-medium">
+                Aviso de tratamento de dados (leia para a pessoa)
+              </h3>
+              <p className="rounded-md bg-muted p-3 text-sm text-muted-foreground">
+                {form.aviso.texto}
+              </p>
+              <Consent
+                name="avisoLido"
+                label="Li o aviso para a pessoa ou para o responsável antes de anotar os dados"
+                control={control}
+              />
+            </section>
+
+            {form.termo && (
+              <section aria-labelledby="termo-presencial" className="flex flex-col gap-2">
+                <h3 id="termo-presencial" className="text-sm font-medium">
+                  Compromissos da turma
+                </h3>
+                <p className="rounded-md border border-input p-3 text-sm whitespace-pre-line">
+                  {form.termo.texto}
+                </p>
+                <Consent
+                  name="aceiteTermo"
+                  label="A pessoa ouviu os compromissos e concorda com todos"
+                  control={control}
+                />
+              </section>
             )}
 
-            <div className="space-y-2">
-              <label className="flex items-center gap-2.5 text-xs text-muted-foreground cursor-pointer min-h-12 py-1">
-                <input
-                  type="checkbox"
-                  {...register('autorizaComunicados')}
-                  className="size-4 rounded border-gray-300 text-primary focus:ring-primary shrink-0"
-                />
-                <span>
-                  Participante autoriza receber comunicados e lembretes por WhatsApp/E-mail
-                </span>
-              </label>
+            <fieldset className="flex flex-col gap-2">
+              <legend className="mb-1 text-sm font-medium">Autorizações (opcionais)</legend>
+              <Consent
+                name="autorizaComunicados"
+                label="Autoriza receber comunicados do Instituto"
+                control={control}
+              />
+              <Consent
+                name="autorizaImagem"
+                label="Autoriza o uso da imagem e da voz em materiais do Instituto"
+                control={control}
+              />
+            </fieldset>
 
-              <label className="flex items-center gap-2.5 text-xs text-muted-foreground cursor-pointer min-h-12 py-1">
-                <input
-                  type="checkbox"
-                  {...register('autorizaImagem')}
-                  className="size-4 rounded border-gray-300 text-primary focus:ring-primary shrink-0"
-                />
-                <span>
-                  Participante autoriza uso institucional de imagem e voz para prestação de contas
-                </span>
-              </label>
-            </div>
-          </FieldGroup>
+            {failure && (
+              <p role="alert" className="text-sm text-destructive">
+                {failure}
+              </p>
+            )}
 
-          <div className="p-2.5 rounded bg-muted/40 text-xs text-muted-foreground border">
-            Inscrição assistida registrada com perfil autenticado{' '}
-            <Badge variant="outline" className="text-[10px] ml-1">
-              {session?.perfil === 'NUCLEO_PEDAGOGICO'
-                ? 'Núcleo Pedagógico'
-                : (session?.perfil ?? 'Operador')}
-            </Badge>
-          </div>
-
-          <DialogFooter className="gap-2 pt-2">
-            <Button
-              type="button"
-              variant="outline"
-              onClick={handleClose}
-              disabled={isSubmitting}
-              className="min-h-12 px-4"
-            >
-              Cancelar
-            </Button>
-            <Button type="submit" disabled={isSubmitting} className="min-h-12 px-4">
-              {isSubmitting ? 'Concluindo...' : 'Concluir inscrição'}
-            </Button>
-          </DialogFooter>
-        </form>
+            <DialogFooter>
+              <Button
+                type="button"
+                variant="outline"
+                className="h-12"
+                onClick={close}
+                disabled={submitting}
+              >
+                Cancelar
+              </Button>
+              <Button type="submit" className="h-12" disabled={submitting}>
+                {submitting ? 'Registrando…' : 'Concluir inscrição'}
+              </Button>
+            </DialogFooter>
+          </form>
+        )}
       </DialogContent>
     </Dialog>
   );

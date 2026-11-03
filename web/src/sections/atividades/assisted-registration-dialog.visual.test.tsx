@@ -37,7 +37,7 @@ describe.each([
         if (url.endsWith('/auth/login')) {
           return json({ accessToken: 't', perfil: 'NUCLEO_PEDAGOGICO', deveTrocarSenha: false });
         }
-        if (url.includes('/registration')) {
+        if (url.endsWith(`/activities/${ACTIVITY.id}/registration`)) {
           return json({
             atividadeId: ACTIVITY.id,
             versao: 1,
@@ -89,7 +89,10 @@ describe.each([
       </QueryClientProvider>,
     );
 
-    await expect.element(page.getByText('Inscrição Presencial Assistida')).toBeVisible();
-    await expect.element(page.getByRole('dialog')).toMatchScreenshot(`inscricao-assistida-${device}`);
+    // Espera a configuração carregar: o aviso de dados aparece com o formulário.
+    await expect.element(page.getByText(/usa os dados deste formulário/)).toBeVisible();
+    await expect
+      .element(page.getByRole('dialog'))
+      .toMatchScreenshot(`inscricao-assistida-${device}`);
   });
 });
