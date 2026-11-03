@@ -7,6 +7,7 @@
 | 05/10/2026 | 2.0 | Branches por componente: documentação na `main` com homologação, API e web em linhas próprias; congelamento e marcação das entregas; controles da equipe na ausência de proteção de branch | Vinicius Vieira |
 | 07/10/2026 | 2.1 | Título de commit sem acentos; *rebase* para conflitos, sem *squash*; prazo de 24 horas para revisão de pull request | Maria Eduarda Marques |
 | 26/10/2026 | 2.2 | A `web-develop` publica a homologação do front; revisão por integrante de outra dupla ou pelo integrante independente | Vinicius Vieira |
+| 03/11/2026 | 2.3 | Página Histórico e evolução gerada no build a partir das tabelas de versões, do índice de atas e dos planos de sprint; selos de situação dos requisitos e das histórias lidos do quadro | Vinicius Vieira |
 
 Acordo de trabalho da equipe para este repositório. O objetivo é que o histórico de commits e de pull requests seja a evidência do processo, e que ninguém dependa de memória para saber como contribuir.
 
@@ -125,6 +126,10 @@ GITHUB_TOKEN=$(gh auth token) python .github/scripts/fetch_issues.py  # páginas
 mkdocs serve          # pré-visualização em http://127.0.0.1:8000
 mkdocs build --strict # o mesmo teste que roda no CI
 ```
+
+A página [Histórico e evolução](historico.md) não é editada à mão: o `hooks/historico.py` a monta a cada build a partir das tabelas de versões das páginas, do índice de atas e dos planos de sprint. Para que uma mudança apareça nela, basta registrá-la na origem: a linha na tabela de versões da página alterada (em ordem cronológica, data `dd/mm/aaaa`, quatro colunas), a ata no índice ou o plano da sprint. Linha fora desse padrão interrompe o `mkdocs build --strict` com o arquivo e a linha.
+
+Os selos de situação das seções 8 e 10 (a fazer, em andamento, concluído, retirado do escopo) também não são escritos à mão: o `fetch_issues.py` grava a situação de cada história, lida do campo Status do quadro, e o `hooks/selos.py` a põe ao lado de cada história e de cada requisito funcional, que segue as histórias da sua coluna de rastreabilidade. História retirada do escopo é a issue fechada como "não planejada". Sem leitura do quadro, as seções saem sem selos.
 
 ## Contribuição individual
 
