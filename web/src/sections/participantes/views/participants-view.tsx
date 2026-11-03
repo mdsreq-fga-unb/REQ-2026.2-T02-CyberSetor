@@ -18,15 +18,12 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table';
-import { toast } from '@/components/ui/toast';
 import { useDialogState } from '@/hooks/use-dialog-state';
 import { ApiError } from '@/lib/api';
 import { formatDate, formatPhone } from '@/lib/br';
-import { useParticipant, useParticipants } from '@/queries/participantes';
-import type { ParticipantRegistration, ParticipantSummary } from '@/types/participantes';
-import { CorrectParticipantDialog } from '../correct-participant-dialog';
-import { ParticipantDialog } from '../participant-dialog';
-import { RevokeAuthorizationDialog } from '../revoke-authorization-dialog';
+import { useParticipants } from '@/queries/participantes';
+import type { ParticipantSummary } from '@/types/participantes';
+import { ParticipantRecord } from '../participant-record';
 
 const TITLE = 'Participantes';
 const DESCRIPTION =
@@ -56,22 +53,12 @@ export function ParticipantsView() {
   const deferred = useDeferredValue(busca);
   const participants = useParticipants(deferred, isNucleo);
 
-  const viewing = useDialogState<string>();
-  const [correcting, setCorrecting] = useState(false);
-  const [revoking, setRevoking] = useState<ParticipantRegistration | null>(null);
-  const participant = useParticipant(viewing.value);
+  const viewing = useDialogState<{ id: string; correcting: boolean }>();
   const truncated = (participants.data?.length ?? 0) > LIMIT;
   const pagination = usePagination(participants.data?.slice(0, LIMIT));
 
-  function show(id: string, correct: boolean) {
-    setCorrecting(correct);
-    viewing.show(id);
-  }
-
-  function closeAll() {
-    setCorrecting(false);
-    setRevoking(null);
-    viewing.close();
+  function show(id: string, correcting: boolean) {
+    viewing.show({ id, correcting });
   }
 
   if (!isNucleo) {
@@ -196,31 +183,11 @@ export function ParticipantsView() {
         </ListCard>
       )}
 
-      <ParticipantDialog
-        // Enquanto a ficha carrega, ou se ela falhar, mostra a ficha mesmo vindo de "Corrigir dados".
-        open={viewing.open && !revoking && (!correcting || !participant.data)}
-        participant={participant.data}
-        loading={participant.isPending}
-        failed={participant.isError}
-        onClose={closeAll}
-        onCorrect={() => setCorrecting(true)}
-        onRevoke={setRevoking}
-      />
-      <RevokeAuthorizationDialog
-        open={viewing.open && Boolean(revoking)}
-        participant={participant.data ?? null}
-        registration={revoking}
-        onClose={() => setRevoking(null)}
-        onRevoked={() => toast.add({ type: 'success', title: 'Revogação registrada' })}
-      />
-      <CorrectParticipantDialog
-        open={viewing.open && correcting && Boolean(participant.data)}
-        participant={participant.data ?? null}
-        onClose={() => setCorrecting(false)}
-        onConflict={() => void participant.refetch()}
-        onCorrected={(corrected) =>
-          toast.add({ type: 'success', title: `Dados de ${corrected.nome} corrigidos` })
-        }
+      <ParticipantRecord
+        open={viewing.open}
+        participantId={viewing.value?.id ?? null}
+        correcting={viewing.value?.correcting}
+        onClose={viewing.close}
       />
     </>
   );
