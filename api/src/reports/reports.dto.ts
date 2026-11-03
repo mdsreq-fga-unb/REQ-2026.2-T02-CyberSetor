@@ -175,6 +175,25 @@ export class ReportGoalItemResponse {
   justificativa!: string | null;
 }
 
+export class ReportPdfResponse {
+  @ApiProperty({ description: 'SHA-256 do PDF guardado, para conferir o arquivo recebido (RNF08)' })
+  sha256!: string;
+
+  @ApiProperty({ format: 'date-time' })
+  geradoEm!: string;
+}
+
+export class OpenReportPdfResponse extends ReportPdfResponse {
+  @ApiProperty({ description: 'Endereço assinado de curta duração para baixar o PDF' })
+  url!: string;
+
+  @ApiProperty({ type: String, format: 'date-time' })
+  expiraEm!: Date;
+
+  @ApiProperty({ example: 'relatorio-P01-2026-01-01-a-2026-06-30-v1.pdf' })
+  nomeArquivo!: string;
+}
+
 export class ReportResponse {
   @ApiProperty({ format: 'uuid' })
   id!: string;
@@ -205,4 +224,11 @@ export class ReportResponse {
 
   @ApiProperty({ type: [ReportGoalItemResponse] })
   metas!: ReportGoalItemResponse[];
+
+  @ApiPropertyOptional({
+    type: ReportPdfResponse,
+    nullable: true,
+    description: 'Nulo até a primeira geração do PDF',
+  })
+  pdf!: ReportPdfResponse | null;
 }

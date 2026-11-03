@@ -29,17 +29,18 @@ import type {
 const WITH_DETAILS = {
   emitidoPor: { select: { id: true, pessoa: { select: { nome: true } } } },
   metas: { orderBy: { metaOrdem: 'asc' } },
+  pdf: { select: { sha256: true, geradoEm: true } },
 } satisfies Prisma.RelatorioInclude;
 
 type ReportRow = Prisma.RelatorioGetPayload<{ include: typeof WITH_DETAILS }>;
 type ReportGoalRow = ReportRow['metas'][number];
 type InstrumentRow = Prisma.InstrumentoGetPayload<object>;
 
-function isoDate(date: Date): string {
+export function isoDate(date: Date): string {
   return date.toISOString().slice(0, 10);
 }
 
-function brIsoDate(iso: string): string {
+export function brIsoDate(iso: string): string {
   return iso.split('-').reverse().join('/');
 }
 
@@ -55,7 +56,7 @@ function toDecimalOrNull(value: number | null): Prisma.Decimal | null {
   return value === null ? null : new Prisma.Decimal(value);
 }
 
-function toGoalItemResponse(row: ReportGoalRow): ReportGoalItemResponse {
+export function toGoalItemResponse(row: ReportGoalRow): ReportGoalItemResponse {
   return {
     id: row.id,
     metaId: row.metaId,
@@ -92,6 +93,7 @@ function toResponse(row: ReportRow): ReportResponse {
     },
     criadoEm: row.criadoEm.toISOString(),
     metas: row.metas.map(toGoalItemResponse),
+    pdf: row.pdf ? { sha256: row.pdf.sha256, geradoEm: row.pdf.geradoEm.toISOString() } : null,
   };
 }
 
@@ -124,6 +126,27 @@ function assertPeriodFinished(to: string): void {
       message: 'Não é possível finalizar o relatório antes do encerramento do período informado.',
     });
   }
+}
+
+/** Cabeçalho do relatório congelado na emissão, para o PDF não mudar com edições depois (RNF08). */
+async function headerSnapshot(
+  tx: Prisma.TransactionClient,
+  projeto: { codigo: string; titulo: string },
+  instrument: InstrumentRow,
+  usuarioId: string,
+) {
+  const emissor = await tx.usuario.findUniqueOrThrow({
+    where: { id: usuarioId },
+    select: { pessoa: { select: { nome: true } } },
+  });
+  return {
+    projetoCodigo: projeto.codigo,
+    projetoTitulo: projeto.titulo,
+    instrumentoTipo: instrument.tipo,
+    orgaoConcedente: instrument.orgaoConcedente,
+    numeroProcesso: instrument.numeroProcesso,
+    emitidoPorNome: emissor.pessoa.nome,
+  };
 }
 
 function snapshotGoalInput(
@@ -230,6 +253,7 @@ export class ReportsService {
             periodoInicio,
             periodoFim,
             emitidoPorId: actor.usuarioId,
+            ...(await headerSnapshot(tx, preview.projeto, instrument, actor.usuarioId)),
             metas: {
               create: metas.map(snapshotGoalInput),
             },
@@ -319,6 +343,12 @@ export class ReportsService {
             relatorioAnteriorId: anterior.id,
             motivoRetificacao: data.motivo,
             emitidoPorId: actor.usuarioId,
+            ...(await headerSnapshot(
+              tx,
+              anterior.projeto,
+              anterior.projeto.instrumento,
+              actor.usuarioId,
+            )),
             metas: {
               create: metas.map(snapshotGoalInput),
             },
