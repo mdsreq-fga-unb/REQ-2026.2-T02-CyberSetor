@@ -286,6 +286,59 @@ describe('ProjectActivitiesSection', () => {
     });
   });
 
+  it('reabrir com o prazo vencido pede um prazo novo e envia com ele', async () => {
+    const dia = (offset: number) =>
+      new Date(Date.now() + offset * 86_400_000).toISOString().slice(0, 10);
+    const atividade = { ...ACTIVITY_1, data: dia(30) };
+    const calls = await signedInAs('NUCLEO_PEDAGOGICO', {
+      [`GET /projects/${PROJECT.id}/activities`]: () => ({
+        status: 200,
+        body: [{ ...atividade, inscricao: { aberta: false, vagas: 30, inscritos: 12 } }],
+      }),
+      [`GET /activities/${ACTIVITY_1.id}/registration`]: () => ({
+        status: 200,
+        body: {
+          atividadeId: ACTIVITY_1.id,
+          versao: 3,
+          aberta: false,
+          vagas: 30,
+          prazoInscricao: dia(-2),
+          prazoHora: '18:00',
+        },
+      }),
+      [`PATCH /activities/${ACTIVITY_1.id}/registration`]: (body) => ({
+        status: 200,
+        body: { atividadeId: ACTIVITY_1.id, versao: 4, vagas: 30, ...(body as object) },
+      }),
+    });
+    const patch = () => calls.find((c) => c.key.startsWith('PATCH'));
+    renderSection();
+
+    fireEvent.click(
+      await screen.findByRole('button', { name: `Ações da atividade ${ACTIVITY_1.titulo}` }),
+    );
+    fireEvent.click(await screen.findByRole('menuitem', { name: 'Reabrir inscrições' }));
+    fireEvent.click(await screen.findByRole('button', { name: 'Reabrir inscrições' }));
+
+    expect(await screen.findByText(/O prazo de inscrição terminou em/)).toBeInTheDocument();
+    expect(patch()).toBeUndefined();
+
+    fireEvent.click(screen.getByRole('button', { name: 'Reabrir inscrições' }));
+    expect(await screen.findByText('Informe a data do prazo novo.')).toBeInTheDocument();
+
+    fireEvent.change(screen.getByLabelText('Inscrições até'), { target: { value: dia(5) } });
+    fireEvent.click(screen.getByRole('button', { name: 'Reabrir inscrições' }));
+
+    await waitFor(() =>
+      expect(patch()?.body).toEqual({
+        versao: 3,
+        aberta: true,
+        prazoInscricao: dia(5),
+        prazoHora: null,
+      }),
+    );
+  });
+
   it('oferece reabrir a inscricao encerrada e mostra a recusa do servidor', async () => {
     await signedInAs('NUCLEO_PEDAGOGICO', {
       [`GET /projects/${PROJECT.id}/activities`]: () => ({

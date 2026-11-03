@@ -24,13 +24,15 @@ export function cpfSchema(
   return z.string().min(1, required).refine(isValidCpf, invalid);
 }
 
-/** Data AAAA-MM-DD; com `notFuture`, até hoje em Brasília. */
+/** Data AAAA-MM-DD; com `notFuture`, até hoje em Brasília; com `notPast`, de hoje em diante. */
 export function dateSchema(
   message = 'Informe a data completa.',
-  { notFuture }: { notFuture?: string } = {},
+  { notFuture, notPast }: { notFuture?: string; notPast?: string } = {},
 ) {
   const date = z.string().regex(ISO_DATE, message);
-  return notFuture ? date.refine((value) => value <= todayInBrasilia(), notFuture) : date;
+  if (notFuture) return date.refine((value) => value <= todayInBrasilia(), notFuture);
+  if (notPast) return date.refine((value) => value >= todayInBrasilia(), notPast);
+  return date;
 }
 
 /** Hora HH:MM, como o seletor nativo guarda. */
