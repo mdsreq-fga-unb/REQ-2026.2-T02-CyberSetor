@@ -21,16 +21,16 @@ import type { CampoInscricao } from '@/types/inscricoes';
 import { CpfField, DateField, PhoneField, TextField } from '@/components/form/fields';
 import {
   ageOn,
+  deadlinePassed,
   formatDate,
+  formatDeadline,
   formatPhone,
   isValidPhone,
-  nowInBrasilia,
   todayInBrasilia,
 } from '@/lib/br';
-import { cpfSchema, phoneSchema } from '@/lib/schemas';
+import { cpfSchema, ISO_DATE, phoneSchema } from '@/lib/schemas';
 
 const ADULT_AGE = 18;
-const ISO_DATE = /^\d{4}-\d{2}-\d{2}$/;
 
 const FIELD_OF = {
   EMAIL: 'email',
@@ -161,12 +161,6 @@ function ActivitySummary({ activity }: { activity: PublicActivity }) {
   );
 }
 
-/** "05/11/2026, às 18h" ou, sem hora, "05/11/2026, às 23h59". */
-function formatDeadline(prazo: string, hora: string | null): string {
-  const [h, m] = (hora ?? '23:59').split(':');
-  return `${formatDate(prazo)}, às ${Number(h)}h${m === '00' ? '' : m}`;
-}
-
 function WhatsAppLink({ digits }: { digits: string }) {
   return (
     <a
@@ -214,11 +208,6 @@ function Presentation({ form }: { form: PublicForm }) {
       )}
     </div>
   );
-}
-
-function deadlinePassed(form: PublicForm): boolean {
-  if (!form.prazoInscricao) return false;
-  return nowInBrasilia() > `${form.prazoInscricao} ${form.prazoHora ?? '23:59'}`;
 }
 
 function Message({
@@ -564,7 +553,7 @@ export function PublicRegistrationView({ codigo }: { codigo: string }) {
       <Message
         title="Inscrições encerradas"
         text={
-          prazoInscricao && deadlinePassed(form.data)
+          deadlinePassed(prazoInscricao, prazoHora)
             ? `O prazo de inscrição terminou em ${formatDeadline(prazoInscricao, prazoHora)}.`
             : 'Esta atividade não está recebendo inscrições no momento. Fale com a equipe do Instituto.'
         }

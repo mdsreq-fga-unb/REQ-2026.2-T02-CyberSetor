@@ -5,6 +5,8 @@ import {
   formatDateTime,
   formatDuration,
   formatPhone,
+  deadlinePassed,
+  formatDeadline,
   formatSchedule,
   formatTime,
   isValidCpf,
@@ -59,5 +61,14 @@ describe('formatos brasileiros', () => {
     expect(formatDuration(210)).toBe('3 h 30 min');
     expect(formatDuration(45)).toBe('45 min');
     expect(formatSchedule('09:00', '17:00', 420)).toBe('9h às 17h · 7 h');
+  });
+
+  it('prazo de inscricao ate o fim do minuto, sem hora ate 23h59', () => {
+    expect(formatDeadline('2026-11-05', '18:00')).toBe('05/11/2026, às 18h');
+    expect(formatDeadline('2026-11-05', null)).toBe('05/11/2026, às 23h59');
+    expect(deadlinePassed(null, null)).toBe(false);
+    expect(deadlinePassed('2026-11-05', '18:00', new Date('2026-11-05T21:00:00.000Z'))).toBe(false);
+    expect(deadlinePassed('2026-11-05', '18:00', new Date('2026-11-05T21:01:00.000Z'))).toBe(true);
+    expect(deadlinePassed('2026-11-05', null, new Date('2026-11-06T02:59:00.000Z'))).toBe(false);
   });
 });
