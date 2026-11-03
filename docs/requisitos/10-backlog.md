@@ -12,6 +12,7 @@
 | 20/10/2026 | 2.3 | Histórias derivadas dos requisitos funcionais por regras explícitas: quinze histórias passam a vinte e cinco, cada requisito com uma única história; critérios de aceitação ampliados para cobrir o texto dos requisitos; administração de contas (RF40), cadastro de modalidades (RF41) e configuração do formulário de inscrição (RF42); personas ligadas aos perfis; correspondência entre as histórias validadas e as derivadas; avaliação técnica de RF40 a RF42; requisitos não funcionais de todo o produto na Definition of Done | Equipe CyberSetor |
 | 26/10/2026 | 2.4 | Resultado alcançado da meta no relatório (CA-05a.1, CA-05a.6; RF43 no MVP); parâmetro planejado na condição de rascunho da meta quantitativa (CA-01b.3); período da meta dentro da execução do projeto (CA-01b.4); justificativa para reabrir meta concluída (CA-02a.3); dados da atividade (CA-03a.3); comparativo das metas repactuadas (RF44) e orientação de enquadramento (RF45) como requisitos próprios; controle de acesso por perfil (RNF04) e usabilidade das telas (RNF15) entre os requisitos de todo o produto, fora das linhas das histórias; estado vazio e recusas próprias nos critérios de cada história com tela; origem e conferência do resultado alcançado (10.2.6); gargalos atendidos pelo MVP e pelos incrementos (10.2.6); requisitos não funcionais das histórias conforme a matriz 8.4.2; portabilidade dos dados e eficiência do registro de presença entre os evolutivos (RNF19, RNF20); alcance da validação na 10.2.8: MVP aprovado pelo núcleo pedagógico; relatório e planilha aguardam a área administrativo-financeira; hipótese do primeiro recorte e ordem de contenção (10.2.6); valor herdado das derivadas com resultado diferente marcado como inicial (10.2.2); requisitos associados exigíveis na conclusão da história (10.2.7); edição de meta fora da nova vigência (CA-14.5); minimização de dados no relatório e na correção a pedido do titular (RNF05); registro de 28/09 sem a marca de minuto da gravação (10.2.8) | Vinicius Vieira |
 | 30/10/2026 | 2.5 | HU-07d (apresentação da inscrição, RF46) no backlog geral, com valor herdado da HU-07 e esforço técnico propostos 🔧 até a validação com o Instituto em 05/11/2026 | Vinicius Vieira |
+| 03/11/2026 | 2.6 | Opções de lista de espera e de confirmação automática na configuração da inscrição (CA-07b.1); confirmação pelo coordenador, prioridade de quem espera, cancelamento a pedido e nova inscrição de quem cancelou na HU-07c (CA-07c.3 a CA-07c.6), propostos 🔧 até a validação com o Instituto em 05/11/2026 | Vinicius Vieira |
 
 ---
 
@@ -283,7 +284,7 @@ Personas das histórias e perfis da [seção 8.5.1](8-requisitos.md#851-perfis-d
 
     **Critérios de aceitação**
 
-    - CA-07b.1 Ao abrir a inscrição, o coordenador define o número de vagas, os campos do formulário além dos mínimos e se o e-mail ou o CPF identifica cadastro repetido 🔧.
+    - CA-07b.1 Ao abrir a inscrição, o coordenador define o número de vagas, os campos do formulário além dos mínimos, se o e-mail ou o CPF identifica cadastro repetido, se as vagas esgotadas abrem lista de espera e se a espera é confirmada sozinha quando houver vaga, as duas opções ativadas por padrão 🔧.
     - CA-07b.2 O formulário não aceita campo estruturado de dado pessoal sensível.
     - CA-07b.3 Para cada atividade com inscrição aberta, o coordenador gera um link e um QR Code que abrem o formulário público dela.
     - CA-07b.4 Atividade sem inscrição configurada mostra a ação de abrir a inscrição, sem link nem QR Code; com a inscrição encerrada, o link e o QR Code aparecem com o aviso de encerramento; número de vagas menor que um é recusado no campo.
@@ -298,6 +299,10 @@ Personas das histórias e perfis da [seção 8.5.1](8-requisitos.md#851-perfis-d
 
     - CA-07c.1 Com as vagas esgotadas, a inscrição entra na lista de espera e a pessoa é informada da posição.
     - CA-07c.2 A lista de espera segue a ordem de chegada das inscrições.
+    - CA-07c.3 Com vaga livre e a confirmação automática desligada, o coordenador confirma a vaga de quem escolher na lista de espera; com menos vagas, ninguém perde a vaga já confirmada 🔧.
+    - CA-07c.4 Com pessoas na lista de espera, a vaga que se libera é de quem espera: uma inscrição nova entra no fim da fila, mesmo havendo vaga livre 🔧.
+    - CA-07c.5 O cancelamento ou a desistência pedida pela pessoa é registrado com a data e o canal do pedido, sem apagar a inscrição; a vaga confirmada que se libera passa à lista de espera conforme a confirmação automática 🔧.
+    - CA-07c.6 Quem cancelou pode se inscrever de novo na mesma atividade, e o cancelamento anterior continua no histórico da inscrição 🔧.
 
     **Requisitos não funcionais e regras de negócio:** —
 
