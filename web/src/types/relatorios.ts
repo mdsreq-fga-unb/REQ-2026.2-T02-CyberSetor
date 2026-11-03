@@ -44,3 +44,58 @@ export interface ReportPreview {
   periodo: ReportPreviewPeriod;
   metas: ReportPreviewGoal[];
 }
+
+export type ReportPendenciaMotivo = 'SEM_RESULTADO_REGISTRADO' | 'SEM_JUSTIFICATIVA';
+
+export interface ReportPendencia {
+  metaId: string;
+  ordem: number;
+  descricao: string;
+  motivo: ReportPendenciaMotivo;
+  alcance: GoalReach | null;
+  percentual: number | null;
+}
+
+export interface ReportJustificationInput {
+  metaId: string;
+  texto: string;
+}
+
+export interface FinalizeReportInput {
+  from: string;
+  to: string;
+  justificativas?: ReportJustificationInput[];
+}
+
+export interface ReportGoalItem {
+  id: string;
+  metaId: string;
+  resultadoMetaId: string;
+  metaOrdem: number;
+  metaOrigem: GoalOrigin;
+  metaObjetivo: string;
+  metaDescricao: string;
+  metaIndicador: string | null;
+  modalidadeAfericao: MeasurementMode | null;
+  unidade: string | null;
+  parametroPlanejado: number | null;
+  valorAlcancado: number | null;
+  percentual: number | null;
+  alcance: GoalReach;
+  resultadoDataReferencia: string;
+  resultadoDescricao: string;
+  justificativa: string | null;
+}
+
+export interface Report {
+  id: string;
+  projetoId: string;
+  versao: number;
+  periodoInicio: string;
+  periodoFim: string;
+  relatorioAnteriorId: string | null;
+  motivoRetificacao: string | null;
+  emitidoPor: { id: string; nome: string };
+  criadoEm: string;
+  metas: ReportGoalItem[];
+}

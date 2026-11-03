@@ -1,6 +1,6 @@
-import { useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { authorizedRequest } from '@/auth/session';
-import type { ReportPreview } from '@/types/relatorios';
+import type { FinalizeReportInput, Report, ReportPreview } from '@/types/relatorios';
 
 export function reportPreviewKey(projectId: string, from?: string, to?: string) {
   return ['report-preview', projectId, from, to] as const;
@@ -21,5 +21,34 @@ export function useReportPreview(projectId: string, from: string, to: string) {
         `/projects/${encodeURIComponent(projectId)}/report-preview?from=${encodeURIComponent(from)}&to=${encodeURIComponent(to)}`,
       ),
     enabled,
+  });
+}
+
+export function reportsKey(projectId: string) {
+  return ['reports', projectId] as const;
+}
+
+export function useReports(projectId: string, enabled = true) {
+  return useQuery({
+    queryKey: reportsKey(projectId),
+    queryFn: () =>
+      authorizedRequest<Report[]>(`/projects/${encodeURIComponent(projectId)}/reports`),
+    enabled: Boolean(projectId && enabled),
+  });
+}
+
+export function useFinalizeReport(projectId: string) {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: (body: FinalizeReportInput) =>
+      authorizedRequest<Report>(`/projects/${encodeURIComponent(projectId)}/reports/finalize`, {
+        method: 'POST',
+        body,
+      }),
+    onSuccess: () =>
+      Promise.all([
+        queryClient.invalidateQueries({ queryKey: reportsKey(projectId) }),
+        queryClient.invalidateQueries({ queryKey: ['report-preview', projectId] }),
+      ]),
   });
 }

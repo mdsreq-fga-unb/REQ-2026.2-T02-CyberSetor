@@ -4,6 +4,7 @@ export interface ApiErrorBody {
   code: string;
   message: string;
   correlationId: string;
+  details?: unknown;
 }
 
 export class ApiError extends Error {
@@ -11,6 +12,7 @@ export class ApiError extends Error {
     readonly status: number,
     readonly code: string,
     message: string,
+    readonly details?: unknown,
   ) {
     super(message);
   }
@@ -47,6 +49,7 @@ export async function apiRequest<T>(path: string, options: ApiRequestOptions = {
       response.status,
       error?.code ?? 'HTTP_ERROR',
       error?.message ?? 'Falha na comunicação com a API.',
+      error?.details,
     );
   }
   if (response.status === 204) return undefined as T;

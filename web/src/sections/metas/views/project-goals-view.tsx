@@ -509,7 +509,12 @@ export function ProjectGoalsView({
         <ProjectActivitiesSection instrument={instrument.data} project={project.data} />
       )}
 
-      {project.data && <ProjectReportPreviewSection projectId={projectId} />}
+      {project.data && (
+        <ProjectReportPreviewSection
+          projectId={projectId}
+          instrumentActive={instrument.data?.ativo ?? true}
+        />
+      )}
 
       {requirements.data && project.data && (
         <GoalFormDialog
