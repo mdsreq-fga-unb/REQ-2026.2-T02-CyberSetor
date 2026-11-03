@@ -22,7 +22,7 @@ import { CpfField, DateField, PhoneField, TextField } from '@/components/form/fi
 import {
   ageOn,
   deadlinePassed,
-  formatDate,
+  formatActivityWhen,
   formatDeadline,
   formatPhone,
   isValidPhone,
@@ -156,7 +156,7 @@ function failureOf(error: unknown): string {
 function ActivitySummary({ activity }: { activity: PublicActivity }) {
   return (
     <CardDescription>
-      {formatDate(activity.data)} · {activity.local}
+      {formatActivityWhen(activity)} · {activity.local}
     </CardDescription>
   );
 }
@@ -494,7 +494,7 @@ export function PublicRegistrationView({ codigo }: { codigo: string }) {
             <p className="text-base font-medium">Sua vaga está garantida.</p>
           )}
           <p>
-            {formatDate(submitted.atividade.data)} · {submitted.atividade.local}
+            {formatActivityWhen(submitted.atividade)} · {submitted.atividade.local}
           </p>
           <p className="text-muted-foreground">
             Se tiver dúvidas ou quiser cancelar, fale com a equipe do Instituto.

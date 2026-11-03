@@ -149,3 +149,15 @@ export function deadlinePassed(
   if (!prazo) return false;
   return nowInBrasilia(now) > `${prazo} ${hora ?? '23:59'}`;
 }
+
+/** Data e, quando houver, horário e carga horária: "28/10/2026 · 9h às 17h · 8 h". */
+export function formatActivityWhen(activity: {
+  data: string;
+  horaInicio: string | null;
+  horaFim: string | null;
+  cargaHorariaMinutos: number | null;
+}): string {
+  const { data, horaInicio, horaFim, cargaHorariaMinutos } = activity;
+  if (!horaInicio || !horaFim || cargaHorariaMinutos === null) return formatDate(data);
+  return `${formatDate(data)} · ${formatSchedule(horaInicio, horaFim, cargaHorariaMinutos)}`;
+}

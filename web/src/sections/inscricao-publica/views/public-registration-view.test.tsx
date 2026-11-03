@@ -6,7 +6,14 @@ import { PublicRegistrationView } from './public-registration-view';
 const CODIGO = 'codigoPublicoA01';
 
 const FORM: PublicForm = {
-  atividade: { titulo: 'Oficina de serigrafia', data: '2026-11-10', local: 'Setor Comercial Sul' },
+  atividade: {
+    titulo: 'Oficina de serigrafia',
+    data: '2026-11-10',
+    horaInicio: null,
+    horaFim: null,
+    cargaHorariaMinutos: null,
+    local: 'Setor Comercial Sul',
+  },
   aberta: true,
   vagasEsgotadas: false,
   listaEspera: true,
@@ -79,6 +86,37 @@ describe('formulario publico de inscricao', () => {
   afterEach(() => {
     cleanup();
     vi.unstubAllGlobals();
+  });
+
+  it('mostra o horario e a carga horaria da atividade no formulario e na confirmacao', async () => {
+    const atividade = {
+      ...FORM.atividade,
+      horaInicio: '14:00',
+      horaFim: '17:30',
+      cargaHorariaMinutos: 210,
+    };
+    stubApi({
+      [GET]: () => ({ status: 200, body: { ...FORM, atividade } }),
+      [POST]: () => ({
+        status: 201,
+        body: {
+          situacao: 'CONFIRMADA',
+          posicaoEspera: null,
+          atividade,
+          inscritoEm: '2026-10-28T13:00:00.000Z',
+        },
+      }),
+    });
+    renderView();
+
+    const quando = '10/11/2026 · 14h às 17h30 · 3 h 30 min · Setor Comercial Sul';
+    expect(await screen.findByText(quando)).toBeInTheDocument();
+    fillAdult();
+    fireEvent.click(screen.getByRole('button', { name: 'Confirmar inscrição' }));
+    expect(
+      await screen.findByRole('heading', { name: 'Inscrição confirmada' }),
+    ).toBeInTheDocument();
+    expect(screen.getByText(quando)).toBeInTheDocument();
   });
 
   it('mostra a atividade, so os campos pedidos, o aviso e as autorizacoes desmarcadas', async () => {

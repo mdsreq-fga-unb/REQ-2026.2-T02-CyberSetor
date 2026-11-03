@@ -6,6 +6,7 @@ import {
   formatDuration,
   formatPhone,
   deadlinePassed,
+  formatActivityWhen,
   formatDeadline,
   formatSchedule,
   formatTime,
@@ -61,6 +62,24 @@ describe('formatos brasileiros', () => {
     expect(formatDuration(210)).toBe('3 h 30 min');
     expect(formatDuration(45)).toBe('45 min');
     expect(formatSchedule('09:00', '17:00', 420)).toBe('9h às 17h · 7 h');
+  });
+
+  it('data da atividade com horario quando houver', () => {
+    const semHorario = {
+      data: '2026-11-10',
+      horaInicio: null,
+      horaFim: null,
+      cargaHorariaMinutos: null,
+    };
+    expect(formatActivityWhen(semHorario)).toBe('10/11/2026');
+    expect(
+      formatActivityWhen({
+        ...semHorario,
+        horaInicio: '14:00',
+        horaFim: '17:30',
+        cargaHorariaMinutos: 210,
+      }),
+    ).toBe('10/11/2026 · 14h às 17h30 · 3 h 30 min');
   });
 
   it('prazo de inscricao ate o fim do minuto, sem hora ate 23h59', () => {
