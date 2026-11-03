@@ -1,6 +1,11 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { authorizedRequest } from '@/auth/session';
-import type { Participant, ParticipantCorrection, ParticipantSummary } from '@/types/participantes';
+import type {
+  Participant,
+  ParticipantCorrection,
+  ParticipantSummary,
+  RevocationInput,
+} from '@/types/participantes';
 
 /** Fichas de participantes: só o Núcleo Pedagógico (seção 8.5.1). */
 export function participantsKey(busca = '') {
@@ -29,6 +34,28 @@ export function useParticipant(id: string | null) {
     queryKey: participantKey(id ?? ''),
     queryFn: () => authorizedRequest<Participant>(`/participants/${encodeURIComponent(id!)}`),
     enabled: Boolean(id),
+  });
+}
+
+export function useRevokeAuthorization() {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: ({
+      id,
+      inscricaoId,
+      data,
+    }: {
+      id: string;
+      inscricaoId: string;
+      data: RevocationInput;
+    }) =>
+      authorizedRequest<Participant>(
+        `/participants/${encodeURIComponent(id)}/registrations/${encodeURIComponent(inscricaoId)}/revocations`,
+        { method: 'POST', body: data },
+      ),
+    onSuccess: (participant) => {
+      queryClient.setQueryData(participantKey(participant.id), participant);
+    },
   });
 }
 

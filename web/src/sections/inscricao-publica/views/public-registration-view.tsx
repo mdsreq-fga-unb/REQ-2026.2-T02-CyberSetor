@@ -19,7 +19,14 @@ import type {
 } from '@/types/inscricao-publica';
 import type { CampoInscricao } from '@/types/inscricoes';
 import { CpfField, DateField, PhoneField, TextField } from '@/components/form/fields';
-import { ageOn, formatDate, isValidPhone, todayInBrasilia } from '@/lib/br';
+import {
+  ageOn,
+  formatDate,
+  formatPhone,
+  isValidPhone,
+  nowInBrasilia,
+  todayInBrasilia,
+} from '@/lib/br';
 import { cpfSchema, phoneSchema } from '@/lib/schemas';
 
 const ADULT_AGE = 18;
@@ -34,12 +41,14 @@ const FIELD_OF = {
 
 interface FormValues {
   nome: string;
+  nomePreferencia: string;
   telefone: string;
   dataNascimento: string;
   email: string;
   cpf: string;
   bairroRegiao: string;
   escolaridade: string;
+  aceiteTermo: boolean;
   autorizaComunicados: boolean;
   autorizaImagem: boolean;
   responsavelNome: string;
@@ -48,12 +57,14 @@ interface FormValues {
 
 const EMPTY: FormValues = {
   nome: '',
+  nomePreferencia: '',
   telefone: '',
   dataNascimento: '',
   email: '',
   cpf: '',
   bairroRegiao: '',
   escolaridade: '',
+  aceiteTermo: false,
   autorizaComunicados: false,
   autorizaImagem: false,
   responsavelNome: '',
@@ -65,13 +76,14 @@ function isMinor(birthDate: string): boolean {
 }
 
 /** Valida só os campos que a atividade pede; todos os pedidos são obrigatórios. */
-function schemaFor(asked: CampoInscricao[]) {
+function schemaFor(asked: CampoInscricao[], hasTerm: boolean) {
   const has = (campo: CampoInscricao) => asked.includes(campo);
   const required = (message: string) => z.string().trim().min(1, message);
   const optional = z.string();
   return z
     .object({
       nome: required('Informe o seu nome.').max(150, 'O nome tem no máximo 150 caracteres.'),
+      nomePreferencia: z.string().max(80, 'Use no máximo 80 caracteres.'),
       telefone: phoneSchema(),
       dataNascimento: z
         .string()
@@ -83,6 +95,9 @@ function schemaFor(asked: CampoInscricao[]) {
       cpf: has('CPF') ? cpfSchema('Informe o seu CPF.') : optional,
       bairroRegiao: has('BAIRRO_REGIAO') ? required('Informe o bairro ou a região.') : optional,
       escolaridade: has('ESCOLARIDADE') ? required('Informe a escolaridade.') : optional,
+      aceiteTermo: hasTerm
+        ? z.literal(true, { message: 'Marque que concorda com os compromissos da turma.' })
+        : z.boolean(),
       autorizaComunicados: z.boolean(),
       autorizaImagem: z.boolean(),
       responsavelNome: optional,
@@ -114,9 +129,12 @@ function submissionOf(values: FormValues, form: PublicForm): PublicSubmission {
     telefone: values.telefone,
     dataNascimento: values.dataNascimento,
     versaoAviso: form.aviso.versao,
+    ...(form.termo && values.aceiteTermo && { versaoTermo: form.termo.versao }),
     autorizaComunicados: values.autorizaComunicados,
     autorizaImagem: values.autorizaImagem,
   };
+  const nomePreferencia = values.nomePreferencia.trim();
+  if (nomePreferencia) body.nomePreferencia = nomePreferencia;
   for (const campo of form.camposAdicionais) {
     const name = FIELD_OF[campo];
     body[name] = values[name].trim();
@@ -143,14 +161,76 @@ function ActivitySummary({ activity }: { activity: PublicActivity }) {
   );
 }
 
+/** "05/11/2026, às 18h" ou, sem hora, "05/11/2026, às 23h59". */
+function formatDeadline(prazo: string, hora: string | null): string {
+  const [h, m] = (hora ?? '23:59').split(':');
+  return `${formatDate(prazo)}, às ${Number(h)}h${m === '00' ? '' : m}`;
+}
+
+function WhatsAppLink({ digits }: { digits: string }) {
+  return (
+    <a
+      href={`https://wa.me/55${digits}`}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="font-medium text-primary underline-offset-4 hover:underline"
+    >
+      WhatsApp do Instituto: {formatPhone(digits)}
+    </a>
+  );
+}
+
+/** O que a coordenação escreveu sobre a atividade, o prazo e o contato; some quando não há. */
+function Presentation({ form }: { form: PublicForm }) {
+  const { apresentacao, prazoInscricao, prazoHora, contatoWhatsapp } = form;
+  if (!apresentacao && !prazoInscricao && !contatoWhatsapp) return null;
+  return (
+    <div className="flex flex-col gap-4">
+      {apresentacao && (
+        <section aria-labelledby="sobre-atividade" className="flex flex-col gap-2">
+          <h2 id="sobre-atividade" className="text-base font-medium">
+            Sobre a atividade
+          </h2>
+          <p className="text-sm whitespace-pre-line">{apresentacao}</p>
+        </section>
+      )}
+      {(prazoInscricao || contatoWhatsapp) && (
+        <dl className="grid grid-cols-1 gap-3 rounded-lg bg-muted p-3 text-sm sm:grid-cols-2">
+          {prazoInscricao && (
+            <div className="flex flex-col gap-0.5">
+              <dt className="text-xs text-muted-foreground">Inscrições até</dt>
+              <dd className="font-medium">{formatDeadline(prazoInscricao, prazoHora)}</dd>
+            </div>
+          )}
+          {contatoWhatsapp && (
+            <div className="flex flex-col gap-0.5">
+              <dt className="text-xs text-muted-foreground">Dúvidas</dt>
+              <dd>
+                <WhatsAppLink digits={contatoWhatsapp} />
+              </dd>
+            </div>
+          )}
+        </dl>
+      )}
+    </div>
+  );
+}
+
+function deadlinePassed(form: PublicForm): boolean {
+  if (!form.prazoInscricao) return false;
+  return nowInBrasilia() > `${form.prazoInscricao} ${form.prazoHora ?? '23:59'}`;
+}
+
 function Message({
   title,
   text,
   activity,
+  contact,
 }: {
   title: string;
   text: string;
   activity?: PublicActivity;
+  contact?: string | null;
 }) {
   return (
     <Card>
@@ -162,6 +242,11 @@ function Message({
       </CardHeader>
       <CardContent>
         <p className="text-center text-sm text-muted-foreground">{text}</p>
+        {contact && (
+          <p className="mt-3 text-center text-sm">
+            Dúvidas: <WhatsAppLink digits={contact} />
+          </p>
+        )}
       </CardContent>
     </Card>
   );
@@ -172,7 +257,7 @@ function Consent({
   label,
   control,
 }: {
-  name: 'autorizaComunicados' | 'autorizaImagem';
+  name: 'aceiteTermo' | 'autorizaComunicados' | 'autorizaImagem';
   label: string;
   control: Control<FormValues>;
 }) {
@@ -180,21 +265,31 @@ function Consent({
     <Controller
       name={name}
       control={control}
-      render={({ field }) => (
-        <label
-          htmlFor={name}
-          className="flex min-h-12 cursor-pointer items-center gap-3 rounded-md border border-input p-3 text-sm"
-        >
-          <input
-            id={name}
-            type="checkbox"
-            checked={field.value}
-            onChange={(event) => field.onChange(event.target.checked)}
-            onBlur={field.onBlur}
-            className="size-5 shrink-0 accent-primary"
-          />
-          <span>{label}</span>
-        </label>
+      render={({ field, fieldState }) => (
+        <div className="flex flex-col gap-1">
+          <label
+            htmlFor={name}
+            className="flex min-h-12 cursor-pointer items-center gap-3 rounded-md border border-input p-3 text-sm"
+          >
+            <input
+              id={name}
+              ref={field.ref}
+              type="checkbox"
+              checked={field.value}
+              onChange={(event) => field.onChange(event.target.checked)}
+              onBlur={field.onBlur}
+              aria-invalid={fieldState.invalid || undefined}
+              aria-describedby={fieldState.error ? `${name}-erro` : undefined}
+              className="size-5 shrink-0 accent-primary"
+            />
+            <span>{label}</span>
+          </label>
+          {fieldState.error && (
+            <p id={`${name}-erro`} className="text-sm text-destructive">
+              {fieldState.error.message}
+            </p>
+          )}
+        </div>
       )}
     />
   );
@@ -215,7 +310,11 @@ function RegistrationForm({
 }) {
   const submit = useSubmitRegistration(codigo);
   const [failure, setFailure] = useState<string | null>(null);
-  const schema = useMemo(() => schemaFor(form.camposAdicionais), [form.camposAdicionais]);
+  const hasTerm = form.termo !== null;
+  const schema = useMemo(
+    () => schemaFor(form.camposAdicionais, hasTerm),
+    [form.camposAdicionais, hasTerm],
+  );
   const methods = useForm<FormValues>({ resolver: zodResolver(schema), defaultValues: EMPTY });
   const birthDate = useWatch({ control: methods.control, name: 'dataNascimento' });
   const minor = isMinor(birthDate);
@@ -226,7 +325,13 @@ function RegistrationForm({
       onSubmitted(await submit.mutateAsync(submissionOf(values, form)));
     } catch (error) {
       if (error instanceof ApiError && error.code === 'REGISTRATION_CLOSED') return onClosed();
-      if (error instanceof ApiError && error.code === 'NOTICE_OUTDATED') onNoticeChanged();
+      if (
+        error instanceof ApiError &&
+        (error.code === 'NOTICE_OUTDATED' || error.code === 'TERM_OUTDATED')
+      ) {
+        methods.setValue('aceiteTermo', false);
+        onNoticeChanged();
+      }
       setFailure(failureOf(error));
     }
   }
@@ -247,10 +352,17 @@ function RegistrationForm({
         </CardTitle>
         <ActivitySummary activity={form.atividade} />
       </CardHeader>
-      <CardContent>
+      <CardContent className="flex flex-col gap-6">
+        <Presentation form={form} />
         <form noValidate onSubmit={onSubmit}>
           <FieldGroup>
             <TextField name="nome" label="Nome completo" control={control} autoComplete="name" />
+            <TextField
+              name="nomePreferencia"
+              label="Como prefere ser chamado(a)? (opcional)"
+              control={control}
+              autoComplete="nickname"
+            />
             <PhoneField name="telefone" label="Telefone com DDD" control={control} />
             <DateField
               name="dataNascimento"
@@ -292,6 +404,22 @@ function RegistrationForm({
               </div>
             )}
 
+            {form.termo && (
+              <section aria-labelledby="termo-titulo" className="flex flex-col gap-2">
+                <h2 id="termo-titulo" className="text-sm font-medium">
+                  Compromissos da turma
+                </h2>
+                <p className="rounded-md border border-input p-3 text-sm whitespace-pre-line">
+                  {form.termo.texto}
+                </p>
+                <Consent
+                  name="aceiteTermo"
+                  label="Li os compromissos acima e concordo com todos"
+                  control={control}
+                />
+              </section>
+            )}
+
             <section
               aria-labelledby="aviso-titulo"
               className="flex flex-col gap-2 rounded-md bg-muted p-3"
@@ -317,8 +445,8 @@ function RegistrationForm({
                 name="autorizaImagem"
                 label={
                   minor
-                    ? 'O responsável legal autoriza o uso da imagem do participante em materiais do Instituto'
-                    : 'Autorizo o uso da minha imagem em materiais do Instituto'
+                    ? 'O responsável legal autoriza o uso da imagem e da voz do participante em materiais do Instituto'
+                    : 'Autorizo o uso da minha imagem e da minha voz em materiais do Instituto'
                 }
                 control={control}
               />
@@ -401,11 +529,17 @@ export function PublicRegistrationView({ codigo }: { codigo: string }) {
   }
 
   if (closed || !form.data.aberta) {
+    const { prazoInscricao, prazoHora } = form.data;
     return (
       <Message
         title="Inscrições encerradas"
-        text="Esta atividade não está recebendo inscrições no momento. Fale com a equipe do Instituto."
+        text={
+          prazoInscricao && deadlinePassed(form.data)
+            ? `O prazo de inscrição terminou em ${formatDeadline(prazoInscricao, prazoHora)}.`
+            : 'Esta atividade não está recebendo inscrições no momento. Fale com a equipe do Instituto.'
+        }
         activity={form.data.atividade}
+        contact={form.data.contatoWhatsapp}
       />
     );
   }

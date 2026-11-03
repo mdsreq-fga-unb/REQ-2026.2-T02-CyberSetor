@@ -14,7 +14,8 @@ import {
 import { Skeleton } from '@/components/ui/skeleton';
 import { formatCpf, formatDate, formatDateTime, formatPhone } from '@/lib/br';
 import { paths } from '@/routes/paths';
-import type { Participant } from '@/types/participantes';
+import type { Participant, ParticipantRegistration, Revocation } from '@/types/participantes';
+import { CANAL_LABEL, revocableOf } from './format';
 
 function Item({ label, value }: { label: string; value: string | null }) {
   return (
@@ -25,7 +26,22 @@ function Item({ label, value }: { label: string; value: string | null }) {
   );
 }
 
-function Authorization({ label, given }: { label: string; given: boolean }) {
+function Authorization({
+  label,
+  given,
+  revocation,
+}: {
+  label: string;
+  given: boolean;
+  revocation: Revocation | null;
+}) {
+  if (given && revocation) {
+    return (
+      <Badge variant="outline">
+        {`${label}: revogada em ${formatDate(revocation.pedidoEm)} (${CANAL_LABEL[revocation.canal].toLowerCase()})`}
+      </Badge>
+    );
+  }
   return (
     <Badge variant={given ? 'secondary' : 'outline'}>{`${label}: ${given ? 'sim' : 'não'}`}</Badge>
   );
@@ -39,6 +55,7 @@ export function ParticipantDialog({
   failed,
   onClose,
   onCorrect,
+  onRevoke,
 }: {
   open: boolean;
   participant: Participant | undefined;
@@ -46,6 +63,7 @@ export function ParticipantDialog({
   failed: boolean;
   onClose: () => void;
   onCorrect: () => void;
+  onRevoke: (registration: ParticipantRegistration) => void;
 }) {
   return (
     <Dialog open={open} onOpenChange={(next) => !next && onClose()}>
@@ -69,6 +87,7 @@ export function ParticipantDialog({
         ) : (
           <div className="flex flex-col gap-5">
             <dl className="grid grid-cols-2 gap-3 sm:grid-cols-3">
+              <Item label="Nome de preferência" value={participant.nomePreferencia} />
               <Item label="Telefone" value={formatPhone(participant.telefone)} />
               <Item
                 label="Nascimento"
@@ -99,10 +118,32 @@ export function ParticipantDialog({
                         {formatDateTime(inscricao.inscritoEm)}
                       </span>
                     </div>
-                    <div className="flex flex-wrap gap-2">
-                      <Authorization label="Comunicados" given={inscricao.autorizaComunicados} />
-                      <Authorization label="Uso de imagem" given={inscricao.autorizaImagem} />
+                    <div className="flex flex-wrap items-center gap-2">
+                      <Authorization
+                        label="Comunicados"
+                        given={inscricao.autorizaComunicados}
+                        revocation={inscricao.comunicadosRevogacao}
+                      />
+                      <Authorization
+                        label="Imagem e voz"
+                        given={inscricao.autorizaImagem}
+                        revocation={inscricao.imagemRevogacao}
+                      />
+                      {revocableOf(inscricao).length > 0 && (
+                        <Button
+                          variant="outline"
+                          className="w-full sm:w-auto"
+                          onClick={() => onRevoke(inscricao)}
+                        >
+                          Registrar revogação
+                        </Button>
+                      )}
                     </div>
+                    {inscricao.termoAceitoEm && (
+                      <p className="text-sm text-muted-foreground">
+                        Compromissos da turma aceitos em {formatDateTime(inscricao.termoAceitoEm)}
+                      </p>
+                    )}
                     {inscricao.responsavelNome && (
                       <p className="text-sm text-muted-foreground">
                         Responsável legal: {inscricao.responsavelNome}

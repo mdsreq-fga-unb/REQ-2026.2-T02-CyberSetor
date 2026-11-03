@@ -11,6 +11,7 @@ const PARTICIPANTES: ParticipantSummary[] = NOMES.map((nome, index) => ({
   id: `00000000-0000-4000-8000-00000000070${index}`,
   versao: 1,
   nome,
+  nomePreferencia: null,
   idade: 15 + index * 7,
   telefone: `6199999${String(index).padStart(4, '0')}`,
   email: null,

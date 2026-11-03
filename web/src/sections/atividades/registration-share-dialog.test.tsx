@@ -38,6 +38,11 @@ const REGISTRATION_OPEN: Registration = {
   camposMinimos: ['NOME', 'TELEFONE', 'DATA_NASCIMENTO', 'CONSENTIMENTOS'],
   camposAdicionais: ['CPF', 'EMAIL'],
   campoDuplicidade: 'CPF',
+  termoCompromisso: null,
+  apresentacao: null,
+  prazoInscricao: null,
+  prazoHora: null,
+  contatoWhatsapp: null,
   codigoPublico: 'xyz987654321',
   linkPublico: '/inscrever/xyz987654321',
 };

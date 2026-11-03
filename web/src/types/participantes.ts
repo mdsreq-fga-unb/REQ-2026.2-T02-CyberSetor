@@ -1,3 +1,23 @@
+export const AUTORIZACOES = ['COMUNICADOS', 'IMAGEM'] as const;
+
+export type Autorizacao = (typeof AUTORIZACOES)[number];
+
+export const CANAIS_PEDIDO = ['EMAIL', 'TELEFONE', 'WHATSAPP', 'PRESENCIAL', 'OUTRO'] as const;
+
+export type CanalPedido = (typeof CANAIS_PEDIDO)[number];
+
+/** Revogação pedida pelo titular: data do pedido e canal (CA-07a.6). */
+export interface Revocation {
+  pedidoEm: string;
+  canal: CanalPedido;
+}
+
+export interface RevocationInput {
+  autorizacao: Autorizacao;
+  canal: CanalPedido;
+  pedidoEm: string;
+}
+
 export interface ParticipantActivity {
   id: string;
   titulo: string;
@@ -8,6 +28,7 @@ export interface ParticipantSummary {
   id: string;
   versao: number;
   nome: string;
+  nomePreferencia: string | null;
   idade: number;
   telefone: string;
   email: string | null;
@@ -21,6 +42,9 @@ export interface ParticipantRegistration {
   inscritoEm: string;
   autorizaComunicados: boolean;
   autorizaImagem: boolean;
+  termoAceitoEm: string | null;
+  comunicadosRevogacao: Revocation | null;
+  imagemRevogacao: Revocation | null;
   responsavelNome: string | null;
   responsavelTelefone: string | null;
   atividade: ParticipantActivity;
@@ -32,6 +56,7 @@ export interface Participant {
   id: string;
   versao: number;
   nome: string;
+  nomePreferencia: string | null;
   telefone: string;
   dataNascimento: string;
   idade: number;
@@ -47,6 +72,7 @@ export interface ParticipantCorrection {
   versao: number;
   justificativa: string;
   nome?: string;
+  nomePreferencia?: string | null;
   telefone?: string;
   dataNascimento?: string;
   email?: string | null;

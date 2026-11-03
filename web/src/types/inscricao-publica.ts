@@ -12,10 +12,20 @@ export interface PublicForm {
   camposMinimos: string[];
   camposAdicionais: CampoInscricao[];
   aviso: { versao: string; texto: string };
+  /** Compromissos da turma, com aceite obrigatório; null quando a atividade não tem. */
+  termo: { versao: string; texto: string } | null;
+  apresentacao: string | null;
+  /** Último dia para se inscrever (AAAA-MM-DD). */
+  prazoInscricao: string | null;
+  /** Hora do prazo (HH:MM); null = fim do dia. */
+  prazoHora: string | null;
+  /** WhatsApp do Instituto para dúvidas, só dígitos com DDD. */
+  contatoWhatsapp: string | null;
 }
 
 export interface PublicSubmission {
   nome: string;
+  nomePreferencia?: string;
   telefone: string;
   dataNascimento: string;
   email?: string;
@@ -23,6 +33,7 @@ export interface PublicSubmission {
   bairroRegiao?: string;
   escolaridade?: string;
   versaoAviso: string;
+  versaoTermo?: string;
   autorizaComunicados: boolean;
   autorizaImagem: boolean;
   responsavelNome?: string;
