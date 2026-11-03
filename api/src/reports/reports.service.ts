@@ -35,7 +35,7 @@ type ReportRow = Prisma.RelatorioGetPayload<{ include: typeof WITH_DETAILS }>;
 type ReportGoalRow = ReportRow['metas'][number];
 type InstrumentRow = Prisma.InstrumentoGetPayload<object>;
 
-function isoDate(date: Date): string {
+export function isoDate(date: Date): string {
   return date.toISOString().slice(0, 10);
 }
 
@@ -55,7 +55,7 @@ function toDecimalOrNull(value: number | null): Prisma.Decimal | null {
   return value === null ? null : new Prisma.Decimal(value);
 }
 
-function toGoalItemResponse(row: ReportGoalRow): ReportGoalItemResponse {
+export function toGoalItemResponse(row: ReportGoalRow): ReportGoalItemResponse {
   return {
     id: row.id,
     metaId: row.metaId,
@@ -92,6 +92,10 @@ function toResponse(row: ReportRow): ReportResponse {
     },
     criadoEm: row.criadoEm.toISOString(),
     metas: row.metas.map(toGoalItemResponse),
+    pdf:
+      row.pdfSha256 && row.pdfGeradoEm
+        ? { sha256: row.pdfSha256, geradoEm: row.pdfGeradoEm.toISOString() }
+        : null,
   };
 }
 

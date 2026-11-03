@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, ParseUUIDPipe, Post, Res } from '@nestjs/common';
+import { Body, Controller, Get, Param, ParseUUIDPipe, Post, Req, Res } from '@nestjs/common';
 import {
   ApiBadRequestResponse,
   ApiBearerAuth,
@@ -7,17 +7,24 @@ import {
   ApiForbiddenResponse,
   ApiNotFoundResponse,
   ApiOkResponse,
+  ApiServiceUnavailableResponse,
   ApiTags,
   ApiUnprocessableEntityResponse,
 } from '@nestjs/swagger';
-import type { Response } from 'express';
+import type { Request, Response } from 'express';
 import type { Actor } from '../accounts/accounts.service.js';
 import { CurrentUser } from '../auth/authenticated-user.js';
 import { Profiles } from '../auth/decorators.js';
 import type { ValidSession } from '../auth/session.service.js';
 import { Perfil } from '../generated/prisma/enums.js';
 import { INSTRUMENT_READERS } from '../instruments/instruments.controller.js';
-import { FinalizeReportDto, RectifyReportDto, ReportResponse } from './reports.dto.js';
+import {
+  FinalizeReportDto,
+  OpenReportPdfResponse,
+  RectifyReportDto,
+  ReportResponse,
+} from './reports.dto.js';
+import { ReportPdfService } from './report-pdf.service.js';
 import { ReportsService } from './reports.service.js';
 
 function actorOf(user: ValidSession, res: Response): Actor {
@@ -28,7 +35,10 @@ function actorOf(user: ValidSession, res: Response): Actor {
 @ApiBearerAuth()
 @Controller('projects/:projectId/reports')
 export class ReportsController {
-  constructor(private readonly reports: ReportsService) {}
+  constructor(
+    private readonly reports: ReportsService,
+    private readonly pdf: ReportPdfService,
+  ) {}
 
   @Get()
   @Profiles(...INSTRUMENT_READERS)
@@ -36,6 +46,29 @@ export class ReportsController {
   @ApiNotFoundResponse({ description: 'Projeto não encontrado' })
   list(@Param('projectId', ParseUUIDPipe) projectId: string): Promise<ReportResponse[]> {
     return this.reports.list(projectId);
+  }
+
+  @Get(':reportId/pdf')
+  @Profiles(...INSTRUMENT_READERS)
+  @ApiOkResponse({
+    type: OpenReportPdfResponse,
+    description: 'Link assinado do PDF da versão, com o SHA-256 do arquivo (RF37, RNF08)',
+  })
+  @ApiNotFoundResponse({ description: 'Relatório não encontrado no projeto' })
+  @ApiServiceUnavailableResponse({ description: 'REPORT_PDF_FAILED: tente de novo' })
+  openPdf(
+    @Param('projectId', ParseUUIDPipe) projectId: string,
+    @Param('reportId', ParseUUIDPipe) reportId: string,
+    @Req() req: Request,
+    @CurrentUser() user: ValidSession,
+    @Res({ passthrough: true }) res: Response,
+  ): Promise<OpenReportPdfResponse> {
+    return this.pdf.open(
+      projectId,
+      reportId,
+      `${req.protocol}://${req.get('host')}`,
+      actorOf(user, res),
+    );
   }
 
   @Post('finalize')

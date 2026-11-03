@@ -488,6 +488,10 @@ model Relatorio {
   orgaoConcedente     String          @map("orgao_concedente")
   numeroProcesso      String          @map("numero_processo")
   emitidoPorNome      String          @map("emitido_por_nome")
+  /// PDF gerado uma vez e guardado; o SHA-256 confere o arquivo entregue (RNF08).
+  pdfChave            String?         @unique @map("pdf_chave")
+  pdfSha256           String?         @map("pdf_sha256") @db.Char(64)
+  pdfGeradoEm         DateTime?       @map("pdf_gerado_em") @db.Timestamptz(3)
 
   projeto           Projeto         @relation(fields: [projetoId], references: [id], onDelete: Restrict)
   emitidoPor        Usuario         @relation(fields: [emitidoPorId], references: [id], onDelete: Restrict)
