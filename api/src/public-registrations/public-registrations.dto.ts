@@ -123,6 +123,20 @@ export class PublicActivityResponse {
   @ApiProperty({ format: 'date' })
   data!: string;
 
+  @ApiProperty({
+    type: String,
+    nullable: true,
+    example: '09:00',
+    description: 'Nulo nas atividades cadastradas antes do horário',
+  })
+  horaInicio!: string | null;
+
+  @ApiProperty({ type: String, nullable: true, example: '17:00' })
+  horaFim!: string | null;
+
+  @ApiProperty({ type: Number, nullable: true, example: 480 })
+  cargaHorariaMinutos!: number | null;
+
   @ApiProperty()
   local!: string;
 }

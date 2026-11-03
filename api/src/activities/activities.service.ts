@@ -68,7 +68,7 @@ function brDate(date: Date): string {
 }
 
 /** Coluna TIME: o Prisma devolve a hora como data em 1970-01-01, em UTC. */
-function hhmm(time: Date | null): string | null {
+export function hhmm(time: Date | null): string | null {
   return time ? time.toISOString().slice(11, 16) : null;
 }
 

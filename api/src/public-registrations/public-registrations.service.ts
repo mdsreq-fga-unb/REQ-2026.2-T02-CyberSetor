@@ -4,6 +4,7 @@ import {
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
+import { hhmm } from '../activities/activities.service.js';
 import { AuditTrailService } from '../audit/audit-trail.service.js';
 import { Prisma } from '../generated/prisma/client.js';
 import { AutorTipo, CampoInscricao } from '../generated/prisma/enums.js';
@@ -36,6 +37,9 @@ const WITH_ACTIVITY = {
       id: true,
       titulo: true,
       data: true,
+      horaInicio: true,
+      horaFim: true,
+      cargaHorariaMinutos: true,
       local: true,
       projeto: { select: { instrumento: { select: { ativo: true } } } },
     },
@@ -52,6 +56,9 @@ function publicActivity(config: ConfigWithActivity) {
   return {
     titulo: config.atividade.titulo,
     data: isoDate(config.atividade.data),
+    horaInicio: hhmm(config.atividade.horaInicio),
+    horaFim: hhmm(config.atividade.horaFim),
+    cargaHorariaMinutos: config.atividade.cargaHorariaMinutos,
     local: config.atividade.local,
   };
 }
