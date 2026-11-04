@@ -67,6 +67,11 @@ export interface FinalizeReportInput {
   justificativas?: ReportJustificationInput[];
 }
 
+export interface RectifyReportInput {
+  motivo: string;
+  justificativas?: ReportJustificationInput[];
+}
+
 export interface ReportGoalItem {
   id: string;
   metaId: string;

@@ -29,6 +29,7 @@ import {
   buildJustificationPayload,
   computePendingReportItems,
   finalizeFailureMessage,
+  mergeUnresolvedPendencias,
   pendenciaReasonText,
   readReportPendencias,
   requiresJustification,
@@ -91,31 +92,6 @@ function previewFailure(error: unknown): string {
   }
   if (error instanceof ApiError && [400, 404, 422].includes(error.status)) return error.message;
   return 'Não foi possível carregar a prévia do relatório. Tente de novo.';
-}
-
-function mergeUnresolvedPendencias(
-  apiPendencias: readonly ReportPendencia[],
-  goals: readonly ReportPreviewGoal[],
-  justifications: Readonly<Record<string, string>>,
-): ReportPendencia[] {
-  const liveByMetaId = new Map(
-    computePendingReportItems(goals, justifications).map((item) => [item.metaId, item]),
-  );
-  const resolved: ReportPendencia[] = [];
-
-  for (const item of apiPendencias) {
-    const live = liveByMetaId.get(item.metaId);
-    if (live) {
-      resolved.push(live);
-      liveByMetaId.delete(item.metaId);
-    }
-  }
-
-  for (const remaining of liveByMetaId.values()) {
-    resolved.push(remaining);
-  }
-
-  return resolved;
 }
 
 export function ProjectReportPreviewSection({

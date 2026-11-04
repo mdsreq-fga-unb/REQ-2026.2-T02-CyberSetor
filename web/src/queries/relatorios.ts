@@ -1,6 +1,12 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { authorizedRequest } from '@/auth/session';
-import type { FinalizeReportInput, Report, ReportPdfLink, ReportPreview } from '@/types/relatorios';
+import type {
+  FinalizeReportInput,
+  RectifyReportInput,
+  Report,
+  ReportPdfLink,
+  ReportPreview,
+} from '@/types/relatorios';
 
 export function reportPreviewKey(projectId: string, from?: string, to?: string) {
   return ['report-preview', projectId, from, to] as const;
@@ -45,6 +51,25 @@ export function useFinalizeReport(projectId: string) {
         method: 'POST',
         body,
       }),
+    onSuccess: () =>
+      Promise.all([
+        queryClient.invalidateQueries({ queryKey: reportsKey(projectId) }),
+        queryClient.invalidateQueries({ queryKey: ['report-preview', projectId] }),
+      ]),
+  });
+}
+
+export function useRectifyReport(projectId: string) {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: ({ reportId, body }: { reportId: string; body: RectifyReportInput }) =>
+      authorizedRequest<Report>(
+        `/projects/${encodeURIComponent(projectId)}/reports/${encodeURIComponent(reportId)}/rectify`,
+        {
+          method: 'POST',
+          body,
+        },
+      ),
     onSuccess: () =>
       Promise.all([
         queryClient.invalidateQueries({ queryKey: reportsKey(projectId) }),

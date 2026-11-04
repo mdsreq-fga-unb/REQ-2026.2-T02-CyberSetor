@@ -1,8 +1,8 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { cleanup, fireEvent, render, screen } from '@testing-library/react';
-import { afterEach, describe, expect, it, vi } from 'vitest';
+import { cleanup, fireEvent, render, screen, waitFor } from '@testing-library/react';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { clearLocalSession, signIn } from '@/auth/session';
-import type { Report, ReportPdfLink } from '@/types/relatorios';
+import type { Report, ReportPdfLink, ReportPreview } from '@/types/relatorios';
 import { ProjectReportsSection } from './project-reports-section';
 
 const PROJECT_ID = '00000000-0000-4000-8000-000000000301';
@@ -30,7 +30,7 @@ const LINK: ReportPdfLink = {
   geradoEm: '2025-07-03T12:00:00.000Z',
 };
 
-type Route = () => { status: number; body?: unknown };
+type Route = (body?: unknown) => { status: number; body?: unknown };
 
 function json(status: number, body?: unknown): Response {
   return new Response(body === undefined ? null : JSON.stringify(body), { status });
@@ -48,7 +48,8 @@ async function signedInAs(perfil: string, routes: Record<string, Route>) {
       }
       const route = routes[key];
       if (!route) return json(404, { code: 'NOT_FOUND', message: key });
-      const result = route();
+      const parsedBody = typeof init.body === 'string' ? JSON.parse(init.body) : undefined;
+      const result = route(parsedBody);
       return json(result.status, result.body);
     }),
   );
@@ -56,19 +57,28 @@ async function signedInAs(perfil: string, routes: Record<string, Route>) {
   return calls;
 }
 
-function renderSection() {
+function renderSection(instrumentActive = true) {
   const client = new QueryClient({ defaultOptions: { queries: { retry: false } } });
   render(
     <QueryClientProvider client={client}>
-      <ProjectReportsSection projectId={PROJECT_ID} />
+      <ProjectReportsSection projectId={PROJECT_ID} instrumentActive={instrumentActive} />
     </QueryClientProvider>,
   );
 }
 
 const LIST = `GET /projects/${PROJECT_ID}/reports`;
 const PDF = `GET /projects/${PROJECT_ID}/reports/${REPORT.id}/pdf`;
+const PREVIEW = `GET /projects/${PROJECT_ID}/report-preview`;
+const RECTIFY = `POST /projects/${PROJECT_ID}/reports/${REPORT.id}/rectify`;
 
 describe('ProjectReportsSection', () => {
+  beforeEach(() => {
+    vi.stubGlobal(
+      'fetch',
+      vi.fn(async () => json(401, { code: 'UNAUTHENTICATED', message: 'Sem sessão' })),
+    );
+  });
+
   afterEach(() => {
     cleanup();
     clearLocalSession();
@@ -221,5 +231,320 @@ describe('ProjectReportsSection', () => {
     );
     fireEvent.click(screen.getByRole('button', { name: 'Tentar de novo' }));
     expect(await screen.findByLabelText('SHA-256 do arquivo')).toHaveValue(SHA);
+  });
+
+  it('oferece retificar apenas na versao mais recente para Presidencia e Gestao com instrumento ativo', async () => {
+    const v2: Report = {
+      ...REPORT,
+      id: '00000000-0000-4000-8000-000000000402',
+      versao: 2,
+      relatorioAnteriorId: REPORT.id,
+      motivoRetificacao: 'Revisão de metas.',
+    };
+    await signedInAs('PRESIDENCIA_GESTAO', {
+      [LIST]: () => ({ status: 200, body: [v2, REPORT] }),
+    });
+    renderSection();
+
+    fireEvent.click(
+      await screen.findByRole('button', {
+        name: 'Ações do relatório de 01/01/2025 a 30/06/2025, versão 1',
+      }),
+    );
+    expect(await screen.findByRole('menuitem', { name: 'Baixar PDF' })).toBeInTheDocument();
+    expect(screen.queryByRole('menuitem', { name: 'Retificar relatório' })).not.toBeInTheDocument();
+
+    fireEvent.click(
+      screen.getByRole('button', {
+        name: 'Ações do relatório de 01/01/2025 a 30/06/2025, versão 2',
+      }),
+    );
+    expect(
+      await screen.findByRole('menuitem', { name: 'Retificar relatório' }),
+    ).toBeInTheDocument();
+  });
+
+  it('oculta a acao de retificar para outros perfis ou quando o instrumento esta inativo', async () => {
+    await signedInAs('ADMINISTRATIVO_FINANCEIRO', {
+      [LIST]: () => ({ status: 200, body: [REPORT] }),
+    });
+    renderSection(true);
+
+    fireEvent.click(
+      await screen.findByRole('button', {
+        name: 'Ações do relatório de 01/01/2025 a 30/06/2025, versão 1',
+      }),
+    );
+    expect(await screen.findByRole('menuitem', { name: 'Baixar PDF' })).toBeInTheDocument();
+    expect(screen.queryByRole('menuitem', { name: 'Retificar relatório' })).not.toBeInTheDocument();
+
+    cleanup();
+    await signedInAs('PRESIDENCIA_GESTAO', {
+      [LIST]: () => ({ status: 200, body: [REPORT] }),
+    });
+    renderSection(false);
+
+    fireEvent.click(
+      await screen.findByRole('button', {
+        name: 'Ações do relatório de 01/01/2025 a 30/06/2025, versão 1',
+      }),
+    );
+    expect(await screen.findByRole('menuitem', { name: 'Baixar PDF' })).toBeInTheDocument();
+    expect(screen.queryByRole('menuitem', { name: 'Retificar relatório' })).not.toBeInTheDocument();
+  });
+
+  it('exige motivo e nova justificativa quando resultado mudou, emitindo nova versao preservando a v1', async () => {
+    const reportComMeta: Report = {
+      ...REPORT,
+      metas: [
+        {
+          id: 'rm-1',
+          metaId: 'meta-1',
+          resultadoMetaId: 'res-antigo',
+          metaOrdem: 1,
+          metaOrigem: 'PROJETO',
+          metaObjetivo: 'Oficinas culturais',
+          metaDescricao: 'Realizar oficinas no semestre',
+          metaIndicador: 'Jovens atendidos',
+          modalidadeAfericao: 'QUANTITATIVA',
+          unidade: 'jovens',
+          parametroPlanejado: 100,
+          valorAlcancado: 50,
+          percentual: 50,
+          alcance: 'PARCIALMENTE_CUMPRIDA',
+          resultadoDataReferencia: '2025-06-15',
+          resultadoDescricao: '50 jovens na chamada inicial',
+          justificativa: 'Chuva intensa na quinzena inicial.',
+        },
+      ],
+    };
+
+    const previewData: ReportPreview = {
+      projeto: {
+        id: PROJECT_ID,
+        codigo: 'P01',
+        titulo: 'Oficinas Culturais',
+        instrumentoId: 'inst-1',
+        inicio: '2025-01-01',
+        fim: '2026-12-31',
+      },
+      periodo: { from: '2025-01-01', to: '2025-06-30' },
+      metas: [
+        {
+          id: 'meta-1',
+          ordem: 1,
+          origem: 'PROJETO',
+          objetivo: 'Oficinas culturais',
+          descricao: 'Realizar oficinas no semestre',
+          indicador: 'Jovens atendidos',
+          modalidadeAfericao: 'QUANTITATIVA',
+          parametroPlanejado: '100',
+          unidade: 'jovens',
+          periodoInicio: '2025-01-01',
+          periodoFim: '2025-06-30',
+          situacao: 'EM_ANDAMENTO',
+          rascunho: false,
+          resultado: {
+            id: 'res-novo',
+            dataReferencia: '2025-06-28',
+            descricao: '80 jovens após conferência de listas físicas',
+            valorAlcancado: 80,
+            parametroPlanejado: 100,
+            percentual: 80,
+            alcance: 'PARCIALMENTE_CUMPRIDA',
+            registradoPor: { id: 'u2', nome: 'Ana' },
+            registradoEm: '2025-06-28T10:00:00.000Z',
+          },
+          percentual: 80,
+          status: 'PARCIALMENTE_CUMPRIDA',
+        },
+      ],
+    };
+
+    let reportsList: Report[] = [reportComMeta];
+    let lastRectifyPayload: unknown = null;
+
+    await signedInAs('PRESIDENCIA_GESTAO', {
+      [LIST]: () => ({ status: 200, body: reportsList }),
+      [PREVIEW]: () => ({ status: 200, body: previewData }),
+      [RECTIFY]: (body) => {
+        lastRectifyPayload = body;
+        const payload = body as {
+          motivo: string;
+          justificativas?: { metaId: string; texto: string }[];
+        };
+        if (!payload.justificativas?.length) {
+          return {
+            status: 422,
+            body: {
+              code: 'REPORT_FINALIZATION_BLOCKED',
+              message:
+                'A emissão do relatório foi bloqueada porque há metas sem resultado registrado ou sem justificativa obrigatória.',
+              details: {
+                pendencias: [
+                  {
+                    metaId: 'meta-1',
+                    ordem: 1,
+                    descricao: 'Realizar oficinas no semestre',
+                    motivo: 'SEM_JUSTIFICATIVA',
+                    alcance: 'PARCIALMENTE_CUMPRIDA',
+                    percentual: 80,
+                  },
+                ],
+              },
+            },
+          };
+        }
+
+        const v2: Report = {
+          ...reportComMeta,
+          id: '00000000-0000-4000-8000-000000000402',
+          versao: 2,
+          relatorioAnteriorId: reportComMeta.id,
+          motivoRetificacao: payload.motivo,
+          criadoEm: '2025-07-10T14:00:00.000Z',
+        };
+        reportsList = [v2, reportComMeta];
+        return { status: 201, body: v2 };
+      },
+    });
+
+    renderSection();
+
+    fireEvent.click(
+      await screen.findByRole('button', {
+        name: 'Ações do relatório de 01/01/2025 a 30/06/2025, versão 1',
+      }),
+    );
+    fireEvent.click(await screen.findByRole('menuitem', { name: 'Retificar relatório' }));
+
+    // Exige motivo antes de enviar
+    const emit = await screen.findByRole('button', { name: 'Emitir retificação' });
+    await waitFor(() => expect(emit).toBeEnabled());
+    fireEvent.click(emit);
+    expect(await screen.findByText('Informe o motivo da retificação.')).toBeInTheDocument();
+
+    // Indica que o resultado mudou após a versão 1 e vem com justificativa em branco
+    const justificationInput = await screen.findByLabelText('Justificativa da meta 1');
+    expect(justificationInput).toHaveValue('');
+    expect(
+      screen.getByText(
+        /Novo resultado apurado após a versão 1: informe a justificativa atualizada/,
+      ),
+    ).toBeInTheDocument();
+
+    fireEvent.change(screen.getByLabelText('Motivo da retificação'), {
+      target: { value: '  Conferência de listas físicas.  ' },
+    });
+
+    // Tenta retificar sem justificativa -> 422 REPORT_FINALIZATION_BLOCKED
+    fireEvent.click(screen.getByRole('button', { name: 'Emitir retificação' }));
+    expect(await screen.findByRole('alert')).toHaveTextContent(
+      'Retificação bloqueada por pendências',
+    );
+    expect(screen.getByRole('alert')).toHaveTextContent('80%');
+
+    // Preenche a nova justificativa e emite a versão 2
+    fireEvent.change(justificationInput, {
+      target: { value: '  Após reposição, restaram 20 vagas ociosas.  ' },
+    });
+    fireEvent.click(screen.getByRole('button', { name: 'Emitir retificação' }));
+
+    expect((await screen.findAllByText('Versão 2')).length).toBeGreaterThan(0);
+    expect(screen.getAllByText('Versão 1').length).toBeGreaterThan(0);
+    expect(lastRectifyPayload).toEqual({
+      motivo: 'Conferência de listas físicas.',
+      justificativas: [{ metaId: 'meta-1', texto: 'Após reposição, restaram 20 vagas ociosas.' }],
+    });
+  });
+
+  it('nao vaza mensagem crua do servidor quando ocorre falha 500 ao retificar', async () => {
+    await signedInAs('PRESIDENCIA_GESTAO', {
+      [LIST]: () => ({ status: 200, body: [REPORT] }),
+      [PREVIEW]: () => ({
+        status: 200,
+        body: {
+          projeto: {
+            id: PROJECT_ID,
+            codigo: 'P01',
+            titulo: 'Projeto',
+            instrumentoId: 'inst-1',
+            inicio: '2025-01-01',
+            fim: '2026-12-31',
+          },
+          periodo: { from: '2025-01-01', to: '2025-06-30' },
+          metas: [],
+        } satisfies ReportPreview,
+      }),
+      [RECTIFY]: () => ({
+        status: 500,
+        body: { code: 'INTERNAL', message: 'PrismaClientKnownRequestError: detalhe interno' },
+      }),
+    });
+
+    renderSection();
+
+    fireEvent.click(
+      await screen.findByRole('button', {
+        name: 'Ações do relatório de 01/01/2025 a 30/06/2025, versão 1',
+      }),
+    );
+    fireEvent.click(await screen.findByRole('menuitem', { name: 'Retificar relatório' }));
+    fireEvent.change(await screen.findByLabelText('Motivo da retificação'), {
+      target: { value: 'Ajuste formal.' },
+    });
+    const submit = screen.getByRole('button', { name: 'Emitir retificação' });
+    await waitFor(() => expect(submit).toBeEnabled());
+    fireEvent.click(submit);
+
+    expect(await screen.findByRole('alert')).toHaveTextContent(
+      'Não foi possível retificar o relatório. Tente de novo.',
+    );
+    expect(screen.queryByText(/detalhe interno/)).not.toBeInTheDocument();
+  });
+
+  it('so retifica depois da apuracao, e a falha oferece tentar de novo', async () => {
+    let attempts = 0;
+    await signedInAs('PRESIDENCIA_GESTAO', {
+      [LIST]: () => ({ status: 200, body: [REPORT] }),
+      [PREVIEW]: () => {
+        attempts += 1;
+        return attempts === 1
+          ? { status: 500, body: { code: 'INTERNAL', message: 'erro' } }
+          : {
+              status: 200,
+              body: {
+                projeto: {
+                  id: PROJECT_ID,
+                  codigo: 'P01',
+                  titulo: 'Projeto',
+                  instrumentoId: 'inst-1',
+                  inicio: '2025-01-01',
+                  fim: '2026-12-31',
+                },
+                periodo: { from: '2025-01-01', to: '2025-06-30' },
+                metas: [],
+              } satisfies ReportPreview,
+            };
+      },
+    });
+
+    renderSection();
+
+    fireEvent.click(
+      await screen.findByRole('button', {
+        name: 'Ações do relatório de 01/01/2025 a 30/06/2025, versão 1',
+      }),
+    );
+    fireEvent.click(await screen.findByRole('menuitem', { name: 'Retificar relatório' }));
+
+    expect(await screen.findByRole('alert')).toHaveTextContent(
+      'Não foi possível carregar a apuração das metas para retificar.',
+    );
+    const submit = screen.getByRole('button', { name: 'Emitir retificação' });
+    expect(submit).toBeDisabled();
+
+    fireEvent.click(screen.getByRole('button', { name: 'Tentar de novo' }));
+    await waitFor(() => expect(submit).toBeEnabled());
   });
 });

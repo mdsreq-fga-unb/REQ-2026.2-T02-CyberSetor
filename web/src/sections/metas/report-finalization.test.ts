@@ -1,11 +1,15 @@
 import { describe, expect, it } from 'vitest';
 import { ApiError } from '@/lib/api';
-import type { ReportPreviewGoal } from '@/types/relatorios';
+import type { Report, ReportPendencia, ReportPreviewGoal } from '@/types/relatorios';
 import {
   buildJustificationPayload,
   computePendingReportItems,
   finalizeFailureMessage,
+  goalsWithChangedResult,
+  initialRectificationJustifications,
+  mergeUnresolvedPendencias,
   readReportPendencias,
+  rectifyFailureMessage,
   requiresJustification,
 } from './report-finalization';
 
@@ -171,5 +175,117 @@ describe('report-finalization helpers', () => {
     expect(
       finalizeFailureMessage(new ApiError(409, 'REPORT_ALREADY_FINALIZED', 'Já finalizado.')),
     ).toBe('Já finalizado.');
+  });
+
+  it('reaproveita na retificação apenas justificativa cujo resultado permaneceu o mesmo e indica mudança de resultado', () => {
+    const report: Report = {
+      id: 'rep-1',
+      projetoId: 'proj-1',
+      versao: 1,
+      periodoInicio: '2026-01-01',
+      periodoFim: '2026-06-30',
+      relatorioAnteriorId: null,
+      motivoRetificacao: null,
+      emitidoPor: { id: 'usr-1', nome: 'Helena' },
+      criadoEm: '2026-07-01T12:00:00.000Z',
+      pdf: null,
+      metas: [
+        {
+          id: 'rm-1',
+          metaId: 'meta-estavel',
+          resultadoMetaId: 'res-estavel',
+          metaOrdem: 1,
+          metaOrigem: 'PROJETO',
+          metaObjetivo: 'Meta estável',
+          metaDescricao: 'Descrição 1',
+          metaIndicador: null,
+          modalidadeAfericao: 'QUANTITATIVA',
+          unidade: 'jovens',
+          parametroPlanejado: 100,
+          valorAlcancado: 70,
+          percentual: 70,
+          alcance: 'PARCIALMENTE_CUMPRIDA',
+          resultadoDataReferencia: '2026-06-15',
+          resultadoDescricao: '70 jovens',
+          justificativa: 'Atraso de transporte escolar.',
+        },
+        {
+          id: 'rm-2',
+          metaId: 'meta-mudou',
+          resultadoMetaId: 'res-antigo',
+          metaOrdem: 2,
+          metaOrigem: 'PROJETO',
+          metaObjetivo: 'Meta revista',
+          metaDescricao: 'Descrição 2',
+          metaIndicador: null,
+          modalidadeAfericao: 'QUANTITATIVA',
+          unidade: 'jovens',
+          parametroPlanejado: 100,
+          valorAlcancado: 50,
+          percentual: 50,
+          alcance: 'PARCIALMENTE_CUMPRIDA',
+          resultadoDataReferencia: '2026-06-15',
+          resultadoDescricao: '50 jovens',
+          justificativa: 'Chuva intensa na quinzena inicial.',
+        },
+      ],
+    };
+
+    const goals: ReportPreviewGoal[] = [
+      {
+        ...BASE_GOAL,
+        id: 'meta-estavel',
+        ordem: 1,
+        status: 'PARCIALMENTE_CUMPRIDA',
+        percentual: 70,
+        resultado: { ...BASE_GOAL.resultado!, id: 'res-estavel', percentual: 70 },
+      },
+      {
+        ...BASE_GOAL,
+        id: 'meta-mudou',
+        ordem: 2,
+        status: 'PARCIALMENTE_CUMPRIDA',
+        percentual: 80,
+        resultado: { ...BASE_GOAL.resultado!, id: 'res-novo', percentual: 80 },
+      },
+    ];
+
+    expect(initialRectificationJustifications(report, goals)).toEqual({
+      'meta-estavel': 'Atraso de transporte escolar.',
+    });
+    expect(Array.from(goalsWithChangedResult(report, goals))).toEqual(['meta-mudou']);
+  });
+
+  it('traduz mensagens de falha da API na retificação sem vazar erro interno 500', () => {
+    expect(rectifyFailureMessage(new Error('rede'))).toContain('falar com o servidor');
+    expect(rectifyFailureMessage(new ApiError(403, 'FORBIDDEN', 'Proibido'))).toContain(
+      'Presidência e Gestão',
+    );
+    expect(
+      rectifyFailureMessage(
+        new ApiError(
+          409,
+          'REPORT_NOT_LATEST_VERSION',
+          'Apenas a versão mais recente do relatório pode ser retificada.',
+        ),
+      ),
+    ).toBe('Apenas a versão mais recente do relatório pode ser retificada.');
+    expect(rectifyFailureMessage(new ApiError(500, 'INTERNAL', 'TypeError: detalhe cru'))).toBe(
+      'Não foi possível retificar o relatório. Tente de novo.',
+    );
+  });
+
+  it('mergeUnresolvedPendencias tira o que foi resolvido e mantem a meta fora da apuracao', () => {
+    const outside = {
+      metaId: 'meta-fora',
+      ordem: 9,
+      descricao: 'Meta fora da tela',
+      motivo: 'SEM_JUSTIFICATIVA',
+      alcance: 'NAO_CUMPRIDA',
+      percentual: null,
+    } satisfies ReportPendencia;
+    const solved = { ...outside, metaId: BASE_GOAL.id, ordem: 1 };
+
+    expect(mergeUnresolvedPendencias([outside, solved], [BASE_GOAL], {})).toEqual([outside]);
   });
 });

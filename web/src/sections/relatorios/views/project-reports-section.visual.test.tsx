@@ -2,7 +2,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { page } from 'vitest/browser';
 import { render } from 'vitest-browser-react';
 import { clearLocalSession, signIn } from '@/auth/session';
-import type { Report, ReportPdfLink } from '@/types/relatorios';
+import type { Report, ReportPdfLink, ReportPreview } from '@/types/relatorios';
 import { ProjectReportsSection } from './project-reports-section';
 
 const PROJECT_ID = '00000000-0000-4000-8000-000000000301';
@@ -43,6 +43,19 @@ const LINK: ReportPdfLink = {
   geradoEm: '2025-07-03T12:00:00.000Z',
 };
 
+const PREVIEW: ReportPreview = {
+  projeto: {
+    id: PROJECT_ID,
+    codigo: 'P01',
+    titulo: 'Oficinas Culturais',
+    instrumentoId: 'inst-1',
+    inicio: '2025-01-01',
+    fim: '2026-12-31',
+  },
+  periodo: { from: '2025-01-01', to: '2025-06-30' },
+  metas: [],
+};
+
 function json(body: unknown): Response {
   return new Response(JSON.stringify(body), { status: 200 });
 }
@@ -59,6 +72,7 @@ describe.each([
         if (url.endsWith('/auth/login')) {
           return json({ accessToken: 't', perfil: 'PRESIDENCIA_GESTAO', deveTrocarSenha: false });
         }
+        if (url.includes('/report-preview')) return json(PREVIEW);
         return json(url.endsWith('/pdf') ? LINK : REPORTS);
       }),
     );
@@ -97,5 +111,18 @@ describe.each([
     await page.getByRole('menuitem', { name: 'Baixar PDF' }).click();
     await expect.element(page.getByLabelText('SHA-256 do arquivo')).toBeVisible();
     await expect.element(page.getByRole('dialog')).toMatchScreenshot(`relatorio-pdf-${device}`);
+  });
+
+  it('dialogo de retificacao com o motivo', async () => {
+    await renderSection();
+
+    await page
+      .getByRole('button', { name: 'Ações do relatório de 01/01/2025 a 30/06/2025, versão 2' })
+      .click();
+    await page.getByRole('menuitem', { name: 'Retificar relatório' }).click();
+    await expect.element(page.getByRole('button', { name: 'Emitir retificação' })).toBeEnabled();
+    await expect
+      .element(page.getByRole('dialog'))
+      .toMatchScreenshot(`relatorio-retificar-${device}`);
   });
 });
