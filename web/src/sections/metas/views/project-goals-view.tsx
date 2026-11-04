@@ -560,7 +560,10 @@ export function ProjectGoalsView({
           )}
 
           {project.data && session && REPORT_READERS.includes(session.perfil as Perfil) && (
-            <ProjectReportsSection projectId={projectId} />
+            <ProjectReportsSection
+              projectId={projectId}
+              instrumentActive={instrument.data?.ativo === true}
+            />
           )}
         </TabsPanel>
       </Tabs>

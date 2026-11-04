@@ -1,9 +1,11 @@
 'use client';
 
 import { FileCheckIcon } from 'lucide-react';
+import { useMemo } from 'react';
+import { useSession } from '@/auth/hooks/use-session';
 import { ListPagination } from '@/components/list/list-pagination';
 import { ListCard, ListEmpty, ListError, TableSkeleton } from '@/components/list/list-states';
-import { RowActionsMenu } from '@/components/list/row-actions-menu';
+import { RowActionsMenu, type RowAction } from '@/components/list/row-actions-menu';
 import { usePagination } from '@/components/list/use-pagination';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -16,12 +18,14 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table';
+import { toast } from '@/components/ui/toast';
 import { useDialogState } from '@/hooks/use-dialog-state';
 import { ApiError } from '@/lib/api';
 import { formatDate, formatDateTime } from '@/lib/br';
 import { useReports } from '@/queries/relatorios';
 import type { Report } from '@/types/relatorios';
 import { ReportPdfDialog } from '../report-pdf-dialog';
+import { ReportRectifyDialog } from '../report-rectify-dialog';
 
 function loadFailure(error: unknown): string {
   if (error instanceof ApiError && error.status === 403) {
@@ -42,7 +46,11 @@ function Version({ report }: { report: Report }) {
   return (
     <span className="flex flex-wrap items-center gap-2">
       Versão {report.versao}
-      {report.relatorioAnteriorId && <Badge variant="secondary">Retificação</Badge>}
+      {report.relatorioAnteriorId && (
+        <Badge variant="secondary" title={report.motivoRetificacao ?? undefined}>
+          Retificação
+        </Badge>
+      )}
     </span>
   );
 }
@@ -65,10 +73,50 @@ function PdfStatus({ report }: { report: Report }) {
 }
 
 /** Versões emitidas do Relatório de Execução do Objeto, com o PDF de cada uma (HU-05b). */
-export function ProjectReportsSection({ projectId }: { projectId: string }) {
+export function ProjectReportsSection({
+  projectId,
+  instrumentActive = true,
+}: {
+  projectId: string;
+  instrumentActive?: boolean;
+}) {
+  const { session } = useSession();
   const reports = useReports(projectId);
   const pagination = usePagination(reports.data);
   const pdfDialog = useDialogState<Report>();
+  const rectifyDialog = useDialogState<Report>();
+
+  const canRectify = session?.perfil === 'PRESIDENCIA_GESTAO' && instrumentActive;
+
+  const supersededIds = useMemo(() => {
+    const data = reports.data ?? [];
+    const set = new Set<string>();
+    for (const item of data) {
+      if (item.relatorioAnteriorId) set.add(item.relatorioAnteriorId);
+      for (const other of data) {
+        if (
+          other.id !== item.id &&
+          other.periodoInicio === item.periodoInicio &&
+          other.periodoFim === item.periodoFim &&
+          other.versao > item.versao
+        ) {
+          set.add(item.id);
+        }
+      }
+    }
+    return set;
+  }, [reports.data]);
+
+  function actionsFor(report: Report): RowAction[] {
+    const actions: RowAction[] = [{ label: 'Baixar PDF', onSelect: () => pdfDialog.show(report) }];
+    if (canRectify && !supersededIds.has(report.id)) {
+      actions.push({
+        label: 'Retificar relatório',
+        onSelect: () => rectifyDialog.show(report),
+      });
+    }
+    return actions;
+  }
 
   return (
     <section className="flex flex-col gap-3" aria-labelledby="relatorios-emitidos-heading">
@@ -152,7 +200,7 @@ export function ProjectReportsSection({ projectId }: { projectId: string }) {
                     <TableCell className="px-4 text-right">
                       <RowActionsMenu
                         label={`Ações do relatório de ${periodOf(report)}, versão ${report.versao}`}
-                        actions={[{ label: 'Baixar PDF', onSelect: () => pdfDialog.show(report) }]}
+                        actions={actionsFor(report)}
                       />
                     </TableCell>
                   </TableRow>
@@ -169,6 +217,19 @@ export function ProjectReportsSection({ projectId }: { projectId: string }) {
         open={pdfDialog.open}
         report={pdfDialog.value}
         onClose={pdfDialog.close}
+      />
+      <ReportRectifyDialog
+        projectId={projectId}
+        open={rectifyDialog.open}
+        report={rectifyDialog.value}
+        onClose={rectifyDialog.close}
+        onRectified={(updated) =>
+          toast.add({
+            type: 'success',
+            title: `Relatório retificado (versão ${updated.versao})`,
+            description: `Período de ${formatDate(updated.periodoInicio)} a ${formatDate(updated.periodoFim)} emitido preservando a versão anterior.`,
+          })
+        }
       />
     </section>
   );
