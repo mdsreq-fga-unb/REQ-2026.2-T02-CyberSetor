@@ -1,12 +1,13 @@
 import { describe, expect, it } from 'vitest';
 import { ApiError } from '@/lib/api';
-import type { Report, ReportPreviewGoal } from '@/types/relatorios';
+import type { Report, ReportPendencia, ReportPreviewGoal } from '@/types/relatorios';
 import {
   buildJustificationPayload,
   computePendingReportItems,
   finalizeFailureMessage,
   goalsWithChangedResult,
   initialRectificationJustifications,
+  mergeUnresolvedPendencias,
   readReportPendencias,
   rectifyFailureMessage,
   requiresJustification,
@@ -272,5 +273,19 @@ describe('report-finalization helpers', () => {
     expect(rectifyFailureMessage(new ApiError(500, 'INTERNAL', 'TypeError: detalhe cru'))).toBe(
       'Não foi possível retificar o relatório. Tente de novo.',
     );
+  });
+
+  it('mergeUnresolvedPendencias tira o que foi resolvido e mantem a meta fora da apuracao', () => {
+    const outside = {
+      metaId: 'meta-fora',
+      ordem: 9,
+      descricao: 'Meta fora da tela',
+      motivo: 'SEM_JUSTIFICATIVA',
+      alcance: 'NAO_CUMPRIDA',
+      percentual: null,
+    } satisfies ReportPendencia;
+    const solved = { ...outside, metaId: BASE_GOAL.id, ordem: 1 };
+
+    expect(mergeUnresolvedPendencias([outside, solved], [BASE_GOAL], {})).toEqual([outside]);
   });
 });

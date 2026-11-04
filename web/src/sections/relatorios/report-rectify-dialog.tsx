@@ -25,6 +25,7 @@ import {
   computePendingReportItems,
   goalsWithChangedResult,
   initialRectificationJustifications,
+  mergeUnresolvedPendencias,
   pendenciaReasonText,
   readReportPendencias,
   rectifyFailureMessage,
@@ -105,29 +106,14 @@ export function ReportRectifyDialog({
   );
 
   const clientPendencias = useMemo(
-    () => (preview.data ? computePendingReportItems(preview.data.metas, justifications) : []),
-    [preview.data, justifications],
+    () => computePendingReportItems(previewGoals, justifications),
+    [previewGoals, justifications],
   );
 
   const unresolvedPendencias = useMemo(() => {
     if (!isBlockedAfterAttempt) return [];
-    if (!preview.data) return apiPendencias;
-    const liveByMetaId = new Map(clientPendencias.map((item) => [item.metaId, item]));
-    const merged: ReportPendencia[] = [];
-    for (const item of apiPendencias) {
-      const live = liveByMetaId.get(item.metaId);
-      if (live) {
-        merged.push(live);
-        liveByMetaId.delete(item.metaId);
-      } else if (!preview.data.metas.some((goal) => goal.id === item.metaId)) {
-        merged.push(item);
-      }
-    }
-    for (const remaining of liveByMetaId.values()) {
-      merged.push(remaining);
-    }
-    return merged;
-  }, [isBlockedAfterAttempt, preview.data, apiPendencias, clientPendencias]);
+    return mergeUnresolvedPendencias(apiPendencias, previewGoals, justifications);
+  }, [isBlockedAfterAttempt, apiPendencias, previewGoals, justifications]);
 
   function close() {
     setMotivo('');

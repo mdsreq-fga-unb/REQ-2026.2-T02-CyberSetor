@@ -130,6 +130,37 @@ export function pendenciaReasonText(item: ReportPendencia): string {
   return 'meta não atingida integralmente sem justificativa registrada';
 }
 
+/**
+ * Junta o bloqueio devolvido pela API ao que ainda falta na tela: o que foi resolvido sai da lista,
+ * e a meta fora da apuração carregada continua nela, porque só a API sabe dela.
+ */
+export function mergeUnresolvedPendencias(
+  apiPendencias: readonly ReportPendencia[],
+  goals: readonly ReportPreviewGoal[],
+  justifications: Readonly<Record<string, string>>,
+): ReportPendencia[] {
+  const liveByMetaId = new Map(
+    computePendingReportItems(goals, justifications).map((item) => [item.metaId, item]),
+  );
+  const resolved: ReportPendencia[] = [];
+
+  for (const item of apiPendencias) {
+    const live = liveByMetaId.get(item.metaId);
+    if (live) {
+      resolved.push(live);
+      liveByMetaId.delete(item.metaId);
+    } else if (!goals.some((goal) => goal.id === item.metaId)) {
+      resolved.push(item);
+    }
+  }
+
+  for (const remaining of liveByMetaId.values()) {
+    resolved.push(remaining);
+  }
+
+  return resolved;
+}
+
 export function finalizeFailureMessage(error: unknown): string {
   if (!(error instanceof ApiError)) {
     return 'Não foi possível falar com o servidor para finalizar o relatório. Tente de novo.';
