@@ -1,9 +1,13 @@
 name: ci-web
 
-# Integração contínua da linha do front: lint, testes e build em todo pull
-# request para web-develop e web, e no push a essas branches. Enquanto web/
-# não tiver package.json, o job só registra que ainda não há código; assim a
-# verificação existe desde o primeiro commit e pode ser exigida no merge.
+# Integração contínua da linha do front: formatação, lint, tipos, testes, testes
+# visuais, build e imagem de implantação em todo pull request para web-develop e
+# web, e no push a essas branches. Os testes visuais rodam na imagem oficial do
+# Playwright, na mesma versão de web/package.json; na falha, o artefato
+# diferencas-visuais traz a captura obtida e a diferença, e é dele que saem as
+# referências. A versão do Node vem de web/.nvmrc e a do pnpm do campo
+# packageManager de web/package.json (lido pelo pnpm/action-setup), para que o
+# CI e a máquina de cada integrante usem o mesmo ambiente.
 
 on:
   pull_request:
@@ -11,48 +15,144 @@ on:
   push:
     branches: [web-develop, web]
 
+concurrency:
+  group: ci-web-${{ github.ref }}
+  cancel-in-progress: true
+
 permissions:
   contents: read
 
 jobs:
-  build:
+  visual:
     runs-on: ubuntu-latest
+    timeout-minutes: 15
+    container:
+      image: mcr.microsoft.com/playwright:v1.64.1-noble
+      options: --ipc=host
+    defaults:
+      run:
+        working-directory: web
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Há testes visuais?
+        id: visual
+        run: |
+          if [ -f package.json ] && grep -q '"test:visual"' package.json; then
+            echo "existe=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "existe=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - uses: pnpm/action-setup@v4
+        if: steps.visual.outputs.existe == 'true'
+        with:
+          package_json_file: web/package.json
+
+      - uses: actions/setup-node@v4
+        if: steps.visual.outputs.existe == 'true'
+        with:
+          node-version-file: web/.nvmrc
+
+      - name: Instalar dependências
+        if: steps.visual.outputs.existe == 'true'
+        run: pnpm install --frozen-lockfile
+
+      - name: Versão do Playwright igual à da imagem
+        if: steps.visual.outputs.existe == 'true'
+        run: |
+          test "$(node -p "require('playwright/package.json').version")" = "1.64.1" || {
+            echo "::error title=Playwright::a versão em web/package.json difere da imagem do job visual."
+            exit 1
+          }
+
+      - name: Testes visuais
+        if: steps.visual.outputs.existe == 'true'
+        run: pnpm exec vitest run --project visual --update=none
+
+      - name: Diferenças encontradas
+        if: failure() && steps.visual.outputs.existe == 'true'
+        uses: actions/upload-artifact@v4
+        with:
+          name: diferencas-visuais
+          path: web/.vitest-attachments
+          include-hidden-files: true
+          if-no-files-found: warn
+
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    defaults:
+      run:
+        working-directory: web
     steps:
       - uses: actions/checkout@v4
 
       - name: Há código?
         id: codigo
         run: |
-          if [ -f web/package.json ]; then
+          if [ -f package.json ]; then
             echo "existe=true" >> "$GITHUB_OUTPUT"
           else
             echo "existe=false" >> "$GITHUB_OUTPUT"
-            echo "::notice title=Sem código::web/package.json ainda não existe; lint, testes e build ficam para o esqueleto do front."
+            echo "::notice title=Sem código::web/package.json ainda não existe; a verificação fica para o esqueleto do front."
           fi
+
+      - uses: pnpm/action-setup@v4
+        if: steps.codigo.outputs.existe == 'true'
+        with:
+          package_json_file: web/package.json
 
       - uses: actions/setup-node@v4
         if: steps.codigo.outputs.existe == 'true'
         with:
-          node-version: 22
+          node-version-file: web/.nvmrc
+          cache: pnpm
+          cache-dependency-path: web/pnpm-lock.yaml
 
       - name: Instalar dependências
         if: steps.codigo.outputs.existe == 'true'
-        working-directory: web
-        run: |
-          corepack enable
-          pnpm install --frozen-lockfile
+        run: pnpm install --frozen-lockfile
+
+      - name: Formatação
+        if: steps.codigo.outputs.existe == 'true'
+        run: pnpm fmt:check
 
       - name: Lint
         if: steps.codigo.outputs.existe == 'true'
-        working-directory: web
         run: pnpm lint
+
+      - name: Tipos
+        if: steps.codigo.outputs.existe == 'true'
+        run: pnpm typecheck
 
       - name: Testes
         if: steps.codigo.outputs.existe == 'true'
-        working-directory: web
         run: pnpm test
 
       - name: Build
         if: steps.codigo.outputs.existe == 'true'
-        working-directory: web
         run: pnpm build
+
+  imagem:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Imagem de implantação
+        run: |
+          if [ ! -f web/Dockerfile ]; then
+            echo "::notice title=Sem Dockerfile::web/Dockerfile ainda não existe."
+            exit 0
+          fi
+          docker build --build-arg NEXT_PUBLIC_API_URL=https://api.example.test/v1 -t web-ci web
+          docker run -d --name web-ci web-ci
+          for _ in $(seq 1 30); do
+            estado=$(docker inspect --format '{{.State.Health.Status}}' web-ci)
+            [ "$estado" = healthy ] && exit 0
+            sleep 3
+          done
+          docker logs web-ci
+          echo "::error title=Imagem::o contêiner não ficou saudável em 90 s (estado: $estado)."
+          exit 1

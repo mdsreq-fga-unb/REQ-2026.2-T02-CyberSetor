@@ -1,0 +1,542 @@
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { cleanup, fireEvent, render, screen } from '@testing-library/react';
+import type { PublicForm } from '@/types/inscricao-publica';
+import { PublicRegistrationView } from './public-registration-view';
+
+const CODIGO = 'codigoPublicoA01';
+
+const FORM: PublicForm = {
+  atividade: {
+    titulo: 'Oficina de serigrafia',
+    data: '2026-11-10',
+    horaInicio: null,
+    horaFim: null,
+    cargaHorariaMinutos: null,
+    local: 'Setor Comercial Sul',
+  },
+  aberta: true,
+  vagasEsgotadas: false,
+  listaEspera: true,
+  camposMinimos: ['NOME', 'TELEFONE', 'DATA_NASCIMENTO', 'CONSENTIMENTOS'],
+  camposAdicionais: ['CPF'],
+  aviso: { versao: '2026-10-28-provisoria', texto: 'O Instituto usa os dados para a inscrição.' },
+  termo: null,
+  apresentacao: null,
+  prazoInscricao: null,
+  prazoHora: null,
+  contatoWhatsapp: null,
+};
+
+const TERMO = { versao: 'a1b2c3d4e5f60718', texto: 'Chegar no horário.\nAvisar quando faltar.' };
+
+type Route = (body: unknown) => { status: number; body?: unknown };
+
+function json(status: number, body?: unknown): Response {
+  return new Response(body === undefined ? null : JSON.stringify(body), { status });
+}
+
+function stubApi(routes: Record<string, Route>) {
+  const calls: { key: string; body: unknown }[] = [];
+  vi.stubGlobal(
+    'fetch',
+    vi.fn(async (url: string, init: RequestInit = {}) => {
+      const key = `${init.method ?? 'GET'} ${new URL(url).pathname.replace(/^\/v1/, '')}`;
+      const body = typeof init.body === 'string' ? JSON.parse(init.body) : undefined;
+      calls.push({ key, body });
+      const route = routes[key];
+      if (!route) return json(404, { code: 'NOT_FOUND', message: key });
+      const result = route(body);
+      return json(result.status, result.body);
+    }),
+  );
+  return calls;
+}
+
+const GET = `GET /public/registrations/${CODIGO}`;
+const POST = `POST /public/registrations/${CODIGO}`;
+
+function renderView() {
+  const client = new QueryClient({ defaultOptions: { queries: { retry: false } } });
+  render(
+    <QueryClientProvider client={client}>
+      <PublicRegistrationView codigo={CODIGO} />
+    </QueryClientProvider>,
+  );
+}
+
+function fill(label: string, value: string) {
+  fireEvent.change(screen.getByLabelText(label), { target: { value } });
+}
+
+function bornYearsAgo(anos: number): string {
+  const date = new Date();
+  date.setFullYear(date.getFullYear() - anos);
+  date.setDate(date.getDate() - 2);
+  return date.toISOString().slice(0, 10);
+}
+
+function fillAdult() {
+  fill('Nome completo', 'Ana Souza');
+  fill('Telefone com DDD', '(61) 99999-8888');
+  fill('Data de nascimento', '1990-05-20');
+  fill('CPF', '529.982.247-25');
+}
+
+describe('formulario publico de inscricao', () => {
+  afterEach(() => {
+    cleanup();
+    vi.unstubAllGlobals();
+  });
+
+  it('mostra o horario e a carga horaria da atividade no formulario e na confirmacao', async () => {
+    const atividade = {
+      ...FORM.atividade,
+      horaInicio: '14:00',
+      horaFim: '17:30',
+      cargaHorariaMinutos: 210,
+    };
+    stubApi({
+      [GET]: () => ({ status: 200, body: { ...FORM, atividade } }),
+      [POST]: () => ({
+        status: 201,
+        body: {
+          situacao: 'CONFIRMADA',
+          posicaoEspera: null,
+          atividade,
+          inscritoEm: '2026-10-28T13:00:00.000Z',
+        },
+      }),
+    });
+    renderView();
+
+    const quando = '10/11/2026 · 14h às 17h30 · 3 h 30 min · Setor Comercial Sul';
+    expect(await screen.findByText(quando)).toBeInTheDocument();
+    fillAdult();
+    fireEvent.click(screen.getByRole('button', { name: 'Confirmar inscrição' }));
+    expect(
+      await screen.findByRole('heading', { name: 'Inscrição confirmada' }),
+    ).toBeInTheDocument();
+    expect(screen.getByText(quando)).toBeInTheDocument();
+  });
+
+  it('mostra a atividade, so os campos pedidos, o aviso e as autorizacoes desmarcadas', async () => {
+    stubApi({ [GET]: () => ({ status: 200, body: FORM }) });
+    renderView();
+
+    expect(
+      await screen.findByRole('heading', { name: 'Inscrição: Oficina de serigrafia' }),
+    ).toBeInTheDocument();
+    expect(screen.getByText('10/11/2026 · Setor Comercial Sul')).toBeInTheDocument();
+    expect(screen.getByLabelText('CPF')).toBeInTheDocument();
+    expect(screen.queryByLabelText('E-mail')).not.toBeInTheDocument();
+    expect(screen.getByText('O Instituto usa os dados para a inscrição.')).toBeInTheDocument();
+    expect(screen.getByLabelText('Quero receber comunicados do Instituto')).not.toBeChecked();
+    expect(
+      screen.getByLabelText(
+        'Autorizo o uso da minha imagem e da minha voz em materiais do Instituto',
+      ),
+    ).not.toBeChecked();
+    expect(screen.queryByLabelText('Nome do responsável')).not.toBeInTheDocument();
+  });
+
+  it('envia so os campos pedidos, sem pontuacao, com a versao do aviso, e confirma', async () => {
+    const calls = stubApi({
+      [GET]: () => ({ status: 200, body: FORM }),
+      [POST]: () => ({
+        status: 201,
+        body: {
+          situacao: 'CONFIRMADA',
+          posicaoEspera: null,
+          atividade: FORM.atividade,
+          inscritoEm: '2026-10-28T13:00:00.000Z',
+        },
+      }),
+    });
+    renderView();
+
+    await screen.findByLabelText('CPF');
+    fillAdult();
+    fireEvent.click(screen.getByLabelText('Quero receber comunicados do Instituto'));
+    fireEvent.click(screen.getByRole('button', { name: 'Confirmar inscrição' }));
+
+    expect(
+      await screen.findByRole('heading', { name: 'Inscrição confirmada' }),
+    ).toBeInTheDocument();
+    expect(screen.getByText('Sua vaga está garantida.')).toBeInTheDocument();
+    expect(calls.find((call) => call.key === POST)?.body).toEqual({
+      nome: 'Ana Souza',
+      telefone: '61999998888',
+      dataNascimento: '1990-05-20',
+      cpf: '52998224725',
+      versaoAviso: '2026-10-28-provisoria',
+      autorizaComunicados: true,
+      autorizaImagem: false,
+    });
+  });
+
+  it('nome de preferencia e opcional e vai sem espacos quando preenchido', async () => {
+    const calls = stubApi({
+      [GET]: () => ({ status: 200, body: FORM }),
+      [POST]: () => ({
+        status: 201,
+        body: {
+          situacao: 'CONFIRMADA',
+          posicaoEspera: null,
+          atividade: FORM.atividade,
+          inscritoEm: '2026-10-30T13:00:00.000Z',
+        },
+      }),
+    });
+    renderView();
+
+    await screen.findByLabelText('CPF');
+    fillAdult();
+    fill('Como prefere ser chamado(a)? (opcional)', '  Aninha  ');
+    fireEvent.click(screen.getByRole('button', { name: 'Confirmar inscrição' }));
+
+    await screen.findByRole('heading', { name: 'Inscrição confirmada' });
+    expect(calls.find((call) => call.key === POST)?.body).toMatchObject({
+      nome: 'Ana Souza',
+      nomePreferencia: 'Aninha',
+    });
+  });
+
+  it('mostra a apresentacao, o prazo com a hora e o link do WhatsApp do Instituto', async () => {
+    stubApi({
+      [GET]: () => ({
+        status: 200,
+        body: {
+          ...FORM,
+          apresentacao: 'Oficina de 8 horas.\nLeve uma camiseta clara.',
+          prazoInscricao: '2026-11-08',
+          prazoHora: '18:00',
+          contatoWhatsapp: '61999998888',
+        },
+      }),
+    });
+    renderView();
+
+    expect(
+      await screen.findByRole('heading', { level: 2, name: 'Sobre a atividade' }),
+    ).toBeInTheDocument();
+    expect(screen.getByText(/Leve uma camiseta clara/)).toBeInTheDocument();
+    expect(screen.getByText('08/11/2026, às 18h')).toBeInTheDocument();
+    expect(screen.getByRole('link', { name: /WhatsApp do Instituto/ })).toHaveAttribute(
+      'href',
+      'https://wa.me/5561999998888',
+    );
+  });
+
+  it('sem apresentacao, prazo nem contato, a pagina fica como antes', async () => {
+    stubApi({ [GET]: () => ({ status: 200, body: FORM }) });
+    renderView();
+
+    await screen.findByRole('heading', { level: 1, name: /Oficina de serigrafia/ });
+    expect(screen.queryByText('Sobre a atividade')).not.toBeInTheDocument();
+    expect(screen.queryByText('Inscrições até')).not.toBeInTheDocument();
+    expect(screen.queryByRole('link', { name: /WhatsApp/ })).not.toBeInTheDocument();
+  });
+
+  it('prazo sem hora vale ate as 23h59', async () => {
+    stubApi({
+      [GET]: () => ({ status: 200, body: { ...FORM, prazoInscricao: '2026-11-08' } }),
+    });
+    renderView();
+
+    expect(await screen.findByText('08/11/2026, às 23h59')).toBeInTheDocument();
+  });
+
+  it('sem termo, nao mostra os compromissos nem manda versao de termo', async () => {
+    stubApi({ [GET]: () => ({ status: 200, body: FORM }) });
+    renderView();
+
+    await screen.findByLabelText('CPF');
+    expect(screen.queryByText('Compromissos da turma')).not.toBeInTheDocument();
+    expect(
+      screen.queryByLabelText('Li os compromissos acima e concordo com todos'),
+    ).not.toBeInTheDocument();
+  });
+
+  it('com termo, mostra os compromissos e so envia com o aceite, junto da versao', async () => {
+    const calls = stubApi({
+      [GET]: () => ({ status: 200, body: { ...FORM, termo: TERMO } }),
+      [POST]: () => ({
+        status: 201,
+        body: {
+          situacao: 'CONFIRMADA',
+          posicaoEspera: null,
+          atividade: FORM.atividade,
+          inscritoEm: '2026-10-30T13:00:00.000Z',
+        },
+      }),
+    });
+    renderView();
+
+    await screen.findByLabelText('CPF');
+    expect(screen.getByRole('heading', { name: 'Compromissos da turma' })).toBeInTheDocument();
+    expect(screen.getByText(/Avisar quando faltar/)).toBeInTheDocument();
+    fillAdult();
+    fireEvent.click(screen.getByRole('button', { name: 'Confirmar inscrição' }));
+
+    expect(
+      await screen.findByText('Marque que concorda com os compromissos da turma.'),
+    ).toBeInTheDocument();
+    expect(calls.some((call) => call.key === POST)).toBe(false);
+
+    fireEvent.click(screen.getByLabelText('Li os compromissos acima e concordo com todos'));
+    fireEvent.click(screen.getByRole('button', { name: 'Confirmar inscrição' }));
+
+    await screen.findByRole('heading', { name: 'Inscrição confirmada' });
+    expect(calls.find((call) => call.key === POST)?.body).toMatchObject({
+      versaoTermo: TERMO.versao,
+    });
+  });
+
+  it('termo alterado durante o preenchimento recarrega o texto e pede o aceite de novo', async () => {
+    let versao = TERMO.versao;
+    const calls = stubApi({
+      [GET]: () => ({ status: 200, body: { ...FORM, termo: { ...TERMO, versao } } }),
+      [POST]: () => {
+        versao = 'f0e1d2c3b4a59687';
+        return {
+          status: 400,
+          body: {
+            code: 'TERM_OUTDATED',
+            message: 'Os compromissos da turma mudaram. Leia o texto atual e envie de novo.',
+          },
+        };
+      },
+    });
+    renderView();
+
+    await screen.findByLabelText('CPF');
+    fillAdult();
+    fireEvent.click(screen.getByLabelText('Li os compromissos acima e concordo com todos'));
+    fireEvent.click(screen.getByRole('button', { name: 'Confirmar inscrição' }));
+
+    expect(await screen.findByRole('alert')).toHaveTextContent('Os compromissos da turma mudaram.');
+    expect(
+      screen.getByLabelText('Li os compromissos acima e concordo com todos'),
+    ).not.toBeChecked();
+    expect(calls.filter((call) => call.key === GET).length).toBeGreaterThan(1);
+  });
+
+  it('com as vagas esgotadas, avisa da lista de espera e mostra a posicao depois do envio', async () => {
+    stubApi({
+      [GET]: () => ({ status: 200, body: { ...FORM, vagasEsgotadas: true } }),
+      [POST]: () => ({
+        status: 201,
+        body: {
+          situacao: 'LISTA_ESPERA',
+          posicaoEspera: 3,
+          atividade: FORM.atividade,
+          inscritoEm: '2026-10-28T13:00:00.000Z',
+        },
+      }),
+    });
+    renderView();
+
+    expect(
+      await screen.findByText(/As vagas já foram preenchidas\. Quem se inscrever agora entra/),
+    ).toBeInTheDocument();
+    fillAdult();
+    fireEvent.click(screen.getByRole('button', { name: 'Confirmar inscrição' }));
+
+    expect(
+      await screen.findByRole('heading', { name: 'Você está na lista de espera' }),
+    ).toBeInTheDocument();
+    expect(screen.getByText(/Sua posição: 3º lugar\./)).toBeInTheDocument();
+  });
+
+  it('sem lista de espera e com as vagas esgotadas, mostra o aviso sem o formulario', async () => {
+    stubApi({
+      [GET]: () => ({
+        status: 200,
+        body: { ...FORM, vagasEsgotadas: true, listaEspera: false },
+      }),
+    });
+    renderView();
+
+    expect(await screen.findByRole('heading', { name: 'Vagas esgotadas' })).toBeInTheDocument();
+    expect(screen.queryByRole('button', { name: 'Confirmar inscrição' })).not.toBeInTheDocument();
+  });
+
+  it('vagas esgotadas durante o preenchimento releem o formulario e mostram o aviso', async () => {
+    let esgotadas = false;
+    const calls = stubApi({
+      [GET]: () => ({
+        status: 200,
+        body: { ...FORM, listaEspera: false, vagasEsgotadas: esgotadas },
+      }),
+      [POST]: () => {
+        esgotadas = true;
+        return {
+          status: 409,
+          body: {
+            code: 'REGISTRATION_FULL',
+            message: 'As vagas desta atividade já foram preenchidas.',
+          },
+        };
+      },
+    });
+    renderView();
+
+    await screen.findByLabelText('CPF');
+    fillAdult();
+    fireEvent.click(screen.getByRole('button', { name: 'Confirmar inscrição' }));
+
+    expect(await screen.findByRole('heading', { name: 'Vagas esgotadas' })).toBeInTheDocument();
+    // O aviso vem do formulário relido: se a vaga voltar, a próxima leitura mostra o formulário.
+    expect(calls.filter((c) => c.key === GET)).toHaveLength(2);
+  });
+
+  it('a tela de sucesso segue a situacao da inscricao, mesmo sem a posicao na resposta', async () => {
+    stubApi({
+      [GET]: () => ({ status: 200, body: FORM }),
+      [POST]: () => ({
+        status: 201,
+        body: {
+          situacao: 'CONFIRMADA',
+          atividade: FORM.atividade,
+          inscritoEm: '2026-10-28T13:00:00.000Z',
+        },
+      }),
+    });
+    renderView();
+
+    await screen.findByLabelText('CPF');
+    fillAdult();
+    fireEvent.click(screen.getByRole('button', { name: 'Confirmar inscrição' }));
+
+    expect(
+      await screen.findByRole('heading', { name: 'Inscrição confirmada' }),
+    ).toBeInTheDocument();
+    expect(screen.queryByText(/Sua posição/)).not.toBeInTheDocument();
+  });
+
+  it('menor de 18 anos ve e precisa preencher o responsavel legal antes de enviar', async () => {
+    const calls = stubApi({ [GET]: () => ({ status: 200, body: FORM }) });
+    renderView();
+
+    await screen.findByLabelText('CPF');
+    fillAdult();
+    fill('Data de nascimento', bornYearsAgo(15));
+    expect(await screen.findByLabelText('Nome do responsável')).toBeInTheDocument();
+    expect(
+      screen.getByLabelText(
+        'O responsável legal autoriza o uso da imagem e da voz do participante em materiais do Instituto',
+      ),
+    ).not.toBeChecked();
+    fireEvent.click(screen.getByRole('button', { name: 'Confirmar inscrição' }));
+
+    expect(await screen.findByText('Informe o nome do responsável legal.')).toBeInTheDocument();
+    expect(screen.getByText('Informe o telefone do responsável com DDD.')).toBeInTheDocument();
+    expect(calls.some((call) => call.key === POST)).toBe(false);
+  });
+
+  it('CPF invalido e campos vazios sao recusados sem chamar a API', async () => {
+    const calls = stubApi({ [GET]: () => ({ status: 200, body: FORM }) });
+    renderView();
+
+    await screen.findByLabelText('CPF');
+    fill('CPF', '529.982.247-24');
+    fireEvent.click(screen.getByRole('button', { name: 'Confirmar inscrição' }));
+
+    expect(await screen.findByText('CPF inválido. Confira os números.')).toBeInTheDocument();
+    expect(screen.getByText('Informe o seu nome.')).toBeInTheDocument();
+    expect(calls.some((call) => call.key === POST)).toBe(false);
+  });
+
+  it('envio repetido mostra a recusa da API', async () => {
+    stubApi({
+      [GET]: () => ({ status: 200, body: FORM }),
+      [POST]: () => ({
+        status: 409,
+        body: {
+          code: 'ALREADY_REGISTERED',
+          message: 'Já existe uma inscrição com estes dados nesta atividade.',
+        },
+      }),
+    });
+    renderView();
+
+    await screen.findByLabelText('CPF');
+    fillAdult();
+    fireEvent.click(screen.getByRole('button', { name: 'Confirmar inscrição' }));
+
+    expect(await screen.findByRole('alert')).toHaveTextContent(
+      'Já existe uma inscrição com estes dados nesta atividade.',
+    );
+  });
+
+  it('inscricao encerrada durante o preenchimento troca para o aviso de encerramento', async () => {
+    stubApi({
+      [GET]: () => ({ status: 200, body: FORM }),
+      [POST]: () => ({
+        status: 409,
+        body: {
+          code: 'REGISTRATION_CLOSED',
+          message: 'As inscrições desta atividade estão encerradas.',
+        },
+      }),
+    });
+    renderView();
+
+    await screen.findByLabelText('CPF');
+    fillAdult();
+    fireEvent.click(screen.getByRole('button', { name: 'Confirmar inscrição' }));
+
+    expect(
+      await screen.findByRole('heading', { name: 'Inscrições encerradas' }),
+    ).toBeInTheDocument();
+  });
+
+  it('inscricao fechada mostra o aviso sem o formulario', async () => {
+    stubApi({ [GET]: () => ({ status: 200, body: { ...FORM, aberta: false } }) });
+    renderView();
+
+    expect(
+      await screen.findByRole('heading', { name: 'Inscrições encerradas' }),
+    ).toBeInTheDocument();
+    expect(screen.queryByLabelText('Nome completo')).not.toBeInTheDocument();
+  });
+
+  it('prazo vencido mostra quando terminou e o WhatsApp do Instituto', async () => {
+    stubApi({
+      [GET]: () => ({
+        status: 200,
+        body: {
+          ...FORM,
+          aberta: false,
+          prazoInscricao: '2026-10-01',
+          prazoHora: '18:00',
+          contatoWhatsapp: '61999998888',
+        },
+      }),
+    });
+    renderView();
+
+    expect(
+      await screen.findByText('O prazo de inscrição terminou em 01/10/2026, às 18h.'),
+    ).toBeInTheDocument();
+    expect(screen.getByRole('link', { name: /WhatsApp do Instituto/ })).toHaveAttribute(
+      'href',
+      'https://wa.me/5561999998888',
+    );
+    expect(screen.queryByLabelText('Nome completo')).not.toBeInTheDocument();
+  });
+
+  it('link inexistente mostra o aviso de link invalido', async () => {
+    stubApi({
+      [GET]: () => ({
+        status: 404,
+        body: { code: 'REGISTRATION_LINK_NOT_FOUND', message: 'Link de inscrição inválido.' },
+      }),
+    });
+    renderView();
+
+    expect(
+      await screen.findByRole('heading', { name: 'Link de inscrição inválido' }),
+    ).toBeInTheDocument();
+  });
+});

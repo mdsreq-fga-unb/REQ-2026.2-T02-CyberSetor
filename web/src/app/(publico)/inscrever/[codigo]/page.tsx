@@ -1,0 +1,45 @@
+import type { Metadata } from 'next';
+import { apiRequest } from '@/lib/api';
+import { formatActivityWhen } from '@/lib/br';
+import { PublicRegistrationView } from '@/sections/inscricao-publica/views/public-registration-view';
+import type { PublicForm } from '@/types/inscricao-publica';
+
+const SITE = 'Instituto No Setor';
+
+/** Prévia do link no WhatsApp e nas outras redes (Open Graph e Twitter Card): nome da atividade, data, local e situação. */
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ codigo: string }>;
+}): Promise<Metadata> {
+  const { codigo } = await params;
+  const base: Metadata = { robots: { index: false, follow: false } };
+  try {
+    const form = await apiRequest<PublicForm>(
+      `/public/registrations/${encodeURIComponent(codigo)}`,
+    );
+    const { titulo, local } = form.atividade;
+    const title = `Inscrição: ${titulo} | ${SITE}`;
+    const description = `${formatActivityWhen(form.atividade)} · ${local}. ${
+      form.aberta ? 'Inscrições abertas.' : 'Inscrições encerradas.'
+    }`;
+    return {
+      ...base,
+      title,
+      description,
+      openGraph: { title, description, siteName: SITE, locale: 'pt_BR', type: 'website' },
+      twitter: { card: 'summary', title, description },
+    };
+  } catch {
+    return { ...base, title: `Inscrição | ${SITE}` };
+  }
+}
+
+export default async function PublicRegistrationPage({
+  params,
+}: {
+  params: Promise<{ codigo: string }>;
+}) {
+  const { codigo } = await params;
+  return <PublicRegistrationView codigo={codigo} />;
+}

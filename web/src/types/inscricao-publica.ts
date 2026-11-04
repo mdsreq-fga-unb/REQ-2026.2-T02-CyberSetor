@@ -1,0 +1,57 @@
+import type { CampoInscricao, SituacaoInscricao } from './inscricoes';
+
+export interface PublicActivity {
+  titulo: string;
+  data: string;
+  /** Nulos nas atividades cadastradas antes do horário. */
+  horaInicio: string | null;
+  horaFim: string | null;
+  cargaHorariaMinutos: number | null;
+  local: string;
+}
+
+export interface PublicForm {
+  atividade: PublicActivity;
+  aberta: boolean;
+  /** Vagas preenchidas: a próxima inscrição entra na lista de espera. */
+  vagasEsgotadas: boolean;
+  /** Com as vagas esgotadas: true entra na lista de espera; false não aceita o envio. */
+  listaEspera: boolean;
+  camposMinimos: string[];
+  camposAdicionais: CampoInscricao[];
+  aviso: { versao: string; texto: string };
+  /** Compromissos da turma, com aceite obrigatório; null quando a atividade não tem. */
+  termo: { versao: string; texto: string } | null;
+  apresentacao: string | null;
+  /** Último dia para se inscrever (AAAA-MM-DD). */
+  prazoInscricao: string | null;
+  /** Hora do prazo (HH:MM); null = fim do dia. */
+  prazoHora: string | null;
+  /** WhatsApp do Instituto para dúvidas, só dígitos com DDD. */
+  contatoWhatsapp: string | null;
+}
+
+export interface PublicSubmission {
+  nome: string;
+  nomePreferencia?: string;
+  telefone: string;
+  dataNascimento: string;
+  email?: string;
+  cpf?: string;
+  bairroRegiao?: string;
+  escolaridade?: string;
+  versaoAviso: string;
+  versaoTermo?: string;
+  autorizaComunicados: boolean;
+  autorizaImagem: boolean;
+  responsavelNome?: string;
+  responsavelTelefone?: string;
+}
+
+export interface SubmittedRegistration {
+  situacao: SituacaoInscricao;
+  /** Posição na lista de espera; nula quando a vaga foi confirmada. */
+  posicaoEspera: number | null;
+  atividade: PublicActivity;
+  inscritoEm: string;
+}

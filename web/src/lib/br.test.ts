@@ -1,0 +1,93 @@
+import {
+  ageOn,
+  formatCpf,
+  formatDate,
+  formatDateTime,
+  formatDuration,
+  formatPhone,
+  deadlinePassed,
+  formatActivityWhen,
+  formatDeadline,
+  formatSchedule,
+  formatTime,
+  isValidCpf,
+  phoneDigits,
+} from './br';
+
+describe('formatos brasileiros', () => {
+  it('telefone formatado enquanto se digita', () => {
+    expect(formatPhone('6')).toBe('(6');
+    expect(formatPhone('6133')).toBe('(61) 33');
+    expect(formatPhone('6133334444')).toBe('(61) 3333-4444');
+    expect(formatPhone('61999998888')).toBe('(61) 99999-8888');
+  });
+
+  it('telefone sem pontuacao e sem o +55', () => {
+    expect(phoneDigits('+55 (61) 99999-8888')).toBe('61999998888');
+    expect(phoneDigits('(55) 99999-8888')).toBe('55999998888');
+    // DDD 55 com um dígito a mais não vira +55; com o "+" escrito, sim.
+    expect(phoneDigits('(55) 99999-88887')).toBe('559999988887');
+    expect(phoneDigits('+55 61 3333-4444')).toBe('6133334444');
+    expect(phoneDigits('5561999998888')).toBe('61999998888');
+  });
+
+  it('CPF formatado e conferido', () => {
+    expect(formatCpf('5299')).toBe('529.9');
+    expect(formatCpf('52998224725')).toBe('529.982.247-25');
+    expect(isValidCpf('529.982.247-25')).toBe(true);
+    expect(isValidCpf('529.982.247-24')).toBe(false);
+    expect(isValidCpf('111.111.111-11')).toBe(false);
+  });
+
+  it('maioridade no dia do aniversario e nascido em 29/02', () => {
+    expect(ageOn('2008-10-28', '2026-10-28')).toBe(18);
+    expect(ageOn('2008-10-29', '2026-10-28')).toBe(17);
+    expect(ageOn('2008-02-29', '2026-02-28')).toBe(17);
+    expect(ageOn('2008-02-29', '2026-03-01')).toBe(18);
+  });
+
+  it('data sem fuso', () => {
+    expect(formatDate('2026-03-15')).toBe('15/03/2026');
+    expect(formatDate('2026-03-15T23:30:00.000Z')).toBe('15/03/2026');
+  });
+
+  it('data e hora de Brasilia', () => {
+    expect(formatDateTime('2026-10-27T13:05:00.000Z')).toBe('27/10/2026, 10:05');
+  });
+
+  it('hora, duracao e horario com carga horaria', () => {
+    expect(formatTime('09:00')).toBe('9h');
+    expect(formatTime('13:30')).toBe('13h30');
+    expect(formatDuration(480)).toBe('8 h');
+    expect(formatDuration(210)).toBe('3 h 30 min');
+    expect(formatDuration(45)).toBe('45 min');
+    expect(formatSchedule('09:00', '17:00', 420)).toBe('9h às 17h · 7 h');
+  });
+
+  it('data da atividade com horario quando houver', () => {
+    const semHorario = {
+      data: '2026-11-10',
+      horaInicio: null,
+      horaFim: null,
+      cargaHorariaMinutos: null,
+    };
+    expect(formatActivityWhen(semHorario)).toBe('10/11/2026');
+    expect(
+      formatActivityWhen({
+        ...semHorario,
+        horaInicio: '14:00',
+        horaFim: '17:30',
+        cargaHorariaMinutos: 210,
+      }),
+    ).toBe('10/11/2026 · 14h às 17h30 · 3 h 30 min');
+  });
+
+  it('prazo de inscricao ate o fim do minuto, sem hora ate 23h59', () => {
+    expect(formatDeadline('2026-11-05', '18:00')).toBe('05/11/2026, às 18h');
+    expect(formatDeadline('2026-11-05', null)).toBe('05/11/2026, às 23h59');
+    expect(deadlinePassed(null, null)).toBe(false);
+    expect(deadlinePassed('2026-11-05', '18:00', new Date('2026-11-05T21:00:00.000Z'))).toBe(false);
+    expect(deadlinePassed('2026-11-05', '18:00', new Date('2026-11-05T21:01:00.000Z'))).toBe(true);
+    expect(deadlinePassed('2026-11-05', null, new Date('2026-11-06T02:59:00.000Z'))).toBe(false);
+  });
+});
