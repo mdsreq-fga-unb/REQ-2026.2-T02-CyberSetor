@@ -75,7 +75,7 @@ describe('tela inicial', () => {
       prazos.getByRole('link', { name: 'Meta 4 · Entregar o relatório parcial' }),
     ).toHaveAttribute(
       'href',
-      '/instrumentos/00000000-0000-4000-8000-000000000101/projetos/00000000-0000-4000-8000-000000000201',
+      '/instrumentos/00000000-0000-4000-8000-000000000101/projetos/00000000-0000-4000-8000-000000000201#prazos',
     );
   });
 

@@ -151,56 +151,100 @@ export function PanelCard({
   );
 }
 
-function projectHref(goal: { projeto: PanelGoal['projeto'] }): string {
-  return paths.dashboard.project(goal.projeto.instrumentoId, goal.projeto.id);
+function projectHref(projeto: PanelGoal['projeto']): string {
+  return `${paths.dashboard.project(projeto.instrumentoId, projeto.id)}#prazos`;
 }
 
+/** Responsável e setor da meta; sem responsável, a falta fica em destaque (CA-02b.3). */
+export function GoalOwner({
+  responsavel,
+  setor,
+  concluded = false,
+}: {
+  responsavel: PanelGoal['responsavel'];
+  setor?: { nome: string } | null;
+  concluded?: boolean;
+}) {
+  return (
+    <p className="text-sm">
+      {responsavel ? (
+        <>
+          Responsável: {responsavel.nome}
+          {!responsavel.ativo && (
+            <Badge variant="outline" className="ml-2">
+              Conta desativada
+            </Badge>
+          )}
+        </>
+      ) : (
+        <span className={concluded ? 'text-muted-foreground' : 'font-medium text-destructive'}>
+          Sem responsável
+        </span>
+      )}
+      {setor && <span className="text-muted-foreground"> · Setor: {setor.nome}</span>}
+    </p>
+  );
+}
+
+/** Selo do prazo: vencida ou dentro da antecedência de aviso (CA-02b.2). */
+export function DeadlineBadge({
+  goal,
+  hoje,
+}: {
+  goal: Pick<PanelGoal, 'periodoFim' | 'alerta'>;
+  hoje: string;
+}) {
+  if (!goal.periodoFim || !goal.alerta) return null;
+  const text = deadlineText(goal.periodoFim, hoje);
+  return goal.alerta === 'VENCIDA' ? (
+    <Badge variant="destructive">{text}</Badge>
+  ) : (
+    <Badge className="bg-warning text-warning-foreground">{text}</Badge>
+  );
+}
+
+type DeadlineGoal = Omit<PanelGoal, 'projeto'> & { projeto?: PanelGoal['projeto'] };
+
 /** Prazos das metas: vencidas primeiro, depois as que vencem em até 30 dias (CA-02b.2). */
-export function DeadlineList({ goals, hoje }: { goals: PanelGoal[]; hoje: string }) {
+export function DeadlineList({ goals, hoje }: { goals: DeadlineGoal[]; hoje: string }) {
   return (
     <ul className="divide-y">
-      {goals.map((goal) => (
-        <li
-          key={goal.metaId}
-          className="flex flex-col gap-2 py-3 first:pt-0 last:pb-0 sm:flex-row sm:items-center"
-        >
-          <div className="min-w-0 flex-1">
-            <Link
-              href={projectHref(goal)}
-              className="font-medium underline-offset-4 hover:underline"
-            >
-              Meta {goal.ordem} · {goal.objetivo}
-            </Link>
-            <p className="text-sm text-muted-foreground">
-              {goal.projeto.codigo} · {goal.projeto.titulo}
-            </p>
-            <p className="text-sm">
-              {goal.responsavel ? (
+      {goals.map((goal) => {
+        const title = `Meta ${goal.ordem} · ${goal.objetivo}`;
+        return (
+          <li
+            key={goal.metaId}
+            className="flex flex-col gap-2 py-3 first:pt-0 last:pb-0 sm:flex-row sm:items-center"
+          >
+            <div className="min-w-0 flex-1">
+              {goal.projeto ? (
                 <>
-                  Responsável: {goal.responsavel.nome}
-                  {!goal.responsavel.ativo && (
-                    <Badge variant="outline" className="ml-2">
-                      Conta desativada
-                    </Badge>
-                  )}
+                  <Link
+                    href={projectHref(goal.projeto)}
+                    className="font-medium underline-offset-4 hover:underline"
+                  >
+                    {title}
+                  </Link>
+                  <p className="text-sm text-muted-foreground">
+                    {goal.projeto.codigo} · {goal.projeto.titulo}
+                  </p>
                 </>
               ) : (
-                <span className="font-medium text-destructive">Sem responsável</span>
+                <p className="font-medium">{title}</p>
               )}
-            </p>
-          </div>
-          {goal.periodoFim && (
-            <div className="flex flex-col gap-1 sm:items-end">
-              <Badge variant={goal.alerta === 'VENCIDA' ? 'destructive' : 'secondary'}>
-                {deadlineText(goal.periodoFim, hoje)}
-              </Badge>
-              <span className="text-xs text-muted-foreground">
-                Prazo {formatDate(goal.periodoFim)}
-              </span>
+              <GoalOwner responsavel={goal.responsavel} />
             </div>
-          )}
-        </li>
-      ))}
+            {goal.periodoFim && (
+              <div className="flex flex-col gap-1 sm:items-end">
+                <DeadlineBadge goal={goal} hoje={hoje} />
+                <span className="text-xs text-muted-foreground">
+                  Prazo {formatDate(goal.periodoFim)}
+                </span>
+              </div>
+            )}
+          </li>
+        );
+      })}
     </ul>
   );
 }
@@ -211,7 +255,10 @@ export function UnownedGoalList({ goals }: { goals: PanelGoal[] }) {
     <ul className="divide-y">
       {goals.map((goal) => (
         <li key={goal.metaId} className="py-3 first:pt-0 last:pb-0">
-          <Link href={projectHref(goal)} className="font-medium underline-offset-4 hover:underline">
+          <Link
+            href={projectHref(goal.projeto)}
+            className="font-medium underline-offset-4 hover:underline"
+          >
             Meta {goal.ordem} · {goal.objetivo}
           </Link>
           <p className="text-sm text-muted-foreground">
@@ -265,8 +312,9 @@ export function TermList({ terms, hoje }: { terms: InstrumentTerm[]; hoje: strin
               value={total > 0 ? (elapsed / total) * 100 : 100}
               label={`Vigência decorrida do processo ${term.numeroProcesso}`}
             />
-            <p className="truncate text-xs text-muted-foreground">
-              {term.orgaoConcedente} · até {formatDate(term.vigenciaFim)}
+            <p className="truncate text-xs text-muted-foreground">{term.orgaoConcedente}</p>
+            <p className="text-xs text-muted-foreground">
+              {formatDate(term.vigenciaInicio)} a {formatDate(term.vigenciaFim)}
             </p>
           </li>
         );
