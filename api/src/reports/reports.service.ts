@@ -177,6 +177,26 @@ function justifiedGoalIds(items: readonly EvaluatedReportGoal[]): string[] {
   return items.filter((item) => item.justificativa !== null).map((item) => item.goal.id);
 }
 
+type AuditGoalSource = Pick<
+  ReportGoalRow,
+  'metaId' | 'resultadoMetaId' | 'alcance' | 'valorAlcancado' | 'percentual' | 'justificativa'
+>;
+
+/**
+ * Valores apurados de cada meta para a trilha (RNF02), sem o texto livre da justificativa
+ * nem do resultado (RNF05): o texto fica na cópia imutável do relatório, que a trilha cita.
+ */
+function auditGoalValues(items: readonly AuditGoalSource[]) {
+  return items.map((item) => ({
+    metaId: item.metaId,
+    resultadoMetaId: item.resultadoMetaId,
+    alcance: item.alcance,
+    valorAlcancado: decimal(item.valorAlcancado),
+    percentual: decimal(item.percentual),
+    justificada: item.justificativa !== null,
+  }));
+}
+
 @Injectable()
 export class ReportsService {
   constructor(
@@ -275,6 +295,7 @@ export class ReportsService {
               periodoFim: data.to,
               metasApuradas: metas.length,
               metasComJustificativa: justifiedGoalIds(metas),
+              metas: auditGoalValues(row.metas),
             },
             correlationId: actor.correlationId,
           },
@@ -363,9 +384,11 @@ export class ReportsService {
             acao: 'REPORT_RECTIFIED',
             entidade: 'relatorio',
             entidadeId: row.id,
+            // RNF02: valores anteriores e novos de cada meta, para conferir o que mudou.
             antes: {
               relatorioId: anterior.id,
               versao: anterior.versao,
+              metas: auditGoalValues(anterior.metas),
             },
             depois: {
               relatorioId: row.id,
@@ -374,6 +397,7 @@ export class ReportsService {
               periodoFim: to,
               metasApuradas: metas.length,
               metasComJustificativa: justifiedGoalIds(metas),
+              metas: auditGoalValues(row.metas),
             },
             correlationId: actor.correlationId,
           },
