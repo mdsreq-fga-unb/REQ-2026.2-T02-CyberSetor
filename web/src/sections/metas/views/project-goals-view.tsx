@@ -45,6 +45,7 @@ import { useRequirements } from '@/queries/requisitos';
 import { useCurrentUser } from '@/queries/sessao';
 import { paths } from '@/routes/paths';
 import { ProjectActivitiesSection } from '@/sections/atividades/views/project-activities-section';
+import { ProjectPlanSection } from '@/sections/plano/views/project-plan-section';
 import { ProjectReportsSection } from '@/sections/relatorios/views/project-reports-section';
 import { ProjectReportPreviewSection } from './project-report-preview-section';
 import type { Goal } from '@/types/metas';
@@ -221,7 +222,7 @@ function bySituation(a: Goal, b: Goal): number {
   );
 }
 
-function GoalSummary({ goal }: { goal: Goal }) {
+function GoalSummary({ goal, fim }: { goal: Goal; fim?: string }) {
   return (
     <div className="flex flex-col gap-1">
       <span className="font-medium">
@@ -233,6 +234,16 @@ function GoalSummary({ goal }: { goal: Goal }) {
       </span>
       <Owner goal={goal} />
       <Result goal={goal} />
+      {fim && goal.periodoFim && goal.periodoFim > fim && (
+        <span>
+          <Badge
+            variant="outline"
+            className="border-transparent bg-warning/20 text-amber-800 dark:text-warning"
+          >
+            Fora da vigência
+          </Badge>
+        </span>
+      )}
       {goal.rascunho && (
         <span className="flex flex-col items-start gap-1">
           <Badge variant="outline">Rascunho</Badge>
@@ -248,7 +259,7 @@ function GoalSummary({ goal }: { goal: Goal }) {
   );
 }
 
-const PROJECT_TABS = ['metas', 'atividades', 'relatorios'] as const;
+const PROJECT_TABS = ['metas', 'plano', 'atividades', 'relatorios'] as const;
 type ProjectTab = (typeof PROJECT_TABS)[number];
 
 export function ProjectGoalsView({
@@ -379,6 +390,7 @@ export function ProjectGoalsView({
       <Tabs value={tab} onValueChange={(next: ProjectTab) => chooseTab(next)}>
         <TabsList aria-label="Seções do projeto">
           <TabsTab value="metas">Metas</TabsTab>
+          <TabsTab value="plano">Plano de trabalho</TabsTab>
           <TabsTab value="atividades">Atividades</TabsTab>
           <TabsTab value="relatorios">Relatórios</TabsTab>
         </TabsList>
@@ -489,7 +501,7 @@ export function ProjectGoalsView({
                         )}
                         <TableRow>
                           <TableCell className="px-4 py-3 whitespace-normal">
-                            <GoalSummary goal={goal} />
+                            <GoalSummary goal={goal} fim={project.data?.fim} />
                           </TableCell>
                           <TableCell className="hidden whitespace-normal md:table-cell">
                             <div className="flex flex-col gap-1">
@@ -520,6 +532,16 @@ export function ProjectGoalsView({
               </Table>
               <ListPagination pagination={pagination} label="Paginação das metas" />
             </ListCard>
+          )}
+        </TabsPanel>
+
+        <TabsPanel value="plano">
+          {project.data && (
+            <ProjectPlanSection
+              projectId={projectId}
+              goals={goals.data ?? []}
+              canRegister={canEdit}
+            />
           )}
         </TabsPanel>
 
