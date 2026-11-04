@@ -1,5 +1,5 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { cleanup, fireEvent, render, screen } from '@testing-library/react';
+import { cleanup, fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { clearLocalSession, signIn } from '@/auth/session';
 import type { Report, ReportPdfLink, ReportPreview } from '@/types/relatorios';
@@ -419,7 +419,9 @@ describe('ProjectReportsSection', () => {
     fireEvent.click(await screen.findByRole('menuitem', { name: 'Retificar relatório' }));
 
     // Exige motivo antes de enviar
-    fireEvent.click(await screen.findByRole('button', { name: 'Emitir retificação' }));
+    const emit = await screen.findByRole('button', { name: 'Emitir retificação' });
+    await waitFor(() => expect(emit).toBeEnabled());
+    fireEvent.click(emit);
     expect(await screen.findByText('Informe o motivo da retificação.')).toBeInTheDocument();
 
     // Indica que o resultado mudou após a versão 1 e vem com justificativa em branco
@@ -491,11 +493,58 @@ describe('ProjectReportsSection', () => {
     fireEvent.change(await screen.findByLabelText('Motivo da retificação'), {
       target: { value: 'Ajuste formal.' },
     });
-    fireEvent.click(screen.getByRole('button', { name: 'Emitir retificação' }));
+    const submit = screen.getByRole('button', { name: 'Emitir retificação' });
+    await waitFor(() => expect(submit).toBeEnabled());
+    fireEvent.click(submit);
 
     expect(await screen.findByRole('alert')).toHaveTextContent(
       'Não foi possível retificar o relatório. Tente de novo.',
     );
     expect(screen.queryByText(/detalhe interno/)).not.toBeInTheDocument();
+  });
+
+  it('so retifica depois da apuracao, e a falha oferece tentar de novo', async () => {
+    let attempts = 0;
+    await signedInAs('PRESIDENCIA_GESTAO', {
+      [LIST]: () => ({ status: 200, body: [REPORT] }),
+      [PREVIEW]: () => {
+        attempts += 1;
+        return attempts === 1
+          ? { status: 500, body: { code: 'INTERNAL', message: 'erro' } }
+          : {
+              status: 200,
+              body: {
+                projeto: {
+                  id: PROJECT_ID,
+                  codigo: 'P01',
+                  titulo: 'Projeto',
+                  instrumentoId: 'inst-1',
+                  inicio: '2025-01-01',
+                  fim: '2026-12-31',
+                },
+                periodo: { from: '2025-01-01', to: '2025-06-30' },
+                metas: [],
+              } satisfies ReportPreview,
+            };
+      },
+    });
+
+    renderSection();
+
+    fireEvent.click(
+      await screen.findByRole('button', {
+        name: 'Ações do relatório de 01/01/2025 a 30/06/2025, versão 1',
+      }),
+    );
+    fireEvent.click(await screen.findByRole('menuitem', { name: 'Retificar relatório' }));
+
+    expect(await screen.findByRole('alert')).toHaveTextContent(
+      'Não foi possível carregar a apuração das metas para retificar.',
+    );
+    const submit = screen.getByRole('button', { name: 'Emitir retificação' });
+    expect(submit).toBeDisabled();
+
+    fireEvent.click(screen.getByRole('button', { name: 'Tentar de novo' }));
+    await waitFor(() => expect(submit).toBeEnabled());
   });
 });

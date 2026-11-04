@@ -140,7 +140,7 @@ export function ReportRectifyDialog({
 
   async function onSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    if (!report) return;
+    if (!report || !preview.data) return;
     setFailure(null);
     setMotivoError(null);
 
@@ -152,9 +152,7 @@ export function ReportRectifyDialog({
     }
 
     try {
-      const justificativas = preview.data
-        ? buildJustificationPayload(preview.data.metas, justifications)
-        : undefined;
+      const justificativas = buildJustificationPayload(preview.data.metas, justifications);
       const created = await rectify.mutateAsync({
         reportId: report.id,
         body: {
@@ -229,7 +227,17 @@ export function ReportRectifyDialog({
             )}
 
             {preview.isError && !preview.data && (
-              <ListError message={previewFailure(preview.error)} />
+              <div className="flex flex-col gap-3">
+                <ListError message={previewFailure(preview.error)} />
+                <Button
+                  type="button"
+                  variant="outline"
+                  className="self-start"
+                  onClick={() => void preview.refetch()}
+                >
+                  Tentar de novo
+                </Button>
+              </div>
             )}
 
             {isBlockedAfterAttempt && unresolvedPendencias.length > 0 && (
@@ -295,7 +303,7 @@ export function ReportRectifyDialog({
               <Button type="button" variant="outline" onClick={close} disabled={rectify.isPending}>
                 Cancelar
               </Button>
-              <Button type="submit" disabled={rectify.isPending}>
+              <Button type="submit" disabled={rectify.isPending || !preview.data}>
                 {rectify.isPending ? 'Retificando…' : 'Emitir retificação'}
               </Button>
             </DialogFooter>
