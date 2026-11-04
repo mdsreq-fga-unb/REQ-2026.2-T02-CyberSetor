@@ -16,6 +16,7 @@ import { ProjectsModule } from './projects/projects.module.js';
 import { PublicRegistrationsModule } from './public-registrations/public-registrations.module.js';
 import { RegistrationsModule } from './registrations/registrations.module.js';
 import { ReportsModule } from './reports/reports.module.js';
+import { WorkPlanModule } from './work-plan/work-plan.module.js';
 import { RequirementsModule } from './requirements/requirements.module.js';
 import { SectorsModule } from './sectors/sectors.module.js';
 import { StorageModule } from './storage/storage.module.js';
@@ -40,6 +41,7 @@ import { StorageModule } from './storage/storage.module.js';
     RequirementsModule,
     GoalsModule,
     ReportsModule,
+    WorkPlanModule,
     SectorsModule,
     RegistrationsModule,
     PublicRegistrationsModule,
