@@ -183,6 +183,7 @@ describe('metas do projeto', () => {
     clearLocalSession();
     vi.unstubAllGlobals();
     window.localStorage.clear();
+    window.history.replaceState(null, '', window.location.pathname);
   });
 
   beforeEach(() => {
@@ -223,15 +224,43 @@ describe('metas do projeto', () => {
   it('relatorios emitidos aparecem so para quem le relatorios, sem aviso de erro para os demais', async () => {
     await signedInAs('ADMINISTRATIVO_FINANCEIRO', page([COMPLETA]));
     renderView();
+    fireEvent.click(await screen.findByRole('tab', { name: 'Relatórios' }));
     expect(await screen.findByRole('heading', { name: 'Relatórios emitidos' })).toBeInTheDocument();
     cleanup();
     clearLocalSession();
 
     const calls = await signedInAs('CONCEDENTE_AUDITORIA', page([COMPLETA]));
     renderView();
-    expect((await screen.findAllByText(new RegExp(COMPLETA.objetivo))).length).toBeGreaterThan(0);
+    fireEvent.click(await screen.findByRole('tab', { name: 'Relatórios' }));
+    expect(
+      await screen.findByRole('heading', { name: 'Relatório de Execução do Objeto' }),
+    ).toBeInTheDocument();
     expect(screen.queryByRole('heading', { name: 'Relatórios emitidos' })).not.toBeInTheDocument();
     expect(calls).not.toContain(`GET /projects/${PROJECT.id}/reports`);
+  });
+
+  it('as abas separam metas, atividades e relatorios, e a aba fica no endereco', async () => {
+    await signedInAs('PRESIDENCIA_GESTAO', page([COMPLETA]));
+    renderView();
+
+    expect(await screen.findByRole('tab', { name: 'Metas' })).toHaveAttribute(
+      'aria-selected',
+      'true',
+    );
+    expect(screen.queryByRole('heading', { name: 'Atividades' })).not.toBeInTheDocument();
+
+    fireEvent.click(screen.getByRole('tab', { name: 'Atividades' }));
+
+    expect(await screen.findByRole('heading', { name: 'Atividades' })).toBeInTheDocument();
+    expect(window.location.hash).toBe('#atividades');
+    expect(screen.queryByRole('button', { name: 'Nova meta' })).not.toBeInTheDocument();
+    cleanup();
+
+    renderView();
+    expect(await screen.findByRole('tab', { name: 'Atividades' })).toHaveAttribute(
+      'aria-selected',
+      'true',
+    );
   });
 
   it('cadastra a meta com os requisitos marcados e os parametros de afericao', async () => {

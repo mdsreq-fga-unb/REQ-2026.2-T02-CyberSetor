@@ -22,6 +22,7 @@ import { PageHeader } from '@/components/page-header';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Skeleton } from '@/components/ui/skeleton';
+import { Tabs, TabsList, TabsPanel, TabsTab } from '@/components/ui/tabs';
 import {
   Table,
   TableBody,
@@ -34,6 +35,7 @@ import {
 import { toast } from '@/components/ui/toast';
 import { useDialogState } from '@/hooks/use-dialog-state';
 import { useIsMobile } from '@/hooks/use-mobile';
+import { useHashTab } from '@/hooks/use-hash-tab';
 import { useStoredChoice } from '@/hooks/use-stored-choice';
 import { ApiError } from '@/lib/api';
 import { useInstrument } from '@/queries/instrumentos';
@@ -246,6 +248,9 @@ function GoalSummary({ goal }: { goal: Goal }) {
   );
 }
 
+const PROJECT_TABS = ['metas', 'atividades', 'relatorios'] as const;
+type ProjectTab = (typeof PROJECT_TABS)[number];
+
 export function ProjectGoalsView({
   instrumentId,
   projectId,
@@ -254,6 +259,7 @@ export function ProjectGoalsView({
   projectId: string;
 }) {
   const { session } = useSession();
+  const [tab, chooseTab] = useHashTab(PROJECT_TABS);
   const instrument = useInstrument(instrumentId);
   const project = useProject(projectId);
   const requirements = useRequirements(instrumentId);
@@ -337,7 +343,7 @@ export function ProjectGoalsView({
         <div className="flex flex-col gap-3">
           <PageHeader
             title={`${project.data.codigo} · ${project.data.titulo}`}
-            action={createButton}
+            action={tab === 'metas' ? createButton : undefined}
           />
           <ProjectSummary project={project.data} />
         </div>
@@ -370,158 +376,172 @@ export function ProjectGoalsView({
         </p>
       )}
 
-      <h2 className="text-lg font-semibold">Metas</h2>
-      {viewer && !!goals.data?.length && (
-        <div className="flex flex-wrap items-center justify-between gap-3">
-          <div role="group" aria-label="Filtro das metas" className="flex flex-wrap gap-2">
-            {filtersFor(viewer).map((option) => (
-              <Button
-                key={option}
-                variant={option === filter ? 'default' : 'outline'}
-                aria-pressed={option === filter}
-                onClick={() => chooseFilter(option === standard ? null : option)}
-              >
-                {FILTER_LABELS[option]}
-              </Button>
-            ))}
-          </div>
-          {!mobile && (
-            <div role="group" aria-label="Visão das metas" className="flex gap-2">
-              {VIEWS.map((option) => (
-                <Button
-                  key={option}
-                  variant={(option === 'QUADRO') === board ? 'secondary' : 'ghost'}
-                  aria-pressed={(option === 'QUADRO') === board}
-                  onClick={() => chooseView(option === 'LISTA' ? null : option)}
-                >
-                  {option === 'LISTA' ? 'Lista' : 'Quadro'}
-                </Button>
-              ))}
+      <Tabs value={tab} onValueChange={(next: ProjectTab) => chooseTab(next)}>
+        <TabsList aria-label="Seções do projeto">
+          <TabsTab value="metas">Metas</TabsTab>
+          <TabsTab value="atividades">Atividades</TabsTab>
+          <TabsTab value="relatorios">Relatórios</TabsTab>
+        </TabsList>
+
+        <TabsPanel value="metas">
+          <h2 className="text-lg font-semibold">Metas</h2>
+          {viewer && !!goals.data?.length && (
+            <div className="flex flex-wrap items-center justify-between gap-3">
+              <div role="group" aria-label="Filtro das metas" className="flex flex-wrap gap-2">
+                {filtersFor(viewer).map((option) => (
+                  <Button
+                    key={option}
+                    variant={option === filter ? 'default' : 'outline'}
+                    aria-pressed={option === filter}
+                    onClick={() => chooseFilter(option === standard ? null : option)}
+                  >
+                    {FILTER_LABELS[option]}
+                  </Button>
+                ))}
+              </div>
+              {!mobile && (
+                <div role="group" aria-label="Visão das metas" className="flex gap-2">
+                  {VIEWS.map((option) => (
+                    <Button
+                      key={option}
+                      variant={(option === 'QUADRO') === board ? 'secondary' : 'ghost'}
+                      aria-pressed={(option === 'QUADRO') === board}
+                      onClick={() => chooseView(option === 'LISTA' ? null : option)}
+                    >
+                      {option === 'LISTA' ? 'Lista' : 'Quadro'}
+                    </Button>
+                  ))}
+                </div>
+              )}
             </div>
           )}
-        </div>
-      )}
-      {viewer && sorted && !!goals.data?.length && (
-        <p className="text-sm text-muted-foreground" aria-live="polite">
-          Exibindo {sorted.length} de {goals.data.length}{' '}
-          {goals.data.length === 1 ? 'meta' : 'metas'}
-        </p>
-      )}
-      {goals.error && !goals.data ? (
-        <ListError message="Não foi possível carregar as metas. Tente de novo." />
-      ) : goals.data?.length === 0 ? (
-        <ListEmpty
-          icon={TargetIcon}
-          title="Nenhuma meta neste projeto"
-          description="Cadastre cada meta do plano de trabalho com o indicador, o período e a forma de comprovação."
-          action={(!withoutRequirements && createButton) || undefined}
-        />
-      ) : sorted?.length === 0 ? (
-        <ListEmpty
-          icon={ListFilterIcon}
-          title="Nenhuma meta neste filtro"
-          description={`O filtro "${FILTER_LABELS[filter]}" não tem metas neste projeto.`}
-          action={
-            <Button
-              variant="outline"
-              onClick={() => chooseFilter(standard === 'TODAS' ? null : 'TODAS')}
-            >
-              Ver todas as metas
-            </Button>
-          }
-        />
-      ) : board && sorted ? (
-        <GoalsBoard goals={sorted} actionsFor={actionsFor} />
-      ) : (
-        <ListCard>
-          <Table aria-busy={loading}>
-            <TableCaption className="sr-only">
-              Metas do projeto {project.data?.codigo ?? ''}.
-            </TableCaption>
-            <TableHeader>
-              <TableRow>
-                <TableHead scope="col" className="px-4">
-                  Meta
-                </TableHead>
-                <TableHead scope="col" className="hidden md:table-cell">
-                  Indicador
-                </TableHead>
-                <TableHead scope="col" className="hidden md:table-cell">
-                  Período e prazo
-                </TableHead>
-                {withActions && (
-                  <TableHead scope="col" className="w-16 px-4">
-                    <span className="sr-only">Ações</span>
-                  </TableHead>
-                )}
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {loading ? (
-                <TableSkeleton columns={columns} />
-              ) : (
-                pagination.pageRows.map((goal, index) => (
-                  <Fragment key={goal.id}>
-                    {pagination.pageRows[index - 1]?.situacao !== goal.situacao && (
-                      <TableRow className="bg-muted/50 hover:bg-muted/50">
-                        <TableHead
-                          scope="colgroup"
-                          colSpan={columns}
-                          className="px-4 font-semibold"
-                        >
-                          {SITUATIONS[goal.situacao]} ({countOf(goal.situacao)})
-                        </TableHead>
-                      </TableRow>
+          {viewer && sorted && !!goals.data?.length && (
+            <p className="text-sm text-muted-foreground" aria-live="polite">
+              Exibindo {sorted.length} de {goals.data.length}{' '}
+              {goals.data.length === 1 ? 'meta' : 'metas'}
+            </p>
+          )}
+          {goals.error && !goals.data ? (
+            <ListError message="Não foi possível carregar as metas. Tente de novo." />
+          ) : goals.data?.length === 0 ? (
+            <ListEmpty
+              icon={TargetIcon}
+              title="Nenhuma meta neste projeto"
+              description="Cadastre cada meta do plano de trabalho com o indicador, o período e a forma de comprovação."
+              action={(!withoutRequirements && createButton) || undefined}
+            />
+          ) : sorted?.length === 0 ? (
+            <ListEmpty
+              icon={ListFilterIcon}
+              title="Nenhuma meta neste filtro"
+              description={`O filtro "${FILTER_LABELS[filter]}" não tem metas neste projeto.`}
+              action={
+                <Button
+                  variant="outline"
+                  onClick={() => chooseFilter(standard === 'TODAS' ? null : 'TODAS')}
+                >
+                  Ver todas as metas
+                </Button>
+              }
+            />
+          ) : board && sorted ? (
+            <GoalsBoard goals={sorted} actionsFor={actionsFor} />
+          ) : (
+            <ListCard>
+              <Table aria-busy={loading}>
+                <TableCaption className="sr-only">
+                  Metas do projeto {project.data?.codigo ?? ''}.
+                </TableCaption>
+                <TableHeader>
+                  <TableRow>
+                    <TableHead scope="col" className="px-4">
+                      Meta
+                    </TableHead>
+                    <TableHead scope="col" className="hidden md:table-cell">
+                      Indicador
+                    </TableHead>
+                    <TableHead scope="col" className="hidden md:table-cell">
+                      Período e prazo
+                    </TableHead>
+                    {withActions && (
+                      <TableHead scope="col" className="w-16 px-4">
+                        <span className="sr-only">Ações</span>
+                      </TableHead>
                     )}
-                    <TableRow>
-                      <TableCell className="px-4 py-3 whitespace-normal">
-                        <GoalSummary goal={goal} />
-                      </TableCell>
-                      <TableCell className="hidden whitespace-normal md:table-cell">
-                        <div className="flex flex-col gap-1">
-                          <span>{goal.indicador ?? '—'}</span>
-                          {measure(goal) && (
-                            <span className="text-muted-foreground">{measure(goal)}</span>
+                  </TableRow>
+                </TableHeader>
+                <TableBody>
+                  {loading ? (
+                    <TableSkeleton columns={columns} />
+                  ) : (
+                    pagination.pageRows.map((goal, index) => (
+                      <Fragment key={goal.id}>
+                        {pagination.pageRows[index - 1]?.situacao !== goal.situacao && (
+                          <TableRow className="bg-muted/50 hover:bg-muted/50">
+                            <TableHead
+                              scope="colgroup"
+                              colSpan={columns}
+                              className="px-4 font-semibold"
+                            >
+                              {SITUATIONS[goal.situacao]} ({countOf(goal.situacao)})
+                            </TableHead>
+                          </TableRow>
+                        )}
+                        <TableRow>
+                          <TableCell className="px-4 py-3 whitespace-normal">
+                            <GoalSummary goal={goal} />
+                          </TableCell>
+                          <TableCell className="hidden whitespace-normal md:table-cell">
+                            <div className="flex flex-col gap-1">
+                              <span>{goal.indicador ?? '—'}</span>
+                              {measure(goal) && (
+                                <span className="text-muted-foreground">{measure(goal)}</span>
+                              )}
+                            </div>
+                          </TableCell>
+                          <TableCell className="hidden md:table-cell">
+                            <Deadline goal={goal} />
+                          </TableCell>
+                          {withActions && (
+                            <TableCell className="px-4 text-right">
+                              {actionsFor(goal).length > 0 && (
+                                <RowActionsMenu
+                                  label={`Ações da meta ${goal.ordem}`}
+                                  actions={actionsFor(goal)}
+                                />
+                              )}
+                            </TableCell>
                           )}
-                        </div>
-                      </TableCell>
-                      <TableCell className="hidden md:table-cell">
-                        <Deadline goal={goal} />
-                      </TableCell>
-                      {withActions && (
-                        <TableCell className="px-4 text-right">
-                          {actionsFor(goal).length > 0 && (
-                            <RowActionsMenu
-                              label={`Ações da meta ${goal.ordem}`}
-                              actions={actionsFor(goal)}
-                            />
-                          )}
-                        </TableCell>
-                      )}
-                    </TableRow>
-                  </Fragment>
-                ))
-              )}
-            </TableBody>
-          </Table>
-          <ListPagination pagination={pagination} label="Paginação das metas" />
-        </ListCard>
-      )}
+                        </TableRow>
+                      </Fragment>
+                    ))
+                  )}
+                </TableBody>
+              </Table>
+              <ListPagination pagination={pagination} label="Paginação das metas" />
+            </ListCard>
+          )}
+        </TabsPanel>
 
-      {instrument.data && project.data && (
-        <ProjectActivitiesSection instrument={instrument.data} project={project.data} />
-      )}
+        <TabsPanel value="atividades">
+          {instrument.data && project.data && (
+            <ProjectActivitiesSection instrument={instrument.data} project={project.data} />
+          )}
+        </TabsPanel>
 
-      {project.data && (
-        <ProjectReportPreviewSection
-          projectId={projectId}
-          instrumentActive={instrument.data?.ativo === true}
-        />
-      )}
+        <TabsPanel value="relatorios">
+          {project.data && (
+            <ProjectReportPreviewSection
+              projectId={projectId}
+              instrumentActive={instrument.data?.ativo === true}
+            />
+          )}
 
-      {project.data && session && REPORT_READERS.includes(session.perfil as Perfil) && (
-        <ProjectReportsSection projectId={projectId} />
-      )}
+          {project.data && session && REPORT_READERS.includes(session.perfil as Perfil) && (
+            <ProjectReportsSection projectId={projectId} />
+          )}
+        </TabsPanel>
+      </Tabs>
 
       {requirements.data && project.data && (
         <GoalFormDialog
