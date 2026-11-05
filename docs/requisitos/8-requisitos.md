@@ -26,6 +26,7 @@
 | 03/11/2026 | 2.12 | Lista de espera do RF15 condicionada à ativação na inscrição, valor inicial para a validação com o Instituto em 05/11 | Vinicius Vieira |
 | 07/11/2026 | 2.13 | Decisões da validação com o Instituto em 29/10: cadastro existente sinalizado na lista de inscritos da inscrição pelo formulário público (RF22), acesso administrativo da coordenação de execução e da direção de projetos (seção 8.5.1), pontos em aberto de cadastro repetido e de perfis revistos; pedidos novos de avisos por e-mail e de campos personalizados e condição de rascunho da meta do registro de 08/10 entre os pontos em aberto | Rodrigo Henrique |
 | 10/11/2026 | 2.14 | Pontos em aberto da primeira versão: visão do Núcleo Pedagógico, anexo do documento formal, encerramento do projeto, justificativa do aditivo e da apostila, guarda decenal e geração do relatório; validação de 05/11 adiada para a reunião da Sprint 5 | Vinicius Vieira |
+| 10/11/2026 | 2.15 | RF07 ligado só ao gargalo G02 na matriz 8.4.1, como nas sínteses das seções 8.4.3 e 10.2.6 | Vinicius Vieira |
 
 ---
 
@@ -182,7 +183,7 @@ A rastreabilidade estabelece o vínculo bidirecional entre os problemas diagnost
 | **RF04** | Desdobrar requisitos contratuais e metas | G01 | MROSC art. 22 e 42; RN-01, RN-02 | HU-01b (CA-01b.1 a CA-01b.4) | Total |
 | **RF05** | Atribuir responsável e setor executor a meta | G02 | Decisão 3 da ata de 08/09 | HU-02a (CA-02a.1) | Total |
 | **RF06** | Fixar prazo fatal e status de meta | G02 | RN-13 | HU-02a (CA-02a.1 a CA-02a.3) | Total |
-| **RF07** | Exibir linha do tempo e painel de prazos de metas | G01, G02 | RN-01 | HU-02b (CA-02b.1) | Total |
+| **RF07** | Exibir linha do tempo e painel de prazos de metas | G02 | RN-01 | HU-02b (CA-02b.1) | Total |
 | **RF08** | Emitir alertas de proximidade e pendências de metas | G02 | RN-03 | HU-02b (CA-02b.2 a CA-02b.4) | Total |
 | **RF40** | Administrar contas e perfis de acesso | — | Seção 8.5.1 | HU-16 (CA-16.1 a CA-16.5) | Total |
 
