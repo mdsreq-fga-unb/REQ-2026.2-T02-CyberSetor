@@ -99,4 +99,35 @@ describe('validateEnv', () => {
       }
     });
   });
+
+  describe('e-mail', () => {
+    const brevo = {
+      EMAIL_DRIVER: 'brevo',
+      BREVO_API_KEY: 'chave-de-teste',
+      EMAIL_FROM: 'cybersetor-mail@netvitae.org',
+    };
+
+    it('sem variáveis, só registra e não envia a ninguém', () => {
+      expect(validateEnv(required)).toMatchObject({
+        EMAIL_DRIVER: 'log',
+        EMAIL_ALLOWED_RECIPIENTS: '',
+        EMAIL_SANDBOX: 'false',
+      });
+    });
+
+    it('exige chave e remetente com o Brevo', () => {
+      expect(() => validateEnv({ ...required, ...brevo, BREVO_API_KEY: '' })).toThrow(
+        'BREVO_API_KEY',
+      );
+      expect(() => validateEnv({ ...required, ...brevo, EMAIL_FROM: 'sem-arroba' })).toThrow(
+        'EMAIL_FROM',
+      );
+      expect(validateEnv({ ...required, ...brevo }).EMAIL_DRIVER).toBe('brevo');
+    });
+
+    it('recusa driver desconhecido e sandbox que não seja true ou false', () => {
+      expect(() => validateEnv({ ...required, EMAIL_DRIVER: 'smtp' })).toThrow('EMAIL_DRIVER');
+      expect(() => validateEnv({ ...required, EMAIL_SANDBOX: 'sim' })).toThrow('EMAIL_SANDBOX');
+    });
+  });
 });
