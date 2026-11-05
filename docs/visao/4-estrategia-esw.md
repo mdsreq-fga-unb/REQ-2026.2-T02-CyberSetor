@@ -11,6 +11,7 @@
 | 13/10/2026 | 1.6 | Revisão conceitual: neutralidade no quadro comparativo, OpenUP iterativo, Scrum como framework, ScrumXP como processo adaptado e alinhamento de cadências | Caio Martins |
 | 19/10/2026 | 1.7 | Equipe atual de cinco integrantes | Maria Eduarda Marques |
 | 26/10/2026 | 1.8 | Programação em pares por duplas de épico, com o detalhe na página de processo; MVP centrado em parcerias, metas e prestação de contas, com a presença nos incrementos; refatoração dentro da história, coberta pelos testes; documentação de requisitos do ScrumXP com o fluxo da tela e o protótipo evolutivo na homologação; justificativa sem superlativos; quadro comparativo pelo que cada processo exige da equipe; síntese e alternativas descartadas pelos fatores do contexto | Vinicius Vieira |
+| 05/11/2026 | 1.9 | Atendimento aos apontamentos da monitoria (#22): remoção da linha de aplicação no contexto do quadro comparativo | Rodrigo Henrique |
 
 A partir do cenário diagnosticado na Seção 1 e da solução proposta na Seção 2, a equipe CyberSetor estabeleceu as decisões de estratégia de engenharia de software para o atendimento ao Instituto No Setor nas três camadas metodológicas distinguidas pelo referencial da disciplina: **abordagem**, **ciclo de vida** e **processo**.
 
@@ -105,7 +106,6 @@ A tabela a seguir compara o **OpenUP** (processo ágil baseado em arquitetura do
 | **Documentação de Requisitos** | Estruturada e formal por fase, centrada em Casos de Uso, Modelo de Dados e Arquitetura Executável. | Viva, enxuta e rastreável: histórias de usuário, critérios de aceitação com o fluxo da tela e protótipo evolutivo na homologação. |
 | **Colaboração com o Cliente** | Contínua ao longo de todas as iterações, complementada por marcos formais de avaliação de objetivos no encerramento de cada fase. | Contínua e direta ao final de cada sprint quinzenal, mediada pela demonstração de software em funcionamento. |
 | **O que exige da equipe** | Domínio da modelagem de casos de uso e das disciplinas do processo unificado. | Domínio das cerimônias do Scrum e das práticas do XP (trabalho em duplas, integração contínua e testes). |
-| **Aplicação no Contexto do Projeto** | Concentra na Elaboração a modelagem de casos de uso e a validação da arquitetura, antes da construção. | Distribui a modelagem e a validação pelas sprints, com as histórias refinadas a cada Planning e as práticas do XP aplicadas na construção. |
 
 > **Síntese da Comparação:** Os dois processos são iterativos e incrementais e poderiam conduzir o projeto. A escolha do ScrumXP se apoia em três fatores do contexto: sprints de duas semanas acompanham as quatro entregas do semestre; os requisitos são mantidos como histórias de usuário com critérios de aceitação, e não como casos de uso; e as práticas do XP ajudam a nivelar uma equipe de cinco estudantes com conhecimento técnico desigual. O OpenUP teria a vantagem de validar a arquitetura mais cedo; no ScrumXP, esse risco é tratado pela base técnica construída antes das histórias e pelos testes automatizados.
 
