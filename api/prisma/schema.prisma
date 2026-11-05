@@ -31,6 +31,22 @@ enum SituacaoMeta {
   CONCLUIDA
 }
 
+enum TipoAvisoEmail {
+  VENCIMENTO
+  VENCIDA
+  SEM_RESPONSAVEL
+  ADICIONAL
+  TRAVA_RELATORIO
+}
+
+enum SituacaoAvisoEmail {
+  PENDENTE
+  ENVIADO
+  FALHOU
+  INCERTO
+  BLOQUEADO
+}
+
 enum Perfil {
   PRESIDENCIA_GESTAO
   NUCLEO_PEDAGOGICO
@@ -121,6 +137,7 @@ model Projeto {
 
   instrumento  Instrumento   @relation(fields: [instrumentoId], references: [id], onDelete: Restrict)
   coordenador  Usuario       @relation(fields: [coordenadorId], references: [id], onDelete: Restrict)
+  avisosEmail  AvisoEmail[]
   metas        Meta[]
   atividades   Atividade[]
   relatorios   Relatorio[]
@@ -178,6 +195,8 @@ model Meta {
   resultados     ResultadoMeta[]
   relatorioMetas RelatorioMeta[]
   planoVersoes   PlanoVersaoMeta[]
+  avisos         AvisoMeta[]
+  avisosEmail    AvisoEmail[]
 
   @@index([projetoId])
   @@index([responsavelId])
@@ -456,6 +475,8 @@ model Usuario {
   relatorios           Relatorio[]
   planoVersoes         PlanoVersao[]          @relation("planoVersaoAutor")
   inscricoesAssistidas Inscricao[]            @relation("inscricaoCriadaPor")
+  avisosMeta           AvisoMeta[]
+  avisosEmail          AvisoEmail[]
 
   @@map("usuario")
 }
@@ -621,4 +642,46 @@ model PlanoVersaoMeta {
   @@unique([versaoId, metaId])
   @@index([metaId])
   @@map("plano_versao_meta")
+}
+
+/// Aviso adicional registrado na própria meta (RN-03).
+model AvisoMeta {
+  id          String   @id @default(uuid()) @db.Uuid
+  metaId      String   @map("meta_id") @db.Uuid
+  dataAviso   DateTime @map("data_aviso") @db.Date
+  mensagem    String
+  criadoPorId String   @map("criado_por_id") @db.Uuid
+  criadoEm    DateTime @default(now()) @map("criado_em") @db.Timestamptz(3)
+
+  meta      Meta    @relation(fields: [metaId], references: [id], onDelete: Restrict)
+  criadoPor Usuario @relation(fields: [criadoPorId], references: [id], onDelete: Restrict)
+
+  @@index([metaId])
+  @@index([dataAviso])
+  @@map("aviso_meta")
+}
+
+/// Um envio por chave: o registro entra antes do envio, e a chave única impede repetição.
+model AvisoEmail {
+  id           String             @id @default(uuid()) @db.Uuid
+  chave        String             @unique
+  tipo         TipoAvisoEmail
+  situacao     SituacaoAvisoEmail @default(PENDENTE)
+  usuarioId    String             @map("usuario_id") @db.Uuid
+  metaId       String?            @map("meta_id") @db.Uuid
+  projetoId    String             @map("projeto_id") @db.Uuid
+  messageId    String?            @map("message_id")
+  tentativas   Int                @default(1)
+  erro         String?
+  criadoEm     DateTime           @default(now()) @map("criado_em") @db.Timestamptz(3)
+  atualizadoEm DateTime           @updatedAt @map("atualizado_em") @db.Timestamptz(3)
+
+  usuario Usuario @relation(fields: [usuarioId], references: [id], onDelete: Restrict)
+  meta    Meta?   @relation(fields: [metaId], references: [id], onDelete: Restrict)
+  projeto Projeto @relation(fields: [projetoId], references: [id], onDelete: Restrict)
+
+  @@index([usuarioId])
+  @@index([metaId])
+  @@index([projetoId])
+  @@map("aviso_email")
 }

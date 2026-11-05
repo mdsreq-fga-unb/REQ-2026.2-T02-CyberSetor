@@ -1,0 +1,14 @@
+{{titulo}}
+
+A finalização do relatório de {{periodo}} foi bloqueada. Os demais registros seguem liberados.
+
+{{#each pendencias}}
+- {{this}}
+{{/each}}
+
+{{#if url}}
+Abrir no CyberSetor: {{url}}
+
+{{/if}}
+Instituto No Setor · CyberSetor
+Aviso automático para a equipe responsável.

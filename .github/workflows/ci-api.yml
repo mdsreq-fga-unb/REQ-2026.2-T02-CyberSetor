@@ -87,6 +87,10 @@ jobs:
         if: steps.codigo.outputs.existe == 'true'
         run: pnpm typecheck
 
+      - name: Modelos de e-mail
+        if: steps.codigo.outputs.existe == 'true'
+        run: pnpm email:check
+
       - name: Testes unitários
         if: steps.codigo.outputs.existe == 'true'
         run: pnpm test

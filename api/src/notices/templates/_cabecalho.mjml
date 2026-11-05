@@ -1,0 +1,9 @@
+<mj-head>
+  <mj-title>{{titulo}}</mj-title>
+  <mj-attributes>
+    <mj-all font-family="Arial, Helvetica, sans-serif" />
+    <mj-section padding="0" />
+    <mj-column padding="0" />
+    <mj-text font-size="15px" line-height="22px" color="#262626" padding="0 0 16px" />
+  </mj-attributes>
+</mj-head>

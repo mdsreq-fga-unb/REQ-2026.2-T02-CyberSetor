@@ -1,0 +1,22 @@
+<mjml lang="pt-BR">
+  <mj-include path="./_cabecalho.mjml" />
+  <mj-body width="560px">
+    <mj-include path="./_abertura.mjml" />
+    <mj-section padding="0 24px">
+      <mj-column>
+        <mj-text>
+          A finalização do relatório de {{periodo}} foi bloqueada. Os demais registros seguem liberados.
+        </mj-text>
+        <mj-text>
+          <ul style="margin: 0 0 16px; padding-left: 20px">
+            {{#each pendencias}}
+            <li style="margin: 0 0 8px">{{this}}</li>
+            {{/each}}
+          </ul>
+          {{#if url}}<a href="{{url}}" style="color: #00738b; font-weight: 700">Abrir no CyberSetor</a>{{/if}}
+        </mj-text>
+      </mj-column>
+    </mj-section>
+    <mj-include path="./_rodape.mjml" />
+  </mj-body>
+</mjml>
