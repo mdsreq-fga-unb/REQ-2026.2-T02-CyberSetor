@@ -7,6 +7,7 @@ import { AppModule } from '../src/app.module.js';
 import { setupApp } from '../src/app.setup.js';
 import { EMAIL_SENDER, EmailDeliveryError, type EmailMessage } from '../src/email/email-sender.js';
 import {
+  ModalidadeAfericao,
   OrigemMeta,
   Perfil,
   SituacaoAvisoEmail,
@@ -46,6 +47,7 @@ describe('Avisos de meta por e-mail (e2e)', () => {
   const ids = {} as Record<string, string>;
   let instrumentoId: string;
   let projetoId: string;
+  let requisitoId: string;
   let ordem = 0;
 
   beforeAll(async () => {
@@ -117,6 +119,11 @@ describe('Avisos de meta por e-mail (e2e)', () => {
           inicio: day('2025-01-01'),
           fim: day('2030-12-31'),
         },
+      })
+    ).id;
+    requisitoId = (
+      await prisma.requisitoInstrumento.create({
+        data: { instrumentoId, referencia: 'Cláusula 3.1', descricao: 'Formação cultural' },
       })
     ).id;
   });
@@ -397,6 +404,70 @@ describe('Avisos de meta por e-mail (e2e)', () => {
         .delete(`/v1/goals/${meta.id}/notices/${id}`)
         .expect(409);
       expect((recusado.body as { code: string }).code).toBe('NOTICE_ALREADY_DUE');
+    });
+  });
+
+  describe('trava do relatório (CA-05a.2)', () => {
+    async function blockedGoal() {
+      await request(app.getHttpServer())
+        .post(`/v1/projects/${projetoId}/goals`)
+        .set('Authorization', `Bearer ${tokens[Perfil.PRESIDENCIA_GESTAO]}`)
+        .send({
+          origem: OrigemMeta.EDITAL,
+          objetivo: 'Formar jovens',
+          descricao: 'Realizar oficinas',
+          requisitoIds: [requisitoId],
+          indicador: 'Participantes',
+          modalidadeAfericao: ModalidadeAfericao.QUANTITATIVA,
+          parametroPlanejado: '100',
+          unidade: 'participantes',
+          periodoInicio: '2025-01-10',
+          periodoFim: '2025-06-30',
+          frequenciaApuracao: 'Semestral',
+          formaComprovacao: 'Lista de presença',
+          responsavelId: ids[RESPONSAVEL],
+        })
+        .expect(201);
+    }
+
+    function finalize() {
+      return request(app.getHttpServer())
+        .post(`/v1/projects/${projetoId}/reports/finalize`)
+        .set('Authorization', `Bearer ${tokens[Perfil.PRESIDENCIA_GESTAO]}`)
+        .send({ from: '2025-01-01', to: '2025-06-30' })
+        .expect(422);
+    }
+
+    it('notifica a coordenação e a gestão uma vez por dia, menos quem tentou, sem mudar a recusa', async () => {
+      await blockedGoal();
+
+      const res = await finalize();
+      expect((res.body as { code: string }).code).toBe('REPORT_FINALIZATION_BLOCKED');
+      await vi.waitFor(() => {
+        expect(send).toHaveBeenCalledTimes(1);
+      });
+      await finalize();
+      await new Promise((resolve) => setTimeout(resolve, 200));
+
+      expect(destinatarios()).toEqual([SEGUNDA_GESTAO]);
+      const [mensagem] = send.mock.calls[0];
+      expect(mensagem.tag).toBe('TRAVA_RELATORIO');
+      expect(mensagem.subject).toBe('Relatório do P01 bloqueado');
+      expect(mensagem.text).not.toContain('Realizar oficinas');
+      expect(mensagem.text).toContain('sem resultado registrado');
+      expect(mensagem.text).toContain('01/01/2025 a 30/06/2025');
+      expect(mensagem.text).toContain(`/projetos/${projetoId}#relatorios`);
+    });
+
+    it('com o provedor fora, a recusa segue a mesma e a falha fica registrada', async () => {
+      await blockedGoal();
+      send.mockRejectedValue(new EmailDeliveryError('BREVO_503', false));
+
+      await finalize();
+
+      await vi.waitFor(async () => {
+        expect((await registros()).map((row) => row.situacao)).toEqual([SituacaoAvisoEmail.FALHOU]);
+      });
     });
   });
 });
