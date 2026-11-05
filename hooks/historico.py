@@ -236,7 +236,8 @@ def _link(origem: str | None) -> str:
 def montar(eventos: list[Evento], sprints: list[Sprint], hoje: date) -> str:
     eventos = sorted(eventos, key=lambda e: (e.quando, e.tipo != "marco"), reverse=True)
     for e in eventos:
-        e.sprint = sprint_de(e.quando, sprints)  # type: ignore[attr-defined]
+        # O início de sprint pertence à sprint que começa, ainda que o dia seja de fronteira.
+        e.sprint = e.titulo if e.tipo == "sprint" else sprint_de(e.quando, sprints)  # type: ignore[attr-defined]
         e.unidade = unidade_de(e.quando)  # type: ignore[attr-defined]
 
     faixas = ["Concepção"] + [f"Sprint {s.numero}" for s in sprints]

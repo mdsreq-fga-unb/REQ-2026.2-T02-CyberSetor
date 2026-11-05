@@ -76,6 +76,12 @@ def test_plano_sem_meta_nao_interrompe_o_build():
     assert historico.ler_meta("# Plano\n\nSem meta declarada.\n") == ""
 
 
+def test_inicio_de_sprint_fica_no_grupo_da_propria_sprint():
+    inicio = historico.Evento(date(2026, 9, 22), "sprint", "Sprint 2", "")
+    historico.montar([inicio], SPRINTS, date(2026, 9, 30))
+    assert inicio.sprint == "Sprint 2"
+
+
 def test_dia_de_fronteira_conta_para_a_sprint_que_termina():
     assert historico.sprint_de(date(2026, 9, 22), SPRINTS) == "Sprint 1"
     assert historico.sprint_de(date(2026, 9, 23), SPRINTS) == "Sprint 2"
