@@ -362,6 +362,16 @@ a.cs-card:focus {
   color: var(--md-default-fg-color--light);
 }
 
+.hist-faixa__meta {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 4;
+  line-clamp: 4;
+  overflow: hidden;
+  font-size: 0.68rem;
+  line-height: 1.35;
+}
+
 .hist-faixa__barra {
   display: block;
   height: 0.35rem;
