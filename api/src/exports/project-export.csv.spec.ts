@@ -69,13 +69,13 @@ function makeData(overrides: Partial<ProjectExportData> = {}): ProjectExportData
 }
 
 function lines(csv: string): string[] {
-  return csv.replace(/^﻿/, '').split('\r\n');
+  return csv.replace(/^\uFEFF/, '').split('\r\n');
 }
 
 describe('buildProjectExportCsv (RF38, CA-13.1, CA-13.2, CA-13.5, CA-13.6)', () => {
   it('abre em UTF-8 com BOM, separa por ponto e vírgula e traz cabeçalho com a data de corte', () => {
     const csv = buildProjectExportCsv(makeData());
-    expect(csv.startsWith('﻿')).toBe(true);
+    expect(csv.startsWith('\uFEFF')).toBe(true);
     const [titulo, projeto, periodo, visao, corte] = lines(csv);
     expect(titulo).toBe('Exportação de dados do projeto');
     expect(projeto).toBe('Projeto;P01 — Oficinas Culturais no Setor');

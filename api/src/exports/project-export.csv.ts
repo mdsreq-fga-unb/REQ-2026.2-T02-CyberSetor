@@ -61,7 +61,7 @@ type Cell = string | number | null;
 const SEPARATOR = ';';
 const LINE_BREAK = '\r\n';
 /** BOM para o Excel reconhecer o UTF-8 e mostrar os acentos. */
-const BOM = '﻿';
+const BOM = '\uFEFF';
 const EMPTY_PERIOD = 'Sem registros no período.';
 
 const VIEWS: Record<VisaoMetas, string> = {

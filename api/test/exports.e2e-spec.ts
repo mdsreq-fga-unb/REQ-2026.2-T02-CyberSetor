@@ -33,7 +33,7 @@ interface ErrorBody {
 }
 
 function lines(csv: string): string[] {
-  return csv.replace(/^﻿/, '').split('\r\n');
+  return csv.replace(/^\uFEFF/, '').split('\r\n');
 }
 
 describe('Exportação dos dados do projeto em planilha (e2e, HU-13)', () => {
@@ -260,7 +260,7 @@ describe('Exportação dos dados do projeto em planilha (e2e, HU-13)', () => {
     expect(res.headers['content-disposition']).toBe(
       'attachment; filename="exportacao-P01-2025-04-01-a-2025-06-30-consolidada.csv"',
     );
-    expect(res.text.startsWith('﻿')).toBe(true);
+    expect(res.text.startsWith('\uFEFF')).toBe(true);
 
     const all = lines(res.text);
     expect(all).toContain('Projeto;P01 — Oficinas Culturais no Setor');
