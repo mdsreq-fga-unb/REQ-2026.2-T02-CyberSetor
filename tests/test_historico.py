@@ -58,6 +58,24 @@ def test_linha_fora_do_padrao_interrompe_o_build(linha, trecho):
         historico.ler_versoes("requisitos/8.md", texto)
 
 
+@pytest.mark.parametrize(
+    "citacao",
+    [
+        '> **Sprint Goal (aprovado em 07/10):** *"Ao final da Sprint 3, a base está pronta."*',
+        "> **Ao final da Sprint 3, a base está pronta.**",
+    ],
+)
+def test_le_a_meta_da_sprint_nos_dois_formatos_de_plano(citacao):
+    plano = f"| **Período da Sprint** | 06/10/2026 a 20/10/2026 |\n\n### 4.2 Meta da Sprint 🔧\n\n{citacao}\n"
+    sprint = historico.ler_sprint("gestao/sprints/sprint-3.md", 3, plano)
+    assert sprint.meta == "Ao final da Sprint 3, a base está pronta."
+    assert historico.meta_curta(sprint.meta) == "A base está pronta."
+
+
+def test_plano_sem_meta_nao_interrompe_o_build():
+    assert historico.ler_meta("# Plano\n\nSem meta declarada.\n") == ""
+
+
 def test_dia_de_fronteira_conta_para_a_sprint_que_termina():
     assert historico.sprint_de(date(2026, 9, 22), SPRINTS) == "Sprint 1"
     assert historico.sprint_de(date(2026, 9, 23), SPRINTS) == "Sprint 2"
@@ -106,4 +124,6 @@ def test_site_atual_gera_todos_os_registros():
     pagina = historico.montar(eventos, sprints, date(2026, 11, 3))
     assert pagina.count('class="hist-item ') == len(eventos)
     assert len(sprints) >= 4
+    assert all(s.meta for s in sprints)
+    assert 'class="hist-faixa__meta"' in pagina
     assert "Sprint 4" in pagina

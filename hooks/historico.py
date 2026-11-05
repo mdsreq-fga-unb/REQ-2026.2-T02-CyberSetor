@@ -45,6 +45,9 @@ DATA = re.compile(r"^\d{2}/\d{2}/\d{4}$")
 LINK_MD = re.compile(r"^\[([^\]]+)\]\(([^)]+)\)$")
 CODIGO = re.compile(r"\b(RNF\d{2}|RF\d{2}|HU-\d{2}[a-z]?|CA-\d{2}[a-z]?)(?=[\s.,;:)\]]|$)")
 PERIODO = re.compile(r"Per[ií]odo da Sprint\*?\*?\s*\|\s*(\d{2}/\d{2}/\d{4}).*?a\s+(\d{2}/\d{2}/\d{4})")
+META = re.compile(r"^#+[^\n]*Meta da Sprint[^\n]*\n+>\s*([^\n]+)", re.MULTILINE)
+ROTULO_META = re.compile(r"^\*\*Sprint Goal[^*]*\*\*\s*")
+INICIO_META = re.compile(r"^Ao final da Sprint \d+, ")
 
 CURTO = {"versao": "Versões", "ata-equipe": "Equipe", "ata-cliente": "Instituto", "sprint": "Sprints", "marco": "Marcos"}
 
@@ -75,6 +78,7 @@ class Sprint:
     numero: int
     inicio: date
     fim: date
+    meta: str = ""
 
 
 # ---------------------------------------------------------------- leitura
@@ -168,7 +172,19 @@ def ler_sprint(caminho: str, numero: int, texto: str) -> Sprint | None:
     if not m:
         log.warning("historico: %s sem 'Período da Sprint' reconhecível; sprint fora da régua.", caminho)
         return None
-    return Sprint(numero, _data(m.group(1), caminho, 0), _data(m.group(2), caminho, 0))
+    return Sprint(numero, _data(m.group(1), caminho, 0), _data(m.group(2), caminho, 0), ler_meta(texto))
+
+
+def ler_meta(texto: str) -> str:
+    """Meta da sprint, da citação logo abaixo do título "Meta da Sprint" do plano."""
+    m = META.search(texto)
+    return ROTULO_META.sub("", m.group(1).strip()).strip(' *"“”') if m else ""
+
+
+def meta_curta(meta: str) -> str:
+    """Meta sem a abertura repetida ("Ao final da Sprint N,"), para o cartão."""
+    curta = INICIO_META.sub("", meta)
+    return curta[:1].upper() + curta[1:]
 
 
 # ---------------------------------------------------------------- classificação
@@ -280,11 +296,13 @@ def montar(eventos: list[Evento], sprints: list[Sprint], hoje: date) -> str:
         periodo = f"{s.inicio:%d/%m} a {s.fim:%d/%m}" if s else f"até {sprints[0].inicio:%d/%m}" if sprints else ""
         corrente = s is not None and s.inicio <= hoje <= s.fim
         pct = round(100 * len(doF) / maior)
+        meta = (f'<span class="hist-faixa__meta" title="{_e(s.meta)}">{_e(meta_curta(s.meta))}</span>'
+                if s and s.meta else "")
         w(
             f'<a class="hist-faixa{" hist-faixa--corrente" if corrente else ""}" href="#{slug(f)}" '
             f'data-filtro="sprint" data-valor="{slug(f)}">'
             f'<span class="hist-faixa__nome">{_e(f)}{" · atual" if corrente else ""}</span>'
-            f'<span class="hist-faixa__periodo">{_e(periodo)}</span>'
+            f'<span class="hist-faixa__periodo">{_e(periodo)}</span>{meta}'
             f'<span class="hist-faixa__barra"><span style="width:{pct}%"></span></span>'
             f'<span class="hist-faixa__numeros">{_n(nv, "versão", "versões")} · {_n(na, "reunião", "reuniões")} · '
             f'{_n(nd, "documento alterado", "documentos alterados")}</span></a>'
@@ -410,8 +428,10 @@ def coletar(docs_dir: Path) -> tuple[list[Evento], list[Sprint]]:
             s = ler_sprint(rel, int(m.group(1)), texto)
             if s:
                 sprints.append(s)
-                eventos.append(Evento(s.inicio, "sprint", f"Sprint {s.numero}",
-                                      f"Período de {s.inicio:%d/%m/%Y} a {s.fim:%d/%m/%Y}.", rel, "Plano"))
+                descricao = f"Período de {s.inicio:%d/%m/%Y} a {s.fim:%d/%m/%Y}."
+                if s.meta:
+                    descricao += f" Meta: {s.meta}"
+                eventos.append(Evento(s.inicio, "sprint", f"Sprint {s.numero}", descricao, rel, "Plano"))
     sprints.sort(key=lambda s: s.numero)
     for quando, nome, _ in MARCOS:
         eventos.append(Evento(quando, "marco", nome, ""))
