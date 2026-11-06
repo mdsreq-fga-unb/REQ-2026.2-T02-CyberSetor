@@ -1,4 +1,10 @@
-import { ApiError, apiRequest, type ApiRequestOptions } from '@/lib/api';
+import {
+  ApiError,
+  apiDownload,
+  apiRequest,
+  type ApiDownload,
+  type ApiRequestOptions,
+} from '@/lib/api';
 import type { Session } from './types';
 
 const REFRESH_LOCK = 'cybersetor-renovacao';
@@ -84,21 +90,29 @@ export async function signOut(): Promise<void> {
   }
 }
 
-export async function authorizedRequest<T>(
-  path: string,
-  options: Omit<ApiRequestOptions, 'accessToken'> = {},
-): Promise<T> {
+async function withAccessToken<T>(run: (accessToken: string) => Promise<T>): Promise<T> {
   const used = current ?? (await refreshSession());
   if (!used) throw new ApiError(401, 'UNAUTHENTICATED', 'Sessão encerrada. Entre novamente.');
   try {
-    return await apiRequest<T>(path, { ...options, accessToken: used.accessToken });
+    return await run(used.accessToken);
   } catch (error) {
     if (!(error instanceof ApiError) || error.status !== 401) throw error;
     if (current === null) throw error;
     const refreshed = current.accessToken !== used.accessToken ? current : await refreshSession();
     if (!refreshed) throw error;
-    return apiRequest<T>(path, { ...options, accessToken: refreshed.accessToken });
+    return run(refreshed.accessToken);
   }
+}
+
+export function authorizedRequest<T>(
+  path: string,
+  options: Omit<ApiRequestOptions, 'accessToken'> = {},
+): Promise<T> {
+  return withAccessToken((accessToken) => apiRequest<T>(path, { ...options, accessToken }));
+}
+
+export function authorizedDownload(path: string): Promise<ApiDownload> {
+  return withAccessToken((accessToken) => apiDownload(path, { accessToken }));
 }
 
 export async function changePassword(currentPassword: string, newPassword: string): Promise<void> {

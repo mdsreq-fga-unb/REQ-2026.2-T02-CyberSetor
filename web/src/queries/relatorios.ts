@@ -1,7 +1,8 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { authorizedRequest } from '@/auth/session';
+import { authorizedDownload, authorizedRequest } from '@/auth/session';
 import type {
   FinalizeReportInput,
+  ProjectExportInput,
   RectifyReportInput,
   Report,
   ReportPdfLink,
@@ -109,5 +110,24 @@ export function useReportPdf(projectId: string, reportId: string | undefined, en
     enabled: Boolean(reportId && enabled),
     staleTime: PDF_LINK_REFRESH_MS,
     refetchInterval: PDF_LINK_REFRESH_MS,
+  });
+}
+
+export function useExportProjectCsv(projectId: string) {
+  return useMutation({
+    mutationFn: async ({ from, to, visao }: ProjectExportInput) => {
+      const query = new URLSearchParams({
+        from,
+        to,
+        visao,
+        formato: 'csv',
+      });
+      const file = await authorizedDownload(
+        `/projects/${encodeURIComponent(projectId)}/export?${query.toString()}`,
+      );
+      const fileName =
+        file.fileName ?? `exportacao-${projectId}-${from}-a-${to}-${visao.toLowerCase()}.csv`;
+      return { blob: file.blob, fileName };
+    },
   });
 }

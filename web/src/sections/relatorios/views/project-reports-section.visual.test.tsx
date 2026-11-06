@@ -125,4 +125,14 @@ describe.each([
       .element(page.getByRole('dialog'))
       .toMatchScreenshot(`relatorio-retificar-${device}`);
   });
+
+  it('dialogo de exportacao da planilha', async () => {
+    await renderSection();
+
+    await page.getByRole('button', { name: 'Exportar planilha' }).click();
+    await expect.element(page.getByRole('button', { name: 'Baixar planilha' })).toBeEnabled();
+    await expect
+      .element(page.getByRole('dialog'))
+      .toMatchScreenshot(`relatorio-exportar-${device}`);
+  });
 });
