@@ -30,10 +30,13 @@ const LINK: ReportPdfLink = {
   geradoEm: '2025-07-03T12:00:00.000Z',
 };
 
-type Route = (body?: unknown) => { status: number; body?: unknown };
+type Route = (
+  body?: unknown,
+  searchParams?: URLSearchParams,
+) => Response | { status: number; body?: unknown; headers?: Record<string, string> };
 
-function json(status: number, body?: unknown): Response {
-  return new Response(body === undefined ? null : JSON.stringify(body), { status });
+function json(status: number, body?: unknown, headers?: Record<string, string>): Response {
+  return new Response(body === undefined ? null : JSON.stringify(body), { status, headers });
 }
 
 async function signedInAs(perfil: string, routes: Record<string, Route>) {
@@ -41,16 +44,18 @@ async function signedInAs(perfil: string, routes: Record<string, Route>) {
   vi.stubGlobal(
     'fetch',
     vi.fn(async (url: string, init: RequestInit = {}) => {
-      const key = `${init.method ?? 'GET'} ${new URL(url).pathname.replace(/^\/v1/, '')}`;
-      calls.push(key);
+      const parsed = new URL(url);
+      const key = `${init.method ?? 'GET'} ${parsed.pathname.replace(/^\/v1/, '')}`;
+      calls.push(`${key}${parsed.search}`);
       if (key === 'POST /auth/login') {
         return json(200, { accessToken: 't', perfil, deveTrocarSenha: false });
       }
       const route = routes[key];
       if (!route) return json(404, { code: 'NOT_FOUND', message: key });
       const parsedBody = typeof init.body === 'string' ? JSON.parse(init.body) : undefined;
-      const result = route(parsedBody);
-      return json(result.status, result.body);
+      const result = route(parsedBody, parsed.searchParams);
+      if (result instanceof Response) return result;
+      return json(result.status, result.body, result.headers);
     }),
   );
   await signIn('gestao@instituto.org.br', 'senha-de-teste-longa');
@@ -70,6 +75,7 @@ const LIST = `GET /projects/${PROJECT_ID}/reports`;
 const PDF = `GET /projects/${PROJECT_ID}/reports/${REPORT.id}/pdf`;
 const PREVIEW = `GET /projects/${PROJECT_ID}/report-preview`;
 const RECTIFY = `POST /projects/${PROJECT_ID}/reports/${REPORT.id}/rectify`;
+const EXPORT = `GET /projects/${PROJECT_ID}/export`;
 
 describe('ProjectReportsSection', () => {
   beforeEach(() => {
@@ -546,5 +552,139 @@ describe('ProjectReportsSection', () => {
 
     fireEvent.click(screen.getByRole('button', { name: 'Tentar de novo' }));
     await waitFor(() => expect(submit).toBeEnabled());
+  });
+
+  it('exporta a planilha CSV com a visao escolhida e salva com o nome do Content-Disposition (HU-13)', async () => {
+    let downloadedName = '';
+    const clickSpy = vi.spyOn(HTMLAnchorElement.prototype, 'click').mockImplementation(function (
+      this: HTMLAnchorElement,
+    ) {
+      downloadedName = this.download;
+    });
+
+    const calls = await signedInAs('NUCLEO_PEDAGOGICO', {
+      [LIST]: () => ({ status: 200, body: [REPORT] }),
+      [EXPORT]: (_body, params) =>
+        new Response('\uFEFFExportação de dados do projeto\r\nProjeto;P01', {
+          status: 200,
+          headers: {
+            'Content-Type': 'text/csv; charset=utf-8',
+            'Content-Disposition': `attachment; filename="exportacao-P01-${params?.get('from')}-a-${params?.get('to')}-${params?.get('visao')?.toLowerCase()}.csv"`,
+          },
+        }),
+    });
+
+    renderSection();
+
+    fireEvent.click(await screen.findByRole('button', { name: 'Exportar planilha' }));
+
+    expect(
+      await screen.findByText(
+        'Último resultado de cada meta até o fim do período, com resumo por alcance.',
+      ),
+    ).toBeInTheDocument();
+    expect(
+      screen.getByText('Cada resultado registrado no período, para acompanhar a evolução.'),
+    ).toBeInTheDocument();
+
+    fireEvent.change(screen.getByLabelText('Início do período'), {
+      target: { value: '2025-04-01' },
+    });
+    fireEvent.change(screen.getByLabelText('Fim do período'), {
+      target: { value: '2025-06-30' },
+    });
+    fireEvent.click(screen.getByRole('radio', { name: /Analítica/ }));
+    fireEvent.click(screen.getByRole('button', { name: 'Baixar planilha' }));
+
+    await waitFor(() =>
+      expect(downloadedName).toBe('exportacao-P01-2025-04-01-a-2025-06-30-analitica.csv'),
+    );
+    expect(calls).toContain(`${EXPORT}?from=2025-04-01&to=2025-06-30&visao=ANALITICA&formato=csv`);
+    clickSpy.mockRestore();
+  });
+
+  it('recusa periodo invertido antes de chamar a API e trata erros 400, 403 e 500 na exportacao', async () => {
+    let statusToReturn = 400;
+    const calls = await signedInAs('ADMINISTRATIVO_FINANCEIRO', {
+      [LIST]: () => ({ status: 200, body: [] }),
+      [EXPORT]: () => {
+        if (statusToReturn === 400) {
+          return {
+            status: 400,
+            body: {
+              code: 'INVALID_PERIOD',
+              message: 'A data inicial (from) não pode ser posterior à data final (to).',
+            },
+          };
+        }
+        if (statusToReturn === 403) {
+          return { status: 403, body: { code: 'FORBIDDEN', message: 'Sem permissão' } };
+        }
+        return {
+          status: 500,
+          body: { code: 'INTERNAL', message: 'Error: falha interna no banco' },
+        };
+      },
+    });
+
+    renderSection();
+    fireEvent.click(await screen.findByRole('button', { name: 'Exportar planilha' }));
+
+    // 1. Período invertido é barrado no formulário sem chamar a rota
+    fireEvent.change(await screen.findByLabelText('Início do período'), {
+      target: { value: '2025-06-30' },
+    });
+    fireEvent.change(screen.getByLabelText('Fim do período'), {
+      target: { value: '2025-04-01' },
+    });
+    fireEvent.click(screen.getByRole('button', { name: 'Baixar planilha' }));
+
+    expect(
+      await screen.findByText('A data final não pode ser anterior à data inicial.'),
+    ).toBeInTheDocument();
+    expect(calls.some((call) => call.startsWith(EXPORT))).toBe(false);
+
+    // 2. Erro 400 INVALID_PERIOD vindo da API marca o campo final
+    fireEvent.change(screen.getByLabelText('Início do período'), {
+      target: { value: '2025-01-01' },
+    });
+    fireEvent.change(screen.getByLabelText('Fim do período'), {
+      target: { value: '2025-06-30' },
+    });
+    fireEvent.click(screen.getByRole('button', { name: 'Baixar planilha' }));
+
+    expect(
+      await screen.findByText('A data inicial (from) não pode ser posterior à data final (to).'),
+    ).toBeInTheDocument();
+    expect(screen.getByLabelText('Fim do período')).toHaveAttribute('aria-invalid', 'true');
+
+    // 3. Erro 403 exibe mensagem clara de perfil
+    statusToReturn = 403;
+    fireEvent.click(screen.getByRole('button', { name: 'Baixar planilha' }));
+    await waitFor(() =>
+      expect(screen.getByRole('alert')).toHaveTextContent(
+        'O seu perfil não exporta dados do projeto.',
+      ),
+    );
+
+    // 4. Erro 500 não vaza texto cru do servidor
+    statusToReturn = 500;
+    fireEvent.click(screen.getByRole('button', { name: 'Baixar planilha' }));
+    await waitFor(() =>
+      expect(screen.getByRole('alert')).toHaveTextContent(
+        'Não foi possível exportar a planilha. Tente de novo.',
+      ),
+    );
+    expect(screen.queryByText(/falha interna no banco/)).not.toBeInTheDocument();
+  });
+
+  it('oculta o botao de exportar planilha para perfis que nao consultam projetos', async () => {
+    await signedInAs('CONCEDENTE_AUDITORIA', {
+      [LIST]: () => ({ status: 403, body: { code: 'FORBIDDEN', message: 'Sem permissão' } }),
+    });
+    renderSection();
+
+    await screen.findByRole('alert');
+    expect(screen.queryByRole('button', { name: 'Exportar planilha' })).not.toBeInTheDocument();
   });
 });

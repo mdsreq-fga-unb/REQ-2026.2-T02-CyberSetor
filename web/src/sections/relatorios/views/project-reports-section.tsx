@@ -1,8 +1,10 @@
 'use client';
 
-import { FileCheckIcon } from 'lucide-react';
-import { useMemo } from 'react';
+import { DownloadIcon, FileCheckIcon } from 'lucide-react';
+import { useMemo, useState } from 'react';
 import { useSession } from '@/auth/hooks/use-session';
+import { REPORT_READERS } from '@/auth/profiles';
+import type { Perfil } from '@/auth/types';
 import { ListPagination } from '@/components/list/list-pagination';
 import { ListCard, ListEmpty, ListError, TableSkeleton } from '@/components/list/list-states';
 import { RowActionsMenu, type RowAction } from '@/components/list/row-actions-menu';
@@ -24,6 +26,7 @@ import { ApiError } from '@/lib/api';
 import { formatDate, formatDateTime } from '@/lib/br';
 import { useReports } from '@/queries/relatorios';
 import type { Report } from '@/types/relatorios';
+import { ProjectExportDialog } from '../project-export-dialog';
 import { ReportPdfDialog } from '../report-pdf-dialog';
 import { ReportRectifyDialog } from '../report-rectify-dialog';
 
@@ -85,8 +88,10 @@ export function ProjectReportsSection({
   const pagination = usePagination(reports.data);
   const pdfDialog = useDialogState<Report>();
   const rectifyDialog = useDialogState<Report>();
+  const [exportOpen, setExportOpen] = useState(false);
 
   const canRectify = session?.perfil === 'PRESIDENCIA_GESTAO' && instrumentActive;
+  const canExport = session !== null && REPORT_READERS.includes(session.perfil as Perfil);
 
   const supersededIds = useMemo(() => {
     const data = reports.data ?? [];
@@ -120,13 +125,22 @@ export function ProjectReportsSection({
 
   return (
     <section className="flex flex-col gap-3" aria-labelledby="relatorios-emitidos-heading">
-      <div>
-        <h2 id="relatorios-emitidos-heading" className="text-lg font-semibold">
-          Relatórios emitidos
-        </h2>
-        <p className="text-sm text-muted-foreground">
-          Cada versão guarda os números da emissão; o PDF é o mesmo arquivo sempre que for baixado.
-        </p>
+      <div className="flex flex-wrap items-start justify-between gap-3">
+        <div>
+          <h2 id="relatorios-emitidos-heading" className="text-lg font-semibold">
+            Relatórios emitidos
+          </h2>
+          <p className="text-sm text-muted-foreground">
+            Cada versão guarda os números da emissão; o PDF é o mesmo arquivo sempre que for
+            baixado.
+          </p>
+        </div>
+        {canExport && (
+          <Button variant="outline" onClick={() => setExportOpen(true)}>
+            <DownloadIcon data-icon="inline-start" />
+            Exportar planilha
+          </Button>
+        )}
       </div>
 
       {reports.error && !reports.data ? (
@@ -228,6 +242,18 @@ export function ProjectReportsSection({
             type: 'success',
             title: `Relatório retificado (versão ${updated.versao})`,
             description: `Período de ${formatDate(updated.periodoInicio)} a ${formatDate(updated.periodoFim)} emitido preservando a versão anterior.`,
+          })
+        }
+      />
+      <ProjectExportDialog
+        projectId={projectId}
+        open={exportOpen}
+        onClose={() => setExportOpen(false)}
+        onExported={(fileName) =>
+          toast.add({
+            type: 'success',
+            title: 'Planilha exportada',
+            description: `Arquivo ${fileName} baixado.`,
           })
         }
       />

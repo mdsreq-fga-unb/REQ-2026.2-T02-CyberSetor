@@ -117,3 +117,12 @@ export interface Report {
   metas: ReportGoalItem[];
   pdf: ReportPdf | null;
 }
+
+export const EXPORT_GOAL_VIEWS = ['CONSOLIDADA', 'ANALITICA'] as const;
+export type ExportGoalView = (typeof EXPORT_GOAL_VIEWS)[number];
+
+export interface ProjectExportInput {
+  from: string;
+  to: string;
+  visao: ExportGoalView;
+}
