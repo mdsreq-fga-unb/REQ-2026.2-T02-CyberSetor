@@ -65,7 +65,14 @@ function exportFailure(error: unknown): string {
 }
 
 function saveDownloadedFile(blob: Blob, fileName: string): void {
-  const url = typeof URL.createObjectURL === 'function' ? URL.createObjectURL(blob) : '';
+  let url = '';
+  try {
+    if (typeof URL.createObjectURL === 'function') {
+      url = URL.createObjectURL(blob);
+    }
+  } catch {
+    url = '';
+  }
   const link = document.createElement('a');
   link.href = url;
   link.download = fileName;
