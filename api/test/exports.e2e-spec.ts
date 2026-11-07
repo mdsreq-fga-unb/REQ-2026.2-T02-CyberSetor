@@ -168,6 +168,22 @@ describe('Exportação dos dados do projeto em planilha (e2e, HU-13)', () => {
     return (res.body as { id: string }).id;
   }
 
+  /** Sem indicador nem forma de comprovação: a meta fica em rascunho (RN-02). */
+  async function createDraftGoal(): Promise<string> {
+    const res = await as(Perfil.PRESIDENCIA_GESTAO)
+      .post(`/v1/projects/${projetoId}/goals`, {
+        origem: OrigemMeta.INSTITUTO,
+        objetivo: 'Ampliar a rede de parceiros culturais',
+        descricao: 'Firmar parcerias com coletivos locais',
+        requisitoIds: [requisitoId],
+        periodoInicio: '2025-01-10',
+        periodoFim: '2025-06-30',
+      })
+      .expect(201);
+    expect((res.body as { rascunho: boolean }).rascunho).toBe(true);
+    return (res.body as { id: string }).id;
+  }
+
   async function recordResult(
     goalId: string,
     payload: { dataReferencia: string; valorAlcancado?: number; alcance?: AlcanceMeta },
@@ -194,11 +210,15 @@ describe('Exportação dos dados do projeto em planilha (e2e, HU-13)', () => {
     });
   }
 
-  /** Meta quantitativa com resultados antes e dentro do período, qualitativa e uma sem resultado. */
+  /**
+   * Meta quantitativa com resultados antes e dentro do período, qualitativa, uma sem resultado e
+   * uma em rascunho.
+   */
   async function seedPeriod(): Promise<{ quantitativa: string; qualitativa: string }> {
     const quantitativa = await createGoal();
     const qualitativa = await createGoal(ModalidadeAfericao.QUALITATIVA);
     await createGoal();
+    await createDraftGoal();
     await recordResult(quantitativa, { dataReferencia: '2025-03-20', valorAlcancado: 30 });
     await recordResult(quantitativa, { dataReferencia: '2025-05-10', valorAlcancado: 60 });
     await recordResult(quantitativa, { dataReferencia: '2025-06-20', valorAlcancado: 90.5 });
@@ -279,15 +299,18 @@ describe('Exportação dos dados do projeto em planilha (e2e, HU-13)', () => {
     expect(qualitativa).toContain(';05/05/2025;;;;Cumprida;');
     const semResultado = all.find((line) => line.startsWith('3;Edital;'));
     expect(semResultado).toMatch(/;Não;;;;;;$/);
+    // RN-02: a meta em rascunho aparece marcada e fica fora da apuração
+    const rascunho = all.find((line) => line.startsWith('4;Instituto;'));
+    expect(rascunho).toMatch(/;Sim;;;;;;$/);
 
     const resumo = all.indexOf('Resumo das metas');
     expect(all.slice(resumo + 2, resumo + 8)).toEqual([
-      'Metas no período;3',
+      'Metas no período;4',
       'Cumprida;1',
       'Parcialmente cumprida;1',
       'Não cumprida;0',
       'Sem resultado registrado;1',
-      'Em rascunho;0',
+      'Em rascunho;1',
     ]);
 
     expect(all).toContain(
@@ -314,6 +337,10 @@ describe('Exportação dos dados do projeto em planilha (e2e, HU-13)', () => {
     expect(quantitativa[1]).toContain(';20/06/2025;90,5;100;90,5;Parcialmente cumprida;');
     expect(res.text).not.toContain('20/03/2025');
     expect(all.filter((line) => line.startsWith('3;Edital;'))).toHaveLength(1);
+    // Meta em rascunho não busca resultados: sai numa linha só, sem resultado
+    const rascunho = all.filter((line) => line.startsWith('4;Instituto;'));
+    expect(rascunho).toHaveLength(1);
+    expect(rascunho[0]).toMatch(/;Sim;;;;;;$/);
     expect(all).not.toContain('Resumo das metas');
   });
 
@@ -356,7 +383,7 @@ describe('Exportação dos dados do projeto em planilha (e2e, HU-13)', () => {
       visao: 'ANALITICA',
       periodoInicio: FROM,
       periodoFim: TO,
-      metas: 3,
+      metas: 4,
       atividades: 1,
     });
     expect(segunda?.usuarioId).toBe(ids[Perfil.PRESIDENCIA_GESTAO]);

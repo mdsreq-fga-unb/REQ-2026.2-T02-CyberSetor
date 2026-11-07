@@ -4,6 +4,7 @@ import type {
   OrigemMeta,
   SituacaoMeta,
 } from '../generated/prisma/enums.js';
+import { brIsoDate } from '../reports/reports.service.js';
 
 /** Visões das metas na exportação (RF38, CA-13.5). */
 export const VISOES_METAS = ['ANALITICA', 'CONSOLIDADA'] as const;
@@ -157,7 +158,7 @@ function toLine(cells: readonly Cell[]): string {
 }
 
 function brDate(iso: string | null): string | null {
-  return iso ? iso.split('-').reverse().join('/') : null;
+  return iso ? brIsoDate(iso) : null;
 }
 
 function brDateTime(date: Date): string {

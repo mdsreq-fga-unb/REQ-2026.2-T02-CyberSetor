@@ -8,6 +8,7 @@ import { toDate } from '../instruments/instruments.service.js';
 import { PrismaService } from '../prisma/prisma.service.js';
 import type { ReportPreviewGoalResponse } from '../projects/report-preview.dto.js';
 import { ProjectsService } from '../projects/projects.service.js';
+import { isoDate } from '../reports/reports.service.js';
 import type { ProjectExportQueryDto } from './exports.dto.js';
 import {
   buildProjectExportCsv,
@@ -24,10 +25,6 @@ export interface ProjectExportFile {
 
 function decimal(value: Prisma.Decimal | null): number | null {
   return value === null ? null : value.toNumber();
-}
-
-function isoDate(date: Date): string {
-  return date.toISOString().slice(0, 10);
 }
 
 function exportGoal(goal: ReportPreviewGoalResponse, resultados: ExportGoalResult[]): ExportGoal {
@@ -173,7 +170,8 @@ export class ExportsService {
           orderBy: { meta: { ordem: 'asc' } },
         },
       },
-      orderBy: [{ data: 'asc' }, { horaInicio: 'asc' }, { titulo: 'asc' }],
+      // O cadastro desempata atividades com a mesma data, hora e título.
+      orderBy: [{ data: 'asc' }, { horaInicio: 'asc' }, { titulo: 'asc' }, { criadoEm: 'asc' }],
     });
     return rows.map((row) => ({
       data: isoDate(row.data),
