@@ -1,0 +1,2857 @@
+
+<!doctype html>
+<html lang="pt" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Visão de Produto e Projeto — Requisitos de Software (FGA0313) · T02 · 2026.2 · FCTE/UnB">
+      
+      
+        <meta name="author" content="Equipe CyberSetor">
+      
+      
+        <link rel="canonical" href="https://mdsreq-fga-unb.github.io/REQ-2026.2-T02-CyberSetor/gestao/historico/">
+      
+      
+        <link rel="prev" href="../../requisitos/b1-bpmn-processo-atual/">
+      
+      
+        <link rel="next" href="../processo-scrumxp/">
+      
+      
+      <link rel="icon" href="../../assets/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.9">
+    
+    
+      
+        <title>Histórico e evolução - CyberSetor · Instituto No Setor</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.4af4bdda.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Montserrat";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#historico-e-evolucao" class="md-skip">
+          Pular para conteúdo
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Cabeçalho">
+    <a href="../.." title="CyberSetor · Instituto No Setor" class="md-header__button md-logo" aria-label="CyberSetor · Instituto No Setor" data-md-component="logo">
+      
+  <img src="../../assets/logo.svg" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            CyberSetor · Instituto No Setor
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Histórico e evolução
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom"  aria-label="Alternar para o modo escuro"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Alternar para o modo escuro" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="custom" data-md-color-accent="custom"  aria-label="Alternar para o modo claro"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Alternar para o modo claro" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Buscar" placeholder="Buscar" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Pesquisar">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="Compartilhar" aria-label="Compartilhar" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91s2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="Limpar" aria-label="Limpar" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Inicializando busca
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/mdsreq-fga-unb/REQ-2026.2-T02-CyberSetor" title="Ir para repositório" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8M97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    mdsreq-fga-unb/REQ-2026.2-T02-CyberSetor
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+    
+      
+<nav class="md-tabs" aria-label="Abas" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+    
+  
+  Início
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../visao/" class="md-tabs__link">
+          
+  
+    
+  
+  Visão do Produto
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="./" class="md-tabs__link">
+          
+  
+    
+  
+  Gestão do projeto
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../entregas/unidade-1/" class="md-tabs__link">
+          
+  
+    
+  
+  Entregas
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../referencias/" class="md-tabs__link">
+        
+  
+    
+  
+  Referências
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+                
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navegação" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="CyberSetor · Instituto No Setor" class="md-nav__button md-logo" aria-label="CyberSetor · Instituto No Setor" data-md-component="logo">
+      
+  <img src="../../assets/logo.svg" alt="logo">
+
+    </a>
+    CyberSetor · Instituto No Setor
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/mdsreq-fga-unb/REQ-2026.2-T02-CyberSetor" title="Ir para repositório" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8M97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    mdsreq-fga-unb/REQ-2026.2-T02-CyberSetor
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Início
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../../visao/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Visão do Produto
+    
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Gestão do projeto
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            Gestão do projeto
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Histórico e evolução
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    Histórico e evolução
+    
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Índice">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Índice
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#andamento-por-sprint" class="md-nav__link">
+    <span class="md-ellipsis">
+      Andamento por sprint
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#linha-do-tempo" class="md-nav__link">
+    <span class="md-ellipsis">
+      Linha do tempo
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Linha do tempo">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#proximos-marcos" class="md-nav__link">
+    <span class="md-ellipsis">
+      Próximos marcos
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sprint-4_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Sprint 4
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sprint-3_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Sprint 3
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sprint-2_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Sprint 2
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sprint-1_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Sprint 1
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#concepcao_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Concepção
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#evolucao-por-documento" class="md-nav__link">
+    <span class="md-ellipsis">
+      Evolução por documento
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../processo-scrumxp/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Processo e ritos (ScrumXP)
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../boas-praticas-github/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Boas práticas no GitHub
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../matriz-competencias/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Matriz de competências e stack
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../dailies/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Registro das dailies
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_6" >
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../atas/" class="md-nav__link ">
+              
+  
+  <span class="md-ellipsis">
+    Reuniões
+    
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_3_6" id="__nav_3_6_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_6">
+            <span class="md-nav__icon md-icon"></span>
+            Reuniões
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../atas/2026-09-08-reuniao-presencial-instituto/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Com o Instituto
+    
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../atas/2026-08-27-reuniao-equipe/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Equipe
+    
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../atas/2026-09-08-sprint-planning/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Cerimônias ScrumXP
+    
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_7" id="__nav_3_7_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Sprints
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_7">
+            <span class="md-nav__icon md-icon"></span>
+            Sprints
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../sprints/sprint-1/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Sprint 1
+    
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../sprints/sprint-2/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Sprint 2
+    
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../sprints/sprint-3/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Sprint 3
+    
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../sprints/sprint-4/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Sprint 4
+    
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../../entregas/unidade-1/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Entregas
+    
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../referencias/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Referências
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+                
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" hidden>
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Índice">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Índice
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#andamento-por-sprint" class="md-nav__link">
+    <span class="md-ellipsis">
+      Andamento por sprint
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#linha-do-tempo" class="md-nav__link">
+    <span class="md-ellipsis">
+      Linha do tempo
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Linha do tempo">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#proximos-marcos" class="md-nav__link">
+    <span class="md-ellipsis">
+      Próximos marcos
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sprint-4_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Sprint 4
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sprint-3_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Sprint 3
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sprint-2_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Sprint 2
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sprint-1_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Sprint 1
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#concepcao_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Concepção
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#evolucao-por-documento" class="md-nav__link">
+    <span class="md-ellipsis">
+      Evolução por documento
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+  
+
+
+
+
+<h1 id="historico-e-evolucao">Histórico e evolução<a class="headerlink" href="#historico-e-evolucao" title="Permanent link">&para;</a></h1>
+<p>Linha do tempo do projeto: versões de cada documento do site, reuniões da equipe, interações com o Instituto No Setor, sprints e marcos da disciplina. Cada registro leva ao documento de origem, onde está o conteúdo vigente; o histórico do Documento de Visão como um todo está no <a href="../../visao/#historico-de-versoes">Sumário e versões</a>.</p>
+<div class="grid cards hist-resumo" markdown="0"><ul>
+<li><span class="hist-resumo__rotulo">Sprint atual</span><strong class="hist-resumo__valor">Fora de sprint</strong><span class="hist-resumo__detalhe"></span></li>
+<li><span class="hist-resumo__rotulo">Próximo marco</span><strong class="hist-resumo__valor">Unidade 3</strong><span class="hist-resumo__detalhe">17/11 · em 10 dias</span></li>
+<li><span class="hist-resumo__rotulo">Documentos</span><strong class="hist-resumo__valor">21</strong><span class="hist-resumo__detalhe">144 versões registradas</span></li>
+<li><span class="hist-resumo__rotulo">Reuniões</span><strong class="hist-resumo__valor">21</strong><span class="hist-resumo__detalhe">8 com o Instituto</span></li>
+</ul></div>
+
+<h2 id="andamento-por-sprint">Andamento por sprint<a class="headerlink" href="#andamento-por-sprint" title="Permanent link">&para;</a></h2>
+<p>Cada cartão filtra a linha do tempo pela sprint.</p>
+<div class="hist-andamento" markdown="0">
+<a class="hist-faixa" href="#concepcao" data-filtro="sprint" data-valor="concepcao"><span class="hist-faixa__nome">Concepção</span><span class="hist-faixa__periodo">até 08/09</span><span class="hist-faixa__barra"><span style="width:61%"></span></span><span class="hist-faixa__numeros">22 versões · 6 reuniões · 11 documentos alterados</span></a>
+<a class="hist-faixa" href="#sprint-1" data-filtro="sprint" data-valor="sprint-1"><span class="hist-faixa__nome">Sprint 1</span><span class="hist-faixa__periodo">08/09 a 22/09</span><span class="hist-faixa__meta" title="Ao final da Sprint 1, a equipe dispõe de um Product Backlog estruturado no GitHub Projects que declara o ciclo do projeto financiado — requisito/meta, atividade, evidência, relatório de execução do objeto e base única de pessoas — em histórias de usuário com critérios de aceitação verificáveis, classificadas por MoSCoW e rastreadas aos Objetivos Específicos, acompanhado da representação do processo atual do Instituto em notação BPMN.">A equipe dispõe de um Product Backlog estruturado no GitHub Projects que declara o ciclo do projeto financiado — requisito/meta, atividade, evidência, relatório de execução do objeto e base única de pessoas — em histórias de usuário com critérios de aceitação verificáveis, classificadas por MoSCoW e rastreadas aos Objetivos Específicos, acompanhado da representação do processo atual do Instituto em notação BPMN.</span><span class="hist-faixa__barra"><span style="width:100%"></span></span><span class="hist-faixa__numeros">38 versões · 7 reuniões · 13 documentos alterados</span></a>
+<a class="hist-faixa" href="#sprint-2" data-filtro="sprint" data-valor="sprint-2"><span class="hist-faixa__nome">Sprint 2</span><span class="hist-faixa__periodo">22/09 a 06/10</span><span class="hist-faixa__meta" title="Ao final da Sprint 2, a lista de requisitos está ajustada pelos feedbacks recebidos, a matriz 4 × 4 está preenchida, o MVP está definido e validado com o Instituto e a DoR e a DoD estão publicadas; os itens ligados às Atividades 3 e 4, até 29/09.">A lista de requisitos está ajustada pelos feedbacks recebidos, a matriz 4 × 4 está preenchida, o MVP está definido e validado com o Instituto e a DoR e a DoD estão publicadas; os itens ligados às Atividades 3 e 4, até 29/09.</span><span class="hist-faixa__barra"><span style="width:83%"></span></span><span class="hist-faixa__numeros">34 versões · 3 reuniões · 17 documentos alterados</span></a>
+<a class="hist-faixa" href="#sprint-3" data-filtro="sprint" data-valor="sprint-3"><span class="hist-faixa__nome">Sprint 3</span><span class="hist-faixa__periodo">06/10 a 20/10</span><span class="hist-faixa__meta" title="Ao final da Sprint 3, a Unidade 2 está publicada no site na versão marcada, antes da aula de 13/10, com o MVP confirmado pelo Instituto; e a base técnica está pronta para a construção: ambiente local definido, linhas da API e do front criadas e as histórias do MVP iniciadas.">A Unidade 2 está publicada no site na versão marcada, antes da aula de 13/10, com o MVP confirmado pelo Instituto; e a base técnica está pronta para a construção: ambiente local definido, linhas da API e do front criadas e as histórias do MVP iniciadas.</span><span class="hist-faixa__barra"><span style="width:54%"></span></span><span class="hist-faixa__numeros">21 versões · 3 reuniões · 14 documentos alterados</span></a>
+<a class="hist-faixa" href="#sprint-4" data-filtro="sprint" data-valor="sprint-4"><span class="hist-faixa__nome">Sprint 4</span><span class="hist-faixa__periodo">20/10 a 03/11</span><span class="hist-faixa__meta" title="Ao final da Sprint 4, o MVP está completo em homologação: os dois ciclos da seção 10.2.6 — do instrumento ao relatório e da atividade à lista de inscritos — com os direitos do titular, conferidos com o Instituto no checkpoint de 29/10 e na Review de 03/11.">O MVP está completo em homologação: os dois ciclos da seção 10.2.6 — do instrumento ao relatório e da atividade à lista de inscritos — com os direitos do titular, conferidos com o Instituto no checkpoint de 29/10 e na Review de 03/11.</span><span class="hist-faixa__barra"><span style="width:70%"></span></span><span class="hist-faixa__numeros">29 versões · 2 reuniões · 18 documentos alterados</span></a>
+</div>
+
+<ol class="hist-marcos" markdown="0">
+<li class="hist-marcos__item hist-marcos__item--feito"><strong>Unidade 1</strong><span>08/09/2026 · realizado</span></li>
+<li class="hist-marcos__item hist-marcos__item--feito"><strong>Unidade 2</strong><span>13/10/2026 · realizado</span></li>
+<li class="hist-marcos__item hist-marcos__item--previsto"><strong>Unidade 3</strong><span>17/11/2026 · previsto</span></li>
+<li class="hist-marcos__item hist-marcos__item--previsto"><strong>Questionário de avaliação geral</strong><span>24/11/2026 · previsto</span></li>
+<li class="hist-marcos__item hist-marcos__item--previsto"><strong>Unidade 4</strong><span>01/12/2026 · previsto</span></li>
+</ol>
+
+<h2 id="linha-do-tempo">Linha do tempo<a class="headerlink" href="#linha-do-tempo" title="Permanent link">&para;</a></h2>
+<div class="hist-filtros" id="hist-filtros" markdown="0">
+<label class="hist-filtros__busca"><span class="hist-filtros__rotulo">Buscar na linha do tempo</span><input type="search" data-busca placeholder="Palavra, código (RF21, HU-07a), versão ou data"></label>
+<div class="hist-filtros__tipos" role="group" aria-label="Tipo de registro"><button type="button" class="hist-tipo" data-tipo="" aria-pressed="true">Todos <span>174</span></button><button type="button" class="hist-tipo hist-tipo--versao" data-tipo="versao" aria-pressed="false" title="Versão de documento">Versões <span>144</span></button><button type="button" class="hist-tipo hist-tipo--ata-equipe" data-tipo="ata-equipe" aria-pressed="false" title="Reunião da equipe">Equipe <span>13</span></button><button type="button" class="hist-tipo hist-tipo--ata-cliente" data-tipo="ata-cliente" aria-pressed="false" title="Interação com o Instituto">Instituto <span>8</span></button><button type="button" class="hist-tipo hist-tipo--sprint" data-tipo="sprint" aria-pressed="false" title="Início de sprint">Sprints <span>4</span></button><button type="button" class="hist-tipo hist-tipo--marco" data-tipo="marco" aria-pressed="false" title="Marco da disciplina">Marcos <span>5</span></button></div>
+<select data-campo="tipo" hidden aria-hidden="true"><option value="">Todos</option><option value="versao">Versão de documento</option><option value="ata-equipe">Reunião da equipe</option><option value="ata-cliente">Interação com o Instituto</option><option value="sprint">Início de sprint</option><option value="marco">Marco da disciplina</option></select>
+<div class="hist-filtros__grade">
+<label>Sprint<select data-campo="sprint"><option value="">Todos</option><option value="concepcao">Concepção</option><option value="sprint-1">Sprint 1</option><option value="sprint-2">Sprint 2</option><option value="sprint-3">Sprint 3</option><option value="sprint-4">Sprint 4</option><option value="apos-a-sprint-4">Após a Sprint 4</option></select></label>
+<label>Unidade<select data-campo="unidade"><option value="">Todos</option><option value="unidade-1">Unidade 1</option><option value="unidade-2">Unidade 2</option><option value="unidade-3">Unidade 3</option><option value="unidade-4">Unidade 4</option></select></label>
+<label>Documento<select data-campo="documento"><option value="">Todos</option><option value="1-cenario-atual-do-cliente-e-do-negocio">1. Cenário atual do cliente e do negócio</option><option value="10-backlog-de-produto">10. Backlog de produto</option><option value="11-licoes-aprendidas-unidade-1">11. Lições aprendidas — Unidade 1</option><option value="11-licoes-aprendidas-unidade-2">11. Lições aprendidas — Unidade 2</option><option value="12-referencias-bibliograficas">12. Referências bibliográficas</option><option value="2-solucao-proposta">2. Solução proposta</option><option value="3-intervencao-social">3. Intervenção social</option><option value="4-estrategias-de-engenharia-de-software">4. Estratégias de engenharia de software</option><option value="5-engenharia-de-requisitos">5. Engenharia de requisitos</option><option value="6-cronograma-e-entregas">6. Cronograma e entregas</option><option value="7-interacao-entre-equipe-e-cliente">7. Interação entre equipe e cliente</option><option value="8-requisitos-de-software">8. Requisitos de Software</option><option value="9-definition-of-ready-e-definition-of-done">9. Definition of Ready e Definition of Done</option><option value="atividade-3-ajuste-e-validacao-da-lista-de-requisitos">Atividade 3: ajuste e validação da lista de requisitos</option><option value="b1-modelo-do-processo-atual-bpmn">B1 · Modelo do processo atual (BPMN)</option><option value="boas-praticas-no-github">Boas práticas no GitHub</option><option value="documento-de-visao-de-produto-e-projeto">Documento de Visão de Produto e Projeto</option><option value="matriz-de-competencias-e-stack">Matriz de competências e stack</option><option value="processo-e-ritos-scrumxp">Processo e ritos (ScrumXP)</option><option value="registro-das-dailies">Registro das dailies</option><option value="sintese-de-entregas-unidade-2">Síntese de Entregas — Unidade 2</option></select></label>
+<label>Requisito ou história<select data-campo="codigo"><option value="">Todos</option><option value="hu-01">HU-01</option><option value="hu-01b">HU-01b</option><option value="hu-02a">HU-02a</option><option value="hu-03">HU-03</option><option value="hu-03a">HU-03a</option><option value="hu-05a">HU-05a</option><option value="hu-07">HU-07</option><option value="hu-07b">HU-07b</option><option value="hu-07c">HU-07c</option><option value="hu-07d">HU-07d</option><option value="hu-14">HU-14</option><option value="hu-15">HU-15</option><option value="rf01">RF01</option><option value="rf02">RF02</option><option value="rf04">RF04</option><option value="rf06">RF06</option><option value="rf08">RF08</option><option value="rf09">RF09</option><option value="rf10">RF10</option><option value="rf11">RF11</option><option value="rf15">RF15</option><option value="rf16">RF16</option><option value="rf17">RF17</option><option value="rf19">RF19</option><option value="rf20">RF20</option><option value="rf21">RF21</option><option value="rf22">RF22</option><option value="rf27">RF27</option><option value="rf29">RF29</option><option value="rf31">RF31</option><option value="rf33">RF33</option><option value="rf34">RF34</option><option value="rf35">RF35</option><option value="rf36">RF36</option><option value="rf37">RF37</option><option value="rf38">RF38</option><option value="rf39">RF39</option><option value="rf40">RF40</option><option value="rf41">RF41</option><option value="rf42">RF42</option><option value="rf43">RF43</option><option value="rf44">RF44</option><option value="rf45">RF45</option><option value="rf46">RF46</option><option value="rnf01">RNF01</option><option value="rnf02">RNF02</option><option value="rnf03">RNF03</option><option value="rnf04">RNF04</option><option value="rnf05">RNF05</option><option value="rnf08">RNF08</option><option value="rnf11">RNF11</option><option value="rnf13">RNF13</option><option value="rnf15">RNF15</option><option value="rnf16">RNF16</option><option value="rnf17">RNF17</option><option value="rnf18">RNF18</option><option value="rnf19">RNF19</option><option value="rnf20">RNF20</option></select></label>
+<label>Autor<select data-campo="autor"><option value="">Todos</option><option value="caio-flavio">Caio Flávio</option><option value="caio-martins">Caio Martins</option><option value="daniel-batista">Daniel Batista</option><option value="equipe-cybersetor">Equipe CyberSetor</option><option value="lucas-leal">Lucas Leal</option><option value="maria-eduarda-marques">Maria Eduarda Marques</option><option value="rodrigo-henrique">Rodrigo Henrique</option><option value="vinicius-vieira">Vinicius Vieira</option></select></label>
+</div>
+<div class="hist-filtros__rodape">
+<p class="hist-filtros__status" data-status aria-live="polite">174 registros.</p>
+<button type="button" data-limpar>Limpar filtros</button>
+</div></div>
+
+<div class="hist-linha" id="hist-linha">
+<section class="hist-grupo" id="apos-a-sprint-4">
+<h3 class="hist-grupo__titulo" id="proximos-marcos">Próximos marcos<a class="headerlink" href="#proximos-marcos" title="Permanent link">&para;</a></h3>
+<article class="hist-item hist-item--marco" data-autor="" data-codigo="" data-documento="" data-sprint="apos-a-sprint-4" data-tipo="marco" data-unidade="unidade-4">
+<p class="hist-item__meta"><time datetime="2026-12-01">01/12/2026</time> <span class="hist-chip hist-chip--marco">Marco da disciplina</span> <span class="hist-chip">Previsto</span></p>
+<p><strong>Unidade 4</strong></p>
+</article>
+<article class="hist-item hist-item--marco" data-autor="" data-codigo="" data-documento="" data-sprint="apos-a-sprint-4" data-tipo="marco" data-unidade="unidade-4">
+<p class="hist-item__meta"><time datetime="2026-11-24">24/11/2026</time> <span class="hist-chip hist-chip--marco">Marco da disciplina</span> <span class="hist-chip">Previsto</span></p>
+<p><strong>Questionário de avaliação geral</strong></p>
+</article>
+<article class="hist-item hist-item--marco" data-autor="" data-codigo="" data-documento="" data-sprint="apos-a-sprint-4" data-tipo="marco" data-unidade="unidade-3">
+<p class="hist-item__meta"><time datetime="2026-11-17">17/11/2026</time> <span class="hist-chip hist-chip--marco">Marco da disciplina</span> <span class="hist-chip">Previsto</span></p>
+<p><strong>Unidade 3</strong></p>
+</article>
+</section>
+<section class="hist-grupo" id="sprint-4">
+<h3 class="hist-grupo__titulo" id="sprint-4_1">Sprint 4<a class="headerlink" href="#sprint-4_1" title="Permanent link">&para;</a></h3>
+<article class="hist-item hist-item--versao" data-autor="vinicius-vieira" data-codigo="" data-documento="boas-praticas-no-github" data-sprint="sprint-4" data-tipo="versao" data-unidade="unidade-3">
+<p class="hist-item__meta"><time datetime="2026-11-03">03/11/2026</time> <span class="hist-chip hist-chip--versao">Versão de documento</span></p>
+<p><strong><a href="../boas-praticas-github/">Boas práticas no GitHub · versão 2.3</a></strong></p>
+<p>Página Histórico e evolução gerada no build a partir das tabelas de versões, do índice de atas e dos planos de sprint; selos de situação dos requisitos e das histórias lidos do quadro</p>
+<p class="hist-item__rodape">Vinicius Vieira</p>
+</article>
+<article class="hist-item hist-item--versao" data-autor="vinicius-vieira" data-codigo="hu-07b hu-07c" data-documento="10-backlog-de-produto" data-sprint="sprint-4" data-tipo="versao" data-unidade="unidade-3">
+<p class="hist-item__meta"><time datetime="2026-11-03">03/11/2026</time> <span class="hist-chip hist-chip--versao">Versão de documento</span></p>
+<p><strong><a href="../../requisitos/10-backlog/">10. Backlog de produto · versão 2.6</a></strong></p>
+<p>Opções de lista de espera e de confirmação automática na configuração da inscrição (CA-07b.1); confirmação pelo coordenador, prioridade de quem espera, cancelamento a pedido e nova inscrição de quem cancelou na HU-07c (CA-07c.3 a CA-07c.6), propostos 🔧 até a validação com o Instituto em 05/11/2026</p>
+<p class="hist-item__rodape">Vinicius Vieira · <span class="hist-codigo">HU-07b</span> <span class="hist-codigo">HU-07c</span></p>
+</article>
+<article class="hist-item hist-item--versao" data-autor="vinicius-vieira" data-codigo="rf15" data-documento="8-requisitos-de-software" data-sprint="sprint-4" data-tipo="versao" data-unidade="unidade-3">
+<p class="hist-item__meta"><time datetime="2026-11-03">03/11/2026</time> <span class="hist-chip hist-chip--versao">Versão de documento</span></p>
+<p><strong><a href="../../requisitos/8-requisitos/">8. Requisitos de Software · versão 2.12</a></strong></p>
+<p>Lista de espera do RF15 condicionada à ativação na inscrição, valor inicial para a validação com o Instituto em 05/11</p>
+<p class="hist-item__rodape">Vinicius Vieira · <span class="hist-codigo">RF15</span></p>
+</article>
+<article class="hist-item hist-item--versao" data-autor="vinicius-vieira" data-codigo="" data-documento="documento-de-visao-de-produto-e-projeto" data-sprint="sprint-4" data-tipo="versao" data-unidade="unidade-3">
+<p class="hist-item__meta"><time datetime="2026-11-03">03/11/2026</time> <span class="hist-chip hist-chip--versao">Versão de documento</span></p>
+<p><strong><a href="../../visao/">Documento de Visão de Produto e Projeto · versão 1.11</a></strong></p>
+<p>Remissão para a página Histórico e evolução, que reúne as versões do documento e de cada seção com as reuniões, as sprints e os marcos da disciplina</p>
+<p class="hist-item__rodape">Vinicius Vieira</p>
+</article>
+<article class="hist-item hist-item--versao" data-autor="vinicius-vieira" data-codigo="rf46" data-documento="8-requisitos-de-software" data-sprint="sprint-4" data-tipo="versao" data-unidade="unidade-3">
+<p class="hist-item__meta"><time datetime="2026-11-02">02/11/2026</time> <span class="hist-chip hist-chip--versao">Versão de documento</span></p>
+<p><strong><a href="../../requisitos/8-requisitos/">8. Requisitos de Software · versão 2.11</a></strong></p>
+<p>Comportamento padrão da apresentação da inscrição (RF46) entre os pontos em aberto, para a validação com o Instituto em 05/11</p>
+<p class="hist-item__rodape">Vinicius Vieira · <span class="hist-codigo">RF46</span></p>
+</article>
+<article class="hist-item hist-item--versao" data-autor="vinicius-vieira" data-codigo="hu-07d rf46 hu-07" data-documento="10-backlog-de-produto" data-sprint="sprint-4" data-tipo="versao" data-unidade="unidade-3">
+<p class="hist-item__meta"><time datetime="2026-10-30">30/10/2026</time> <span class="hist-chip hist-chip--versao">Versão de documento</span></p>
+<p><strong><a href="../../requisitos/10-backlog/">10. Backlog de produto · versão 2.5</a></strong></p>
+<p>HU-07d (apresentação da inscrição, RF46) no backlog geral, com valor herdado da HU-07 e esforço técnico propostos 🔧 até a validação com o Instituto em 05/11/2026</p>
+<p class="hist-item__rodape">Vinicius Vieira · <span class="hist-codigo">HU-07d</span> <span class="hist-codigo">RF46</span> <span class="hist-codigo">HU-07</span></p>
+</article>
+<article class="hist-item hist-item--versao" data-autor="vinicius-vieira" data-codigo="rf46 rf11" data-documento="8-requisitos-de-software" data-sprint="sprint-4" data-tipo="versao" data-unidade="unidade-3">
+<p class="hist-item__meta"><time datetime="2026-10-30">30/10/2026</time> <span class="hist-chip hist-chip--versao">Versão de documento</span></p>
+<p><strong><a href="../../requisitos/8-requisitos/">8. Requisitos de Software · versão 2.10</a></strong></p>
+<p>Apresentação da inscrição (RF46), com texto, prazo com hora opcional e WhatsApp do Instituto, a partir do checkpoint com o Instituto em 29/10; RF11 passa a exibir a data, o horário e o local da atividade e a apresentação</p>
+<p class="hist-item__rodape">Vinicius Vieira · <span class="hist-codigo">RF46</span> <span class="hist-codigo">RF11</span></p>
+</article>
+<article class="hist-item hist-item--ata-cliente" data-autor="" data-codigo="" data-documento="" data-sprint="sprint-4" data-tipo="ata-cliente" data-unidade="unidade-3">
+<p class="hist-item__meta"><time datetime="2026-10-29">29/10/2026</time> <span class="hist-chip hist-chip--ata-cliente">Interação com o Instituto</span></p>
+<p><strong>Instituto No Setor · Videoconferência</strong></p>
+<p>Checkpoint com demonstração na homologação para Maria Clara Novaes e Maria Eduarda (Duda — Núcleo Pedagógico): cadastros de participantes mantidos, cadastro já existente identificado na nova inscrição, avisos por e-mail, campos personalizados no formulário e acesso administrativo estendido; ata em conferência pelo Instituto</p>
+</article>
+<article class="hist-item hist-item--ata-equipe" data-autor="" data-codigo="" data-documento="" data-sprint="sprint-4" data-tipo="ata-equipe" data-unidade="unidade-3">
+<p class="hist-item__meta"><time datetime="2026-10-27">27/10/2026</time> <span class="hist-chip hist-chip--ata-equipe">Reunião da equipe</span></p>
+<p><strong><a href="../atas/2026-10-27-reuniao-equipe/">Alinhamento técnico e preparação do checkpoint</a></strong></p>
+<p>Dupla registrada em cada história, com os pull requests; dados fictícios e contas de teste na homologação; checkpoint online em 29/10; uso estruturado de assistentes de IA</p>
+</article>
+<article class="hist-item hist-item--versao" data-autor="vinicius-vieira" data-codigo="" data-documento="atividade-3-ajuste-e-validacao-da-lista-de-requisitos" data-sprint="sprint-4" data-tipo="versao" data-unidade="unidade-3">
+<p class="hist-item__meta"><time datetime="2026-10-26">26/10/2026</time> <span class="hist-chip hist-chip--versao">Versão de documento</span></p>
+<p><strong><a href="../../entregas/atividade-3/">Atividade 3: ajuste e validação da lista de requisitos · versão 1.1</a></strong></p>
+<p>Situação de cada ajuste conferida contra a versão 2.9 da seção 8: aplicado, com o lugar, ou aceito e não aplicado</p>
+<p class="hist-item__rodape">Vinicius Vieira</p>
+</article>
+<article class="hist-item hist-item--versao" data-autor="vinicius-vieira" data-codigo="" data-documento="sintese-de-entregas-unidade-2" data-sprint="sprint-4" data-tipo="versao" data-unidade="unidade-3">
+<p class="hist-item__meta"><time datetime="2026-10-26">26/10/2026</time> <span class="hist-chip hist-chip--versao">Versão de documento</span></p>
+<p><strong><a href="../../entregas/unidade-2/">Síntese de Entregas — Unidade 2 · versão 2.1</a></strong></p>
+<p>Situação da validação: MVP confirmado em 08/10 pelo núcleo pedagógico, com o alcance da validação na 10.2.8, pontos em aberto e valores iniciais, atas em conferência; página como registro da entrega de 13/10; histórias da entrega remetidas à correspondência da seção 10.2.2</p>
+<p class="hist-item__rodape">Vinicius Vieira</p>
+</article>
+<article class="hist-item hist-item--versao" data-autor="vinicius-vieira" data-codigo="" data-documento="boas-praticas-no-github" data-sprint="sprint-4" data-tipo="versao" data-unidade="unidade-3">
+<p class="hist-item__meta"><time datetime="2026-10-26">26/10/2026</time> <span class="hist-chip hist-chip--versao">Versão de documento</span></p>
+<p><strong><a href="../boas-praticas-github/">Boas práticas no GitHub · versão 2.2</a></strong></p>
+<p>A <code>web-develop</code> publica a homologação do front; revisão por integrante de outra dupla ou pelo integrante independente</p>
+<p class="hist-item__rodape">Vinicius Vieira</p>
+</article>
+<article class="hist-item hist-item--versao" data-autor="vinicius-vieira" data-codigo="" data-documento="matriz-de-competencias-e-stack" data-sprint="sprint-4" data-tipo="versao" data-unidade="unidade-3">
+<p class="hist-item__meta"><time datetime="2026-10-26">26/10/2026</time> <span class="hist-chip hist-chip--versao">Versão de documento</span></p>
+<p><strong><a href="../matriz-competencias/">Matriz de competências e stack · versão 1.3</a></strong></p>
+<p>Dojos D1 e D2 com as entregas concluídas; testes com Vitest; ferramentas já exercitadas no código e as que ainda não foram; trabalho em duplas no lugar da programação em pares contínua; Dexie e operação sem conexão com o registro sem conexão; concentração do conhecimento como lacuna que ainda afeta a construção</p>
+<p class="hist-item__rodape">Vinicius Vieira</p>
+</article>
+<article class="hist-item hist-item--versao" data-autor="vinicius-vieira" data-codigo="" data-documento="processo-e-ritos-scrumxp" data-sprint="sprint-4" data-tipo="versao" data-unidade="unidade-3">
+<p class="hist-item__meta"><time datetime="2026-10-26">26/10/2026</time> <span class="hist-chip hist-chip--versao">Versão de documento</span></p>
+<p><strong><a href="../processo-scrumxp/">Processo e ritos (ScrumXP) · versão 1.6</a></strong></p>
+<p>Incremento como a versão integrada da API e do front publicada na homologação; programação em pares descrita como é aplicada</p>
+<p class="hist-item__rodape">Vinicius Vieira</p>
+</article>
+<article class="hist-item hist-item--versao" data-autor="vinicius-vieira" data-codigo="rnf03" data-documento="12-referencias-bibliograficas" data-sprint="sprint-4" data-tipo="versao" data-unidade="unidade-3">
+<p class="hist-item__meta"><time datetime="2026-10-26">26/10/2026</time> <span class="hist-chip hist-chip--versao">Versão de documento</span></p>
+<p><strong><a href="../../referencias/">12. Referências bibliográficas · versão 1.3</a></strong></p>
+<p>Inclusão do Decreto nº 8.726/2016 e do Decreto distrital nº 37.843/2016, citados na regra de apuração do resultado das metas (seção 8.7), e da NIST SP 800-52 Rev. 2, citada na segurança das comunicações (RNF03)</p>
+<p class="hist-item__rodape">Vinicius Vieira · <span class="hist-codigo">RNF03</span></p>
+</article>
+<article class="hist-item hist-item--versao" data-autor="vinicius-vieira" data-codigo="hu-05a rf43 hu-01b hu-02a hu-03a rf44 rf45 rnf04 rnf15 rnf19 rnf20 hu-14 rnf05" data-documento="10-backlog-de-produto" data-sprint="sprint-4" data-tipo="versao" data-unidade="unidade-3">
+<p class="hist-item__meta"><time datetime="2026-10-26">26/10/2026</time> <span class="hist-chip hist-chip--versao">Versão de documento</span></p>
+<p><strong><a href="../../requisitos/10-backlog/">10. Backlog de produto · versão 2.4</a></strong></p>
+<p>Resultado alcançado da meta no relatório (CA-05a.1, CA-05a.6; RF43 no MVP); parâmetro planejado na condição de rascunho da meta quantitativa (CA-01b.3); período da meta dentro da execução do projeto (CA-01b.4); justificativa para reabrir meta concluída (CA-02a.3); dados da atividade (CA-03a.3); comparativo das metas repactuadas (RF44) e orientação de enquadramento (RF45) como requisitos próprios; controle de acesso por perfil (RNF04) e usabilidade das telas (RNF15) entre os requisitos de todo o produto, fora das linhas das histórias; estado vazio e recusas próprias nos critérios de cada história com tela; origem e conferência do resultado alcançado (10.2.6); gargalos atendidos pelo MVP e pelos incrementos (10.2.6); requisitos não funcionais das histórias conforme a matriz 8.4.2; portabilidade dos dados e eficiência do registro de presença entre os evolutivos (RNF19, RNF20); alcance da validação na 10.2.8: MVP aprovado pelo núcleo pedagógico; relatório e planilha aguardam a área administrativo-financeira; hipótese do primeiro recorte e ordem de contenção (10.2.6); valor herdado das derivadas com resultado diferente marcado como inicial (10.2.2); requisitos associados exigíveis na conclusão da história (10.2.7); edição de meta fora da nova vigência (CA-14.5); minimização de dados no relatório e na correção a pedido do titular (RNF05); registro de 28/09 sem a marca de minuto da gravação (10.2.8)</p>
+<p class="hist-item__rodape">Vinicius Vieira · <span class="hist-codigo">HU-05a</span> <span class="hist-codigo">RF43</span> <span class="hist-codigo">HU-01b</span> <span class="hist-codigo">HU-02a</span> <span class="hist-codigo">HU-03a</span> <span class="hist-codigo">RF44</span> <span class="hist-codigo">RF45</span> <span class="hist-codigo">RNF04</span> <span class="hist-codigo">RNF15</span> <span class="hist-codigo">RNF19</span> <span class="hist-codigo">RNF20</span> <span class="hist-codigo">HU-14</span> <span class="hist-codigo">RNF05</span></p>
+</article>
+<article class="hist-item hist-item--versao" data-autor="vinicius-vieira" data-codigo="rf43 rf04 rf35 rf36 rf44 rf09 rf31 rf45 rf34 rnf03 rnf04 rnf05 rnf08 rnf11 rnf13 rnf18 rnf15 rnf20 rnf19 rf06" data-documento="8-requisitos-de-software" data-sprint="sprint-4" data-tipo="versao" data-unidade="unidade-3">
+<p class="hist-item__meta"><time datetime="2026-10-26">26/10/2026</time> <span class="hist-chip hist-chip--versao">Versão de documento</span></p>
+<p><strong><a href="../../requisitos/8-requisitos/">8. Requisitos de Software · versão 2.9</a></strong></p>
+<p>Resultado alcançado da meta (RF43, RN-14), com percentual calculado na meta quantitativa e classificação do alcance; parâmetro planejado numérico na meta quantitativa (RF04, RN-02); relatório com o resultado alcançado e aviso à direção ou à coordenação responsável (RF35, RF36); meta de marco e comparativo dos aditivos na seção 8.5.3 alinhados ao RN-14 e ao RF44; dados da atividade (RF09); comparativo das metas repactuadas (RF44) separado do versionamento (RF31); orientação de enquadramento (RF45) separada da restrição de acesso às fotos (RF34); carga horária (RN-15); métricas de cifragem e revogação de sessão com a exceção do formulário público (RNF03), de escopo por perfil (RNF04), de texto livre e anexos (RNF05), de conferência dos números do relatório (RNF08), de ambiente e massa de referência (RNF11, RNF13) e de restauração conjunta de banco e arquivos (RNF18); acessibilidade (RNF15) separada da eficiência da chamada (RNF20) e estendida a todas as telas, com os estados de carregamento, vazio e erro; portabilidade dos dados (RNF19); controle de acesso por perfil para todo o produto; regras de negócio citadas nos dois sentidos e gargalos de inscrição e de direitos do titular na matriz; RN-13 ligada ao RF06; encontros da atividade e formulários de inscrição entre os pontos em aberto; minimização de dados estendida à correção a pedido do titular, às justificativas e ao resultado alcançado (RNF05)</p>
+<p class="hist-item__rodape">Vinicius Vieira · <span class="hist-codigo">RF43</span> <span class="hist-codigo">RF04</span> <span class="hist-codigo">RF35</span> <span class="hist-codigo">RF36</span> <span class="hist-codigo">RF44</span> <span class="hist-codigo">RF09</span> <span class="hist-codigo">RF31</span> <span class="hist-codigo">RF45</span> <span class="hist-codigo">RF34</span> <span class="hist-codigo">RNF03</span> <span class="hist-codigo">RNF04</span> <span class="hist-codigo">RNF05</span> <span class="hist-codigo">RNF08</span> <span class="hist-codigo">RNF11</span> <span class="hist-codigo">RNF13</span> <span class="hist-codigo">RNF18</span> <span class="hist-codigo">RNF15</span> <span class="hist-codigo">RNF20</span> <span class="hist-codigo">RNF19</span> <span class="hist-codigo">RF06</span></p>
+</article>
+<article class="hist-item hist-item--versao" data-autor="vinicius-vieira" data-codigo="rnf04 rnf15" data-documento="9-definition-of-ready-e-definition-of-done" data-sprint="sprint-4" data-tipo="versao" data-unidade="unidade-3">
+<p class="hist-item__meta"><time datetime="2026-10-26">26/10/2026</time> <span class="hist-chip hist-chip--versao">Versão de documento</span></p>
+<p><strong><a href="../../requisitos/9-dor-dod/">9. Definition of Ready e Definition of Done · versão 1.4</a></strong></p>
+<p>Item de código atende aos requisitos não funcionais listados na história, conferidos pela métrica; controle de acesso por perfil (RNF04) e usabilidade e acessibilidade (RNF15) entre os requisitos de todo o produto; DoR: o que impede a entrada separado do que admite valor provisório com 🔧; fluxo da tela nos critérios de aceitação no lugar do esboço, com os estados comuns a todas as telas na RNF15; valor herdado e regra com comportamento padrão entre os valores provisórios. DoD: história concluída na versão publicada na homologação, com o percurso executado; item concluído distinto do incremento; validação pendente em "Aguardando"; tratamento do retorno do Instituto; registro de conclusão no quadro do projeto; revisor de outra dupla ou integrante independente; item de código e história com listas próprias; verificação por classe de requisito não funcional</p>
+<p class="hist-item__rodape">Vinicius Vieira · <span class="hist-codigo">RNF04</span> <span class="hist-codigo">RNF15</span></p>
+</article>
+<article class="hist-item hist-item--versao" data-autor="vinicius-vieira" data-codigo="" data-documento="1-cenario-atual-do-cliente-e-do-negocio" data-sprint="sprint-4" data-tipo="versao" data-unidade="unidade-3">
+<p class="hist-item__meta"><time datetime="2026-10-26">26/10/2026</time> <span class="hist-chip hist-chip--versao">Versão de documento</span></p>
+<p><strong><a href="../../visao/1-cenario-atual/">1. Cenário atual do cliente e do negócio · versão 1.8</a></strong></p>
+<p>Conectividade no campo com quedas pontuais (1.3 e 1.5); área administrativo-financeira com a rotina atual fora do sistema e a consulta a consolidados e relatórios, sem dados nominais (1.6 e 1.7); painel da presidência como capacidade candidata sem requisito funcional, sem saldo (1.7); desafios de conectividade, de dados pessoais e de manutenção com remissão às políticas da seção 2.6 (1.5)</p>
+<p class="hist-item__rodape">Vinicius Vieira</p>
+</article>
+<article class="hist-item hist-item--versao" data-autor="vinicius-vieira" data-codigo="rf38 rnf19 rnf18" data-documento="2-solucao-proposta" data-sprint="sprint-4" data-tipo="versao" data-unidade="unidade-3">
+<p class="hist-item__meta"><time datetime="2026-10-26">26/10/2026</time> <span class="hist-chip hist-chip--versao">Versão de documento</span></p>
+<p><strong><a href="../../visao/2-solucao-proposta/">2. Solução proposta · versão 1.6</a></strong></p>
+<p>O que a primeira entrega demonstra (2.1); exportação do projeto em planilha aberta (RF38) e cópia integral de dados e arquivos sob pedido e na transferência (RNF19) na CP8, na 2.5 e na 2.6; interface publicada no Coolify e testes com Vitest, com testes visuais (2.4); registro em campo com quedas pontuais e lançamento posterior até a operação sem conexão (2.6); ensaio de restauração descrito pelo RNF18 (2.6); registro sem conexão e requisitos de campo remetidos à seção 8; administração após a disciplina como questão aberta (2.6); benefícios sem promessa de registro contínuo nem de tempo real (2.7); políticas de operação sem conexão, dados pessoais, cópia de segurança e transferência explicadas uma vez na 2.6, com os requisitos que as verificam, e remetidas na 2.3, na 2.4 e na 2.5; acompanhamento das metas na 2.7 pelo que cada entrega traz</p>
+<p class="hist-item__rodape">Vinicius Vieira · <span class="hist-codigo">RF38</span> <span class="hist-codigo">RNF19</span> <span class="hist-codigo">RNF18</span></p>
+</article>
+<article class="hist-item hist-item--versao" data-autor="vinicius-vieira" data-codigo="" data-documento="3-intervencao-social" data-sprint="sprint-4" data-tipo="versao" data-unidade="unidade-3">
+<p class="hist-item__meta"><time datetime="2026-10-26">26/10/2026</time> <span class="hist-chip hist-chip--versao">Versão de documento</span></p>
+<p><strong><a href="../../visao/3-intervencao-social/">3. Intervenção social · versão 1.5</a></strong></p>
+<p>Conectividade no campo com quedas pontuais e lançamento posterior com justificativa até a operação sem conexão (3.3.1 a 3.3.3); rastreabilidade das mitigações com as histórias da seção 10.1; riscos 3.3.1 a 3.3.3 em termos do uso, com o conflito de sincronização descrito pelo resultado; identificação nominal ligada à prestação de contas nominal ao concedente; mitigações dos riscos 3.3.1 a 3.3.4 e visibilidade por perfil (3.5) com remissão às políticas da seção 2.6 e aos requisitos; autorização de uso de imagem separada da prova de execução (3.3.4)</p>
+<p class="hist-item__rodape">Vinicius Vieira</p>
+</article>
+<article class="hist-item hist-item--versao" data-autor="vinicius-vieira" data-codigo="" data-documento="4-estrategias-de-engenharia-de-software" data-sprint="sprint-4" data-tipo="versao" data-unidade="unidade-3">
+<p class="hist-item__meta"><time datetime="2026-10-26">26/10/2026</time> <span class="hist-chip hist-chip--versao">Versão de documento</span></p>
+<p><strong><a href="../../visao/4-estrategia-esw/">4. Estratégias de engenharia de software · versão 1.8</a></strong></p>
+<p>Programação em pares por duplas de épico, com o detalhe na página de processo; MVP centrado em parcerias, metas e prestação de contas, com a presença nos incrementos; refatoração dentro da história, coberta pelos testes; documentação de requisitos do ScrumXP com o fluxo da tela e o protótipo evolutivo na homologação; justificativa sem superlativos; quadro comparativo pelo que cada processo exige da equipe; síntese e alternativas descartadas pelos fatores do contexto</p>
+<p class="hist-item__rodape">Vinicius Vieira</p>
+</article>
+<article class="hist-item hist-item--versao" data-autor="vinicius-vieira" data-codigo="" data-documento="5-engenharia-de-requisitos" data-sprint="sprint-4" data-tipo="versao" data-unidade="unidade-3">
+<p class="hist-item__meta"><time datetime="2026-10-26">26/10/2026</time> <span class="hist-chip hist-chip--versao">Versão de documento</span></p>
+<p><strong><a href="../../visao/5-engenharia-requisitos/">5. Engenharia de requisitos · versão 1.6</a></strong></p>
+<p>Observação direta das instalações, dos processos administrativos e das planilhas, com a observação da chamada prevista para o incremento de presença; caso de triangulação; prototipação evolutiva, com a homologação como protótipo avaliado pelo Instituto e os testes visuais como verificação da tela; termos de domínio definidos na seção 8, sem glossário à parte; requisitos que resultaram da observação</p>
+<p class="hist-item__rodape">Vinicius Vieira</p>
+</article>
+<article class="hist-item hist-item--versao" data-autor="vinicius-vieira" data-codigo="rf45 rf38 rnf19 rf22 rf27 rf21" data-documento="6-cronograma-e-entregas" data-sprint="sprint-4" data-tipo="versao" data-unidade="unidade-3">
+<p class="hist-item__meta"><time datetime="2026-10-26">26/10/2026</time> <span class="hist-chip hist-chip--versao">Versão de documento</span></p>
+<p><strong><a href="../../visao/6-cronograma/">6. Cronograma e entregas · versão 1.8</a></strong></p>
+<p>Prestação de contas com o resultado alcançado; orientação de enquadramento (RF45) no incremento de evidências; teste de restauração do banco e dos arquivos juntos; Sprint 3 com a meta do seu plano; histórias previstas por sprint e ligação aos planos das sprints; características da Sprint 4 e da Sprint 5 pelos requisitos que entram; alcance do MVP remetido à seção 10.2.6; exportação do projeto (RF38) e cópia integral dos dados (RNF19) na transferência, com o que avança e o que depende de responsável nomeado pelo Instituto; CP5 na Sprint 4 com RF22 a RF27, sem o histórico de participação (RF21); manual técnico de operação na transferência; políticas de cópia de segurança e de transferência remetidas à seção 2.6, ficando na 6.4 as atividades; checkpoint de 29/10 pelas histórias publicadas até a véspera</p>
+<p class="hist-item__rodape">Vinicius Vieira · <span class="hist-codigo">RF45</span> <span class="hist-codigo">RF38</span> <span class="hist-codigo">RNF19</span> <span class="hist-codigo">RF22</span> <span class="hist-codigo">RF27</span> <span class="hist-codigo">RF21</span></p>
+</article>
+<article class="hist-item hist-item--versao" data-autor="vinicius-vieira" data-codigo="" data-documento="7-interacao-entre-equipe-e-cliente" data-sprint="sprint-4" data-tipo="versao" data-unidade="unidade-3">
+<p class="hist-item__meta"><time datetime="2026-10-26">26/10/2026</time> <span class="hist-chip hist-chip--versao">Versão de documento</span></p>
+<p><strong><a href="../../visao/7-equipe-e-cliente/">7. Interação entre equipe e cliente · versão 1.11</a></strong></p>
+<p>Interações de 21/09, 28/09 e 08/10 com o Instituto; alinhamento técnico de 15/10 e reunião de 22/10, remarcada para 29/10, registrados como encontros que não ocorreram; ausência registrada sem exigência de motivo; atas de 08/09 e 15/09 ligadas na tabela; trabalho em duplas com revisão por outra dupla (7.1); validação da interface pela demonstração em homologação (7.3); termos do Instituto nas notas de domínio da seção 8</p>
+<p class="hist-item__rodape">Vinicius Vieira</p>
+</article>
+<article class="hist-item hist-item--versao" data-autor="vinicius-vieira" data-codigo="rf44 rf45 rnf20" data-documento="documento-de-visao-de-produto-e-projeto" data-sprint="sprint-4" data-tipo="versao" data-unidade="unidade-3">
+<p class="hist-item__meta"><time datetime="2026-10-26">26/10/2026</time> <span class="hist-chip hist-chip--versao">Versão de documento</span></p>
+<p><strong><a href="../../visao/">Documento de Visão de Produto e Projeto · versão 1.10</a></strong></p>
+<p>Resultado alcançado da meta no MVP e no relatório; portabilidade dos dados no lugar da exportação integral como função; requisitos divididos para verificação (RF44, RF45, RNF20) e métricas dos RNFs com ambiente, massa e restauração conjunta; conectividade com quedas pontuais; papel da área administrativo-financeira no sistema; trabalho em duplas e prototipação evolutiva como aplicados; DoR e DoD com entrada provisória, conclusão na homologação e validação pendente; cronograma com as histórias por sprint; interações de setembro e outubro (seções 1 a 10); políticas de operação sem conexão, dados pessoais, cópia de segurança e transferência explicadas na seção 2.6, com remissão nas seções 1, 3 e 6; usabilidade e estados das telas para todo o produto, com o estado vazio e as recusas de cada história nos critérios; quadro comparativo da seção 4 sem qualificar os processos</p>
+<p class="hist-item__rodape">Vinicius Vieira · <span class="hist-codigo">RF44</span> <span class="hist-codigo">RF45</span> <span class="hist-codigo">RNF20</span></p>
+</article>
+<article class="hist-item hist-item--versao" data-autor="vinicius-vieira" data-codigo="" data-documento="registro-das-dailies" data-sprint="sprint-4" data-tipo="versao" data-unidade="unidade-3">
+<p class="hist-item__meta"><time datetime="2026-10-21">21/10/2026</time> <span class="hist-chip hist-chip--versao">Versão de documento</span></p>
+<p><strong><a href="../dailies/">Registro das dailies · versão 1.2</a></strong></p>
+<p>Adesão da Sprint 3; dailies presenciais às terças e quintas</p>
+<p class="hist-item__rodape">Vinicius Vieira</p>
+</article>
+<article class="hist-item hist-item--versao" data-autor="maria-eduarda-marques" data-codigo="" data-documento="processo-e-ritos-scrumxp" data-sprint="sprint-4" data-tipo="versao" data-unidade="unidade-3">
+<p class="hist-item__meta"><time datetime="2026-10-21">21/10/2026</time> <span class="hist-chip hist-chip--versao">Versão de documento</span></p>
+<p><strong><a href="../processo-scrumxp/">Processo e ritos (ScrumXP) · versão 1.4</a></strong></p>
+<p>Registro dos ritos das Sprints 2 a 4</p>
+<p class="hist-item__rodape">Maria Eduarda Marques</p>
+</article>
+<article class="hist-item hist-item--versao" data-autor="vinicius-vieira" data-codigo="" data-documento="processo-e-ritos-scrumxp" data-sprint="sprint-4" data-tipo="versao" data-unidade="unidade-3">
+<p class="hist-item__meta"><time datetime="2026-10-21">21/10/2026</time> <span class="hist-chip hist-chip--versao">Versão de documento</span></p>
+<p><strong><a href="../processo-scrumxp/">Processo e ritos (ScrumXP) · versão 1.5</a></strong></p>
+<p>Daily presencial às terças e quintas e escrita nos demais dias úteis; ambientes do produto com os endereços de homologação</p>
+<p class="hist-item__rodape">Vinicius Vieira</p>
+</article>
+<article class="hist-item hist-item--versao" data-autor="vinicius-vieira" data-codigo="" data-documento="7-interacao-entre-equipe-e-cliente" data-sprint="sprint-4" data-tipo="versao" data-unidade="unidade-3">
+<p class="hist-item__meta"><time datetime="2026-10-21">21/10/2026</time> <span class="hist-chip hist-chip--versao">Versão de documento</span></p>
+<p><strong><a href="../../visao/7-equipe-e-cliente/">7. Interação entre equipe e cliente · versão 1.10</a></strong></p>
+<p>Daily presencial às terças e quintas e escrita nos demais dias úteis</p>
+<p class="hist-item__rodape">Vinicius Vieira</p>
+</article>
+<article class="hist-item hist-item--versao" data-autor="vinicius-vieira" data-codigo="" data-documento="documento-de-visao-de-produto-e-projeto" data-sprint="sprint-4" data-tipo="versao" data-unidade="unidade-3">
+<p class="hist-item__meta"><time datetime="2026-10-21">21/10/2026</time> <span class="hist-chip hist-chip--versao">Versão de documento</span></p>
+<p><strong><a href="../../visao/">Documento de Visão de Produto e Projeto · versão 1.9</a></strong></p>
+<p>Daily presencial às terças e quintas e escrita nos demais dias úteis (seção 7.2)</p>
+<p class="hist-item__rodape">Vinicius Vieira</p>
+</article>
+<article class="hist-item hist-item--sprint" data-autor="" data-codigo="" data-documento="" data-sprint="sprint-4" data-tipo="sprint" data-unidade="unidade-3">
+<p class="hist-item__meta"><time datetime="2026-10-20">20/10/2026</time> <span class="hist-chip hist-chip--sprint">Início de sprint</span></p>
+<p><strong><a href="../sprints/sprint-4/">Sprint 4</a></strong></p>
+<p>Período de 20/10/2026 a 03/11/2026. Meta: Ao final da Sprint 4, o MVP está completo em homologação: os dois ciclos da seção 10.2.6 — do instrumento ao relatório e da atividade à lista de inscritos — com os direitos do titular, conferidos com o Instituto no checkpoint de 29/10 e na Review de 03/11.</p>
+</article>
+</section>
+<section class="hist-grupo" id="sprint-3">
+<h3 class="hist-grupo__titulo" id="sprint-3_1">Sprint 3<a class="headerlink" href="#sprint-3_1" title="Permanent link">&para;</a></h3>
+<article class="hist-item hist-item--ata-equipe" data-autor="" data-codigo="" data-documento="" data-sprint="sprint-3" data-tipo="ata-equipe" data-unidade="unidade-3">
+<p class="hist-item__meta"><time datetime="2026-10-20">20/10/2026</time> <span class="hist-chip hist-chip--ata-equipe">Reunião da equipe</span></p>
+<p><strong><a href="../atas/2026-10-20-sprint-review-retrospectiva-planning/">Sprint Review e Retrospectiva da Sprint 3 e Sprint Planning da Sprint 4</a></strong></p>
+<p>Meta da Sprint 3 parcialmente atingida; histórias com um ator e um resultado; pull requests de até 1.000 linhas e revisão em até 24 horas; meta da Sprint 4 com o MVP completo em homologação até 03/11</p>
+</article>
+<article class="hist-item hist-item--versao" data-autor="equipe-cybersetor" data-codigo="rf40 rf41 rf42" data-documento="10-backlog-de-produto" data-sprint="sprint-3" data-tipo="versao" data-unidade="unidade-3">
+<p class="hist-item__meta"><time datetime="2026-10-20">20/10/2026</time> <span class="hist-chip hist-chip--versao">Versão de documento</span></p>
+<p><strong><a href="../../requisitos/10-backlog/">10. Backlog de produto · versão 2.3</a></strong></p>
+<p>Histórias derivadas dos requisitos funcionais por regras explícitas: quinze histórias passam a vinte e cinco, cada requisito com uma única história; critérios de aceitação ampliados para cobrir o texto dos requisitos; administração de contas (RF40), cadastro de modalidades (RF41) e configuração do formulário de inscrição (RF42); personas ligadas aos perfis; correspondência entre as histórias validadas e as derivadas; avaliação técnica de RF40 a RF42; requisitos não funcionais de todo o produto na Definition of Done</p>
+<p class="hist-item__rodape">Equipe CyberSetor · <span class="hist-codigo">RF40</span> <span class="hist-codigo">RF41</span> <span class="hist-codigo">RF42</span></p>
+</article>
+<article class="hist-item hist-item--versao" data-autor="equipe-cybersetor" data-codigo="rf09 rf16 rf31 rf22 rf02 rf38 rf40 rf41 rf42 rnf03" data-documento="8-requisitos-de-software" data-sprint="sprint-3" data-tipo="versao" data-unidade="unidade-3">
+<p class="hist-item__meta"><time datetime="2026-10-20">20/10/2026</time> <span class="hist-chip hist-chip--versao">Versão de documento</span></p>
+<p><strong><a href="../../requisitos/8-requisitos/">8. Requisitos de Software · versão 2.8</a></strong></p>
+<p>RF09 com o vínculo da atividade às metas; RF16 com a presença dos inscritos; RF31 e RN-09 com a mudança do período de execução; RF22 por e-mail ou CPF, conforme o formulário; documento formal em PDF ou DOCX (RF02) e planilha em XLSX ou CSV (RF38); administração de contas (RF40), cadastro de modalidades (RF41) e configuração do formulário de inscrição (RF42); matriz dos requisitos funcionais pela história dona e pelos novos critérios; matrizes dos requisitos não funcionais e das regras de negócio completadas; perfil de administração do sistema; dados mínimos da inscrição; métrica da RNF03 com sessão e bloqueio por tentativas; pontos em aberto revistos contra as validações com o Instituto</p>
+<p class="hist-item__rodape">Equipe CyberSetor · <span class="hist-codigo">RF09</span> <span class="hist-codigo">RF16</span> <span class="hist-codigo">RF31</span> <span class="hist-codigo">RF22</span> <span class="hist-codigo">RF02</span> <span class="hist-codigo">RF38</span> <span class="hist-codigo">RF40</span> <span class="hist-codigo">RF41</span> <span class="hist-codigo">RF42</span> <span class="hist-codigo">RNF03</span></p>
+</article>
+<article class="hist-item hist-item--versao" data-autor="equipe-cybersetor" data-codigo="rnf03 rnf16 rnf17" data-documento="9-definition-of-ready-e-definition-of-done" data-sprint="sprint-3" data-tipo="versao" data-unidade="unidade-3">
+<p class="hist-item__meta"><time datetime="2026-10-20">20/10/2026</time> <span class="hist-chip hist-chip--versao">Versão de documento</span></p>
+<p><strong><a href="../../requisitos/9-dor-dod/">9. Definition of Ready e Definition of Done · versão 1.3</a></strong></p>
+<p>Requisitos não funcionais de todo o produto (RNF03, RNF16 e RNF17) como condição de conclusão do item de código</p>
+<p class="hist-item__rodape">Equipe CyberSetor · <span class="hist-codigo">RNF03</span> <span class="hist-codigo">RNF16</span> <span class="hist-codigo">RNF17</span></p>
+</article>
+<article class="hist-item hist-item--versao" data-autor="equipe-cybersetor" data-codigo="" data-documento="6-cronograma-e-entregas" data-sprint="sprint-3" data-tipo="versao" data-unidade="unidade-3">
+<p class="hist-item__meta"><time datetime="2026-10-20">20/10/2026</time> <span class="hist-chip hist-chip--versao">Versão de documento</span></p>
+<p><strong><a href="../../visao/6-cronograma/">6. Cronograma e entregas · versão 1.7</a></strong></p>
+<p>Sprints 4 e 5 alinhadas ao MVP e aos incrementos da seção 10.2.6: MVP concluído na Sprint 4, evidências e presença em campo na Sprint 5; checkpoint de 29/10 até a inscrição; alcance do MVP com as histórias da seção 10.1</p>
+<p class="hist-item__rodape">Equipe CyberSetor</p>
+</article>
+<article class="hist-item hist-item--versao" data-autor="equipe-cybersetor" data-codigo="" data-documento="documento-de-visao-de-produto-e-projeto" data-sprint="sprint-3" data-tipo="versao" data-unidade="unidade-3">
+<p class="hist-item__meta"><time datetime="2026-10-20">20/10/2026</time> <span class="hist-chip hist-chip--versao">Versão de documento</span></p>
+<p><strong><a href="../../visao/">Documento de Visão de Produto e Projeto · versão 1.8</a></strong></p>
+<p>Histórias derivadas dos requisitos funcionais, com uma história dona por requisito; requisitos de contas, modalidades e formulário de inscrição; pontos em aberto revistos contra as validações; MVP concluído na Sprint 4</p>
+<p class="hist-item__rodape">Equipe CyberSetor</p>
+</article>
+<article class="hist-item hist-item--versao" data-autor="maria-eduarda-marques" data-codigo="" data-documento="registro-das-dailies" data-sprint="sprint-3" data-tipo="versao" data-unidade="unidade-3">
+<p class="hist-item__meta"><time datetime="2026-10-19">19/10/2026</time> <span class="hist-chip hist-chip--versao">Versão de documento</span></p>
+<p><strong><a href="../dailies/">Registro das dailies · versão 1.1</a></strong></p>
+<p>Adesão calculada pelo número de integrantes de cada sprint</p>
+<p class="hist-item__rodape">Maria Eduarda Marques</p>
+</article>
+<article class="hist-item hist-item--versao" data-autor="maria-eduarda-marques" data-codigo="" data-documento="processo-e-ritos-scrumxp" data-sprint="sprint-3" data-tipo="versao" data-unidade="unidade-3">
+<p class="hist-item__meta"><time datetime="2026-10-19">19/10/2026</time> <span class="hist-chip hist-chip--versao">Versão de documento</span></p>
+<p><strong><a href="../processo-scrumxp/">Processo e ritos (ScrumXP) · versão 1.3</a></strong></p>
+<p>Equipe atual de cinco integrantes</p>
+<p class="hist-item__rodape">Maria Eduarda Marques</p>
+</article>
+<article class="hist-item hist-item--versao" data-autor="maria-eduarda-marques" data-codigo="hu-03 rf09 rnf02 rnf04 rnf15 rnf16" data-documento="10-backlog-de-produto" data-sprint="sprint-3" data-tipo="versao" data-unidade="unidade-3">
+<p class="hist-item__meta"><time datetime="2026-10-19">19/10/2026</time> <span class="hist-chip hist-chip--versao">Versão de documento</span></p>
+<p><strong><a href="../../requisitos/10-backlog/">10. Backlog de produto · versão 2.2</a></strong></p>
+<p>HU-03: modalidade escolhida entre as cadastradas pelo Instituto, como no RF09 e na validação de 28/09; requisitos não funcionais do cadastro da atividade (RNF02, RNF04, RNF15, RNF16)</p>
+<p class="hist-item__rodape">Maria Eduarda Marques · <span class="hist-codigo">HU-03</span> <span class="hist-codigo">RF09</span> <span class="hist-codigo">RNF02</span> <span class="hist-codigo">RNF04</span> <span class="hist-codigo">RNF15</span> <span class="hist-codigo">RNF16</span></p>
+</article>
+<article class="hist-item hist-item--versao" data-autor="maria-eduarda-marques" data-codigo="rf09 rnf02 rnf04 rnf15" data-documento="8-requisitos-de-software" data-sprint="sprint-3" data-tipo="versao" data-unidade="unidade-3">
+<p class="hist-item__meta"><time datetime="2026-10-19">19/10/2026</time> <span class="hist-chip hist-chip--versao">Versão de documento</span></p>
+<p><strong><a href="../../requisitos/8-requisitos/">8. Requisitos de Software · versão 2.7</a></strong></p>
+<p>Matriz dos requisitos não funcionais: RF09 ligado a RNF02, RNF04 e RNF15</p>
+<p class="hist-item__rodape">Maria Eduarda Marques · <span class="hist-codigo">RF09</span> <span class="hist-codigo">RNF02</span> <span class="hist-codigo">RNF04</span> <span class="hist-codigo">RNF15</span></p>
+</article>
+<article class="hist-item hist-item--versao" data-autor="maria-eduarda-marques" data-codigo="" data-documento="2-solucao-proposta" data-sprint="sprint-3" data-tipo="versao" data-unidade="unidade-3">
+<p class="hist-item__meta"><time datetime="2026-10-19">19/10/2026</time> <span class="hist-chip hist-chip--versao">Versão de documento</span></p>
+<p><strong><a href="../../visao/2-solucao-proposta/">2. Solução proposta · versão 1.5</a></strong></p>
+<p>Equipe atual de cinco integrantes</p>
+<p class="hist-item__rodape">Maria Eduarda Marques</p>
+</article>
+<article class="hist-item hist-item--versao" data-autor="maria-eduarda-marques" data-codigo="" data-documento="4-estrategias-de-engenharia-de-software" data-sprint="sprint-3" data-tipo="versao" data-unidade="unidade-3">
+<p class="hist-item__meta"><time datetime="2026-10-19">19/10/2026</time> <span class="hist-chip hist-chip--versao">Versão de documento</span></p>
+<p><strong><a href="../../visao/4-estrategia-esw/">4. Estratégias de engenharia de software · versão 1.7</a></strong></p>
+<p>Equipe atual de cinco integrantes</p>
+<p class="hist-item__rodape">Maria Eduarda Marques</p>
+</article>
+<article class="hist-item hist-item--versao" data-autor="maria-eduarda-marques" data-codigo="" data-documento="6-cronograma-e-entregas" data-sprint="sprint-3" data-tipo="versao" data-unidade="unidade-3">
+<p class="hist-item__meta"><time datetime="2026-10-19">19/10/2026</time> <span class="hist-chip hist-chip--versao">Versão de documento</span></p>
+<p><strong><a href="../../visao/6-cronograma/">6. Cronograma e entregas · versão 1.6</a></strong></p>
+<p>Equipe atual de cinco integrantes</p>
+<p class="hist-item__rodape">Maria Eduarda Marques</p>
+</article>
+<article class="hist-item hist-item--versao" data-autor="maria-eduarda-marques" data-codigo="" data-documento="7-interacao-entre-equipe-e-cliente" data-sprint="sprint-3" data-tipo="versao" data-unidade="unidade-3">
+<p class="hist-item__meta"><time datetime="2026-10-19">19/10/2026</time> <span class="hist-chip hist-chip--versao">Versão de documento</span></p>
+<p><strong><a href="../../visao/7-equipe-e-cliente/">7. Interação entre equipe e cliente · versão 1.9</a></strong></p>
+<p>Composição da equipe atualizada para cinco integrantes</p>
+<p class="hist-item__rodape">Maria Eduarda Marques</p>
+</article>
+<article class="hist-item hist-item--versao" data-autor="caio-martins" data-codigo="" data-documento="12-referencias-bibliograficas" data-sprint="sprint-3" data-tipo="versao" data-unidade="unidade-3">
+<p class="hist-item__meta"><time datetime="2026-10-15">15/10/2026</time> <span class="hist-chip hist-chip--versao">Versão de documento</span></p>
+<p><strong><a href="../../referencias/">12. Referências bibliográficas · versão 1.2</a></strong></p>
+<p>Inclusão das fontes do Manifesto Ágil e Extreme Programming citadas na seção 4</p>
+<p class="hist-item__rodape">Caio Martins</p>
+</article>
+<article class="hist-item hist-item--versao" data-autor="rodrigo-henrique" data-codigo="" data-documento="sintese-de-entregas-unidade-2" data-sprint="sprint-3" data-tipo="versao" data-unidade="unidade-2">
+<p class="hist-item__meta"><time datetime="2026-10-13">13/10/2026</time> <span class="hist-chip hist-chip--versao">Versão de documento</span></p>
+<p><strong><a href="../../entregas/unidade-2/">Síntese de Entregas — Unidade 2 · versão 2.0</a></strong></p>
+<p>Incorporação do vídeo de apresentação</p>
+<p class="hist-item__rodape">Rodrigo Henrique</p>
+</article>
+<article class="hist-item hist-item--versao" data-autor="caio-martins" data-codigo="" data-documento="4-estrategias-de-engenharia-de-software" data-sprint="sprint-3" data-tipo="versao" data-unidade="unidade-2">
+<p class="hist-item__meta"><time datetime="2026-10-13">13/10/2026</time> <span class="hist-chip hist-chip--versao">Versão de documento</span></p>
+<p><strong><a href="../../visao/4-estrategia-esw/">4. Estratégias de engenharia de software · versão 1.6</a></strong></p>
+<p>Revisão conceitual: neutralidade no quadro comparativo, OpenUP iterativo, Scrum como framework, ScrumXP como processo adaptado e alinhamento de cadências</p>
+<p class="hist-item__rodape">Caio Martins</p>
+</article>
+<article class="hist-item hist-item--versao" data-autor="caio-martins" data-codigo="" data-documento="6-cronograma-e-entregas" data-sprint="sprint-3" data-tipo="versao" data-unidade="unidade-2">
+<p class="hist-item__meta"><time datetime="2026-10-13">13/10/2026</time> <span class="hist-chip hist-chip--versao">Versão de documento</span></p>
+<p><strong><a href="../../visao/6-cronograma/">6. Cronograma e entregas · versão 1.5</a></strong></p>
+<p>Alcance do MVP e incrementos posteriores alinhados à seção 10.2.6</p>
+<p class="hist-item__rodape">Caio Martins</p>
+</article>
+<article class="hist-item hist-item--marco" data-autor="" data-codigo="" data-documento="" data-sprint="sprint-3" data-tipo="marco" data-unidade="unidade-2">
+<p class="hist-item__meta"><time datetime="2026-10-13">13/10/2026</time> <span class="hist-chip hist-chip--marco">Marco da disciplina</span></p>
+<p><strong>Unidade 2</strong></p>
+</article>
+<article class="hist-item hist-item--versao" data-autor="rodrigo-henrique" data-codigo="rf39 rnf18" data-documento="sintese-de-entregas-unidade-2" data-sprint="sprint-3" data-tipo="versao" data-unidade="unidade-2">
+<p class="hist-item__meta"><time datetime="2026-10-08">08/10/2026</time> <span class="hist-chip hist-chip--versao">Versão de documento</span></p>
+<p><strong><a href="../../entregas/unidade-2/">Síntese de Entregas — Unidade 2 · versão 1.4</a></strong></p>
+<p>Atualização para catálogo RF01–RF39 e RNF01–RNF18, checklist concluído, validação integral com o Instituto e estrutura de apresentação em vídeo</p>
+<p class="hist-item__rodape">Rodrigo Henrique · <span class="hist-codigo">RF39</span> <span class="hist-codigo">RNF18</span></p>
+</article>
+<article class="hist-item hist-item--ata-cliente" data-autor="" data-codigo="" data-documento="" data-sprint="sprint-3" data-tipo="ata-cliente" data-unidade="unidade-2">
+<p class="hist-item__meta"><time datetime="2026-10-08">08/10/2026</time> <span class="hist-chip hist-chip--ata-cliente">Interação com o Instituto</span></p>
+<p><strong><a href="../atas/2026-10-08-validacao-mvp-instituto/">Instituto No Setor · Videoconferência</a></strong></p>
+<p>Validação do MVP com Maria Eduarda (Duda — Núcleo Pedagógico): parcerias e metas, aditivos e auditoria, inscrições, direitos do titular e prestação de contas; evidências fotográficas no segundo incremento; sprints de duas semanas e alinhamentos técnicos às quintas-feiras</p>
+</article>
+<article class="hist-item hist-item--ata-equipe" data-autor="" data-codigo="" data-documento="" data-sprint="sprint-3" data-tipo="ata-equipe" data-unidade="unidade-2">
+<p class="hist-item__meta"><time datetime="2026-10-07">07/10/2026</time> <span class="hist-chip hist-chip--ata-equipe">Reunião da equipe</span></p>
+<p><strong><a href="../atas/2026-10-07-sprint-planning/">Sprint Planning da Sprint 3</a></strong></p>
+<p>Meta da Sprint 3 com a Unidade 2 publicada antes de 13/10, MVP confirmado e base técnica pronta; branch de homologação da documentação; novas duplas, com dois épicos cada</p>
+</article>
+<article class="hist-item hist-item--versao" data-autor="maria-eduarda-marques" data-codigo="" data-documento="boas-praticas-no-github" data-sprint="sprint-3" data-tipo="versao" data-unidade="unidade-2">
+<p class="hist-item__meta"><time datetime="2026-10-07">07/10/2026</time> <span class="hist-chip hist-chip--versao">Versão de documento</span></p>
+<p><strong><a href="../boas-praticas-github/">Boas práticas no GitHub · versão 2.1</a></strong></p>
+<p>Título de commit sem acentos; <em>rebase</em> para conflitos, sem <em>squash</em>; prazo de 24 horas para revisão de pull request</p>
+<p class="hist-item__rodape">Maria Eduarda Marques</p>
+</article>
+<article class="hist-item hist-item--versao" data-autor="daniel-batista" data-codigo="" data-documento="11-licoes-aprendidas-unidade-2" data-sprint="sprint-3" data-tipo="versao" data-unidade="unidade-2">
+<p class="hist-item__meta"><time datetime="2026-10-07">07/10/2026</time> <span class="hist-chip hist-chip--versao">Versão de documento</span></p>
+<p><strong><a href="../../licoes-aprendidas/unidade-2/">11. Lições aprendidas — Unidade 2 · versão 1.0</a></strong></p>
+<p>Registro das lições aprendidas das Sprints 1 e 2 para a entrega da Unidade 2</p>
+<p class="hist-item__rodape">Daniel Batista</p>
+</article>
+<article class="hist-item hist-item--versao" data-autor="daniel-batista maria-eduarda-marques" data-codigo="" data-documento="7-interacao-entre-equipe-e-cliente" data-sprint="sprint-3" data-tipo="versao" data-unidade="unidade-2">
+<p class="hist-item__meta"><time datetime="2026-10-07">07/10/2026</time> <span class="hist-chip hist-chip--versao">Versão de documento</span></p>
+<p><strong><a href="../../visao/7-equipe-e-cliente/">7. Interação entre equipe e cliente · versão 1.8</a></strong></p>
+<p>Especificação dos papéis de Engenharia de Requisitos de cada integrante na composição da equipe e remoção de menções operacionais genéricas</p>
+<p class="hist-item__rodape">Daniel Batista e Maria Eduarda Marques</p>
+</article>
+<article class="hist-item hist-item--sprint" data-autor="" data-codigo="" data-documento="" data-sprint="sprint-3" data-tipo="sprint" data-unidade="unidade-2">
+<p class="hist-item__meta"><time datetime="2026-10-06">06/10/2026</time> <span class="hist-chip hist-chip--sprint">Início de sprint</span></p>
+<p><strong><a href="../sprints/sprint-3/">Sprint 3</a></strong></p>
+<p>Período de 06/10/2026 a 20/10/2026. Meta: Ao final da Sprint 3, a Unidade 2 está publicada no site na versão marcada, antes da aula de 13/10, com o MVP confirmado pelo Instituto; e a base técnica está pronta para a construção: ambiente local definido, linhas da API e do front criadas e as histórias do MVP iniciadas.</p>
+</article>
+</section>
+<section class="hist-grupo" id="sprint-2">
+<h3 class="hist-grupo__titulo" id="sprint-2_1">Sprint 2<a class="headerlink" href="#sprint-2_1" title="Permanent link">&para;</a></h3>
+<article class="hist-item hist-item--ata-equipe" data-autor="" data-codigo="" data-documento="" data-sprint="sprint-2" data-tipo="ata-equipe" data-unidade="unidade-2">
+<p class="hist-item__meta"><time datetime="2026-10-06">06/10/2026</time> <span class="hist-chip hist-chip--ata-equipe">Reunião da equipe</span></p>
+<p><strong><a href="../atas/2026-10-06-sprint-review-retrospectiva/">Sprint Review e Retrospectiva da Sprint 2</a></strong></p>
+<p>Meta da Sprint 2 parcialmente atingida, com a conferência da validação do MVP pendente; <em>merge commit</em> e <em>rebase</em>; revisão de pull request em até 24 horas; daily até o fim do dia; reorganização do site</p>
+</article>
+<article class="hist-item hist-item--versao" data-autor="vinicius-vieira" data-codigo="" data-documento="registro-das-dailies" data-sprint="sprint-2" data-tipo="versao" data-unidade="unidade-2">
+<p class="hist-item__meta"><time datetime="2026-10-06">06/10/2026</time> <span class="hist-chip hist-chip--versao">Versão de documento</span></p>
+<p><strong><a href="../dailies/">Registro das dailies · versão 1.0</a></strong></p>
+<p>Adesão às dailies das Sprints 1 e 2</p>
+<p class="hist-item__rodape">Vinicius Vieira</p>
+</article>
+<article class="hist-item hist-item--versao" data-autor="vinicius-vieira" data-codigo="" data-documento="matriz-de-competencias-e-stack" data-sprint="sprint-2" data-tipo="versao" data-unidade="unidade-2">
+<p class="hist-item__meta"><time datetime="2026-10-06">06/10/2026</time> <span class="hist-chip hist-chip--versao">Versão de documento</span></p>
+<p><strong><a href="../matriz-competencias/">Matriz de competências e stack · versão 1.2</a></strong></p>
+<p>Dojos de nivelamento registrados como realizados, com o conteúdo de cada um</p>
+<p class="hist-item__rodape">Vinicius Vieira</p>
+</article>
+<article class="hist-item hist-item--versao" data-autor="vinicius-vieira" data-codigo="" data-documento="processo-e-ritos-scrumxp" data-sprint="sprint-2" data-tipo="versao" data-unidade="unidade-2">
+<p class="hist-item__meta"><time datetime="2026-10-06">06/10/2026</time> <span class="hist-chip hist-chip--versao">Versão de documento</span></p>
+<p><strong><a href="../processo-scrumxp/">Processo e ritos (ScrumXP) · versão 1.2</a></strong></p>
+<p>Daily no próprio dia, até o fim do dia, em vez de até as 12h</p>
+<p class="hist-item__rodape">Vinicius Vieira</p>
+</article>
+<article class="hist-item hist-item--versao" data-autor="vinicius-vieira" data-codigo="" data-documento="7-interacao-entre-equipe-e-cliente" data-sprint="sprint-2" data-tipo="versao" data-unidade="unidade-2">
+<p class="hist-item__meta"><time datetime="2026-10-06">06/10/2026</time> <span class="hist-chip hist-chip--versao">Versão de documento</span></p>
+<p><strong><a href="../../visao/7-equipe-e-cliente/">7. Interação entre equipe e cliente · versão 1.7</a></strong></p>
+<p>Daily no próprio dia, até o fim do dia, em vez de até as 12h</p>
+<p class="hist-item__rodape">Vinicius Vieira</p>
+</article>
+<article class="hist-item hist-item--versao" data-autor="vinicius-vieira" data-codigo="" data-documento="boas-praticas-no-github" data-sprint="sprint-2" data-tipo="versao" data-unidade="unidade-2">
+<p class="hist-item__meta"><time datetime="2026-10-05">05/10/2026</time> <span class="hist-chip hist-chip--versao">Versão de documento</span></p>
+<p><strong><a href="../boas-praticas-github/">Boas práticas no GitHub · versão 2.0</a></strong></p>
+<p>Branches por componente: documentação na <code>main</code> com homologação, API e web em linhas próprias; congelamento e marcação das entregas; controles da equipe na ausência de proteção de branch</p>
+<p class="hist-item__rodape">Vinicius Vieira</p>
+</article>
+<article class="hist-item hist-item--versao" data-autor="maria-eduarda-marques" data-codigo="" data-documento="processo-e-ritos-scrumxp" data-sprint="sprint-2" data-tipo="versao" data-unidade="unidade-2">
+<p class="hist-item__meta"><time datetime="2026-10-05">05/10/2026</time> <span class="hist-chip hist-chip--versao">Versão de documento</span></p>
+<p><strong><a href="../processo-scrumxp/">Processo e ritos (ScrumXP) · versão 1.1</a></strong></p>
+<p>Registro dos ritos das Sprints 1 e 2 com remissão às atas</p>
+<p class="hist-item__rodape">Maria Eduarda Marques</p>
+</article>
+<article class="hist-item hist-item--versao" data-autor="caio-martins" data-codigo="" data-documento="11-licoes-aprendidas-unidade-1" data-sprint="sprint-2" data-tipo="versao" data-unidade="unidade-2">
+<p class="hist-item__meta"><time datetime="2026-10-05">05/10/2026</time> <span class="hist-chip hist-chip--versao">Versão de documento</span></p>
+<p><strong><a href="../../licoes-aprendidas/unidade-1/">11. Lições aprendidas — Unidade 1 · versão 1.3</a></strong></p>
+<p>Revisão editorial: lições sintetizadas, conteúdo já descrito em outras páginas substituído por remissão e detalhes de processo retirados</p>
+<p class="hist-item__rodape">Caio Martins</p>
+</article>
+<article class="hist-item hist-item--versao" data-autor="maria-eduarda-marques" data-codigo="" data-documento="12-referencias-bibliograficas" data-sprint="sprint-2" data-tipo="versao" data-unidade="unidade-2">
+<p class="hist-item__meta"><time datetime="2026-10-05">05/10/2026</time> <span class="hist-chip hist-chip--versao">Versão de documento</span></p>
+<p><strong><a href="../../referencias/">12. Referências bibliográficas · versão 1.1</a></strong></p>
+<p>Inclusão das fontes citadas nas seções 1, 2, 3 e 8 (legislação, taxonomias de requisitos não funcionais e acessibilidade); fontes agrupadas por tema</p>
+<p class="hist-item__rodape">Maria Eduarda Marques</p>
+</article>
+<article class="hist-item hist-item--versao" data-autor="rodrigo-henrique" data-codigo="hu-01 hu-15" data-documento="10-backlog-de-produto" data-sprint="sprint-2" data-tipo="versao" data-unidade="unidade-2">
+<p class="hist-item__meta"><time datetime="2026-10-05">05/10/2026</time> <span class="hist-chip hist-chip--versao">Versão de documento</span></p>
+<p><strong><a href="../../requisitos/10-backlog/">10. Backlog de produto · versão 2.1</a></strong></p>
+<p>Inclusão de âncoras HTML unívocas para as histórias de usuário (HU-01 a HU-15) para rastreabilidade direta a partir do catálogo</p>
+<p class="hist-item__rodape">Rodrigo Henrique · <span class="hist-codigo">HU-01</span> <span class="hist-codigo">HU-15</span></p>
+</article>
+<article class="hist-item hist-item--versao" data-autor="rodrigo-henrique" data-codigo="" data-documento="8-requisitos-de-software" data-sprint="sprint-2" data-tipo="versao" data-unidade="unidade-2">
+<p class="hist-item__meta"><time datetime="2026-10-05">05/10/2026</time> <span class="hist-chip hist-chip--versao">Versão de documento</span></p>
+<p><strong><a href="../../requisitos/8-requisitos/">8. Requisitos de Software · versão 2.5</a></strong></p>
+<p>Seções 8.2 e 8.3 em tabelas por característica de produto e por categoria de RNF, com âncoras preservadas e ligação direta às histórias da seção 10</p>
+<p class="hist-item__rodape">Rodrigo Henrique</p>
+</article>
+<article class="hist-item hist-item--versao" data-autor="maria-eduarda-marques" data-codigo="" data-documento="8-requisitos-de-software" data-sprint="sprint-2" data-tipo="versao" data-unidade="unidade-2">
+<p class="hist-item__meta"><time datetime="2026-10-05">05/10/2026</time> <span class="hist-chip hist-chip--versao">Versão de documento</span></p>
+<p><strong><a href="../../requisitos/8-requisitos/">8. Requisitos de Software · versão 2.6</a></strong></p>
+<p>Padronização verbal descrita como redução de ambiguidades, sem garantir sua ausência</p>
+<p class="hist-item__rodape">Maria Eduarda Marques</p>
+</article>
+<article class="hist-item hist-item--versao" data-autor="maria-eduarda-marques" data-codigo="" data-documento="9-definition-of-ready-e-definition-of-done" data-sprint="sprint-2" data-tipo="versao" data-unidade="unidade-2">
+<p class="hist-item__meta"><time datetime="2026-10-05">05/10/2026</time> <span class="hist-chip hist-chip--versao">Versão de documento</span></p>
+<p><strong><a href="../../requisitos/9-dor-dod/">9. Definition of Ready e Definition of Done · versão 1.1</a></strong></p>
+<p>Critério Testável da DoR limitado às ambiguidades identificadas na revisão</p>
+<p class="hist-item__rodape">Maria Eduarda Marques</p>
+</article>
+<article class="hist-item hist-item--versao" data-autor="vinicius-vieira" data-codigo="" data-documento="9-definition-of-ready-e-definition-of-done" data-sprint="sprint-2" data-tipo="versao" data-unidade="unidade-2">
+<p class="hist-item__meta"><time datetime="2026-10-05">05/10/2026</time> <span class="hist-chip hist-chip--versao">Versão de documento</span></p>
+<p><strong><a href="../../requisitos/9-dor-dod/">9. Definition of Ready e Definition of Done · versão 1.2</a></strong></p>
+<p>Conclusão do item na branch de integração do seu tipo: <code>docs-homologacao</code> para documentação, <code>api-develop</code> ou <code>web-develop</code> para código; demonstração no ambiente de homologação</p>
+<p class="hist-item__rodape">Vinicius Vieira</p>
+</article>
+<article class="hist-item hist-item--versao" data-autor="rodrigo-henrique" data-codigo="" data-documento="1-cenario-atual-do-cliente-e-do-negocio" data-sprint="sprint-2" data-tipo="versao" data-unidade="unidade-2">
+<p class="hist-item__meta"><time datetime="2026-10-05">05/10/2026</time> <span class="hist-chip hist-chip--versao">Versão de documento</span></p>
+<p><strong><a href="../../visao/1-cenario-atual/">1. Cenário atual do cliente e do negócio · versão 1.7</a></strong></p>
+<p>Fechamento do dimensionamento empírico com estimativas da coordenação, restauração do mapa circular de stakeholders e unificação da matriz de interesse e poder</p>
+<p class="hist-item__rodape">Rodrigo Henrique</p>
+</article>
+<article class="hist-item hist-item--versao" data-autor="rodrigo-henrique" data-codigo="" data-documento="2-solucao-proposta" data-sprint="sprint-2" data-tipo="versao" data-unidade="unidade-2">
+<p class="hist-item__meta"><time datetime="2026-10-05">05/10/2026</time> <span class="hist-chip hist-chip--versao">Versão de documento</span></p>
+<p><strong><a href="../../visao/2-solucao-proposta/">2. Solução proposta · versão 1.4</a></strong></p>
+<p>Revisão editorial: aplicação de formatação estrutural (listas e espaçamentos) nas seções 2.6 e 2.7 para fluidez de leitura, mantendo a íntegra do conteúdo analítico</p>
+<p class="hist-item__rodape">Rodrigo Henrique</p>
+</article>
+<article class="hist-item hist-item--versao" data-autor="rodrigo-henrique" data-codigo="" data-documento="3-intervencao-social" data-sprint="sprint-2" data-tipo="versao" data-unidade="unidade-2">
+<p class="hist-item__meta"><time datetime="2026-10-05">05/10/2026</time> <span class="hist-chip hist-chip--versao">Versão de documento</span></p>
+<p><strong><a href="../../visao/3-intervencao-social/">3. Intervenção social · versão 1.4</a></strong></p>
+<p>Revisão editorial: padronização da formatação e espaçamentos, preservando integralmente o conteúdo e a densidade analítica original</p>
+<p class="hist-item__rodape">Rodrigo Henrique</p>
+</article>
+<article class="hist-item hist-item--versao" data-autor="rodrigo-henrique" data-codigo="" data-documento="4-estrategias-de-engenharia-de-software" data-sprint="sprint-2" data-tipo="versao" data-unidade="unidade-2">
+<p class="hist-item__meta"><time datetime="2026-10-05">05/10/2026</time> <span class="hist-chip hist-chip--versao">Versão de documento</span></p>
+<p><strong><a href="../../visao/4-estrategia-esw/">4. Estratégias de engenharia de software · versão 1.5</a></strong></p>
+<p>Revisão editorial: formatação direta, preservando toda a fundamentação teórica, citações e quadros comparativos</p>
+<p class="hist-item__rodape">Rodrigo Henrique</p>
+</article>
+<article class="hist-item hist-item--versao" data-autor="rodrigo-henrique" data-codigo="" data-documento="5-engenharia-de-requisitos" data-sprint="sprint-2" data-tipo="versao" data-unidade="unidade-2">
+<p class="hist-item__meta"><time datetime="2026-10-05">05/10/2026</time> <span class="hist-chip hist-chip--versao">Versão de documento</span></p>
+<p><strong><a href="../../visao/5-engenharia-requisitos/">5. Engenharia de requisitos · versão 1.5</a></strong></p>
+<p>Revisão editorial: formatação direta, sem supressão de técnicas, artefatos ou mapeamento do ScrumXP</p>
+<p class="hist-item__rodape">Rodrigo Henrique</p>
+</article>
+<article class="hist-item hist-item--versao" data-autor="rodrigo-henrique" data-codigo="" data-documento="7-interacao-entre-equipe-e-cliente" data-sprint="sprint-2" data-tipo="versao" data-unidade="unidade-2">
+<p class="hist-item__meta"><time datetime="2026-10-05">05/10/2026</time> <span class="hist-chip hist-chip--versao">Versão de documento</span></p>
+<p><strong><a href="../../visao/7-equipe-e-cliente/">7. Interação entre equipe e cliente · versão 1.6</a></strong></p>
+<p>Revisão editorial: aplicação de espaçamentos e formatação em tópicos estruturados para maior fluidez de leitura, preservando a íntegra das validações e argumentações</p>
+<p class="hist-item__rodape">Rodrigo Henrique</p>
+</article>
+<article class="hist-item hist-item--versao" data-autor="rodrigo-henrique" data-codigo="" data-documento="documento-de-visao-de-produto-e-projeto" data-sprint="sprint-2" data-tipo="versao" data-unidade="unidade-2">
+<p class="hist-item__meta"><time datetime="2026-10-05">05/10/2026</time> <span class="hist-chip hist-chip--versao">Versão de documento</span></p>
+<p><strong><a href="../../visao/">Documento de Visão de Produto e Projeto · versão 1.7</a></strong></p>
+<p>Revisão editorial: correção de sintaxe Markdown no sumário e padronização executiva das descrições das seções</p>
+<p class="hist-item__rodape">Rodrigo Henrique</p>
+</article>
+<article class="hist-item hist-item--versao" data-autor="equipe-cybersetor" data-codigo="" data-documento="1-cenario-atual-do-cliente-e-do-negocio" data-sprint="sprint-2" data-tipo="versao" data-unidade="unidade-2">
+<p class="hist-item__meta"><time datetime="2026-09-30">30/09/2026</time> <span class="hist-chip hist-chip--versao">Versão de documento</span></p>
+<p><strong><a href="../../visao/1-cenario-atual/">1. Cenário atual do cliente e do negócio · versão 1.6</a></strong></p>
+<p>Atualização do Rich Picture e mapa de stakeholders com papéis identificados na reunião de 08/09 (Diretoria de Projetos, Captação de Recursos, ausência de RH, demais setores operacionais e regimes de financiadores)</p>
+<p class="hist-item__rodape">Equipe CyberSetor</p>
+</article>
+<article class="hist-item hist-item--versao" data-autor="equipe-cybersetor" data-codigo="" data-documento="atividade-3-ajuste-e-validacao-da-lista-de-requisitos" data-sprint="sprint-2" data-tipo="versao" data-unidade="unidade-2">
+<p class="hist-item__meta"><time datetime="2026-09-29">29/09/2026</time> <span class="hist-chip hist-chip--versao">Versão de documento</span></p>
+<p><strong><a href="../../entregas/atividade-3/">Atividade 3: ajuste e validação da lista de requisitos · versão 1.0</a></strong></p>
+<p>Decisões por apontamento da verificação em pares e da monitoria e evidência da revisão e da validação da lista de requisitos</p>
+<p class="hist-item__rodape">Equipe CyberSetor</p>
+</article>
+<article class="hist-item hist-item--versao" data-autor="vinicius-vieira maria-eduarda-marques" data-codigo="rf20" data-documento="10-backlog-de-produto" data-sprint="sprint-2" data-tipo="versao" data-unidade="unidade-2">
+<p class="hist-item__meta"><time datetime="2026-09-29">29/09/2026</time> <span class="hist-chip hist-chip--versao">Versão de documento</span></p>
+<p><strong><a href="../../requisitos/10-backlog/">10. Backlog de produto · versão 2.0</a></strong></p>
+<p>Backlog geral com as quinze histórias e seus critérios de aceitação; valor de negócio validado com o Instituto; avaliação técnica dos requisitos de CP3, de CP5 e do RF20; tabela consolidada, matriz 4 × 4, MVP, incrementos, requisitos não funcionais do MVP e registro da validação; seção organizada em 10.1 e 10.2, como no template</p>
+<p class="hist-item__rodape">Vinicius Vieira e Maria Eduarda Marques · <span class="hist-codigo">RF20</span></p>
+</article>
+<article class="hist-item hist-item--versao" data-autor="vinicius-vieira maria-eduarda-marques" data-codigo="rf08 rf09 rf10 rf19 rf35 rf20 rf29 rf31 rf36 hu-01 hu-15" data-documento="8-requisitos-de-software" data-sprint="sprint-2" data-tipo="versao" data-unidade="unidade-2">
+<p class="hist-item__meta"><time datetime="2026-09-29">29/09/2026</time> <span class="hist-chip hist-chip--versao">Versão de documento</span></p>
+<p><strong><a href="../../requisitos/8-requisitos/">8. Requisitos de Software · versão 2.4</a></strong></p>
+<p>Aviso de vencimento com 30 dias e por e-mail (RF08, RN-03); modalidades criadas pelo Instituto (RF09, RF10); correção fora do prazo sem aprovação (RF19); trava do relatório com notificação à direção (RF35); encerramento do projeto (RN-11); justificativa para alterar registro concluído (RN-13); CP3, CP5 e RF20 reescritos; ator genérico em CP1, RF29 a RF31 e RF36; RN-07 revista; matriz pelas histórias HU-01 a HU-15; tabela de códigos provisórios retirada</p>
+<p class="hist-item__rodape">Vinicius Vieira e Maria Eduarda Marques · <span class="hist-codigo">RF08</span> <span class="hist-codigo">RF09</span> <span class="hist-codigo">RF10</span> <span class="hist-codigo">RF19</span> <span class="hist-codigo">RF35</span> <span class="hist-codigo">RF20</span> <span class="hist-codigo">RF29</span> <span class="hist-codigo">RF31</span> <span class="hist-codigo">RF36</span> <span class="hist-codigo">HU-01</span> <span class="hist-codigo">HU-15</span></p>
+</article>
+<article class="hist-item hist-item--versao" data-autor="vinicius-vieira maria-eduarda-marques" data-codigo="" data-documento="9-definition-of-ready-e-definition-of-done" data-sprint="sprint-2" data-tipo="versao" data-unidade="unidade-2">
+<p class="hist-item__meta"><time datetime="2026-09-29">29/09/2026</time> <span class="hist-chip hist-chip--versao">Versão de documento</span></p>
+<p><strong><a href="../../requisitos/9-dor-dod/">9. Definition of Ready e Definition of Done · versão 1.0</a></strong></p>
+<p>Definition of Ready das histórias de usuário, com os critérios INVEST, e Definition of Done dos itens de documentação de requisitos e de código</p>
+<p class="hist-item__rodape">Vinicius Vieira e Maria Eduarda Marques</p>
+</article>
+<article class="hist-item hist-item--versao" data-autor="vinicius-vieira maria-eduarda-marques" data-codigo="" data-documento="7-interacao-entre-equipe-e-cliente" data-sprint="sprint-2" data-tipo="versao" data-unidade="unidade-2">
+<p class="hist-item__meta"><time datetime="2026-09-29">29/09/2026</time> <span class="hist-chip hist-chip--versao">Versão de documento</span></p>
+<p><strong><a href="../../visao/7-equipe-e-cliente/">7. Interação entre equipe e cliente · versão 1.5</a></strong></p>
+<p>Parágrafo que liga a entrada das histórias na sprint e a conclusão dos itens à seção 9</p>
+<p class="hist-item__rodape">Vinicius Vieira e Maria Eduarda Marques</p>
+</article>
+<article class="hist-item hist-item--versao" data-autor="equipe-cybersetor" data-codigo="" data-documento="documento-de-visao-de-produto-e-projeto" data-sprint="sprint-2" data-tipo="versao" data-unidade="unidade-2">
+<p class="hist-item__meta"><time datetime="2026-09-29">29/09/2026</time> <span class="hist-chip hist-chip--versao">Versão de documento</span></p>
+<p><strong><a href="../../visao/">Documento de Visão de Produto e Projeto · versão 1.6</a></strong></p>
+<p>Definition of Ready, com os critérios INVEST, e Definition of Done na seção 9; processo de validação ligado a elas</p>
+<p class="hist-item__rodape">Equipe CyberSetor</p>
+</article>
+<article class="hist-item hist-item--ata-cliente" data-autor="" data-codigo="" data-documento="" data-sprint="sprint-2" data-tipo="ata-cliente" data-unidade="unidade-2">
+<p class="hist-item__meta"><time datetime="2026-09-28">28/09/2026</time> <span class="hist-chip hist-chip--ata-cliente">Interação com o Instituto</span></p>
+<p><strong><a href="../atas/2026-09-28-validacao-mvp-instituto/">Instituto No Setor · Videoconferência</a></strong></p>
+<p>Validação do MVP e priorização por MoSCoW com Maria Clara Novaes (diretora pedagógica) e Maria Eduarda (Duda — Núcleo Pedagógico): parcerias e metas como base do MVP, inscrições públicas e assistidas no MVP, evidências no segundo incremento, aviso de vencimento com 30 dias</p>
+</article>
+<article class="hist-item hist-item--versao" data-autor="daniel-batista" data-codigo="" data-documento="matriz-de-competencias-e-stack" data-sprint="sprint-2" data-tipo="versao" data-unidade="unidade-2">
+<p class="hist-item__meta"><time datetime="2026-09-28">28/09/2026</time> <span class="hist-chip hist-chip--versao">Versão de documento</span></p>
+<p><strong><a href="../matriz-competencias/">Matriz de competências e stack · versão 1.1</a></strong></p>
+<p>Explicitação do histórico de consolidação (pendência da Sprint 0 sanada no início da Sprint 1)</p>
+<p class="hist-item__rodape">Daniel Batista</p>
+</article>
+<article class="hist-item hist-item--versao" data-autor="daniel-batista" data-codigo="" data-documento="11-licoes-aprendidas-unidade-1" data-sprint="sprint-2" data-tipo="versao" data-unidade="unidade-2">
+<p class="hist-item__meta"><time datetime="2026-09-28">28/09/2026</time> <span class="hist-chip hist-chip--versao">Versão de documento</span></p>
+<p><strong><a href="../../licoes-aprendidas/unidade-1/">11. Lições aprendidas — Unidade 1 · versão 1.2</a></strong></p>
+<p>Explicitação da pendência da avaliação de Daniel na consolidação inicial da Sprint 0 e sua resolução e integração integral na Sprint 1</p>
+<p class="hist-item__rodape">Daniel Batista</p>
+</article>
+<article class="hist-item hist-item--versao" data-autor="caio-martins lucas-leal" data-codigo="" data-documento="10-backlog-de-produto" data-sprint="sprint-2" data-tipo="versao" data-unidade="unidade-2">
+<p class="hist-item__meta"><time datetime="2026-09-28">28/09/2026</time> <span class="hist-chip hist-chip--versao">Versão de documento</span></p>
+<p><strong><a href="../../requisitos/10-backlog/">10. Backlog de produto · versão 1.1</a></strong></p>
+<p>Adição da avaliação de esforço técnico dos requisitos de CP2, CP4 e CP7</p>
+<p class="hist-item__rodape">Caio Martins e Lucas Leal</p>
+</article>
+<article class="hist-item hist-item--versao" data-autor="caio-martins lucas-leal" data-codigo="rf09 rf16 rf17 rf33" data-documento="8-requisitos-de-software" data-sprint="sprint-2" data-tipo="versao" data-unidade="unidade-2">
+<p class="hist-item__meta"><time datetime="2026-09-28">28/09/2026</time> <span class="hist-chip hist-chip--versao">Versão de documento</span></p>
+<p><strong><a href="../../requisitos/8-requisitos/">8. Requisitos de Software · versão 2.3</a></strong></p>
+<p>Redação de CP2, CP4 e CP7; vínculo da atividade às metas (RF09); participante não inscrito na chamada (RF16); preparação da lista para uso sem conexão (RF17); descarte de rascunho (RF33)</p>
+<p class="hist-item__rodape">Caio Martins e Lucas Leal · <span class="hist-codigo">RF09</span> <span class="hist-codigo">RF16</span> <span class="hist-codigo">RF17</span> <span class="hist-codigo">RF33</span></p>
+</article>
+<article class="hist-item hist-item--versao" data-autor="daniel-batista" data-codigo="" data-documento="1-cenario-atual-do-cliente-e-do-negocio" data-sprint="sprint-2" data-tipo="versao" data-unidade="unidade-2">
+<p class="hist-item__meta"><time datetime="2026-09-28">28/09/2026</time> <span class="hist-chip hist-chip--versao">Versão de documento</span></p>
+<p><strong><a href="../../visao/1-cenario-atual/">1. Cenário atual do cliente e do negócio · versão 1.5</a></strong></p>
+<p>Rich Picture refeito com os oito componentes do fluxo operacional (financiadores públicos, editais e termos de fomento, projetos e metas, formulários avulsos, campo com listas e fotos, área administrativo-financeira, consolidação manual e entrega dos relatórios com risco de glosa), detalhados na seção 1.3</p>
+<p class="hist-item__rodape">Daniel Batista</p>
+</article>
+<article class="hist-item hist-item--versao" data-autor="daniel-batista rodrigo-henrique" data-codigo="" data-documento="10-backlog-de-produto" data-sprint="sprint-2" data-tipo="versao" data-unidade="unidade-2">
+<p class="hist-item__meta"><time datetime="2026-09-27">27/09/2026</time> <span class="hist-chip hist-chip--versao">Versão de documento</span></p>
+<p><strong><a href="../../requisitos/10-backlog/">10. Backlog de produto · versão 1.0</a></strong></p>
+<p>Estruturação inicial da seção e registro da avaliação de esforço técnico dos requisitos de CP1, CP6 e CP8</p>
+<p class="hist-item__rodape">Daniel Batista e Rodrigo Henrique</p>
+</article>
+<article class="hist-item hist-item--versao" data-autor="daniel-batista rodrigo-henrique" data-codigo="rf01 rf04 rf39" data-documento="8-requisitos-de-software" data-sprint="sprint-2" data-tipo="versao" data-unidade="unidade-2">
+<p class="hist-item__meta"><time datetime="2026-09-27">27/09/2026</time> <span class="hist-chip hist-chip--versao">Versão de documento</span></p>
+<p><strong><a href="../../requisitos/8-requisitos/">8. Requisitos de Software · versão 2.2</a></strong></p>
+<p>RF01 e RF04 divididos; numeração contínua RF01 a RF39; redação de CP1, CP6 e CP8; matriz de rastreabilidade e regras de negócio sincronizadas</p>
+<p class="hist-item__rodape">Daniel Batista e Rodrigo Henrique · <span class="hist-codigo">RF01</span> <span class="hist-codigo">RF04</span> <span class="hist-codigo">RF39</span></p>
+</article>
+<article class="hist-item hist-item--ata-equipe" data-autor="" data-codigo="" data-documento="" data-sprint="sprint-2" data-tipo="ata-equipe" data-unidade="unidade-2">
+<p class="hist-item__meta"><time datetime="2026-09-23">23/09/2026</time> <span class="hist-chip hist-chip--ata-equipe">Reunião da equipe</span></p>
+<p><strong><a href="../atas/2026-09-23-sprint-planning/">Sprint Planning da Sprint 2</a></strong></p>
+<p>Meta da Sprint 2 com lista ajustada, matriz 4 × 4, MVP validado com o Instituto e DoR e DoD publicadas; sete épicos e quinze histórias; painel gerencial como <em>Should</em></p>
+</article>
+<article class="hist-item hist-item--sprint" data-autor="" data-codigo="" data-documento="" data-sprint="sprint-2" data-tipo="sprint" data-unidade="unidade-2">
+<p class="hist-item__meta"><time datetime="2026-09-22">22/09/2026</time> <span class="hist-chip hist-chip--sprint">Início de sprint</span></p>
+<p><strong><a href="../sprints/sprint-2/">Sprint 2</a></strong></p>
+<p>Período de 22/09/2026 a 06/10/2026. Meta: Ao final da Sprint 2, a lista de requisitos está ajustada pelos feedbacks recebidos, a matriz 4 × 4 está preenchida, o MVP está definido e validado com o Instituto e a DoR e a DoD estão publicadas; os itens ligados às Atividades 3 e 4, até 29/09.</p>
+</article>
+</section>
+<section class="hist-grupo" id="sprint-1">
+<h3 class="hist-grupo__titulo" id="sprint-1_1">Sprint 1<a class="headerlink" href="#sprint-1_1" title="Permanent link">&para;</a></h3>
+<article class="hist-item hist-item--ata-equipe" data-autor="" data-codigo="rf01 rf04" data-documento="" data-sprint="sprint-1" data-tipo="ata-equipe" data-unidade="unidade-2">
+<p class="hist-item__meta"><time datetime="2026-09-22">22/09/2026</time> <span class="hist-chip hist-chip--ata-equipe">Reunião da equipe</span></p>
+<p><strong><a href="../atas/2026-09-22-sprint-review-retrospectiva/">Sprint Review e Retrospectiva da Sprint 1</a></strong></p>
+<p>Meta da Sprint 1 parcialmente atingida, com refinamento e priorização transferidos para a Sprint 2; duplas, revisão de pull request registrada e divisão de RF01 e RF04</p>
+<p class="hist-item__rodape"><span class="hist-codigo">RF01</span> <span class="hist-codigo">RF04</span></p>
+</article>
+<article class="hist-item hist-item--versao" data-autor="maria-eduarda-marques" data-codigo="" data-documento="sintese-de-entregas-unidade-2" data-sprint="sprint-1" data-tipo="versao" data-unidade="unidade-2">
+<p class="hist-item__meta"><time datetime="2026-09-21">21/09/2026</time> <span class="hist-chip hist-chip--versao">Versão de documento</span></p>
+<p><strong><a href="../../entregas/unidade-2/">Síntese de Entregas — Unidade 2 · versão 1.1</a></strong></p>
+<p>Status ajustado à consolidação da numeração única</p>
+<p class="hist-item__rodape">Maria Eduarda Marques</p>
+</article>
+<article class="hist-item hist-item--versao" data-autor="rodrigo-henrique vinicius-vieira" data-codigo="" data-documento="sintese-de-entregas-unidade-2" data-sprint="sprint-1" data-tipo="versao" data-unidade="unidade-2">
+<p class="hist-item__meta"><time datetime="2026-09-21">21/09/2026</time> <span class="hist-chip hist-chip--versao">Versão de documento</span></p>
+<p><strong><a href="../../entregas/unidade-2/">Síntese de Entregas — Unidade 2 · versão 1.2</a></strong></p>
+<p>Consolidação final da Seção 8 com a Matriz Bidirecional e publicação unificada</p>
+<p class="hist-item__rodape">Rodrigo Henrique e Vinicius Vieira</p>
+</article>
+<article class="hist-item hist-item--versao" data-autor="equipe-cybersetor" data-codigo="" data-documento="sintese-de-entregas-unidade-2" data-sprint="sprint-1" data-tipo="versao" data-unidade="unidade-2">
+<p class="hist-item__meta"><time datetime="2026-09-21">21/09/2026</time> <span class="hist-chip hist-chip--versao">Versão de documento</span></p>
+<p><strong><a href="../../entregas/unidade-2/">Síntese de Entregas — Unidade 2 · versão 1.3</a></strong></p>
+<p>Status e checklist alinhados à versão 2.1 da Seção 8: âncoras restauradas e valores iniciais marcados</p>
+<p class="hist-item__rodape">Equipe CyberSetor</p>
+</article>
+<article class="hist-item hist-item--ata-equipe" data-autor="" data-codigo="" data-documento="" data-sprint="sprint-1" data-tipo="ata-equipe" data-unidade="unidade-2">
+<p class="hist-item__meta"><time datetime="2026-09-21">21/09/2026</time> <span class="hist-chip hist-chip--ata-equipe">Reunião da equipe</span></p>
+<p><strong><a href="../atas/2026-09-21-reuniao-equipe/">Debrief da visita, arquitetura técnica e alinhamento com monitoria</a></strong></p>
+<p>Adoção de banco de dados relacional centralizado e Docker/Docker Compose; corte de escopo do MVP via MoSCoW</p>
+</article>
+<article class="hist-item hist-item--ata-cliente" data-autor="" data-codigo="" data-documento="" data-sprint="sprint-1" data-tipo="ata-cliente" data-unidade="unidade-2">
+<p class="hist-item__meta"><time datetime="2026-09-21">21/09/2026</time> <span class="hist-chip hist-chip--ata-cliente">Interação com o Instituto</span></p>
+<p><strong><a href="../atas/2026-09-21-reuniao-presencial-instituto/">Instituto No Setor · Presencial, na sede do Instituto</a></strong></p>
+<p>Imersão operacional e análise prática de projetos reais com Franci, Rafael, Maria Eduarda e Maria Clara: apresentação do fluxo de trabalho por Franci, centralidade e fragilidade da Matriz de Aquisição, gargalos no Google Drive e visão de dashboard da Presidência</p>
+</article>
+<article class="hist-item hist-item--versao" data-autor="maria-eduarda-marques vinicius-vieira" data-codigo="" data-documento="8-requisitos-de-software" data-sprint="sprint-1" data-tipo="versao" data-unidade="unidade-2">
+<p class="hist-item__meta"><time datetime="2026-09-21">21/09/2026</time> <span class="hist-chip hist-chip--versao">Versão de documento</span></p>
+<p><strong><a href="../../requisitos/8-requisitos/">8. Requisitos de Software · versão 1.5</a></strong></p>
+<p>RNFs consolidados sob FURPS+ e Sommerville</p>
+<p class="hist-item__rodape">Maria Eduarda Marques e Vinicius Vieira</p>
+</article>
+<article class="hist-item hist-item--versao" data-autor="maria-eduarda-marques daniel-batista" data-codigo="" data-documento="8-requisitos-de-software" data-sprint="sprint-1" data-tipo="versao" data-unidade="unidade-2">
+<p class="hist-item__meta"><time datetime="2026-09-21">21/09/2026</time> <span class="hist-chip hist-chip--versao">Versão de documento</span></p>
+<p><strong><a href="../../requisitos/8-requisitos/">8. Requisitos de Software · versão 1.6</a></strong></p>
+<p>Matriz de rastreabilidade bidirecional e auditoria de lacunas</p>
+<p class="hist-item__rodape">Maria Eduarda Marques e Daniel Batista</p>
+</article>
+<article class="hist-item hist-item--versao" data-autor="equipe-cybersetor" data-codigo="rf01 rf37 rnf01 rnf18" data-documento="8-requisitos-de-software" data-sprint="sprint-1" data-tipo="versao" data-unidade="unidade-2">
+<p class="hist-item__meta"><time datetime="2026-09-21">21/09/2026</time> <span class="hist-chip hist-chip--versao">Versão de documento</span></p>
+<p><strong><a href="../../requisitos/8-requisitos/">8. Requisitos de Software · versão 2.0</a></strong></p>
+<p>Catálogo unificado (RF01 a RF37, RNF01 a RNF18), notas de domínio e matriz de rastreabilidade</p>
+<p class="hist-item__rodape">Equipe CyberSetor · <span class="hist-codigo">RF01</span> <span class="hist-codigo">RF37</span> <span class="hist-codigo">RNF01</span> <span class="hist-codigo">RNF18</span></p>
+</article>
+<article class="hist-item hist-item--versao" data-autor="equipe-cybersetor" data-codigo="" data-documento="8-requisitos-de-software" data-sprint="sprint-1" data-tipo="versao" data-unidade="unidade-2">
+<p class="hist-item__meta"><time datetime="2026-09-21">21/09/2026</time> <span class="hist-chip hist-chip--versao">Versão de documento</span></p>
+<p><strong><a href="../../requisitos/8-requisitos/">8. Requisitos de Software · versão 2.1</a></strong></p>
+<p>Âncoras restauradas; tecnologia retirada dos requisitos; regras de negócio em subseção própria; rastreabilidade sem dados de sprint; valores iniciais marcados com 🔧</p>
+<p class="hist-item__rodape">Equipe CyberSetor</p>
+</article>
+<article class="hist-item hist-item--versao" data-autor="caio-flavio lucas-leal" data-codigo="" data-documento="8-requisitos-de-software" data-sprint="sprint-1" data-tipo="versao" data-unidade="unidade-2">
+<p class="hist-item__meta"><time datetime="2026-09-20">20/09/2026</time> <span class="hist-chip hist-chip--versao">Versão de documento</span></p>
+<p><strong><a href="../../requisitos/8-requisitos/">8. Requisitos de Software · versão 1.2</a></strong></p>
+<p>Requisitos de CP2, CP4 e CP7 e registro sem conexão</p>
+<p class="hist-item__rodape">Caio Flávio e Lucas Leal</p>
+</article>
+<article class="hist-item hist-item--versao" data-autor="caio-flavio lucas-leal vinicius-vieira" data-codigo="" data-documento="8-requisitos-de-software" data-sprint="sprint-1" data-tipo="versao" data-unidade="unidade-2">
+<p class="hist-item__meta"><time datetime="2026-09-20">20/09/2026</time> <span class="hist-chip hist-chip--versao">Versão de documento</span></p>
+<p><strong><a href="../../requisitos/8-requisitos/">8. Requisitos de Software · versão 1.3</a></strong></p>
+<p>Requisitos de CP6 e CP8 e regras de prestação de contas</p>
+<p class="hist-item__rodape">Caio Flávio, Lucas Leal e Vinicius Vieira</p>
+</article>
+<article class="hist-item hist-item--versao" data-autor="rodrigo-henrique vinicius-vieira" data-codigo="" data-documento="8-requisitos-de-software" data-sprint="sprint-1" data-tipo="versao" data-unidade="unidade-2">
+<p class="hist-item__meta"><time datetime="2026-09-20">20/09/2026</time> <span class="hist-chip hist-chip--versao">Versão de documento</span></p>
+<p><strong><a href="../../requisitos/8-requisitos/">8. Requisitos de Software · versão 1.4</a></strong></p>
+<p>Refinamento da CP1, notas de domínio e matriz dos gargalos</p>
+<p class="hist-item__rodape">Rodrigo Henrique e Vinicius Vieira</p>
+</article>
+<article class="hist-item hist-item--versao" data-autor="rodrigo-henrique vinicius-vieira" data-codigo="" data-documento="sintese-de-entregas-unidade-2" data-sprint="sprint-1" data-tipo="versao" data-unidade="unidade-2">
+<p class="hist-item__meta"><time datetime="2026-09-19">19/09/2026</time> <span class="hist-chip hist-chip--versao">Versão de documento</span></p>
+<p><strong><a href="../../entregas/unidade-2/">Síntese de Entregas — Unidade 2 · versão 1.0</a></strong></p>
+<p>Registro da entrega do Catálogo de Requisitos e Rastreabilidade (Marco da Sprint 1)</p>
+<p class="hist-item__rodape">Rodrigo Henrique e Vinicius Vieira</p>
+</article>
+<article class="hist-item hist-item--versao" data-autor="rodrigo-henrique vinicius-vieira" data-codigo="" data-documento="8-requisitos-de-software" data-sprint="sprint-1" data-tipo="versao" data-unidade="unidade-2">
+<p class="hist-item__meta"><time datetime="2026-09-19">19/09/2026</time> <span class="hist-chip hist-chip--versao">Versão de documento</span></p>
+<p><strong><a href="../../requisitos/8-requisitos/">8. Requisitos de Software · versão 1.0</a></strong></p>
+<p>Primeira versão do catálogo de requisitos</p>
+<p class="hist-item__rodape">Rodrigo Henrique e Vinicius Vieira</p>
+</article>
+<article class="hist-item hist-item--versao" data-autor="maria-eduarda-marques daniel-batista" data-codigo="" data-documento="8-requisitos-de-software" data-sprint="sprint-1" data-tipo="versao" data-unidade="unidade-2">
+<p class="hist-item__meta"><time datetime="2026-09-19">19/09/2026</time> <span class="hist-chip hist-chip--versao">Versão de documento</span></p>
+<p><strong><a href="../../requisitos/8-requisitos/">8. Requisitos de Software · versão 1.1</a></strong></p>
+<p>Requisitos de CP3 e CP5 e perguntas-chave</p>
+<p class="hist-item__rodape">Maria Eduarda Marques e Daniel Batista</p>
+</article>
+<article class="hist-item hist-item--versao" data-autor="daniel-batista" data-codigo="" data-documento="11-licoes-aprendidas-unidade-1" data-sprint="sprint-1" data-tipo="versao" data-unidade="unidade-2">
+<p class="hist-item__meta"><time datetime="2026-09-17">17/09/2026</time> <span class="hist-chip hist-chip--versao">Versão de documento</span></p>
+<p><strong><a href="../../licoes-aprendidas/unidade-1/">11. Lições aprendidas — Unidade 1 · versão 1.1</a></strong></p>
+<p>Cada lição passa a declarar responsável, prazo e indicador; alcance da validação de 02/09 delimitado; avaliação da daily assíncrona remetida à Retrospectiva</p>
+<p class="hist-item__rodape">Daniel Batista</p>
+</article>
+<article class="hist-item hist-item--versao" data-autor="rodrigo-henrique vinicius-vieira" data-codigo="" data-documento="b1-modelo-do-processo-atual-bpmn" data-sprint="sprint-1" data-tipo="versao" data-unidade="unidade-2">
+<p class="hist-item__meta"><time datetime="2026-09-17">17/09/2026</time> <span class="hist-chip hist-chip--versao">Versão de documento</span></p>
+<p><strong><a href="../../requisitos/b1-bpmn-processo-atual/">B1 · Modelo do processo atual (BPMN) · versão 1.0</a></strong></p>
+<p>Modelagem inicial do processo AS-IS em BPMN e mapeamento de gargalos operacionais</p>
+<p class="hist-item__rodape">Rodrigo Henrique e Vinicius Vieira</p>
+</article>
+<article class="hist-item hist-item--versao" data-autor="rodrigo-henrique" data-codigo="" data-documento="b1-modelo-do-processo-atual-bpmn" data-sprint="sprint-1" data-tipo="versao" data-unidade="unidade-2">
+<p class="hist-item__meta"><time datetime="2026-09-17">17/09/2026</time> <span class="hist-chip hist-chip--versao">Versão de documento</span></p>
+<p><strong><a href="../../requisitos/b1-bpmn-processo-atual/">B1 · Modelo do processo atual (BPMN) · versão 1.1</a></strong></p>
+<p>Inclusão da cadeia de evidências de ER, rastreabilidade bidirecional e segregação LGPD</p>
+<p class="hist-item__rodape">Rodrigo Henrique</p>
+</article>
+<article class="hist-item hist-item--versao" data-autor="vinicius-vieira" data-codigo="" data-documento="b1-modelo-do-processo-atual-bpmn" data-sprint="sprint-1" data-tipo="versao" data-unidade="unidade-2">
+<p class="hist-item__meta"><time datetime="2026-09-17">17/09/2026</time> <span class="hist-chip hist-chip--versao">Versão de documento</span></p>
+<p><strong><a href="../../requisitos/b1-bpmn-processo-atual/">B1 · Modelo do processo atual (BPMN) · versão 1.2</a></strong></p>
+<p>Participantes por data conforme a ata; nomenclatura das características alinhada à seção 2; capacidades previstas no lugar de identificadores ainda não atribuídos; figura com legenda numerada</p>
+<p class="hist-item__rodape">Vinicius Vieira</p>
+</article>
+<article class="hist-item hist-item--versao" data-autor="equipe-cybersetor" data-codigo="" data-documento="1-cenario-atual-do-cliente-e-do-negocio" data-sprint="sprint-1" data-tipo="versao" data-unidade="unidade-2">
+<p class="hist-item__meta"><time datetime="2026-09-17">17/09/2026</time> <span class="hist-chip hist-chip--versao">Versão de documento</span></p>
+<p><strong><a href="../../visao/1-cenario-atual/">1. Cenário atual do cliente e do negócio · versão 1.3</a></strong></p>
+<p>Segmentação de clientes alinhada ao escopo da seção 2.3: registro de presença e carga horária no lugar da emissão de certificado</p>
+<p class="hist-item__rodape">Equipe CyberSetor</p>
+</article>
+<article class="hist-item hist-item--versao" data-autor="rodrigo-henrique daniel-batista" data-codigo="" data-documento="1-cenario-atual-do-cliente-e-do-negocio" data-sprint="sprint-1" data-tipo="versao" data-unidade="unidade-2">
+<p class="hist-item__meta"><time datetime="2026-09-17">17/09/2026</time> <span class="hist-chip hist-chip--versao">Versão de documento</span></p>
+<p><strong><a href="../../visao/1-cenario-atual/">1. Cenário atual do cliente e do negócio · versão 1.4</a></strong></p>
+<p>Dimensionamento do problema, matriz de interesse e poder com estratégias de engajamento, distinção entre usuário, titular e beneficiário, aprofundamento da área administrativo-financeira e heterogeneidade dos editais</p>
+<p class="hist-item__rodape">Rodrigo Henrique e Daniel Batista</p>
+</article>
+<article class="hist-item hist-item--versao" data-autor="vinicius-vieira" data-codigo="" data-documento="2-solucao-proposta" data-sprint="sprint-1" data-tipo="versao" data-unidade="unidade-2">
+<p class="hist-item__meta"><time datetime="2026-09-17">17/09/2026</time> <span class="hist-chip hist-chip--versao">Versão de documento</span></p>
+<p><strong><a href="../../visao/2-solucao-proposta/">2. Solução proposta · versão 1.3</a></strong></p>
+<p>Cópia de segurança descrita como configuração prevista; guarda documental de dez anos com a norma citada; verbos dos objetivos específicos 05 e 06 alinhados entre título e texto; cabeçalho da tabela de características sem colunas homônimas; blocos de equipe, prazo e conhecimento técnico da 2.6 sem repetir as seções 6, 7.1 e a matriz de competências</p>
+<p class="hist-item__rodape">Vinicius Vieira</p>
+</article>
+<article class="hist-item hist-item--versao" data-autor="rodrigo-henrique lucas-leal" data-codigo="" data-documento="3-intervencao-social" data-sprint="sprint-1" data-tipo="versao" data-unidade="unidade-2">
+<p class="hist-item__meta"><time datetime="2026-09-17">17/09/2026</time> <span class="hist-chip hist-chip--versao">Versão de documento</span></p>
+<p><strong><a href="../../visao/3-intervencao-social/">3. Intervenção social · versão 1.2</a></strong></p>
+<p>Riscos éticos e operacionais aprofundados: dispositivos pessoais, uso de imagens, burocratização do cuidado, distorção de metas, governança de retificações e rastreabilidade</p>
+<p class="hist-item__rodape">Rodrigo Henrique e Lucas Leal</p>
+</article>
+<article class="hist-item hist-item--versao" data-autor="equipe-cybersetor" data-codigo="" data-documento="3-intervencao-social" data-sprint="sprint-1" data-tipo="versao" data-unidade="unidade-2">
+<p class="hist-item__meta"><time datetime="2026-09-17">17/09/2026</time> <span class="hist-chip hist-chip--versao">Versão de documento</span></p>
+<p><strong><a href="../../visao/3-intervencao-social/">3. Intervenção social · versão 1.3</a></strong></p>
+<p>Impactos pretendidos restaurados como 3.1 e princípios da intervenção separados em 3.2; riscos reunidos em 3.3, com o da exclusão por familiaridade digital; rastreabilidade sem repetir a mitigação; governança de dados remetida à seção 2.6, ficando aqui a visibilidade por perfil; capacidades descritas em lugar de identificadores que a seção 8 declara; base legal e prazo de guarda alinhados à Lei 13.709/2018 e ao art. 68 da Lei 13.019/2014; mitigações declaradas como previstas</p>
+<p class="hist-item__rodape">Equipe CyberSetor</p>
+</article>
+<article class="hist-item hist-item--versao" data-autor="equipe-cybersetor" data-codigo="" data-documento="4-estrategias-de-engenharia-de-software" data-sprint="sprint-1" data-tipo="versao" data-unidade="unidade-2">
+<p class="hist-item__meta"><time datetime="2026-09-17">17/09/2026</time> <span class="hist-chip hist-chip--versao">Versão de documento</span></p>
+<p><strong><a href="../../visao/4-estrategia-esw/">4. Estratégias de engenharia de software · versão 1.4</a></strong></p>
+<p>Cadência de validação com o Instituto alinhada à seção 7.2</p>
+<p class="hist-item__rodape">Equipe CyberSetor</p>
+</article>
+<article class="hist-item hist-item--versao" data-autor="vinicius-vieira" data-codigo="" data-documento="5-engenharia-de-requisitos" data-sprint="sprint-1" data-tipo="versao" data-unidade="unidade-2">
+<p class="hist-item__meta"><time datetime="2026-09-17">17/09/2026</time> <span class="hist-chip hist-chip--versao">Versão de documento</span></p>
+<p><strong><a href="../../visao/5-engenharia-requisitos/">5. Engenharia de requisitos · versão 1.3</a></strong></p>
+<p>Taxonomia revista conforme o livro-texto: artefatos, eventos do Scrum e ferramentas separados das técnicas</p>
+<p class="hist-item__rodape">Vinicius Vieira</p>
+</article>
+<article class="hist-item hist-item--versao" data-autor="equipe-cybersetor" data-codigo="" data-documento="5-engenharia-de-requisitos" data-sprint="sprint-1" data-tipo="versao" data-unidade="unidade-2">
+<p class="hist-item__meta"><time datetime="2026-09-17">17/09/2026</time> <span class="hist-chip hist-chip--versao">Versão de documento</span></p>
+<p><strong><a href="../../visao/5-engenharia-requisitos/">5. Engenharia de requisitos · versão 1.4</a></strong></p>
+<p>Registro das sessões de entrevista remetido à seção 7.2</p>
+<p class="hist-item__rodape">Equipe CyberSetor</p>
+</article>
+<article class="hist-item hist-item--versao" data-autor="vinicius-vieira" data-codigo="" data-documento="6-cronograma-e-entregas" data-sprint="sprint-1" data-tipo="versao" data-unidade="unidade-2">
+<p class="hist-item__meta"><time datetime="2026-09-17">17/09/2026</time> <span class="hist-chip hist-chip--versao">Versão de documento</span></p>
+<p><strong><a href="../../visao/6-cronograma/">6. Cronograma e entregas · versão 1.3</a></strong></p>
+<p>Calendário alinhado ao plano da Sprint 1; dependências entre as características, alcance do MVP, sprint de estabilização e momentos de validação</p>
+<p class="hist-item__rodape">Vinicius Vieira</p>
+</article>
+<article class="hist-item hist-item--versao" data-autor="equipe-cybersetor" data-codigo="" data-documento="6-cronograma-e-entregas" data-sprint="sprint-1" data-tipo="versao" data-unidade="unidade-2">
+<p class="hist-item__meta"><time datetime="2026-09-17">17/09/2026</time> <span class="hist-chip hist-chip--versao">Versão de documento</span></p>
+<p><strong><a href="../../visao/6-cronograma/">6. Cronograma e entregas · versão 1.4</a></strong></p>
+<p>Prazos da Unidade 2 e workshop de 21/09 incorporados; calendário reorganizado em período, objetivo e entrega de fechamento</p>
+<p class="hist-item__rodape">Equipe CyberSetor</p>
+</article>
+<article class="hist-item hist-item--versao" data-autor="vinicius-vieira" data-codigo="" data-documento="7-interacao-entre-equipe-e-cliente" data-sprint="sprint-1" data-tipo="versao" data-unidade="unidade-2">
+<p class="hist-item__meta"><time datetime="2026-09-17">17/09/2026</time> <span class="hist-chip hist-chip--versao">Versão de documento</span></p>
+<p><strong><a href="../../visao/7-equipe-e-cliente/">7. Interação entre equipe e cliente · versão 1.4</a></strong></p>
+<p>Papel do cliente na validação e na ordenação do backlog declarado na 7.1; retrospectiva registrada ao fim de cada sprint; papel do Product Owner interno unificado com a delimitação já publicada; compromisso de treinamento remetido à seção 6.4; cadência de validação registrada como semanal; reunião de 15/09 nas interações realizadas; tabela de áreas competentes sem coluna de andamento</p>
+<p class="hist-item__rodape">Vinicius Vieira</p>
+</article>
+<article class="hist-item hist-item--versao" data-autor="equipe-cybersetor" data-codigo="" data-documento="documento-de-visao-de-produto-e-projeto" data-sprint="sprint-1" data-tipo="versao" data-unidade="unidade-2">
+<p class="hist-item__meta"><time datetime="2026-09-17">17/09/2026</time> <span class="hist-chip hist-chip--versao">Versão de documento</span></p>
+<p><strong><a href="../../visao/">Documento de Visão de Produto e Projeto · versão 1.5</a></strong></p>
+<p>Riscos da intervenção social aprofundados; calendário alinhado ao plano de sprint e aos prazos da Unidade 2; cadência de validação semanal; correções de coerência, de base legal e de nomenclatura em todas as seções</p>
+<p class="hist-item__rodape">Equipe CyberSetor</p>
+</article>
+<article class="hist-item hist-item--ata-equipe" data-autor="" data-codigo="" data-documento="" data-sprint="sprint-1" data-tipo="ata-equipe" data-unidade="unidade-2">
+<p class="hist-item__meta"><time datetime="2026-09-15">15/09/2026</time> <span class="hist-chip hist-chip--ata-equipe">Reunião da equipe</span></p>
+<p><strong><a href="../atas/2026-09-15-reuniao-equipe/">Alinhamento após a reunião com o Instituto</a></strong></p>
+<p>Controle de acesso por departamento e função; DoR e DoD como critérios de gestão da sprint; matriz esforço × valor ao lado do MoSCoW; MVP sem integrações complexas</p>
+</article>
+<article class="hist-item hist-item--ata-cliente" data-autor="" data-codigo="" data-documento="" data-sprint="sprint-1" data-tipo="ata-cliente" data-unidade="unidade-2">
+<p class="hist-item__meta"><time datetime="2026-09-15">15/09/2026</time> <span class="hist-chip hist-chip--ata-cliente">Interação com o Instituto</span></p>
+<p><strong><a href="../atas/2026-09-15-reuniao-alinhamento-instituto/">Instituto No Setor · Videoconferência</a></strong></p>
+<p>Levantamento com coordenação administrativo-financeira, de execução e núcleo pedagógico: rotina administrativa, matriz de aquisição, separação de acesso por área (LGPD), infraestrutura com VPS/backup 6h e demandas de painel e comprovação em campo</p>
+</article>
+<article class="hist-item hist-item--versao" data-autor="vinicius-vieira" data-codigo="" data-documento="2-solucao-proposta" data-sprint="sprint-1" data-tipo="versao" data-unidade="unidade-2">
+<p class="hist-item__meta"><time datetime="2026-09-15">15/09/2026</time> <span class="hist-chip hist-chip--versao">Versão de documento</span></p>
+<p><strong><a href="../../visao/2-solucao-proposta/">2. Solução proposta · versão 1.2</a></strong></p>
+<p>Tratamento de dados pessoais, custo em três fases, topologia de produção, cópia de segurança e alcance da validação do cliente</p>
+<p class="hist-item__rodape">Vinicius Vieira</p>
+</article>
+<article class="hist-item hist-item--versao" data-autor="equipe-cybersetor" data-codigo="" data-documento="6-cronograma-e-entregas" data-sprint="sprint-1" data-tipo="versao" data-unidade="unidade-2">
+<p class="hist-item__meta"><time datetime="2026-09-15">15/09/2026</time> <span class="hist-chip hist-chip--versao">Versão de documento</span></p>
+<p><strong><a href="../../visao/6-cronograma/">6. Cronograma e entregas · versão 1.2</a></strong></p>
+<p>Ajuste de validação na Sprint 1: alinhamento contínuo com a coordenação</p>
+<p class="hist-item__rodape">Equipe CyberSetor</p>
+</article>
+<article class="hist-item hist-item--versao" data-autor="caio-martins" data-codigo="" data-documento="7-interacao-entre-equipe-e-cliente" data-sprint="sprint-1" data-tipo="versao" data-unidade="unidade-2">
+<p class="hist-item__meta"><time datetime="2026-09-15">15/09/2026</time> <span class="hist-chip hist-chip--versao">Versão de documento</span></p>
+<p><strong><a href="../../visao/7-equipe-e-cliente/">7. Interação entre equipe e cliente · versão 1.3</a></strong></p>
+<p>Processo de validação reestruturado em torno das conversas com o Instituto; Definition of Ready e Definition of Done remetidas à seção 9; política de gravações e transcrições</p>
+<p class="hist-item__rodape">Caio Martins</p>
+</article>
+<article class="hist-item hist-item--versao" data-autor="equipe-cybersetor" data-codigo="" data-documento="documento-de-visao-de-produto-e-projeto" data-sprint="sprint-1" data-tipo="versao" data-unidade="unidade-2">
+<p class="hist-item__meta"><time datetime="2026-09-15">15/09/2026</time> <span class="hist-chip hist-chip--versao">Versão de documento</span></p>
+<p><strong><a href="../../visao/">Documento de Visão de Produto e Projeto · versão 1.4</a></strong></p>
+<p>Solução proposta revista quanto a dados pessoais, custo, topologia e cópia de segurança; processo de validação e critérios de aceitação em lista</p>
+<p class="hist-item__rodape">Equipe CyberSetor</p>
+</article>
+<article class="hist-item hist-item--versao" data-autor="vinicius-vieira maria-eduarda-marques" data-codigo="" data-documento="1-cenario-atual-do-cliente-e-do-negocio" data-sprint="sprint-1" data-tipo="versao" data-unidade="unidade-2">
+<p class="hist-item__meta"><time datetime="2026-09-14">14/09/2026</time> <span class="hist-chip hist-chip--versao">Versão de documento</span></p>
+<p><strong><a href="../../visao/1-cenario-atual/">1. Cenário atual do cliente e do negócio · versão 1.2</a></strong></p>
+<p>Identificação institucional das representantes do Instituto nas seções 1.1, 1.5 e 1.6; mapa de stakeholders alinhado à validação por área da seção 7.3.1</p>
+<p class="hist-item__rodape">Vinicius Vieira e Maria Eduarda Marques</p>
+</article>
+<article class="hist-item hist-item--versao" data-autor="caio-martins" data-codigo="" data-documento="5-engenharia-de-requisitos" data-sprint="sprint-1" data-tipo="versao" data-unidade="unidade-2">
+<p class="hist-item__meta"><time datetime="2026-09-14">14/09/2026</time> <span class="hist-chip hist-chip--versao">Versão de documento</span></p>
+<p><strong><a href="../../visao/5-engenharia-requisitos/">5. Engenharia de requisitos · versão 1.2</a></strong></p>
+<p>Ajustes na taxonomia de ER: artefatos de representação, critérios de aceitação objetivos, portões de qualidade e redução sistemática de ambiguidades</p>
+<p class="hist-item__rodape">Caio Martins</p>
+</article>
+<article class="hist-item hist-item--versao" data-autor="vinicius-vieira" data-codigo="" data-documento="7-interacao-entre-equipe-e-cliente" data-sprint="sprint-1" data-tipo="versao" data-unidade="unidade-2">
+<p class="hist-item__meta"><time datetime="2026-09-14">14/09/2026</time> <span class="hist-chip hist-chip--versao">Versão de documento</span></p>
+<p><strong><a href="../../visao/7-equipe-e-cliente/">7. Interação entre equipe e cliente · versão 1.2</a></strong></p>
+<p>Distinção entre as duas Maria Eduardas; alcance da avaliação do Product Owner interno; área competente por funcionalidade; cadência de validação e responsabilidades por atividade de Engenharia de Requisitos</p>
+<p class="hist-item__rodape">Vinicius Vieira</p>
+</article>
+<article class="hist-item hist-item--versao" data-autor="equipe-cybersetor" data-codigo="" data-documento="documento-de-visao-de-produto-e-projeto" data-sprint="sprint-1" data-tipo="versao" data-unidade="unidade-2">
+<p class="hist-item__meta"><time datetime="2026-09-14">14/09/2026</time> <span class="hist-chip hist-chip--versao">Versão de documento</span></p>
+<p><strong><a href="../../visao/">Documento de Visão de Produto e Projeto · versão 1.3</a></strong></p>
+<p>Identificação das representantes do Instituto, taxonomia de Engenharia de Requisitos e processo de validação com o cliente</p>
+<p class="hist-item__rodape">Equipe CyberSetor</p>
+</article>
+<article class="hist-item hist-item--versao" data-autor="vinicius-vieira" data-codigo="" data-documento="boas-praticas-no-github" data-sprint="sprint-1" data-tipo="versao" data-unidade="unidade-2">
+<p class="hist-item__meta"><time datetime="2026-09-09">09/09/2026</time> <span class="hist-chip hist-chip--versao">Versão de documento</span></p>
+<p><strong><a href="../boas-praticas-github/">Boas práticas no GitHub · versão 1.1</a></strong></p>
+<p>Verificação e publicação do site separadas por workflow</p>
+<p class="hist-item__rodape">Vinicius Vieira</p>
+</article>
+<article class="hist-item hist-item--ata-equipe" data-autor="" data-codigo="" data-documento="" data-sprint="sprint-1" data-tipo="ata-equipe" data-unidade="unidade-1">
+<p class="hist-item__meta"><time datetime="2026-09-08">08/09/2026</time> <span class="hist-chip hist-chip--ata-equipe">Reunião da equipe</span></p>
+<p><strong><a href="../atas/2026-09-08-sprint-planning/">Sprint Planning da Sprint 1</a></strong></p>
+<p>Adoção do MoSCoW para priorização do Product Backlog; estrutura da Sprint em duas semanas; padrão INVEST/Given-When-Then para histórias de usuário</p>
+</article>
+<article class="hist-item hist-item--ata-cliente" data-autor="" data-codigo="" data-documento="" data-sprint="sprint-1" data-tipo="ata-cliente" data-unidade="unidade-1">
+<p class="hist-item__meta"><time datetime="2026-09-08">08/09/2026</time> <span class="hist-chip hist-chip--ata-cliente">Interação com o Instituto</span></p>
+<p><strong><a href="../atas/2026-09-08-reuniao-presencial-instituto/">Instituto No Setor · Presencial, na sede do Instituto</a></strong></p>
+<p>Aprofundamento das questões em aberto: estrutura organizacional, ciclo do projeto financiado e dores confirmadas</p>
+</article>
+<article class="hist-item hist-item--sprint" data-autor="" data-codigo="" data-documento="" data-sprint="sprint-1" data-tipo="sprint" data-unidade="unidade-1">
+<p class="hist-item__meta"><time datetime="2026-09-08">08/09/2026</time> <span class="hist-chip hist-chip--sprint">Início de sprint</span></p>
+<p><strong><a href="../sprints/sprint-1/">Sprint 1</a></strong></p>
+<p>Período de 08/09/2026 a 22/09/2026. Meta: Ao final da Sprint 1, a equipe dispõe de um Product Backlog estruturado no GitHub Projects que declara o ciclo do projeto financiado — requisito/meta, atividade, evidência, relatório de execução do objeto e base única de pessoas — em histórias de usuário com critérios de aceitação verificáveis, classificadas por MoSCoW e rastreadas aos Objetivos Específicos, acompanhado da representação do processo atual do Instituto em notação BPMN.</p>
+</article>
+<article class="hist-item hist-item--marco" data-autor="" data-codigo="" data-documento="" data-sprint="sprint-1" data-tipo="marco" data-unidade="unidade-1">
+<p class="hist-item__meta"><time datetime="2026-09-08">08/09/2026</time> <span class="hist-chip hist-chip--marco">Marco da disciplina</span></p>
+<p><strong>Unidade 1</strong></p>
+</article>
+</section>
+<section class="hist-grupo" id="concepcao">
+<h3 class="hist-grupo__titulo" id="concepcao_1">Concepção<a class="headerlink" href="#concepcao_1" title="Permanent link">&para;</a></h3>
+<article class="hist-item hist-item--versao" data-autor="equipe-cybersetor" data-codigo="" data-documento="11-licoes-aprendidas-unidade-1" data-sprint="concepcao" data-tipo="versao" data-unidade="unidade-1">
+<p class="hist-item__meta"><time datetime="2026-09-07">07/09/2026</time> <span class="hist-chip hist-chip--versao">Versão de documento</span></p>
+<p><strong><a href="../../licoes-aprendidas/unidade-1/">11. Lições aprendidas — Unidade 1 · versão 1.0</a></strong></p>
+<p>Lições da Sprint 0 registradas para a entrega da Unidade 1</p>
+<p class="hist-item__rodape">Equipe CyberSetor</p>
+</article>
+<article class="hist-item hist-item--versao" data-autor="equipe-cybersetor" data-codigo="" data-documento="4-estrategias-de-engenharia-de-software" data-sprint="concepcao" data-tipo="versao" data-unidade="unidade-1">
+<p class="hist-item__meta"><time datetime="2026-09-07">07/09/2026</time> <span class="hist-chip hist-chip--versao">Versão de documento</span></p>
+<p><strong><a href="../../visao/4-estrategia-esw/">4. Estratégias de engenharia de software · versão 1.3</a></strong></p>
+<p>Adequação da classificação do Ciclo de Vida</p>
+<p class="hist-item__rodape">Equipe CyberSetor</p>
+</article>
+<article class="hist-item hist-item--versao" data-autor="vinicius-vieira" data-codigo="" data-documento="boas-praticas-no-github" data-sprint="concepcao" data-tipo="versao" data-unidade="unidade-1">
+<p class="hist-item__meta"><time datetime="2026-09-06">06/09/2026</time> <span class="hist-chip hist-chip--versao">Versão de documento</span></p>
+<p><strong><a href="../boas-praticas-github/">Boas práticas no GitHub · versão 1.0</a></strong></p>
+<p>Branches curtas a partir da <code>main</code>, Conventional Commits, pull request revisado e integração contínua</p>
+<p class="hist-item__rodape">Vinicius Vieira</p>
+</article>
+<article class="hist-item hist-item--versao" data-autor="equipe-cybersetor" data-codigo="" data-documento="3-intervencao-social" data-sprint="concepcao" data-tipo="versao" data-unidade="unidade-1">
+<p class="hist-item__meta"><time datetime="2026-09-06">06/09/2026</time> <span class="hist-chip hist-chip--versao">Versão de documento</span></p>
+<p><strong><a href="../../visao/3-intervencao-social/">3. Intervenção social · versão 1.1</a></strong></p>
+<p>Redação das seções de impacto social para o site</p>
+<p class="hist-item__rodape">Equipe CyberSetor</p>
+</article>
+<article class="hist-item hist-item--versao" data-autor="equipe-cybersetor" data-codigo="" data-documento="4-estrategias-de-engenharia-de-software" data-sprint="concepcao" data-tipo="versao" data-unidade="unidade-1">
+<p class="hist-item__meta"><time datetime="2026-09-06">06/09/2026</time> <span class="hist-chip hist-chip--versao">Versão de documento</span></p>
+<p><strong><a href="../../visao/4-estrategia-esw/">4. Estratégias de engenharia de software · versão 1.1</a></strong></p>
+<p>Seção redigida para o site</p>
+<p class="hist-item__rodape">Equipe CyberSetor</p>
+</article>
+<article class="hist-item hist-item--versao" data-autor="equipe-cybersetor" data-codigo="" data-documento="4-estrategias-de-engenharia-de-software" data-sprint="concepcao" data-tipo="versao" data-unidade="unidade-1">
+<p class="hist-item__meta"><time datetime="2026-09-06">06/09/2026</time> <span class="hist-chip hist-chip--versao">Versão de documento</span></p>
+<p><strong><a href="../../visao/4-estrategia-esw/">4. Estratégias de engenharia de software · versão 1.2</a></strong></p>
+<p>Refatoração e melhoria na apresentação e estrutura da seção 4</p>
+<p class="hist-item__rodape">Equipe CyberSetor</p>
+</article>
+<article class="hist-item hist-item--versao" data-autor="equipe-cybersetor" data-codigo="" data-documento="5-engenharia-de-requisitos" data-sprint="concepcao" data-tipo="versao" data-unidade="unidade-1">
+<p class="hist-item__meta"><time datetime="2026-09-06">06/09/2026</time> <span class="hist-chip hist-chip--versao">Versão de documento</span></p>
+<p><strong><a href="../../visao/5-engenharia-requisitos/">5. Engenharia de requisitos · versão 1.1</a></strong></p>
+<p>Seção redigida para o site</p>
+<p class="hist-item__rodape">Equipe CyberSetor</p>
+</article>
+<article class="hist-item hist-item--versao" data-autor="equipe-cybersetor" data-codigo="" data-documento="6-cronograma-e-entregas" data-sprint="concepcao" data-tipo="versao" data-unidade="unidade-1">
+<p class="hist-item__meta"><time datetime="2026-09-06">06/09/2026</time> <span class="hist-chip hist-chip--versao">Versão de documento</span></p>
+<p><strong><a href="../../visao/6-cronograma/">6. Cronograma e entregas · versão 1.1</a></strong></p>
+<p>Seção redigida para o site</p>
+<p class="hist-item__rodape">Equipe CyberSetor</p>
+</article>
+<article class="hist-item hist-item--versao" data-autor="equipe-cybersetor" data-codigo="" data-documento="7-interacao-entre-equipe-e-cliente" data-sprint="concepcao" data-tipo="versao" data-unidade="unidade-1">
+<p class="hist-item__meta"><time datetime="2026-09-06">06/09/2026</time> <span class="hist-chip hist-chip--versao">Versão de documento</span></p>
+<p><strong><a href="../../visao/7-equipe-e-cliente/">7. Interação entre equipe e cliente · versão 1.1</a></strong></p>
+<p>Seção redigida para o site</p>
+<p class="hist-item__rodape">Equipe CyberSetor</p>
+</article>
+<article class="hist-item hist-item--versao" data-autor="equipe-cybersetor" data-codigo="" data-documento="documento-de-visao-de-produto-e-projeto" data-sprint="concepcao" data-tipo="versao" data-unidade="unidade-1">
+<p class="hist-item__meta"><time datetime="2026-09-06">06/09/2026</time> <span class="hist-chip hist-chip--versao">Versão de documento</span></p>
+<p><strong><a href="../../visao/">Documento de Visão de Produto e Projeto · versão 1.2</a></strong></p>
+<p>Seções 4, 5, 6 e 7 redigidas para o site</p>
+<p class="hist-item__rodape">Equipe CyberSetor</p>
+</article>
+<article class="hist-item hist-item--versao" data-autor="equipe-cybersetor" data-codigo="" data-documento="1-cenario-atual-do-cliente-e-do-negocio" data-sprint="concepcao" data-tipo="versao" data-unidade="unidade-1">
+<p class="hist-item__meta"><time datetime="2026-09-05">05/09/2026</time> <span class="hist-chip hist-chip--versao">Versão de documento</span></p>
+<p><strong><a href="../../visao/1-cenario-atual/">1. Cenário atual do cliente e do negócio · versão 1.1</a></strong></p>
+<p>Revisão das seções 1.4, 1.5 e 1.7</p>
+<p class="hist-item__rodape">Equipe CyberSetor</p>
+</article>
+<article class="hist-item hist-item--versao" data-autor="equipe-cybersetor" data-codigo="" data-documento="2-solucao-proposta" data-sprint="concepcao" data-tipo="versao" data-unidade="unidade-1">
+<p class="hist-item__meta"><time datetime="2026-09-05">05/09/2026</time> <span class="hist-chip hist-chip--versao">Versão de documento</span></p>
+<p><strong><a href="../../visao/2-solucao-proposta/">2. Solução proposta · versão 1.1</a></strong></p>
+<p>Revisão das seções 2.1 e 2.2</p>
+<p class="hist-item__rodape">Equipe CyberSetor</p>
+</article>
+<article class="hist-item hist-item--versao" data-autor="equipe-cybersetor" data-codigo="" data-documento="documento-de-visao-de-produto-e-projeto" data-sprint="concepcao" data-tipo="versao" data-unidade="unidade-1">
+<p class="hist-item__meta"><time datetime="2026-09-05">05/09/2026</time> <span class="hist-chip hist-chip--versao">Versão de documento</span></p>
+<p><strong><a href="../../visao/">Documento de Visão de Produto e Projeto · versão 1.1</a></strong></p>
+<p>Revisão com foco único nas seções 1.4, 1.5, 1.7, 2.1 e 2.2</p>
+<p class="hist-item__rodape">Equipe CyberSetor</p>
+</article>
+<article class="hist-item hist-item--versao" data-autor="equipe-cybersetor" data-codigo="" data-documento="matriz-de-competencias-e-stack" data-sprint="concepcao" data-tipo="versao" data-unidade="unidade-1">
+<p class="hist-item__meta"><time datetime="2026-09-03">03/09/2026</time> <span class="hist-chip hist-chip--versao">Versão de documento</span></p>
+<p><strong><a href="../matriz-competencias/">Matriz de competências e stack · versão 1.0</a></strong></p>
+<p>Registro inicial das decisões técnicas e método da matriz de competências</p>
+<p class="hist-item__rodape">Equipe CyberSetor</p>
+</article>
+<article class="hist-item hist-item--ata-cliente" data-autor="" data-codigo="" data-documento="" data-sprint="concepcao" data-tipo="ata-cliente" data-unidade="unidade-1">
+<p class="hist-item__meta"><time datetime="2026-09-02">02/09/2026</time> <span class="hist-chip hist-chip--ata-cliente">Interação com o Instituto</span></p>
+<p><strong>Instituto No Setor · Mensagem</strong></p>
+<p>O Instituto manifestou concordância <strong>preliminar</strong> com a proposta de solução e propôs encontro presencial — ver seção 7.3.2 do Documento de Visão</p>
+</article>
+<article class="hist-item hist-item--ata-equipe" data-autor="" data-codigo="" data-documento="" data-sprint="concepcao" data-tipo="ata-equipe" data-unidade="unidade-1">
+<p class="hist-item__meta"><time datetime="2026-09-01">01/09/2026</time> <span class="hist-chip hist-chip--ata-equipe">Reunião da equipe</span></p>
+<p><strong><a href="../atas/2026-09-01-reuniao-equipe/">Planejamento da entrega da Unidade 1</a></strong></p>
+<p>Product Owner interno definido; duplas e prazos por seção; vídeo gravado em conjunto; stack decidida por matriz de competências</p>
+</article>
+<article class="hist-item hist-item--versao" data-autor="equipe-cybersetor" data-codigo="" data-documento="1-cenario-atual-do-cliente-e-do-negocio" data-sprint="concepcao" data-tipo="versao" data-unidade="unidade-1">
+<p class="hist-item__meta"><time datetime="2026-09-01">01/09/2026</time> <span class="hist-chip hist-chip--versao">Versão de documento</span></p>
+<p><strong><a href="../../visao/1-cenario-atual/">1. Cenário atual do cliente e do negócio · versão 1.0</a></strong></p>
+<p>Versão inicial</p>
+<p class="hist-item__rodape">Equipe CyberSetor</p>
+</article>
+<article class="hist-item hist-item--versao" data-autor="equipe-cybersetor" data-codigo="" data-documento="2-solucao-proposta" data-sprint="concepcao" data-tipo="versao" data-unidade="unidade-1">
+<p class="hist-item__meta"><time datetime="2026-09-01">01/09/2026</time> <span class="hist-chip hist-chip--versao">Versão de documento</span></p>
+<p><strong><a href="../../visao/2-solucao-proposta/">2. Solução proposta · versão 1.0</a></strong></p>
+<p>Versão inicial</p>
+<p class="hist-item__rodape">Equipe CyberSetor</p>
+</article>
+<article class="hist-item hist-item--versao" data-autor="equipe-cybersetor" data-codigo="" data-documento="3-intervencao-social" data-sprint="concepcao" data-tipo="versao" data-unidade="unidade-1">
+<p class="hist-item__meta"><time datetime="2026-09-01">01/09/2026</time> <span class="hist-chip hist-chip--versao">Versão de documento</span></p>
+<p><strong><a href="../../visao/3-intervencao-social/">3. Intervenção social · versão 1.0</a></strong></p>
+<p>Versão inicial</p>
+<p class="hist-item__rodape">Equipe CyberSetor</p>
+</article>
+<article class="hist-item hist-item--versao" data-autor="equipe-cybersetor" data-codigo="" data-documento="4-estrategias-de-engenharia-de-software" data-sprint="concepcao" data-tipo="versao" data-unidade="unidade-1">
+<p class="hist-item__meta"><time datetime="2026-09-01">01/09/2026</time> <span class="hist-chip hist-chip--versao">Versão de documento</span></p>
+<p><strong><a href="../../visao/4-estrategia-esw/">4. Estratégias de engenharia de software · versão 1.0</a></strong></p>
+<p>Versão inicial</p>
+<p class="hist-item__rodape">Equipe CyberSetor</p>
+</article>
+<article class="hist-item hist-item--versao" data-autor="equipe-cybersetor" data-codigo="" data-documento="5-engenharia-de-requisitos" data-sprint="concepcao" data-tipo="versao" data-unidade="unidade-1">
+<p class="hist-item__meta"><time datetime="2026-09-01">01/09/2026</time> <span class="hist-chip hist-chip--versao">Versão de documento</span></p>
+<p><strong><a href="../../visao/5-engenharia-requisitos/">5. Engenharia de requisitos · versão 1.0</a></strong></p>
+<p>Versão inicial</p>
+<p class="hist-item__rodape">Equipe CyberSetor</p>
+</article>
+<article class="hist-item hist-item--versao" data-autor="equipe-cybersetor" data-codigo="" data-documento="6-cronograma-e-entregas" data-sprint="concepcao" data-tipo="versao" data-unidade="unidade-1">
+<p class="hist-item__meta"><time datetime="2026-09-01">01/09/2026</time> <span class="hist-chip hist-chip--versao">Versão de documento</span></p>
+<p><strong><a href="../../visao/6-cronograma/">6. Cronograma e entregas · versão 1.0</a></strong></p>
+<p>Versão inicial</p>
+<p class="hist-item__rodape">Equipe CyberSetor</p>
+</article>
+<article class="hist-item hist-item--versao" data-autor="equipe-cybersetor" data-codigo="" data-documento="7-interacao-entre-equipe-e-cliente" data-sprint="concepcao" data-tipo="versao" data-unidade="unidade-1">
+<p class="hist-item__meta"><time datetime="2026-09-01">01/09/2026</time> <span class="hist-chip hist-chip--versao">Versão de documento</span></p>
+<p><strong><a href="../../visao/7-equipe-e-cliente/">7. Interação entre equipe e cliente · versão 1.0</a></strong></p>
+<p>Versão inicial</p>
+<p class="hist-item__rodape">Equipe CyberSetor</p>
+</article>
+<article class="hist-item hist-item--versao" data-autor="equipe-cybersetor" data-codigo="" data-documento="documento-de-visao-de-produto-e-projeto" data-sprint="concepcao" data-tipo="versao" data-unidade="unidade-1">
+<p class="hist-item__meta"><time datetime="2026-09-01">01/09/2026</time> <span class="hist-chip hist-chip--versao">Versão de documento</span></p>
+<p><strong><a href="../../visao/">Documento de Visão de Produto e Projeto · versão 1.0</a></strong></p>
+<p>Versão inicial</p>
+<p class="hist-item__rodape">Equipe CyberSetor</p>
+</article>
+<article class="hist-item hist-item--ata-equipe" data-autor="" data-codigo="" data-documento="" data-sprint="concepcao" data-tipo="ata-equipe" data-unidade="unidade-1">
+<p class="hist-item__meta"><time datetime="2026-08-27">27/08/2026</time> <span class="hist-chip hist-chip--ata-equipe">Reunião da equipe</span></p>
+<p><strong><a href="../atas/2026-08-27-reuniao-equipe/">Escopo e prestação de contas</a></strong></p>
+<p>Adoção de ata automática; migração das reuniões para o Google Meet; estudo aprofundado do Instituto</p>
+</article>
+<article class="hist-item hist-item--ata-cliente" data-autor="" data-codigo="" data-documento="" data-sprint="concepcao" data-tipo="ata-cliente" data-unidade="unidade-1">
+<p class="hist-item__meta"><time datetime="2026-08-20">20/08/2026</time> <span class="hist-chip hist-chip--ata-cliente">Interação com o Instituto</span></p>
+<p><strong>Instituto No Setor · Videoconferência</strong></p>
+<p>Primeira reunião com o Instituto No Setor: entendimento do contexto e das dores</p>
+</article>
+<article class="hist-item hist-item--ata-equipe" data-autor="" data-codigo="" data-documento="" data-sprint="concepcao" data-tipo="ata-equipe" data-unidade="unidade-1">
+<p class="hist-item__meta"><time datetime="2026-08-18">18/08/2026</time> <span class="hist-chip hist-chip--ata-equipe">Reunião da equipe</span></p>
+<p><strong>Organização do trabalho</strong></p>
+<p>Divisão inicial de tópicos do documento</p>
+</article>
+<article class="hist-item hist-item--ata-equipe" data-autor="" data-codigo="" data-documento="" data-sprint="concepcao" data-tipo="ata-equipe" data-unidade="unidade-1">
+<p class="hist-item__meta"><time datetime="2026-08-17">17/08/2026</time> <span class="hist-chip hist-chip--ata-equipe">Reunião da equipe</span></p>
+<p><strong>Alinhamento inicial</strong></p>
+<p>Domínio social; prospecção de clientes; abordagem ágil</p>
+</article>
+</section>
+</div>
+<h2 id="evolucao-por-documento">Evolução por documento<a class="headerlink" href="#evolucao-por-documento" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Documento</th>
+<th>Versão vigente</th>
+<th style="text-align: right;">Versões</th>
+<th>Primeira</th>
+<th>Última</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="../boas-praticas-github/">Boas práticas no GitHub</a></td>
+<td>2.3</td>
+<td style="text-align: right;">6</td>
+<td>06/09/2026</td>
+<td>03/11/2026</td>
+</tr>
+<tr>
+<td><a href="../../requisitos/10-backlog/">10. Backlog de produto</a></td>
+<td>2.6</td>
+<td style="text-align: right;">9</td>
+<td>27/09/2026</td>
+<td>03/11/2026</td>
+</tr>
+<tr>
+<td><a href="../../requisitos/8-requisitos/">8. Requisitos de Software</a></td>
+<td>2.12</td>
+<td style="text-align: right;">20</td>
+<td>19/09/2026</td>
+<td>03/11/2026</td>
+</tr>
+<tr>
+<td><a href="../../visao/">Documento de Visão de Produto e Projeto</a></td>
+<td>1.11</td>
+<td style="text-align: right;">12</td>
+<td>01/09/2026</td>
+<td>03/11/2026</td>
+</tr>
+<tr>
+<td><a href="../../entregas/atividade-3/">Atividade 3: ajuste e validação da lista de requisitos</a></td>
+<td>1.1</td>
+<td style="text-align: right;">2</td>
+<td>29/09/2026</td>
+<td>26/10/2026</td>
+</tr>
+<tr>
+<td><a href="../../entregas/unidade-2/">Síntese de Entregas — Unidade 2</a></td>
+<td>2.1</td>
+<td style="text-align: right;">7</td>
+<td>19/09/2026</td>
+<td>26/10/2026</td>
+</tr>
+<tr>
+<td><a href="../matriz-competencias/">Matriz de competências e stack</a></td>
+<td>1.3</td>
+<td style="text-align: right;">4</td>
+<td>03/09/2026</td>
+<td>26/10/2026</td>
+</tr>
+<tr>
+<td><a href="../processo-scrumxp/">Processo e ritos (ScrumXP)</a></td>
+<td>1.6</td>
+<td style="text-align: right;">6</td>
+<td>05/10/2026</td>
+<td>26/10/2026</td>
+</tr>
+<tr>
+<td><a href="../../referencias/">12. Referências bibliográficas</a></td>
+<td>1.3</td>
+<td style="text-align: right;">3</td>
+<td>05/10/2026</td>
+<td>26/10/2026</td>
+</tr>
+<tr>
+<td><a href="../../requisitos/9-dor-dod/">9. Definition of Ready e Definition of Done</a></td>
+<td>1.4</td>
+<td style="text-align: right;">5</td>
+<td>29/09/2026</td>
+<td>26/10/2026</td>
+</tr>
+<tr>
+<td><a href="../../visao/1-cenario-atual/">1. Cenário atual do cliente e do negócio</a></td>
+<td>1.8</td>
+<td style="text-align: right;">9</td>
+<td>01/09/2026</td>
+<td>26/10/2026</td>
+</tr>
+<tr>
+<td><a href="../../visao/2-solucao-proposta/">2. Solução proposta</a></td>
+<td>1.6</td>
+<td style="text-align: right;">7</td>
+<td>01/09/2026</td>
+<td>26/10/2026</td>
+</tr>
+<tr>
+<td><a href="../../visao/3-intervencao-social/">3. Intervenção social</a></td>
+<td>1.5</td>
+<td style="text-align: right;">6</td>
+<td>01/09/2026</td>
+<td>26/10/2026</td>
+</tr>
+<tr>
+<td><a href="../../visao/4-estrategia-esw/">4. Estratégias de engenharia de software</a></td>
+<td>1.8</td>
+<td style="text-align: right;">9</td>
+<td>01/09/2026</td>
+<td>26/10/2026</td>
+</tr>
+<tr>
+<td><a href="../../visao/5-engenharia-requisitos/">5. Engenharia de requisitos</a></td>
+<td>1.6</td>
+<td style="text-align: right;">7</td>
+<td>01/09/2026</td>
+<td>26/10/2026</td>
+</tr>
+<tr>
+<td><a href="../../visao/6-cronograma/">6. Cronograma e entregas</a></td>
+<td>1.8</td>
+<td style="text-align: right;">9</td>
+<td>01/09/2026</td>
+<td>26/10/2026</td>
+</tr>
+<tr>
+<td><a href="../../visao/7-equipe-e-cliente/">7. Interação entre equipe e cliente</a></td>
+<td>1.11</td>
+<td style="text-align: right;">12</td>
+<td>01/09/2026</td>
+<td>26/10/2026</td>
+</tr>
+<tr>
+<td><a href="../dailies/">Registro das dailies</a></td>
+<td>1.2</td>
+<td style="text-align: right;">3</td>
+<td>06/10/2026</td>
+<td>21/10/2026</td>
+</tr>
+<tr>
+<td><a href="../../licoes-aprendidas/unidade-2/">11. Lições aprendidas — Unidade 2</a></td>
+<td>1.0</td>
+<td style="text-align: right;">1</td>
+<td>07/10/2026</td>
+<td>07/10/2026</td>
+</tr>
+<tr>
+<td><a href="../../licoes-aprendidas/unidade-1/">11. Lições aprendidas — Unidade 1</a></td>
+<td>1.3</td>
+<td style="text-align: right;">4</td>
+<td>07/09/2026</td>
+<td>05/10/2026</td>
+</tr>
+<tr>
+<td><a href="../../requisitos/b1-bpmn-processo-atual/">B1 · Modelo do processo atual (BPMN)</a></td>
+<td>1.2</td>
+<td style="text-align: right;">3</td>
+<td>17/09/2026</td>
+<td>17/09/2026</td>
+</tr>
+</tbody>
+</table>
+<p><small>Registros: 144 versões de 21 documentos, 21 reuniões, 4 sprints e 5 marcos.</small></p>
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+  
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Voltar para o topo
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+        
+      
+      <nav class="md-footer__inner md-grid" aria-label="Rodapé" >
+        
+          
+          <a href="../../requisitos/b1-bpmn-processo-atual/" class="md-footer__link md-footer__link--prev" aria-label="Anterior: Anexo B1 · Modelo do processo atual (BPMN)">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Anterior
+              </span>
+              <div class="md-ellipsis">
+                Anexo B1 · Modelo do processo atual (BPMN)
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../processo-scrumxp/" class="md-footer__link md-footer__link--next" aria-label="Próximo: Processo e ritos (ScrumXP)">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Próximo
+              </span>
+              <div class="md-ellipsis">
+                Processo e ritos (ScrumXP)
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      © 2026 Equipe CyberSetor · FCTE/UnB
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+      <div class="md-progress" data-md-component="progress" role="progressbar"></div>
+    
+    
+    <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.tabs", "navigation.tabs.sticky", "navigation.indexes", "navigation.instant", "navigation.instant.prefetch", "navigation.instant.progress", "navigation.tracking", "navigation.sections", "navigation.top", "navigation.prune", "navigation.footer", "content.action.edit", "content.code.copy", "toc.follow", "search.suggest", "search.highlight", "search.share", "content.tooltips"], "search": "../../assets/javascripts/workers/search.f8cc74c7.min.js", "translations": {"clipboard.copied": "Copiado para \u00e1rea de transfer\u00eancia", "clipboard.copy": "Copiar para \u00e1rea de transfer\u00eancia", "search.result.more.one": "mais 1 nesta p\u00e1gina", "search.result.more.other": "# mais nesta p\u00e1gina", "search.result.none": "Nenhum documento encontrado", "search.result.one": "1 documento encontrado", "search.result.other": "# documentos encontrados", "search.result.placeholder": "Digite para iniciar a busca", "search.result.term.missing": "Ausente", "select.version": "Selecione a vers\u00e3o"}}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.c8b220af.min.js"></script>
+      
+        <script src="../../assets/javascripts/historico.js"></script>
+      
+    
+  </body>
+</html>
