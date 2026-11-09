@@ -9,7 +9,7 @@ Reunião de encerramento da Sprint 4 e de planejamento da Sprint 5, realizada em
 | **Código** | ATA-2026-11-05 |
 | **Tipo** | Sprint Review 4, Retrospectiva 4 e Sprint Planning 5 |
 | **Data** | 05/11/2026 (quinta-feira) |
-| **Horário** | Não registrado |
+| **Horário** | Início às 21h30 |
 | **Local / plataforma** | Google Meet |
 | **Formato** | Remoto |
 | **Participantes — CyberSetor** | Vinicius Vieira, Maria Eduarda Marques, Rodrigo Henrique Donato, Daniel Batista e Caio Martins (na parte final) |
@@ -34,11 +34,11 @@ Reunião de encerramento da Sprint 4 e de planejamento da Sprint 5, realizada em
 
 ## 2. Resumo
 
-A Sprint 4 terminou com o MVP quase completo: dos 84 critérios de aceitação das histórias do MVP, 73 foram implementados, 3 parcialmente, 7 ainda faltam e 1 não tem efeito prático. A homologação foi publicada online, com domínio e envio de e-mail configurados, e 68 itens do quadro foram fechados. A adesão às dailies ficou em 73%, abaixo da meta de 80%. A validação com o Instituto foi adiada a pedido do Instituto para a semana seguinte; a equipe vai preparar um roteiro e slides para orientar os testes. Na Retrospectiva, a equipe flexibilizou o limite de linhas e o prazo de revisão dos pull requests e decidiu que o pull request aprovado e sem conflito é integrado logo. A Sprint 5 vai de 05/11 a 19/11, com a entrega da Unidade 3 em 17/11.
+A Sprint 4 terminou com o MVP quase completo: dos 84 critérios de aceitação das histórias do MVP, 73 foram implementados, 3 parcialmente, 7 ainda faltam e 1 não tem efeito prático. A homologação foi publicada online, com domínio e envio de e-mail configurados, e 68 itens do quadro foram fechados. A adesão às dailies ficou em 73%, abaixo da meta de 80%. A validação com o Instituto foi adiada a pedido do Instituto para a semana seguinte; a equipe vai preparar um roteiro e slides para orientar os testes. Na Retrospectiva, a equipe flexibilizou o limite de linhas e o prazo de revisão dos pull requests e decidiu que o pull request com duas aprovações e sem conflito é integrado logo. A Sprint 5 vai de 05/11 a 19/11, com a entrega da Unidade 3 em 17/11.
 
 - **Review:** MVP com 73 de 84 critérios implementados; homologação online; 68 itens fechados; dailies em 73%.
 - **Retrospectiva:** programação em par e troca de duplas funcionaram; integração concentrada numa só pessoa e acúmulo de pull requests a corrigir; demandas do docente pedem mais atenção.
-- **Processo:** linhas de teste fora do limite de tamanho do pull request; integração logo após a aprovação, sem conflito.
+- **Processo:** linhas de teste fora do limite de tamanho do pull request; integração logo após a segunda aprovação, sem conflito.
 - **Sprint 5:** MVP completo em código, Unidade 3 publicada, retornos do Instituto e issues do docente fechados.
 
 ---
@@ -49,7 +49,7 @@ A Sprint 4 terminou com o MVP quase completo: dos 84 critérios de aceitação d
 |---|---|---|---|
 | D1 | A meta da Sprint 4 foi **parcialmente atingida**: 73 dos 84 critérios de aceitação do MVP implementados, 3 parcialmente, 7 ausentes e 1 sem efeito prático; homologação online | Balanço apresentado na Review | Plano da Sprint 4; quadro do projeto |
 | D2 | **Limite de tamanho dos pull requests flexibilizado**: deixa de valer a regra estrita de 1.000 linhas, e as linhas de teste não contam no tamanho | Testes aumentam o tamanho sem dificultar a revisão | Página "Boas práticas no GitHub" |
-| D3 | **Integração logo após a aprovação**: pull request aprovado e sem conflito com a branch de destino é integrado em seguida, sem concentrar os merges numa só pessoa | Acúmulo de pull requests aprovados e não integrados | Página "Boas práticas no GitHub" |
+| D3 | **Duas aprovações e integração logo depois**: o pull request precisa da aprovação de dois revisores e, sem conflito com a branch de destino, é integrado logo após a segunda aprovação, sem concentrar os merges numa só pessoa | Acúmulo de pull requests aprovados e não integrados; merges concentrados num só integrante | Página "Boas práticas no GitHub" |
 | D4 | **Prazo de revisão de 24 horas flexibilizado** | Proposta da Retrospectiva | Página "Boas práticas no GitHub" |
 | D5 | **Sprint 5 de 05/11 a 19/11** (14 dias); entrega da Unidade 3 e encerramento das mudanças na branch principal em 17/11 | A Sprint 4 terminou dois dias depois do previsto | Cronograma (seção 6); plano da Sprint 5 |
 | D6 | **Meta da Sprint 5**: MVP 100% em código, com os critérios de aceitação exercitados; Unidade 3 100% publicada; retornos do Instituto e issues do docente fechados | Proximidade da entrega da Unidade 3 | Plano da Sprint 5 |
@@ -68,7 +68,7 @@ A Sprint 4 terminou com o MVP quase completo: dos 84 critérios de aceitação d
 | A2 | Preparar o roteiro e os slides dos testes que o Instituto vai fazer na homologação, a partir de uma issue colaborativa (D7) | Maria Eduarda Marques | 09/11 | Pendente |
 | A3 | Definir a data da reunião de validação com o Instituto, entre terça e quinta-feira (D10) | equipe | 08/11 | Pendente |
 | A4 | Incentivar o uso da homologação pelo Instituto antes e depois da reunião de validação | equipe | contínuo | Pendente |
-| A5 | Registrar na página de boas práticas as novas regras de revisão e de integração (D2 a D4), com a proposta de exigir duas aprovações antes do merge | Maria Eduarda Marques | Sprint 5 | Pendente |
+| A5 | Registrar na página de boas práticas as novas regras de revisão e de integração (D2 a D4) | Maria Eduarda Marques | Sprint 5 | Pendente |
 | A6 | Atualizar o quadro e publicar o plano da Sprint 5 | Vinicius Vieira | Sprint 5 | Pendente |
 | A7 | Pedir à monitoria a avaliação das pendências e do site, e enviar a ela os documentos que faltam | Vinicius Vieira | 06/11 | Pendente |
 | A8 | Concluir a tela de download da planilha do projeto (HU-13) | Daniel Batista | 06/11 | Pendente |
@@ -86,7 +86,7 @@ Vinicius Vieira apresentou o balanço da Sprint 4: o MVP soma 84 critérios de a
 
 - **Funcionou:** primeira sprint de construção com muitas funcionalidades entregues, apesar da curva de aprendizado das tecnologias; programação em par e troca de duplas; homologação e documentação.
 - **Não funcionou:** integração dos pull requests concentrada numa só pessoa, com acúmulo de pull requests aprovados; algumas demandas do docente ficaram em segundo plano; encerramento da sprint com dois dias de atraso.
-- **Ações:** D2 a D4; proposta de exigir duas aprovações antes do merge (A5).
+- **Ações:** D2 a D4, registradas na página de boas práticas (A5).
 
 ### Assistentes de inteligência artificial
 
@@ -113,7 +113,6 @@ A equipe tratou da exigência de comprovar a programação em par e o desenvolvi
 | P1 | Data da reunião de validação com o Instituto | equipe | A3 |
 | P2 | Os 7 critérios de aceitação ausentes e os 3 parciais do MVP | Sprint 5 | Plano da Sprint 5 |
 | P3 | Formalização com o Instituto do tratamento e da confidencialidade dos dados antes do uso com dados reais | Instituto e equipe | Reunião de validação |
-| P4 | Número de aprovações exigido antes do merge: uma (D3) ou duas (proposta da A5) | equipe | Definir ao registrar a regra |
 
 ---
 
@@ -121,4 +120,4 @@ A equipe tratou da exigência de comprovar a programação em par e o desenvolvi
 
 | Versão | Data | Autor | Descrição |
 |---|---|---|---|
-| 0.1 | 09/11/2026 | Maria Eduarda Marques | Rascunho a partir das anotações automáticas da reunião, com revisão de dados sensíveis |
+| 0.1 | 09/11/2026 | Maria Eduarda Marques | Rascunho a partir das anotações automáticas da reunião, com revisão de dados sensíveis; horário e regra de duas aprovações confirmados |
