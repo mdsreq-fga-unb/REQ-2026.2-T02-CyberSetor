@@ -8,6 +8,7 @@
 | 21/10/2026 | 1.4 | Registro dos ritos das Sprints 2 a 4 | Maria Eduarda Marques |
 | 21/10/2026 | 1.5 | Daily presencial às terças e quintas e escrita nos demais dias úteis; ambientes do produto com os endereços de homologação | Vinicius Vieira |
 | 26/10/2026 | 1.6 | Incremento como a versão integrada da API e do front publicada na homologação; programação em pares descrita como é aplicada | Vinicius Vieira |
+| 09/11/2026 | 1.7 | Registro dos ritos de encerramento da Sprint 4 e de planejamento da Sprint 5 | Maria Eduarda Marques |
 
 A equipe CyberSetor adota o **ScrumXP**: o framework Scrum para o gerenciamento do trabalho e as práticas técnicas do eXtreme Programming para a engenharia. Esta página registra como o processo funciona na prática. A fundamentação da escolha está na seção 4 do Documento de Visão.
 
@@ -76,6 +77,8 @@ O acesso à homologação é por conta criada pela administração do sistema, s
 | Sprint 3 | Sprint Planning | 07/10/2026 | [Ata](atas/2026-10-07-sprint-planning.md) |
 | Sprint 3 | Sprint Review e Retrospectiva | 20/10/2026 | [Ata](atas/2026-10-20-sprint-review-retrospectiva-planning.md) |
 | Sprint 4 | Sprint Planning | 20/10/2026 | [Ata](atas/2026-10-20-sprint-review-retrospectiva-planning.md) |
+| Sprint 4 | Sprint Review e Retrospectiva | 05/11/2026 | [Ata](atas/2026-11-05-sprint-review-retrospectiva-planning.md) |
+| Sprint 5 | Sprint Planning | 05/11/2026 | [Ata](atas/2026-11-05-sprint-review-retrospectiva-planning.md) |
 
 As reuniões com o Instituto que alimentam a validação estão no [índice de atas](atas/index.md#interacoes-com-o-cliente).
 
