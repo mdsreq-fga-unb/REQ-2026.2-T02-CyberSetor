@@ -8,6 +8,7 @@
 | 07/10/2026 | 2.1 | Título de commit sem acentos; *rebase* para conflitos, sem *squash*; prazo de 24 horas para revisão de pull request | Maria Eduarda Marques |
 | 26/10/2026 | 2.2 | A `web-develop` publica a homologação do front; revisão por integrante de outra dupla ou pelo integrante independente | Vinicius Vieira |
 | 03/11/2026 | 2.3 | Página Histórico e evolução gerada no build a partir das tabelas de versões, do índice de atas e dos planos de sprint; selos de situação dos requisitos e das histórias lidos do quadro | Vinicius Vieira |
+| 09/11/2026 | 2.4 | Duas aprovações por pull request e merge pelo autor logo após a segunda; prazo de 24 horas e limite de 1.000 linhas como referência, sem contar as linhas de teste | Maria Eduarda Marques |
 
 Acordo de trabalho da equipe para este repositório. O objetivo é que o histórico de commits e de pull requests seja a evidência do processo, e que ninguém dependa de memória para saber como contribuir.
 
@@ -40,12 +41,12 @@ O repositório não tem proteção de branch, que depende de permissão de admin
 1. Partir da homologação atualizada: `git switch docs-homologacao && git pull && git switch -c docs/<assunto>`.
 2. Commitar em fatias, com `mkdocs build --strict` passando antes do push.
 3. Abrir o pull request com base `docs-homologacao` e `Refs #N` no corpo.
-4. Aguardar a aprovação de um integrante de outra dupla ou do integrante independente, que confere o site compilado: pelo artefato `site` do `build-check` ou com `mkdocs serve` na própria máquina.
-5. Fazer o merge pelo pull request e apagar a branch.
+4. Aguardar duas aprovações, ao menos uma de integrante de outra dupla ou do integrante independente; quem revisa confere o site compilado: pelo artefato `site` do `build-check` ou com `mkdocs serve` na própria máquina.
+5. Logo após a segunda aprovação, sem conflito com a branch de destino, o próprio autor faz o merge pelo pull request e apaga a branch.
 
 ### Código
 
-A branch de trabalho sai da branch de integração do componente (`api-develop` ou `web-develop`) e volta para ela em pull request, com a verificação de código aprovada e a revisão de um integrante de outra dupla ou do integrante independente. O nome leva o componente (`feat/api/HU-01-cadastro-de-meta`) e a história. O ciclo é de dias, não de semanas: história grande se divide em mais de um pull request. A ida para produção é um pull request de `api-develop` para `api` (ou de `web-develop` para `web`), revisado como os demais.
+A branch de trabalho sai da branch de integração do componente (`api-develop` ou `web-develop`) e volta para ela em pull request, com a verificação de código aprovada e duas aprovações, ao menos uma de integrante de outra dupla ou do integrante independente; o autor faz o merge logo após a segunda aprovação. O nome leva o componente (`feat/api/HU-01-cadastro-de-meta`) e a história. O ciclo é de dias, não de semanas: história grande se divide em mais de um pull request. A ida para produção é um pull request de `api-develop` para `api` (ou de `web-develop` para `web`), revisado como os demais.
 
 ### Correções
 
@@ -100,9 +101,11 @@ Co-authored-by: Nome Sobrenome <email-da-conta@exemplo.com>
 
 Toda mudança entra por pull request; edição feita pela interface web direto na `main` é push sem revisão e não é usada. O corpo segue o modelo do repositório: o que mudou, qual seção do template é afetada, confirmação de que o build passou e quem revisa.
 
-A revisão é registrada no próprio pull request: um integrante de outra dupla ou o integrante independente aprova antes do merge, e o autor não faz merge sem essa aprovação. O merge é feito pelo botão do pull request, com o método *merge commit*, que preserva os commits de cada pessoa e as linhas de coautoria. Merge local seguido de push não deixa o registro da revisão. *Squash* não é usado. Conflito com a branch de destino se resolve com *rebase* da branch de trabalho sobre ela, antes do merge.
+A revisão é registrada no próprio pull request: **duas aprovações** antes do merge, ao menos uma de integrante de outra dupla ou do integrante independente, como pede a DoD. Com a segunda aprovação e sem conflito com a branch de destino, **o próprio autor faz o merge logo em seguida**, sem esperar outra pessoa: o merge não fica concentrado num só integrante e pull request aprovado não se acumula. O merge é feito pelo botão do pull request, com o método *merge commit*, que preserva os commits de cada pessoa e as linhas de coautoria. Merge local seguido de push não deixa o registro da revisão. *Squash* não é usado. Conflito com a branch de destino se resolve com *rebase* da branch de trabalho sobre ela, antes do merge.
 
-Quem é pedido como revisor tem até 24 horas para revisar. Passado o prazo, o autor avisa no grupo da equipe, e a revisão pode ser repassada a outro integrante de outra dupla ou ao integrante independente.
+Quem é pedido como revisor tem como referência 24 horas para revisar, sem ser regra estrita. Se a revisão atrasar e travar outro trabalho, o autor avisa no grupo da equipe, e a revisão pode ser repassada a outro integrante.
+
+**Tamanho.** A referência é de até cerca de 1.000 linhas de mudança por pull request, **sem contar as linhas de teste**, que aumentam o tamanho sem dificultar a revisão. A referência não é regra estrita: quando uma história passa muito disso, ela se divide em mais de um pull request, cada um com uma fatia que funcione sozinha.
 
 ## Integração contínua
 
