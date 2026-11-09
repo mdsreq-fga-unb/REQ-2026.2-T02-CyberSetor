@@ -556,10 +556,15 @@ describe('ProjectReportsSection', () => {
 
   it('exporta a planilha CSV com a visao escolhida e salva com o nome do Content-Disposition (HU-13)', async () => {
     let downloadedName = '';
+    let downloadedHref = '';
+    const createObjectURL = vi.fn(() => 'blob:planilha-teste');
+    const revokeObjectURL = vi.fn();
+    vi.stubGlobal('URL', Object.assign(URL, { createObjectURL, revokeObjectURL }));
     const clickSpy = vi.spyOn(HTMLAnchorElement.prototype, 'click').mockImplementation(function (
       this: HTMLAnchorElement,
     ) {
       downloadedName = this.download;
+      downloadedHref = this.href;
     });
 
     const calls = await signedInAs('NUCLEO_PEDAGOGICO', {
@@ -599,6 +604,9 @@ describe('ProjectReportsSection', () => {
     await waitFor(() =>
       expect(downloadedName).toBe('exportacao-P01-2025-04-01-a-2025-06-30-analitica.csv'),
     );
+    expect(downloadedHref).toBe('blob:planilha-teste');
+    expect(createObjectURL).toHaveBeenCalledTimes(1);
+    expect(revokeObjectURL).not.toHaveBeenCalled();
     expect(calls).toContain(`${EXPORT}?from=2025-04-01&to=2025-06-30&visao=ANALITICA&formato=csv`);
     clickSpy.mockRestore();
   });

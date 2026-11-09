@@ -64,22 +64,17 @@ function exportFailure(error: unknown): string {
   return 'Não foi possível exportar a planilha. Tente de novo.';
 }
 
+const REVOKE_URL_DELAY_MS = 10_000;
+
 function saveDownloadedFile(blob: Blob, fileName: string): void {
-  let url = '';
-  try {
-    if (typeof URL.createObjectURL === 'function') {
-      url = URL.createObjectURL(blob);
-    }
-  } catch {
-    url = '';
-  }
+  const url = URL.createObjectURL(blob);
   const link = document.createElement('a');
   link.href = url;
   link.download = fileName;
   document.body.appendChild(link);
   link.click();
   link.remove();
-  if (url) URL.revokeObjectURL?.(url);
+  setTimeout(() => URL.revokeObjectURL(url), REVOKE_URL_DELAY_MS);
 }
 
 /**
