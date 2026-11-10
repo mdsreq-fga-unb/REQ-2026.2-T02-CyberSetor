@@ -3,8 +3,8 @@ import { IsIn, IsOptional } from 'class-validator';
 import { ReportPreviewQueryDto } from '../projects/report-preview.dto.js';
 import { VISOES_METAS, type VisaoMetas } from './project-export.csv.js';
 
-/** Formatos da planilha. O XLSX entra quando confirmado com o Instituto (#135). */
-export const FORMATOS_EXPORTACAO = ['csv'] as const;
+/** Formatos da planilha aberta (CA-13.1): CSV e XLSX, que abre no Excel e no Google Planilhas. */
+export const FORMATOS_EXPORTACAO = ['csv', 'xlsx'] as const;
 export type FormatoExportacao = (typeof FORMATOS_EXPORTACAO)[number];
 
 export class ProjectExportQueryDto extends ReportPreviewQueryDto {
@@ -18,6 +18,6 @@ export class ProjectExportQueryDto extends ReportPreviewQueryDto {
 
   @ApiPropertyOptional({ enum: FORMATOS_EXPORTACAO, default: 'csv' })
   @IsOptional()
-  @IsIn(FORMATOS_EXPORTACAO, { message: 'formato deve ser csv' })
+  @IsIn(FORMATOS_EXPORTACAO, { message: 'formato deve ser csv ou xlsx' })
   formato?: FormatoExportacao;
 }

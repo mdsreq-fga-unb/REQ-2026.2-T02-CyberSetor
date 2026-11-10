@@ -1,5 +1,6 @@
 import { INestApplication } from '@nestjs/common';
 import { Test } from '@nestjs/testing';
+import ExcelJS from 'exceljs';
 import request from 'supertest';
 import type { App } from 'supertest/types.js';
 import { PasswordService } from '../src/accounts/password.service.js';
@@ -261,7 +262,7 @@ describe('Exportação dos dados do projeto em planilha (e2e, HU-13)', () => {
 
     await gestao.get(exportPath(`from=${FROM}&to=${TO}`)).expect(400);
     await gestao.get(exportPath(`from=${FROM}&to=${TO}&visao=RESUMIDA`)).expect(400);
-    await gestao.get(exportPath(`from=${FROM}&to=${TO}&visao=ANALITICA&formato=xlsx`)).expect(400);
+    await gestao.get(exportPath(`from=${FROM}&to=${TO}&visao=ANALITICA&formato=pdf`)).expect(400);
     await gestao.get(exportPath(`from=2025-02-30&to=${TO}&visao=ANALITICA`)).expect(400);
 
     expect(await prisma.trilhaAuditoria.count({ where: { acao: 'PROJECT_DATA_EXPORTED' } })).toBe(
@@ -389,5 +390,59 @@ describe('Exportação dos dados do projeto em planilha (e2e, HU-13)', () => {
     expect(segunda?.usuarioId).toBe(ids[Perfil.PRESIDENCIA_GESTAO]);
     expect(segunda?.depois).toMatchObject({ visao: 'CONSOLIDADA' });
     expect(JSON.stringify(trilha)).not.toContain(FREE_TEXT);
+  });
+
+  it('CA-13.1: baixa em XLSX as mesmas linhas do CSV, com números como número, e registra o formato na trilha', async () => {
+    await seedPeriod();
+    const gestao = as(Perfil.PRESIDENCIA_GESTAO);
+    const csv = await gestao
+      .get(exportPath(`from=${FROM}&to=${TO}&visao=CONSOLIDADA&formato=csv`))
+      .expect(200);
+    const res = await gestao
+      .get(exportPath(`from=${FROM}&to=${TO}&visao=CONSOLIDADA&formato=xlsx`))
+      .buffer(true)
+      .parse((response, done) => {
+        const chunks: Buffer[] = [];
+        response.on('data', (chunk: Buffer) => chunks.push(chunk));
+        response.on('end', () => done(null, Buffer.concat(chunks)));
+      })
+      .expect(200);
+
+    expect(res.headers['content-type']).toBe(
+      'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+    );
+    expect(res.headers['content-disposition']).toBe(
+      'attachment; filename="exportacao-P01-2025-04-01-a-2025-06-30-consolidada.xlsx"',
+    );
+
+    const workbook = new ExcelJS.Workbook();
+    await workbook.xlsx.load(res.body as Parameters<ExcelJS.Xlsx['load']>[0]);
+    const sheet = workbook.getWorksheet('Exportação');
+    expect(sheet).toBeDefined();
+    const texts: string[] = [];
+    sheet?.eachRow({ includeEmpty: false }, (row) => {
+      const first = row.getCell(1).value;
+      texts.push(typeof first === 'string' ? first : '');
+    });
+    expect(texts).toContain('Legenda');
+    expect(texts).toContain('Atividades do período');
+    expect(texts.length).toBe(lines(csv.text).filter((line) => line !== '').length);
+
+    let quantitativa: ExcelJS.Row | undefined;
+    sheet?.eachRow((row) => {
+      if (row.getCell(1).value === 1 && row.getCell(2).value === 'Edital') quantitativa = row;
+    });
+    expect(quantitativa?.getCell(14).value).toBe(90.5);
+    expect(quantitativa?.getCell(16).value).toBe(90.5);
+    expect(JSON.stringify(sheet?.getSheetValues())).not.toContain(FREE_TEXT);
+
+    const trilha = await prisma.trilhaAuditoria.findMany({
+      where: { acao: 'PROJECT_DATA_EXPORTED' },
+      orderBy: { criadoEm: 'asc' },
+    });
+    expect(trilha.map((entry) => (entry.depois as { formato: string }).formato)).toEqual([
+      'CSV',
+      'XLSX',
+    ]);
   });
 });

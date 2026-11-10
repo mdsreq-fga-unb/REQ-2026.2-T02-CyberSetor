@@ -17,11 +17,18 @@ import {
   type ExportGoal,
   type ExportGoalResult,
 } from './project-export.csv.js';
+import { buildProjectExportXlsx } from './project-export.xlsx.js';
 
 export interface ProjectExportFile {
   fileName: string;
+  contentType: string;
   content: Buffer;
 }
+
+const CONTENT_TYPES = {
+  csv: 'text/csv; charset=utf-8',
+  xlsx: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+} as const;
 
 function decimal(value: Prisma.Decimal | null): number | null {
   return value === null ? null : value.toNumber();
@@ -92,14 +99,19 @@ export class ExportsService {
 
     const atividades = await this.activities(projectId, from, to);
 
-    const csv = buildProjectExportCsv({
+    const formato = query.formato ?? 'csv';
+    const data = {
       projeto: { codigo: preview.projeto.codigo, titulo: preview.projeto.titulo },
       periodo,
       visao: query.visao,
       geradoEm,
       metas,
       atividades,
-    });
+    };
+    const content =
+      formato === 'xlsx'
+        ? await buildProjectExportXlsx(data)
+        : Buffer.from(buildProjectExportCsv(data), 'utf8');
 
     await this.audit.record({
       autorTipo: AutorTipo.USUARIO,
@@ -108,7 +120,7 @@ export class ExportsService {
       entidade: 'projeto',
       entidadeId: projectId,
       depois: {
-        formato: 'CSV',
+        formato: formato.toUpperCase(),
         visao: query.visao,
         periodoInicio: query.from,
         periodoFim: query.to,
@@ -120,8 +132,9 @@ export class ExportsService {
     });
 
     return {
-      fileName: exportFileName(preview.projeto.codigo, periodo, query.visao),
-      content: Buffer.from(csv, 'utf8'),
+      fileName: exportFileName(preview.projeto.codigo, periodo, query.visao, formato),
+      contentType: CONTENT_TYPES[formato],
+      content,
     };
   }
 

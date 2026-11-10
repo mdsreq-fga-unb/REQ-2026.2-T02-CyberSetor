@@ -29,10 +29,10 @@ export class ExportsController {
 
   @Get()
   @Profiles(...INSTRUMENT_READERS)
-  @ApiProduces('text/csv')
+  @ApiProduces('text/csv', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
   @ApiOkResponse({
     description:
-      'Planilha CSV (UTF-8, separada por ponto e vírgula) com legenda, data de corte, metas na visão escolhida e atividades do período (RF38)',
+      'Planilha CSV (UTF-8, separada por ponto e vírgula) ou XLSX com legenda, data de corte, metas na visão escolhida e atividades do período (RF38)',
   })
   @ApiBadRequestResponse({
     description: 'INVALID_PERIOD, data inválida, visão ou formato inválido',
@@ -47,7 +47,7 @@ export class ExportsController {
   ): Promise<StreamableFile> {
     const file = await this.service.exportProject(projectId, query, actorOf(user, res));
     return new StreamableFile(file.content, {
-      type: 'text/csv; charset=utf-8',
+      type: file.contentType,
       disposition: `attachment; filename="${file.fileName}"`,
       length: file.content.length,
     });

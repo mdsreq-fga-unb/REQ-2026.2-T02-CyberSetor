@@ -204,6 +204,12 @@ describe('buildProjectExportCsv (RF38, CA-13.1, CA-13.2, CA-13.5, CA-13.6)', () 
 });
 
 describe('exportFileName', () => {
+  it('usa a extensão do formato escolhido', () => {
+    expect(
+      exportFileName('P01', { from: '2025-01-01', to: '2025-06-30' }, 'ANALITICA', 'xlsx'),
+    ).toBe('exportacao-P01-2025-01-01-a-2025-06-30-analitica.xlsx');
+  });
+
   it('monta um nome seguro com o código do projeto, o período e a visão', () => {
     expect(exportFileName('P01', { from: '2025-01-01', to: '2025-06-30' }, 'CONSOLIDADA')).toBe(
       'exportacao-P01-2025-01-01-a-2025-06-30-consolidada.csv',

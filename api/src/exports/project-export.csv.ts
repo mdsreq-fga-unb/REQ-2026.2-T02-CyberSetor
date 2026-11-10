@@ -57,7 +57,7 @@ export interface ProjectExportData {
   atividades: ExportActivity[];
 }
 
-type Cell = string | number | null;
+export type Cell = string | number | null;
 
 const SEPARATOR = ';';
 const LINE_BREAK = '\r\n';
@@ -237,13 +237,19 @@ function section(title: string, header: readonly string[], rows: Cell[][]): Cell
   return [[title], [...header], ...(rows.length > 0 ? rows : [[EMPTY_PERIOD]]), []];
 }
 
+/** Linha de título de seção, que a planilha XLSX destaca. */
+export interface ExportRows {
+  rows: Cell[][];
+  titleRows: number[];
+}
+
 /**
- * Planilha aberta com os dados de execução do período (RF38): cabeçalho com a data de corte,
- * legenda dos campos, metas na visão escolhida e atividades (CA-13.1, CA-13.2, CA-13.5).
- * Período sem registro sai com a legenda e a indicação de que não há registros (CA-13.6).
- * Textos livres do resultado e das justificativas ficam fora (RNF05, CA-13.3).
+ * Linhas da planilha aberta com os dados de execução do período (RF38), as mesmas no CSV e no
+ * XLSX: cabeçalho com a data de corte, legenda dos campos, metas na visão escolhida e atividades
+ * (CA-13.1, CA-13.2, CA-13.5). Período sem registro sai com a legenda e a indicação de que não há
+ * registros (CA-13.6). Textos livres do resultado e das justificativas ficam fora (RNF05, CA-13.3).
  */
-export function buildProjectExportCsv(data: ProjectExportData): string {
+export function buildProjectExportRows(data: ProjectExportData): ExportRows {
   const consolidada = data.visao === 'CONSOLIDADA';
   const metasTitle = consolidada
     ? 'Metas (visão consolidada: último resultado registrado até o fim do período)'
@@ -284,7 +290,22 @@ export function buildProjectExportCsv(data: ProjectExportData): string {
     ),
   );
 
-  return BOM + lines.map(toLine).join(LINE_BREAK);
+  const titles = new Set([
+    'Exportação de dados do projeto',
+    'Legenda',
+    metasTitle,
+    'Resumo das metas',
+    'Atividades do período',
+  ]);
+  const titleRows = lines.flatMap((line, index) =>
+    line.length === 1 && typeof line[0] === 'string' && titles.has(line[0]) ? [index] : [],
+  );
+  return { rows: lines, titleRows };
+}
+
+/** Planilha CSV em UTF-8 com BOM, separada por ponto e vírgula, que abre com acentos no Excel. */
+export function buildProjectExportCsv(data: ProjectExportData): string {
+  return BOM + buildProjectExportRows(data).rows.map(toLine).join(LINE_BREAK);
 }
 
 /** Nome do arquivo só com letras, números, hífen e sublinhado, para qualquer sistema. */
@@ -292,6 +313,7 @@ export function exportFileName(
   codigo: string,
   periodo: { from: string; to: string },
   visao: VisaoMetas,
+  extensao: 'csv' | 'xlsx' = 'csv',
 ): string {
   const safeCode =
     codigo
@@ -299,5 +321,5 @@ export function exportFileName(
       .replace(/[̀-ͯ]/g, '')
       .replace(/[^A-Za-z0-9_-]+/g, '-')
       .replace(/^-+|-+$/g, '') || 'projeto';
-  return `exportacao-${safeCode}-${periodo.from}-a-${periodo.to}-${visao.toLowerCase()}.csv`;
+  return `exportacao-${safeCode}-${periodo.from}-a-${periodo.to}-${visao.toLowerCase()}.${extensao}`;
 }
