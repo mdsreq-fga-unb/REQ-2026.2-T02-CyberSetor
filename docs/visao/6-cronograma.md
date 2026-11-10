@@ -11,7 +11,7 @@
 | 19/10/2026 | 1.6 | Equipe atual de cinco integrantes | Maria Eduarda Marques |
 | 20/10/2026 | 1.7 | Sprints 4 e 5 alinhadas ao MVP e aos incrementos da seção 10.2.6: MVP concluído na Sprint 4, evidências e presença em campo na Sprint 5; checkpoint de 29/10 até a inscrição; alcance do MVP com as histórias da seção 10.1 | Equipe CyberSetor |
 | 26/10/2026 | 1.8 | Prestação de contas com o resultado alcançado; orientação de enquadramento (RF45) no incremento de evidências; teste de restauração do banco e dos arquivos juntos; Sprint 3 com a meta do seu plano; histórias previstas por sprint e ligação aos planos das sprints; características da Sprint 4 e da Sprint 5 pelos requisitos que entram; alcance do MVP remetido à seção 10.2.6; exportação do projeto (RF38) e cópia integral dos dados (RNF19) na transferência, com o que avança e o que depende de responsável nomeado pelo Instituto; CP5 na Sprint 4 com RF22 a RF27, sem o histórico de participação (RF21); manual técnico de operação na transferência; políticas de cópia de segurança e de transferência remetidas à seção 2.6, ficando na 6.4 as atividades; checkpoint de 29/10 pelas histórias publicadas até a véspera | Vinicius Vieira |
-| 10/11/2026 | 1.9 | Período real das Sprints 4 e 5 (ATA-2026-11-05); Sprint 5 com o fechamento do MVP em código e a Unidade 3; incrementos 2 e 3 fora das sprints da disciplina, salvo folga; dezessete histórias do MVP; momentos de validação com a reunião remarcada | Vinicius Vieira |
+| 10/11/2026 | 1.9 | Período real das Sprints 4 e 5 (ATA-2026-11-05); Sprint 5 com o fechamento do MVP em código e a Unidade 3; incrementos 2 e 3 fora das sprints da disciplina, salvo folga; histórias da Sprint 4 pela seção 10.2.6, sem repetir a contagem; momentos de validação com a reunião remarcada | Vinicius Vieira |
 
 ## 6.1 Calendário vigente
 
@@ -50,7 +50,7 @@ CP1 projetos e metas → CP2 atividades → CP5 pessoas → CP3 inscrição · C
 | Sprint | Características cobertas | Histórias previstas | Condição de saída |
 |---|---|---|---|
 | 3 | nenhuma concluída · base técnica, autenticação e perfis | histórias do MVP iniciadas | Unidade 2 publicada, MVP confirmado pelo Instituto, linhas da API e do front com integração contínua |
-| 4 | CP1, CP2 (RF09, RF41), CP3, CP5 (RF22 a RF27), CP6 (só RF31, RF43, RF44), CP8 | as dezessete do MVP ([seção 10.2.6](../requisitos/10-backlog.md#1026-mvp-e-incrementos)) | MVP completo em homologação; checkpoint com dados reais realizado |
+| 4 | CP1, CP2 (RF09, RF41), CP3, CP5 (RF22 a RF27), CP6 (só RF31, RF43, RF44), CP8 | as do MVP ([seção 10.2.6](../requisitos/10-backlog.md#1026-mvp-e-incrementos)) | MVP completo em homologação; checkpoint com dados reais realizado |
 | 5 | conclusão de CP3 (RF07, RF08 na HU-02b), CP8 (RF38) e do acesso por perfil (8.5.1) | as do MVP sem registro de conclusão; HU-13 | MVP 100% em código, com os critérios exercitados; Unidade 3 publicada |
 | 6 | nenhuma nova | nenhuma | produto implantado, restauração testada, pessoas treinadas, transferência ensaiada |
 
