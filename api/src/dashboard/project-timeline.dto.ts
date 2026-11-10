@@ -84,7 +84,7 @@ export class TimelineGoalResponse {
   @ApiProperty({ description: 'Falta campo obrigatório: fora da apuração (RN-02)' })
   rascunho!: boolean;
 
-  @ApiProperty({ description: 'Prazo depois do fim do projeto (CA-14.5)' })
+  @ApiProperty({ description: 'Prazo antes do início ou depois do fim do projeto (CA-14.5)' })
   foraDaVigencia!: boolean;
 }
 

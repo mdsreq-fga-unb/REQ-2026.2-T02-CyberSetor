@@ -116,7 +116,12 @@ describe('Linha do tempo do projeto (e2e)', () => {
       ordem: number,
       objetivo: string,
       fim: number | null,
-      extra: { responsavelId?: string | null; situacao?: 'CONCLUIDA'; setorId?: string } = {},
+      extra: {
+        responsavelId?: string | null;
+        situacao?: 'CONCLUIDA';
+        setorId?: string;
+        periodoInicio?: Date;
+      } = {},
     ) =>
       prisma.meta.create({
         data: {
@@ -142,6 +147,10 @@ describe('Linha do tempo do projeto (e2e)', () => {
       responsavelId: null,
     });
     await meta(p1, 5, 'Sem prazo', null);
+    await meta(p1, 6, 'Antes do inicio', -175, {
+      situacao: 'CONCLUIDA',
+      periodoInicio: day(-180),
+    });
     const outroProjeto = await meta(segundo.id, 1, 'Do outro projeto', 40, {
       situacao: 'CONCLUIDA',
     });
@@ -186,13 +195,14 @@ describe('Linha do tempo do projeto (e2e)', () => {
     });
     expect(body.projeto).toMatchObject({ codigo: 'P01', inicio: brasilia(-170) });
     expect(body.metas.map((goal) => goal.objetivo)).toEqual([
+      'Antes do inicio',
       'Concluida vencida',
       'Vencida',
       'Vencendo sem responsavel',
       'Fora da vigencia',
       'Sem prazo',
     ]);
-    expect(body.metas[1]).toMatchObject({
+    expect(body.metas[2]).toMatchObject({
       alerta: 'VENCIDA',
       responsavel: { nome: `Pessoa ${Perfil.NUCLEO_PEDAGOGICO}` },
       setor: { nome: 'Pedagógico' },
@@ -200,13 +210,14 @@ describe('Linha do tempo do projeto (e2e)', () => {
     });
   });
 
-  it('marca a meta em rascunho e a meta com prazo depois do fim do projeto', async () => {
+  it('marca a meta em rascunho e a meta com prazo fora do período do projeto', async () => {
     const res = await get(p1, Perfil.PRESIDENCIA_GESTAO).expect(200);
     const body = res.body as Timeline;
     const flags = Object.fromEntries(
       body.metas.map((goal) => [goal.objetivo, [goal.rascunho, goal.foraDaVigencia]]),
     );
     expect(flags['Fora da vigencia']).toEqual([false, true]);
+    expect(flags['Antes do inicio']).toEqual([false, true]);
     expect(flags['Sem prazo']).toEqual([true, false]);
     expect(flags.Vencida).toEqual([false, false]);
   });
@@ -214,8 +225,8 @@ describe('Linha do tempo do projeto (e2e)', () => {
   it('conta as pendências só das metas abertas', async () => {
     const res = await get(p1, Perfil.NUCLEO_PEDAGOGICO).expect(200);
     const body = res.body as Timeline;
-    expect(body.pendencias).toEqual({ metas: 5, vencendo: 1, vencidas: 1, semResponsavel: 1 });
-    expect(body.metas[0]).toMatchObject({ alerta: null, responsavel: null });
+    expect(body.pendencias).toEqual({ metas: 6, vencendo: 1, vencidas: 1, semResponsavel: 1 });
+    expect(body.metas[1]).toMatchObject({ alerta: null, responsavel: null });
   });
 
   it('avalia o requisito pelas metas de todos os projetos do instrumento', async () => {

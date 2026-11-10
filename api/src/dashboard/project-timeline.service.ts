@@ -117,7 +117,9 @@ export class ProjectTimelineService {
         situacao: goal.situacao,
         alerta: deadlineAlert(periodoFim, goal.situacao, today),
         rascunho: isDraft(goal),
-        foraDaVigencia: goal.periodoFim !== null && goal.periodoFim > row.fim,
+        // Prazo antes do início ou depois do fim do projeto (CA-14.5).
+        foraDaVigencia:
+          goal.periodoFim !== null && (goal.periodoFim < row.inicio || goal.periodoFim > row.fim),
         setor: goal.setor,
         responsavel: goal.responsavel
           ? {
