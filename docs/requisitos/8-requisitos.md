@@ -26,7 +26,7 @@
 | 03/11/2026 | 2.12 | Lista de espera do RF15 condicionada à ativação na inscrição, valor inicial para a validação com o Instituto em 05/11 | Vinicius Vieira |
 | 07/11/2026 | 2.13 | Decisões da validação com o Instituto em 29/10: cadastro existente sinalizado na lista de inscritos da inscrição pelo formulário público (RF22), acesso administrativo da coordenação de execução e da direção de projetos (seção 8.5.1), pontos em aberto de cadastro repetido e de perfis revistos; pedidos novos de avisos por e-mail e de campos personalizados e condição de rascunho da meta do registro de 08/10 entre os pontos em aberto | Rodrigo Henrique |
 | 10/11/2026 | 2.14 | Pontos em aberto da primeira versão: visão do Núcleo Pedagógico, anexo do documento formal, encerramento do projeto, justificativa do aditivo e da apostila, guarda decenal e geração do relatório; validação de 05/11 adiada para a reunião da Sprint 5 | Vinicius Vieira |
-| 10/11/2026 | 2.15 | RF07 ligado só ao gargalo G02 na matriz 8.4.1, como nas sínteses das seções 8.4.3 e 10.2.6 | Vinicius Vieira |
+| 10/11/2026 | 2.15 | RF07 ligado só ao gargalo G02 na matriz 8.4.1, como nas sínteses das seções 8.4.3 e 10.2.6; RF11 com a história dona na lista, e a HU-07d, que também o verifica, na matriz 8.4.1 | Vinicius Vieira |
 
 ---
 
@@ -67,7 +67,7 @@ A governança do catálogo adota:
 ### CP3 — Inscrição de Participantes
 | Identificador | Requisito | Descrição | Rastreabilidade |
 | :---: | :--- | :--- | :--- |
-| <a id="rf11"></a>**RF11** | Disponibilizar formulário público de inscrição | Permitir ao interessado se inscrever em uma atividade por formulário público no celular, sem criar conta nem senha. O formulário exibe a data, o horário e o local da atividade e, quando houver, a apresentação, o prazo e o contato do Instituto ([RF46](#rf46)). | [RN-05](#rn-05), [RN-06](#rn-06) \| [HU-07a](10-backlog.md#hu-07a), [HU-07d](10-backlog.md#hu-07d) |
+| <a id="rf11"></a>**RF11** | Disponibilizar formulário público de inscrição | Permitir ao interessado se inscrever em uma atividade por formulário público no celular, sem criar conta nem senha. O formulário exibe a data, o horário e o local da atividade e, quando houver, a apresentação, o prazo e o contato do Instituto ([RF46](#rf46)). | [RN-05](#rn-05), [RN-06](#rn-06) \| [HU-07a](10-backlog.md#hu-07a) |
 | <a id="rf12"></a>**RF12** | Gerar link e QR Code de inscrição | Permitir ao usuário autorizado gerar, para cada atividade, o link e o QR Code do formulário público de inscrição. | OE02 \| [HU-07b](10-backlog.md#hu-07b) |
 | <a id="rf13"></a>**RF13** | Registrar inscrição presencial assistida | Permitir ao usuário autorizado inscrever presencialmente quem não dispõe de celular ou conectividade. | Seção 3.3.10; [RN-05](#rn-05), [RN-06](#rn-06) \| [HU-08](10-backlog.md#hu-08) |
 | <a id="rf14"></a>**RF14** | Limitar vagas da atividade | Encerrar as inscrições confirmadas de uma atividade quando o número de vagas estipulado for atingido. | OE01, OE02 \| [HU-07c](10-backlog.md#hu-07c) |
