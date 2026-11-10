@@ -203,10 +203,24 @@ export function DeadlineBadge({
   );
 }
 
-type DeadlineGoal = Omit<PanelGoal, 'projeto'> & { projeto?: PanelGoal['projeto'] };
+type DeadlineGoal = Omit<PanelGoal, 'projeto'> & {
+  projeto?: PanelGoal['projeto'];
+  setor?: { nome: string } | null;
+};
 
-/** Prazos das metas: vencidas primeiro, depois as que vencem em até 30 dias (CA-02b.2). */
-export function DeadlineList({ goals, hoje }: { goals: DeadlineGoal[]; hoje: string }) {
+/**
+ * Prazos das metas: vencidas primeiro, depois as que vencem em até 30 dias (CA-02b.2). Na tela
+ * inicial, a meta leva ao projeto; dentro do projeto, `onSelect` abre a própria meta.
+ */
+export function DeadlineList({
+  goals,
+  hoje,
+  onSelect,
+}: {
+  goals: DeadlineGoal[];
+  hoje: string;
+  onSelect?: (metaId: string) => void;
+}) {
   return (
     <ul className="divide-y">
       {goals.map((goal) => {
@@ -229,10 +243,18 @@ export function DeadlineList({ goals, hoje }: { goals: DeadlineGoal[]; hoje: str
                     {goal.projeto.codigo} · {goal.projeto.titulo}
                   </p>
                 </>
+              ) : onSelect ? (
+                <button
+                  type="button"
+                  onClick={() => onSelect(goal.metaId)}
+                  className="text-left font-medium underline-offset-4 hover:underline focus-visible:underline focus-visible:outline-none"
+                >
+                  {title}
+                </button>
               ) : (
                 <p className="font-medium">{title}</p>
               )}
-              <GoalOwner responsavel={goal.responsavel} />
+              <GoalOwner responsavel={goal.responsavel} setor={goal.setor} />
             </div>
             {goal.periodoFim && (
               <div className="flex flex-col gap-1 sm:items-end">

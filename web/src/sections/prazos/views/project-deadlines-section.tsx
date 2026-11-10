@@ -191,7 +191,15 @@ function Loading() {
   );
 }
 
-function Panel({ timeline, createGoal }: { timeline: ProjectTimeline; createGoal?: ReactNode }) {
+function Panel({
+  timeline,
+  createGoal,
+  onSelectGoal,
+}: {
+  timeline: ProjectTimeline;
+  createGoal?: ReactNode;
+  onSelectGoal?: (metaId: string) => void;
+}) {
   const { pendencias, hoje, metas, requisitos, instrumento } = timeline;
   const attended = requisitos.filter((item) => item.situacao === 'ATENDIDO').length;
   const attention = attentionGoals(metas);
@@ -253,7 +261,7 @@ function Panel({ timeline, createGoal }: { timeline: ProjectTimeline; createGoal
               description="Vencidas, com prazo em até 30 dias ou sem responsável"
               empty={attention.length === 0 ? 'Nenhuma pendência de prazo.' : null}
             >
-              <DeadlineList goals={attention} hoje={hoje} />
+              <DeadlineList goals={attention} hoje={hoje} onSelect={onSelectGoal} />
             </PanelCard>
           )}
           <PanelCard id="linha-do-tempo" title="Linha do tempo">
@@ -285,9 +293,12 @@ function Panel({ timeline, createGoal }: { timeline: ProjectTimeline; createGoal
 export function ProjectDeadlinesSection({
   projectId,
   createGoal,
+  onSelectGoal,
 }: {
   projectId: string;
   createGoal?: ReactNode;
+  /** Abre a meta escolhida no cartão de pendências. */
+  onSelectGoal?: (metaId: string) => void;
 }) {
   const timeline = useProjectTimeline(projectId);
   const forbidden = timeline.error instanceof ApiError && timeline.error.status === 403;
@@ -307,7 +318,9 @@ export function ProjectDeadlinesSection({
             </Button>
           </div>
         ))}
-      {timeline.data && <Panel timeline={timeline.data} createGoal={createGoal} />}
+      {timeline.data && (
+        <Panel timeline={timeline.data} createGoal={createGoal} onSelectGoal={onSelectGoal} />
+      )}
     </div>
   );
 }

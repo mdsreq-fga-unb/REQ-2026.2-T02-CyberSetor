@@ -29,11 +29,15 @@ async function respondWith(...answers: [number, ProjectTimeline | object][]) {
   await signIn('gestao@instituto.org.br', 'senha-de-teste-longa');
 }
 
-function renderSection(createGoal?: React.ReactNode) {
+function renderSection(createGoal?: React.ReactNode, onSelectGoal?: (metaId: string) => void) {
   const client = new QueryClient({ defaultOptions: { queries: { retry: false } } });
   render(
     <QueryClientProvider client={client}>
-      <ProjectDeadlinesSection projectId={PROJECT_ID} createGoal={createGoal} />
+      <ProjectDeadlinesSection
+        projectId={PROJECT_ID}
+        createGoal={createGoal}
+        onSelectGoal={onSelectGoal}
+      />
     </QueryClientProvider>,
   );
 }
@@ -90,6 +94,17 @@ describe('painel de prazos do projeto', () => {
     expect(region.getByText('Vence em 15 dias')).toBeInTheDocument();
     expect(region.getByText('Sem responsável')).toBeInTheDocument();
     expect(region.queryByText(/Mapear as famílias/)).not.toBeInTheDocument();
+  });
+
+  it('a pendencia leva a propria meta e mostra o setor do responsavel', async () => {
+    await respondWith([200, TIMELINE]);
+    const onSelectGoal = vi.fn();
+    renderSection(undefined, onSelectGoal);
+
+    const region = within(await screen.findByRole('region', { name: 'Prazos das metas' }));
+    expect(region.getAllByText(/Setor: Coordenação Pedagógica/).length).toBeGreaterThan(0);
+    fireEvent.click(region.getByRole('button', { name: /Publicar o calendário das oficinas/ }));
+    expect(onSelectGoal).toHaveBeenCalledWith('00000000-0000-4000-8000-000000000801');
   });
 
   it('resume as pendencias e os requisitos atendidos nos numeros do painel', async () => {

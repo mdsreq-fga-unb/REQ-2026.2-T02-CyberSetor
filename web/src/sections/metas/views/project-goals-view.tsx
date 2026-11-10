@@ -314,6 +314,12 @@ export function ProjectGoalsView({
       : []),
   ];
   const withActions = canEdit || !!sorted?.some(canChange);
+  // Pendência escolhida na aba Prazos: a gestão abre a meta para editar; os demais voltam às metas.
+  const openGoal = (metaId: string) => {
+    const goal = goals.data?.find((item) => item.id === metaId);
+    chooseTab('metas');
+    if (goal && canEdit) form.show({ goal });
+  };
   const columns = withActions ? 4 : 3;
   const countOf = (situacao: Goal['situacao']) =>
     sorted?.filter((goal) => goal.situacao === situacao).length ?? 0;
@@ -538,7 +544,11 @@ export function ProjectGoalsView({
         </TabsPanel>
 
         <TabsPanel value="prazos">
-          <ProjectDeadlinesSection projectId={projectId} createGoal={createButton || undefined} />
+          <ProjectDeadlinesSection
+            projectId={projectId}
+            createGoal={createButton || undefined}
+            onSelectGoal={openGoal}
+          />
         </TabsPanel>
 
         <TabsPanel value="plano">
