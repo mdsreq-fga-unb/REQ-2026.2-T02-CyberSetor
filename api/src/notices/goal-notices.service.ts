@@ -7,7 +7,7 @@ import {
 import type { Actor } from '../accounts/accounts.service.js';
 import { AuditTrailService } from '../audit/audit-trail.service.js';
 import type { Prisma } from '../generated/prisma/client.js';
-import { AutorTipo } from '../generated/prisma/enums.js';
+import { AutorTipo, SituacaoMeta } from '../generated/prisma/enums.js';
 import { todayInBrasilia } from '../goals/goal-deadline.js';
 import { toDate } from '../instruments/instruments.service.js';
 import { PrismaService } from '../prisma/prisma.service.js';
@@ -65,6 +65,13 @@ export class GoalNoticesService {
         message: 'O instrumento está desativado.',
       });
     }
+    // Meta concluída não recebe aviso: a rotina não avisa meta concluída, e o aviso nunca sairia.
+    if (goal.situacao === SituacaoMeta.CONCLUIDA) {
+      throw new ConflictException({
+        code: 'GOAL_CONCLUDED',
+        message: 'A meta já está concluída e não recebe aviso.',
+      });
+    }
     return this.prisma.$transaction(async (tx) => {
       const row = await tx.avisoMeta.create({
         data: { metaId: goalId, dataAviso: data, mensagem, criadoPorId: actor.usuarioId },
@@ -116,7 +123,10 @@ export class GoalNoticesService {
   private async assertGoal(goalId: string) {
     const goal = await this.prisma.meta.findUnique({
       where: { id: goalId },
-      select: { projeto: { select: { instrumento: { select: { ativo: true } } } } },
+      select: {
+        situacao: true,
+        projeto: { select: { instrumento: { select: { ativo: true } } } },
+      },
     });
     if (!goal) throw new NotFoundException('Meta não encontrada.');
     return goal;

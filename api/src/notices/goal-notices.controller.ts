@@ -48,7 +48,7 @@ export class GoalNoticesController {
   @Profiles(Perfil.PRESIDENCIA_GESTAO)
   @ApiCreatedResponse({ type: GoalNoticeResponse })
   @ApiBadRequestResponse({ description: 'Campo inválido ou PAST_NOTICE_DATE' })
-  @ApiConflictResponse({ description: 'INSTRUMENT_INACTIVE' })
+  @ApiConflictResponse({ description: 'INSTRUMENT_INACTIVE ou GOAL_CONCLUDED' })
   create(
     @Param('id', ParseUUIDPipe) id: string,
     @Body() body: CreateGoalNoticeDto,

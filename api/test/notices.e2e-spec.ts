@@ -386,6 +386,17 @@ describe('Avisos de meta por e-mail (e2e)', () => {
       expect(trilha.map((row) => row.acao)).toEqual(['GOAL_NOTICE_CREATED', 'GOAL_NOTICE_REMOVED']);
     });
 
+    it('recusa aviso em meta concluída, que nunca seria enviado', async () => {
+      const meta = await goal(brasilia(60));
+      await prisma.meta.update({ where: { id: meta.id }, data: { situacao: 'CONCLUIDA' } });
+
+      const res = await as(Perfil.PRESIDENCIA_GESTAO)
+        .post(`/v1/goals/${meta.id}/notices`, { dataAviso: brasilia(5), mensagem: 'Aviso' })
+        .expect(409);
+      expect((res.body as { code: string }).code).toBe('GOAL_CONCLUDED');
+      expect(await prisma.avisoMeta.count({ where: { metaId: meta.id } })).toBe(0);
+    });
+
     it('recusa data passada e mensagem vazia', async () => {
       const meta = await goal(brasilia(60));
 
