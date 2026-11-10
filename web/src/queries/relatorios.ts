@@ -115,18 +115,19 @@ export function useReportPdf(projectId: string, reportId: string | undefined, en
 
 export function useExportProjectCsv(projectId: string) {
   return useMutation({
-    mutationFn: async ({ from, to, visao }: ProjectExportInput) => {
+    mutationFn: async ({ from, to, visao, formato }: ProjectExportInput) => {
       const query = new URLSearchParams({
         from,
         to,
         visao,
-        formato: 'csv',
+        formato,
       });
       const file = await authorizedDownload(
         `/projects/${encodeURIComponent(projectId)}/export?${query.toString()}`,
       );
       const fileName =
-        file.fileName ?? `exportacao-${projectId}-${from}-a-${to}-${visao.toLowerCase()}.csv`;
+        file.fileName ??
+        `exportacao-${projectId}-${from}-a-${to}-${visao.toLowerCase()}.${formato}`;
       return { blob: file.blob, fileName };
     },
   });

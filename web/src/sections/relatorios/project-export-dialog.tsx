@@ -19,7 +19,12 @@ import { FieldGroup, FieldLegend, FieldSet } from '@/components/ui/field';
 import { ApiError } from '@/lib/api';
 import { dateSchema } from '@/lib/schemas';
 import { useExportProjectCsv } from '@/queries/relatorios';
-import { EXPORT_GOAL_VIEWS, type ExportGoalView } from '@/types/relatorios';
+import {
+  EXPORT_FORMATS,
+  EXPORT_GOAL_VIEWS,
+  type ExportFormat,
+  type ExportGoalView,
+} from '@/types/relatorios';
 
 const DATE = dateSchema('Informe a data completa.');
 
@@ -28,6 +33,7 @@ const schema = z
     from: DATE,
     to: DATE,
     visao: z.enum(EXPORT_GOAL_VIEWS, { message: 'Escolha a visão das metas.' }),
+    formato: z.enum(EXPORT_FORMATS, { message: 'Escolha o formato da planilha.' }),
   })
   .refine((values) => values.to >= values.from, {
     path: ['to'],
@@ -41,6 +47,7 @@ const DEFAULT_VALUES: FormValues = {
   from: '',
   to: '',
   visao: 'CONSOLIDADA',
+  formato: 'xlsx',
 };
 
 const VIEW_LABELS: Record<ExportGoalView, string> = {
@@ -52,6 +59,62 @@ const VIEW_DESCRIPTIONS: Record<ExportGoalView, string> = {
   CONSOLIDADA: 'Último resultado de cada meta até o fim do período, com resumo por alcance.',
   ANALITICA: 'Cada resultado registrado no período, para acompanhar a evolução.',
 };
+
+const FORMAT_LABELS: Record<ExportFormat, string> = {
+  xlsx: 'Excel (XLSX)',
+  csv: 'CSV',
+};
+
+const FORMAT_DESCRIPTIONS: Record<ExportFormat, string> = {
+  xlsx: 'Abre direto no Excel, no LibreOffice e no Google Planilhas.',
+  csv: 'Texto separado por ponto e vírgula, para levar a outros sistemas.',
+};
+
+function OptionCards<T extends string>({
+  name,
+  legend,
+  options,
+  labels,
+  descriptions,
+  value,
+  disabled,
+  onChange,
+}: {
+  name: string;
+  legend: string;
+  options: readonly T[];
+  labels: Record<T, string>;
+  descriptions: Record<T, string>;
+  value: T;
+  disabled: boolean;
+  onChange: (option: T) => void;
+}) {
+  return (
+    <FieldSet>
+      <FieldLegend variant="label">{legend}</FieldLegend>
+      {options.map((option) => (
+        <label
+          key={option}
+          className="flex min-h-12 cursor-pointer items-start gap-3 rounded-lg border px-3 py-2.5 hover:bg-muted/50"
+        >
+          <input
+            type="radio"
+            name={name}
+            value={option}
+            checked={value === option}
+            disabled={disabled}
+            onChange={() => onChange(option)}
+            className="mt-1 size-4 shrink-0 accent-primary"
+          />
+          <span className="flex flex-col gap-0.5 text-sm">
+            <span className="font-medium">{labels[option]}</span>
+            <span className="text-muted-foreground">{descriptions[option]}</span>
+          </span>
+        </label>
+      ))}
+    </FieldSet>
+  );
+}
 
 function exportFailure(error: unknown): string {
   if (!(error instanceof ApiError)) {
@@ -78,7 +141,8 @@ function saveDownloadedFile(blob: Blob, fileName: string): void {
 }
 
 /**
- * Exportação dos dados de execução do projeto em planilha CSV aberta (HU-13, RF38, CA-13.5).
+ * Exportação dos dados de execução do projeto em planilha aberta, XLSX ou CSV (HU-13, RF38,
+ * CA-13.1, CA-13.5).
  */
 export function ProjectExportDialog({
   projectId,
@@ -102,6 +166,11 @@ export function ProjectExportDialog({
     control: form.control,
     name: 'visao',
     defaultValue: DEFAULT_VALUES.visao,
+  });
+  const formato = useWatch({
+    control: form.control,
+    name: 'formato',
+    defaultValue: DEFAULT_VALUES.formato,
   });
 
   function close() {
@@ -138,8 +207,8 @@ export function ProjectExportDialog({
         <DialogHeader>
           <DialogTitle>Exportar planilha</DialogTitle>
           <DialogDescription>
-            Baixe a planilha CSV (UTF-8, separada por ponto e vírgula) com a legenda dos campos, a
-            data de corte, as metas e as atividades do período.
+            Baixe a planilha com a legenda dos campos, a data de corte, as metas e as atividades do
+            período.
           </DialogDescription>
         </DialogHeader>
 
@@ -155,29 +224,27 @@ export function ProjectExportDialog({
               <DateField control={form.control} name="to" label="Fim do período" disabled={busy} />
             </div>
 
-            <FieldSet>
-              <FieldLegend variant="label">Visão das metas</FieldLegend>
-              {EXPORT_GOAL_VIEWS.map((option) => (
-                <label
-                  key={option}
-                  className="flex min-h-12 cursor-pointer items-start gap-3 rounded-lg border px-3 py-2.5 hover:bg-muted/50"
-                >
-                  <input
-                    type="radio"
-                    name="visao"
-                    value={option}
-                    checked={visao === option}
-                    disabled={busy}
-                    onChange={() => form.setValue('visao', option)}
-                    className="mt-1 size-4 shrink-0 accent-primary"
-                  />
-                  <span className="flex flex-col gap-0.5 text-sm">
-                    <span className="font-medium">{VIEW_LABELS[option]}</span>
-                    <span className="text-muted-foreground">{VIEW_DESCRIPTIONS[option]}</span>
-                  </span>
-                </label>
-              ))}
-            </FieldSet>
+            <OptionCards
+              name="visao"
+              legend="Visão das metas"
+              options={EXPORT_GOAL_VIEWS}
+              labels={VIEW_LABELS}
+              descriptions={VIEW_DESCRIPTIONS}
+              value={visao}
+              disabled={busy}
+              onChange={(option) => form.setValue('visao', option)}
+            />
+
+            <OptionCards
+              name="formato"
+              legend="Formato"
+              options={EXPORT_FORMATS}
+              labels={FORMAT_LABELS}
+              descriptions={FORMAT_DESCRIPTIONS}
+              value={formato}
+              disabled={busy}
+              onChange={(option) => form.setValue('formato', option)}
+            />
 
             {failure && (
               <p role="alert" className="text-sm text-destructive">

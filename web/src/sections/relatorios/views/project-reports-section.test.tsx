@@ -554,7 +554,7 @@ describe('ProjectReportsSection', () => {
     await waitFor(() => expect(submit).toBeEnabled());
   });
 
-  it('exporta a planilha CSV com a visao escolhida e salva com o nome do Content-Disposition (HU-13)', async () => {
+  it('exporta a planilha CSV quando escolhida, com a visao escolhida e salva com o nome do Content-Disposition (HU-13)', async () => {
     let downloadedName = '';
     let downloadedHref = '';
     const createObjectURL = vi.fn(() => 'blob:planilha-teste');
@@ -603,6 +603,7 @@ describe('ProjectReportsSection', () => {
       target: { value: '2025-06-30' },
     });
     fireEvent.click(screen.getByRole('radio', { name: /Analítica/ }));
+    fireEvent.click(screen.getByRole('radio', { name: /^CSV/ }));
     fireEvent.click(screen.getByRole('button', { name: 'Baixar planilha' }));
 
     await waitFor(() =>
@@ -612,6 +613,57 @@ describe('ProjectReportsSection', () => {
     expect(createObjectURL).toHaveBeenCalledTimes(1);
     expect(revokeObjectURL).not.toHaveBeenCalled();
     expect(calls).toContain(`${EXPORT}?from=2025-04-01&to=2025-06-30&visao=ANALITICA&formato=csv`);
+    clickSpy.mockRestore();
+  });
+
+  it('baixa em XLSX por padrao, para abrir no Excel e no Google Planilhas (HU-13, CA-13.1)', async () => {
+    let downloadedName = '';
+    class TestURL extends URL {
+      static createObjectURL = vi.fn(() => 'blob:planilha-xlsx');
+      static revokeObjectURL = vi.fn();
+    }
+    vi.stubGlobal('URL', TestURL);
+    const clickSpy = vi.spyOn(HTMLAnchorElement.prototype, 'click').mockImplementation(function (
+      this: HTMLAnchorElement,
+    ) {
+      downloadedName = this.download;
+    });
+
+    const calls = await signedInAs('ADMINISTRATIVO_FINANCEIRO', {
+      [LIST]: () => ({ status: 200, body: [REPORT] }),
+      [EXPORT]: () =>
+        new Response(new Uint8Array([0x50, 0x4b, 0x03, 0x04]), {
+          status: 200,
+          headers: {
+            'Content-Type': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+            'Content-Disposition':
+              'attachment; filename="exportacao-P01-2025-04-01-a-2025-06-30-consolidada.xlsx"',
+          },
+        }),
+    });
+
+    renderSection();
+
+    fireEvent.click(await screen.findByRole('button', { name: 'Exportar planilha' }));
+    expect(await screen.findByRole('radio', { name: /Excel \(XLSX\)/ })).toBeChecked();
+    expect(
+      screen.getByText('Abre direto no Excel, no LibreOffice e no Google Planilhas.'),
+    ).toBeInTheDocument();
+
+    fireEvent.change(screen.getByLabelText('Início do período'), {
+      target: { value: '2025-04-01' },
+    });
+    fireEvent.change(screen.getByLabelText('Fim do período'), {
+      target: { value: '2025-06-30' },
+    });
+    fireEvent.click(screen.getByRole('button', { name: 'Baixar planilha' }));
+
+    await waitFor(() =>
+      expect(downloadedName).toBe('exportacao-P01-2025-04-01-a-2025-06-30-consolidada.xlsx'),
+    );
+    expect(calls).toContain(
+      `${EXPORT}?from=2025-04-01&to=2025-06-30&visao=CONSOLIDADA&formato=xlsx`,
+    );
     clickSpy.mockRestore();
   });
 
