@@ -79,9 +79,13 @@ function PdfStatus({ report }: { report: Report }) {
 export function ProjectReportsSection({
   projectId,
   instrumentActive = true,
+  defaultFrom = '',
+  defaultTo = '',
 }: {
   projectId: string;
   instrumentActive?: boolean;
+  defaultFrom?: string;
+  defaultTo?: string;
 }) {
   const { session } = useSession();
   const reports = useReports(projectId);
@@ -111,6 +115,9 @@ export function ProjectReportsSection({
     }
     return set;
   }, [reports.data]);
+
+  const latestReport =
+    reports.data?.find((item) => !supersededIds.has(item.id)) ?? reports.data?.[0];
 
   function actionsFor(report: Report): RowAction[] {
     const actions: RowAction[] = [{ label: 'Baixar PDF', onSelect: () => pdfDialog.show(report) }];
@@ -248,6 +255,8 @@ export function ProjectReportsSection({
       <ProjectExportDialog
         projectId={projectId}
         open={exportOpen}
+        defaultFrom={latestReport?.periodoInicio ?? defaultFrom}
+        defaultTo={latestReport?.periodoFim ?? defaultTo}
         onClose={() => setExportOpen(false)}
         onExported={(fileName) =>
           toast.add({

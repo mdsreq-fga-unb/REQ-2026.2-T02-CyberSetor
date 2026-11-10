@@ -644,11 +644,14 @@ describe('ProjectReportsSection', () => {
 
     renderSection();
 
-    fireEvent.click(await screen.findByRole('button', { name: 'Exportar planilha' }));
+    await screen.findByText('01/01/2025 a 30/06/2025');
+    fireEvent.click(screen.getByRole('button', { name: 'Exportar planilha' }));
     expect(await screen.findByRole('radio', { name: /Excel \(XLSX\)/ })).toBeChecked();
     expect(
       screen.getByText('Abre direto no Excel, no LibreOffice e no Google Planilhas.'),
     ).toBeInTheDocument();
+    expect(screen.getByLabelText('Início do período')).toHaveValue('2025-01-01');
+    expect(screen.getByLabelText('Fim do período')).toHaveValue('2025-06-30');
 
     fireEvent.change(screen.getByLabelText('Início do período'), {
       target: { value: '2025-04-01' },

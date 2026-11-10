@@ -130,6 +130,7 @@ describe.each([
     await renderSection();
 
     await page.getByRole('button', { name: 'Exportar planilha' }).click();
+    await expect.element(page.getByLabelText('Início do período')).toHaveValue('2025-01-01');
     await expect.element(page.getByRole('button', { name: 'Baixar planilha' })).toBeEnabled();
     await expect
       .element(page.getByRole('dialog'))

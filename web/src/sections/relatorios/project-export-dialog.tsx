@@ -2,7 +2,7 @@
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import { DownloadIcon } from 'lucide-react';
-import { useState, type FormEvent } from 'react';
+import { useEffect, useState, type FormEvent } from 'react';
 import { useForm, useWatch } from 'react-hook-form';
 import { z } from 'zod';
 import { DateField } from '@/components/form/fields';
@@ -43,12 +43,14 @@ const schema = z
 
 type FormValues = z.infer<typeof schema>;
 
-const DEFAULT_VALUES: FormValues = {
-  from: '',
-  to: '',
-  visao: 'CONSOLIDADA',
-  formato: 'xlsx',
-};
+function defaultValues(from = '', to = ''): FormValues {
+  return {
+    from,
+    to,
+    visao: 'CONSOLIDADA',
+    formato: 'xlsx',
+  };
+}
 
 const VIEW_LABELS: Record<ExportGoalView, string> = {
   CONSOLIDADA: 'Consolidada',
@@ -147,11 +149,15 @@ function saveDownloadedFile(blob: Blob, fileName: string): void {
 export function ProjectExportDialog({
   projectId,
   open,
+  defaultFrom = '',
+  defaultTo = '',
   onClose,
   onExported,
 }: {
   projectId: string;
   open: boolean;
+  defaultFrom?: string;
+  defaultTo?: string;
   onClose: () => void;
   onExported?: (fileName: string) => void;
 }) {
@@ -159,23 +165,29 @@ export function ProjectExportDialog({
   const [failure, setFailure] = useState<string | null>(null);
   const form = useForm<FormValues>({
     resolver: zodResolver(schema),
-    defaultValues: DEFAULT_VALUES,
+    defaultValues: defaultValues(defaultFrom, defaultTo),
   });
+
+  useEffect(() => {
+    if (open && !form.formState.isDirty) {
+      form.reset(defaultValues(defaultFrom, defaultTo));
+    }
+  }, [open, defaultFrom, defaultTo, form]);
 
   const visao = useWatch({
     control: form.control,
     name: 'visao',
-    defaultValue: DEFAULT_VALUES.visao,
+    defaultValue: 'CONSOLIDADA',
   });
   const formato = useWatch({
     control: form.control,
     name: 'formato',
-    defaultValue: DEFAULT_VALUES.formato,
+    defaultValue: 'xlsx',
   });
 
   function close() {
     setFailure(null);
-    form.reset(DEFAULT_VALUES);
+    form.reset(defaultValues(defaultFrom, defaultTo));
     onClose();
   }
 
