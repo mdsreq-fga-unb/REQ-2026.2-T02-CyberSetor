@@ -27,6 +27,7 @@
 | 07/11/2026 | 2.13 | Decisões da validação com o Instituto em 29/10: cadastro existente sinalizado na lista de inscritos da inscrição pelo formulário público (RF22), acesso administrativo da coordenação de execução e da direção de projetos (seção 8.5.1), pontos em aberto de cadastro repetido e de perfis revistos; pedidos novos de avisos por e-mail e de campos personalizados e condição de rascunho da meta do registro de 08/10 entre os pontos em aberto | Rodrigo Henrique |
 | 10/11/2026 | 2.14 | Pontos em aberto da primeira versão: visão do Núcleo Pedagógico, anexo do documento formal, encerramento do projeto, justificativa do aditivo e da apostila, guarda decenal e geração do relatório; validação de 05/11 adiada para a reunião da Sprint 5 | Vinicius Vieira |
 | 10/11/2026 | 2.15 | RF07 ligado só ao gargalo G02 na matriz 8.4.1, como nas sínteses das seções 8.4.3 e 10.2.6; RF11 com a história dona na lista, e a HU-07d, que também o verifica, na matriz 8.4.1 | Vinicius Vieira |
+| 10/11/2026 | 2.16 | RF22 com a história dona (HU-08) na lista 8.2; a HU-07a fica como verificação na matriz 8.4.1 (CA-07a.8) | Vinicius Vieira |
 
 ---
 
@@ -88,7 +89,7 @@ A governança do catálogo adota:
 | Identificador | Requisito | Descrição | Rastreabilidade |
 | :---: | :--- | :--- | :--- |
 | <a id="rf21"></a>**RF21** | Consultar histórico de participação | Permitir ao usuário autorizado consultar a ficha consolidada de uma pessoa, contendo atividades e projetos dos quais participou. | OE01 \| [HU-06](10-backlog.md#hu-06) |
-| <a id="rf22"></a>**RF22** | Avisar cadastro repetido | Avisar o usuário autorizado quando o e-mail ou o CPF informado, conforme o campo escolhido no formulário de inscrição 🔧, coincidir com cadastro prévio, na inscrição presencial e, pela lista de inscritos, na inscrição pelo formulário público, facultando o reaproveitamento do registro existente. | OE01; validações com o Instituto em 08/10/2026 e 29/10/2026 \| [HU-07a](10-backlog.md#hu-07a), [HU-08](10-backlog.md#hu-08) |
+| <a id="rf22"></a>**RF22** | Avisar cadastro repetido | Avisar o usuário autorizado quando o e-mail ou o CPF informado, conforme o campo escolhido no formulário de inscrição 🔧, coincidir com cadastro prévio, na inscrição presencial e, pela lista de inscritos, na inscrição pelo formulário público, facultando o reaproveitamento do registro existente. | OE01; validações com o Instituto em 08/10/2026 e 29/10/2026 \| [HU-08](10-backlog.md#hu-08) |
 | <a id="rf23"></a>**RF23** | Registrar aviso de tratamento de dados na inscrição | Registrar em cada inscrição a versão do aviso de tratamento de dados exibida ao titular, com carimbo de data e hora. | LGPD art. 7º, 8º, 9º e 14; [RN-05](#rn-05), [RN-06](#rn-06) \| [HU-07a](10-backlog.md#hu-07a) |
 | <a id="rf24"></a>**RF24** | Registrar autorização de contato | Registrar autorização opcional para recebimento de informativos e permitir sua revogação com data e canal. | Seção 3.3.5; LGPD art. 8º, §5º; [RN-05](#rn-05) \| [HU-07a](10-backlog.md#hu-07a) |
 | <a id="rf25"></a>**RF25** | Registrar autorização de uso de imagem | Registrar separadamente a anuência ou recusa ao uso institucional de imagem e sua eventual revogação, sem condicionar a participação. | Seção 3.3.4; LGPD art. 7º e 8º; [RN-05](#rn-05), [RN-12](#rn-12) \| [HU-07a](10-backlog.md#hu-07a) |
