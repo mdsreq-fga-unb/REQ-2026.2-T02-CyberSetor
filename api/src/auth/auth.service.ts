@@ -27,12 +27,17 @@ export class AuthService implements OnModuleInit {
     private readonly audit: AuditTrailService,
   ) {}
 
-  async sectorOf(usuarioId: string): Promise<{ id: string; nome: string } | null> {
+  /** Nome e setor da pessoa logada, para a barra superior do front. */
+  async personOf(
+    usuarioId: string,
+  ): Promise<{ nome: string; setor: { id: string; nome: string } | null }> {
     const usuario = await this.prisma.usuario.findUnique({
       where: { id: usuarioId },
-      select: { pessoa: { select: { setor: { select: { id: true, nome: true } } } } },
+      select: {
+        pessoa: { select: { nome: true, setor: { select: { id: true, nome: true } } } },
+      },
     });
-    return usuario?.pessoa.setor ?? null;
+    return { nome: usuario?.pessoa.nome ?? '', setor: usuario?.pessoa.setor ?? null };
   }
 
   async onModuleInit(): Promise<void> {
