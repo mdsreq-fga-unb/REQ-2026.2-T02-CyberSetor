@@ -27,6 +27,8 @@ import {
 } from './notice-templates.js';
 
 const MAX_ATTEMPTS = 3;
+/** Aviso ainda pendente depois disso ficou de uma corrida interrompida: volta como a falha. */
+const STALE_PENDING_MS = 60 * 60 * 1000;
 const READERS: readonly Perfil[] = INSTRUMENT_READERS;
 
 const RECIPIENT = {
@@ -280,7 +282,10 @@ export class NoticesService {
     return active(project.coordenador, ...(await this.leadership()));
   }
 
-  /** Só um envio por chave; falha definida volta na corrida seguinte, até o limite. */
+  /**
+   * Só um envio por chave; falha definida volta na corrida seguinte, até o limite. Pendente antigo
+   * (a corrida parou antes de registrar o resultado) também volta, para o aviso não se perder.
+   */
   private async claim(item: NoticeItem): Promise<string | null> {
     const { chave, tipo, usuario, projetoId, metaId } = item;
     try {
@@ -297,8 +302,14 @@ export class NoticesService {
     const { count } = await this.prisma.avisoEmail.updateMany({
       where: {
         chave,
-        situacao: SituacaoAvisoEmail.FALHOU,
         tentativas: { lt: MAX_ATTEMPTS },
+        OR: [
+          { situacao: SituacaoAvisoEmail.FALHOU },
+          {
+            situacao: SituacaoAvisoEmail.PENDENTE,
+            atualizadoEm: { lt: new Date(Date.now() - STALE_PENDING_MS) },
+          },
+        ],
       },
       data: { situacao: SituacaoAvisoEmail.PENDENTE, tentativas: { increment: 1 } },
     });

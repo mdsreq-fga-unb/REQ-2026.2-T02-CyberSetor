@@ -298,6 +298,29 @@ describe('Avisos de meta por e-mail (e2e)', () => {
     });
   });
 
+  it('pendente de corrida interrompida volta na corrida seguinte, e o recente não', async () => {
+    await goal(brasilia(5));
+    await notices.runDaily();
+    const [primeiro] = await registros();
+    expect(primeiro).toBeDefined();
+    // Simula a queda no meio do envio: ficou pendente, sem resultado registrado.
+    await prisma.avisoEmail.updateMany({ data: { situacao: SituacaoAvisoEmail.PENDENTE } });
+
+    send.mockClear();
+    await notices.runDaily();
+    expect(send).not.toHaveBeenCalled();
+
+    await prisma.$executeRawUnsafe(
+      `UPDATE aviso_email SET atualizado_em = now() - interval '2 hours'`,
+    );
+    await notices.runDaily();
+    expect(send).toHaveBeenCalledTimes(2);
+    expect((await registros()).map((row) => [row.situacao, row.tentativas])).toEqual([
+      [SituacaoAvisoEmail.ENVIADO, 2],
+      [SituacaoAvisoEmail.ENVIADO, 2],
+    ]);
+  });
+
   it('timeout fica incerto e não reenvia', async () => {
     await goal(brasilia(5));
     send.mockRejectedValue(new EmailDeliveryError('BREVO_TIMEOUT', true));
