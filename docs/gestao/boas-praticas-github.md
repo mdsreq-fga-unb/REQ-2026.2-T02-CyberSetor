@@ -131,6 +131,8 @@ A página [Histórico e evolução](historico.md) não é editada à mão: o `ho
 
 Os selos de situação das seções 8 e 10 (a fazer, em andamento, concluído, retirado do escopo) também não são escritos à mão: o `fetch_issues.py` grava a situação de cada história, lida do campo Status do quadro, e o `hooks/selos.py` a põe ao lado de cada história e de cada requisito funcional, que segue as histórias da sua coluna de rastreabilidade. História retirada do escopo é a issue fechada como "não planejada". Sem leitura do quadro, as seções saem sem selos.
 
+As fichas da seção 10.1 também são compostas no build: na ficha se escrevem só a história, o épico, os requisitos, as dependências e os critérios; o `hooks/fichas.py` traz o resto das seções de origem. O `hooks/conferencia.py` interrompe o build quando uma tabela das seções 8 e 10 diverge da fonte do dado e lista o que corrigir.
+
 ## Contribuição individual
 
 Cada integrante commita com a própria conta, com `user.email` ligado a ela, as seções que escreveu e o código que implementou. Assim o histórico mostra quem fez o quê dentro da equipe.
