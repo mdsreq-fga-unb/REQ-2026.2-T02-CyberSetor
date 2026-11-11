@@ -9,6 +9,9 @@
 | 26/10/2026 | 2.2 | A `web-develop` publica a homologação do front; revisão por integrante de outra dupla ou pelo integrante independente | Vinicius Vieira |
 | 03/11/2026 | 2.3 | Página Histórico e evolução gerada no build a partir das tabelas de versões, do índice de atas e dos planos de sprint; selos de situação dos requisitos e das histórias lidos do quadro | Vinicius Vieira |
 | 09/11/2026 | 2.4 | Duas aprovações por pull request e merge pelo autor logo após a segunda; prazo de 24 horas e limite de 1.000 linhas como referência, sem contar as linhas de teste | Maria Eduarda Marques |
+| 11/11/2026 | 2.5 | Resumo das regras no topo da página; a regra de aprovação e merge fica só na seção Pull requests, com link nas seções Documentação e Código | Maria Eduarda Marques |
+
+**Em resumo.** Toda mudança entra por pull request, com duas aprovações (ao menos uma de outra dupla ou do integrante independente) e merge pelo próprio autor, por *merge commit*. A documentação passa pela `docs-homologacao` e vai à `main` em pontos de publicação marcados com tag (correção do site publicado vai direto à `main`); API e front têm linhas próprias (`api-develop` e `web-develop` para homologação, `api` e `web` para produção). Commits seguem Conventional Commits, sem acentos no título.
 
 Acordo de trabalho da equipe para este repositório. O objetivo é que o histórico de commits e de pull requests seja a evidência do processo, e que ninguém dependa de memória para saber como contribuir.
 
@@ -41,12 +44,12 @@ O repositório não tem proteção de branch, que depende de permissão de admin
 1. Partir da homologação atualizada: `git switch docs-homologacao && git pull && git switch -c docs/<assunto>`.
 2. Commitar em fatias, com `mkdocs build --strict` passando antes do push.
 3. Abrir o pull request com base `docs-homologacao` e `Refs #N` no corpo.
-4. Aguardar duas aprovações, ao menos uma de integrante de outra dupla ou do integrante independente; quem revisa confere o site compilado: pelo artefato `site` do `build-check` ou com `mkdocs serve` na própria máquina.
-5. Logo após a segunda aprovação, sem conflito com a branch de destino, o próprio autor faz o merge pelo pull request e apaga a branch.
+4. Aguardar as aprovações pedidas em [Pull requests](#pull-requests); quem revisa confere o site compilado: pelo artefato `site` do `build-check` ou com `mkdocs serve` na própria máquina.
+5. O próprio autor faz o merge pelo pull request, como descrito em [Pull requests](#pull-requests), e apaga a branch.
 
 ### Código
 
-A branch de trabalho sai da branch de integração do componente (`api-develop` ou `web-develop`) e volta para ela em pull request, com a verificação de código aprovada e duas aprovações, ao menos uma de integrante de outra dupla ou do integrante independente; o autor faz o merge logo após a segunda aprovação. O nome leva o componente (`feat/api/HU-01-cadastro-de-meta`) e a história. O ciclo é de dias, não de semanas: história grande se divide em mais de um pull request. A ida para produção é um pull request de `api-develop` para `api` (ou de `web-develop` para `web`), revisado como os demais.
+A branch de trabalho sai da branch de integração do componente (`api-develop` ou `web-develop`) e volta para ela em pull request, com a verificação de código aprovada e as aprovações e o merge descritos em [Pull requests](#pull-requests). O nome leva o componente (`feat/api/HU-01-cadastro-de-meta`) e a história. O ciclo é de dias, não de semanas: história grande se divide em mais de um pull request. A ida para produção é um pull request de `api-develop` para `api` (ou de `web-develop` para `web`), revisado como os demais.
 
 ### Correções
 
