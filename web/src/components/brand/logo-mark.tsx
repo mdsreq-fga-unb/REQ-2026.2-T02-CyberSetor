@@ -1,0 +1,56 @@
+import { cn } from 'cn';
+
+/**
+ * Marca do CyberSetor: os quatro quartos de arco do ciclo do projeto, nas cores do logo do site
+ * (`docs/assets/logo.svg`). As cores são as exatas da marca, não tokens de tema.
+ */
+export function LogoMark({ className, title }: { className?: string; title?: string }) {
+  return (
+    <svg
+      viewBox="0 0 512 512"
+      className={cn('size-8 shrink-0', className)}
+      role={title ? 'img' : undefined}
+      aria-hidden={title ? undefined : true}
+      aria-label={title}
+    >
+      <rect width="512" height="512" rx="72" fill="#0b0b0b" />
+      <path
+        d="M276.9,107.5 A150,150 0 0 1 383.2,176.5"
+        fill="none"
+        stroke="#f84850"
+        strokeWidth="46"
+      />
+      <path d="M346.1,199.7 L400.2,214.7 L420.3,153.4 Z" fill="#f84850" />
+      <path
+        d="M404.5,276.9 A150,150 0 0 1 335.5,383.2"
+        fill="none"
+        stroke="#008098"
+        strokeWidth="46"
+      />
+      <path d="M312.3,346.1 L297.3,400.2 L358.6,420.3 Z" fill="#008098" />
+      <path
+        d="M235.1,404.5 A150,150 0 0 1 128.8,335.5"
+        fill="none"
+        stroke="#40b068"
+        strokeWidth="46"
+      />
+      <path d="M165.9,312.3 L111.8,297.3 L91.7,358.6 Z" fill="#40b068" />
+      <path
+        d="M107.5,235.1 A150,150 0 0 1 176.5,128.8"
+        fill="none"
+        stroke="#f8c860"
+        strokeWidth="46"
+      />
+      <path d="M199.7,165.9 L214.7,111.8 L153.4,91.7 Z" fill="#f8c860" />
+      <rect
+        x="214"
+        y="214"
+        width="84"
+        height="84"
+        rx="14"
+        fill="#ffffff"
+        transform="rotate(45 256 256)"
+      />
+    </svg>
+  );
+}

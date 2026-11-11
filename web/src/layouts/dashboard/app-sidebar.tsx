@@ -6,6 +6,7 @@ import { usePathname } from 'next/navigation';
 import { useSession } from '@/auth/hooks/use-session';
 import { isActiveItem, navigationFor, profileLabel } from '@/auth/profiles';
 import { signOut } from '@/auth/session';
+import { LogoMark } from '@/components/brand/logo-mark';
 import {
   Sidebar,
   SidebarContent,
@@ -35,9 +36,7 @@ export function AppSidebar() {
               size="lg"
               render={<Link href={paths.dashboard.root} onClick={() => setOpenMobile(false)} />}
             >
-              <span className="flex size-8 shrink-0 items-center justify-center rounded-md bg-primary text-sm font-semibold text-primary-foreground">
-                CS
-              </span>
+              <LogoMark className="size-8! rounded-md" />
               <span className="font-semibold">CyberSetor</span>
             </SidebarMenuButton>
           </SidebarMenuItem>
