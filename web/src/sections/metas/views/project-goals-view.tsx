@@ -22,7 +22,7 @@ import { PageHeader } from '@/components/page-header';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Skeleton } from '@/components/ui/skeleton';
-import { Tabs, TabsList, TabsPanel, TabsTab } from '@/components/ui/tabs';
+import { Tabs, TabsCount, TabsList, TabsPanel, TabsTab } from '@/components/ui/tabs';
 import {
   Table,
   TableBody,
@@ -42,6 +42,8 @@ import { useInstrument } from '@/queries/instrumentos';
 import { useGoals } from '@/queries/metas';
 import { useProject } from '@/queries/projetos';
 import { useRequirements } from '@/queries/requisitos';
+import { useActivities } from '@/queries/atividades';
+import { useReports } from '@/queries/relatorios';
 import { useCurrentUser } from '@/queries/sessao';
 import { useBreadcrumbs } from '@/layouts/dashboard/breadcrumbs';
 import { paths } from '@/routes/paths';
@@ -320,6 +322,9 @@ export function ProjectGoalsView({
   const countOf = (situacao: Goal['situacao']) =>
     sorted?.filter((goal) => goal.situacao === situacao).length ?? 0;
   const withoutRequirements = requirements.data?.length === 0;
+  const readsReports = !!session && REPORT_READERS.includes(session.perfil as Perfil);
+  const activities = useActivities(projectId);
+  const reports = useReports(projectId, readsReports);
 
   useBreadcrumbs([
     { label: 'Início', href: paths.dashboard.root },
@@ -401,11 +406,23 @@ export function ProjectGoalsView({
 
       <Tabs value={tab} onValueChange={(next: ProjectTab) => chooseTab(next)}>
         <TabsList aria-label="Seções do projeto">
-          <TabsTab value="metas">Metas</TabsTab>
+          <TabsTab value="metas">
+            Metas
+            <TabsCount value={goals.data?.length} label="metas" />
+          </TabsTab>
           <TabsTab value="prazos">Prazos</TabsTab>
           <TabsTab value="plano">Plano de trabalho</TabsTab>
-          <TabsTab value="atividades">Atividades</TabsTab>
-          <TabsTab value="relatorios">Relatórios</TabsTab>
+          <TabsTab value="atividades">
+            Atividades
+            <TabsCount value={activities.data?.length} label="atividades" />
+          </TabsTab>
+          <TabsTab value="relatorios">
+            Relatórios
+            <TabsCount
+              value={readsReports ? reports.data?.length : undefined}
+              label="relatórios emitidos"
+            />
+          </TabsTab>
         </TabsList>
 
         <TabsPanel value="metas">

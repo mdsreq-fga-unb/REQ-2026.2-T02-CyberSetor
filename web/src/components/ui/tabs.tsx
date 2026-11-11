@@ -14,14 +14,38 @@ function Tabs({ className, ...props }: ComponentProps<typeof TabsPrimitive.Root>
   );
 }
 
-/** A lista rola de lado no celular, sem quebrar a página (RNF15). */
+/**
+ * A lista rola de lado no celular, sem quebrar a página (RNF15). A borda direita esmaece
+ * enquanto há aba escondida, para indicar que a lista continua.
+ */
 function TabsList({ className, ...props }: ComponentProps<typeof TabsPrimitive.List>) {
   return (
     <TabsPrimitive.List
       data-slot="tabs-list"
-      className={cn('flex gap-1 overflow-x-auto border-b border-border', className)}
+      className={cn(
+        'flex gap-1 overflow-x-auto border-b border-border [scrollbar-width:none] max-md:pr-8 max-md:[mask-image:linear-gradient(to_right,black_calc(100%-2rem),transparent)] [&::-webkit-scrollbar]:hidden',
+        className,
+      )}
       {...props}
     />
+  );
+}
+
+/**
+ * Quantidade ao lado do nome da aba; some enquanto carrega. Fica fora do nome acessível da aba
+ * (o painel já diz quantos itens mostra) e vai no título, para quem passa o cursor.
+ */
+function TabsCount({ value, label }: { value: number | undefined; label: string }) {
+  if (value === undefined) return null;
+  return (
+    <span
+      data-slot="tabs-count"
+      aria-hidden="true"
+      title={`${value} ${label}`}
+      className="ml-2 inline-flex min-w-6 items-center justify-center rounded-full bg-muted px-1.5 text-xs font-medium text-muted-foreground tabular-nums"
+    >
+      {value}
+    </span>
   );
 }
 
@@ -48,4 +72,4 @@ function TabsPanel({ className, ...props }: ComponentProps<typeof TabsPrimitive.
   );
 }
 
-export { Tabs, TabsList, TabsPanel, TabsTab };
+export { Tabs, TabsCount, TabsList, TabsPanel, TabsTab };
