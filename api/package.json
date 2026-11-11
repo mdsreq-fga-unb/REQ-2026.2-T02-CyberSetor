@@ -49,6 +49,7 @@
     "class-transformer": "^0.5.1",
     "class-validator": "^0.15.1",
     "cookie-parser": "1.4.7",
+    "exceljs": "4.4.0",
     "pdfmake": "0.3.13",
     "pg": "8.23.1",
     "reflect-metadata": "^0.2.2",

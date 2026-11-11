@@ -38,7 +38,8 @@ export function setupApp(
     .map((o) => o.trim())
     .filter(Boolean);
   if (origens.length > 0) {
-    app.enableCors({ origin: origens, credentials: true });
+    // A tela lê o nome da planilha exportada no Content-Disposition (RF38).
+    app.enableCors({ origin: origens, credentials: true, exposedHeaders: ['Content-Disposition'] });
   }
 
   const documento = SwaggerModule.createDocument(
