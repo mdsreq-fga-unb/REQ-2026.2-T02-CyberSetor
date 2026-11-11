@@ -563,6 +563,8 @@ export function ProjectGoalsView({
             <ProjectReportsSection
               projectId={projectId}
               instrumentActive={instrument.data?.ativo === true}
+              defaultFrom={project.data.inicio}
+              defaultTo={project.data.fim}
             />
           )}
         </TabsPanel>

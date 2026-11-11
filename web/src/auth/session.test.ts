@@ -2,6 +2,7 @@ import {
   clearLocalSession,
   signIn,
   refreshSession,
+  authorizedDownload,
   authorizedRequest,
   signOut,
   getSession,
@@ -189,5 +190,35 @@ describe('sessao no cliente', () => {
 
     await expect(authorizedRequest('/accounts')).rejects.toMatchObject({ status: 401 });
     expect(getSession()).toBeNull();
+  });
+
+  it('authorizedDownload baixa o arquivo com o nome do Content-Disposition e renova em 401', async () => {
+    const fetchMock = vi
+      .fn()
+      .mockResolvedValueOnce(response(200, ACCESS))
+      .mockResolvedValueOnce(response(401, { code: 'UNAUTHENTICATED', message: 'x' }))
+      .mockResolvedValueOnce(response(200, { ...ACCESS, accessToken: 'token-2' }))
+      .mockResolvedValueOnce(
+        new Response('\uFEFFProjeto;P01', {
+          status: 200,
+          headers: {
+            'Content-Type': 'text/csv; charset=utf-8',
+            'Content-Disposition':
+              'attachment; filename="exportacao-P01-2025-01-01-a-2025-06-30-consolidada.csv"',
+          },
+        }),
+      );
+    vi.stubGlobal('fetch', fetchMock);
+    await signIn('pessoa@instituto.org.br', 'senha-de-teste-longa');
+
+    const downloaded = await authorizedDownload(
+      '/projects/p1/export?from=2025-01-01&to=2025-06-30&visao=CONSOLIDADA&formato=csv',
+    );
+
+    expect(downloaded.fileName).toBe('exportacao-P01-2025-01-01-a-2025-06-30-consolidada.csv');
+    expect(new Uint8Array(await downloaded.blob.arrayBuffer()).slice(0, 3)).toEqual(
+      new Uint8Array([0xef, 0xbb, 0xbf]),
+    );
+    await expect(downloaded.blob.text()).resolves.toBe('Projeto;P01');
   });
 });
