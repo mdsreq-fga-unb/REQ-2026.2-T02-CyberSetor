@@ -47,14 +47,7 @@ function ReachBadge({ reach, draft }: { reach: GoalReach | null; draft: boolean 
     return <Badge className="bg-success text-success-foreground">{REACHES.CUMPRIDA}</Badge>;
   }
   if (reach === 'PARCIALMENTE_CUMPRIDA') {
-    return (
-      <Badge
-        variant="outline"
-        className="border-transparent bg-warning/20 text-amber-800 dark:text-warning"
-      >
-        {REACHES.PARCIALMENTE_CUMPRIDA}
-      </Badge>
-    );
+    return <Badge variant="warning">{REACHES.PARCIALMENTE_CUMPRIDA}</Badge>;
   }
   if (reach === 'NAO_CUMPRIDA') {
     return <Badge variant="destructive">{REACHES.NAO_CUMPRIDA}</Badge>;

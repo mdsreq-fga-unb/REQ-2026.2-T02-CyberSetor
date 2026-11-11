@@ -196,16 +196,13 @@ export function RegistrationShareDialog({
             {!registration.aberta && (
               <div
                 role="alert"
-                className="flex items-center justify-between rounded-lg border border-amber-500/30 bg-amber-500/10 p-3 text-xs text-amber-700 dark:text-amber-400"
+                className="flex items-center justify-between rounded-lg border border-warning/40 bg-warning/10 p-3 text-xs text-warning-strong"
               >
                 <span>
                   <strong>Aviso:</strong> As inscrições estão encerradas. O formulário público
                   exibirá aviso de encerramento e não aceitará novos envios.
                 </span>
-                <Badge
-                  variant="outline"
-                  className="shrink-0 border-amber-500 text-amber-700 dark:text-amber-400"
-                >
+                <Badge variant="outline" className="shrink-0 border-warning text-warning-strong">
                   Encerrada
                 </Badge>
               </div>

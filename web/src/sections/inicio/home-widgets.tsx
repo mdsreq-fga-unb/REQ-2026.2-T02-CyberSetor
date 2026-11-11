@@ -52,23 +52,26 @@ export function WelcomeCard({
   return (
     <section
       aria-labelledby="boas-vindas"
-      className="relative flex h-full flex-col justify-center gap-4 overflow-hidden rounded-xl bg-linear-to-br from-slate-900 via-slate-800 to-primary p-6 text-white md:p-8"
+      className="relative flex h-full flex-col justify-center gap-4 overflow-hidden rounded-xl bg-linear-to-br from-surface-inverse via-surface-inverse-muted to-primary p-6 text-surface-inverse-foreground md:p-8"
     >
       <div
         aria-hidden
-        className="absolute -top-16 -right-10 size-56 rounded-full bg-white/5 md:size-72"
+        className="absolute -top-16 -right-10 size-56 rounded-full bg-surface-inverse-foreground/5 md:size-72"
       />
-      <div aria-hidden className="absolute right-24 -bottom-20 size-40 rounded-full bg-white/5" />
+      <div
+        aria-hidden
+        className="absolute right-24 -bottom-20 size-40 rounded-full bg-surface-inverse-foreground/5"
+      />
       <CalendarCheckIcon
         aria-hidden
-        className="absolute right-8 bottom-6 hidden size-24 text-white/15 md:block"
+        className="absolute right-8 bottom-6 hidden size-24 text-surface-inverse-foreground/15 md:block"
       />
       <div className="relative flex max-w-xl flex-col gap-2">
-        <p className="text-sm text-white/70">{subtitle}</p>
+        <p className="text-sm text-surface-inverse-foreground/70">{subtitle}</p>
         <h1 id="boas-vindas" className="text-2xl font-semibold md:text-3xl">
           Olá, {name}
         </h1>
-        <p className="text-sm text-white/80 md:text-base">{summary}</p>
+        <p className="text-sm text-surface-inverse-foreground/80 md:text-base">{summary}</p>
       </div>
       {action && <div className="relative">{action}</div>}
     </section>
@@ -77,7 +80,7 @@ export function WelcomeCard({
 
 const TONES = {
   primary: 'bg-primary/10 text-primary',
-  warning: 'bg-warning/20 text-amber-800 dark:text-warning',
+  warning: 'bg-warning/20 text-warning-strong',
   destructive: 'bg-destructive/10 text-destructive',
   success: 'bg-success/10 text-success',
 } as const;
@@ -440,12 +443,12 @@ export function OpenRegistrations({
     <section
       aria-labelledby="inscricoes-abertas"
       aria-roledescription="carrossel"
-      className="flex h-full flex-col gap-4 rounded-xl bg-linear-to-br from-primary to-slate-900 p-6 text-white"
+      className="flex h-full flex-col gap-4 rounded-xl bg-linear-to-br from-primary to-surface-inverse p-6 text-surface-inverse-foreground"
     >
       <div className="flex items-center justify-between gap-2">
         <h2
           id="inscricoes-abertas"
-          className="text-xs font-semibold tracking-wide text-white/80 uppercase"
+          className="text-xs font-semibold tracking-wide text-surface-inverse-foreground/80 uppercase"
         >
           Inscrições abertas
           {total > 1 && ` · ${position + 1} de ${total}`}
@@ -455,7 +458,7 @@ export function OpenRegistrations({
             <Button
               size="icon"
               variant="ghost"
-              className="text-white hover:bg-white/10 hover:text-white"
+              className="text-surface-inverse-foreground hover:bg-surface-inverse-foreground/10 hover:text-surface-inverse-foreground"
               aria-label="Inscrição anterior"
               onClick={() => setIndex((position - 1 + registrations.length) % registrations.length)}
             >
@@ -464,7 +467,7 @@ export function OpenRegistrations({
             <Button
               size="icon"
               variant="ghost"
-              className="text-white hover:bg-white/10 hover:text-white"
+              className="text-surface-inverse-foreground hover:bg-surface-inverse-foreground/10 hover:text-surface-inverse-foreground"
               aria-label="Próxima inscrição"
               onClick={() => setIndex((position + 1) % registrations.length)}
             >
@@ -481,15 +484,18 @@ export function OpenRegistrations({
         className="flex flex-1 flex-col gap-1"
       >
         <p className="text-xl font-semibold">{current.titulo}</p>
-        <p className="text-sm text-white/80">
+        <p className="text-sm text-surface-inverse-foreground/80">
           {formatDate(current.data)} · {current.local}
         </p>
         <p className="mt-3 text-sm">
           {current.inscritos} de {current.vagas} vagas preenchidas
         </p>
-        <div className="h-2 overflow-hidden rounded-full bg-white/20" aria-hidden>
+        <div
+          className="h-2 overflow-hidden rounded-full bg-surface-inverse-foreground/20"
+          aria-hidden
+        >
           <div
-            className="h-full rounded-full bg-white"
+            className="h-full rounded-full bg-surface-inverse-foreground"
             style={{ width: `${Math.min(100, (current.inscritos / current.vagas) * 100)}%` }}
           />
         </div>
@@ -505,7 +511,7 @@ export function OpenRegistrations({
           rel="noopener noreferrer"
           className={cn(
             buttonVariants({ variant: 'ghost' }),
-            'text-white hover:bg-white/10 hover:text-white',
+            'text-surface-inverse-foreground hover:bg-surface-inverse-foreground/10 hover:text-surface-inverse-foreground',
           )}
         >
           <ExternalLinkIcon data-icon="inline-start" />

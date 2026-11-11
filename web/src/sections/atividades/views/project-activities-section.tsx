@@ -38,7 +38,7 @@ import type { Registration } from '@/types/inscricoes';
 // Mesmos tons dos destaques da tela inicial (home-widgets).
 const TONE_CLASS: Record<RegistrationTone, string> = {
   open: 'border-transparent bg-success/10 text-success',
-  full: 'border-transparent bg-warning/20 text-amber-800 dark:text-warning',
+  full: 'border-transparent bg-warning/20 text-warning-strong',
   closed: 'text-muted-foreground',
   none: 'text-muted-foreground',
 };

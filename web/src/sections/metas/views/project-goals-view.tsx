@@ -237,12 +237,7 @@ function GoalSummary({ goal, fim }: { goal: Goal; fim?: string }) {
       <Result goal={goal} />
       {fim && goal.periodoFim && goal.periodoFim > fim && (
         <span>
-          <Badge
-            variant="outline"
-            className="border-transparent bg-warning/20 text-amber-800 dark:text-warning"
-          >
-            Fora da vigência
-          </Badge>
+          <Badge variant="warning">Fora da vigência</Badge>
         </span>
       )}
       {goal.rascunho && (

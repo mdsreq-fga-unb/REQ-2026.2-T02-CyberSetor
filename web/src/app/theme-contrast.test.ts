@@ -76,6 +76,9 @@ const TEXT_PAIRS: [string, string][] = [
   ['success', 'background'],
   ['success-foreground', 'success'],
   ['warning-foreground', 'warning'],
+  ['warning-strong', 'background'],
+  ['surface-inverse-foreground', 'surface-inverse'],
+  ['surface-inverse-foreground', 'surface-inverse-muted'],
   ['sidebar-foreground', 'sidebar'],
   ['sidebar-primary-foreground', 'sidebar-primary'],
   ['sidebar-accent-foreground', 'sidebar-accent'],
@@ -95,6 +98,9 @@ const STATE_PAIRS: Record<string, [string, string, number, string][]> = {
     ['destructive', 'destructive', 0.1, 'card'],
     ['destructive', 'destructive', 0.2, 'card'],
     ['destructive', 'destructive', 0.1, 'muted'],
+    ['warning-strong', 'warning', 0.2, 'background'],
+    ['warning-strong', 'warning', 0.2, 'card'],
+    ['warning-strong', 'warning', 0.1, 'background'],
   ],
   '.dark': [
     ['primary-foreground', 'primary', 0.9, 'background'],
@@ -103,10 +109,22 @@ const STATE_PAIRS: Record<string, [string, string, number, string][]> = {
     ['destructive', 'destructive', 0.2, 'card'],
     ['destructive', 'destructive', 0.3, 'card'],
     ['destructive', 'destructive', 0.2, 'muted'],
+    ['warning-strong', 'warning', 0.2, 'background'],
+    ['warning-strong', 'warning', 0.2, 'card'],
+    ['warning-strong', 'warning', 0.1, 'background'],
   ],
 };
 
-const EXPOSED = ['success', 'success-foreground', 'warning', 'warning-foreground'];
+const EXPOSED = [
+  'success',
+  'success-foreground',
+  'warning',
+  'warning-foreground',
+  'warning-strong',
+  'surface-inverse',
+  'surface-inverse-muted',
+  'surface-inverse-foreground',
+];
 
 it.each(EXPOSED)('expoe %s como cor do Tailwind', (nome) => {
   expect(css).toContain(`--color-${nome}: var(--${nome});`);
