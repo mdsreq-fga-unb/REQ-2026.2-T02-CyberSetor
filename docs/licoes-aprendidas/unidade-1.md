@@ -6,6 +6,7 @@
 | 17/09/2026 | 1.1 | Cada lição passa a declarar responsável, prazo e indicador; alcance da validação de 02/09 delimitado; avaliação da daily assíncrona remetida à Retrospectiva | Daniel Batista |
 | 28/09/2026 | 1.2 | Explicitação da pendência da avaliação de Daniel na consolidação inicial da Sprint 0 e sua resolução e integração integral na Sprint 1 | Daniel Batista |
 | 05/10/2026 | 1.3 | Revisão editorial: lições sintetizadas, conteúdo já descrito em outras páginas substituído por remissão e detalhes de processo retirados | Caio Martins |
+| 11/11/2026 | 1.4 | Remissão ao resultado da daily no registro das dailies | Maria Eduarda Marques |
 
 Durante a Sprint 0, dedicada à descoberta do problema e à formação da equipe e do processo, a equipe registrou as lições abaixo, com a ação de melhoria adotada para cada uma.
 
@@ -39,4 +40,4 @@ Durante a Sprint 0, dedicada à descoberta do problema e à formação da equipe
 - *Ação de melhoria:* A equipe adotou, em caráter experimental na Sprint 0, a daily escrita e assíncrona. Como a prática nasceu na fase de planejamento, sua eficácia quanto ao compromisso dos integrantes e à identificação de impedimentos é avaliada na Retrospectiva, ao fim de uma sprint completa. Formato e regras estão em [Processo e ritos](../gestao/processo-scrumxp.md).
 - *Responsável:* Vinicius Vieira (Scrum Master) e equipe.
 - *Prazo:* Retrospectiva da Sprint 1 (22/09/2026).
-- *Indicador da ação:* Taxa de envio dos relatos nos dias úteis (meta de 80% ou mais) e registro e resolução dos impedimentos declarados.
+- *Indicador da ação:* Taxa de envio dos relatos nos dias úteis (meta de 80% ou mais) e registro e resolução dos impedimentos declarados. Resultado por sprint no [registro das dailies](../gestao/dailies.md).
