@@ -13,6 +13,7 @@
 | 26/10/2026 | 2.4 | Resultado alcançado da meta no relatório (CA-05a.1, CA-05a.6; RF43 no MVP); parâmetro planejado na condição de rascunho da meta quantitativa (CA-01b.3); período da meta dentro da execução do projeto (CA-01b.4); justificativa para reabrir meta concluída (CA-02a.3); dados da atividade (CA-03a.3); comparativo das metas repactuadas (RF44) e orientação de enquadramento (RF45) como requisitos próprios; controle de acesso por perfil (RNF04) e usabilidade das telas (RNF15) entre os requisitos de todo o produto, fora das linhas das histórias; estado vazio e recusas próprias nos critérios de cada história com tela; origem e conferência do resultado alcançado (10.2.6); gargalos atendidos pelo MVP e pelos incrementos (10.2.6); requisitos não funcionais das histórias conforme a matriz 8.4.2; portabilidade dos dados e eficiência do registro de presença entre os evolutivos (RNF19, RNF20); alcance da validação na 10.2.8: MVP aprovado pelo núcleo pedagógico; relatório e planilha aguardam a área administrativo-financeira; hipótese do primeiro recorte e ordem de contenção (10.2.6); valor herdado das derivadas com resultado diferente marcado como inicial (10.2.2); requisitos associados exigíveis na conclusão da história (10.2.7); edição de meta fora da nova vigência (CA-14.5); minimização de dados no relatório e na correção a pedido do titular (RNF05); registro de 28/09 sem a marca de minuto da gravação (10.2.8) | Vinicius Vieira |
 | 30/10/2026 | 2.5 | HU-07d (apresentação da inscrição, RF46) no backlog geral, com valor herdado da HU-07 e esforço técnico propostos 🔧 até a validação com o Instituto em 05/11/2026 | Vinicius Vieira |
 | 03/11/2026 | 2.6 | Opções de lista de espera e de confirmação automática na configuração da inscrição (CA-07b.1); confirmação pelo coordenador, prioridade de quem espera, cancelamento a pedido e nova inscrição de quem cancelou na HU-07c (CA-07c.3 a CA-07c.6), propostos 🔧 até a validação com o Instituto em 05/11/2026 | Vinicius Vieira |
+| 07/11/2026 | 2.7 | Cadastro existente sinalizado na lista de inscritos, sem bloquear a inscrição pelo formulário público (CA-07a.8); registros das sessões de 08/10 e de 29/10 com o Instituto na 10.2.8, com o alcance das três sessões; recorte confirmado em 08/10 na 10.2.6 | Rodrigo Henrique |
 
 ---
 
@@ -275,6 +276,7 @@ Personas das histórias e perfis da [seção 8.5.1](8-requisitos.md#851-perfis-d
     - CA-07a.5 Autorização para receber comunicados e autorização de uso de imagem são opções separadas e opcionais; recusar qualquer uma não impede a inscrição.
     - CA-07a.6 A revogação da autorização de comunicados ou de uso de imagem, pedida pela pessoa por qualquer canal, fica registrada com data e canal e não afeta a inscrição.
     - CA-07a.7 O link de atividade com inscrição não aberta ou encerrada pelo coordenador mostra que a inscrição não está aberta, sem o formulário; com as vagas esgotadas, vale o CA-07c.1.
+    - CA-07a.8 A inscrição com e-mail ou CPF de cadastro prévio, conforme o campo escolhido no formulário 🔧, é aceita sem mostrar à pessoa dados do cadastro existente e aparece na lista de inscritos com o indicador de cadastro existente, para o coordenador reaproveitar o cadastro.
 
     **Requisitos não funcionais e regras de negócio:** RNF02, RNF05, RNF12; RN-05, RN-06, RN-12
 
@@ -649,7 +651,7 @@ Candidatos ao MVP pela regra da matriz: valor 4 com esforço 1 ou 2, e valor 3 c
 
 ### 10.2.6 MVP e incrementos
 
-O MVP é o primeiro recorte utilizável pelo Instituto: cadastrar o instrumento e o projeto, desdobrar requisitos e metas, dar responsável e prazo a cada meta, ser avisado dos vencimentos, registrar aditivos, receber inscrições por link, QR Code ou presencialmente, atender pedidos dos titulares dos dados e gerar a prestação de contas com justificativas. Na validação, o Instituto definiu parcerias e metas como a entrega prioritária, apontou as inscrições como o que "facilitaria para todas as equipes" e confirmou tentar o relatório e a planilha já no MVP.
+O MVP é o primeiro recorte utilizável pelo Instituto: cadastrar o instrumento e o projeto, desdobrar requisitos e metas, dar responsável e prazo a cada meta, ser avisado dos vencimentos, registrar aditivos, receber inscrições por link, QR Code ou presencialmente, atender pedidos dos titulares dos dados e gerar a prestação de contas com justificativas. Na validação, o Instituto definiu parcerias e metas como a entrega prioritária, apontou as inscrições como o que "facilitaria para todas as equipes" e confirmou tentar o relatório e a planilha já no MVP. O recorte foi confirmado em 08/10/2026; o que essa sessão e a de 29/10/2026 resolveram e o que segue pendente estão na [seção 10.2.8](#1028-validacao-com-o-instituto).
 
 O que este recorte permite verificar é o controle de instrumentos, metas, prazos e inscrições, com o relatório montado a partir desses registros. A redução do esforço de prestação de contas depende das evidências e da presença, que chegam nos incrementos 2 e 3, e é conferida com o Instituto a cada entrega 🔧.
 
@@ -701,7 +703,11 @@ Se a capacidade da sprint não comportar o recorte inteiro, descem para a sprint
 
 ### 10.2.8 Validação com o Instituto
 
-Os códigos de história são os da sessão; a correspondência com as histórias derivadas está na 10.2.2.
+O recorte foi validado com o Instituto em três sessões: a de 28/09/2026 aprovou o MVP, a de 08/10/2026 confirmou o recorte e a de 29/10/2026, com a demonstração da primeira entrega, respondeu parte dos pontos em aberto da [seção 8.6](8-requisitos.md#86-pontos-em-aberto-e-auditoria-de-lacunas). Os registros de 08/10 e de 29/10 são preliminares e aguardam a conferência do Instituto.
+
+**Alcance da validação:** o MVP foi aprovado pelo núcleo pedagógico, que também representou o Instituto em 08/10 e em 29/10. As funcionalidades que a [seção 7.3.1](../visao/7-equipe-e-cliente.md#731-area-competente-por-funcionalidade) atribui a outras áreas aguardam a validação da área competente, em especial o relatório e a planilha (HU-05a, HU-05b e HU-13), da área administrativo-financeira.
+
+**Sessão de 28/09/2026.** Os códigos de história são os da sessão; a correspondência com as histórias derivadas está na 10.2.2.
 
 | Item | Registro |
 | :--- | :--- |
@@ -715,4 +721,29 @@ Os códigos de história são os da sessão; a correspondência com as história
 | Confirmado sem ajuste | Meta sem parâmetros fica em rascunho; aditivo gera nova versão e preserva a original; alteração em registro já publicado exige justificativa |
 | Pedido novo | Registrar a alteração do período de execução e atualizar os prazos que dependem dele, a especificar |
 | Divergências e pendências | A ordem dos incrementos vai à conferência do Instituto: as inscrições foram confirmadas para o MVP no início da sessão e, na ordem final, o campo ficou depois das evidências; a equipe manteve as inscrições no MVP e posicionou por dependência o RF09 e a HU-15 no MVP e a HU-10 e o RF16 no incremento 3; a HU-15 não foi votada e seu valor vai à conferência; a repetição do aviso depois dos 30 dias está a definir; a trava do relatório sobre pagamentos depende da área financeira |
-| Alcance da validação | O MVP foi aprovado pelo núcleo pedagógico. As funcionalidades que a [seção 7.3.1](../visao/7-equipe-e-cliente.md#731-area-competente-por-funcionalidade) atribui a outras áreas aguardam a validação da área competente, em especial o relatório e a planilha (HU-05a, HU-05b e HU-13), da área administrativo-financeira |
+
+**Sessão de 08/10/2026.**
+
+| Item | Registro |
+| :--- | :--- |
+| Data e formato | 08/10/2026, 16h30, reunião online com gravação autorizada; [ata](../gestao/atas/2026-10-08-validacao-mvp-instituto.md) |
+| Participantes do Instituto | Maria Eduarda (Duda), do núcleo pedagógico |
+| Participantes da equipe | Vinicius Vieira, Daniel Batista, Maria Eduarda Marques, Lucas de Paula Leal |
+| Apresentado | As histórias do MVP no quadro do projeto, pelos épicos priorizados em 28/09 |
+| Confirmado | Instrumento, projeto e metas com indicador e prazos, com os documentos assinados anexados em PDF ou DOCX; responsável, setor e aviso por e-mail 30 dias antes do vencimento; aditivo e mudança do período como nova versão, com a anterior preservada; inscrição por link, QR Code e presencial, com aviso de tratamento de dados, autorização de uso de imagem, vagas, lista de espera e cadastro repetido; atendimento aos titulares dos dados desde a primeira fase; relatório em PDF, travado por meta não atingida sem justificativa, e planilha em XLSX e CSV; fotos e demais comprovações visuais no incremento 2 |
+| Pendências de 28/09 resolvidas | Ordem dos incrementos: as inscrições ficam no MVP, e as evidências, no incremento 2; a HU-15 fica no MVP, com o atendimento aos titulares desde a primeira fase, e seu valor segue inicial (10.2.2) 🔧; o relatório e a planilha, aprovados em 28/09 se coubessem na capacidade, foram confirmados sem essa condição |
+| Divergências com o catálogo | Cadastro repetido como aviso no tema e como bloqueio na decisão, resolvido em 29/10 pelo aviso; indicador e datas como condição para a meta sair do rascunho (seção 8.6, item 16) 🔧; e-mail de confirmação da inscrição presencial e inscrição vinculada aos formulários que o Instituto já utiliza (seção 8.6, item 8) 🔧 |
+| Seguem em aberto | Repetição do aviso depois dos 30 dias e trava do relatório sobre pendências administrativo-financeiras (seção 8.6, itens 6 e 7) |
+
+**Sessão de 29/10/2026.**
+
+| Item | Registro |
+| :--- | :--- |
+| Data e formato | 29/10/2026, 16h30, reunião online com demonstração no ambiente de homologação; [ata](../gestao/atas/2026-10-29-checkpoint-instituto.md) |
+| Participantes do Instituto | Clara Novaes e Maria Eduarda (Duda), do núcleo pedagógico |
+| Participantes da equipe | Vinicius Vieira, Maria Eduarda Marques, Caio Martins |
+| Apresentado | Painel inicial, perfis de acesso, cadastro de instrumentos, projetos e metas e inscrição pública por link e QR Code |
+| Confirmado sem ajuste | Rumo do produto; descritivo das metas preenchido à mão na primeira versão; cadastros de participantes mantidos, para formar um banco de participantes, com exclusão e anonimização só a pedido do titular (HU-15b) |
+| Pontos em aberto respondidos | Cadastro repetido como aviso, sem bloqueio, com indicador na lista de inscritos (RF22, CA-07a.8); acesso administrativo da coordenação de execução e da direção de projetos (seção 8.5.1) |
+| Pedidos novos | Avisos por e-mail sobre a inscrição e o início das atividades, recuperação de senha e campos personalizados no formulário de inscrição (seção 8.6, item 15) 🔧 |
+| Seguem em aberto | Projeto modelo dos testes, a confirmar pela direção do Instituto; modelo de formulário do Instituto; dados de acessibilidade, que são dados pessoais sensíveis (seção 8.6, item 15); canal e custo dos avisos por WhatsApp. Os demais pontos da seção 8.6 não foram tratados nesta sessão |
