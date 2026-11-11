@@ -2,7 +2,7 @@
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useRouter } from 'next/navigation';
-import { useState, type FormEvent } from 'react';
+import { useState, useSyncExternalStore, type FormEvent } from 'react';
 import { Controller, useForm, type Control } from 'react-hook-form';
 import { z } from 'zod';
 import { Button } from '@/components/ui/button';
@@ -11,7 +11,7 @@ import { Field, FieldError, FieldGroup, FieldLabel } from '@/components/ui/field
 import { Input } from '@/components/ui/input';
 import { ApiError } from '@/lib/api';
 import { paths } from '@/routes/paths';
-import { changePassword, signOut } from '../session';
+import { changePassword, getSession, signOut, subscribeSession } from '../session';
 
 const schema = z
   .object({
@@ -75,6 +75,9 @@ function PasswordField({
 
 export function ChangePasswordView() {
   const router = useRouter();
+  const session = useSyncExternalStore(subscribeSession, getSession, () => null);
+  // Pela barra superior a troca é por vontade da pessoa: volta ao painel em vez de sair.
+  const voluntary = session?.deveTrocarSenha === false;
   const [failure, setFailure] = useState<string | null>(null);
   const [leaving, setLeaving] = useState(false);
   const form = useForm<ChangePasswordValues>({
@@ -111,8 +114,9 @@ export function ChangePasswordView() {
           <h1>Trocar senha</h1>
         </CardTitle>
         <CardDescription>
-          No primeiro acesso, troque a senha temporária por uma senha só sua, com 15 a 64
-          caracteres.
+          {voluntary
+            ? 'Escolha uma nova senha, com 15 a 64 caracteres. As outras sessões abertas com a sua conta serão encerradas.'
+            : 'No primeiro acesso, troque a senha temporária por uma senha só sua, com 15 a 64 caracteres.'}
         </CardDescription>
       </CardHeader>
       <CardContent>
@@ -145,16 +149,27 @@ export function ChangePasswordView() {
               <Button type="submit" disabled={busy}>
                 {busy ? 'Trocando…' : 'Trocar senha'}
               </Button>
-              <Button
-                type="button"
-                variant="ghost"
-                disabled={busy}
-                onClick={() => {
-                  signOut().catch(() => null);
-                }}
-              >
-                Sair
-              </Button>
+              {voluntary ? (
+                <Button
+                  type="button"
+                  variant="ghost"
+                  disabled={busy}
+                  onClick={() => router.replace(paths.dashboard.root)}
+                >
+                  Voltar ao painel
+                </Button>
+              ) : (
+                <Button
+                  type="button"
+                  variant="ghost"
+                  disabled={busy}
+                  onClick={() => {
+                    signOut().catch(() => null);
+                  }}
+                >
+                  Sair
+                </Button>
+              )}
             </Field>
           </FieldGroup>
         </form>

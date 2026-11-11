@@ -1,16 +1,13 @@
 'use client';
 
-import { LogOutIcon } from 'lucide-react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useSession } from '@/auth/hooks/use-session';
-import { isActiveItem, navigationFor, profileLabel } from '@/auth/profiles';
-import { signOut } from '@/auth/session';
+import { isActiveItem, navigationFor } from '@/auth/profiles';
 import { LogoMark } from '@/components/brand/logo-mark';
 import {
   Sidebar,
   SidebarContent,
-  SidebarFooter,
   SidebarGroup,
   SidebarGroupLabel,
   SidebarHeader,
@@ -70,27 +67,6 @@ export function AppSidebar() {
           </nav>
         </SidebarGroup>
       </SidebarContent>
-      <SidebarFooter>
-        {session && (
-          <p className="truncate px-2 text-xs text-muted-foreground group-data-[collapsible=icon]:hidden">
-            {profileLabel(session.perfil)}
-          </p>
-        )}
-        <SidebarMenu>
-          <SidebarMenuItem>
-            <SidebarMenuButton
-              size="lg"
-              tooltip="Sair"
-              onClick={() => {
-                signOut().catch(() => null);
-              }}
-            >
-              <LogOutIcon />
-              <span>Sair</span>
-            </SidebarMenuButton>
-          </SidebarMenuItem>
-        </SidebarMenu>
-      </SidebarFooter>
     </Sidebar>
   );
 }

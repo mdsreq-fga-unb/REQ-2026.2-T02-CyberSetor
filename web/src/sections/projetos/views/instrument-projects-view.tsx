@@ -23,6 +23,7 @@ import {
 } from '@/components/ui/table';
 import { toast } from '@/components/ui/toast';
 import { useDialogState } from '@/hooks/use-dialog-state';
+import { useBreadcrumbs } from '@/layouts/dashboard/breadcrumbs';
 import { ApiError } from '@/lib/api';
 import { useInstrument } from '@/queries/instrumentos';
 import { useProjects } from '@/queries/projetos';
@@ -82,6 +83,12 @@ export function InstrumentProjectsView({ instrumentId }: { instrumentId: string 
     ? `Projetos do instrumento do processo ${instrument.data.numeroProcesso}.`
     : 'Projetos do instrumento.';
 
+  useBreadcrumbs([
+    { label: 'Início', href: paths.dashboard.root },
+    { label: 'Instrumentos', href: paths.dashboard.instruments },
+    { label: instrument.data?.numeroProcesso ?? 'Instrumento' },
+  ]);
+
   const back = (
     <Link
       href={paths.dashboard.instruments}
@@ -110,7 +117,6 @@ export function InstrumentProjectsView({ instrumentId }: { instrumentId: string 
 
   return (
     <>
-      {back}
       {instrument.data ? (
         <div className="flex flex-col gap-3">
           <PageHeader

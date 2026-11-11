@@ -43,6 +43,7 @@ import { useGoals } from '@/queries/metas';
 import { useProject } from '@/queries/projetos';
 import { useRequirements } from '@/queries/requisitos';
 import { useCurrentUser } from '@/queries/sessao';
+import { useBreadcrumbs } from '@/layouts/dashboard/breadcrumbs';
 import { paths } from '@/routes/paths';
 import { ProjectActivitiesSection } from '@/sections/atividades/views/project-activities-section';
 import { ProjectPlanSection } from '@/sections/plano/views/project-plan-section';
@@ -320,6 +321,16 @@ export function ProjectGoalsView({
     sorted?.filter((goal) => goal.situacao === situacao).length ?? 0;
   const withoutRequirements = requirements.data?.length === 0;
 
+  useBreadcrumbs([
+    { label: 'Início', href: paths.dashboard.root },
+    { label: 'Instrumentos', href: paths.dashboard.instruments },
+    {
+      label: instrument.data?.numeroProcesso ?? 'Instrumento',
+      href: paths.dashboard.instrument(instrumentId),
+    },
+    { label: project.data?.codigo ?? 'Projeto' },
+  ]);
+
   const back = (
     <Link
       href={paths.dashboard.instrument(instrumentId)}
@@ -351,7 +362,6 @@ export function ProjectGoalsView({
 
   return (
     <>
-      {back}
       {project.data ? (
         <div className="flex flex-col gap-3">
           <PageHeader
