@@ -249,11 +249,21 @@ function GoalSummary({ goal, fim }: { goal: Goal; fim?: string }) {
           <span className="text-muted-foreground">{missingText(goal.camposFaltantes)}</span>
         </span>
       )}
-      <span className="text-muted-foreground md:hidden">{goal.indicador ?? 'Sem indicador'}</span>
-      {measure(goal) && <span className="text-muted-foreground md:hidden">{measure(goal)}</span>}
-      <span className="text-muted-foreground md:hidden">
-        <Deadline goal={goal} />
-      </span>
+      {/* No celular as colunas da tabela viram pares rótulo e valor dentro do cartão. */}
+      <dl className="mt-2 grid grid-cols-[auto_1fr] gap-x-3 gap-y-1 border-t pt-2 md:hidden">
+        <dt className="text-muted-foreground">Indicador</dt>
+        <dd>{goal.indicador ?? 'Sem indicador'}</dd>
+        {measure(goal) && (
+          <>
+            <dt className="text-muted-foreground">Alvo</dt>
+            <dd>{measure(goal)}</dd>
+          </>
+        )}
+        <dt className="text-muted-foreground">Período</dt>
+        <dd>
+          <Deadline goal={goal} />
+        </dd>
+      </dl>
     </div>
   );
 }
