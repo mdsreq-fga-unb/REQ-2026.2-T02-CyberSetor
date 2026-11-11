@@ -102,6 +102,7 @@ function person(
     responsavelNome: null,
     responsavelTelefone: null,
     cancelamento: null,
+    cadastroExistente: null,
   };
 }
 
@@ -408,9 +409,10 @@ describe('ProjectActivitiesSection', () => {
           emEspera: 1,
           canceladas: 0,
           inscricoes: [
-            person('Ana Souza', 'CONFIRMADA', null),
+            { ...person('Ana Souza', 'CONFIRMADA', null), cadastroExistente: 'REAPROVEITADO' },
             {
               ...person('Bruno Lima', 'LISTA_ESPERA', 1),
+              cadastroExistente: 'CPF',
               menor: true,
               responsavelNome: 'Carla Lima',
             },
@@ -430,10 +432,12 @@ describe('ProjectActivitiesSection', () => {
     ).toBeInTheDocument();
     const confirmadas = screen.getByRole('region', { name: 'Vagas confirmadas (1)' });
     expect(within(confirmadas).getByText('Ana Souza')).toBeInTheDocument();
+    expect(within(confirmadas).getByText('Cadastro já existente')).toBeInTheDocument();
     const espera = screen.getByRole('region', { name: 'Lista de espera (1)' });
     expect(within(espera).getByText(/1º ·/)).toBeInTheDocument();
     expect(within(espera).getByText('Bruno Lima', { exact: false })).toBeInTheDocument();
     expect(within(espera).getByText('Menor')).toBeInTheDocument();
+    expect(within(espera).getByText('Possível cadastro repetido (CPF)')).toBeInTheDocument();
     expect(within(espera).getByText(/Responsável: Carla Lima/)).toBeInTheDocument();
 
     // Sem vaga livre, a pessoa da espera só pode ter a inscrição cancelada.

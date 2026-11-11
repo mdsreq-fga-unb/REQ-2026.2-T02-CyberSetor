@@ -28,6 +28,7 @@ function person(index: number, nome: string, espera: number | null): RegisteredP
     responsavelNome: espera === 2 ? 'Carla Mendes' : null,
     responsavelTelefone: espera === 2 ? '61988887777' : null,
     cancelamento: null,
+    cadastroExistente: null,
   };
 }
 
@@ -38,8 +39,8 @@ const LIST: RegistrationList = {
   canceladas: 1,
   inscricoes: [
     person(0, 'Ana Souza', null),
-    person(1, 'Bruno Lima', null),
-    person(2, 'Davi Rocha', 1),
+    { ...person(1, 'Bruno Lima', null), cadastroExistente: 'REAPROVEITADO' },
+    { ...person(2, 'Davi Rocha', 1), cadastroExistente: 'CPF' },
     person(3, 'Elisa Mendes', 2),
     {
       ...person(4, 'Fábio Costa', null),

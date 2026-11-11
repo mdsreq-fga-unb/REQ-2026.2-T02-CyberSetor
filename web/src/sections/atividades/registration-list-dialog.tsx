@@ -27,11 +27,18 @@ import { ApiError } from '@/lib/api';
 import { formatDate, formatDateTime, formatPhone } from '@/lib/br';
 import { useConfirmFromWaitlist, useRegistration, useRegistrationList } from '@/queries/inscricoes';
 import type { Activity } from '@/types/atividades';
-import type { RegisteredPerson, SituacaoInscricao } from '@/types/inscricoes';
+import type { CadastroExistente, RegisteredPerson, SituacaoInscricao } from '@/types/inscricoes';
 import { CANAL_LABEL } from '../participantes/format';
 import { useDialogState } from '@/hooks/use-dialog-state';
 import { ParticipantRecord } from '../participantes/participant-record';
 import { CancelRegistrationDialog } from './cancel-registration-dialog';
+
+/** Selo do cadastro que já existia antes da inscrição (RF22; D2 do checkpoint de 29/10). */
+const CADASTRO_LABEL: Record<CadastroExistente, string> = {
+  REAPROVEITADO: 'Cadastro já existente',
+  CPF: 'Possível cadastro repetido (CPF)',
+  EMAIL: 'Possível cadastro repetido (e-mail)',
+};
 
 const COLUMNS = 3;
 
@@ -101,6 +108,9 @@ function PeopleTable({
                     {waiting && `${person.posicaoEspera}º · `}
                     {person.nome}
                     {person.menor && <Badge variant="outline">Menor</Badge>}
+                    {person.cadastroExistente && (
+                      <Badge variant="secondary">{CADASTRO_LABEL[person.cadastroExistente]}</Badge>
+                    )}
                   </span>
                   <span className="text-sm text-muted-foreground">
                     {person.idade} anos · <Authorizations person={person} />
