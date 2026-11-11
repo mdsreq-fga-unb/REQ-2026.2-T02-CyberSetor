@@ -3,6 +3,7 @@ import { Transform } from 'class-transformer';
 import { IsEnum, IsOptional, IsString, Matches, MaxLength } from 'class-validator';
 import { trimString } from '../common/trim.js';
 import { CanalPedido, SituacaoInscricao } from '../generated/prisma/enums.js';
+import type { ExistingRecord } from './existing-record.js';
 
 const ISO_DATE = /^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])$/;
 
@@ -78,6 +79,14 @@ export class RegisteredPersonResponse {
 
   @ApiProperty({ type: CancellationResponse, nullable: true })
   cancelamento!: CancellationResponse | null;
+
+  @ApiProperty({
+    enum: ['REAPROVEITADO', 'EMAIL', 'CPF'],
+    nullable: true,
+    description:
+      'Cadastro que já existia antes desta inscrição (RF22): REAPROVEITADO quando a inscrição usa um cadastro com inscrição anterior; EMAIL ou CPF quando há outro cadastro, mais antigo, com o mesmo valor no campo que identifica cadastro repetido',
+  })
+  cadastroExistente!: ExistingRecord | null;
 }
 
 export class RegistrationListResponse {
