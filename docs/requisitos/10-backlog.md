@@ -14,6 +14,7 @@
 | 30/10/2026 | 2.5 | HU-07d (apresentação da inscrição, RF46) no backlog geral, com valor herdado da HU-07 e esforço técnico propostos 🔧 até a validação com o Instituto em 05/11/2026 | Vinicius Vieira |
 | 03/11/2026 | 2.6 | Opções de lista de espera e de confirmação automática na configuração da inscrição (CA-07b.1); confirmação pelo coordenador, prioridade de quem espera, cancelamento a pedido e nova inscrição de quem cancelou na HU-07c (CA-07c.3 a CA-07c.6), propostos 🔧 até a validação com o Instituto em 05/11/2026 | Vinicius Vieira |
 | 07/11/2026 | 2.7 | Cadastro existente sinalizado na lista de inscritos, sem bloquear a inscrição pelo formulário público (CA-07a.8); registros das sessões de 08/10 e de 29/10 com o Instituto na 10.2.8, com o alcance das três sessões; recorte confirmado em 08/10 na 10.2.6 | Rodrigo Henrique |
+| 11/11/2026 | 2.8 | Valor herdado em conferência (🔧) nas histórias HU-03b, HU-05b, HU-07c e HU-09a, também na tabela 10.2.4 e na matriz 10.2.5; retirada da regra de maior valor da 10.2.1, que não se aplicava porque cada requisito funcional pertence a uma única história (regra 2 da 10.1) | Maria Eduarda Marques |
 
 ---
 
@@ -441,7 +442,7 @@ Personas das histórias e perfis da [seção 8.5.1](8-requisitos.md#851-perfis-d
 
 ### 10.2.1 Critérios e escalas
 
-A priorização cruza o **valor de negócio**, dado pelo Instituto, com o **esforço técnico**, avaliado pela equipe. O valor é dado por história, em conversa com o Instituto, e vale para todos os requisitos funcionais dela; quando um requisito pertence a mais de uma história, prevalece o maior valor.
+A priorização cruza o **valor de negócio**, dado pelo Instituto, com o **esforço técnico**, avaliado pela equipe. O valor é dado por história, em conversa com o Instituto, e vale para todos os requisitos funcionais dela.
 
 | Valor | MoSCoW | Significado para o Instituto |
 | :---: | :--- | :--- |
@@ -597,13 +598,13 @@ O Instituto deu o valor a quatorze das quinze histórias apresentadas na valida�
 | [RF07](8-requisitos.md#rf07) | HU-02b | 4 | 2 | MVP |
 | [RF08](8-requisitos.md#rf08) | HU-02b | 4 | 2 | MVP |
 | [RF09](8-requisitos.md#rf09) | HU-03a | 4 | 1 | MVP |
-| [RF10](8-requisitos.md#rf10) | HU-03b | 4 | 3 | Incremento 2 |
+| [RF10](8-requisitos.md#rf10) | HU-03b | 4 🔧 | 3 | Incremento 2 |
 | [RF11](8-requisitos.md#rf11) | HU-07a | 4 | 2 | MVP |
 | [RF12](8-requisitos.md#rf12) | HU-07b | 4 | 1 | MVP |
 | [RF13](8-requisitos.md#rf13) | HU-08 | 4 | 1 | MVP |
-| [RF14](8-requisitos.md#rf14) | HU-07c | 4 | 2 | MVP |
-| [RF15](8-requisitos.md#rf15) | HU-07c | 4 | 2 | MVP |
-| [RF16](8-requisitos.md#rf16) | HU-09a | 2 | 3 | Incremento 3 |
+| [RF14](8-requisitos.md#rf14) | HU-07c | 4 🔧 | 2 | MVP |
+| [RF15](8-requisitos.md#rf15) | HU-07c | 4 🔧 | 2 | MVP |
+| [RF16](8-requisitos.md#rf16) | HU-09a | 2 🔧 | 3 | Incremento 3 |
 | [RF17](8-requisitos.md#rf17) | HU-09b | 2 | 3 | Posterior |
 | [RF18](8-requisitos.md#rf18) | HU-12 | 2 | 3 | Posterior |
 | [RF19](8-requisitos.md#rf19) | HU-10 | 4 | 1 | Incremento 3 |
@@ -624,7 +625,7 @@ O Instituto deu o valor a quatorze das quinze histórias apresentadas na valida�
 | [RF34](8-requisitos.md#rf34) | HU-04b | 4 | 3 | Incremento 2 |
 | [RF35](8-requisitos.md#rf35) | HU-05a | 4 | 1 | MVP |
 | [RF36](8-requisitos.md#rf36) | HU-05a | 4 | 2 | MVP |
-| [RF37](8-requisitos.md#rf37) | HU-05b | 4 | 3 | MVP |
+| [RF37](8-requisitos.md#rf37) | HU-05b | 4 🔧 | 3 | MVP |
 | [RF38](8-requisitos.md#rf38) | HU-13 | 4 | 1 | MVP |
 | [RF39](8-requisitos.md#rf39) | HU-05a | 4 | 1 | MVP |
 | [RF40](8-requisitos.md#rf40) | HU-16 | 4 🔧 | 1 | MVP |
@@ -641,9 +642,9 @@ Linhas: valor de negócio. Colunas: esforço técnico. Em negrito, os requisitos
 
 | Valor \ Esforço | 1 | 2 | 3 | 4 |
 | :---: | :--- | :--- | :--- | :--- |
-| **4** | **RF01**, **RF02**, **RF03**, **RF05**, **RF06**, **RF09**, **RF12**, **RF13**, RF19, **RF23**, **RF24**, **RF26** 🔧, **RF35**, **RF38**, **RF39**, **RF40** 🔧, **RF41**, **RF43**, **RF44**, RF45, **RF46** 🔧 | **RF04**, **RF07**, **RF08**, **RF11**, **RF14**, **RF15**, **RF22**, **RF25**, **RF31**, RF33, **RF36**, **RF42** | RF10, **RF27** 🔧, RF32, RF34, **RF37** | — |
+| **4** | **RF01**, **RF02**, **RF03**, **RF05**, **RF06**, **RF09**, **RF12**, **RF13**, RF19, **RF23**, **RF24**, **RF26** 🔧, **RF35**, **RF38**, **RF39**, **RF40** 🔧, **RF41**, **RF43**, **RF44**, RF45, **RF46** 🔧 | **RF04**, **RF07**, **RF08**, **RF11**, **RF14** 🔧, **RF15** 🔧, **RF22**, **RF25**, **RF31**, RF33, **RF36**, **RF42** | RF10 🔧, **RF27** 🔧, RF32, RF34, **RF37** 🔧 | — |
 | **3** | RF29 | RF28, RF30 | — | — |
-| **2** | RF21 | RF20 | RF16, RF17, RF18 | — |
+| **2** | RF21 | RF20 | RF16 🔧, RF17, RF18 | — |
 | **1** | — | — | — | — |
 
 Candidatos ao MVP pela regra da matriz: valor 4 com esforço 1 ou 2, e valor 3 com esforço 1, ponderados pelas dependências, pelo fluxo mínimo completo e pelos riscos. Requisito de valor alto e esforço alto é reduzido, dividido ou adiado, nunca descartado. O símbolo 🔧 marca valor ainda em conferência com o Instituto.
