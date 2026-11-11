@@ -135,18 +135,18 @@ describe('projetos do instrumento', () => {
     expect(screen.getByText('Vigência 01/04/2026 a 31/03/2027')).toBeInTheDocument();
     expect(screen.queryByRole('button', { name: 'Novo projeto' })).not.toBeInTheDocument();
     expect(screen.queryByRole('button', { name: /Ações do projeto/ })).not.toBeInTheDocument();
-    expect(within(projeto).getByRole('link', { name: 'P01' })).toHaveAttribute(
+    expect(within(projeto).getByRole('link', { name: 'P01 · Oficinas de dança' })).toHaveAttribute(
       'href',
       `/instrumentos/${INSTRUMENT.id}/projetos/${DANCA.id}`,
     );
   });
 
-  it('o menu do projeto leva as metas', async () => {
+  it('o menu do projeto abre o projeto', async () => {
     await signedInAs('PRESIDENCIA_GESTAO', page(INSTRUMENT, [DANCA]));
     renderView();
 
     fireEvent.click(await screen.findByRole('button', { name: 'Ações do projeto P01' }));
-    fireEvent.click(await screen.findByRole('menuitem', { name: 'Metas' }));
+    fireEvent.click(await screen.findByRole('menuitem', { name: 'Abrir projeto' }));
 
     expect(push).toHaveBeenCalledWith(`/instrumentos/${INSTRUMENT.id}/projetos/${DANCA.id}`);
   });
@@ -160,7 +160,7 @@ describe('projetos do instrumento', () => {
         'Instrumento inativo: não recebe nem altera requisitos nem projetos.',
       ),
     ).toBeInTheDocument();
-    await screen.findByText('Oficinas de dança');
+    await screen.findByText('P01 · Oficinas de dança');
     await screen.findByText('Nenhum requisito neste instrumento');
     expect(screen.queryByRole('button', { name: 'Novo requisito' })).not.toBeInTheDocument();
     expect(screen.queryByRole('button', { name: 'Novo projeto' })).not.toBeInTheDocument();

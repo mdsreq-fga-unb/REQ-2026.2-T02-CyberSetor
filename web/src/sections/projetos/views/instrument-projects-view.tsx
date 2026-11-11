@@ -1,6 +1,6 @@
 'use client';
 
-import { ArrowLeftIcon, FolderKanbanIcon, PlusIcon } from 'lucide-react';
+import { ArrowLeftIcon, ChevronRightIcon, FolderKanbanIcon, PlusIcon } from 'lucide-react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useSession } from '@/auth/hooks/use-session';
@@ -137,9 +137,6 @@ export function InstrumentProjectsView({ instrumentId }: { instrumentId: string 
           Instrumento inativo: não recebe nem altera requisitos nem projetos.
         </p>
       )}
-      {instrument.data && <InstrumentDocument instrument={instrument.data} canEdit={canEdit} />}
-      {instrument.data && <InstrumentRequirements instrument={instrument.data} canEdit={canEdit} />}
-
       <h2 className="text-lg font-semibold">Projetos</h2>
 
       {projects.error && !projects.data ? (
@@ -178,16 +175,22 @@ export function InstrumentProjectsView({ instrumentId }: { instrumentId: string 
                 <TableSkeleton columns={canEdit ? 4 : 3} />
               ) : (
                 pagination.pageRows.map((project) => (
-                  <TableRow key={project.id}>
+                  <TableRow key={project.id} className="relative cursor-pointer">
                     <TableCell className="px-4 py-3 whitespace-normal">
                       <div className="flex flex-col gap-1">
+                        {/* O link cobre a linha inteira; o menu de ações fica por cima dele. */}
                         <Link
                           href={paths.dashboard.project(instrumentId, project.id)}
-                          className="inline-flex min-h-12 items-center self-start font-medium underline-offset-4 hover:underline"
+                          className="inline-flex min-h-12 items-center gap-1 self-start font-medium underline-offset-4 outline-none after:absolute after:inset-0 hover:underline focus-visible:after:ring-3 focus-visible:after:ring-ring/50"
                         >
-                          {project.codigo}
+                          <span>
+                            {project.codigo} · {project.titulo}
+                          </span>
+                          <ChevronRightIcon
+                            aria-hidden="true"
+                            className="size-4 shrink-0 text-muted-foreground"
+                          />
                         </Link>
-                        <span>{project.titulo}</span>
                         <span className="text-muted-foreground md:hidden">
                           <Coordinator project={project} />
                         </span>
@@ -203,12 +206,12 @@ export function InstrumentProjectsView({ instrumentId }: { instrumentId: string 
                       {period(project.inicio, project.fim)}
                     </TableCell>
                     {canEdit && (
-                      <TableCell className="px-4 text-right">
+                      <TableCell className="relative z-10 px-4 text-right">
                         <RowActionsMenu
                           label={`Ações do projeto ${project.codigo}`}
                           actions={[
                             {
-                              label: 'Metas',
+                              label: 'Abrir projeto',
                               onSelect: () =>
                                 router.push(paths.dashboard.project(instrumentId, project.id)),
                             },
@@ -225,6 +228,9 @@ export function InstrumentProjectsView({ instrumentId }: { instrumentId: string 
           <ListPagination pagination={pagination} label="Paginação dos projetos" />
         </ListCard>
       )}
+
+      {instrument.data && <InstrumentRequirements instrument={instrument.data} canEdit={canEdit} />}
+      {instrument.data && <InstrumentDocument instrument={instrument.data} canEdit={canEdit} />}
 
       {instrument.data && (
         <ProjectFormDialog
