@@ -25,6 +25,7 @@
 | 02/11/2026 | 2.11 | Comportamento padrão da apresentação da inscrição (RF46) entre os pontos em aberto, para a validação com o Instituto em 05/11 | Vinicius Vieira |
 | 03/11/2026 | 2.12 | Lista de espera do RF15 condicionada à ativação na inscrição, valor inicial para a validação com o Instituto em 05/11 | Vinicius Vieira |
 | 07/11/2026 | 2.13 | Decisões da validação com o Instituto em 29/10: cadastro existente sinalizado na lista de inscritos da inscrição pelo formulário público (RF22), acesso administrativo da coordenação de execução e da direção de projetos (seção 8.5.1), pontos em aberto de cadastro repetido e de perfis revistos; pedidos novos de avisos por e-mail e de campos personalizados e condição de rascunho da meta do registro de 08/10 entre os pontos em aberto | Rodrigo Henrique |
+| 11/11/2026 | 2.14 | Requisitos das seções 8.2 e 8.3 apresentados em cartões, com história, critérios de aceitação, origem, RNF, gargalo e destino no MVP ou fora dele, compostos a cada build a partir das tabelas desta seção e da seção 10; filtro por destino e busca; matriz 8.4 em trilhas (gargalo, requisito, história e critérios), com cada código (HU, CA, RF, RNF, RN, OE, CP, gargalo e seção) levando ao ponto da documentação que o define | Maria Eduarda Marques |
 
 ---
 

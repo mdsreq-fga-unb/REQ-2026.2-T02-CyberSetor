@@ -157,7 +157,8 @@
   // histórias cujo selo não corresponde. Itens sem selo não são afetados.
   function iniciarSelos() {
     var filtro = document.querySelector("[data-selo-filtro]");
-    if (!filtro || filtro.getAttribute("data-pronto")) {
+    // Na seção 8, os cartões de requisitos têm filtro próprio (requisitos.js), que lê este seletor.
+    if (!filtro || filtro.getAttribute("data-pronto") || document.querySelector(".rq-card")) {
       return;
     }
     filtro.setAttribute("data-pronto", "1");
