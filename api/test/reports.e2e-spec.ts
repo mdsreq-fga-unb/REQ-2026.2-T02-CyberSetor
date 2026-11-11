@@ -338,8 +338,19 @@ describe('Emissão, bloqueio e retificação de relatórios de execução (e2e)'
       periodoFim: '2025-06-30',
       metasApuradas: 1,
       metasComJustificativa: [meta.id],
+      metas: [
+        {
+          metaId: meta.id,
+          resultadoMetaId: report.metas[0]?.resultadoMetaId,
+          alcance: AlcanceMeta.PARCIALMENTE_CUMPRIDA,
+          valorAlcancado: 80,
+          percentual: 80,
+          justificada: true,
+        },
+      ],
     });
     expect(JSON.stringify(audit.depois)).not.toContain('Maria da Silva');
+    expect(JSON.stringify(audit.depois)).not.toContain('80 participantes certificados');
   });
 
   it('CA-05a.7: bloqueia finalização (422) quando há meta ativa do período sem resultado registrado', async () => {
@@ -876,7 +887,29 @@ describe('Emissão, bloqueio e retificação de relatórios de execução (e2e)'
       where: { entidade: 'relatorio', entidadeId: v2.id, acao: 'REPORT_RECTIFIED' },
     });
     expect(audit.usuarioId).toBe(ids[Perfil.PRESIDENCIA_GESTAO]);
-    expect(audit.antes).toEqual({ relatorioId: v1.id, versao: 1 });
+    // RNF02: a trilha guarda os valores anteriores e os novos de cada meta, sem texto livre
+    expect(audit.antes).toEqual({
+      relatorioId: v1.id,
+      versao: 1,
+      metas: [
+        {
+          metaId: metaMudou.id,
+          resultadoMetaId: v1.metas[0]?.resultadoMetaId,
+          alcance: AlcanceMeta.PARCIALMENTE_CUMPRIDA,
+          valorAlcancado: 50,
+          percentual: 50,
+          justificada: true,
+        },
+        {
+          metaId: metaEstavel.id,
+          resultadoMetaId: v1.metas[1]?.resultadoMetaId,
+          alcance: AlcanceMeta.PARCIALMENTE_CUMPRIDA,
+          valorAlcancado: 70,
+          percentual: 70,
+          justificada: true,
+        },
+      ],
+    });
     expect(audit.depois).toEqual({
       relatorioId: v2.id,
       versao: 2,
@@ -884,9 +917,32 @@ describe('Emissão, bloqueio e retificação de relatórios de execução (e2e)'
       periodoFim: '2025-06-30',
       metasApuradas: 2,
       metasComJustificativa: [metaMudou.id, metaEstavel.id],
+      metas: [
+        {
+          metaId: metaMudou.id,
+          resultadoMetaId: v2.metas[0]?.resultadoMetaId,
+          alcance: AlcanceMeta.PARCIALMENTE_CUMPRIDA,
+          valorAlcancado: 80,
+          percentual: 80,
+          justificada: true,
+        },
+        {
+          metaId: metaEstavel.id,
+          resultadoMetaId: v1.metas[1]?.resultadoMetaId,
+          alcance: AlcanceMeta.PARCIALMENTE_CUMPRIDA,
+          valorAlcancado: 70,
+          percentual: 70,
+          justificada: true,
+        },
+      ],
     });
-    expect(JSON.stringify(audit.depois)).not.toContain('João Souza');
-    expect(JSON.stringify(audit.depois)).not.toContain('vagas ociosas');
+    expect(v2.metas[0]?.resultadoMetaId).not.toBe(v1.metas[0]?.resultadoMetaId);
+    for (const valores of [audit.antes, audit.depois]) {
+      expect(JSON.stringify(valores)).not.toContain('João Souza');
+      expect(JSON.stringify(valores)).not.toContain('vagas ociosas');
+      expect(JSON.stringify(valores)).not.toContain('Chuva intensa');
+      expect(JSON.stringify(valores)).not.toContain('listas físicas');
+    }
 
     // Tentar retificar novamente a v1 (já superada pela v2) retorna 409 REPORT_NOT_LATEST_VERSION
     const obsoleta = await as(Perfil.PRESIDENCIA_GESTAO)
