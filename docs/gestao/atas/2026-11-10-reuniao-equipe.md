@@ -9,7 +9,7 @@ Reunião da equipe de 10/11/2026, na Sprint 5, sobre a integração dos pull req
 | **Código** | ATA-2026-11-10 |
 | **Tipo** | Reunião da equipe — alinhamento de processo e de documentação |
 | **Data** | 10/11/2026 (terça-feira) |
-| **Horário** | 20h57 (início das anotações automáticas) |
+| **Horário** | 21h30 |
 | **Local / plataforma** | Google Meet |
 | **Formato** | Remoto |
 | **Participantes — CyberSetor** | Vinicius Vieira, Rodrigo Henrique Donato, Maria Eduarda Marques, Daniel Batista e Caio Martins |
@@ -35,13 +35,13 @@ Reunião da equipe de 10/11/2026, na Sprint 5, sobre a integração dos pull req
 
 ## 2. Resumo
 
-A equipe combinou integrar os pull requests aprovados e sem conflito, cada integrante os seus. Para a documentação, o foco é o que o docente apontou: remover duplicações e organizar as páginas, sem reduzir conteúdo. As seções longas ganham um resumo no início, e as tabelas resumidas de histórias saem em favor das versões completas. A programação em par deixa de ser usada na documentação, e as dailies passam a registrar como impedimento só o que bloqueia o trabalho. O integrante que deixou a equipe sai da documentação, e as responsabilidades dele são redistribuídas. A reunião de validação com o Instituto ficou para quinta-feira, 12/11, de forma online.
+A equipe combinou integrar os pull requests aprovados e sem conflito, cada integrante os seus. Para a documentação, o foco é o que o docente apontou: remover duplicações e organizar as páginas, sem reduzir conteúdo. As seções longas ganham um resumo no início, e as tabelas resumidas de histórias saem em favor das versões completas. A programação em par deixa de ser usada na documentação, e as dailies passam a registrar como impedimento só o que bloqueia o trabalho. O integrante que deixou a equipe sai da documentação, e as responsabilidades dele são redistribuídas. A reunião de validação com o Instituto ficou para quinta-feira, 12/11, das 16h às 17h, de forma online.
 
 - **Pull requests:** aprovados e sem conflito são integrados pelo próprio autor.
 - **Documentação:** sem duplicação, com resumo nas seções longas e sem as tabelas resumidas de histórias.
 - **Práticas ágeis:** fim da programação em par na documentação; impedimento na daily é só o que bloqueia o trabalho.
 - **Equipe:** o integrante que deixou a equipe sai da documentação; papéis em ER formalizados.
-- **Instituto:** validação online em 12/11.
+- **Instituto:** validação online em 12/11, das 16h às 17h.
 
 ---
 
@@ -68,7 +68,7 @@ A equipe combinou integrar os pull requests aprovados e sem conflito, cada integ
 | A4 | Formalizar os papéis de cada integrante na Engenharia de Requisitos e atualizar o README com as responsabilidades | equipe | Sprint 5 | Pendente |
 | A5 | Incluir marcações de tempo nos vídeos de validação, a começar pela validação do MVP (D6) | equipe | Sprint 5 | Pendente |
 | A6 | Publicar o projeto na homologação e configurar o envio de e-mails no servidor | Vinicius Vieira | Sprint 5 | Pendente |
-| A7 | Realizar a reunião de validação online com o Instituto | equipe | 12/11 | Pendente |
+| A7 | Realizar a reunião de validação online com o Instituto, das 16h às 17h | equipe | 12/11 | Pendente |
 
 ---
 
@@ -92,7 +92,7 @@ A equipe decidiu retirar da documentação o integrante que deixou a equipe, par
 
 ### Reunião de validação com o Instituto
 
-A reunião de validação com o Instituto será online, na quinta-feira, 12/11. Os integrantes que participarem juntos vão se reunir em um local com conexão estável, para evitar quedas de internet. Com isso, fica definida a data pendente da ação A3 da [ATA-2026-11-05](2026-11-05-sprint-review-retrospectiva-planning.md).
+A reunião de validação com o Instituto será online, na quinta-feira, 12/11, das 16h às 17h, horário confirmado pelo Instituto. Os integrantes que participarem juntos vão se reunir em um local com conexão estável, para evitar quedas de internet. Com isso, fica definida a data pendente da ação A3 da [ATA-2026-11-05](2026-11-05-sprint-review-retrospectiva-planning.md).
 
 ---
 
@@ -101,7 +101,6 @@ A reunião de validação com o Instituto será online, na quinta-feira, 12/11. 
 | # | Pendência | Depende de | Encaminhamento |
 |---|---|---|---|
 | P1 | As marcações de tempo (D6) precisam respeitar a política de registro das atas, pela qual as gravações não são publicadas; falta definir onde ficam os vídeos marcados e quem os acessa | equipe | A5 |
-| P2 | Horário da reunião de validação de 12/11 | equipe e Instituto | A7 |
 
 ---
 
@@ -109,4 +108,4 @@ A reunião de validação com o Instituto será online, na quinta-feira, 12/11. 
 
 | Versão | Data | Autor | Descrição |
 |---|---|---|---|
-| 0.1 | 11/11/2026 | Maria Eduarda Marques | Rascunho a partir das anotações automáticas da reunião, com revisão de dados sensíveis |
+| 0.1 | 11/11/2026 | Maria Eduarda Marques | Rascunho a partir das anotações automáticas da reunião, com revisão de dados sensíveis; horário de início confirmado e reunião com o Instituto das 16h às 17h, confirmada pelo Instituto |
