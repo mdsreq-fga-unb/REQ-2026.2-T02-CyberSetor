@@ -20,6 +20,7 @@ Este histórico é o do Documento de Visão como um todo. Cada seção traz, no 
 | 21/10/2026 | 1.9 | Daily presencial às terças e quintas e escrita nos demais dias úteis (seção 7.2) | Vinicius Vieira |
 | 26/10/2026 | 1.10 | Resultado alcançado da meta no MVP e no relatório; portabilidade dos dados no lugar da exportação integral como função; requisitos divididos para verificação (RF44, RF45, RNF20) e métricas dos RNFs com ambiente, massa e restauração conjunta; conectividade com quedas pontuais; papel da área administrativo-financeira no sistema; trabalho em duplas e prototipação evolutiva como aplicados; DoR e DoD com entrada provisória, conclusão na homologação e validação pendente; cronograma com as histórias por sprint; interações de setembro e outubro (seções 1 a 10); políticas de operação sem conexão, dados pessoais, cópia de segurança e transferência explicadas na seção 2.6, com remissão nas seções 1, 3 e 6; usabilidade e estados das telas para todo o produto, com o estado vazio e as recusas de cada história nos critérios; quadro comparativo da seção 4 sem qualificar os processos | Vinicius Vieira |
 | 03/11/2026 | 1.11 | Remissão para a página Histórico e evolução, que reúne as versões do documento e de cada seção com as reuniões, as sprints e os marcos da disciplina | Vinicius Vieira |
+| 11/11/2026 | 1.12 | Nota sobre o que está vigente no documento e o que é registro; resumos e remissões ao recorte vigente nas seções 1 a 4 | Maria Eduarda Marques |
 
 ## Sumário
 
@@ -37,3 +38,5 @@ Este histórico é o do Documento de Visão como um todo. Cada seção traz, no 
 | [10. Backlog de produto](../requisitos/10-backlog.md) | Histórias de usuário, priorização técnica vs. valor e definição do MVP |
 | [11. Lições aprendidas](../licoes-aprendidas/unidade-1.md) | Lições e ações de melhoria registradas por unidade, a partir das retrospectivas |
 | [12. Referências bibliográficas](../referencias.md) | Fontes citadas no documento |
+
+Cada seção vale pela sua versão mais recente, indicada no histórico de versões no início da página. O recorte vigente do MVP e dos incrementos está na [seção 10.2.6](../requisitos/10-backlog.md#1026-mvp-e-incrementos). Atas, entregas das unidades e linhas de histórico de versões são registros do momento em que foram feitos e não são reescritos.

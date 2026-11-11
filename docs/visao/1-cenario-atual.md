@@ -11,6 +11,7 @@
 | 30/09/2026 | 1.6 | Atualização do Rich Picture e mapa de stakeholders com papéis identificados na reunião de 08/09 (Diretoria de Projetos, Captação de Recursos, ausência de RH, demais setores operacionais e regimes de financiadores) | Equipe CyberSetor |
 | 05/10/2026 | 1.7 | Fechamento do dimensionamento empírico com estimativas da coordenação, restauração do mapa circular de stakeholders e unificação da matriz de interesse e poder | Rodrigo Henrique |
 | 26/10/2026 | 1.8 | Conectividade no campo com quedas pontuais (1.3 e 1.5); área administrativo-financeira com a rotina atual fora do sistema e a consulta a consolidados e relatórios, sem dados nominais (1.6 e 1.7); painel da presidência como capacidade candidata sem requisito funcional, sem saldo (1.7); desafios de conectividade, de dados pessoais e de manutenção com remissão às políticas da seção 2.6 (1.5) | Vinicius Vieira |
+| 11/11/2026 | 1.9 | Resumo do problema no início da 1.4; relatório próprio com remissão à 2.3 e ao incremento 2 do índice de comprovações (1.5); painel gerencial como capacidade candidata (1.6) | Maria Eduarda Marques |
 
 ---
 
@@ -62,6 +63,8 @@ O fluxo em que os gargalos se originam está modelado em notação BPMN na pági
 
 ## 1.4 Identificação e Dimensionamento Empírico do Problema
 
+**Em resumo.** O Instituto gere de 4 a 6 projetos e termos de fomento com 20 a 30 planilhas, listas em papel e fotos em celulares pessoais; a consolidação manual consome de 30 a 50 horas por ciclo e só revela metas em atraso no fechamento, com risco de glosa.
+
 <figure markdown>
   ![Diagrama de Ishikawa: causas dos gargalos na consolidação das informações para a prestação de contas](../assets/img/ishikawa.jpg)
   <figcaption>Figura 2 – Diagrama de Ishikawa. Fonte: elaborada pelos autores.</figcaption>
@@ -76,6 +79,7 @@ O processo atual gera descompasso severo entre a execução prática no SCS e a 
 - **Sobrecarga de Consolidação Manual:** O núcleo gestor consome entre 30 e 50 horas de trabalho por ciclo de prestação de contas na digitação de listas físicas e checagem cruzada linha a linha com rubricas orçamentárias.
 - **Frequência de Inconsistências e Risco Crítico de Glosa:** A ausência de monitoramento em tempo real faz com que metas em atraso só sejam detectadas no fechamento do relatório, impedindo a pactuação tempestiva de Termos Aditivos e gerando risco iminente de glosa orçamentária (art. 64 da Lei 13.019/2014).
 - **Heterogeneidade de Editais e Plataformas:** Convivência concorrente com exigências de múltiplos concedentes (SEDET-DF, FAC-DF, Fiocruz, MinC), cada qual com plataformas (TransferGov, sistema Parcerias) e modelos documentais próprios.
+
 ---
 
 ## 1.5 Desafios do Projeto
@@ -83,7 +87,7 @@ O processo atual gera descompasso severo entre a execução prática no SCS e a 
 * **Operação de Campo com Conectividade Não Garantida:** Disponibilizar uma interface leve e intuitiva para que oficineiros registrem presenças e capturem evidências no SCS, em espaço público onde a conexão não é garantida e as quedas são pontuais ([seção 10.2.2](../requisitos/10-backlog.md#1022-avaliacao-de-negocio-com-o-instituto)). A política de operação sem conexão está na [seção 2.6](2-solucao-proposta.md#politica-sem-conexao).
 * **Governança de Dados Pessoais e LGPD:** Segregar o acesso aos dados nominais e cadastrais de crianças, adolescentes e populações em situação de vulnerabilidade, restringindo-os ao núcleo pedagógico e protegendo-os de consultas por setores administrativos ou públicos externos. A política de dados pessoais está na [seção 2.6](2-solucao-proposta.md#politica-dados-pessoais).
 * **Autonomia operacional e manutenção:** reduzir o custo e a complexidade de manutenção, de modo que a operação cotidiana não dependa de equipe interna de tecnologia. A administração técnica e o custeio após a disciplina são dependências reais, tratadas na [seção 2.6](2-solucao-proposta.md#politica-transferencia).
-* **Viabilidade Técnica dos Relatórios frente à Variedade de Editais:** Devido à disparidade entre os formulários de cada órgão governamental, o sistema foca em gerar um **relatório consolidado próprio**, com exportação tabular e índice ordenado de comprovações fotográficas com metadados. A reprodução idêntica de formulários governamentais customizados fica condicionada à padronização normativa ulterior dos concedentes.
+* **Viabilidade Técnica dos Relatórios frente à Variedade de Editais:** Devido à disparidade entre os formulários de cada órgão governamental, o sistema gera um **relatório consolidado próprio**, com exportação tabular e índice de comprovações, sem reproduzir os formulários de cada concedente. A característica está detalhada na [seção 2.3](2-solucao-proposta.md#23-caracteristicas-de-produto-mapeadas-com-os-objetivos-especificos-do-produto) ("Sobre a CP8"), e o índice de comprovações chega no incremento 2 ([seção 10.2.6](../requisitos/10-backlog.md#1026-mvp-e-incrementos)).
 
 ---
 
@@ -108,7 +112,7 @@ A área do Instituto que valida cada conjunto de funcionalidades está na [seç�
 | Stakeholder | Quadrante (Poder / Interesse) | Estratégia de Engajamento e Participação |
 | :--- | :--- | :--- |
 | **Financiadores Públicos** (SEDET-DF, FAC-DF, Fiocruz, MinC) | Alto / Alto *(Gerenciar de perto)* | Alinhamentos prioritários, validação contínua de requisitos e relatórios com total auditabilidade para afastar risco de glosa. |
-| **Presidência e Diretoria Executiva** (Rafael) | Alto / Alto *(Gerenciar de perto)* | Validação das prioridades do produto e do painel gerencial. |
+| **Presidência e Diretoria Executiva** (Rafael) | Alto / Alto *(Gerenciar de perto)* | Validação das prioridades do produto e do painel gerencial (capacidade candidata, sem requisito funcional nesta versão). |
 | **Diretoria de Projetos e Captação de Recursos** (Fran) | Alto / Alto *(Gerenciar de perto)* | Validação primária do modelo de metas, indicadores e parâmetros de aferição. |
 | **Equipe CyberSetor** | Alto / Alto *(Gerenciar de perto)* | Condução da engenharia de requisitos e entregas funcionais quinzenais. |
 | **Coordenação Administrativo-Financeira** (Fillipe Ramos) | Médio / Alto *(Manter satisfeito)* | Validação do relatório de execução do objeto ([seção 7.3.1](7-equipe-e-cliente.md#731-area-competente-por-funcionalidade)). A rotina atual (Matriz de Aquisição e lançamentos) fica fora do sistema; no CyberSetor, a coordenação consulta consolidados e relatórios, sem dados nominais ([seção 8.5.1](../requisitos/8-requisitos.md#851-perfis-de-acesso-e-permissoes-cp1-e-transversal)). Acumula a gestão de pessoal, na ausência de setor de RH. |
