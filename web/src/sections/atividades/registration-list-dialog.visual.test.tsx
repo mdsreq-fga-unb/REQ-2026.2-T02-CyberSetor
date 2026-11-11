@@ -36,6 +36,7 @@ const LIST: RegistrationList = {
   confirmadas: 2,
   emEspera: 2,
   canceladas: 1,
+  promocaoAutomatica: false,
   inscricoes: [
     person(0, 'Ana Souza', null),
     person(1, 'Bruno Lima', null),

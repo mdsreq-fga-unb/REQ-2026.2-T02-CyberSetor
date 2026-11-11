@@ -180,7 +180,11 @@ export function RegistrationListDialog({
   const confirm = useConfirmFromWaitlist(activity?.id ?? '');
   const [cancelling, setCancelling] = useState<RegisteredPerson | null>(null);
   const record = useDialogState<string>();
-  const freeVacancy = list.data ? list.data.confirmadas < list.data.vagas : false;
+
+  const promocaoAutomatica =
+    list.data?.promocaoAutomatica ?? registration.data?.promocaoAutomatica ?? false;
+  const hasFreeVacancy = list.data ? list.data.confirmadas < list.data.vagas : false;
+  const canManuallyConfirm = hasFreeVacancy && !promocaoAutomatica;
 
   async function confirmVacancy(person: RegisteredPerson) {
     try {
@@ -197,7 +201,7 @@ export function RegistrationListDialog({
       { label: 'Ver ficha', onSelect: () => record.show(person.participanteId) },
     ];
     if (!editable || person.situacao === 'CANCELADA') return actions;
-    if (person.situacao === 'LISTA_ESPERA' && freeVacancy) {
+    if (person.situacao === 'LISTA_ESPERA' && canManuallyConfirm) {
       actions.push({
         label: 'Confirmar vaga',
         disabled: confirm.isPending,
@@ -279,9 +283,16 @@ export function RegistrationListDialog({
 
               {(list.data?.emEspera ?? 0) > 0 && (
                 <section aria-labelledby="inscritos-espera" className="flex flex-col gap-2">
-                  <h3 id="inscritos-espera" className="text-sm font-medium">
-                    Lista de espera ({list.data?.emEspera})
-                  </h3>
+                  <div className="flex flex-wrap items-center justify-between gap-2">
+                    <h3 id="inscritos-espera" className="text-sm font-medium">
+                      Lista de espera ({list.data?.emEspera})
+                    </h3>
+                    {canManuallyConfirm && (
+                      <Badge variant="outline" className="text-xs">
+                        Vaga livre para confirmação
+                      </Badge>
+                    )}
+                  </div>
                   {of('LISTA_ESPERA').length === 0 ? (
                     <p className="text-sm text-muted-foreground">
                       Ninguém encontrado na lista de espera.
