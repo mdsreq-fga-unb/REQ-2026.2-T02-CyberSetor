@@ -1,0 +1,349 @@
+import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
+import { Transform } from 'class-transformer';
+import {
+  IsEmail,
+  IsEnum,
+  IsInt,
+  IsNotEmpty,
+  IsOptional,
+  IsString,
+  Matches,
+  MaxLength,
+  Min,
+  MinLength,
+  ValidateIf,
+} from 'class-validator';
+import { trimString } from '../common/trim.js';
+import { CanalPedido, SituacaoInscricao } from '../generated/prisma/enums.js';
+import { toDigits, toLowerTrim, toPhoneDigits } from '../public-registrations/participant-data.js';
+
+const ISO_DATE = /^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])$/;
+const PHONE = /^\d{10,11}$/;
+
+// Campo obrigatório do participante: ausente mantém o valor; enviado, inclusive null, é validado.
+const sent = (_obj: object, value: unknown): boolean => value !== undefined;
+// Campo opcional do participante: null apaga o valor.
+const filled = (_obj: object, value: unknown): boolean => value !== undefined && value !== null;
+
+export class ListParticipantsQuery {
+  @ApiPropertyOptional({
+    description: 'Parte do nome, do nome de preferência, do telefone ou do e-mail',
+  })
+  @IsOptional()
+  @Transform(trimString)
+  @IsString()
+  @MaxLength(150)
+  busca?: string;
+}
+
+export class CheckDuplicateDto {
+  @ApiPropertyOptional({ description: 'CPF a verificar (pontuação ignorada)' })
+  @IsOptional()
+  @Transform(toDigits)
+  @IsString()
+  cpf?: string;
+
+  @ApiPropertyOptional({ description: 'E-mail a verificar' })
+  @IsOptional()
+  @Transform(toLowerTrim)
+  @IsEmail({}, { message: 'email inválido' })
+  email?: string;
+}
+
+export class DuplicateCheckParticipant {
+  @ApiProperty()
+  id!: string;
+
+  @ApiProperty()
+  nome!: string;
+
+  @ApiProperty({ description: 'Telefone mascarado para confirmação verbal' })
+  telefoneMascarado!: string;
+
+  @ApiPropertyOptional({ nullable: true, description: 'E-mail mascarado para confirmação verbal' })
+  emailMascarado?: string | null;
+
+  @ApiPropertyOptional({ nullable: true, description: 'CPF mascarado para confirmação verbal' })
+  cpfMascarado?: string | null;
+
+  @ApiProperty({ isArray: true, description: 'Campos preenchidos no cadastro do participante' })
+  camposDisponiveis!: string[];
+}
+
+export class DuplicateCheckResponse {
+  @ApiProperty()
+  existe!: boolean;
+
+  @ApiPropertyOptional({ type: DuplicateCheckParticipant, nullable: true })
+  participante?: DuplicateCheckParticipant | null;
+}
+
+export class CorrectParticipantDto {
+  @ApiProperty({ description: 'Versão lida; correção sobre versão antiga é recusada com 409' })
+  @IsInt()
+  @Min(1)
+  versao!: number;
+
+  @ApiProperty({ description: 'Pedido do titular que motiva a correção (RF26, CA-15a.2)' })
+  @Transform(trimString)
+  @IsString()
+  @MinLength(10, { message: 'Descreva o pedido do titular em pelo menos 10 caracteres.' })
+  @MaxLength(1000)
+  justificativa!: string;
+
+  @ApiPropertyOptional()
+  @ValidateIf(sent)
+  @Transform(trimString)
+  @IsString()
+  @MinLength(2)
+  @MaxLength(150)
+  nome?: string;
+
+  @ApiPropertyOptional({ nullable: true })
+  @ValidateIf(filled)
+  @Transform(trimString)
+  @IsString()
+  @IsNotEmpty()
+  @MaxLength(80)
+  nomePreferencia?: string | null;
+
+  @ApiPropertyOptional({ description: 'DDD e número; pontuação e +55 são ignorados' })
+  @ValidateIf(sent)
+  @Transform(toPhoneDigits)
+  @IsString()
+  @Matches(PHONE, { message: 'telefone deve ter DDD e número, com 10 ou 11 dígitos' })
+  telefone?: string;
+
+  @ApiPropertyOptional({ format: 'date' })
+  @ValidateIf(sent)
+  @Matches(ISO_DATE, { message: 'dataNascimento deve estar no formato AAAA-MM-DD' })
+  dataNascimento?: string;
+
+  @ApiPropertyOptional({ nullable: true })
+  @ValidateIf(filled)
+  @Transform(toLowerTrim)
+  @IsEmail({}, { message: 'email inválido' })
+  @MaxLength(254)
+  email?: string | null;
+
+  @ApiPropertyOptional({ nullable: true, description: 'Pontuação é ignorada' })
+  @ValidateIf(filled)
+  @Transform(toDigits)
+  @IsString()
+  cpf?: string | null;
+
+  @ApiPropertyOptional({ nullable: true })
+  @ValidateIf(filled)
+  @Transform(trimString)
+  @IsString()
+  @IsNotEmpty()
+  @MaxLength(120)
+  bairroRegiao?: string | null;
+
+  @ApiPropertyOptional({ nullable: true })
+  @ValidateIf(filled)
+  @Transform(trimString)
+  @IsString()
+  @IsNotEmpty()
+  @MaxLength(120)
+  escolaridade?: string | null;
+}
+
+export const AUTORIZACOES = ['COMUNICADOS', 'IMAGEM'] as const;
+export type Autorizacao = (typeof AUTORIZACOES)[number];
+
+export class RevokeAuthorizationDto {
+  @ApiProperty({ enum: AUTORIZACOES, description: 'IMAGEM cobre imagem e voz' })
+  @IsEnum(AUTORIZACOES, { message: 'autorizacao deve ser COMUNICADOS ou IMAGEM' })
+  autorizacao!: Autorizacao;
+
+  @ApiProperty({ enum: CanalPedido, description: 'Por onde o titular pediu' })
+  @IsEnum(CanalPedido)
+  canal!: CanalPedido;
+
+  @ApiProperty({ format: 'date', description: 'Data do pedido; não pode ser futura' })
+  @Matches(ISO_DATE, { message: 'pedidoEm deve estar no formato AAAA-MM-DD' })
+  pedidoEm!: string;
+}
+
+export class RevocationResponse {
+  @ApiProperty({ format: 'date' })
+  pedidoEm!: string;
+
+  @ApiProperty({ enum: CanalPedido })
+  canal!: CanalPedido;
+}
+
+export class ParticipantActivityRef {
+  @ApiProperty()
+  id!: string;
+
+  @ApiProperty()
+  titulo!: string;
+
+  @ApiProperty({ format: 'date' })
+  data!: string;
+}
+
+export class ParticipantSummaryResponse {
+  @ApiProperty()
+  id!: string;
+
+  @ApiProperty()
+  versao!: number;
+
+  @ApiProperty()
+  nome!: string;
+
+  @ApiProperty({ nullable: true })
+  nomePreferencia!: string | null;
+
+  @ApiProperty({ description: 'Idade completa hoje, em Brasília' })
+  idade!: number;
+
+  @ApiProperty()
+  telefone!: string;
+
+  @ApiProperty({ nullable: true })
+  email!: string | null;
+
+  @ApiProperty({ description: 'Inscrições com vaga confirmada' })
+  inscricoes!: number;
+
+  @ApiProperty({
+    type: ParticipantActivityRef,
+    nullable: true,
+    description: 'Inscrição mais recente',
+  })
+  ultimaAtividade!: ParticipantActivityRef | null;
+}
+
+export class ParticipantRegistrationResponse {
+  @ApiProperty()
+  id!: string;
+
+  @ApiProperty({ enum: SituacaoInscricao })
+  situacao!: SituacaoInscricao;
+
+  @ApiProperty()
+  inscritoEm!: Date;
+
+  @ApiProperty()
+  autorizaComunicados!: boolean;
+
+  @ApiProperty()
+  autorizaImagem!: boolean;
+
+  @ApiProperty({ nullable: true, description: 'Quando aceitou os compromissos da turma' })
+  termoAceitoEm!: Date | null;
+
+  @ApiProperty({ type: RevocationResponse, nullable: true })
+  comunicadosRevogacao!: RevocationResponse | null;
+
+  @ApiProperty({ type: RevocationResponse, nullable: true, description: 'Imagem e voz' })
+  imagemRevogacao!: RevocationResponse | null;
+
+  @ApiProperty({ nullable: true })
+  responsavelNome!: string | null;
+
+  @ApiProperty({ nullable: true })
+  responsavelTelefone!: string | null;
+
+  @ApiProperty({ type: ParticipantActivityRef })
+  atividade!: ParticipantActivityRef;
+
+  @ApiProperty()
+  projetoId!: string;
+
+  @ApiProperty()
+  instrumentoId!: string;
+}
+
+export class ParticipantResponse {
+  @ApiProperty()
+  id!: string;
+
+  @ApiProperty()
+  versao!: number;
+
+  @ApiProperty()
+  nome!: string;
+
+  @ApiProperty({ nullable: true })
+  nomePreferencia!: string | null;
+
+  @ApiProperty()
+  telefone!: string;
+
+  @ApiProperty({ format: 'date' })
+  dataNascimento!: string;
+
+  @ApiProperty()
+  idade!: number;
+
+  @ApiProperty({ nullable: true })
+  email!: string | null;
+
+  @ApiProperty({ nullable: true })
+  cpf!: string | null;
+
+  @ApiProperty({ nullable: true })
+  bairroRegiao!: string | null;
+
+  @ApiProperty({ nullable: true })
+  escolaridade!: string | null;
+
+  @ApiProperty({
+    nullable: true,
+    description: 'Quando os dados pessoais foram anonimizados (HU-15b); nulo enquanto não foram',
+  })
+  anonimizadoEm!: Date | null;
+
+  @ApiProperty({ type: [ParticipantRegistrationResponse] })
+  inscricoes!: ParticipantRegistrationResponse[];
+}
+
+export const MOTIVOS_ELIMINACAO = ['PEDIDO_TITULAR', 'FIM_FINALIDADE'] as const;
+export type MotivoEliminacao = (typeof MOTIVOS_ELIMINACAO)[number];
+
+/** Exclusão ou anonimização a pedido do titular ou ao fim da finalidade (HU-15b, RF27). */
+export class EraseParticipantDto {
+  @ApiProperty({ description: 'Versão lida; pedido sobre versão antiga é recusado com 409' })
+  @IsInt()
+  @Min(1)
+  versao!: number;
+
+  @ApiProperty({ enum: MOTIVOS_ELIMINACAO })
+  @IsEnum(MOTIVOS_ELIMINACAO, { message: 'motivo deve ser PEDIDO_TITULAR ou FIM_FINALIDADE' })
+  motivo!: MotivoEliminacao;
+
+  @ApiProperty({ enum: CanalPedido, description: 'Por onde chegou o pedido ou o aviso de fim' })
+  @IsEnum(CanalPedido)
+  canal!: CanalPedido;
+
+  @ApiProperty({ format: 'date', description: 'Data do pedido; não pode ser futura (RNF06)' })
+  @Matches(ISO_DATE, { message: 'pedidoEm deve estar no formato AAAA-MM-DD' })
+  pedidoEm!: string;
+}
+
+/** O que o pedido faz com cada classe de dado, antes de confirmar (CA-15b.4). */
+export class ErasurePlanResponse {
+  @ApiProperty({
+    enum: ['EXCLUIR', 'ANONIMIZAR'],
+    description:
+      'EXCLUIR quando não há inscrição em atividade já realizada; senão, ANONIMIZAR (RN-07)',
+  })
+  acao!: 'EXCLUIR' | 'ANONIMIZAR';
+
+  @ApiProperty({ type: [String], description: 'Dados apagados' })
+  excluidos!: string[];
+
+  @ApiProperty({ type: [String], description: 'Dados reduzidos ao que compõe os totais' })
+  anonimizados!: string[];
+
+  @ApiProperty({ type: [String], description: 'Registros preservados, com o fundamento' })
+  preservados!: string[];
+
+  @ApiProperty({ description: 'Inscrições em atividade futura, que são canceladas' })
+  inscricoesCanceladas!: number;
+}
