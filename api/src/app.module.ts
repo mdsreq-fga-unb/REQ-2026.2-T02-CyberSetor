@@ -8,6 +8,7 @@ import { AuthModule } from './auth/auth.module.js';
 import { validateEnv } from './config/env.validation.js';
 import { DashboardModule } from './dashboard/dashboard.module.js';
 import { EmailModule } from './email/email.module.js';
+import { ExportsModule } from './exports/exports.module.js';
 import { GoalsModule } from './goals/goals.module.js';
 import { HealthModule } from './health/health.module.js';
 import { InstrumentsModule } from './instruments/instruments.module.js';
@@ -46,6 +47,7 @@ import { StorageModule } from './storage/storage.module.js';
     RequirementsModule,
     GoalsModule,
     ReportsModule,
+    ExportsModule,
     WorkPlanModule,
     SectorsModule,
     RegistrationsModule,
