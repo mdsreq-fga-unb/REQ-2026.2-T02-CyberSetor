@@ -14,6 +14,7 @@
 | 19/10/2026 | 1.9 | Composição da equipe atualizada para cinco integrantes | Maria Eduarda Marques |
 | 21/10/2026 | 1.10 | Daily presencial às terças e quintas e escrita nos demais dias úteis | Vinicius Vieira |
 | 26/10/2026 | 1.11 | Interações de 21/09, 28/09 e 08/10 com o Instituto; alinhamento técnico de 15/10 e reunião de 22/10, remarcada para 29/10, registrados como encontros que não ocorreram; ausência registrada sem exigência de motivo; atas de 08/09 e 15/09 ligadas na tabela; trabalho em duplas com revisão por outra dupla (7.1); validação da interface pela demonstração em homologação (7.3); termos do Instituto nas notas de domínio da seção 8 | Vinicius Vieira |
+| 11/11/2026 | 1.12 | Responsabilidades por atividade de ER (7.1.1) alinhadas à composição da equipe: Caio Martins na declaração e na organização e atualização, pela rastreabilidade | Maria Eduarda Marques |
 
 ## 7.1 Composição da Equipe
 
@@ -40,10 +41,10 @@ O que a tabela abaixo registra é **quem conduz cada atividade e responde por su
 |---|---|---|---|
 | **Elicitação e descoberta** | Maria Eduarda Marques (interlocução e agendamento) | A ata de cada sessão é publicada neste site, e as questões que dela surgem entram no refinamento semanal | Atas de reunião com o cliente; roteiros de entrevista; notas de observação direta |
 | **Análise e consenso** | Vinicius Vieira e Rodrigo Henrique (documentos do cliente) | Achados discutidos no refinamento semanal, onde a equipe fecha o entendimento | Análise da planilha-template; termos do Instituto nas notas de domínio da seção 8; registro de lacunas |
-| **Declaração** | Cada dupla, no bloco atribuído | Todas as duplas redigem histórias e critérios de aceitação | Histórias de usuário e critérios de aceitação no GitHub Projects |
+| **Declaração** | Caio Martins (estrutura das histórias e dos critérios de aceitação) · cada dupla, no bloco atribuído | Todas as duplas redigem histórias e critérios de aceitação | Histórias de usuário e critérios de aceitação no GitHub Projects |
 | **Representação** | Rodrigo Henrique (BPMN) · Daniel Batista (Rich Picture e mapa de stakeholders) | Diagramas revisados pela equipe antes de publicados | Diagramas publicados neste site |
 | **Verificação e validação** | Vinicius Vieira organiza a revisão cruzada; a validação cabe ao Instituto, por área competente — ver §7.3 | Cada dupla revisa o material de outra dupla | Registro da revisão por par; ata da sessão de validação |
-| **Organização e atualização** | Vinicius Vieira (Scrum Master) | Cada integrante mantém atualizados os itens sob sua responsabilidade no quadro | Quadro do projeto; matriz de rastreabilidade; planos de sprint |
+| **Organização e atualização** | Vinicius Vieira (Scrum Master) · Caio Martins (rastreabilidade) | Cada integrante mantém atualizados os itens sob sua responsabilidade no quadro | Quadro do projeto; matriz de rastreabilidade; planos de sprint |
 
 A nomenclatura das seis atividades segue o livro-texto da disciplina (MARSICANO, 2026, §5.3): elicitação e descoberta, análise e consenso, declaração, representação, verificação e validação, organização e atualização.
 
