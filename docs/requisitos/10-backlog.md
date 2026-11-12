@@ -372,7 +372,7 @@ Personas das histórias e perfis da [seção 8.5.1](8-requisitos.md#851-perfis-d
     - CA-07d.7 Reabrir uma inscrição com o prazo vencido pede um prazo novo; sem ele, a reabertura é recusada com o motivo.
 
 
-    Comportamento padrão a confirmar com o Instituto na reunião de validação da Sprint 5 🔧: o contato é o WhatsApp do Instituto, reabrir com o prazo vencido pede prazo novo e o prazo vai até a data da atividade.
+    Comportamento padrão a confirmar com o Instituto na reunião de validação da Sprint 5, em 12/11/2026 🔧: o contato é o WhatsApp do Instituto, reabrir com o prazo vencido pede prazo novo e o prazo vai até a data da atividade.
 
 <a id="hu-08"></a>
 ??? note "HU-08 · Inscrever presencialmente pessoa sem celular"
@@ -560,7 +560,7 @@ O Instituto deu o valor a quatorze das quinze histórias apresentadas na valida�
 | HU-12 | HU-12 | 2 | Urgência | Mesmo motivo da HU-09: sincronização sem conexão fica para depois. |
 | HU-06 | HU-06 | 2 | Impacto para os usuários | "Sonho do pedagógico", mas não é prioridade no contexto geral do Instituto. |
 | HU-07 | HU-07a, HU-07b, HU-07c | 4 | Abrangência de uso | "Seria excelente": facilitaria o controle de inscritos e de metas para todas as equipes. |
-| HU-07 | HU-07d | 4 🔧 | Abrangência de uso | Herdado da HU-07: no checkpoint de 29/10/2026, o Instituto disse que as perguntas são fixas e "a única variação… é o descritivo"; confirmar na reunião de validação da Sprint 5. |
+| HU-07 | HU-07d | 4 🔧 | Abrangência de uso | Herdado da HU-07: no checkpoint de 29/10/2026, o Instituto disse que as perguntas são fixas e "a única variação… é o descritivo"; confirmar na reunião de validação da Sprint 5, em 12/11/2026. |
 | HU-08 | HU-08 | 4 | Abrangência de uso | Mesmo valor das inscrições por link ("seria excelente"); para a equipe, garante acesso a quem não tem celular. |
 | HU-15 | HU-15a, HU-15b | 4 🔧 | Obrigação legal | Obrigação legal (LGPD, art. 18); não foi votada em 28/09 e entrou no recorte confirmado em 08/10/2026. |
 | — | HU-16 | 4 🔧 | Dependência de outra função | Sem valor atribuído pelo Instituto 🔧; as contas e os perfis são condição do acesso por perfil, que vale para todo o produto (RNF04). |
