@@ -240,7 +240,7 @@ function GoalSummary({ goal, fim }: { goal: Goal; fim?: string }) {
       <Result goal={goal} />
       {fim && goal.periodoFim && goal.periodoFim > fim && (
         <span>
-          <Badge variant="warning">Fora da vigência</Badge>
+          <Badge variant="warning">Fora do período do projeto</Badge>
         </span>
       )}
       {goal.rascunho && (
