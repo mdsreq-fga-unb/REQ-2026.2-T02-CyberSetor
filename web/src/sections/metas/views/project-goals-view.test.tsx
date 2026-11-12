@@ -6,7 +6,13 @@ import type { Instrument } from '@/types/instrumentos';
 import type { Goal } from '@/types/metas';
 import type { Project } from '@/types/projetos';
 import type { Requirement } from '@/types/requisitos';
+import { BreadcrumbsProvider, HeaderBreadcrumbs } from '@/layouts/dashboard/breadcrumbs';
 import { ProjectGoalsView } from './project-goals-view';
+
+vi.mock('next/navigation', async (original) => ({
+  ...(await original<typeof import('next/navigation')>()),
+  usePathname: () => '/instrumentos/x/projetos/y',
+}));
 
 const INSTRUMENT: Instrument = {
   id: '00000000-0000-4000-8000-000000000101',
@@ -160,7 +166,10 @@ function renderView(instrumentId = INSTRUMENT.id) {
   render(
     <QueryClientProvider client={client}>
       <Toaster>
-        <ProjectGoalsView instrumentId={instrumentId} projectId={PROJECT.id} />
+        <BreadcrumbsProvider>
+          <HeaderBreadcrumbs />
+          <ProjectGoalsView instrumentId={instrumentId} projectId={PROJECT.id} />
+        </BreadcrumbsProvider>
       </Toaster>
     </QueryClientProvider>,
   );
@@ -247,10 +256,12 @@ describe('metas do projeto', () => {
     );
     expect(rascunho).toHaveTextContent('Período a definir');
     expect(screen.getByText('Coordenação Ana Pedagógica')).toBeInTheDocument();
-    expect(screen.getByRole('link', { name: /Parceria · Ministério/ })).toHaveAttribute(
+    const trail = screen.getByRole('navigation', { name: 'Trilha de navegação' });
+    expect(within(trail).getByRole('link', { name: INSTRUMENT.numeroProcesso })).toHaveAttribute(
       'href',
       `/instrumentos/${INSTRUMENT.id}`,
     );
+    expect(within(trail).getByText(PROJECT.codigo)).toHaveAttribute('aria-current', 'page');
     expect(screen.queryByRole('button', { name: 'Nova meta' })).not.toBeInTheDocument();
     expect(screen.queryByRole('button', { name: /Ações da meta/ })).not.toBeInTheDocument();
   });

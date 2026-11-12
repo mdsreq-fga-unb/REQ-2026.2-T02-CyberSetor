@@ -52,23 +52,26 @@ export function WelcomeCard({
   return (
     <section
       aria-labelledby="boas-vindas"
-      className="relative flex h-full flex-col justify-center gap-4 overflow-hidden rounded-xl bg-linear-to-br from-slate-900 via-slate-800 to-primary p-6 text-white md:p-8"
+      className="relative flex h-full flex-col justify-center gap-4 overflow-hidden rounded-xl bg-linear-to-br from-surface-inverse via-surface-inverse-muted to-primary p-6 text-surface-inverse-foreground md:p-8"
     >
       <div
         aria-hidden
-        className="absolute -top-16 -right-10 size-56 rounded-full bg-white/5 md:size-72"
+        className="absolute -top-16 -right-10 size-56 rounded-full bg-surface-inverse-foreground/5 md:size-72"
       />
-      <div aria-hidden className="absolute right-24 -bottom-20 size-40 rounded-full bg-white/5" />
+      <div
+        aria-hidden
+        className="absolute right-24 -bottom-20 size-40 rounded-full bg-surface-inverse-foreground/5"
+      />
       <CalendarCheckIcon
         aria-hidden
-        className="absolute right-8 bottom-6 hidden size-24 text-white/15 md:block"
+        className="absolute right-8 bottom-6 hidden size-24 text-surface-inverse-foreground/15 md:block"
       />
       <div className="relative flex max-w-xl flex-col gap-2">
-        <p className="text-sm text-white/70">{subtitle}</p>
+        <p className="text-sm text-surface-inverse-foreground/70">{subtitle}</p>
         <h1 id="boas-vindas" className="text-2xl font-semibold md:text-3xl">
           Olá, {name}
         </h1>
-        <p className="text-sm text-white/80 md:text-base">{summary}</p>
+        <p className="text-sm text-surface-inverse-foreground/80 md:text-base">{summary}</p>
       </div>
       {action && <div className="relative">{action}</div>}
     </section>
@@ -77,7 +80,7 @@ export function WelcomeCard({
 
 const TONES = {
   primary: 'bg-primary/10 text-primary',
-  warning: 'bg-warning/20 text-amber-800 dark:text-warning',
+  warning: 'bg-warning/20 text-warning-strong',
   destructive: 'bg-destructive/10 text-destructive',
   success: 'bg-success/10 text-success',
 } as const;
@@ -99,7 +102,7 @@ export function SummaryWidget({
   return (
     <Card className="flex-row items-center gap-3 p-4 sm:gap-4 sm:p-5">
       <div className="flex min-w-0 flex-1 flex-col gap-1">
-        <h2 className="text-sm font-medium">{title}</h2>
+        <h2 className="text-sm font-medium text-balance">{title}</h2>
         <p className="text-2xl font-semibold tabular-nums sm:text-3xl">{value}</p>
         <p className="text-xs text-muted-foreground">{caption}</p>
       </div>
@@ -148,6 +151,19 @@ export function PanelCard({
         )}
       </CardContent>
     </Card>
+  );
+}
+
+/** Item de lista que leva a outra tela: sublinha ao passar e mostra a seta. */
+const ITEM_LINK =
+  'group/item inline-flex max-w-full items-center gap-1 font-medium underline-offset-4 hover:underline';
+
+function ItemArrow() {
+  return (
+    <ChevronRightIcon
+      aria-hidden="true"
+      className="size-4 shrink-0 text-muted-foreground transition-transform group-hover/item:translate-x-0.5"
+    />
   );
 }
 
@@ -233,11 +249,9 @@ export function DeadlineList({
             <div className="min-w-0 flex-1">
               {goal.projeto ? (
                 <>
-                  <Link
-                    href={projectHref(goal.projeto)}
-                    className="font-medium underline-offset-4 hover:underline"
-                  >
+                  <Link href={projectHref(goal.projeto)} className={ITEM_LINK}>
                     {title}
+                    <ItemArrow />
                   </Link>
                   <p className="text-sm text-muted-foreground">
                     {goal.projeto.codigo} · {goal.projeto.titulo}
@@ -247,9 +261,13 @@ export function DeadlineList({
                 <button
                   type="button"
                   onClick={() => onSelect(goal.metaId)}
-                  className="text-left font-medium underline-offset-4 hover:underline focus-visible:underline focus-visible:outline-none"
+                  className={cn(
+                    ITEM_LINK,
+                    'text-left focus-visible:underline focus-visible:outline-none',
+                  )}
                 >
                   {title}
+                  <ItemArrow />
                 </button>
               ) : (
                 <p className="font-medium">{title}</p>
@@ -277,11 +295,9 @@ export function UnownedGoalList({ goals }: { goals: PanelGoal[] }) {
     <ul className="divide-y">
       {goals.map((goal) => (
         <li key={goal.metaId} className="py-3 first:pt-0 last:pb-0">
-          <Link
-            href={projectHref(goal.projeto)}
-            className="font-medium underline-offset-4 hover:underline"
-          >
+          <Link href={projectHref(goal.projeto)} className={ITEM_LINK}>
             Meta {goal.ordem} · {goal.objetivo}
+            <ItemArrow />
           </Link>
           <p className="text-sm text-muted-foreground">
             {goal.projeto.codigo}
@@ -322,9 +338,10 @@ export function TermList({ terms, hoje }: { terms: InstrumentTerm[]; hoje: strin
             <div className="flex items-baseline justify-between gap-2">
               <Link
                 href={paths.dashboard.instrument(term.id)}
-                className="truncate text-sm font-medium underline-offset-4 hover:underline"
+                className={cn(ITEM_LINK, 'min-w-0 text-sm')}
               >
-                {term.numeroProcesso}
+                <span className="truncate">{term.numeroProcesso}</span>
+                <ItemArrow />
               </Link>
               <span className="shrink-0 text-xs text-muted-foreground">
                 {left < 0 ? 'Vigência encerrada' : `Faltam ${plural(left, 'dia', 'dias')}`}
@@ -371,9 +388,10 @@ export function UpcomingActivityList({ activities }: { activities: UpcomingActiv
             <div className="min-w-0 flex-1">
               <Link
                 href={paths.dashboard.project(activity.projeto.instrumentoId, activity.projeto.id)}
-                className="font-medium underline-offset-4 hover:underline"
+                className={ITEM_LINK}
               >
                 {activity.titulo}
+                <ItemArrow />
               </Link>
               <p className="truncate text-sm text-muted-foreground">
                 {formatDate(activity.data)} · {activity.local} · {activity.projeto.codigo}
@@ -421,6 +439,14 @@ export function OpenRegistrations({
             ? 'Nenhuma inscrição aberta. Abra pela lista de atividades, na página do projeto.'
             : 'Nenhuma inscrição aberta no momento.'}
         </p>
+        {canOpen && (
+          <Link
+            href={paths.dashboard.instruments}
+            className={cn(buttonVariants({ variant: 'outline' }), 'mt-2 self-start')}
+          >
+            Ver projetos
+          </Link>
+        )}
       </section>
     );
   }
@@ -440,12 +466,12 @@ export function OpenRegistrations({
     <section
       aria-labelledby="inscricoes-abertas"
       aria-roledescription="carrossel"
-      className="flex h-full flex-col gap-4 rounded-xl bg-linear-to-br from-primary to-slate-900 p-6 text-white"
+      className="flex h-full flex-col gap-4 rounded-xl bg-linear-to-br from-primary to-surface-inverse p-6 text-surface-inverse-foreground"
     >
       <div className="flex items-center justify-between gap-2">
         <h2
           id="inscricoes-abertas"
-          className="text-xs font-semibold tracking-wide text-white/80 uppercase"
+          className="text-xs font-semibold tracking-wide text-surface-inverse-foreground/80 uppercase"
         >
           Inscrições abertas
           {total > 1 && ` · ${position + 1} de ${total}`}
@@ -455,7 +481,7 @@ export function OpenRegistrations({
             <Button
               size="icon"
               variant="ghost"
-              className="text-white hover:bg-white/10 hover:text-white"
+              className="text-surface-inverse-foreground hover:bg-surface-inverse-foreground/10 hover:text-surface-inverse-foreground"
               aria-label="Inscrição anterior"
               onClick={() => setIndex((position - 1 + registrations.length) % registrations.length)}
             >
@@ -464,7 +490,7 @@ export function OpenRegistrations({
             <Button
               size="icon"
               variant="ghost"
-              className="text-white hover:bg-white/10 hover:text-white"
+              className="text-surface-inverse-foreground hover:bg-surface-inverse-foreground/10 hover:text-surface-inverse-foreground"
               aria-label="Próxima inscrição"
               onClick={() => setIndex((position + 1) % registrations.length)}
             >
@@ -481,15 +507,18 @@ export function OpenRegistrations({
         className="flex flex-1 flex-col gap-1"
       >
         <p className="text-xl font-semibold">{current.titulo}</p>
-        <p className="text-sm text-white/80">
+        <p className="text-sm text-surface-inverse-foreground/80">
           {formatDate(current.data)} · {current.local}
         </p>
         <p className="mt-3 text-sm">
           {current.inscritos} de {current.vagas} vagas preenchidas
         </p>
-        <div className="h-2 overflow-hidden rounded-full bg-white/20" aria-hidden>
+        <div
+          className="h-2 overflow-hidden rounded-full bg-surface-inverse-foreground/20"
+          aria-hidden
+        >
           <div
-            className="h-full rounded-full bg-white"
+            className="h-full rounded-full bg-surface-inverse-foreground"
             style={{ width: `${Math.min(100, (current.inscritos / current.vagas) * 100)}%` }}
           />
         </div>
@@ -505,7 +534,7 @@ export function OpenRegistrations({
           rel="noopener noreferrer"
           className={cn(
             buttonVariants({ variant: 'ghost' }),
-            'text-white hover:bg-white/10 hover:text-white',
+            'text-surface-inverse-foreground hover:bg-surface-inverse-foreground/10 hover:text-surface-inverse-foreground',
           )}
         >
           <ExternalLinkIcon data-icon="inline-start" />

@@ -53,6 +53,21 @@ describe('troca de senha obrigatoria', () => {
     expect(screen.getByRole('button', { name: 'Sair' })).toHaveClass('h-12');
   });
 
+  it('fora do primeiro acesso volta ao painel em vez de sair', async () => {
+    const fetchMock = vi
+      .fn()
+      .mockResolvedValueOnce(response(200, { ...ACCESS, deveTrocarSenha: false }));
+    vi.stubGlobal('fetch', fetchMock);
+    await signIn('pessoa@instituto.org.br', 'senha-de-teste-longa');
+    render(<ChangePasswordView />);
+
+    expect(screen.getByText(/outras sessões abertas/)).toBeInTheDocument();
+    expect(screen.queryByRole('button', { name: 'Sair' })).not.toBeInTheDocument();
+    fireEvent.click(screen.getByRole('button', { name: 'Voltar ao painel' }));
+    expect(replace).toHaveBeenCalledWith('/');
+    expect(getSession()).not.toBeNull();
+  });
+
   it('pede os tres campos antes de enviar', async () => {
     const fetchMock = vi.fn();
     vi.stubGlobal('fetch', fetchMock);

@@ -22,7 +22,7 @@ import { PageHeader } from '@/components/page-header';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Skeleton } from '@/components/ui/skeleton';
-import { Tabs, TabsList, TabsPanel, TabsTab } from '@/components/ui/tabs';
+import { Tabs, TabsCount, TabsList, TabsPanel, TabsTab } from '@/components/ui/tabs';
 import {
   Table,
   TableBody,
@@ -42,7 +42,10 @@ import { useInstrument } from '@/queries/instrumentos';
 import { useGoals } from '@/queries/metas';
 import { useProject } from '@/queries/projetos';
 import { useRequirements } from '@/queries/requisitos';
+import { useActivities } from '@/queries/atividades';
+import { useReports } from '@/queries/relatorios';
 import { useCurrentUser } from '@/queries/sessao';
+import { useBreadcrumbs } from '@/layouts/dashboard/breadcrumbs';
 import { paths } from '@/routes/paths';
 import { ProjectActivitiesSection } from '@/sections/atividades/views/project-activities-section';
 import { ProjectPlanSection } from '@/sections/plano/views/project-plan-section';
@@ -237,12 +240,7 @@ function GoalSummary({ goal, fim }: { goal: Goal; fim?: string }) {
       <Result goal={goal} />
       {fim && goal.periodoFim && goal.periodoFim > fim && (
         <span>
-          <Badge
-            variant="outline"
-            className="border-transparent bg-warning/20 text-amber-800 dark:text-warning"
-          >
-            Fora da vigência
-          </Badge>
+          <Badge variant="warning">Fora do período do projeto</Badge>
         </span>
       )}
       {goal.rascunho && (
@@ -251,11 +249,21 @@ function GoalSummary({ goal, fim }: { goal: Goal; fim?: string }) {
           <span className="text-muted-foreground">{missingText(goal.camposFaltantes)}</span>
         </span>
       )}
-      <span className="text-muted-foreground md:hidden">{goal.indicador ?? 'Sem indicador'}</span>
-      {measure(goal) && <span className="text-muted-foreground md:hidden">{measure(goal)}</span>}
-      <span className="text-muted-foreground md:hidden">
-        <Deadline goal={goal} />
-      </span>
+      {/* No celular as colunas da tabela viram pares rótulo e valor dentro do cartão. */}
+      <dl className="mt-2 grid grid-cols-[auto_1fr] gap-x-3 gap-y-1 border-t pt-2 md:hidden">
+        <dt className="text-muted-foreground">Indicador</dt>
+        <dd>{goal.indicador ?? 'Sem indicador'}</dd>
+        {measure(goal) && (
+          <>
+            <dt className="text-muted-foreground">Alvo</dt>
+            <dd>{measure(goal)}</dd>
+          </>
+        )}
+        <dt className="text-muted-foreground">Período</dt>
+        <dd>
+          <Deadline goal={goal} />
+        </dd>
+      </dl>
     </div>
   );
 }
@@ -324,6 +332,19 @@ export function ProjectGoalsView({
   const countOf = (situacao: Goal['situacao']) =>
     sorted?.filter((goal) => goal.situacao === situacao).length ?? 0;
   const withoutRequirements = requirements.data?.length === 0;
+  const readsReports = !!session && REPORT_READERS.includes(session.perfil as Perfil);
+  const activities = useActivities(projectId);
+  const reports = useReports(projectId, readsReports);
+
+  useBreadcrumbs([
+    { label: 'Início', href: paths.dashboard.root },
+    { label: 'Instrumentos', href: paths.dashboard.instruments },
+    {
+      label: instrument.data?.numeroProcesso ?? 'Instrumento',
+      href: paths.dashboard.instrument(instrumentId),
+    },
+    { label: project.data?.codigo ?? 'Projeto' },
+  ]);
 
   const back = (
     <Link
@@ -356,7 +377,6 @@ export function ProjectGoalsView({
 
   return (
     <>
-      {back}
       {project.data ? (
         <div className="flex flex-col gap-3">
           <PageHeader
@@ -396,11 +416,23 @@ export function ProjectGoalsView({
 
       <Tabs value={tab} onValueChange={(next: ProjectTab) => chooseTab(next)}>
         <TabsList aria-label="Seções do projeto">
-          <TabsTab value="metas">Metas</TabsTab>
+          <TabsTab value="metas">
+            Metas
+            <TabsCount value={goals.data?.length} label="metas" />
+          </TabsTab>
           <TabsTab value="prazos">Prazos</TabsTab>
           <TabsTab value="plano">Plano de trabalho</TabsTab>
-          <TabsTab value="atividades">Atividades</TabsTab>
-          <TabsTab value="relatorios">Relatórios</TabsTab>
+          <TabsTab value="atividades">
+            Atividades
+            <TabsCount value={activities.data?.length} label="atividades" />
+          </TabsTab>
+          <TabsTab value="relatorios">
+            Relatórios
+            <TabsCount
+              value={readsReports ? reports.data?.length : undefined}
+              label="relatórios emitidos"
+            />
+          </TabsTab>
         </TabsList>
 
         <TabsPanel value="metas">

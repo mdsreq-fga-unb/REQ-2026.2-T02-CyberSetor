@@ -6,6 +6,8 @@ import type { SectorRef } from '@/types/setores';
 
 export interface CurrentUser {
   usuarioId: string;
+  /** Vem da API a partir da versão com o nome na sessão; ausente nas anteriores. */
+  nome?: string;
   perfil: Perfil;
   setor: SectorRef | null;
 }
