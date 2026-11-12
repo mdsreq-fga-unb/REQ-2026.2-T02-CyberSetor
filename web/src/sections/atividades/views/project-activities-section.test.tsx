@@ -524,6 +524,10 @@ describe('ProjectActivitiesSection', () => {
       }),
       [`GET /activities/${ACTIVITY_1.id}/registrations`]: () =>
         confirmed ? lista([ana, brunoConfirmado], []) : lista([ana], [bruno]),
+      [`GET /activities/${ACTIVITY_1.id}/registration`]: () => ({
+        status: 200,
+        body: { promocaoAutomatica: false, listaEspera: true },
+      }),
       [`POST /activities/${ACTIVITY_1.id}/registrations/${encodeURIComponent(bruno.id)}/confirmation`]:
         () => {
           confirmed = true;
@@ -566,6 +570,28 @@ describe('ProjectActivitiesSection', () => {
       await screen.findByText(/fica livre para o Núcleo confirmar alguém da lista de espera/),
     ).toBeInTheDocument();
     expect(screen.queryByText(/passa para a primeira da lista de espera/)).not.toBeInTheDocument();
+  });
+
+  it('com promocao automatica ligada, nao oferece confirmacao manual mesmo com vaga livre', async () => {
+    const ana = person('Ana Souza', 'CONFIRMADA', null);
+    const bruno = person('Bruno Lima', 'LISTA_ESPERA', 1);
+    await signedInAs('NUCLEO_PEDAGOGICO', {
+      [`GET /projects/${PROJECT.id}/activities`]: () => ({
+        status: 200,
+        body: [{ ...ACTIVITY_1, inscricao: { aberta: true, vagas: 2, inscritos: 1, emEspera: 1 } }],
+      }),
+      [`GET /activities/${ACTIVITY_1.id}/registrations`]: () => lista([ana], [bruno]),
+      [`GET /activities/${ACTIVITY_1.id}/registration`]: () => ({
+        status: 200,
+        body: { promocaoAutomatica: true, listaEspera: true },
+      }),
+    });
+    renderSection();
+
+    await openRegistrations();
+    fireEvent.click(await screen.findByRole('button', { name: 'Ações de Bruno Lima' }));
+    expect(await screen.findByRole('menuitem', { name: 'Cancelar inscrição' })).toBeInTheDocument();
+    expect(screen.queryByRole('menuitem', { name: 'Confirmar vaga' })).not.toBeInTheDocument();
   });
 
   it('ao trocar de atividade, a lista de inscritos nao mostra as pessoas da anterior', async () => {
