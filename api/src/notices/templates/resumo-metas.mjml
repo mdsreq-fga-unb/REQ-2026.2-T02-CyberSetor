@@ -1,0 +1,23 @@
+<mjml lang="pt-BR">
+  <mj-include path="./_cabecalho.mjml" />
+  <mj-body width="560px">
+    <mj-include path="./_abertura.mjml" />
+    <mj-section padding="0 24px">
+      <mj-column>
+        <mj-text>
+          {{#each secoes}}
+          <h2 style="margin: 16px 0 8px; font-size: 16px; line-height: 22px">{{titulo}}</h2>
+          <ul style="margin: 0 0 16px; padding-left: 20px">
+            {{#each linhas}}
+            <li style="margin: 0 0 8px">
+              {{#if url}}<a href="{{url}}" style="color: #00738b">{{texto}}</a>{{else}}{{texto}}{{/if}}
+            </li>
+            {{/each}}
+          </ul>
+          {{/each}}
+        </mj-text>
+      </mj-column>
+    </mj-section>
+    <mj-include path="./_rodape.mjml" />
+  </mj-body>
+</mjml>

@@ -1,0 +1,14 @@
+{{titulo}}
+
+{{#each secoes}}
+{{titulo}}
+{{#each linhas}}
+- {{texto}}
+{{#if url}}
+  {{url}}
+{{/if}}
+{{/each}}
+
+{{/each}}
+Instituto No Setor · CyberSetor
+Aviso automático para a equipe responsável.

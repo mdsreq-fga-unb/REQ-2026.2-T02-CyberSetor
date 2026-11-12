@@ -1,0 +1,8 @@
+<mj-section padding="24px 24px 0">
+  <mj-column>
+    <mj-text font-size="13px" font-weight="700" color="#00738b" padding-bottom="24px">
+      Instituto No Setor · CyberSetor
+    </mj-text>
+    <mj-text font-size="20px" line-height="26px" font-weight="700">{{titulo}}</mj-text>
+  </mj-column>
+</mj-section>

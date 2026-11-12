@@ -1,7 +1,9 @@
 import { isIP } from 'node:net';
 import { plainToInstance } from 'class-transformer';
 import {
+  IsEmail,
   IsEnum,
+  IsIn,
   IsInt,
   IsOptional,
   IsString,
@@ -43,7 +45,13 @@ export enum StorageDriver {
   S3 = 's3',
 }
 
+export enum EmailDriver {
+  LOG = 'log',
+  BREVO = 'brevo',
+}
+
 const usesS3 = (env: EnvironmentVariables) => env.STORAGE_DRIVER === StorageDriver.S3;
+const usesBrevo = (env: EnvironmentVariables) => env.EMAIL_DRIVER === EmailDriver.BREVO;
 
 export class EnvironmentVariables {
   @IsOptional()
@@ -123,6 +131,36 @@ export class EnvironmentVariables {
   @Min(60)
   @Max(3600)
   DOCUMENT_URL_TTL_SECONDS: number = 300;
+
+  @IsOptional()
+  @IsEnum(EmailDriver)
+  EMAIL_DRIVER: EmailDriver = EmailDriver.LOG;
+
+  @ValidateIf(usesBrevo)
+  @IsString()
+  @MinLength(1)
+  BREVO_API_KEY?: string;
+
+  @ValidateIf(usesBrevo)
+  @IsEmail()
+  EMAIL_FROM?: string;
+
+  @IsOptional()
+  @IsString()
+  EMAIL_FROM_NAME: string = 'CyberSetor';
+
+  @IsOptional()
+  @IsString()
+  EMAIL_ALLOWED_RECIPIENTS: string = '';
+
+  // Texto, porque a conversão implícita leria "false" como verdadeiro.
+  @IsOptional()
+  @IsIn(['true', 'false'])
+  EMAIL_SANDBOX: string = 'false';
+
+  @IsOptional()
+  @IsUrl({ protocols: ['https', 'http'], require_tld: false, require_protocol: true })
+  APP_WEB_URL?: string;
 }
 
 export function validateEnv(config: Record<string, unknown>): EnvironmentVariables {

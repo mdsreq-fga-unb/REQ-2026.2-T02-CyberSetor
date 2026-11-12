@@ -11,6 +11,7 @@ import { Prisma } from '../generated/prisma/client.js';
 import { AutorTipo } from '../generated/prisma/enums.js';
 import { todayInBrasilia } from '../goals/goal-deadline.js';
 import { toDate } from '../instruments/instruments.service.js';
+import { NoticesService } from '../notices/notices.service.js';
 import { PrismaService } from '../prisma/prisma.service.js';
 import { ProjectsService } from '../projects/projects.service.js';
 import {
@@ -18,6 +19,7 @@ import {
   type EvaluatedReportGoal,
   type JustificativaInput,
   type PreviousGoalJustification,
+  type ReportPendencia,
 } from './report-finalization.js';
 import type {
   FinalizeReportDto,
@@ -177,6 +179,17 @@ function justifiedGoalIds(items: readonly EvaluatedReportGoal[]): string[] {
   return items.filter((item) => item.justificativa !== null).map((item) => item.goal.id);
 }
 
+class ReportBlockedException extends UnprocessableEntityException {
+  constructor(readonly pendencias: ReportPendencia[]) {
+    super({
+      code: 'REPORT_FINALIZATION_BLOCKED',
+      message:
+        'A emissão do relatório foi bloqueada porque há metas sem resultado registrado ou sem justificativa obrigatória.',
+      details: { pendencias },
+    });
+  }
+}
+
 type AuditGoalSource = Pick<
   ReportGoalRow,
   'metaId' | 'resultadoMetaId' | 'alcance' | 'valorAlcancado' | 'percentual' | 'justificativa'
@@ -203,6 +216,7 @@ export class ReportsService {
     private readonly prisma: PrismaService,
     private readonly projects: ProjectsService,
     private readonly audit: AuditTrailService,
+    private readonly notices: NoticesService,
   ) {}
 
   async list(projectId: string): Promise<ReportResponse[]> {
@@ -305,6 +319,16 @@ export class ReportsService {
         return toResponse(row);
       });
     } catch (error) {
+      if (error instanceof ReportBlockedException) {
+        // Fora da transação e sem esperar: a recusa não depende do aviso (CA-05a.2).
+        void this.notices.reportBlocked({
+          projetoId: projectId,
+          from: data.from,
+          to: data.to,
+          pendencias: error.pendencias,
+          autorId: actor.usuarioId,
+        });
+      }
       if (error instanceof Prisma.PrismaClientKnownRequestError && error.code === 'P2002') {
         throw this.alreadyFinalizedConflict();
       }
@@ -444,12 +468,7 @@ export class ReportsService {
     }
 
     if (result.kind === 'blocked') {
-      throw new UnprocessableEntityException({
-        code: 'REPORT_FINALIZATION_BLOCKED',
-        message:
-          'A emissão do relatório foi bloqueada porque há metas sem resultado registrado ou sem justificativa obrigatória.',
-        details: { pendencias: result.pendencias },
-      });
+      throw new ReportBlockedException(result.pendencias);
     }
 
     return result.metas;
