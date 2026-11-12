@@ -60,7 +60,7 @@ function GoalEvent({ goal, date, hoje }: { goal: TimelineGoal; date: string; hoj
         </span>
         <DeadlineBadge goal={goal} hoje={hoje} />
         {goal.foraDaVigencia && (
-          <Badge className="bg-warning text-warning-foreground">Fora da vigência</Badge>
+          <Badge className="bg-warning text-warning-foreground">Fora do período do projeto</Badge>
         )}
         {goal.rascunho && <Badge variant="outline">Rascunho</Badge>}
       </div>

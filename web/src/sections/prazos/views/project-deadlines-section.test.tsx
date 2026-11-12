@@ -80,7 +80,7 @@ describe('painel de prazos do projeto', () => {
     renderSection();
 
     const region = within(await screen.findByRole('region', { name: 'Linha do tempo' }));
-    expect(region.getByText('Fora da vigência')).toBeInTheDocument();
+    expect(region.getByText('Fora do período do projeto')).toBeInTheDocument();
     expect(region.getByText('Prazo 31/03/2026 · Concluída')).toBeInTheDocument();
     expect(region.getByText('Prazo 10/06/2026 · Em andamento')).toBeInTheDocument();
   });
