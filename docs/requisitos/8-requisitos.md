@@ -28,6 +28,7 @@
 | 10/11/2026 | 2.14 | Pontos em aberto da primeira versão: visão do Núcleo Pedagógico, anexo do documento formal, encerramento do projeto, justificativa do aditivo e da apostila, guarda decenal e geração do relatório; validação de 05/11 adiada para a reunião da Sprint 5 | Vinicius Vieira |
 | 10/11/2026 | 2.15 | RF07 ligado só ao gargalo G02 na matriz 8.4.1, como nas sínteses das seções 8.4.3 e 10.2.6; RF11 com a história dona na lista, e a HU-07d, que também o verifica, na matriz 8.4.1 | Vinicius Vieira |
 | 10/11/2026 | 2.16 | RF22 com a história dona (HU-08) na lista 8.2; a HU-07a fica como verificação na matriz 8.4.1 (CA-07a.8) | Vinicius Vieira |
+| 11/11/2026 | 2.17 | Requisitos das seções 8.2 e 8.3 apresentados em cartões, com história, critérios de aceitação, origem, RNF, gargalo e destino no MVP ou fora dele, compostos a cada build a partir das tabelas desta seção e da seção 10; filtro por destino e busca; matriz 8.4 em trilhas (gargalo, requisito, história e critérios), com cada código (HU, CA, RF, RNF, RN, OE, CP, gargalo e seção) levando ao ponto da documentação que o define | Maria Eduarda Marques |
 
 ---
 

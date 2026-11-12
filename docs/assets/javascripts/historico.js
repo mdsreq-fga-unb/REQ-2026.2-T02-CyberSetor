@@ -179,7 +179,9 @@
   function iniciarSelos() {
     filtrosPagina = Array.prototype.slice.call(
       document.querySelectorAll("[data-selo-filtro], [data-ficha-filtro]"));
-    if (!filtrosPagina.length || filtrosPagina[0].getAttribute("data-pronto")) {
+    // Na seção 8, os cartões de requisitos têm filtro próprio (requisitos.js), que lê este seletor.
+    if (!filtrosPagina.length || filtrosPagina[0].getAttribute("data-pronto") ||
+        document.querySelector(".rq-card")) {
       return;
     }
     var status = document.querySelector("[data-selo-status]");

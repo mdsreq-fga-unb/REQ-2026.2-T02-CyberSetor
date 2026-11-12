@@ -58,12 +58,15 @@ extra_css:
 
 extra_javascript:
   - assets/javascripts/historico.js
+  - assets/javascripts/requisitos.js
 
 hooks:
   - hooks/historico.py
   - hooks/selos.py
   - hooks/fichas.py
   - hooks/conferencia.py
+  - hooks/ligacoes.py
+  - hooks/cartoes.py
 
 markdown_extensions:
   - abbr

@@ -266,9 +266,20 @@ As respostas do Instituto em 29/10 entram em nova versão deste plano.
 
 ---
 
+## 12. Resultado da Sprint
+
+Meta **parcialmente atingida** ([ata de 05/11/2026](../atas/2026-11-05-sprint-review-retrospectiva-planning.md), D1). A sprint foi de 20/10 a 05/11/2026, e não até 03/11 como previa a seção 4.1, porque a Review 4 ocorreu em 05/11.
+
+- **MVP:** dos 84 critérios de aceitação das histórias do MVP, 73 foram implementados, 3 parcialmente, 7 ainda faltam e 1 não tem efeito prático; a homologação foi publicada online (D1).
+- **Dailies:** adesão de 73% apresentada na Review, abaixo da meta de 80% ([registro das dailies](../dailies.md)).
+- **Levado à Sprint 5:** os 7 critérios ausentes e os 3 parciais (P2) e os itens do quadro, sob a meta da Sprint 5 (D6): MVP 100% em código, com os critérios de aceitação exercitados; Unidade 3 100% publicada; retornos do Instituto e issues do docente fechados.
+
+---
+
 ## Controle de versões
 
 | Versão | Data | Alteração | Responsável |
 |---|---|---|---|
 | 1.0 | 21/10/2026 | Emissão com o deliberado no Sprint Planning de 20/10 e na realocação de 21/10: meta, calendário, Sprint Backlog em três partes, priorização, alocação, riscos e critérios de aceitação | Vinicius |
 | 1.1 | 26/10/2026 | Reunião com o Instituto remarcada de 22/10 para 29/10 (quinta-feira), com demonstração e checkpoint; remanejamento de 22/10 no perfil da equipe, no Sprint Backlog e na alocação; nova ordem de contenção; itens, riscos e critérios de aceitação ajustados à nova data, com a HU-07b antes da reunião; horas de construção na verificação de capacidade; HU-14 depois da HU-05a na ordem de construção; prazos separados para os registros de 08/10 e 29/10 na 10.2.8; conferência da Definition of Ready das histórias selecionadas e da ata de 08/10 com o catálogo | Vinicius Vieira |
+| 1.2 | 11/11/2026 | Resultado da Sprint: período real, balanço do MVP, adesão às dailies e o que passou à Sprint 5, a partir da ata de 05/11 | Maria Eduarda Marques |

@@ -12,12 +12,15 @@
 | 19/10/2026 | 1.7 | Equipe atual de cinco integrantes | Maria Eduarda Marques |
 | 26/10/2026 | 1.8 | Programação em pares por duplas de épico, com o detalhe na página de processo; MVP centrado em parcerias, metas e prestação de contas, com a presença nos incrementos; refatoração dentro da história, coberta pelos testes; documentação de requisitos do ScrumXP com o fluxo da tela e o protótipo evolutivo na homologação; justificativa sem superlativos; quadro comparativo pelo que cada processo exige da equipe; síntese e alternativas descartadas pelos fatores do contexto | Vinicius Vieira |
 | 05/11/2026 | 1.9 | Atendimento aos apontamentos da monitoria (#22): remoção da linha de aplicação no contexto do quadro comparativo | Rodrigo Henrique |
+| 11/11/2026 | 1.10 | Resumo no início da 4.1; validações com o Instituto remetidas à cadência da seção 7.2; incremento disponibilizado no ambiente de homologação | Maria Eduarda Marques |
 
 A partir do cenário diagnosticado na Seção 1 e da solução proposta na Seção 2, a equipe CyberSetor estabeleceu as decisões de estratégia de engenharia de software para o atendimento ao Instituto No Setor nas três camadas metodológicas distinguidas pelo referencial da disciplina: **abordagem**, **ciclo de vida** e **processo**.
 
 ---
 
 ## 4.1 Estratégia Priorizada
+
+**Em resumo.** Abordagem e ciclo de vida ágeis, com processo ScrumXP (Scrum para cadência e papéis; XP para integração contínua, testes e refatoração), em sprints de duas semanas alinhadas às quatro entregas.
 
 A estratégia para o projeto adota o **ScrumXP** como processo de desenvolvimento, fundamentando-se em uma abordagem **Ágil** e em um ciclo de vida **Ágil**. Essa combinação foi desenhada para conectar o contexto real da organização atendida à dinâmica acadêmica da disciplina, com entregas frequentes validadas com o Instituto, riscos tratados a cada sprint e código verificado por testes.
 
@@ -43,7 +46,7 @@ Conforme o referencial da disciplina, o ciclo de vida ágil é um *superset* que
 **Por que escolher o Ciclo de Vida Ágil?**
 
 - **Sincronia com Marcos Acadêmicos (Releases Fixas):** Acompanha os quatro pontos de controle da disciplina mantendo datas e recursos fixos, usando o escopo como variável de ajuste para garantir software funcional homologado a cada release.
-- **Feedback Contínuo Baseado em Evidências:** Promove validações frequentes a cada 2 semanas diretamente com os educadores e gestores do Instituto No Setor por meio de incrementos executáveis, reduzindo divergências entre o problema real e a solução.
+- **Feedback Contínuo Baseado em Evidências:** Promove validações frequentes, na cadência da [seção 7.2](7-equipe-e-cliente.md#72-comunicacao), diretamente com os educadores e gestores do Instituto No Setor por meio de incrementos executáveis, reduzindo divergências entre o problema real e a solução.
 - **Mitigação Precoce de Riscos Sociotécnicos:** Expõe precocemente desafios de integração técnica, usabilidade e modelagem de regras de negócio, permitindo ajustar a arquitetura a cada sprint, sem retrabalho tardio.
 
 ### Processo: ScrumXP
@@ -77,7 +80,7 @@ O **ScrumXP** adotado pelo projeto é um **processo adaptado pela equipe**, que 
    - **Atividades:**
      - Executar a Sprint Retrospective ao final de cada sprint quinzenal para analisar sucessos, gargalos e planos de ação de melhoria contínua da equipe.
      - Atualizar a documentação viva no repositório e registrar as lições aprendidas.
-     - Gerar as tags de versão e disponibilizar o incremento no ambiente de testes.
+     - Gerar as tags de versão e disponibilizar o incremento no ambiente de homologação.
 
 #### Práticas Selecionadas no ScrumXP
 - **Práticas de Gestão (Scrum):**

@@ -745,3 +745,264 @@ a.cs-card:focus {
 .selos-legenda label {
   white-space: nowrap;
 }
+
+/* ---- Cartões de requisitos (seções 8.2 e 8.3), montados por hooks/cartoes.py ---- */
+.md-typeset .rq-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(17rem, 100%), 1fr));
+  gap: 0.7rem;
+  margin: 0.6rem 0 1.4rem;
+}
+
+.md-typeset .rq-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  min-width: 0;
+  padding: 0.75rem 0.85rem 0.7rem;
+  border: 1px solid var(--md-default-fg-color--lightest);
+  border-left: 3px solid var(--rq-borda, var(--md-default-fg-color--lighter));
+  border-radius: 0.35rem;
+  background: var(--md-default-bg-color);
+  scroll-margin-top: 4.5rem;
+}
+
+.md-typeset .rq-card--mvp { --rq-borda: var(--md-accent-fg-color); }
+.md-typeset .rq-card:target { box-shadow: 0 0 0 2px var(--md-accent-fg-color); }
+.md-typeset .rq-card[hidden],
+.md-typeset h3[hidden] { display: none; }
+
+.md-typeset .rq-card__topo {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.3rem;
+  margin: 0;
+  font-size: 0.66rem;
+}
+
+.md-typeset .rq-card__topo > a:first-child {
+  font-family: var(--md-code-font-family);
+  font-size: 0.78rem;
+  font-weight: 700;
+  margin-right: 0.15rem;
+}
+
+.md-typeset .rq-card__topo .selo { margin: 0; }
+
+.md-typeset .rq-card__nome {
+  margin: 0;
+  font-size: 0.8rem;
+  font-weight: 700;
+  line-height: 1.35;
+  color: var(--md-default-fg-color);
+}
+
+.md-typeset .rq-card__desc {
+  margin: 0;
+  font-size: 0.7rem;
+  line-height: 1.5;
+  color: var(--md-default-fg-color--light);
+}
+
+.md-typeset .rq-card__rastro {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  margin-top: auto;
+  padding-top: 0.45rem;
+  border-top: 1px solid var(--md-default-fg-color--lightest);
+  font-size: 0.66rem;
+}
+
+.md-typeset .rq-item {
+  display: grid;
+  grid-template-columns: 4.6rem 1fr;
+  gap: 0.4rem;
+}
+
+.md-typeset .rq-item__rotulo {
+  color: var(--md-default-fg-color--light);
+  font-weight: 600;
+}
+
+.md-typeset .rq-item__valor { min-width: 0; overflow-wrap: anywhere; }
+
+.md-typeset .rq-ca {
+  font-family: var(--md-code-font-family);
+  font-size: 0.6rem;
+  color: var(--md-default-fg-color--light);
+}
+
+.md-typeset .rq-chip {
+  display: inline-block;
+  padding: 0 0.45rem;
+  border-radius: 1rem;
+  border: 1px solid var(--md-default-fg-color--lightest);
+  font-weight: 600;
+  line-height: 1.55;
+  white-space: nowrap;
+  color: var(--md-default-fg-color--light);
+}
+
+.md-typeset .rq-chip--mvp {
+  border-color: transparent;
+  background: var(--md-accent-fg-color--transparent);
+  color: var(--md-accent-fg-color);
+}
+
+.md-typeset .rq-chip--fora { border-style: dashed; }
+
+.rq-filtro {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.4rem 0.5rem;
+  padding: 0.5rem 0.7rem;
+  margin: 0.4rem 0 0.8rem;
+  border: 1px solid var(--md-default-fg-color--lightest);
+  border-radius: 0.3rem;
+  font-size: 0.7rem;
+}
+
+.rq-filtro__rotulo { color: var(--md-default-fg-color--light); }
+
+.rq-filtro button {
+  font: inherit;
+  font-weight: 600;
+  padding: 0.15rem 0.7rem;
+  border: 1px solid var(--md-default-fg-color--lighter);
+  border-radius: 1rem;
+  background: transparent;
+  color: var(--md-default-fg-color);
+  cursor: pointer;
+}
+
+.rq-filtro button[aria-pressed="true"] {
+  background: var(--md-primary-fg-color);
+  border-color: var(--md-primary-fg-color);
+  color: #fff;
+}
+
+.rq-filtro button:focus-visible,
+.rq-filtro input:focus-visible {
+  outline: 2px solid var(--md-accent-fg-color);
+  outline-offset: 2px;
+}
+
+.rq-filtro__busca input {
+  font: inherit;
+  margin-left: 0.3rem;
+  padding: 0.15rem 0.4rem;
+  width: 12rem;
+  max-width: 60vw;
+  border: 1px solid var(--md-default-fg-color--lighter);
+  border-radius: 0.2rem;
+  background: var(--md-default-bg-color);
+  color: var(--md-default-fg-color);
+}
+
+.rq-filtro__status { color: var(--md-default-fg-color--light); }
+
+
+/* ---- Matriz de rastreabilidade (8.4) em trilhas, montada por hooks/cartoes.py ---- */
+.md-typeset .rt-cp {
+  display: inline-block;
+  margin: 0 0 0.5rem;
+  padding: 0.15rem 0.6rem;
+  border-radius: 1rem;
+  background: var(--md-accent-fg-color--transparent);
+  font-size: 0.68rem;
+  font-weight: 600;
+}
+
+.md-typeset .rt-lista {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  margin: 0.4rem 0 1.4rem;
+}
+
+.md-typeset .rt-linha {
+  display: grid;
+  gap: 0.3rem 0.9rem;
+  align-items: start;
+  padding: 0.55rem 0.8rem;
+  border: 1px solid var(--md-default-fg-color--lightest);
+  border-left: 3px solid var(--md-default-fg-color--lighter);
+  border-radius: 0.35rem;
+  font-size: 0.7rem;
+  line-height: 1.45;
+  scroll-margin-top: 4.5rem;
+}
+
+.md-typeset .rt-linha[data-destino="mvp"] { border-left-color: var(--md-accent-fg-color); }
+.md-typeset .rt-linha:target { box-shadow: 0 0 0 2px var(--md-accent-fg-color); }
+
+.md-typeset .rt--rf { grid-template-columns: 4.5rem minmax(0, 1.6fr) minmax(0, 1.1fr) minmax(0, 1fr) 7.5rem; }
+.md-typeset .rt--rnf { grid-template-columns: minmax(0, 1.4fr) minmax(0, 1.1fr) minmax(0, 1.6fr) 8rem; }
+.md-typeset .rt--g { grid-template-columns: minmax(0, 1.4fr) minmax(0, 2fr) 5rem; }
+.md-typeset .rt--cp { grid-template-columns: minmax(0, 1.3fr) minmax(0, 1.6fr) minmax(0, 1.4fr); }
+
+.md-typeset .rt-linha--cabeca {
+  padding-block: 0 0.1rem;
+  border: 0;
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  color: var(--md-default-fg-color--light);
+}
+
+.md-typeset .rt-col { min-width: 0; overflow-wrap: anywhere; }
+.md-typeset .rt-rot { display: none; }
+.md-typeset .rt-col--req a:first-child,
+.md-typeset .rt-col--g a {
+  font-family: var(--md-code-font-family);
+  font-weight: 700;
+}
+
+/* Fluxo da 8.4.1: gargalo → requisito → história */
+.md-typeset .rt--rf .rt-col--g,
+.md-typeset .rt--rf .rt-col--req { position: relative; }
+.md-typeset .rt--rf:not(.rt-linha--cabeca) .rt-col--g::after,
+.md-typeset .rt--rf:not(.rt-linha--cabeca) .rt-col--req::after {
+  content: "→";
+  position: absolute;
+  right: -0.75rem;
+  top: 0;
+  color: var(--md-default-fg-color--lighter);
+}
+
+.md-typeset .rt-col--cob { display: flex; flex-wrap: wrap; gap: 0.25rem; }
+.md-typeset .rt-col--cob .rq-chip { font-size: 0.6rem; }
+.md-typeset .rt-nota { color: var(--md-default-fg-color--light); font-size: 0.62rem; }
+
+.md-typeset a.rt-rf {
+  display: inline-block;
+  margin: 0 0.15rem 0.2rem 0;
+  padding: 0 0.4rem;
+  border: 1px solid var(--md-default-fg-color--lightest);
+  border-radius: 0.25rem;
+  font-family: var(--md-code-font-family);
+  font-size: 0.62rem;
+  line-height: 1.6;
+}
+
+.md-typeset a.rt-rf:hover { border-color: var(--md-accent-fg-color); }
+
+@media screen and (max-width: 59.9375em) {
+  .md-typeset .rt-linha { grid-template-columns: 1fr; }
+  .md-typeset .rt-linha--cabeca { display: none; }
+  .md-typeset .rt-rot {
+    display: block;
+    font-size: 0.6rem;
+    font-weight: 700;
+    color: var(--md-default-fg-color--light);
+  }
+  .md-typeset .rt--rf .rt-col--g::after,
+  .md-typeset .rt--rf .rt-col--req::after { content: none; }
+}
+
+/* Selo longo (classificação do RNF) quebra linha no celular em vez de passar do cartão. */
+.md-typeset .rq-chip { max-width: 100%; white-space: normal; }

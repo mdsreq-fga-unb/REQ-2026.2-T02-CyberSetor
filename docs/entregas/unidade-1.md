@@ -1,5 +1,8 @@
 # Entregas da Unidade 1
 
+!!! info "Registro histórico"
+    Esta página registra a entrega de 08/09/2026. A Visão vigente está no [Documento de Visão](../visao/index.md), e o calendário atualizado, na [seção 6](../visao/6-cronograma.md).
+
 Prazo: 08/09/2026, às 08h. Apresentações em 10/09/2026.
 
 | Entregável | Situação | Onde |
