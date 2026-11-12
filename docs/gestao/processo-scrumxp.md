@@ -9,6 +9,7 @@
 | 21/10/2026 | 1.5 | Daily presencial às terças e quintas e escrita nos demais dias úteis; ambientes do produto com os endereços de homologação | Vinicius Vieira |
 | 26/10/2026 | 1.6 | Incremento como a versão integrada da API e do front publicada na homologação; programação em pares descrita como é aplicada | Vinicius Vieira |
 | 09/11/2026 | 1.7 | Registro dos ritos de encerramento da Sprint 4 e de planejamento da Sprint 5 | Maria Eduarda Marques |
+| 11/11/2026 | 1.8 | Impedimento na daily restrito ao que trava o trabalho, com provas avisadas no grupo Geral; documentação sem sessões em par, com a revisão por outra dupla | Maria Eduarda Marques |
 
 A equipe CyberSetor adota o **ScrumXP**: o framework Scrum para o gerenciamento do trabalho e as práticas técnicas do eXtreme Programming para a engenharia. Esta página registra como o processo funciona na prática. A fundamentação da escolha está na seção 4 do Documento de Visão.
 
@@ -31,7 +32,7 @@ A equipe é formada por cinco estudantes com grades e compromissos distintos, e 
 🚧 Impedimento: o que está me travando, ou "nenhum"
 ```
 
-**Regras:** nos dias úteis sem encontro presencial, no próprio dia, até o fim do dia, inclusive sem avanço (escreve-se "sem avanço") · impedimento é campo obrigatório · quem depende de outra pessoa a marca · o grupo *Dailys* é exclusivo para dailies; discussão vai para o grupo *Geral* e decisão vira ata · impedimento declarado é resolvido ou escalado pelo Scrum Master em até 24 horas.
+**Regras:** nos dias úteis sem encontro presencial, no próprio dia, até o fim do dia, inclusive sem avanço (escreve-se "sem avanço") · impedimento é campo obrigatório · impedimento é o que trava o trabalho, como uma revisão ou um merge pendente de outro integrante; prova e outro compromisso acadêmico não são impedimento e são avisados no grupo *Geral* ([ATA-2026-11-10](atas/2026-11-10-reuniao-equipe.md), D3) · quem depende de outra pessoa a marca · o grupo *Dailys* é exclusivo para dailies; discussão vai para o grupo *Geral* e decisão vira ata · impedimento declarado é resolvido ou escalado pelo Scrum Master em até 24 horas.
 
 ## Artefatos
 
@@ -84,11 +85,13 @@ As reuniões com o Instituto que alimentam a validação estão no [índice de a
 
 ## Práticas de XP
 
-**Em uso desde a Sprint 1:** histórias de usuário · critérios de aceitação · trabalho em duplas na documentação · integração contínua, que compila o site em modo estrito a cada alteração · cliente presente **adaptado**, com Product Owner interno no intervalo entre validações e validação semanal com o Instituto (Documento de Visão, seção 7.2).
+**Em uso desde a Sprint 1:** histórias de usuário · critérios de aceitação · duplas donas das histórias na documentação, com revisão por outra dupla · integração contínua, que compila o site em modo estrito a cada alteração · cliente presente **adaptado**, com Product Owner interno no intervalo entre validações e validação semanal com o Instituto (Documento de Visão, seção 7.2).
 
 **A partir da primeira sprint de código:** testes de aceitação · pequenas releases · programação em pares, na forma descrita abaixo · propriedade coletiva do código · design simples · padrões de codificação. Cada uma passa a valer quando houver código a que aplicá-la, e a evidência de adoção é registrada na Sprint Review correspondente.
 
 **Programação em pares, como é aplicada:** as histórias são distribuídas por duplas, uma por épico. Quando a dupla trabalha junta, a sessão é síncrona e fica registrada pela coautoria do commit (`Co-authored-by`) e na daily. Quem trabalha sozinho tem o pull request revisado obrigatoriamente por integrante de outra dupla, controle que substitui o par. A evidência de cada sprint, com as sessões tiradas do histórico de commits, é apresentada na Sprint Review.
+
+**Documentação sem sessões em par:** desde 10/11/2026, as sessões síncronas em par deixaram de ser usadas na documentação, por falta de tempo para as chamadas ([ATA-2026-11-10](atas/2026-11-10-reuniao-equipe.md), D2). A dupla continua dona da história, e o pull request da documentação passa pelas duas aprovações das [boas práticas no GitHub](boas-praticas-github.md), ao menos uma de integrante de outra dupla ou do integrante independente.
 
 **Não adotadas, com justificativa:**
 
