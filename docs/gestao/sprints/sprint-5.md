@@ -5,7 +5,7 @@
 | Campo | Conteúdo |
 |---|---|
 | **Código do documento** | C35 |
-| **Versão** | 1.0 |
+| **Versão** | 1.1 |
 | **Data de emissão** | 10 de novembro de 2026 |
 | **Projeto** | CyberSetor — sistema de gestão do ciclo de projetos financiados |
 | **Cliente** | Instituto Cultural e Social No Setor |
@@ -71,7 +71,7 @@ Na Retrospectiva 4, a equipe passou a exigir duas aprovações por pull request 
 |---|---|---|---|
 | Sprint Planning 5 | 05/11 (quinta) | 20h47 | Na mesma reunião da Review 4 e da Retrospectiva 4 |
 | Reuniões da equipe | terças e quintas | entre 20h e 23h | Meet, com anotações automáticas |
-| Reunião de validação com o Instituto | 🟨 terça ou quinta, data a definir (A3) | 🟨 a definir | Roteiro e slides da #286; registro com autorização |
+| Reunião de validação com o Instituto | 12/11 (quinta), confirmada pelo Instituto (ATA-2026-11-10) | 16h às 17h, online | Roteiro e slides da #286; registro com autorização |
 | Entrega da Unidade 3 | 17/11 (terça) | 🟨 conferir no Aprender | Encerramento das mudanças na branch principal no mesmo dia (D5); −20% por dia de atraso |
 | Sprint Review 5, Retrospectiva 5 e Planning 6 | 19/11 (quinta) 🔧 | à noite | Último dia da sprint |
 
@@ -171,7 +171,7 @@ Responsáveis e prazos das linhas A01, A02, B01 e B02 vêm da ATA-2026-11-05 (A2
 | C01 | Ata de 05/11 publicada | Organização e atualização | Maria Eduarda | Must | 🔧 10/11 |
 | C02 | Roteiro e slides dos testes do Instituto na homologação, construídos na issue (D7, A2) | Verificação e validação | Maria Eduarda | Must | 09/11 |
 | C03 | Data da reunião de validação definida (A3) e uso da homologação incentivado antes e depois dela (A4) | Validação | equipe | Must | 08/11 (data) |
-| C04 | Reunião de validação com o Instituto: condução, registro com autorização e ata | Validação | 🔧 Maria Eduarda e Vinicius; o máximo de integrantes | Must | data da A3 |
+| C04 | Reunião de validação com o Instituto: condução, registro com autorização e ata | Validação | 🔧 Maria Eduarda e Vinicius; o máximo de integrantes | Must | 12/11 |
 | C05 | Retornos da validação nas seções 8 e 10, trocando 🔧 por 🟩 quando confirmados | Organização e atualização | 🔧 Maria Eduarda e Vinicius | Must | 🔧 até 16/11 |
 | C06 | Regras de revisão e de integração na página de boas práticas (D2 a D4, A5) | Organização e atualização | Maria Eduarda | Must | Sprint 5 (#285) |
 | C07 | Cronograma (seção 6) com o período real das Sprints 4 e 5 e o novo papel da Sprint 5 | Organização e atualização | 🔧 Vinicius | Must | 🔧 13/11 |
@@ -233,3 +233,4 @@ Duplas mantidas até o fim do semestre (D8): Maria Eduarda Marques e Caio Martin
 | Versão | Data | Alteração | Responsável |
 |---|---|---|---|
 | 1.0 | 10/11/2026 | Emissão com o deliberado na Sprint Planning de 05/11 (ATA-2026-11-05): período de 05/11 a 19/11, meta, duplas mantidas, regras de revisão, Sprint Backlog em três partes, priorização, riscos e critérios de aceitação | Vinicius Vieira |
+| 1.1 | 11/11/2026 | Data da reunião de validação com o Instituto, 12/11, das 16h às 17h, definida na reunião da equipe de 10/11 (ATA-2026-11-10) | Vinicius Vieira |
