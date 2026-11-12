@@ -446,7 +446,6 @@ describe('ProjectActivitiesSection', () => {
     confirmadas: RegisteredPerson[],
     espera: RegisteredPerson[],
     canceladas: RegisteredPerson[] = [],
-    promocaoAutomatica = false,
   ) => ({
     status: 200,
     body: {
@@ -454,7 +453,6 @@ describe('ProjectActivitiesSection', () => {
       confirmadas: confirmadas.length,
       emEspera: espera.length,
       canceladas: canceladas.length,
-      promocaoAutomatica,
       inscricoes: [...confirmadas, ...espera, ...canceladas],
     },
   });
@@ -526,6 +524,10 @@ describe('ProjectActivitiesSection', () => {
       }),
       [`GET /activities/${ACTIVITY_1.id}/registrations`]: () =>
         confirmed ? lista([ana, brunoConfirmado], []) : lista([ana], [bruno]),
+      [`GET /activities/${ACTIVITY_1.id}/registration`]: () => ({
+        status: 200,
+        body: { promocaoAutomatica: false, listaEspera: true },
+      }),
       [`POST /activities/${ACTIVITY_1.id}/registrations/${encodeURIComponent(bruno.id)}/confirmation`]:
         () => {
           confirmed = true;
@@ -578,8 +580,11 @@ describe('ProjectActivitiesSection', () => {
         status: 200,
         body: [{ ...ACTIVITY_1, inscricao: { aberta: true, vagas: 2, inscritos: 1, emEspera: 1 } }],
       }),
-      [`GET /activities/${ACTIVITY_1.id}/registrations`]: () =>
-        lista([ana], [bruno], [], true), // promocaoAutomatica = true
+      [`GET /activities/${ACTIVITY_1.id}/registrations`]: () => lista([ana], [bruno]),
+      [`GET /activities/${ACTIVITY_1.id}/registration`]: () => ({
+        status: 200,
+        body: { promocaoAutomatica: true, listaEspera: true },
+      }),
     });
     renderSection();
 

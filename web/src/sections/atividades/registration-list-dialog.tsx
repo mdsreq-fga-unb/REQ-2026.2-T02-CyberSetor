@@ -181,10 +181,9 @@ export function RegistrationListDialog({
   const [cancelling, setCancelling] = useState<RegisteredPerson | null>(null);
   const record = useDialogState<string>();
 
-  const promocaoAutomatica =
-    list.data?.promocaoAutomatica ?? registration.data?.promocaoAutomatica ?? false;
   const hasFreeVacancy = list.data ? list.data.confirmadas < list.data.vagas : false;
-  const canManuallyConfirm = hasFreeVacancy && !promocaoAutomatica;
+  // A regra vem da configuração da inscrição; enquanto ela carrega, a confirmação manual espera.
+  const canManuallyConfirm = hasFreeVacancy && registration.data?.promocaoAutomatica === false;
 
   async function confirmVacancy(person: RegisteredPerson) {
     try {

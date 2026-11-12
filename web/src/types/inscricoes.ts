@@ -97,8 +97,6 @@ export interface RegistrationList {
   confirmadas: number;
   emEspera: number;
   canceladas: number;
-  /** Com as vagas livres, a espera é promovida automaticamente se true (HU-07c). */
-  promocaoAutomatica?: boolean;
   inscricoes: RegisteredPerson[];
 }
 
