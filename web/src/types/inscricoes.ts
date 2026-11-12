@@ -85,7 +85,14 @@ export interface RegisteredPerson {
   responsavelTelefone: string | null;
   /** Cancelamento ou desistência: data do pedido e canal. */
   cancelamento: { pedidoEm: string; canal: CanalPedido } | null;
+  /**
+   * Cadastro que já existia antes desta inscrição (RF22): reaproveitado, ou outro cadastro mais
+   * antigo com o mesmo CPF ou e-mail. Só o indicador; os dados do outro cadastro não vêm (RNF05).
+   */
+  cadastroExistente: CadastroExistente | null;
 }
+
+export type CadastroExistente = 'REAPROVEITADO' | 'EMAIL' | 'CPF';
 
 export interface CancelRegistrationInput {
   canal: CanalPedido;
