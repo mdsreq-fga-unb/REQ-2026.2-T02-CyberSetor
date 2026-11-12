@@ -153,6 +153,8 @@ describe('Inscrição presencial assistida e detecção de duplicidade (HU-08 / 
         dataNascimento: new Date('1995-03-12T00:00:00.000Z'),
         cpf: CPF_EXISTENTE,
         email: 'maria.existente@teste.com',
+        // Cadastro de uma inscrição antiga, como no uso real.
+        criadoEm: new Date('2026-09-01T12:00:00.000Z'),
       },
     });
     participanteExistenteId = pExistente.id;
@@ -389,6 +391,21 @@ describe('Inscrição presencial assistida e detecção de duplicidade (HU-08 / 
       expect(participantesDepois).toBe(participantesAntes); // Não duplicou
     });
 
+    it('a lista de inscritos indica o cadastro que já existia antes da inscrição (RF22, D2 de 29/10)', async () => {
+      const res = await nucleo().get(`/v1/activities/${atividadeId}/registrations`);
+      expect(res.status).toBe(200);
+      const inscricoes = (
+        res.body as { inscricoes: { nome: string; cadastroExistente: string | null }[] }
+      ).inscricoes;
+      const porNome = new Map(inscricoes.map((i) => [i.nome, i.cadastroExistente]));
+      // Reaproveitado na inscrição presencial: o cadastro já existia.
+      expect(porNome.get('Maria Existente')).toBe('REAPROVEITADO');
+      // Cadastro novo, criado na própria inscrição: sem indicador.
+      for (const [nome, indicador] of porNome) {
+        if (nome !== 'Maria Existente') expect(indicador).toBeNull();
+      }
+    });
+
     it('respeita o limite de vagas e envia excedente para a lista de espera (CA-08.2, RF14, RF15)', async () => {
       // Atividade atv2 tem vagas = 1
       const p1 = {
@@ -550,6 +567,30 @@ describe('Inscrição presencial assistida e detecção de duplicidade (HU-08 / 
         'telefoneMascarado',
       ]);
       expect(participante?.telefoneMascarado).toBe('(**) *****-7777');
+    });
+    it('o formulário público com o CPF de um cadastro anterior aparece como possível repetido', async () => {
+      const res = await request(app.getHttpServer())
+        .post('/v1/public/registrations/codigo-pub-vagas')
+        .send({
+          nome: 'Maria pelo Formulário',
+          telefone: '61977776666',
+          dataNascimento: '1995-03-12',
+          cpf: CPF_EXISTENTE,
+          versaoAviso: DATA_NOTICE.versao,
+          autorizaComunicados: false,
+          autorizaImagem: false,
+        });
+      expect(res.status).toBe(201);
+      const lista = await nucleo().get(`/v1/activities/${atividadeVagasId}/registrations`);
+      expect(lista.status).toBe(200);
+      const inscricoes = (
+        lista.body as { inscricoes: { nome: string; cadastroExistente: string | null }[] }
+      ).inscricoes;
+      expect(inscricoes.find((i) => i.nome === 'Maria pelo Formulário')?.cadastroExistente).toBe(
+        'CPF',
+      );
+      // Só o indicador: os dados do outro cadastro não aparecem na lista (RNF05).
+      expect(JSON.stringify(lista.body)).not.toContain('maria.existente@teste.com');
     });
   });
 });

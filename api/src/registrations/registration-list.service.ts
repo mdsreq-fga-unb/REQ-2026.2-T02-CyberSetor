@@ -14,6 +14,7 @@ import { participantSearch } from '../participants/participant-search.js';
 import { ageOn } from '../public-registrations/participant-data.js';
 import type { CancelRegistrationDto, RegistrationListResponse } from './registration-list.dto.js';
 import { cancelRegistration, confirmFromWaitlist } from './waitlist.js';
+import { loadExistingRecords } from './existing-record.js';
 
 const ADULT_AGE = 18;
 
@@ -98,7 +99,7 @@ export class RegistrationListService {
   async list(atividadeId: string, busca?: string): Promise<RegistrationListResponse> {
     const config = await this.prisma.configuracaoInscricao.findUnique({
       where: { atividadeId },
-      select: { vagas: true },
+      select: { vagas: true, campoDuplicidade: true },
     });
     if (!config) {
       const count = await this.prisma.atividade.count({ where: { id: atividadeId } });
@@ -121,10 +122,30 @@ export class RegistrationListService {
       orderBy: { ordemChegada: 'asc' },
       include: {
         participante: {
-          select: { nome: true, dataNascimento: true, telefone: true, email: true },
+          select: {
+            nome: true,
+            dataNascimento: true,
+            telefone: true,
+            email: true,
+            cpf: true,
+            criadoEm: true,
+          },
         },
       },
     });
+
+    const existing = await loadExistingRecords(
+      this.prisma,
+      config.campoDuplicidade,
+      rows.map((row) => ({
+        id: row.id,
+        participanteId: row.participanteId,
+        participanteCriadoEm: row.participante.criadoEm,
+        criadoEm: row.criadoEm,
+        email: row.participante.email,
+        cpf: row.participante.cpf,
+      })),
+    );
 
     const today = todayInBrasilia();
     let espera = 0;
@@ -143,6 +164,7 @@ export class RegistrationListService {
           situacao: row.situacao,
           posicaoEspera: emEspera ? ++espera : null,
           inscritoEm: row.criadoEm,
+          cadastroExistente: existing.get(row.id) ?? null,
           autorizaComunicados: row.autorizaComunicados,
           autorizaImagem: row.autorizaImagem,
           responsavelNome: row.responsavelNome,
