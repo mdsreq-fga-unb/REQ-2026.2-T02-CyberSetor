@@ -691,3 +691,57 @@ a.cs-card:focus {
 .md-typeset details[hidden] {
   display: none;
 }
+
+/* ---- Ficha de cada história (seção 10.1, composta por hooks/fichas.py) ---- */
+.md-typeset details.ficha {
+  scroll-margin-top: 5rem;
+}
+
+.md-typeset details.ficha > summary .destino {
+  display: inline-block;
+  margin: 0.1rem 0.15rem;
+  padding: 0 0.45rem;
+  border-radius: 1rem;
+  background: var(--md-default-fg-color--lightest);
+  color: var(--md-default-fg-color);
+  font-size: 0.62rem;
+  font-weight: 600;
+  line-height: 1.5;
+  white-space: nowrap;
+  vertical-align: middle;
+}
+
+.md-typeset details.ficha .md-typeset__table {
+  width: 100%;
+  margin: 0.6em 0;
+}
+
+.md-typeset details.ficha table:not([class]) {
+  display: table;
+  width: 100%;
+  font-size: 0.7rem;
+}
+
+.md-typeset details.ficha table:not([class]) thead {
+  display: none;
+}
+
+.md-typeset details.ficha table:not([class]) td {
+  padding: 0.35em 0.6em;
+  overflow-wrap: anywhere;
+}
+
+.md-typeset details.ficha table:not([class]) td:first-child {
+  width: 30%;
+  overflow-wrap: normal;
+  color: var(--md-default-fg-color--light);
+  font-weight: 600;
+}
+
+.md-typeset details.ficha details {
+  margin-top: 0.8em;
+}
+
+.selos-legenda label {
+  white-space: nowrap;
+}

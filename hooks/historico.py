@@ -49,6 +49,9 @@ META = re.compile(r"^#+[^\n]*Meta da Sprint[^\n]*\n+>\s*([^\n]+)", re.MULTILINE)
 ROTULO_META = re.compile(r"^\*\*Sprint Goal[^*]*\*\*\s*")
 INICIO_META = re.compile(r"^Ao final da Sprint \d+, ")
 
+PAGINAS_DE_CODIGO = ("requisitos/8-requisitos.md", "requisitos/10-backlog.md")
+ANCORA_CODIGO = re.compile(r'<a id="(rnf\d{2}|rf\d{2}|hu-\d{2}[a-z]?)"></a>')
+
 CURTO = {"versao": "Versões", "ata-equipe": "Equipe", "ata-cliente": "Instituto", "sprint": "Sprints", "marco": "Marcos"}
 
 TIPOS = {
@@ -233,7 +236,26 @@ def _link(origem: str | None) -> str:
     return posixpath.relpath(origem, posixpath.dirname(DESTINO))
 
 
-def montar(eventos: list[Evento], sprints: list[Sprint], hoje: date) -> str:
+def _codigo(codigo: str, ancoras: dict[str, str]) -> str:
+    """Código no rodapé do registro: leva à ficha ou ao requisito, quando ele tem âncora."""
+    pagina = ancoras.get(codigo.lower())
+    if not pagina:
+        return f'<span class="hist-codigo">{_e(codigo)}</span>'
+    alvo = posixpath.relpath(pagina, posixpath.dirname(DESTINO))
+    return f"[{_e(codigo)}]({alvo}#{codigo.lower()}){{ .hist-codigo }}"
+
+
+def ler_ancoras(docs_dir: Path) -> dict[str, str]:
+    """Âncoras de histórias e requisitos nas páginas que os definem: {"hu-07c": caminho}."""
+    ancoras: dict[str, str] = {}
+    for pagina in PAGINAS_DE_CODIGO:
+        texto = (docs_dir / pagina).read_text(encoding="utf-8")
+        ancoras.update({a: pagina for a in ANCORA_CODIGO.findall(texto)})
+    return ancoras
+
+
+def montar(eventos: list[Evento], sprints: list[Sprint], hoje: date, ancoras: dict[str, str] | None = None) -> str:
+    ancoras = ancoras or {}
     eventos = sorted(eventos, key=lambda e: (e.quando, e.tipo != "marco"), reverse=True)
     for e in eventos:
         # O início de sprint pertence à sprint que começa, ainda que o dia seja de fronteira.
@@ -381,9 +403,9 @@ def montar(eventos: list[Evento], sprints: list[Sprint], hoje: date) -> str:
             if e.autor:
                 rodape.append(_e(e.autor))
             if e.codigos:
-                rodape.append(" ".join(f'<span class="hist-codigo">{_e(c)}</span>' for c in e.codigos))
+                rodape.append(" ".join(_codigo(c, ancoras) for c in e.codigos))
             if rodape:
-                w(f'<p class="hist-item__rodape">{" · ".join(rodape)}</p>\n')
+                w(f'<p class="hist-item__rodape" markdown="span">{" · ".join(rodape)}</p>\n')
             w("</article>\n")
         w("</section>\n")
     w("</div>\n")
@@ -441,7 +463,7 @@ def coletar(docs_dir: Path) -> tuple[list[Evento], list[Sprint]]:
 
 def on_files(files, config, **kwargs):
     eventos, sprints = coletar(Path(config["docs_dir"]))
-    conteudo = montar(eventos, sprints, date.today())
+    conteudo = montar(eventos, sprints, date.today(), ler_ancoras(Path(config["docs_dir"])))
     files.append(File.generated(config, DESTINO, content=conteudo))
     log.info("historico: %s gerada com %d registros.", DESTINO, len(eventos))
     return files

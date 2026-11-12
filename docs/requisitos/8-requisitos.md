@@ -25,7 +25,9 @@
 | 02/11/2026 | 2.11 | Comportamento padrão da apresentação da inscrição (RF46) entre os pontos em aberto, para a validação com o Instituto em 05/11 | Vinicius Vieira |
 | 03/11/2026 | 2.12 | Lista de espera do RF15 condicionada à ativação na inscrição, valor inicial para a validação com o Instituto em 05/11 | Vinicius Vieira |
 | 07/11/2026 | 2.13 | Decisões da validação com o Instituto em 29/10: cadastro existente sinalizado na lista de inscritos da inscrição pelo formulário público (RF22), acesso administrativo da coordenação de execução e da direção de projetos (seção 8.5.1), pontos em aberto de cadastro repetido e de perfis revistos; pedidos novos de avisos por e-mail e de campos personalizados e condição de rascunho da meta do registro de 08/10 entre os pontos em aberto | Rodrigo Henrique |
-| 10/11/2026 | 2.14 | Pontos em aberto da primeira versão: visão do Núcleo Pedagógico, anexo do documento formal, encerramento do projeto, justificativa do aditivo e da apostila, guarda decenal e geração do relatório; validação de 05/11 adiada para a reunião da Sprint 5, em 12/11 | Vinicius Vieira |
+| 10/11/2026 | 2.14 | Pontos em aberto da primeira versão: visão do Núcleo Pedagógico, anexo do documento formal, encerramento do projeto, justificativa do aditivo e da apostila, guarda decenal e geração do relatório; validação de 05/11 adiada para a reunião da Sprint 5 | Vinicius Vieira |
+| 10/11/2026 | 2.15 | RF07 ligado só ao gargalo G02 na matriz 8.4.1, como nas sínteses das seções 8.4.3 e 10.2.6; RF11 com a história dona na lista, e a HU-07d, que também o verifica, na matriz 8.4.1 | Vinicius Vieira |
+| 10/11/2026 | 2.16 | RF22 com a história dona (HU-08) na lista 8.2; a HU-07a fica como verificação na matriz 8.4.1 (CA-07a.8) | Vinicius Vieira |
 
 ---
 
@@ -66,7 +68,7 @@ A governança do catálogo adota:
 ### CP3 — Inscrição de Participantes
 | Identificador | Requisito | Descrição | Rastreabilidade |
 | :---: | :--- | :--- | :--- |
-| <a id="rf11"></a>**RF11** | Disponibilizar formulário público de inscrição | Permitir ao interessado se inscrever em uma atividade por formulário público no celular, sem criar conta nem senha. O formulário exibe a data, o horário e o local da atividade e, quando houver, a apresentação, o prazo e o contato do Instituto ([RF46](#rf46)). | [RN-05](#rn-05), [RN-06](#rn-06) \| [HU-07a](10-backlog.md#hu-07a), [HU-07d](10-backlog.md#hu-07d) |
+| <a id="rf11"></a>**RF11** | Disponibilizar formulário público de inscrição | Permitir ao interessado se inscrever em uma atividade por formulário público no celular, sem criar conta nem senha. O formulário exibe a data, o horário e o local da atividade e, quando houver, a apresentação, o prazo e o contato do Instituto ([RF46](#rf46)). | [RN-05](#rn-05), [RN-06](#rn-06) \| [HU-07a](10-backlog.md#hu-07a) |
 | <a id="rf12"></a>**RF12** | Gerar link e QR Code de inscrição | Permitir ao usuário autorizado gerar, para cada atividade, o link e o QR Code do formulário público de inscrição. | OE02 \| [HU-07b](10-backlog.md#hu-07b) |
 | <a id="rf13"></a>**RF13** | Registrar inscrição presencial assistida | Permitir ao usuário autorizado inscrever presencialmente quem não dispõe de celular ou conectividade. | Seção 3.3.10; [RN-05](#rn-05), [RN-06](#rn-06) \| [HU-08](10-backlog.md#hu-08) |
 | <a id="rf14"></a>**RF14** | Limitar vagas da atividade | Encerrar as inscrições confirmadas de uma atividade quando o número de vagas estipulado for atingido. | OE01, OE02 \| [HU-07c](10-backlog.md#hu-07c) |
@@ -87,7 +89,7 @@ A governança do catálogo adota:
 | Identificador | Requisito | Descrição | Rastreabilidade |
 | :---: | :--- | :--- | :--- |
 | <a id="rf21"></a>**RF21** | Consultar histórico de participação | Permitir ao usuário autorizado consultar a ficha consolidada de uma pessoa, contendo atividades e projetos dos quais participou. | OE01 \| [HU-06](10-backlog.md#hu-06) |
-| <a id="rf22"></a>**RF22** | Avisar cadastro repetido | Avisar o usuário autorizado quando o e-mail ou o CPF informado, conforme o campo escolhido no formulário de inscrição 🔧, coincidir com cadastro prévio, na inscrição presencial e, pela lista de inscritos, na inscrição pelo formulário público, facultando o reaproveitamento do registro existente. | OE01; validações com o Instituto em 08/10/2026 e 29/10/2026 \| [HU-07a](10-backlog.md#hu-07a), [HU-08](10-backlog.md#hu-08) |
+| <a id="rf22"></a>**RF22** | Avisar cadastro repetido | Avisar o usuário autorizado quando o e-mail ou o CPF informado, conforme o campo escolhido no formulário de inscrição 🔧, coincidir com cadastro prévio, na inscrição presencial e, pela lista de inscritos, na inscrição pelo formulário público, facultando o reaproveitamento do registro existente. | OE01; validações com o Instituto em 08/10/2026 e 29/10/2026 \| [HU-08](10-backlog.md#hu-08) |
 | <a id="rf23"></a>**RF23** | Registrar aviso de tratamento de dados na inscrição | Registrar em cada inscrição a versão do aviso de tratamento de dados exibida ao titular, com carimbo de data e hora. | LGPD art. 7º, 8º, 9º e 14; [RN-05](#rn-05), [RN-06](#rn-06) \| [HU-07a](10-backlog.md#hu-07a) |
 | <a id="rf24"></a>**RF24** | Registrar autorização de contato | Registrar autorização opcional para recebimento de informativos e permitir sua revogação com data e canal. | Seção 3.3.5; LGPD art. 8º, §5º; [RN-05](#rn-05) \| [HU-07a](10-backlog.md#hu-07a) |
 | <a id="rf25"></a>**RF25** | Registrar autorização de uso de imagem | Registrar separadamente a anuência ou recusa ao uso institucional de imagem e sua eventual revogação, sem condicionar a participação. | Seção 3.3.4; LGPD art. 7º e 8º; [RN-05](#rn-05), [RN-12](#rn-12) \| [HU-07a](10-backlog.md#hu-07a) |
@@ -182,7 +184,7 @@ A rastreabilidade estabelece o vínculo bidirecional entre os problemas diagnost
 | **RF04** | Desdobrar requisitos contratuais e metas | G01 | MROSC art. 22 e 42; RN-01, RN-02 | HU-01b (CA-01b.1 a CA-01b.4) | Total |
 | **RF05** | Atribuir responsável e setor executor a meta | G02 | Decisão 3 da ata de 08/09 | HU-02a (CA-02a.1) | Total |
 | **RF06** | Fixar prazo fatal e status de meta | G02 | RN-13 | HU-02a (CA-02a.1 a CA-02a.3) | Total |
-| **RF07** | Exibir linha do tempo e painel de prazos de metas | G01, G02 | RN-01 | HU-02b (CA-02b.1) | Total |
+| **RF07** | Exibir linha do tempo e painel de prazos de metas | G02 | RN-01 | HU-02b (CA-02b.1) | Total |
 | **RF08** | Emitir alertas de proximidade e pendências de metas | G02 | RN-03 | HU-02b (CA-02b.2 a CA-02b.4) | Total |
 | **RF40** | Administrar contas e perfis de acesso | — | Seção 8.5.1 | HU-16 (CA-16.1 a CA-16.5) | Total |
 

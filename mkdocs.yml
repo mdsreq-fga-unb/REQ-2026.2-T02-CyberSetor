@@ -62,6 +62,8 @@ extra_javascript:
 hooks:
   - hooks/historico.py
   - hooks/selos.py
+  - hooks/fichas.py
+  - hooks/conferencia.py
 
 markdown_extensions:
   - abbr
