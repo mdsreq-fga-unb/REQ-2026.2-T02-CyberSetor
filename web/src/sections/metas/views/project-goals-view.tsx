@@ -46,6 +46,7 @@ import { useCurrentUser } from '@/queries/sessao';
 import { paths } from '@/routes/paths';
 import { ProjectActivitiesSection } from '@/sections/atividades/views/project-activities-section';
 import { ProjectPlanSection } from '@/sections/plano/views/project-plan-section';
+import { ProjectDeadlinesSection } from '@/sections/prazos/views/project-deadlines-section';
 import { ProjectReportsSection } from '@/sections/relatorios/views/project-reports-section';
 import { ProjectReportPreviewSection } from './project-report-preview-section';
 import type { Goal } from '@/types/metas';
@@ -259,7 +260,7 @@ function GoalSummary({ goal, fim }: { goal: Goal; fim?: string }) {
   );
 }
 
-const PROJECT_TABS = ['metas', 'plano', 'atividades', 'relatorios'] as const;
+const PROJECT_TABS = ['metas', 'prazos', 'plano', 'atividades', 'relatorios'] as const;
 type ProjectTab = (typeof PROJECT_TABS)[number];
 
 export function ProjectGoalsView({
@@ -313,6 +314,12 @@ export function ProjectGoalsView({
       : []),
   ];
   const withActions = canEdit || !!sorted?.some(canChange);
+  // Pendência escolhida na aba Prazos: a gestão abre a meta para editar; os demais voltam às metas.
+  const openGoal = (metaId: string) => {
+    const goal = goals.data?.find((item) => item.id === metaId);
+    chooseTab('metas');
+    if (goal && canEdit) form.show({ goal });
+  };
   const columns = withActions ? 4 : 3;
   const countOf = (situacao: Goal['situacao']) =>
     sorted?.filter((goal) => goal.situacao === situacao).length ?? 0;
@@ -390,6 +397,7 @@ export function ProjectGoalsView({
       <Tabs value={tab} onValueChange={(next: ProjectTab) => chooseTab(next)}>
         <TabsList aria-label="Seções do projeto">
           <TabsTab value="metas">Metas</TabsTab>
+          <TabsTab value="prazos">Prazos</TabsTab>
           <TabsTab value="plano">Plano de trabalho</TabsTab>
           <TabsTab value="atividades">Atividades</TabsTab>
           <TabsTab value="relatorios">Relatórios</TabsTab>
@@ -533,6 +541,14 @@ export function ProjectGoalsView({
               <ListPagination pagination={pagination} label="Paginação das metas" />
             </ListCard>
           )}
+        </TabsPanel>
+
+        <TabsPanel value="prazos">
+          <ProjectDeadlinesSection
+            projectId={projectId}
+            createGoal={createButton || undefined}
+            onSelectGoal={openGoal}
+          />
         </TabsPanel>
 
         <TabsPanel value="plano">

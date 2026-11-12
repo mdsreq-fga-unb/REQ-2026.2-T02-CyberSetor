@@ -193,6 +193,40 @@ describe('metas do projeto', () => {
     );
   });
 
+  it('a aba de prazos abre o cadastro quando o projeto nao tem meta (CA-02b.5)', async () => {
+    window.location.hash = 'prazos';
+    await signedInAs(
+      'PRESIDENCIA_GESTAO',
+      page([], {
+        [`GET /projects/${PROJECT.id}/timeline`]: () => ({
+          status: 200,
+          body: {
+            hoje: '2026-06-20',
+            instrumento: {
+              id: INSTRUMENT.id,
+              numeroProcesso: INSTRUMENT.numeroProcesso,
+              orgaoConcedente: INSTRUMENT.orgaoConcedente,
+              vigenciaInicio: INSTRUMENT.vigenciaInicio,
+              vigenciaFim: INSTRUMENT.vigenciaFim,
+              ativo: true,
+            },
+            projeto: PROJECT,
+            pendencias: { metas: 0, vencendo: 0, vencidas: 0, semResponsavel: 0 },
+            metas: [],
+            requisitos: [],
+          },
+        }),
+      }),
+    );
+    renderView();
+
+    await screen.findByText('Nenhuma meta cadastrada');
+    const button = await screen.findByRole('button', { name: 'Nova meta' });
+    await vi.waitFor(() => expect(button).toBeEnabled());
+    fireEvent.click(button);
+    expect(await screen.findByRole('dialog')).toBeInTheDocument();
+  });
+
   it('lista as metas com o rascunho identificado, sem acoes para quem so consulta', async () => {
     await signedInAs('ADMINISTRATIVO_FINANCEIRO', page([COMPLETA, RASCUNHO]));
     renderView();
