@@ -25,7 +25,7 @@ TOKEN = os.environ.get("GITHUB_TOKEN")
 FEEDBACK_FILE = "docs/entregas/debitos-u1.md"
 SPRINT_FILE = "docs/gestao/sprints/tarefas-sprint-{n}.md"
 SITUACAO_FILE = "situacao-historias.json"
-SPRINTS = [1, 2, 3, 4]  # páginas geradas; acrescentar aqui e no nav do mkdocs.yml a cada sprint
+SPRINTS = [1, 2, 3, 4, 5]  # páginas geradas; acrescentar aqui e no nav do mkdocs.yml a cada sprint
 PROFESSOR = "marsicanogeorge"
 
 if not TOKEN:
