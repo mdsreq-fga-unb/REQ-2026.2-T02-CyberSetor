@@ -48,6 +48,9 @@ export class SessionResponse {
   @ApiProperty()
   usuarioId!: string;
 
+  @ApiProperty({ description: 'Nome da pessoa logada' })
+  nome!: string;
+
   @ApiProperty({ type: SectorRefResponse, nullable: true, description: 'Setor da pessoa logada' })
   setor!: SectorRefResponse | null;
 

@@ -97,9 +97,11 @@ export class AuthController {
   @ApiBearerAuth()
   @ApiOkResponse({ type: SessionResponse })
   async session(@CurrentUser() user: ValidSession): Promise<SessionResponse> {
+    const pessoa = await this.auth.personOf(user.usuarioId);
     return {
       usuarioId: user.usuarioId,
-      setor: await this.auth.sectorOf(user.usuarioId),
+      nome: pessoa.nome,
+      setor: pessoa.setor,
       perfil: user.perfil,
       deveTrocarSenha: user.deveTrocarSenha,
     };
