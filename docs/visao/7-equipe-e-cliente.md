@@ -15,6 +15,9 @@
 | 21/10/2026 | 1.10 | Daily presencial às terças e quintas e escrita nos demais dias úteis | Vinicius Vieira |
 | 26/10/2026 | 1.11 | Interações de 21/09, 28/09 e 08/10 com o Instituto; alinhamento técnico de 15/10 e reunião de 22/10, remarcada para 29/10, registrados como encontros que não ocorreram; ausência registrada sem exigência de motivo; atas de 08/09 e 15/09 ligadas na tabela; trabalho em duplas com revisão por outra dupla (7.1); validação da interface pela demonstração em homologação (7.3); termos do Instituto nas notas de domínio da seção 8 | Vinicius Vieira |
 | 11/11/2026 | 1.12 | Responsabilidades por atividade de ER (7.1.1) alinhadas à composição da equipe: Caio Martins na declaração e na organização e atualização, pela rastreabilidade | Maria Eduarda Marques |
+| 13/11/2026 | 1.13 | Resumo no início da seção; alcance da avaliação do Product Owner interno explicado só na 7.3, com a 7.1 apontando para ela; duplas e revisão remetidas às práticas de XP da página Processo e ritos; regras da daily remetidas à mesma página; exceção da Sprint 5 nas cerimônias; checkpoint de 29/10/2026 nas interações realizadas e validação de 05/11/2026 adiada a pedido do Instituto; "ambiente de homologação com dados de teste" no lugar de "protótipo evolutivo" na 7.3 (ATA-2026-11-12, D1) | Maria Eduarda Marques |
+
+**Em resumo.** Cinco estudantes, todos engenheiros de requisitos, com uma Product Owner interna e um Scrum Master (7.1). A comunicação passa pelo WhatsApp, pelo Google Meet e pelo GitHub, com ata publicada de cada reunião (7.2). Quem valida é o Instituto, por área competente; a avaliação da Product Owner interna é provisória (7.3).
 
 ## 7.1 Composição da Equipe
 
@@ -48,9 +51,9 @@ O que a tabela abaixo registra é **quem conduz cada atividade e responde por su
 
 A nomenclatura das seis atividades segue o livro-texto da disciplina (MARSICANO, 2026, §5.3): elicitação e descoberta, análise e consenso, declaração, representação, verificação e validação, organização e atualização.
 
-**O papel do cliente.** O Instituto No Setor **valida as entregas**, **indica o valor dos itens e participa da ordenação do Product Backlog** e é a fonte primária dos requisitos. O Product Owner interno **propõe** a ordenação a partir desse valor e a mantém atualizada entre os encontros; a proposta vale até o Instituto confirmá-la, e uma entrega avaliada apenas por essa via fica registrada como *pendente de validação externa*. Quem valida cada conjunto de funcionalidades está na seção 7.3.1.
+**O papel do cliente.** O Instituto No Setor **valida as entregas**, **indica o valor dos itens e participa da ordenação do Product Backlog** e é a fonte primária dos requisitos. O Product Owner interno **propõe** a ordenação a partir desse valor e a mantém atualizada entre os encontros; a proposta vale até o Instituto confirmá-la. O alcance da avaliação do Product Owner interno está na [seção 7.3](#73-processo-de-validacao), e quem valida cada conjunto de funcionalidades, na seção 7.3.1.
 
-O Product Owner interno é a mitigação para duas limitações conhecidas: a dependência da disponibilidade do Product Owner, no Scrum, e a dependência do cliente presente, no XP. O Instituto No Setor não dispõe de equipe de tecnologia e atua com agenda reduzida, e por isso não funcionaria como cliente presente no sentido literal. As responsabilidades técnicas no desenvolvimento serão distribuídas a partir da matriz de competências, com o trabalho em duplas por épico e revisão de cada pull request por outra dupla; as sessões em dupla ficam registradas na coautoria dos commits.
+O Product Owner interno é a mitigação para duas limitações conhecidas: a dependência da disponibilidade do Product Owner, no Scrum, e a dependência do cliente presente, no XP. O Instituto No Setor não dispõe de equipe de tecnologia e atua com agenda reduzida, e por isso não funcionaria como cliente presente no sentido literal. As responsabilidades técnicas no desenvolvimento são distribuídas a partir da [matriz de competências](../gestao/matriz-competencias.md), com o trabalho em duplas por épico; como as duplas trabalham e como cada pull request é revisado estão nas [práticas de XP](../gestao/processo-scrumxp.md#praticas-de-xp) da página Processo e ritos.
 
 ## 7.2 Comunicação
 
@@ -63,11 +66,13 @@ O Product Owner interno é a mitigação para duas limitações conhecidas: a de
 
 **Reuniões e frequência**
 
-- **Daily:** presencial às terças e quintas, na aula ou na reunião da equipe; nos demais dias úteis, escrita no grupo *Dailys*, no próprio dia, até o fim do dia, com o que foi feito, o que será feito e os impedimentos. Impedimento declarado é resolvido ou escalado pelo Scrum Master em até 24 horas.
+- **Daily:** presencial às terças e quintas, na aula ou na reunião da equipe; nos demais dias úteis, escrita no grupo *Dailys*, no próprio dia. O molde e as regras, inclusive o que conta como impedimento, estão em [Como a daily acontece](../gestao/processo-scrumxp.md#como-a-daily-acontece).
 - **Sprint Planning:** na primeira terça-feira de cada sprint, cerca de uma hora, no Google Meet.
 - **Refinamento do backlog:** semanal, cerca de trinta minutos, no Google Meet. É onde a Engenharia de Requisitos acontece no dia a dia.
 - **Sprint Review:** na última terça-feira de cada sprint, cerca de uma hora, com o incremento demonstrado e o retorno incorporado ao backlog. Quando o Instituto não puder estar presente, a avaliação é provisória e a confirmação fica para a validação semanal seguinte (§7.3).
 - **Retrospectiva:** ao final de cada sprint, logo após a Review, cerca de quarenta minutos. As ações de melhoria acumuladas ao longo de cada unidade compõem a seção 11.
+
+Na Sprint 5, que vai de quinta a quinta, a Planning e a Review caem na quinta-feira ([seção 6.1](6-cronograma.md#61-calendario-vigente)).
 
 **Interação com o cliente**
 
@@ -84,20 +89,21 @@ As interlocutoras atuais são **Maria Clara e Maria Eduarda, do núcleo pedagóg
 | [21/09/2026](../gestao/atas/2026-09-21-reuniao-presencial-instituto.md) | Presencial, na sede | Levantamento de processos com a coordenação de execução, a presidência e o núcleo pedagógico: fluxo de compras, contratações e prestação de contas, Matriz de Aquisição e planilhas de projetos em andamento |
 | [28/09/2026](../gestao/atas/2026-09-28-validacao-mvp-instituto.md) | Videoconferência | Validação das histórias e priorização do MVP com o núcleo pedagógico (diretora pedagógica e Maria Eduarda): parcerias e metas como base do MVP, inscrições no MVP, evidências no incremento 2 — ver seção 10.2.8 |
 | [08/10/2026](../gestao/atas/2026-10-08-validacao-mvp-instituto.md) | Videoconferência | Validação do recorte do MVP com Maria Eduarda, do núcleo pedagógico: parcerias e metas, aditivos e auditoria, inscrições, direitos do titular e prestação de contas; evidências no incremento 2 |
+| 29/10/2026 | Videoconferência | Checkpoint com demonstração na homologação, com o núcleo pedagógico: cadastro repetido como aviso na lista de inscritos, acesso administrativo da coordenação de execução e da direção de projetos e pedidos novos — ver seção 10.2.8; a ata é preliminar e entra no site depois da conferência do Instituto |
 
-A tabela acima registra apenas encontros realizados: intenção e convite não entram nela. Dois encontros combinados não ocorreram: o alinhamento técnico sobre a estrutura do banco de dados, previsto na reunião de 08/10 para 15/10/2026, e a reunião de 22/10/2026, remarcada para 29/10/2026. A cadência acordada é **semanal**. Quando um encontro não ocorre, a ausência é registrada, em vez de a cadência ser reescrita: é assim que a tabela acima permanece fiel ao que aconteceu.
+A tabela acima registra apenas encontros realizados: intenção e convite não entram nela. Dois encontros combinados não ocorreram: o alinhamento técnico sobre a estrutura do banco de dados, previsto na reunião de 08/10 para 15/10/2026, e a reunião de 22/10/2026, remarcada para 29/10/2026. A validação prevista para 05/11/2026 foi adiada a pedido do Instituto para a reunião da Sprint 5 ([ATA-2026-11-05](../gestao/atas/2026-11-05-sprint-review-retrospectiva-planning.md), D10). A cadência acordada é **semanal**. Quando um encontro não ocorre, a ausência é registrada, em vez de a cadência ser reescrita: é assim que a tabela acima permanece fiel ao que aconteceu.
 
 ## 7.3 Processo de Validação
 
 A validação dos requisitos e da solução é um processo contínuo e centrado no cliente, estruturado em torno das interações e conversas de validação com as representantes do Instituto No Setor:
 
-1. **Validação da interface em homologação:** a cada fluxo construído, as telas são demonstradas às representantes no ambiente de homologação, que funciona como protótipo evolutivo; os esboços de tela orientam a dupla antes da construção e não substituem essa demonstração.
+1. **Validação da interface em homologação:** a cada fluxo construído, as telas são demonstradas às representantes no ambiente de homologação com dados de teste; os esboços de tela orientam a dupla antes da construção e não substituem essa demonstração.
 2. **Demonstração do MVP funcional mínimo:** com o avanço do desenvolvimento, as iterações e incrementos são demonstrados e exercitados com cenários reais das oficinas e eventos do Instituto, confirmando se o comportamento construído resolve de fato os gargalos de registro e prestação de contas.
 3. **Identificação conjunta de ambiguidades, inconsistências e omissões:** a equipe e as interlocutoras analisam ativamente cada funcionalidade demonstrada para identificar lacunas de regras de negócio, comportamentos inesperados ou fluxos ausentes.
 4. **Registro em ata e refinamento contínuo:** os apontamentos e acordos estabelecidos nas conversas de validação são formalmente sintetizados em ata de reunião, alimentando o refinamento imediato do Product Backlog e o planejamento das sprints seguintes.
-5. **Papel do Product Owner interno:** não valida o trabalho da equipe em nome do cliente; destrava dúvidas operacionais no intervalo entre as conversas de validação. Decisão de domínio, regra de prestação de contas ou alteração de escopo é confirmada com as representantes do Instituto — o alcance dessa avaliação provisória está delimitado no parágrafo seguinte.
+5. **Papel do Product Owner interno:** destrava dúvidas operacionais no intervalo entre as conversas de validação, sem validar o trabalho da equipe em nome do cliente, como delimita o parágrafo seguinte.
 
-**Quando o Instituto não participar:** O Product Owner interno existe para que o trabalho não pare enquanto uma resposta do Instituto não chega: é a mitigação declarada em §7.1 para a ausência de cliente presente. Seu alcance é delimitado — a avaliação feita pelo Product Owner interno é **provisória**: mantém o trabalho em andamento, mas **não confirma regra de domínio nem substitui a validação do cliente**. Um item avaliado apenas por essa via permanece marcado como *pendente de validação externa* até ser confirmado pela área competente do Instituto. Quando a contingência assíncrona for usada — envio do material com prazo de resposta —, é o **registro escrito da resposta** que converte a avaliação provisória em validação.
+**Quando o Instituto não participar:** O Product Owner interno existe para que o trabalho não pare enquanto uma resposta do Instituto não chega: é a mitigação declarada em §7.1 para a ausência de cliente presente. Seu alcance é delimitado — a avaliação feita pelo Product Owner interno é **provisória**: mantém o trabalho em andamento, mas **não confirma regra de domínio nem substitui a validação do cliente**. Decisão de domínio, regra de prestação de contas ou alteração de escopo é confirmada com as representantes do Instituto. Um item avaliado apenas por essa via permanece marcado como *pendente de validação externa* até ser confirmado pela área competente do Instituto. Quando a contingência assíncrona for usada — envio do material com prazo de resposta —, é o **registro escrito da resposta** que converte a avaliação provisória em validação.
 
 A entrada de cada história de usuário em uma sprint e a conclusão de cada item seguem a Definition of Ready e a Definition of Done da [seção 9](../requisitos/9-dor-dod.md).
 

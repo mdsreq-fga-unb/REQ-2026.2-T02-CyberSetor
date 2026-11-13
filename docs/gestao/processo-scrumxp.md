@@ -10,6 +10,7 @@
 | 26/10/2026 | 1.6 | Incremento como a versão integrada da API e do front publicada na homologação; programação em pares descrita como é aplicada | Vinicius Vieira |
 | 09/11/2026 | 1.7 | Registro dos ritos de encerramento da Sprint 4 e de planejamento da Sprint 5 | Maria Eduarda Marques |
 | 11/11/2026 | 1.8 | Impedimento na daily restrito ao que trava o trabalho, com provas avisadas no grupo Geral; documentação sem sessões em par, com a revisão por outra dupla | Maria Eduarda Marques |
+| 13/11/2026 | 1.9 | Exceção da Sprint 5, de quinta a quinta, remetida à seção 6.1; comunicação remetida à seção 7.2, sem repetir as ferramentas | Maria Eduarda Marques |
 
 A equipe CyberSetor adota o **ScrumXP**: o framework Scrum para o gerenciamento do trabalho e as práticas técnicas do eXtreme Programming para a engenharia. Esta página registra como o processo funciona na prática. A fundamentação da escolha está na seção 4 do Documento de Visão.
 
@@ -17,7 +18,7 @@ A equipe CyberSetor adota o **ScrumXP**: o framework Scrum para o gerenciamento 
 
 A composição da equipe, os papéis e o papel do cliente estão na [seção 7.1 do Documento de Visão](../visao/7-equipe-e-cliente.md); a cadência das cerimônias, com frequência, duração e formato, está na [seção 7.2](../visao/7-equipe-e-cliente.md#72-comunicacao). Esta página registra o que é próprio da operação da equipe: como a daily acontece, quais artefatos sustentam o processo, quais práticas de XP estão em uso e como a equipe se comunica.
 
-Sprints de duas semanas, ancoradas nas terças-feiras. A Sprint 0 (18/08 a 08/09) é excepcional, com três semanas, por ser de descoberta e formação da equipe.
+Sprints de duas semanas, ancoradas nas terças-feiras. A Sprint 0 (18/08 a 08/09) é excepcional, com três semanas, por ser de descoberta e formação da equipe, e a Sprint 5 vai de quinta a quinta, de 05/11 a 19/11, porque a Sprint 4 terminou dois dias depois do previsto ([seção 6.1](../visao/6-cronograma.md#61-calendario-vigente)).
 
 ## Como a daily acontece
 
@@ -104,7 +105,7 @@ As reuniões com o Instituto que alimentam a validação estão no [índice de a
 
 ## Comunicação
 
-Comunidade no WhatsApp *CyberSetor - Requisitos*, com três grupos: *Avisos* (comunicados), *CyberSetor - Geral* (discussão e decisões) e *Dailys* (só dailies). Reuniões no Google Meet, com gravação e transcrição de apoio armazenadas no Drive com acesso restrito, e ata sintética oficial elaborada pelo relator, com revisão de dados sensíveis (LGPD). Entregas publicadas neste site; o Google Docs é rascunho.
+As ferramentas (os três grupos da comunidade no WhatsApp, o Google Meet, o GitHub e o Google Docs como rascunho) estão na [seção 7.2 do Documento de Visão](../visao/7-equipe-e-cliente.md#72-comunicacao). As gravações e transcrições são apoio interno restrito; o registro oficial é a ata sintética, conforme a [política de registro, acesso e publicação](atas/index.md#politica-de-registro-acesso-e-publicacao).
 
 ## Referências
 
