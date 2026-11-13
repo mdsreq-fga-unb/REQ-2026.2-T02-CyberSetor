@@ -5,6 +5,7 @@
 | 17/09/2026 | 1.0 | Modelagem inicial do processo AS-IS em BPMN e mapeamento de gargalos operacionais | Rodrigo Henrique e Vinicius Vieira |
 | 17/09/2026 | 1.1 | Inclusão da cadeia de evidências de ER, rastreabilidade bidirecional e segregação LGPD | Rodrigo Henrique |
 | 17/09/2026 | 1.2 | Participantes por data conforme a ata; nomenclatura das características alinhada à seção 2; capacidades previstas no lugar de identificadores ainda não atribuídos; figura com legenda numerada | Vinicius Vieira |
+| 13/11/2026 | 1.3 | Aviso de registro de 17/09/2026: códigos de história anteriores à divisão da seção 10.1, com remissão à cobertura vigente nas seções 8.4.3 e 10.2.6 | Maria Eduarda Marques |
 
 | Campo | Informação |
 | :--- | :--- |
@@ -13,6 +14,9 @@
 | **Rastreabilidade** | OE01, OE02, CP1, CP2, CP7, CP8, Lei 13.019/2014 (MROSC) |
 
 ---
+
+!!! note "Registro de 17/09/2026"
+    O modelo e a rastreabilidade da seção 4 usam os códigos de história da época (HU-01 a HU-06), antes da divisão das histórias na [seção 10.1](10-backlog.md#101-backlog-geral). A cobertura vigente de cada gargalo está na [seção 8.4.3](8-requisitos.md#843-sintese-de-cobertura) e, no MVP e nos incrementos, na [seção 10.2.6](10-backlog.md#1026-mvp-e-incrementos).
 
 ## 1. Evidência da atividade de Engenharia de Requisitos
 
