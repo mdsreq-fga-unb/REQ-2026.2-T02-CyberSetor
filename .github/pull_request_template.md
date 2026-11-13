@@ -19,4 +19,4 @@
 
 ## Revisor
 
-<!-- @usuário de outra dupla; o merge só depois da aprovação e com aviso no grupo -->
+<!-- dois revisores, ao menos um de outra dupla ou o integrante independente; o autor faz o merge logo após a segunda aprovação, sem conflito com a branch de destino -->

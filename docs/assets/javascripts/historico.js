@@ -1,5 +1,5 @@
 /* Filtros da página "Histórico e evolução" (gestao/historico.md, gerada por hooks/historico.py)
-   e dos selos de situação das seções 8 e 10.
+   e dos selos de situação e das fichas das seções 8 e 10.
    Sem dependências. Sem JavaScript, todos os registros continuam visíveis.
    O filtro também vem do endereço: #sprint-4, #unidade-2, #hu-07c, #rf21, #tipo-ata-cliente,
    #documento-8-requisitos-de-software, #autor-vinicius-vieira. */
@@ -153,46 +153,95 @@
     lerEndereco();
   }
 
-  // Selos de situação nas seções 8 e 10: o filtro esconde as linhas de tabela e as
-  // histórias cujo selo não corresponde. Itens sem selo não são afetados.
+  // Selos das seções 8 e 10 e fichas da seção 10.1: cada filtro esconde as linhas de tabela e
+  // as fichas que não correspondem. O filtro de situação lê o selo; destino e épico, a classe
+  // que hooks/fichas.py põe na ficha. Itens sem selo não são afetados pelo filtro de situação.
+  var filtrosPagina = [];
+
+  function aplicarFiltros(itens, contados, nome, status) {
+    itens.forEach(function (el) {
+      el.hidden = !filtrosPagina.every(function (sel) {
+        if (!sel.value) {
+          return true;
+        }
+        return sel.hasAttribute("data-selo-filtro")
+          ? el.getAttribute("data-situacao") === sel.value
+          : el.classList.contains(sel.value);
+      });
+    });
+    if (status) {
+      var ativo = filtrosPagina.some(function (sel) { return sel.value; });
+      var n = contados.filter(function (el) { return !el.hidden; }).length;
+      status.textContent = ativo ? n + " de " + contados.length + " " + nome + "." : "";
+    }
+  }
+
   function iniciarSelos() {
-    var filtro = document.querySelector("[data-selo-filtro]");
-    if (!filtro || filtro.getAttribute("data-pronto")) {
+    filtrosPagina = Array.prototype.slice.call(
+      document.querySelectorAll("[data-selo-filtro], [data-ficha-filtro]"));
+    // Na seção 8, os cartões de requisitos têm filtro próprio (requisitos.js), que lê este seletor.
+    if (!filtrosPagina.length || filtrosPagina[0].getAttribute("data-pronto") ||
+        document.querySelector(".rq-card")) {
       return;
     }
-    filtro.setAttribute("data-pronto", "1");
     var status = document.querySelector("[data-selo-status]");
-    var itens = [];
+    var itens = Array.prototype.slice.call(document.querySelectorAll(".md-content details.ficha"));
     Array.prototype.slice.call(document.querySelectorAll(".md-content .selo")).forEach(function (selo) {
       if (selo.closest(".selos-legenda")) {
         return;
       }
-      var alvo = selo.closest("details") || selo.closest("tr");
-      if (alvo && itens.indexOf(alvo) === -1) {
+      var alvo = selo.closest("details.ficha") || selo.closest("tr");
+      if (!alvo) {
+        return;
+      }
+      if (itens.indexOf(alvo) === -1) {
         itens.push(alvo);
+      }
+      if (!alvo.hasAttribute("data-situacao")) {
         alvo.setAttribute("data-situacao", selo.getAttribute("data-situacao"));
       }
     });
-    // Na seção 10 cada história aparece na tabela e no quadro recolhível: conta pelo quadro.
-    var contados = itens.filter(function (el) { return el.tagName === "DETAILS"; });
-    var nome = contados.length ? "histórias" : "requisitos";
-    if (!contados.length) {
-      contados = itens;
-    }
-    filtro.addEventListener("change", function () {
-      var v = filtro.value;
-      itens.forEach(function (el) {
-        el.hidden = !!v && el.getAttribute("data-situacao") !== v;
+    var fichas = itens.filter(function (el) { return el.tagName === "DETAILS"; });
+    var contados = fichas.length ? fichas : itens;
+    var nome = fichas.length ? "histórias" : "requisitos";
+    filtrosPagina.forEach(function (sel) {
+      sel.setAttribute("data-pronto", "1");
+      sel.addEventListener("change", function () {
+        aplicarFiltros(itens, contados, nome, status);
       });
-      var n = contados.filter(function (el) { return !el.hidden; }).length;
-      status.textContent = v ? n + " de " + contados.length + " " + nome + "." : "";
     });
+  }
+
+  // A âncora de uma história fica antes da ficha: abre a ficha e leva até ela, mesmo que um
+  // filtro a esconda. Vale para os links da própria ficha e para os que vêm de outras páginas.
+  function abrirFicha() {
+    var id = decodeURIComponent(window.location.hash.slice(1));
+    if (id.indexOf("hu-") !== 0) {
+      return;
+    }
+    var ancora = document.getElementById(id);
+    var bloco = ancora && ancora.closest("p");
+    var ficha = bloco && bloco.nextElementSibling;
+    if (!ficha || !ficha.matches("details.ficha")) {
+      return;
+    }
+    if (ficha.hidden) {
+      filtrosPagina.forEach(function (sel) {
+        sel.value = "";
+        sel.dispatchEvent(new Event("change"));
+      });
+    }
+    ficha.open = true;
+    ficha.scrollIntoView();
   }
 
   // Um só ouvinte para a troca de âncora; ele também monta a página se o
   // Material tiver trocado o conteúdo sem avisar pelo document$.
   window.addEventListener("hashchange", function () {
-    window.setTimeout(iniciar, 0);
+    window.setTimeout(function () {
+      iniciar();
+      abrirFicha();
+    }, 0);
   });
 
   // Com navigation.instant, o Material troca o conteúdo sem recarregar a página:
@@ -200,6 +249,7 @@
   function tudo() {
     iniciar();
     iniciarSelos();
+    abrirFicha();
   }
 
   if (window.document$ && typeof window.document$.subscribe === "function") {

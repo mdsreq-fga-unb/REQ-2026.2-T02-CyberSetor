@@ -1,5 +1,8 @@
 # Síntese de Entregas — Unidade 2
 
+!!! info "Registro histórico"
+    Esta página registra a entrega de 13/10/2026; o catálogo de requisitos cresceu depois dela. O recorte vigente do MVP está na [seção 10.2.6](../requisitos/10-backlog.md#1026-mvp-e-incrementos), e o alcance real da validação com o Instituto, na [seção 10.2.8](../requisitos/10-backlog.md#1028-validacao-com-o-instituto).
+
 | Data | Versão | Descrição | Autor(es) |
 | :--- | :--- | :--- | :--- |
 | 19/09/2026 | 1.0 | Registro da entrega do Catálogo de Requisitos e Rastreabilidade (Marco da Sprint 1) | Rodrigo Henrique e Vinicius Vieira |
@@ -9,6 +12,7 @@
 | 08/10/2026 | 1.4 | Atualização para catálogo RF01–RF39 e RNF01–RNF18, checklist concluído, validação integral com o Instituto e estrutura de apresentação em vídeo | Rodrigo Henrique |
 | 13/10/2026 | 2.0 | Incorporação do vídeo de apresentação | Rodrigo Henrique |
 | 26/10/2026 | 2.1 | Situação da validação: MVP confirmado em 08/10 pelo núcleo pedagógico, com o alcance da validação na 10.2.8, pontos em aberto e valores iniciais, atas em conferência; página como registro da entrega de 13/10; histórias da entrega remetidas à correspondência da seção 10.2.2 | Vinicius Vieira |
+| 11/11/2026 | 2.2 | Aviso de registro histórico com remissão ao recorte vigente do MVP (10.2.6) e ao alcance da validação (10.2.8) | Maria Eduarda Marques |
 
 ---
 

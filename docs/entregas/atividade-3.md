@@ -4,6 +4,7 @@
 | :---: | :---: | :--- | :--- |
 | 29/09/2026 | 1.0 | Decisões por apontamento da verificação em pares e da monitoria e evidência da revisão e da validação da lista de requisitos | Equipe CyberSetor |
 | 26/10/2026 | 1.1 | Situação de cada ajuste conferida contra a versão 2.9 da seção 8: aplicado, com o lugar, ou aceito e não aplicado | Vinicius Vieira |
+| 11/11/2026 | 1.2 | Contagem das decisões por apontamento; nota sobre a coluna Rastreabilidade da seção 8 vigente | Maria Eduarda Marques |
 
 A lista de requisitos da [seção 8](../requisitos/8-requisitos.md) foi ajustada a partir de duas revisões externas da versão 2.1: a verificação em pares feita pela equipe SevenSpecs, da mesma turma (46 apontamentos), e o retorno da monitoria (7 pontos). Cada apontamento recebeu uma decisão: Aceito, Parcialmente aceito, Não aceito ou Não aplicável. A versão revisada é a 2.4 da seção 8; para os ajustes que não entraram nela, a tabela indica onde foram aplicados depois ou se continuam aceitos e não aplicados.
 
@@ -83,6 +84,8 @@ Antes da versão 2.0, as propostas de requisitos por característica de produto 
 
 ## Decisões por apontamento
 
+Dos 53 apontamentos da tabela, 37 têm a decisão Aceito e 16, Parcialmente aceito; nenhum Não aceito ou Não aplicável. Em 14 deles a última coluna registra ao menos uma parte como "Aceito, não aplicado".
+
 A última coluna indica o ajuste já presente na lista, com a versão em que entrou ou o requisito em que foi aplicado, ou o ajuste aceito e ainda não aplicado.
 
 | Código avaliado | Código atual | Origem | Apontamento resumido | Decisão | Ajuste ou justificativa |
@@ -150,6 +153,9 @@ Além dos apontamentos recebidos, a lista inteira foi conferida para consistênc
 - Matriz de rastreabilidade dos RFs pelas histórias HU-01 a HU-15 e seus critérios; a história de cada RF fica só na matriz.
 - Pontos em aberto sem situação de execução, com a trava financeira do relatório, a exportação integral e a alteração do período de execução.
 - Tabela de códigos provisórios retirada da seção 8; a correspondência está nesta página.
+
+!!! note "Revisto depois"
+    A seção 8 vigente indica a história de cada RF na coluna Rastreabilidade, além da matriz.
 
 Aceito para depois da versão 2.4, com a situação na seção 8 atual:
 

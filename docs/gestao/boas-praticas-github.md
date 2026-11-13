@@ -8,6 +8,10 @@
 | 07/10/2026 | 2.1 | Título de commit sem acentos; *rebase* para conflitos, sem *squash*; prazo de 24 horas para revisão de pull request | Maria Eduarda Marques |
 | 26/10/2026 | 2.2 | A `web-develop` publica a homologação do front; revisão por integrante de outra dupla ou pelo integrante independente | Vinicius Vieira |
 | 03/11/2026 | 2.3 | Página Histórico e evolução gerada no build a partir das tabelas de versões, do índice de atas e dos planos de sprint; selos de situação dos requisitos e das histórias lidos do quadro | Vinicius Vieira |
+| 09/11/2026 | 2.4 | Duas aprovações por pull request e merge pelo autor logo após a segunda; prazo de 24 horas e limite de 1.000 linhas como referência, sem contar as linhas de teste | Maria Eduarda Marques |
+| 11/11/2026 | 2.5 | Resumo das regras no topo da página; a regra de aprovação e merge fica só na seção Pull requests, com link nas seções Documentação e Código | Maria Eduarda Marques |
+
+**Em resumo.** Toda mudança entra por pull request, com duas aprovações (ao menos uma de outra dupla ou do integrante independente) e merge pelo próprio autor, por *merge commit*. A documentação passa pela `docs-homologacao` e vai à `main` em pontos de publicação marcados com tag (correção do site publicado vai direto à `main`); API e front têm linhas próprias (`api-develop` e `web-develop` para homologação, `api` e `web` para produção). Commits seguem Conventional Commits, sem acentos no título.
 
 Acordo de trabalho da equipe para este repositório. O objetivo é que o histórico de commits e de pull requests seja a evidência do processo, e que ninguém dependa de memória para saber como contribuir.
 
@@ -40,12 +44,12 @@ O repositório não tem proteção de branch, que depende de permissão de admin
 1. Partir da homologação atualizada: `git switch docs-homologacao && git pull && git switch -c docs/<assunto>`.
 2. Commitar em fatias, com `mkdocs build --strict` passando antes do push.
 3. Abrir o pull request com base `docs-homologacao` e `Refs #N` no corpo.
-4. Aguardar a aprovação de um integrante de outra dupla ou do integrante independente, que confere o site compilado: pelo artefato `site` do `build-check` ou com `mkdocs serve` na própria máquina.
-5. Fazer o merge pelo pull request e apagar a branch.
+4. Aguardar as aprovações pedidas em [Pull requests](#pull-requests); quem revisa confere o site compilado: pelo artefato `site` do `build-check` ou com `mkdocs serve` na própria máquina.
+5. O próprio autor faz o merge pelo pull request, como descrito em [Pull requests](#pull-requests), e apaga a branch.
 
 ### Código
 
-A branch de trabalho sai da branch de integração do componente (`api-develop` ou `web-develop`) e volta para ela em pull request, com a verificação de código aprovada e a revisão de um integrante de outra dupla ou do integrante independente. O nome leva o componente (`feat/api/HU-01-cadastro-de-meta`) e a história. O ciclo é de dias, não de semanas: história grande se divide em mais de um pull request. A ida para produção é um pull request de `api-develop` para `api` (ou de `web-develop` para `web`), revisado como os demais.
+A branch de trabalho sai da branch de integração do componente (`api-develop` ou `web-develop`) e volta para ela em pull request, com a verificação de código aprovada e as aprovações e o merge descritos em [Pull requests](#pull-requests). O nome leva o componente (`feat/api/HU-01-cadastro-de-meta`) e a história. O ciclo é de dias, não de semanas: história grande se divide em mais de um pull request. A ida para produção é um pull request de `api-develop` para `api` (ou de `web-develop` para `web`), revisado como os demais.
 
 ### Correções
 
@@ -100,9 +104,11 @@ Co-authored-by: Nome Sobrenome <email-da-conta@exemplo.com>
 
 Toda mudança entra por pull request; edição feita pela interface web direto na `main` é push sem revisão e não é usada. O corpo segue o modelo do repositório: o que mudou, qual seção do template é afetada, confirmação de que o build passou e quem revisa.
 
-A revisão é registrada no próprio pull request: um integrante de outra dupla ou o integrante independente aprova antes do merge, e o autor não faz merge sem essa aprovação. O merge é feito pelo botão do pull request, com o método *merge commit*, que preserva os commits de cada pessoa e as linhas de coautoria. Merge local seguido de push não deixa o registro da revisão. *Squash* não é usado. Conflito com a branch de destino se resolve com *rebase* da branch de trabalho sobre ela, antes do merge.
+A revisão é registrada no próprio pull request: **duas aprovações** antes do merge; ao menos uma, como pede a DoD, de integrante de outra dupla ou do integrante independente. Com a segunda aprovação e sem conflito com a branch de destino, **o próprio autor faz o merge logo em seguida**, sem esperar outra pessoa: o merge não fica concentrado num só integrante e pull request aprovado não se acumula. O merge é feito pelo botão do pull request, com o método *merge commit*, que preserva os commits de cada pessoa e as linhas de coautoria. Merge local seguido de push não deixa o registro da revisão. *Squash* não é usado. Conflito com a branch de destino se resolve com *rebase* da branch de trabalho sobre ela, antes do merge.
 
-Quem é pedido como revisor tem até 24 horas para revisar. Passado o prazo, o autor avisa no grupo da equipe, e a revisão pode ser repassada a outro integrante de outra dupla ou ao integrante independente.
+Quem é pedido como revisor tem como referência 24 horas para revisar, sem ser regra estrita. Se a revisão atrasar e travar outro trabalho, o autor avisa no grupo da equipe, e a revisão pode ser repassada a outro integrante.
+
+**Tamanho.** A referência é de até cerca de 1.000 linhas de mudança por pull request, **sem contar as linhas de teste**, que aumentam o tamanho sem dificultar a revisão. A referência não é regra estrita: quando uma história passa muito disso, ela se divide em mais de um pull request, cada um com uma fatia que funcione sozinha.
 
 ## Integração contínua
 
@@ -130,6 +136,8 @@ mkdocs build --strict # o mesmo teste que roda no CI
 A página [Histórico e evolução](historico.md) não é editada à mão: o `hooks/historico.py` a monta a cada build a partir das tabelas de versões das páginas, do índice de atas e dos planos de sprint. Para que uma mudança apareça nela, basta registrá-la na origem: a linha na tabela de versões da página alterada (em ordem cronológica, data `dd/mm/aaaa`, quatro colunas), a ata no índice ou o plano da sprint. Linha fora desse padrão interrompe o `mkdocs build --strict` com o arquivo e a linha.
 
 Os selos de situação das seções 8 e 10 (a fazer, em andamento, concluído, retirado do escopo) também não são escritos à mão: o `fetch_issues.py` grava a situação de cada história, lida do campo Status do quadro, e o `hooks/selos.py` a põe ao lado de cada história e de cada requisito funcional, que segue as histórias da sua coluna de rastreabilidade. História retirada do escopo é a issue fechada como "não planejada". Sem leitura do quadro, as seções saem sem selos.
+
+As fichas da seção 10.1 também são compostas no build: na ficha se escrevem só a história, o épico, os requisitos, as dependências e os critérios; o `hooks/fichas.py` traz o resto das seções de origem. O `hooks/conferencia.py` interrompe o build quando uma tabela das seções 8 e 10 diverge da fonte do dado e lista o que corrigir.
 
 ## Contribuição individual
 

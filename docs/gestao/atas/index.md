@@ -22,6 +22,8 @@ Registro das reuniões da equipe e das interações com o cliente. Desde 27/08/2
 | [07/10/2026](2026-10-07-sprint-planning.md) | Sprint Planning da Sprint 3 | Meta da Sprint 3 com a Unidade 2 publicada antes de 13/10, MVP confirmado e base técnica pronta; branch de homologação da documentação; novas duplas, com dois épicos cada |
 | [20/10/2026](2026-10-20-sprint-review-retrospectiva-planning.md) | Sprint Review e Retrospectiva da Sprint 3 e Sprint Planning da Sprint 4 | Meta da Sprint 3 parcialmente atingida; histórias com um ator e um resultado; pull requests de até 1.000 linhas e revisão em até 24 horas; meta da Sprint 4 com o MVP completo em homologação até 03/11 |
 | [27/10/2026](2026-10-27-reuniao-equipe.md) | Alinhamento técnico e preparação do checkpoint | Dupla registrada em cada história, com os pull requests; dados fictícios e contas de teste na homologação; checkpoint online em 29/10; uso estruturado de assistentes de IA |
+| [05/11/2026](2026-11-05-sprint-review-retrospectiva-planning.md) | Sprint Review e Retrospectiva da Sprint 4 e Sprint Planning da Sprint 5 | Meta da Sprint 4 parcialmente atingida (73 de 84 critérios do MVP); duas aprovações e integração logo depois; linhas de teste fora do limite dos pull requests; Sprint 5 de 05/11 a 19/11, com a Unidade 3 em 17/11 |
+| [10/11/2026](2026-11-10-reuniao-equipe.md) | Integração dos pull requests, reorganização da documentação e validação com o Instituto | Sem duplicação na documentação, com resumo nas seções longas; fim da programação em par na documentação; impedimento na daily só para o que bloqueia o trabalho; integrante que deixou a equipe retirado da documentação; validação online com o Instituto em 12/11 |
 
 ## Interações com o cliente
 

@@ -58,10 +58,15 @@ extra_css:
 
 extra_javascript:
   - assets/javascripts/historico.js
+  - assets/javascripts/requisitos.js
 
 hooks:
   - hooks/historico.py
   - hooks/selos.py
+  - hooks/fichas.py
+  - hooks/conferencia.py
+  - hooks/ligacoes.py
+  - hooks/cartoes.py
 
 markdown_extensions:
   - abbr
@@ -142,6 +147,7 @@ nav:
               - 15/09 · Equipe: gestao/atas/2026-09-15-reuniao-equipe.md
               - 21/09 · Alinhamento: gestao/atas/2026-09-21-reuniao-equipe.md
               - 27/10 · Equipe: gestao/atas/2026-10-27-reuniao-equipe.md
+              - 10/11 · Equipe: gestao/atas/2026-11-10-reuniao-equipe.md
           - Cerimônias ScrumXP:
               - 08/09 · Sprint Planning 1: gestao/atas/2026-09-08-sprint-planning.md
               - 22/09 · Review e Retrospectiva 1: gestao/atas/2026-09-22-sprint-review-retrospectiva.md
@@ -149,6 +155,7 @@ nav:
               - 06/10 · Review e Retrospectiva 2: gestao/atas/2026-10-06-sprint-review-retrospectiva.md
               - 07/10 · Sprint Planning 3: gestao/atas/2026-10-07-sprint-planning.md
               - 20/10 · Review, Retrospectiva 3 e Planning 4: gestao/atas/2026-10-20-sprint-review-retrospectiva-planning.md
+              - 05/11 · Review, Retrospectiva 4 e Planning 5: gestao/atas/2026-11-05-sprint-review-retrospectiva-planning.md
       - Sprints:
           - Sprint 1:
               - Plano da Sprint 1: gestao/sprints/sprint-1.md
@@ -162,6 +169,9 @@ nav:
           - Sprint 4:
               - Plano da Sprint 4: gestao/sprints/sprint-4.md
               - Tarefas da Sprint 4: gestao/sprints/tarefas-sprint-4.md
+          - Sprint 5:
+              - Plano da Sprint 5: gestao/sprints/sprint-5.md
+              - Tarefas da Sprint 5: gestao/sprints/tarefas-sprint-5.md
   - Entregas:
       - Unidade 1: entregas/unidade-1.md
       - Apontamentos do docente: entregas/debitos-u1.md
