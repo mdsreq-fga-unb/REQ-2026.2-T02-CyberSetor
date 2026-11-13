@@ -9,6 +9,7 @@
 | 17/09/2026 | 1.4 | Registro das sessões de entrevista remetido à seção 7.2 | Equipe CyberSetor |
 | 05/10/2026 | 1.5 | Revisão editorial: formatação direta, sem supressão de técnicas, artefatos ou mapeamento do ScrumXP | Rodrigo Henrique |
 | 26/10/2026 | 1.6 | Observação direta das instalações, dos processos administrativos e das planilhas, com a observação da chamada prevista para o incremento de presença; caso de triangulação; prototipação evolutiva, com a homologação como protótipo avaliado pelo Instituto e os testes visuais como verificação da tela; termos de domínio definidos na seção 8, sem glossário à parte; requisitos que resultaram da observação | Vinicius Vieira |
+| 13/11/2026 | 1.7 | Técnicas de representação, verificação e organização ligadas aos artefatos publicados: Rich Picture, mapa de stakeholders, modelo BPMN, Definition of Ready, matriz de rastreabilidade e atas | Maria Eduarda Marques |
 
 As seis atividades da Engenharia de Requisitos adotadas pela disciplina (elicitação e descoberta, análise e consenso, declaração, representação, verificação e validação, organização e atualização) não são etapas sequenciais. Elas se repetem e se entrelaçam ao longo do ciclo de desenvolvimento. Esta seção associa cada atividade às técnicas que a equipe usará no projeto e mapeia essas técnicas nas fases do ScrumXP.
 
@@ -38,15 +39,15 @@ As seis atividades da Engenharia de Requisitos adotadas pela disciplina (elicita
 
 **Representação**
 
-- **Rich Picture:** Representação sistêmica e informal do cenário atual (livro, §10.5), apresentada na seção 1.3.
-- **Mapa de stakeholders:** Situação dos envolvidos e suas relações com a solução (livro, §§10.4–10.5), apresentada na seção 1.6.
-- **Modelo BPMN:** Diagramação formal do fluxo atual de inscrições e prestação de contas, localizando onde a solução intervém (livro, §10.6.2).
+- **Rich Picture:** Representação sistêmica e informal do cenário atual (livro, §10.5), apresentada na [seção 1.3](1-cenario-atual.md#13-rich-picture-e-mapeamento-do-fluxo-do-problema).
+- **Mapa de stakeholders:** Situação dos envolvidos e suas relações com a solução (livro, §§10.4–10.5), apresentada na [seção 1.6](1-cenario-atual.md#16-mapa-e-matriz-de-stakeholders).
+- **Modelo BPMN:** Diagramação formal do fluxo atual de inscrições e prestação de contas, localizando onde a solução intervém (livro, §10.6.2), publicada no [anexo B1](../requisitos/b1-bpmn-processo-atual.md).
 - **Prototipação evolutiva:** O esboço de tela orienta a dupla e é material de trabalho, não publicado; a versão na homologação é o protótipo avaliado pelo Instituto na demonstração; as referências dos testes visuais, em 360 e 1280 px, são a verificação da tela.
 
 **Verificação e Validação**
 
 - **Revisão cruzada entre duplas:** Verificação de consistência, completude e testabilidade dos artefatos produzidos por outros pares.
-- **Checklist de qualidade:** Lista de inspeção aplicada às histórias antes do desenvolvimento.
+- **Checklist de qualidade:** Lista de inspeção aplicada às histórias antes do desenvolvimento: a [Definition of Ready](../requisitos/9-dor-dod.md#91-definition-of-ready-dor) da seção 9.
 - **Validação do protótipo na homologação:** Percurso da história executado com o Instituto na versão publicada na homologação, para confirmar a adequação do requisito.
 - **Testes de aceitação:** Verificações (automatizadas quando possível) derivadas dos critérios de aceitação.
 - **Demonstração com stakeholders:** Apresentação do incremento funcional na Sprint Review (evento do Scrum), retroalimentando o backlog.
@@ -54,9 +55,9 @@ As seis atividades da Engenharia de Requisitos adotadas pela disciplina (elicita
 **Organização e Atualização**
 
 - **Gestão do Product Backlog:** Repositório único versionado e priorizado no GitHub Projects, refinado semanalmente.
-- **Rastreabilidade bidirecional:** Matriz ligando problemas a objetivos, características, requisitos, histórias e critérios de aceitação.
+- **Rastreabilidade bidirecional:** Matriz ligando problemas a objetivos, características, requisitos, histórias e critérios de aceitação, na [seção 8.4](../requisitos/8-requisitos.md#84-matriz-de-rastreabilidade-bidirecional).
 - **Controle de versões:** Tabelas históricas no início de cada documento rastreando evolução temporal.
-- **Registro de decisões:** Atas sintéticas com controle de dados sensíveis (LGPD) publicadas como evidência.
+- **Registro de decisões:** Atas sintéticas com controle de dados sensíveis (LGPD) publicadas como evidência, no [índice de atas](../gestao/atas/index.md).
 
 ## 5.2 Engenharia de Requisitos e o ScrumXP
 
