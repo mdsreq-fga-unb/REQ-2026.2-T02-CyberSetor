@@ -131,6 +131,8 @@ O fluxo de branches por componente e os pontos de publicação do site, em vigor
 
 Referência de capacidade: cerca de 2 horas por dia por integrante 🟨, como na Sprint 2. Caio e Maria Eduarda tiveram provas em 08/10.
 
+**Nota de reorganização (saída de integrante em 13/10/2026):** com a saída de Lucas de Paula Leal, a equipe passou a cinco integrantes e optou por **manter as duas duplas já consolidadas** (**Maria Eduarda Marques e Caio Martins**; **Daniel Batista e Rodrigo Henrique Donato**), enquanto o Scrum Master (**Vinicius Vieira**) deixou de atuar em dupla fixa e passou a **apoiar as duas duplas** de forma transversal (infraestrutura, integração, base técnica e suporte nos épicos *Pessoas* e *Presença em campo*), em vez de atuar como integrante isolado.
+
 ---
 
 ## 6. Product Backlog e Sprint Backlog
@@ -209,7 +211,7 @@ A ordem é a da seção 10.2.6, confirmada pelo Instituto em 08/10. Dentro de ca
 
 | Dupla | Integrantes | Itens | Fundamento da alocação |
 |---|---|---|---|
-| **Pessoas, Presença em campo e coordenação** | Vinicius Vieira | U01, U09, U10, B01 a B05, H03, P02 a P04 | Scrum Master responde pela integração, pela publicação e pela infraestrutura |
+| **Apoio transversal às duplas, coordenação e épicos Pessoas e Presença em campo** | Vinicius Vieira | U01, U09, U10, B01 a B05, H03, P02 a P04 | Scrum Master responde pela integração, pela publicação e pela infraestrutura, atuando em apoio às duas duplas após a saída de integrante |
 | **Relatório, Atividade e interlocução** | Maria Eduarda Marques · Caio Martins | U04, P03 (Maria Eduarda); U02, U07 (Caio); H01 nos seus épicos | Product Owner conduz a conferência com o Instituto; Caio responde pela seção 4 e pelo cronograma |
 | **Requisito e meta, Evidência** | Daniel Batista · Rodrigo Henrique Donato | U03, U06 (Rodrigo); U08 aba Requisitos (Daniel); H01 nos seus épicos; H02 | Donos do primeiro épico da construção; primeira fatia vertical na HU-01 |
 | **Equipe** | — | U05; revisão de pull request em até 24 horas por integrante de outra dupla, com aviso no grupo | Decisões de 06/10 e 07/10 |
@@ -256,7 +258,7 @@ A ordem é a da seção 10.2.6, confirmada pelo Instituto em 08/10. Dentro de ca
 | Tags de entrega automáticas (ata de 07/10, D4) | Sem origem declarada nem pull request; tratada como proposta a avaliar depois da Unidade 2, fora desta sprint | Proposta |
 | Sub-tarefas da base técnica (ata de 07/10, D9) | Cinco sub-tarefas abertas, uma concluída (linhas de código); donos por dupla definidos no refinamento | Abertas em 09/10 |
 | Ajustes restantes da lista de requisitos (Atividade 3) | Só o já decidido entra antes de 13/10; lacunas dos documentos-modelo vão ao Instituto por escrito | 🔧 A confirmar |
-| Saída de integrante | Lucas de Paula Leal deixou a equipe em 13/10/2026; a equipe passa a cinco integrantes. Vinicius segue sem dupla nos épicos Pessoas e Presença em campo; aba Entregas da revisão editorial e dojo pendente a decidir na Review 3 | Registrado em 19/10 |
+| Saída de integrante | Lucas de Paula Leal deixou a equipe em 13/10/2026; a equipe passa a cinco integrantes, mantendo as duas duplas fixas (Maria Eduarda e Caio; Daniel e Rodrigo) com o Scrum Master (Vinicius) apoiando ambas as duplas e conduzindo os épicos Pessoas e Presença em campo e a base técnica | Registrado em 19/10; nota detalhada na revisão de 15/11 |
 
 ---
 
@@ -328,3 +330,4 @@ Meta **parcialmente atingida** (ata de 20/10/2026, D1): a Unidade 2 foi publicad
 | 1.0 | 09/10/2026 | Emissão com o deliberado na Sprint Planning de 07/10 e nos encaminhamentos de 08/10 (confirmação do MVP) e 09/10 (fluxo de branches, linhas de código, segundo épico de cada dupla): meta, calendário, Sprint Backlog em três partes, priorização, alocação, riscos e critérios de aceitação | Vinicius |
 | 1.1 | 19/10/2026 | Saída de um integrante: perfil da equipe, Sprint Backlog, alocação e segundo épico atualizados para cinco integrantes; risco R07 substituído pelo de capacidade reduzida | Maria Eduarda Marques |
 | 1.2 | 26/10/2026 | Resultado da Sprint: critérios de aceitação e itens do Sprint Backlog avaliados a partir da Review de 20/10 | Vinicius Vieira |
+| 1.3 | 15/11/2026 | Nota de reorganização da equipe após saída de integrante em 13/10/2026: manutenção das duas duplas e atuação do Scrum Master em apoio a ambas (ata de 12/11, D2/A3; #185) | Daniel Batista |

@@ -30,7 +30,8 @@ ROTULO = {
     "m": {"a-fazer": "A fazer", "em-andamento": "Em andamento", "concluido": "Concluído", "retirado": "Retirado do escopo"},
     "f": {"a-fazer": "A fazer", "em-andamento": "Em andamento", "concluido": "Concluída", "retirado": "Retirada do escopo"},
 }
-LINHA_RF = re.compile(r"^(\| <a id=\"rf\d+\"></a>\*\*RF\d+\*\*)(.*)$")
+LINHA_RF = re.compile(r"^(\| <a id=\"rf\d+\"></a>\*\*(RF\d+)\*\*)(.*)$")
+RF_MATRIZ = re.compile(r"^\|\s*\*\*(RF\d+)\*\*")
 NEGRITO_HU = re.compile(r"\*\*(HU-\d{2}[a-z]?)\*\*")
 TITULO_HU = re.compile(r'^(\?\?\?\+? note)( "(HU-\d{2}[a-z]?) · [^"]*)"\s*$')
 HU = re.compile(r"HU-\d{2}[a-z]?")
@@ -78,6 +79,12 @@ def legenda(dados: dict, genero: str, quais: str) -> str:
 
 
 def selar_requisitos(md: str, dados: dict) -> str:
+    hus_por_rf: dict[str, list[str]] = {}
+    for linha in md.splitlines():
+        mm = RF_MATRIZ.match(linha)
+        if mm:
+            hus_por_rf[mm.group(1)] = HU.findall(linha)
+
     saida, legenda_feita = [], False
     for linha in md.splitlines():
         if not legenda_feita and linha.startswith("## 8.2"):
@@ -86,9 +93,10 @@ def selar_requisitos(md: str, dados: dict) -> str:
             continue
         m = LINHA_RF.match(linha)
         if m:
-            sit = situacao_do_rf(HU.findall(re.split(r"(?<!\\)\|", linha)[-2]), dados)
+            historias = HU.findall(re.split(r"(?<!\\)\|", linha)[-2]) or hus_por_rf.get(m.group(2), [])
+            sit = situacao_do_rf(historias, dados)
             if sit:
-                linha = f"{m.group(1)} {_selo(sit, 'm')}{m.group(2)}"
+                linha = f"{m.group(1)} {_selo(sit, 'm')}{m.group(3)}"
         saida.append(linha)
     return "\n".join(saida)
 

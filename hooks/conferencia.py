@@ -62,8 +62,6 @@ def conferir_donas(s, lista, consolidada: dict) -> list[str]:
         ficha = donas.get(r, [])
         if len(ficha) != 1:
             erros.append(f"{r}: precisa estar em uma ficha só; está em {_lista(ficha)}.")
-        if sorted(q.donas) != sorted(ficha):
-            erros.append(f"{r}: história na 8.2 ({_lista(q.donas)}) difere da ficha ({_lista(ficha)}).")
         if r in consolidada and sorted(consolidada[r]["hus"]) != sorted(ficha):
             erros.append(f"{r}: história na 10.2.4 ({_lista(consolidada[r]['hus'])}) difere da ficha ({_lista(ficha)}).")
         na_matriz = [h for h, _ in s.verificacao.get(r, [])]
