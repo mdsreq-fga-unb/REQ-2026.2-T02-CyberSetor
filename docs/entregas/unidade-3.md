@@ -5,6 +5,7 @@
 | 16/11/2026 | 1.0 | Registro da entrega da Unidade 3: itens pedidos pelo docente com o lugar de cada um no site, evidências dos objetivos da unidade e situação na data da entrega | Maria Eduarda Marques |
 | 16/11/2026 | 1.1 | Entrega durante a Sprint 5; revisão por dois integrantes desde 05/11; reunião de 12/11 na 10.2.8; medições do RNF12 e do RNF13; acesso à página das sprints | Vinicius Vieira |
 | 16/11/2026 | 1.2 | Capturas das telas do ambiente de homologação com dados de teste, cada uma com a história que atende (ATA-2026-11-12, A5 e A14) | Vinicius Vieira |
+| 16/11/2026 | 1.3 | Evidências do processo remetidas à página Como trabalhamos | Vinicius Vieira |
 
 ---
 
@@ -33,7 +34,7 @@ Esta página registra a entrega de 17/11/2026, durante a [Sprint 5](../gestao/sp
 | Escopo do produto (backlog, itens de trabalho, mapa) | [10.1 Backlog geral](../requisitos/10-backlog.md#101-backlog-geral), [B1 — processo atual em BPMN](../requisitos/b1-bpmn-processo-atual.md) e o [quadro do projeto](https://github.com/orgs/mdsreq-fga-unb/projects/121) |
 | Escopo priorizado e entregas definidas (MVP) | [10.2 Priorização e MVP](../requisitos/10-backlog.md#102-priorizacao-do-backlog-geral-e-mvp), [10.2.6 MVP e incrementos](../requisitos/10-backlog.md#1026-mvp-e-incrementos) e [6.3 Alcance do MVP](../visao/6-cronograma.md#63-alcance-do-mvp-e-o-que-fica-fora) |
 | DoR e DoD | [9.1 DoR](../requisitos/9-dor-dod.md#91-definition-of-ready-dor) e [9.2 DoD](../requisitos/9-dor-dod.md#92-definition-of-done-dod) |
-| Evidências de execução do processo (ESw e ER) | [Processo e ritos](../gestao/processo-scrumxp.md), [atas](../gestao/atas/index.md), [sprints](../gestao/sprints/index.md), com o plano e as tarefas de cada uma, [registro das dailies](../gestao/dailies.md), [seção 4](../visao/4-estrategia-esw.md) (ESw) e [seção 5](../visao/5-engenharia-requisitos.md) (ER) |
+| Evidências de execução do processo (ESw e ER) | [Como trabalhamos](../gestao/como-trabalhamos.md) (ciclo, [sprints](../gestao/como-trabalhamos.md#sprints) com o plano e as tarefas de cada uma, [dailies](../gestao/como-trabalhamos.md#dailies)), [reuniões](../gestao/atas/index.md), [seção 4](../visao/4-estrategia-esw.md) (ESw) e [seção 5](../visao/5-engenharia-requisitos.md) (ER) |
 | Rastreabilidade (problema, OG, OEs, CPs, RFs e RNFs, declarações) | [8.4 Matriz de rastreabilidade](../requisitos/8-requisitos.md#84-matriz-de-rastreabilidade-bidirecional), [B1 — gargalos e capacidades](../requisitos/b1-bpmn-processo-atual.md#4-rastreabilidade-dos-gargalos-as-capacidades-previstas) e as fichas das histórias na [seção 10.1](../requisitos/10-backlog.md#101-backlog-geral) |
 | Cumprimento e atualização do planejamento (cronograma) | [6.1 Calendário vigente](../visao/6-cronograma.md#61-calendario-vigente), [6.6 Marcos da disciplina](../visao/6-cronograma.md#66-marcos-da-disciplina) e os critérios de aceitação de cada plano de sprint |
 | Site do projeto (GitHub Pages) | Este site, publicado a partir da branch `main` com a tag `u3-2026-11-17` |
