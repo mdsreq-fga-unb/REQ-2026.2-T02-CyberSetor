@@ -11,6 +11,7 @@
 | 09/11/2026 | 1.7 | Registro dos ritos de encerramento da Sprint 4 e de planejamento da Sprint 5 | Maria Eduarda Marques |
 | 11/11/2026 | 1.8 | Impedimento na daily restrito ao que trava o trabalho, com provas avisadas no grupo Geral; documentação sem sessões em par, com a revisão por outra dupla | Maria Eduarda Marques |
 | 13/11/2026 | 1.9 | Exceção da Sprint 5, de quinta a quinta, remetida à seção 6.1; comunicação remetida à seção 7.2, sem repetir as ferramentas | Maria Eduarda Marques |
+| 16/11/2026 | 1.10 | Homologação só com dados de teste, com remissão à política de dados pessoais da 2.6 | Maria Eduarda Marques |
 
 A equipe CyberSetor adota o **ScrumXP**: o framework Scrum para o gerenciamento do trabalho e as práticas técnicas do eXtreme Programming para a engenharia. Esta página registra como o processo funciona na prática. A fundamentação da escolha está na seção 4 do Documento de Visão.
 
@@ -66,7 +67,7 @@ Cada história é aberta pelo formulário de história do repositório, que pede
 | Homologação | [cybersetor-web.netvitae.org](https://cybersetor-web.netvitae.org) · API e documentação em [cybersetor-api.netvitae.org/docs](https://cybersetor-api.netvitae.org/docs) | linhas `web-develop` e `api-develop` |
 | Produção | publicada na estabilização ([seção 6.4](../visao/6-cronograma.md#64-estabilizacao-implantacao-e-transferencia)) | linhas `web` e `api` |
 
-O acesso à homologação é por conta criada pela administração do sistema, sem cadastro aberto. Ela guarda dados de teste e, nas validações com o Instituto, dados reais minimizados de um projeto ([seção 6.5](../visao/6-cronograma.md#65-validacao-com-dados-reais)).
+O acesso à homologação é por conta criada pela administração do sistema, sem cadastro aberto. Ela guarda só dados de teste, inclusive nas validações com o Instituto; o motivo e quando os dados reais entram estão na [política de dados pessoais](../visao/2-solucao-proposta.md#dados-de-teste) da seção 2.6.
 
 ## Registro dos ritos
 

@@ -14,6 +14,7 @@
 | 05/11/2026 | 1.9 | Atendimento aos apontamentos da monitoria (#22): remoção da linha de aplicação no contexto do quadro comparativo | Rodrigo Henrique |
 | 11/11/2026 | 1.10 | Resumo no início da 4.1; validações com o Instituto remetidas à cadência da seção 7.2; incremento disponibilizado no ambiente de homologação | Maria Eduarda Marques |
 | 13/11/2026 | 1.11 | "Ambiente de homologação com dados de teste" no lugar de "protótipo evolutivo" no quadro comparativo (ATA-2026-11-12, D1) | Maria Eduarda Marques |
+| 16/11/2026 | 1.12 | Citações no sistema numérico das referências | Maria Eduarda Marques |
 
 A partir do cenário diagnosticado na Seção 1 e da solução proposta na Seção 2, a equipe CyberSetor estabeleceu as decisões de estratégia de engenharia de software para o atendimento ao Instituto No Setor nas três camadas metodológicas distinguidas pelo referencial da disciplina: **abordagem**, **ciclo de vida** e **processo**.
 
@@ -30,7 +31,7 @@ A estratégia para o projeto adota o **ScrumXP** como processo de desenvolviment
 | **Ágil** | **Ágil** | **ScrumXP** |
 
 ### Abordagem: Ágil
-A abordagem Ágil valoriza indivíduos e interações mais que processos e ferramentas, software em funcionamento mais que documentação abrangente, e colaboração com o cliente mais que negociação de contratos (BECK et al., 2001). Ao equilibrar esses valores sem desconsiderar a importância de processos sustentáveis e de documentação viva e suficiente, essa abordagem mostra-se ideal para a adaptação rápida às demandas em campo no Setor Comercial Sul (SCS).
+A abordagem Ágil valoriza indivíduos e interações mais que processos e ferramentas, software em funcionamento mais que documentação abrangente, e colaboração com o cliente mais que negociação de contratos ([16](../referencias.md#ref-16)). Ao equilibrar esses valores sem desconsiderar a importância de processos sustentáveis e de documentação viva e suficiente, essa abordagem mostra-se ideal para a adaptação rápida às demandas em campo no Setor Comercial Sul (SCS).
 
 **Por que escolher a Abordagem Ágil?**
 
@@ -40,7 +41,7 @@ A abordagem Ágil valoriza indivíduos e interações mais que processos e ferra
 - **Equilíbrio Metodológico frente à Abordagem Preditiva ou Híbrida:** Adequa o esforço de especificação à capacidade produtiva de uma equipe de cinco membros, mantendo a documentação viva, rastreável e focada na entrega de valor funcional direto para a organização.
   
 ### Ciclo de Vida: Ágil
-O Ciclo de Vida Ágil estrutura o desenvolvimento em ciclos temporais curtos, regulares e de duração fixa (timeboxes/sprints quinzenais). Cada ciclo repete iterativamente todas as atividades essenciais da engenharia de software — elicitação, análise, projeto, codificação e testes —, gerando ao final de cada período um incremento funcional utilizável, testado e de valor demonstrável (MARSICANO, 2026).
+O Ciclo de Vida Ágil estrutura o desenvolvimento em ciclos temporais curtos, regulares e de duração fixa (timeboxes/sprints quinzenais). Cada ciclo repete iterativamente todas as atividades essenciais da engenharia de software — elicitação, análise, projeto, codificação e testes —, gerando ao final de cada período um incremento funcional utilizável, testado e de valor demonstrável ([1](../referencias.md#ref-1)).
 
 Conforme o referencial da disciplina, o ciclo de vida ágil é um *superset* que engloba nativamente as dimensões iterativa e incremental, operando-as sob ritos temporais estritos, feedback contínuo em ciclos curtos e adaptação constante ao contexto real do parceiro.
 
@@ -51,7 +52,7 @@ Conforme o referencial da disciplina, o ciclo de vida ágil é um *superset* que
 - **Mitigação Precoce de Riscos Sociotécnicos:** Expõe precocemente desafios de integração técnica, usabilidade e modelagem de regras de negócio, permitindo ajustar a arquitetura a cada sprint, sem retrabalho tardio.
 
 ### Processo: ScrumXP
-O **ScrumXP** adotado pelo projeto é um **processo adaptado pela equipe**, que integra o *framework* de governança ágil **Scrum** (SCHWABER; SUTHERLAND, 2020) às práticas rigorosas de engenharia de software do **eXtreme Programming (XP)** (BECK; ANDRES, 2004; MARSICANO, 2026). Como o Scrum é intencionalmente incompleto — fornecendo a estrutura de papéis, eventos (cerimônias) e artefatos de gestão sem prescrever métodos de codificação —, a equipe complementa esse framework com as práticas técnicas do XP (programação em pares, integração contínua, testes de aceitação e refatoração), assegurando a sustentabilidade da base de código.
+O **ScrumXP** adotado pelo projeto é um **processo adaptado pela equipe**, que integra o *framework* de governança ágil **Scrum** ([18](../referencias.md#ref-18)) às práticas rigorosas de engenharia de software do **eXtreme Programming (XP)** ([17](../referencias.md#ref-17); [1](../referencias.md#ref-1)). Como o Scrum é intencionalmente incompleto — fornecendo a estrutura de papéis, eventos (cerimônias) e artefatos de gestão sem prescrever métodos de codificação —, a equipe complementa esse framework com as práticas técnicas do XP (programação em pares, integração contínua, testes de aceitação e refatoração), assegurando a sustentabilidade da base de código.
 
 #### Etapas do ScrumXP para o Projeto
 
@@ -121,7 +122,7 @@ A tabela a seguir compara o **OpenUP** (processo ágil baseado em arquitetura do
 O Scrum isolado fornece governança e comunicação com stakeholders, mas é agnóstico em relação à engenharia de software, o que pode comprometer a sustentabilidade técnica do produto. Por outro lado, o XP provê práticas técnicas e disciplina de desenvolvimento, mas carece de uma estrutura de papéis organizacionais amplamente compreendida por clientes externos. O **ScrumXP** combina os dois: a cadência de gestão do Scrum e as práticas de código do XP.
 
 ### Coerência com os Valores da Engenharia de Requisitos
-Conforme registrado por Marsicano (2026, §5.4.1), os sete valores fundamentais da Engenharia de Requisitos adotados na disciplina — **Comunicação, Feedback, Simplicidade, Coragem, Respeito, Compromisso e Confiança** — são adaptações diretas do eXtreme Programming e do Scrum (acrescidos do valor Confiança). Adotar o ScrumXP mantém o processo da equipe alinhado a essa base conceitual.
+Conforme registrado por Marsicano ([1](../referencias.md#ref-1), §5.4.1), os sete valores fundamentais da Engenharia de Requisitos adotados na disciplina — **Comunicação, Feedback, Simplicidade, Coragem, Respeito, Compromisso e Confiança** — são adaptações diretas do eXtreme Programming e do Scrum (acrescidos do valor Confiança). Adotar o ScrumXP mantém o processo da equipe alinhado a essa base conceitual.
 
 ### Pilares de Decisão para o Projeto
 
