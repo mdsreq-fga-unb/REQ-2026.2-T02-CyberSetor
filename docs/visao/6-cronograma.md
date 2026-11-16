@@ -13,7 +13,7 @@
 | 26/10/2026 | 1.8 | Prestação de contas com o resultado alcançado; orientação de enquadramento (RF45) no incremento de evidências; teste de restauração do banco e dos arquivos juntos; Sprint 3 com a meta do seu plano; histórias previstas por sprint e ligação aos planos das sprints; características da Sprint 4 e da Sprint 5 pelos requisitos que entram; alcance do MVP remetido à seção 10.2.6; exportação do projeto (RF38) e cópia integral dos dados (RNF19) na transferência, com o que avança e o que depende de responsável nomeado pelo Instituto; CP5 na Sprint 4 com RF22 a RF27, sem o histórico de participação (RF21); manual técnico de operação na transferência; políticas de cópia de segurança e de transferência remetidas à seção 2.6, ficando na 6.4 as atividades; checkpoint de 29/10 pelas histórias publicadas até a véspera | Vinicius Vieira |
 | 10/11/2026 | 1.9 | Período real das Sprints 4 e 5 (ATA-2026-11-05); Sprint 5 com o fechamento do MVP em código e a Unidade 3; incrementos 2 e 3 fora das sprints da disciplina, salvo folga; histórias da Sprint 4 pela seção 10.2.6, sem repetir a contagem; momentos de validação com a reunião remarcada para 12/11 | Vinicius Vieira |
 | 13/11/2026 | 1.10 | Resumo no início da seção; ritos da Sprint 5 na quinta-feira, na explicação das datas que coincidem | Maria Eduarda Marques |
-| 16/11/2026 | 1.11 | Momentos de validação com dados de teste até a formalização do tratamento de dados, com remissão à política da 2.6; checkpoint de 29/10 realizado com dados fictícios | Maria Eduarda Marques |
+| 16/11/2026 | 1.11 | Momentos de validação com dados de teste até a formalização do tratamento de dados, com remissão à política da 2.6; checkpoint de 29/10 previsto com um projeto real e realizado com dados fictícios; título da 6.5 de "Validação com dados reais" para "Validação com o Instituto" | Maria Eduarda Marques |
 
 **Em resumo.** Uma sprint de descoberta e seis sprints de cerca de duas semanas, de 18/08 a 01/12, e uma margem até 08/12. O MVP, recortado na [seção 10.2.6](../requisitos/10-backlog.md#1026-mvp-e-incrementos), fecha em código na Sprint 5, junto com a Unidade 3 (17/11); a Sprint 6 estabiliza, implanta, treina e transfere, sem funcionalidade nova. A validação com o Instituto acontece em cinco momentos (6.5), e não só no fim.
 
@@ -80,13 +80,13 @@ A Sprint 6 e a margem final são tempo sem funcionalidade nova. As políticas de
 
 Quem recebe o sistema e quem custeia a manutenção após dezembro é definido com a direção do Instituto. Sem essa definição, avançam a documentação de operação, o manual de usuário e o manual técnico de operação, o inventário da infraestrutura, o ensaio de restauração e a cópia integral dos dados. Ficam bloqueados até haver responsável nomeado pelo Instituto a entrega das credenciais, o domínio e o certificado no nome do Instituto, a revogação dos acessos da equipe e o aceite formal.
 
-## 6.5 Validação com dados reais
+## 6.5 Validação com o Instituto
 
 A validação não se concentra na última sprint. Há cinco momentos, cada um com objeto próprio. Até a formalização do tratamento de dados com o Instituto, eles usam dados de teste, pelo motivo explicado na [política de dados pessoais](2-solucao-proposta.md#dados-de-teste) da seção 2.6:
 
 1. **Sprint 1 (21/09):** workshop de requisitos com a coordenação do Instituto, para apresentar a lista de requisitos, explicar o método de priorização e resolver divergências antes da entrega de 22/09.
 2. **Sprint 2 (cerca de 29/09):** modelo de meta e esboço de relatório sobre um projeto real, com a Diretoria de Projetos e o núcleo pedagógico — prevista na ata de 08/09.
-3. **Sprint 4 (29/10):** checkpoint com um projeto real e dados minimizados, sobre as histórias publicadas na homologação até a véspera: do instrumento à meta e da modalidade à atividade e à abertura da inscrição. Realizado com dados fictícios e contas de teste ([ATA-2026-10-27](../gestao/atas/2026-10-27-reuniao-equipe.md), D2).
+3. **Sprint 4 (29/10):** checkpoint sobre as histórias publicadas na homologação até a véspera: do instrumento à meta e da modalidade à atividade e à abertura da inscrição. Previsto com um projeto real e dados minimizados; realizado com dados fictícios e contas de teste ([ATA-2026-10-27](../gestao/atas/2026-10-27-reuniao-equipe.md), D2).
 4. **Sprint 5:** reunião de validação com o Instituto, adiada de 05/11 a pedido dele, com roteiro e slides para os testes na homologação; em 12/11, das 16h às 17h, online (ATA-2026-11-05, D7 e D10; ATA-2026-11-10).
 5. **Sprint 6:** validação final em uso real pelas áreas competentes, durante o treinamento.
 

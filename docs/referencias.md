@@ -5,9 +5,9 @@
 | 05/10/2026 | 1.1 | Inclusão das fontes citadas nas seções 1, 2, 3 e 8 (legislação, taxonomias de requisitos não funcionais e acessibilidade); fontes agrupadas por tema | Maria Eduarda Marques |
 | 15/10/2026 | 1.2 | Inclusão das fontes do Manifesto Ágil e Extreme Programming citadas na seção 4 | Caio Martins |
 | 26/10/2026 | 1.3 | Inclusão do Decreto nº 8.726/2016 e do Decreto distrital nº 37.843/2016, citados na regra de apuração do resultado das metas (seção 8.7), e da NIST SP 800-52 Rev. 2, citada na segurança das comunicações (RNF03) | Vinicius Vieira |
-| 16/11/2026 | 1.4 | Referências numeradas no sistema numérico da ABNT, com âncora por número para as citações do texto (ATA-2026-11-12, D7) | Maria Eduarda Marques |
+| 16/11/2026 | 1.4 | Referências numeradas no sistema numérico da ABNT, com âncora por número para as citações do texto (ATA-2026-11-12, D7); numeração pelos grupos por tema, com a renumeração pela ordem de citação registrada como pendência | Maria Eduarda Marques |
 
-Fontes citadas no site, com data de acesso para as consultadas on-line. As referências seguem o sistema numérico da ABNT: cada fonte tem um número, e o texto cita o número entre parênteses, com link para a fonte nesta página.
+Fontes citadas no site, com data de acesso para as consultadas on-line. As referências seguem o sistema numérico da ABNT: cada fonte tem um número, e o texto cita o número entre parênteses, com link para a fonte nesta página. Nesta versão, a numeração segue os grupos por tema; a renumeração pela ordem da primeira citação no texto, como pede a NBR 10520, fica para depois da entrega da Unidade 3 🔧.
 
 ## Disciplina
 

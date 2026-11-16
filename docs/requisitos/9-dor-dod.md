@@ -14,7 +14,7 @@
 
 ---
 
-Conforme o template da disciplina ([3](../referencias.md#ref-3)), a Definition of Ready (DoR, definição de preparado) é o acordo entre o time e o Product Owner sobre quando uma história de usuário está preparada para entrar em uma sprint: clara, bem declarada e sem impedimento para ser desenvolvida. A Definition of Done (DoD, definição de pronto) é o compromisso do time com a qualidade do que entrega: descreve quando um item está concluído, e o item que não a atende não é apresentado na Sprint Review e volta ao Product Backlog (Marsicano, 2026; Schwaber; Sutherland, 2020). As duas apoiam a verificação e a validação de requisitos descritas na [seção 5](../visao/5-engenharia-requisitos.md): a DoR antes do desenvolvimento, a DoD na conclusão de cada item.
+Conforme o template da disciplina ([3](../referencias.md#ref-3)), a Definition of Ready (DoR, definição de preparado) é o acordo entre o time e o Product Owner sobre quando uma história de usuário está preparada para entrar em uma sprint: clara, bem declarada e sem impedimento para ser desenvolvida. A Definition of Done (DoD, definição de pronto) é o compromisso do time com a qualidade do que entrega: descreve quando um item está concluído, e o item que não a atende não é apresentado na Sprint Review e volta ao Product Backlog ([1](../referencias.md#ref-1); [18](../referencias.md#ref-18)). As duas apoiam a verificação e a validação de requisitos descritas na [seção 5](../visao/5-engenharia-requisitos.md): a DoR antes do desenvolvimento, a DoD na conclusão de cada item.
 
 ## 9.1 Definition of Ready (DoR)
 

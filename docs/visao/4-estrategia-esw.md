@@ -52,7 +52,7 @@ Conforme o referencial da disciplina, o ciclo de vida ágil é um *superset* que
 - **Mitigação Precoce de Riscos Sociotécnicos:** Expõe precocemente desafios de integração técnica, usabilidade e modelagem de regras de negócio, permitindo ajustar a arquitetura a cada sprint, sem retrabalho tardio.
 
 ### Processo: ScrumXP
-O **ScrumXP** adotado pelo projeto é um **processo adaptado pela equipe**, que integra o *framework* de governança ágil **Scrum** ([18](../referencias.md#ref-18)) às práticas rigorosas de engenharia de software do **eXtreme Programming (XP)** (BECK; ANDRES, 2004; MARSICANO, 2026). Como o Scrum é intencionalmente incompleto — fornecendo a estrutura de papéis, eventos (cerimônias) e artefatos de gestão sem prescrever métodos de codificação —, a equipe complementa esse framework com as práticas técnicas do XP (programação em pares, integração contínua, testes de aceitação e refatoração), assegurando a sustentabilidade da base de código.
+O **ScrumXP** adotado pelo projeto é um **processo adaptado pela equipe**, que integra o *framework* de governança ágil **Scrum** ([18](../referencias.md#ref-18)) às práticas rigorosas de engenharia de software do **eXtreme Programming (XP)** ([17](../referencias.md#ref-17); [1](../referencias.md#ref-1)). Como o Scrum é intencionalmente incompleto — fornecendo a estrutura de papéis, eventos (cerimônias) e artefatos de gestão sem prescrever métodos de codificação —, a equipe complementa esse framework com as práticas técnicas do XP (programação em pares, integração contínua, testes de aceitação e refatoração), assegurando a sustentabilidade da base de código.
 
 #### Etapas do ScrumXP para o Projeto
 
@@ -122,7 +122,7 @@ A tabela a seguir compara o **OpenUP** (processo ágil baseado em arquitetura do
 O Scrum isolado fornece governança e comunicação com stakeholders, mas é agnóstico em relação à engenharia de software, o que pode comprometer a sustentabilidade técnica do produto. Por outro lado, o XP provê práticas técnicas e disciplina de desenvolvimento, mas carece de uma estrutura de papéis organizacionais amplamente compreendida por clientes externos. O **ScrumXP** combina os dois: a cadência de gestão do Scrum e as práticas de código do XP.
 
 ### Coerência com os Valores da Engenharia de Requisitos
-Conforme registrado por Marsicano (2026, §5.4.1), os sete valores fundamentais da Engenharia de Requisitos adotados na disciplina — **Comunicação, Feedback, Simplicidade, Coragem, Respeito, Compromisso e Confiança** — são adaptações diretas do eXtreme Programming e do Scrum (acrescidos do valor Confiança). Adotar o ScrumXP mantém o processo da equipe alinhado a essa base conceitual.
+Conforme registrado por Marsicano ([1](../referencias.md#ref-1), §5.4.1), os sete valores fundamentais da Engenharia de Requisitos adotados na disciplina — **Comunicação, Feedback, Simplicidade, Coragem, Respeito, Compromisso e Confiança** — são adaptações diretas do eXtreme Programming e do Scrum (acrescidos do valor Confiança). Adotar o ScrumXP mantém o processo da equipe alinhado a essa base conceitual.
 
 ### Pilares de Decisão para o Projeto
 
