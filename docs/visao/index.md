@@ -22,6 +22,7 @@ Este histórico é o do Documento de Visão como um todo. Cada seção traz, no 
 | 03/11/2026 | 1.11 | Remissão para a página Histórico e evolução, que reúne as versões do documento e de cada seção com as reuniões, as sprints e os marcos da disciplina | Vinicius Vieira |
 | 11/11/2026 | 1.12 | Nota sobre o que está vigente no documento e o que é registro; resumos e remissões ao recorte vigente nas seções 1 a 4 | Maria Eduarda Marques |
 | 16/11/2026 | 1.13 | Seção 11 com as lições de cada unidade, que no menu ficam junto da entrega da unidade (ATA-2026-11-12, D5) | Maria Eduarda Marques |
+| 16/11/2026 | 1.14 | Seção 11 com as lições da Unidade 3 | Maria Eduarda Marques |
 
 ## Sumário
 
@@ -37,7 +38,7 @@ Este histórico é o do Documento de Visão como um todo. Cada seção traz, no 
 | [8. Requisitos de software](../requisitos/8-requisitos.md) | Catálogo unificado de Requisitos Funcionais, Não Funcionais e Regras de Negócio |
 | [9. DoR e DoD](../requisitos/9-dor-dod.md) | Critérios de prontidão das histórias (Ready) e de conclusão dos itens de documentação e de código (Done) |
 | [10. Backlog de produto](../requisitos/10-backlog.md) | Histórias de usuário, priorização técnica vs. valor e definição do MVP |
-| 11. Lições aprendidas: [Unidade 1](../licoes-aprendidas/unidade-1.md) · [Unidade 2](../licoes-aprendidas/unidade-2.md) | Lições e ações de melhoria registradas por unidade, a partir das retrospectivas; no menu, ficam em Entregas por unidade, junto da entrega de cada unidade |
+| 11. Lições aprendidas: [Unidade 1](../licoes-aprendidas/unidade-1.md) · [Unidade 2](../licoes-aprendidas/unidade-2.md) · [Unidade 3](../licoes-aprendidas/unidade-3.md) | Lições e ações de melhoria registradas por unidade, a partir das retrospectivas; no menu, ficam em Entregas por unidade, junto da entrega de cada unidade |
 | [12. Referências bibliográficas](../referencias.md) | Fontes citadas no documento |
 
 Cada seção vale pela sua versão mais recente, indicada no histórico de versões no início da página. O recorte vigente do MVP e dos incrementos está na [seção 10.2.6](../requisitos/10-backlog.md#1026-mvp-e-incrementos). Atas, entregas das unidades e linhas de histórico de versões são registros do momento em que foram feitos e não são reescritos.
