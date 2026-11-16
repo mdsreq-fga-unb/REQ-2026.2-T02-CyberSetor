@@ -342,6 +342,7 @@ export class ReportsService {
     data: RectifyReportDto,
     actor: Actor,
   ): Promise<ReportResponse> {
+    let period: { from: string; to: string } | undefined;
     try {
       return await this.prisma.$transaction(async (tx) => {
         const anterior = await tx.relatorio.findFirst({
@@ -360,6 +361,7 @@ export class ReportsService {
 
         const from = isoDate(anterior.periodoInicio);
         const to = isoDate(anterior.periodoFim);
+        period = { from, to };
 
         const preview = await this.projects.reportPreview(projectId, { from, to }, tx);
         const previousJustifications = new Map<string, PreviousGoalJustification>();
@@ -431,6 +433,16 @@ export class ReportsService {
         return toResponse(row);
       });
     } catch (error) {
+      if (error instanceof ReportBlockedException && period) {
+        // Fora da transação e sem esperar: a recusa não depende do aviso (CA-05a.2, CA-05a.3).
+        void this.notices.reportBlocked({
+          projetoId: projectId,
+          from: period.from,
+          to: period.to,
+          pendencias: error.pendencias,
+          autorId: actor.usuarioId,
+        });
+      }
       if (error instanceof Prisma.PrismaClientKnownRequestError && error.code === 'P2002') {
         throw this.notLatestVersionConflict();
       }
