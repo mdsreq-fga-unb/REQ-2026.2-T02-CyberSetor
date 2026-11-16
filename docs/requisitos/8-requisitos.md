@@ -29,6 +29,7 @@
 | 10/11/2026 | 2.15 | RF07 ligado só ao gargalo G02 na matriz 8.4.1, como nas sínteses das seções 8.4.3 e 10.2.6; RF11 com a história dona na lista, e a HU-07d, que também o verifica, na matriz 8.4.1 | Vinicius Vieira |
 | 10/11/2026 | 2.16 | RF22 com a história dona (HU-08) na lista 8.2; a HU-07a fica como verificação na matriz 8.4.1 (CA-07a.8) | Vinicius Vieira |
 | 11/11/2026 | 2.17 | Requisitos das seções 8.2 e 8.3 apresentados em cartões, com história, critérios de aceitação, origem, RNF, gargalo e destino no MVP ou fora dele, compostos a cada build a partir das tabelas desta seção e da seção 10; filtro por destino e busca; matriz 8.4 em trilhas (gargalo, requisito, história e critérios), com cada código (HU, CA, RF, RNF, RN, OE, CP, gargalo e seção) levando ao ponto da documentação que o define | Maria Eduarda Marques |
+| 13/11/2026 | 2.18 | Resumos no início da 8.4 e da 8.6; requisitos funcionais do RNF08 em intervalo na matriz 8.4.2 | Maria Eduarda Marques |
 
 ---
 
@@ -172,6 +173,8 @@ A governança do catálogo adota:
 
 ## 8.4 Matriz de Rastreabilidade Bidirecional
 
+**Em resumo.** A 8.4.1 liga cada requisito funcional ao gargalo, à origem e às histórias e critérios que o verificam; a 8.4.2 liga cada requisito não funcional à origem e aos requisitos funcionais; a 8.4.3 resume a cobertura por gargalo, característica e objetivo. A cobertura no MVP está na [seção 10.2.6](10-backlog.md#1026-mvp-e-incrementos).
+
 A rastreabilidade estabelece o vínculo bidirecional entre os problemas diagnosticados no fluxo atual (BPMN G01 a G06), os Objetivos Específicos (OEs), as Características de Produto (CP1 a CP8), os requisitos especificados e as histórias de usuário da seção 10, com os critérios de aceitação que verificam cada requisito. A história dona de cada requisito funcional aparece também na lista da seção 8.2.
 
 ### 8.4.1 Matriz de Rastreabilidade dos Requisitos Funcionais (RFs)
@@ -267,7 +270,7 @@ A rastreabilidade estabelece o vínculo bidirecional entre os problemas diagnost
 | **RNF05** | Minimização de dados pessoais | LGPD art. 5º, II; Restrição HU-06 | RF11, RF13, RF19, RF21, RF26, RF32 a RF35, RF38, RF42, RF43 |
 | **RNF06** | Prazo de atendimento à exclusão de dados | LGPD art. 18 | RF27 |
 | **RNF07** | Retenção documental decenal | MROSC art. 68 | RF32, RF36 |
-| **RNF08** | Integridade de relatórios fechados | MROSC art. 63 a 66 | RF31, RF35, RF36, RF37, RF43 |
+| **RNF08** | Integridade de relatórios fechados | MROSC art. 63 a 66 | RF31, RF35 a RF37, RF43 |
 | **RNF09** | Resiliência offline e sincronização sem duplicidade | Seção 3.3.3 | RF16 a RF19, RF32 |
 | **RNF10** | Descarte de dados pessoais no aparelho | Seções 3.3.1 e 3.3.2 | RF17, RF18, RF32 |
 | **RNF11** | Desempenho das consultas agregadas | OE04 | RF07, RF08, RF28 |
@@ -355,6 +358,8 @@ Responde à divisão operacional de responsabilidades entre quem cria, edita ou 
 ---
 
 ## 8.6 Pontos em Aberto e Auditoria de Lacunas
+
+**Em resumo.** Vinte e um pontos que ainda dependem de definição: lacunas sem requisito funcional (itens 1, 2, 15 e 19), regras de domínio a definir (3 a 9), valores e parâmetros a confirmar (10 a 14, 16 a 18 e 20) e limitações da primeira versão (21). Os marcados com 🔧 têm valor inicial em uso até a confirmação com o Instituto.
 
 1. **Gargalos G02 e G05:** o controle interno de ordens de serviço (G02), levantado como demanda candidata no alinhamento de 15/09/2026, e o painel consolidado da Presidência (G05), que depende dos cadastros e registros operacionais segundo o levantamento presencial de 21/09/2026, não têm requisito funcional nesta versão.
 2. **Matriz de Aquisição:** confirmada no levantamento presencial de 21/09/2026 como elemento a modelar no lugar da digitação manual, não tem requisito funcional; o controle financeiro e orçamentário está fora desta versão (seção 2), e a fronteira entre os dois está a definir com a área administrativo-financeira.
