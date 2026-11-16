@@ -108,6 +108,8 @@ exclude_docs: |
   *.txt
   # Atas com o cliente em versão preliminar, fora do site até a conferência do Instituto
   gestao/atas/2026-10-29-checkpoint-instituto.md
+  # Apontamentos do docente: o docente acompanha pelas issues do repositório (ATA-2026-11-12, D6)
+  entregas/debitos-u1.md
 
 nav:
   - Início: index.md
@@ -123,9 +125,6 @@ nav:
       - 8. Requisitos de software: requisitos/8-requisitos.md
       - 9. DoR e DoD: requisitos/9-dor-dod.md
       - 10. Backlog de produto: requisitos/10-backlog.md
-      - 11. Lições aprendidas:
-          - Unidade 1: licoes-aprendidas/unidade-1.md
-          - Unidade 2: licoes-aprendidas/unidade-2.md
       - Anexo B1 · Modelo do processo atual (BPMN): requisitos/b1-bpmn-processo-atual.md
   - Gestão do projeto:
       - Histórico e evolução: gestao/historico.md
@@ -173,9 +172,12 @@ nav:
           - Sprint 5:
               - Plano da Sprint 5: gestao/sprints/sprint-5.md
               - Tarefas da Sprint 5: gestao/sprints/tarefas-sprint-5.md
-  - Entregas:
-      - Unidade 1: entregas/unidade-1.md
-      - Apontamentos do docente: entregas/debitos-u1.md
-      - Unidade 2: entregas/unidade-2.md
-      - "Atividade 3: ajuste da lista de requisitos": entregas/atividade-3.md
+  - Entregas por unidade:
+      - Unidade 1:
+          - Entrega: entregas/unidade-1.md
+          - "11. Lições aprendidas": licoes-aprendidas/unidade-1.md
+      - Unidade 2:
+          - Entrega: entregas/unidade-2.md
+          - "Atividade 3: ajuste da lista de requisitos": entregas/atividade-3.md
+          - "11. Lições aprendidas": licoes-aprendidas/unidade-2.md
   - Referências: referencias.md
