@@ -1412,3 +1412,21 @@ a.cs-card:focus {
   border-style: dashed;
   border-left-color: var(--md-default-fg-color--light);
 }
+
+/* Histórico de versões recolhido (docs/assets/javascripts/versoes.js) */
+.md-typeset details.cs-versoes {
+  margin: 0.6rem 0 1.2rem;
+  font-size: 0.72rem;
+}
+.md-typeset details.cs-versoes > summary {
+  cursor: pointer;
+  color: var(--md-default-fg-color--light);
+}
+.md-typeset .cs-versoes__titulo {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}

@@ -60,6 +60,7 @@ extra_javascript:
   - assets/javascripts/historico.js
   - assets/javascripts/requisitos.js
   - assets/javascripts/codigos.js
+  - assets/javascripts/versoes.js
 
 hooks:
   - hooks/historico.py
@@ -159,6 +160,7 @@ nav:
               - 20/10 · Review, Retrospectiva 3 e Planning 4: gestao/atas/2026-10-20-sprint-review-retrospectiva-planning.md
               - 05/11 · Review, Retrospectiva 4 e Planning 5: gestao/atas/2026-11-05-sprint-review-retrospectiva-planning.md
       - Sprints:
+          - gestao/sprints/index.md
           - Sprint 1:
               - Plano da Sprint 1: gestao/sprints/sprint-1.md
               - Tarefas da Sprint 1: gestao/sprints/tarefas-sprint-1.md

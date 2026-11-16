@@ -14,6 +14,7 @@
 | 10/11/2026 | 1.9 | Período real das Sprints 4 e 5 (ATA-2026-11-05); Sprint 5 com o fechamento do MVP em código e a Unidade 3; incrementos 2 e 3 fora das sprints da disciplina, salvo folga; histórias da Sprint 4 pela seção 10.2.6, sem repetir a contagem; momentos de validação com a reunião remarcada para 12/11 | Vinicius Vieira |
 | 13/11/2026 | 1.10 | Resumo no início da seção; ritos da Sprint 5 na quinta-feira, na explicação das datas que coincidem | Maria Eduarda Marques |
 | 16/11/2026 | 1.11 | Momentos de validação com dados de teste até a formalização do tratamento de dados, com remissão à política da 2.6; checkpoint de 29/10 previsto com um projeto real e realizado com dados fictícios; título da 6.5 de "Validação com dados reais" para "Validação com o Instituto" | Maria Eduarda Marques |
+| 16/11/2026 | 1.12 | Remissão à página Sprints, que reúne o acesso ao plano, às tarefas e às atas de cada sprint (ATA-2026-11-12, A6) | Vinicius Vieira |
 
 **Em resumo.** Uma sprint de descoberta e seis sprints de cerca de duas semanas, de 18/08 a 01/12, e uma margem até 08/12. O MVP, recortado na [seção 10.2.6](../requisitos/10-backlog.md#1026-mvp-e-incrementos), fecha em código na Sprint 5, junto com a Unidade 3 (17/11); a Sprint 6 estabiliza, implanta, treina e transfere, sem funcionalidade nova. A validação com o Instituto acontece em cinco momentos (6.5), e não só no fim.
 
@@ -32,7 +33,7 @@ O projeto é organizado em sprints de **duas semanas, ancoradas nas terças-feir
 | **6 · Estabilização** | 19/11 – 01/12 🔧 | Corrigir, implantar, treinar e transferir, sem funcionalidade nova | Produto implantado e equipe do Instituto treinada |
 | **Margem** | 01/12 – 08/12 | Absorver contingência e encerrar, sem escopo novo | Unidade 4: aceite e transferência |
 
-O número de cada sprint, a partir da Sprint 1, leva ao plano da sprint, com o Sprint Backlog e a alocação por dupla.
+O número de cada sprint, a partir da Sprint 1, leva ao plano da sprint, com o Sprint Backlog e a alocação por dupla. A página [Sprints](../gestao/sprints/index.md) reúne, em abas, o acesso ao plano, às tarefas e às atas de cada sprint.
 
 Uma sprint encerra e a seguinte inicia na mesma terça-feira (na quinta, na passagem da Sprint 4 para a 5 e da 5 para a 6) porque esse dia é ocupado pelos ritos — Review, Retrospectiva e Planning —, e não pela produção: o plano da Sprint 1 atribui a ele capacidade produtiva zero. As datas coincidem por isso, sem que nenhum dia de trabalho seja contado duas vezes.
 
