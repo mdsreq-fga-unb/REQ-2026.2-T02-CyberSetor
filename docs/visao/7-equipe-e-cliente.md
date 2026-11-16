@@ -17,6 +17,7 @@
 | 11/11/2026 | 1.12 | Responsabilidades por atividade de ER (7.1.1) alinhadas à composição da equipe: Caio Martins na declaração e na organização e atualização, pela rastreabilidade | Maria Eduarda Marques |
 | 13/11/2026 | 1.13 | Resumo no início da seção; alcance da avaliação do Product Owner interno explicado só na 7.3, com a 7.1 apontando para ela; duplas e revisão remetidas às práticas de XP da página Processo e ritos; regras da daily remetidas à mesma página; exceção da Sprint 5 nas cerimônias; checkpoint de 29/10/2026 nas interações realizadas e validação de 05/11/2026 adiada a pedido do Instituto; "ambiente de homologação com dados de teste" no lugar de "protótipo evolutivo" na 7.3 (ATA-2026-11-12, D1) | Maria Eduarda Marques |
 | 16/11/2026 | 1.14 | Citação do livro-texto no sistema numérico das referências | Maria Eduarda Marques |
+| 16/11/2026 | 1.15 | Delimitação do alcance das aprovações pelo núcleo pedagógico e registro da sessão pendente com a área administrativo-financeira para validar o relatório e a planilha na 7.3.1 | Rodrigo Henrique |
 
 **Em resumo.** Cinco estudantes, todos engenheiros de requisitos, com uma Product Owner interna e um Scrum Master (7.1). A comunicação passa pelo WhatsApp, pelo Google Meet e pelo GitHub, com ata publicada de cada reunião (7.2). Quem valida é o Instituto, por área competente; a avaliação da Product Owner interna é provisória (7.3).
 
@@ -123,7 +124,7 @@ O núcleo pedagógico **não é a única fonte de validação**. Cada conjunto d
 
 A cobertura efetiva de cada área, encontro a encontro, é a que a tabela de interações da seção 7.2 registra.
 
-A consulta à área administrativo-financeira e à Diretoria de Projetos integra os encaminhamentos da reunião presencial de 08/09/2026.
+A consulta à área administrativo-financeira e à Diretoria de Projetos integra os encaminhamentos da reunião presencial de 08/09/2026. As sessões de validação do MVP realizadas em 28/09, 08/10 e 29/10 contaram com o núcleo pedagógico; por isso, o relatório de execução do objeto e a exportação em planilha ([HU-05a](../requisitos/10-backlog.md#hu-05a), [HU-05b](../requisitos/10-backlog.md#hu-05b) e [HU-13](../requisitos/10-backlog.md#hu-13)) permanecem com validação específica pendente de sessão a realizar com a área administrativo-financeira 🔧 ([seção 10.2.8](../requisitos/10-backlog.md#1028-validacao-com-o-instituto)).
 
 ### 7.3.2 O que a validação de 02/09/2026 cobre — e o que não cobre
 
