@@ -13,32 +13,24 @@
 | 26/10/2026 | 1.8 | Conectividade no campo com quedas pontuais (1.3 e 1.5); área administrativo-financeira com a rotina atual fora do sistema e a consulta a consolidados e relatórios, sem dados nominais (1.6 e 1.7); painel da presidência como capacidade candidata sem requisito funcional, sem saldo (1.7); desafios de conectividade, de dados pessoais e de manutenção com remissão às políticas da seção 2.6 (1.5) | Vinicius Vieira |
 | 11/11/2026 | 1.9 | Resumo do problema no início da 1.4; relatório próprio com remissão à 2.3 e ao incremento 2 do índice de comprovações (1.5); painel gerencial como capacidade candidata (1.6) | Maria Eduarda Marques |
 | 16/11/2026 | 1.10 | Números da 1.4 como estimativas da coordenação, a confirmar com os dados do projeto piloto | Vinicius Vieira |
-
----
+| 16/11/2026 | 1.11 | Seção enxugada: fluxo do Rich Picture em etapas, dimensionamento em cartões, matriz de interesse e poder em quadrantes e segmentos em cartões, sem repetir as políticas da seção 2.6 | Vinicius Vieira |
 
 ## 1.1 Identificação do Cliente/Parceiro
 
-* **Nome Institucional:** Instituto Cultural e Social No Setor (Instituto No Setor).
-* **Natureza Jurídica:** Organização da Sociedade Civil (OSC) sem fins lucrativos, atuando como instituto social e cultural regido pelas normas do Marco Regulatório das Organizações da Sociedade Civil — MROSC (Lei Federal nº 13.019/2014).
-* **Interlocutores e Estrutura de Contato:**
-  * *Presidência:* Rafael, a quem cabe a visão consolidada das operações e das parcerias.
-  * *Núcleo pedagógico:* Maria Clara e Maria Eduarda. **Não confundir com Maria Eduarda Marques, integrante da equipe CyberSetor — ver seção 7.1.**
-  * *Coordenação e rotina administrativo-financeira:* Fillipe Ramos.
-  * *Área de projetos:* Fran.
-* **Canais Formais de Interação:** Reuniões periódicas presenciais e remotas, canal institucional no WhatsApp e correio eletrônico.
-* **Papel no Projeto:** Clientes e especialistas de domínio, responsáveis por descrever a rotina de trabalho, prover amostras de instrumentos de gestão, priorizar funcionalidades do produto e validar incrementalmente as entregas.
-
----
+* **Instituição:** Instituto Cultural e Social No Setor (Instituto No Setor), Organização da Sociedade Civil (OSC) sem fins lucrativos, regida pelo Marco Regulatório das Organizações da Sociedade Civil, MROSC (Lei Federal nº 13.019/2014).
+* **Interlocutores:**
+    * *Presidência:* Rafael, com a visão consolidada das operações e das parcerias.
+    * *Núcleo pedagógico:* Maria Clara e Maria Eduarda. **Não confundir com Maria Eduarda Marques, integrante da equipe CyberSetor (seção 7.1).**
+    * *Coordenação e rotina administrativo-financeira:* Fillipe Ramos.
+    * *Área de projetos:* Fran.
+* **Canais:** reuniões presenciais e remotas, grupo institucional no WhatsApp e correio eletrônico.
+* **Papel no projeto:** clientes e especialistas de domínio. Descrevem a rotina, fornecem amostras dos instrumentos de gestão, priorizam funcionalidades e validam as entregas.
 
 ## 1.2 Introdução ao Negócio e Contexto
 
-O Instituto Cultural e Social No Setor atua há cerca de oito anos na ocupação democrática do espaço público e na defesa do direito à cidade. Com fundação e sede histórica no Setor Comercial Sul (SCS), região central de Brasília, a organização converte áreas públicas em palcos de convivência cidadã, articulação comunitária e profissionalização.
+Há cerca de oito anos, o Instituto ocupa democraticamente o espaço público e defende o direito à cidade, a partir da sede histórica no Setor Comercial Sul (SCS), em Brasília. Dos eventos culturais e ocupações artísticas (Setor Carnavalesco Sul, SCS Tour) passou, sobretudo desde a pandemia de Covid-19, à assistência humanitária, zeladoria urbana, capacitação técnica e promoção de direitos humanos para populações em extrema vulnerabilidade.
 
-Ao longo de sua trajetória, o Instituto ampliou seu escopo: o trabalho iniciado com eventos culturais e ocupações artísticas (como o Setor Carnavalesco Sul e o SCS Tour) expandiu-se, sobretudo a partir da pandemia de Covid-19, para ações de assistência humanitária, zeladoria urbana, capacitação técnica e promoção dos direitos humanos para populações em extrema vulnerabilidade.
-
-Para sustentar essas intervenções, o Instituto articula parcerias com a administração pública nas esferas distrital e federal (como SEDET-DF, FAC-DF, Fiocruz e Ministério da Cultura), além de emendas parlamentares. A formalização desses convênios impõe deveres legais estritos de prestação de contas. Entretanto, a gestão dos dados operacionais e financeiros ainda repousa em controles manuais desconexos e planilhas eletrônicas frágeis, expondo o Instituto ao risco de inexecução e sanções financeiras.
-
----
+Financiam essas ações parcerias distritais e federais (SEDET-DF, FAC-DF, Fiocruz, Ministério da Cultura) e emendas parlamentares, com prestação de contas rigorosa. Os dados, porém, vivem em controles manuais e planilhas desconexas, o que expõe o Instituto a inexecução e sanções.
 
 ## 1.3 Rich Picture e Mapeamento do Fluxo do Problema
 
@@ -47,20 +39,22 @@ Para sustentar essas intervenções, o Instituto articula parcerias com a admini
   <figcaption>Figura 1 – Rich Picture do Cenário Operacional do Instituto No Setor. Fonte: elaborada pelos autores.</figcaption>
 </figure>
 
-O Rich Picture sintetiza visualmente a articulação institucional e o fluxo operacional do Instituto No Setor, explicitando os oito componentes centrais do ecossistema e os gargalos críticos que justificam a concepção da solução de software:
+O Rich Picture mostra os oito componentes do fluxo operacional, do repasse ao risco de glosa:
 
-1. **Financiadores Públicos:** Órgãos concedentes e fontes de emendas parlamentares (SEDET-DF, FAC-DF, Fiocruz e Ministério da Cultura), operando sob diferentes regimes e regulamentos, responsáveis pelos repasses financeiros e pela fiscalização das metas contratuais pactuadas.
-2. **Editais e Termos de Fomento:** Instrumentos jurídicos disciplinados pelo Marco Regulatório das Organizações da Sociedade Civil — MROSC (Lei Federal nº 13.019/2014), que fixam metas quantitativas, prazos de execução, limites orçamentários e regras de prestação de contas.
-3. **Diretoria de Projetos e Captação de Recursos:** Stakeholder crítica que concentra a captação de emendas, a gestão da prestação de contas e a resposta a emergências, desdobrando as obrigações dos termos de fomento em planos de trabalho de campo para os projetos do Instituto.
-4. **Formulários Avulsos:** Instrumentos descentralizados (como Google Forms) operados pelo núcleo pedagógico (Maria Clara e Maria Eduarda) para inscrições de turmas e cadastro de participantes, desconectados de um banco centralizado.
-5. **Setores Operacionais, Listas de Presença e Evidências:** Educadores, oficineiros e demais setores operacionais (marcenaria, lavanderia, oficina de estilografia e atendimento a pessoas em situação de rua) realizam as atividades formativas com populações vulneráveis no SCS, em espaço público onde a conectividade não é garantida e há quedas pontuais, coletando assinaturas em listas de presença físicas de papel (sujeitas a perda, rasgos e umidade) e fotografias/vídeos comprobatórios em aparelhos celulares pessoais dispersos.
-6. **Equipe Administrativo-Financeira:** Conduzida por Fillipe Ramos e analistas, gerencia cotações de preços, notas fiscais e alimentação manual da Matriz de Aquisição em arquivos isolados do Excel, sem sincronia em tempo real com as evidências pedagógicas. Devido à ausência de uma área de Recursos Humanos, o setor acumula também controles dessas rotinas.
-7. **Consolidação Manual (Gargalo Operacional):** Ponto crítico de estrangulamento onde convergem listas de papel, fotos de celulares e planilhas financeiras. Exige digitação manual, triagem de mídias e conferência linha a linha entre presenças e rubricas orçamentárias.
-8. **Relatórios de Execução, Entrega Explícita e Risco de Glosa:** Etapa final de consolidação dos relatórios de cumprimento do objeto para submissão formal aos órgãos financiadores. A lentidão e a fragilidade do processo manual expõem a organização ao severo **Risco de Glosa** (art. 64 da Lei 13.019/2014), com possibilidade de rejeição de contas e exigência de devolução compulsória de recursos públicos.
+<div class="f3-fluxo" markdown>
 
-O fluxo em que os gargalos se originam está modelado em notação BPMN na página [B1 · Modelo do processo atual](../requisitos/b1-bpmn-processo-atual.md).
+1. **Financiadores públicos.** Órgãos concedentes e emendas parlamentares (seção 1.2), cada um com seu regime; repassam recursos e fiscalizam as metas.
+2. **Editais e termos de fomento.** Instrumentos do MROSC que fixam metas, prazos, limites orçamentários e regras de prestação de contas.
+3. **Diretoria de Projetos e Captação.** Capta emendas, conduz a prestação de contas e as emergências e desdobra os termos em planos de trabalho.
+4. **Formulários avulsos.** Inscrições e cadastros do núcleo pedagógico em Google Forms, sem base central.
+5. **Campo: presença e evidências.** Educadores, oficineiros e setores operacionais (marcenaria, lavanderia, estilografia, atendimento a pessoas em situação de rua) atuam no espaço público, com conexão não garantida e quedas pontuais; listas em papel e fotos em celulares pessoais.
+6. **Administrativo-financeiro.** Cotações, notas fiscais e Matriz de Aquisição em Excel, sem ligação com as evidências; sem área de RH, acumula também a gestão de pessoal.
+7. **Consolidação manual.** Gargalo: digitação das listas, triagem de fotos e conferência linha a linha com as rubricas.
+8. **Relatório e risco de glosa.** Relatório de cumprimento do objeto entregue ao financiador; o atraso e a fragilidade expõem à glosa e à devolução de recursos (art. 64 da Lei 13.019/2014).
 
----
+</div>
+
+O fluxo está modelado em BPMN na página [B1 · Modelo do processo atual](../requisitos/b1-bpmn-processo-atual.md).
 
 ## 1.4 Identificação e Dimensionamento Empírico do Problema
 
@@ -71,35 +65,65 @@ O fluxo em que os gargalos se originam está modelado em notação BPMN na pági
   <figcaption>Figura 2 – Diagrama de Ishikawa. Fonte: elaborada pelos autores.</figcaption>
 </figure>
 
-O processo atual gera descompasso severo entre a execução prática no SCS e a comprovação documental exigida pelos órgãos concedentes. A ausência de um sistema integrado centralizado impõe os seguintes gargalos mensuráveis (estimativas da coordenação do Instituto nas reuniões de elicitação, em ordem de grandeza, a confirmar com os dados do projeto piloto):
+Estimativas da coordenação nas reuniões de elicitação, em ordem de grandeza, a confirmar com os dados do projeto piloto:
 
-- **Projetos em Paralelo:** Média de 4 a 6 projetos e termos de fomento geridos simultaneamente (identificados no ciclo atual pelos códigos operacionais 061 a 065 e 068).
-- **Volume de Planilhas Dispersas:** 20 a 30 planilhas eletrônicas independentes por ciclo de projeto (controles de turmas, frequências de oficineiros e a Matriz de Aquisição em Excel), armazenadas em drives pessoais e vulneráveis a inconsistências e exclusão acidental.
-- **Atividades e Participantes:** Realização de 10 a 20 oficinas e eventos formativos mensais (serigrafia, fotografia, música, arte urbana e zeladoria), com atendimento direto variando entre 300 e 800 participantes por mês, somando milhares de atendimentos ao longo do ano.
-- **Evidências Acumuladas:** Acúmulo semestral superior a 1.500 fotografias e vídeos em celulares particulares de oficineiros e dezenas de listas físicas de frequência em papel, sujeitas a rasuras, umidade ou extravio no território do SCS.
-- **Sobrecarga de Consolidação Manual:** O núcleo gestor consome entre 30 e 50 horas de trabalho por ciclo de prestação de contas na digitação de listas físicas e checagem cruzada linha a linha com rubricas orçamentárias.
-- **Frequência de Inconsistências e Risco Crítico de Glosa:** A ausência de monitoramento em tempo real faz com que metas em atraso só sejam detectadas no fechamento do relatório, impedindo a pactuação tempestiva de Termos Aditivos e gerando risco iminente de glosa orçamentária (art. 64 da Lei 13.019/2014).
-- **Heterogeneidade de Editais e Plataformas:** Convivência concorrente com exigências de múltiplos concedentes (SEDET-DF, FAC-DF, Fiocruz, MinC), cada qual com plataformas (TransferGov, sistema Parcerias) e modelos documentais próprios.
+<div class="grid cards f3-compacto" markdown>
 
----
+- **4 a 6 projetos em paralelo**
+
+    Termos de fomento simultâneos; no ciclo atual, códigos operacionais 061 a 065 e 068.
+
+- **20 a 30 planilhas por ciclo**
+
+    Turmas, frequências de oficineiros e Matriz de Aquisição, em drives pessoais, sujeitas a inconsistência e exclusão acidental.
+
+- **10 a 20 oficinas e eventos por mês**
+
+    Serigrafia, fotografia, música, arte urbana e zeladoria; de 300 a 800 participantes por mês, milhares de atendimentos no ano.
+
+- **Mais de 1.500 fotos e vídeos por semestre**
+
+    Em celulares particulares, com dezenas de listas de frequência em papel sujeitas a rasura, umidade e extravio.
+
+- **30 a 50 horas por prestação de contas**
+
+    Digitação das listas e checagem cruzada com as rubricas orçamentárias.
+
+- **Atraso visto só no fechamento**
+
+    Sem acompanhamento durante a execução, não há tempo para termo aditivo, e cresce o risco de glosa (art. 64 da Lei 13.019/2014).
+
+- **Editais e plataformas diferentes**
+
+    Cada concedente tem exigências, plataforma (TransferGov, sistema Parcerias) e modelos próprios.
+
+</div>
 
 ## 1.5 Desafios do Projeto
 
-* **Operação de Campo com Conectividade Não Garantida:** Disponibilizar uma interface leve e intuitiva para que oficineiros registrem presenças e capturem evidências no SCS, em espaço público onde a conexão não é garantida e as quedas são pontuais ([seção 10.2.2](../requisitos/10-backlog.md#1022-avaliacao-de-negocio-com-o-instituto)). A política de operação sem conexão está na [seção 2.6](2-solucao-proposta.md#politica-sem-conexao).
-* **Governança de Dados Pessoais e LGPD:** Segregar o acesso aos dados nominais e cadastrais de crianças, adolescentes e populações em situação de vulnerabilidade, restringindo-os ao núcleo pedagógico e protegendo-os de consultas por setores administrativos ou públicos externos. A política de dados pessoais está na [seção 2.6](2-solucao-proposta.md#politica-dados-pessoais).
-* **Autonomia operacional e manutenção:** reduzir o custo e a complexidade de manutenção, de modo que a operação cotidiana não dependa de equipe interna de tecnologia. A administração técnica e o custeio após a disciplina são dependências reais, tratadas na [seção 2.6](2-solucao-proposta.md#politica-transferencia).
-* **Viabilidade Técnica dos Relatórios frente à Variedade de Editais:** Devido à disparidade entre os formulários de cada órgão governamental, o sistema gera um **relatório consolidado próprio**, com exportação tabular e índice de comprovações, sem reproduzir os formulários de cada concedente. A característica está detalhada na [seção 2.3](2-solucao-proposta.md#23-caracteristicas-de-produto-mapeadas-com-os-objetivos-especificos-do-produto) ("Sobre a CP8"), e o índice de comprovações chega no incremento 2 ([seção 10.2.6](../requisitos/10-backlog.md#1026-mvp-e-incrementos)).
+<div class="grid cards f3-compacto" markdown>
 
----
+- **Campo com conexão não garantida**
+
+    Interface leve para registrar presença e evidências no espaço público, com quedas pontuais ([seção 10.2.2](../requisitos/10-backlog.md#1022-avaliacao-de-negocio-com-o-instituto)). Política: [operação sem conexão](2-solucao-proposta.md#politica-sem-conexao).
+
+- **Dados pessoais e LGPD**
+
+    Dados de crianças, adolescentes e pessoas vulneráveis restritos ao núcleo pedagógico. Política: [dados pessoais](2-solucao-proposta.md#politica-dados-pessoais).
+
+- **Autonomia e manutenção**
+
+    Operação diária sem equipe interna de tecnologia; administração e custeio após a disciplina são dependências reais. Política: [transferência](2-solucao-proposta.md#politica-transferencia).
+
+- **Variedade de editais**
+
+    Relatório consolidado próprio, com exportação tabular e índice de comprovações (incremento 2, [seção 10.2.6](../requisitos/10-backlog.md#1026-mvp-e-incrementos)), sem reproduzir o formulário de cada concedente ("Sobre a CP8", [seção 2.3](2-solucao-proposta.md#23-caracteristicas-de-produto-mapeadas-com-os-objetivos-especificos-do-produto)).
+
+</div>
 
 ## 1.6 Mapa e Matriz de Stakeholders
 
-Para mitigar ambiguidades de governança e garantir aderência à LGPD, a caracterização dos agentes distingue quatro categorias essenciais:
-
-- **Usuários do Sistema:** Operam o software diretamente para inserção de dados, monitoramento ou emissão de relatórios.
-- **Titulares dos Dados:** Pessoas físicas cujas informações biográficas, fotográficas ou cadastrais são tratadas pelo sistema.
-- **Beneficiários Diretos/Indiretos:** Populações e comunidade impactadas pelas ações socioculturais.
-- **Stakeholders Externos:** Agentes institucionais concedentes que ditam normas e auditam as contas.
+Quatro categorias evitam ambiguidade de governança e de LGPD: **usuários** (operam o sistema), **titulares** (têm dados cadastrais ou fotos tratados), **beneficiários** diretos e indiretos (populações e comunidade atendidas) e **externos** (concedentes que normatizam e auditam).
 
 <figure markdown>
   ![Mapa de stakeholders do projeto CyberSetor](../assets/img/mapa-stakeholders.png)
@@ -108,40 +132,59 @@ Para mitigar ambiguidades de governança e garantir aderência à LGPD, a caract
 
 ### 1.6.1 Matriz de Interesse e Poder
 
-A área do Instituto que valida cada conjunto de funcionalidades está na [seção 7.3.1](7-equipe-e-cliente.md#731-area-competente-por-funcionalidade).
+Quadrantes com a estratégia de engajamento. A área que valida cada conjunto de funcionalidades está na [seção 7.3.1](7-equipe-e-cliente.md#731-area-competente-por-funcionalidade).
 
-| Stakeholder | Quadrante (Poder / Interesse) | Estratégia de Engajamento e Participação |
-| :--- | :--- | :--- |
-| **Financiadores Públicos** (SEDET-DF, FAC-DF, Fiocruz, MinC) | Alto / Alto *(Gerenciar de perto)* | Alinhamentos prioritários, validação contínua de requisitos e relatórios com total auditabilidade para afastar risco de glosa. |
-| **Presidência e Diretoria Executiva** (Rafael) | Alto / Alto *(Gerenciar de perto)* | Validação das prioridades do produto e do painel gerencial (capacidade candidata, sem requisito funcional nesta versão). |
-| **Diretoria de Projetos e Captação de Recursos** (Fran) | Alto / Alto *(Gerenciar de perto)* | Validação primária do modelo de metas, indicadores e parâmetros de aferição. |
-| **Equipe CyberSetor** | Alto / Alto *(Gerenciar de perto)* | Condução da engenharia de requisitos e entregas funcionais quinzenais. |
-| **Coordenação Administrativo-Financeira** (Fillipe Ramos) | Médio / Alto *(Manter satisfeito)* | Validação do relatório de execução do objeto ([seção 7.3.1](7-equipe-e-cliente.md#731-area-competente-por-funcionalidade)). A rotina atual (Matriz de Aquisição e lançamentos) fica fora do sistema; no CyberSetor, a coordenação consulta consolidados e relatórios, sem dados nominais ([seção 8.5.1](../requisitos/8-requisitos.md#851-perfis-de-acesso-e-permissoes-cp1-e-transversal)). Acumula a gestão de pessoal, na ausência de setor de RH. |
-| **Núcleo Pedagógico** (Maria Clara e Maria Eduarda) | Médio / Alto *(Manter satisfeito)* | Validação contínua das interfaces de campo, controle de atividades e repositório de evidências. |
-| **Educadores, oficineiros e demais setores operacionais** (marcenaria, lavanderia, oficina de estilografia, atendimento de rua) | Baixo / Alto *(Manter informado)* | Capacitação para registro móvel simplificado de frequência e envio ágil de evidências fotográficas. |
-| **Participantes das Oficinas** (Titulares de dados) | Baixo / Médio *(Monitorar)* | Coleta transparente de consentimento (LGPD) e garantia de direitos de retificação/exclusão. |
-| **Populações Vulneráveis e Comunidade** (Beneficiários) | Baixo / Baixo *(Monitorar)* | Proteção estrita de dados sensíveis e garantia de acolhimento sem barreiras digitais (dados agregados). |
+<div class="grid cards f3-compacto" markdown>
 
----
+- **Gerenciar de perto** · poder alto, interesse alto
+
+    - *Financiadores públicos:* alinhamento prioritário e relatórios auditáveis, para afastar a glosa.
+    - *Presidência e Diretoria Executiva* (Rafael): prioridades do produto e painel gerencial (capacidade candidata, sem requisito funcional).
+    - *Diretoria de Projetos e Captação* (Fran): validação do modelo de metas, indicadores e aferição.
+    - *Equipe CyberSetor:* engenharia de requisitos e entregas quinzenais.
+
+- **Manter satisfeito** · poder médio, interesse alto
+
+    - *Coordenação administrativo-financeira* (Fillipe Ramos): valida o relatório de execução do objeto (seção 7.3.1); uso no sistema na seção 1.7.
+    - *Núcleo pedagógico* (Maria Clara e Maria Eduarda): validação contínua das telas de campo, das atividades e das evidências.
+
+- **Manter informado** · poder baixo, interesse alto
+
+    - *Educadores, oficineiros e setores operacionais:* capacitação no registro de presença pelo celular e no envio de fotos.
+
+- **Monitorar** · poder baixo, interesse médio ou baixo
+
+    - *Participantes das oficinas* (titulares, interesse médio): consentimento transparente e direito de retificação e exclusão.
+    - *Populações vulneráveis e comunidade* (beneficiários, interesse baixo): proteção dos dados sensíveis, dados agregados e acolhimento sem barreira digital.
+
+</div>
 
 ## 1.7 Segmentação de Clientes e Usuários
 
-* **1. Presidência e Diretoria Executiva:**
-  * *Perfil:* Lideranças que necessitam de tomada de decisão ágil sobre múltiplos projetos.
-  * *Interação com o sistema:* consulta ao painel consolidado de projetos, com situação das metas e cronograma. Trata-se de capacidade candidata, sem requisito funcional ([seção 8.6](../requisitos/8-requisitos.md#86-pontos-em-aberto-e-auditoria-de-lacunas), item 1).
-* **2. Diretoria de Projetos:**
-  * *Perfil:* Analistas e coordenadores de parcerias com o setor público.
-  * *Interação com o sistema:* cadastro de requisitos e metas do instrumento, atribuição de responsável e prazo por meta, e geração do Relatório de Execução do Objeto.
-* **3. Coordenação Administrativo-Financeira:**
-  * *Perfil:* Profissionais que operam cotações de mercado, tomada de preços, cartas-convite, contratos e pagamentos bancários (*TransferGov* e *Internet Banking*).
-  * *Rotina atual, fora do sistema:* lançamentos da Matriz de Aquisição, conformidade documental de fornecedores e cruzamento com rubricas orçamentárias. O controle financeiro não integra o produto.
-  * *Interação com o Sistema:* consulta a instrumentos, projetos e metas, aos números consolidados de presença e evidências e aos relatórios de execução, sem acesso a dados nominais de participantes ([seção 8.5.1](../requisitos/8-requisitos.md#851-perfis-de-acesso-e-permissoes-cp1-e-transversal)).
-* **4. Educadores, Artistas e Voluntários de Campo:**
-  * *Perfil:* Agentes culturais que realizam o atendimento presencial no território do SCS.
-  * *Interação com o Sistema:* Operação móvel via navegador para conferência de presença em oficinas, envio de registros fotográficos vinculados à atividade e registro de ocorrências de campo.
-* **5. Participantes e Alunos das Oficinas:**
-  * *Perfil:* Crianças, jovens e adultos inscritos nas atividades formativas.
-  * *Interação com o Sistema:* Não operam o painel de gestão; interagem exclusivamente por páginas públicas de inscrição e assinatura de termos de adesão/consentimento de uso de dados e imagem.
-* **6. Populações em Extrema Vulnerabilidade e Comunidade Geral:**
-  * *Perfil:* pessoas em situação de rua e frequentadores atendidos em ações de zeladoria, saúde e alimentação no SCS.
-  * *Interação com o Sistema:* Não interagem diretamente com a interface; seus atendimentos são computados de forma agregada e anônima pelos facilitadores de campo, resguardando dignidade e integridade física.
+<div class="grid cards f3-compacto" markdown>
+
+- **1. Presidência e Diretoria Executiva**
+
+    Decide sobre vários projetos. Consultaria o painel consolidado de metas e cronograma, capacidade candidata sem requisito funcional ([seção 8.6](../requisitos/8-requisitos.md#86-pontos-em-aberto-e-auditoria-de-lacunas), item 1).
+
+- **2. Diretoria de Projetos**
+
+    Coordena as parcerias com o setor público. Cadastra requisitos e metas do instrumento, atribui responsável e prazo a cada meta e gera o Relatório de Execução do Objeto.
+
+- **3. Coordenação Administrativo-Financeira**
+
+    Cotações, tomada de preços, cartas-convite, contratos e pagamentos (*TransferGov*, *Internet Banking*). A Matriz de Aquisição, a conformidade de fornecedores e as rubricas ficam fora do sistema: o controle financeiro não integra o produto. Consulta instrumentos, metas, consolidados de presença e evidências e relatórios, sem dados nominais ([seção 8.5.1](../requisitos/8-requisitos.md#851-perfis-de-acesso-e-permissoes-cp1-e-transversal)).
+
+- **4. Educadores, artistas e voluntários de campo**
+
+    Atendem no SCS. Usam o navegador do celular para conferir presença, enviar fotos ligadas à atividade e registrar ocorrências.
+
+- **5. Participantes das oficinas**
+
+    Crianças, jovens e adultos inscritos. Só usam a página pública de inscrição e os termos de consentimento de dados e imagem.
+
+- **6. Populações vulneráveis e comunidade**
+
+    Pessoas em situação de rua e frequentadores das ações de zeladoria, saúde e alimentação. Não usam o sistema; os atendimentos entram de forma agregada e anônima, lançados pelos facilitadores de campo.
+
+</div>
