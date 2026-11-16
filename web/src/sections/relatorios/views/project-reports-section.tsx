@@ -46,13 +46,19 @@ function goalsCount(total: number): string {
 }
 
 function Version({ report }: { report: Report }) {
+  const reason = report.motivoRetificacao?.trim();
   return (
-    <span className="flex flex-wrap items-center gap-2">
-      Versão {report.versao}
-      {report.relatorioAnteriorId && (
-        <Badge variant="secondary" title={report.motivoRetificacao ?? undefined}>
-          Retificação
-        </Badge>
+    <span className="flex min-w-0 flex-col gap-1">
+      <span className="flex flex-wrap items-center gap-2">
+        Versão {report.versao}
+        {report.relatorioAnteriorId && (
+          <Badge variant="secondary" title={reason || undefined}>
+            Retificação
+          </Badge>
+        )}
+      </span>
+      {reason && (
+        <span className="text-sm text-muted-foreground wrap-break-word">Motivo: {reason}</span>
       )}
     </span>
   );
@@ -209,7 +215,7 @@ export function ProjectReportsSection({
                         </span>
                       </div>
                     </TableCell>
-                    <TableCell className="hidden md:table-cell">
+                    <TableCell className="hidden whitespace-normal md:table-cell">
                       <Version report={report} />
                     </TableCell>
                     <TableCell className="hidden whitespace-normal md:table-cell">

@@ -99,6 +99,8 @@ describe.each([
     const screen = await renderSection();
 
     await expect.element(screen.getByText('Ainda não gerado').first()).toBeInTheDocument();
+    const motivo = screen.getByText('Motivo: Inclusão de comprovação.');
+    await expect.element(device === 'celular' ? motivo.first() : motivo.last()).toBeVisible();
     await expect.element(screen.getByTestId('frame')).toMatchScreenshot(`relatorios-${device}`);
   });
 

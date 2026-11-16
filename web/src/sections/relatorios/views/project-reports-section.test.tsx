@@ -96,7 +96,14 @@ describe('ProjectReportsSection', () => {
       [LIST]: () => ({
         status: 200,
         body: [
-          { ...REPORT, id: 'v2', versao: 2, relatorioAnteriorId: REPORT.id, pdf: null },
+          {
+            ...REPORT,
+            id: 'v2',
+            versao: 2,
+            relatorioAnteriorId: REPORT.id,
+            motivoRetificacao: 'Inclusão de comprovação e revisão de quantitativo.',
+            pdf: null,
+          },
           { ...REPORT, pdf: { sha256: SHA, geradoEm: LINK.geradoEm } },
         ],
       }),
@@ -105,8 +112,36 @@ describe('ProjectReportsSection', () => {
 
     expect((await screen.findAllByText('Versão 2')).length).toBeGreaterThan(0);
     expect(screen.getAllByText('Retificação').length).toBeGreaterThan(0);
+    expect(
+      screen.getAllByText('Motivo: Inclusão de comprovação e revisão de quantitativo.').length,
+    ).toBeGreaterThan(0);
     expect(screen.getAllByText('Ainda não gerado').length).toBeGreaterThan(0);
     expect(screen.getAllByText('SHA-256 a3f1c9e07b5d…').length).toBeGreaterThan(0);
+  });
+
+  it('exibe o motivo da retificacao sem interacao extra para leitores e ignora versao sem motivo', async () => {
+    await signedInAs('NUCLEO_PEDAGOGICO', {
+      [LIST]: () => ({
+        status: 200,
+        body: [
+          {
+            ...REPORT,
+            id: 'v2',
+            versao: 2,
+            relatorioAnteriorId: REPORT.id,
+            motivoRetificacao: 'Correção de indicador consolidado.',
+          },
+          { ...REPORT, id: 'v1-blank', versao: 1, motivoRetificacao: '   ' },
+          { ...REPORT, id: 'v0-null', versao: 0, motivoRetificacao: null },
+        ],
+      }),
+    });
+    renderSection();
+
+    expect(
+      (await screen.findAllByText('Motivo: Correção de indicador consolidado.')).length,
+    ).toBeGreaterThan(0);
+    expect(screen.queryByText(/^Motivo:\s*$/)).not.toBeInTheDocument();
   });
 
   it('sem relatorio emitido, explica onde as versoes vao aparecer', async () => {
