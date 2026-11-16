@@ -31,7 +31,8 @@ DESTINO = "gestao/historico.md"
 INDICE_ATAS = "gestao/atas/index.md"
 PLANOS = re.compile(r"^gestao/sprints/sprint-(\d+)\.md$")
 
-# Calendário da disciplina (plano de ensino FGA0313, 2026.2).
+# Calendário da disciplina (plano de ensino FGA0313, 2026.2). A fonte publicada é a seção 6.6 do
+# cronograma; coletar() confere esta lista contra ela e interrompe o build se divergirem.
 MARCOS = [
     (date(2026, 9, 8), "Unidade 1", "u1"),
     (date(2026, 10, 13), "Unidade 2", "u2"),
@@ -39,6 +40,9 @@ MARCOS = [
     (date(2026, 11, 24), "Questionário de avaliação geral", "qag"),
     (date(2026, 12, 1), "Unidade 4", "u4"),
 ]
+FIM_MARCO = {"u4": date(2026, 12, 8)}  # marco com janela: entrega da Unidade 4 de 01 a 08/12
+CRONOGRAMA = "visao/6-cronograma.md"
+MARCO_66 = re.compile(r"^\|\s*(\d{2})(?:\s*a\s*\d{2})?/(\d{2})\s*\|\s*(Entrega da (Unidade \d)|Questionário de avaliação geral)\s*\|")
 
 CABECALHO_VERSOES = re.compile(r"^\|\s*Data\s*\|\s*Vers", re.IGNORECASE)
 DATA = re.compile(r"^\d{2}/\d{2}/\d{4}$")
@@ -205,6 +209,28 @@ def sprint_de(quando: date, sprints: list[Sprint]) -> str:
     return f"Após a Sprint {sprints[-1].numero}"
 
 
+def ler_marcos(texto: str) -> list[tuple[date, str]]:
+    """Marcos da seção 6.6: (data de início, nome), na ordem da tabela."""
+    secao = texto.split("## 6.6", 1)[1] if "## 6.6" in texto else ""
+    secao = secao.split("\n## ", 1)[0]
+    marcos = []
+    for linha in secao.splitlines():
+        m = MARCO_66.match(linha)
+        if m:
+            marcos.append((date(2026, int(m.group(2)), int(m.group(1))), m.group(4) or m.group(3)))
+    return marcos
+
+
+def conferir_marcos(texto: str) -> None:
+    lidos = ler_marcos(texto)
+    esperados = [(quando, nome) for quando, nome, _ in MARCOS]
+    if lidos != esperados:
+        raise PluginError(
+            "historico: os marcos da seção 6.6 (" + ", ".join(f"{n} {d:%d/%m}" for d, n in lidos)
+            + ") diferem da lista do hook (" + ", ".join(f"{n} {d:%d/%m}" for d, n in esperados) + ")."
+        )
+
+
 def unidade_de(quando: date) -> str:
     for limite, nome, _ in MARCOS:
         if nome.startswith("Unidade") and quando <= limite:
@@ -254,6 +280,87 @@ def ler_ancoras(docs_dir: Path) -> dict[str, str]:
     return ancoras
 
 
+def _marco_alvo(slug_marco: str) -> str:
+    alvos = {"u1": "entregas/unidade-1.md", "u2": "entregas/unidade-2.md", "u3": "entregas/unidade-3.md"}
+    return _link(alvos.get(slug_marco, CRONOGRAMA)) + ("" if slug_marco in alvos else "#66-marcos-da-disciplina")
+
+
+def _trilha(sprints: list[Sprint], eventos: list[Evento], hoje: date) -> list[str]:
+    """Linha do tempo visual: sprints em barras proporcionais, marcos da disciplina e o dia do build."""
+    inicio = min([e.quando for e in eventos] + [s.inicio for s in sprints])
+    fim = max([FIM_MARCO.get(sl, q) for q, _, sl in MARCOS] + [s.fim for s in sprints])
+    total = max((fim - inicio).days, 1)
+
+    def pos(d: date) -> float:
+        return round(100 * max(min((d - inicio).days, total), 0) / total, 2)
+
+    out = ['<div class="hist-trilha" markdown="0">', '<div class="hist-trilha__faixas">']
+    faixas = [("Concepção", "Concepção", inicio, sprints[0].inicio if sprints else inicio, "")]
+    faixas += [(f"Sprint {s.numero}", f"S{s.numero}", s.inicio, s.fim, s.meta) for s in sprints]
+    for nome, curto, a, b, meta in faixas:
+        corrente = a <= hoje <= b and nome != "Concepção"
+        titulo = f"{nome} · {a:%d/%m} a {b:%d/%m}" + (f" · {meta_curta(meta)}" if meta else "")
+        out.append(
+            f'<a class="hist-faixa hist-trilha__seg{" hist-faixa--corrente" if corrente else ""}" '
+            f'style="left:{pos(a)}%;width:{max(pos(b) - pos(a), 1.5)}%" href="#{slug(nome)}" '
+            f'data-filtro="sprint" data-valor="{slug(nome)}" title="{_e(titulo)}">'
+            f'<span class="hist-trilha__nome">{_e(curto)}</span>'
+            f'<span class="hist-trilha__periodo">{a:%d/%m}</span></a>'
+        )
+    out.append("</div>")
+    out.append('<div class="hist-trilha__marcos">')
+    anterior, abaixo_antes = -100.0, False
+    for quando, nome, sl in MARCOS:
+        estado = "feito" if quando < hoje else "hoje" if quando == hoje else "previsto"
+        curto = "QAG" if sl == "qag" else nome.replace("Unidade ", "U")
+        # Marco a menos de 8% do anterior: na tela estreita o rótulo desce, alternando, para não sobrepor.
+        abaixo = pos(quando) - anterior < 8 and not abaixo_antes
+        anterior, abaixo_antes = pos(quando), abaixo
+        out.append(
+            f'<a class="hist-trilha__marco hist-trilha__marco--{estado}{" hist-trilha__marco--abaixo" if abaixo else ""}" '
+            f'style="left:{pos(quando)}%" '
+            f'href="{_e(_marco_alvo(sl))}" title="{_e(nome)} · {quando:%d/%m}{(" a " + format(FIM_MARCO[sl], "%d/%m")) if sl in FIM_MARCO else ""}/{quando:%Y}"><span>{_e(curto)}</span></a>'
+        )
+    out.append("</div>")
+    if inicio <= hoje <= fim:
+        out.append(f'<span class="hist-trilha__hoje" style="left:{pos(hoje)}%" title="Data desta publicação">'
+                   f'<span>{hoje:%d/%m}</span></span>')
+    out.append("</div>")
+    return out
+
+
+def _evolucao_requisitos(versoes: list[Evento], ancoras: dict[str, str]) -> list[str]:
+    """Cada requisito ou história citado numa versão de documento, com as mudanças em ordem de data."""
+    por_codigo: dict[str, list[Evento]] = {}
+    for e in versoes:
+        for c in e.codigos:
+            por_codigo.setdefault(c, []).append(e)
+    grupos = [("Requisitos funcionais", "RF"), ("Requisitos não funcionais", "RNF"), ("Histórias de usuário", "HU-")]
+    out: list[str] = []
+    for titulo, prefixo in grupos:
+        codigos = sorted((c for c in por_codigo if c.startswith(prefixo) and not (prefixo == "RF" and c.startswith("RNF"))),
+                         key=lambda c: (len(re.sub(r"[a-z]$", "", c)), c))
+        if not codigos:
+            continue
+        out.append(f'<p class="hist-req__grupo"><strong>{_e(titulo)}</strong> · {_n(len(codigos), "com mudança registrada", "com mudanças registradas")}</p>')
+        out.append('<div class="hist-req" markdown="0">')
+        for c in codigos:
+            lista = sorted(por_codigo[c], key=lambda e: e.quando)
+            out.append(f'<details class="hist-req__item" id="evolucao-{slug(c)}"><summary><strong>{_e(c)}</strong>'
+                       f'<span>{_n(len(lista), "mudança", "mudanças")} · {lista[-1].quando:%d/%m}</span></summary><ol>')
+            for e in lista:
+                out.append(f'<li><time datetime="{e.quando.isoformat()}">{e.quando:%d/%m/%Y}</time> '
+                           f'<a href="{_e(_link(e.origem))}">{_e(e.origem_rotulo)} · versão {_e(e.versao)}</a>: {_e(e.descricao)}</li>')
+            out.append("</ol>")
+            pagina = ancoras.get(c.lower())
+            if pagina:
+                alvo = posixpath.relpath(pagina, posixpath.dirname(DESTINO))
+                out.append(f'<p><a href="{_e(alvo)}#{c.lower()}">Definição vigente de {_e(c)}</a></p>')
+            out.append("</details>")
+        out.append("</div>")
+    return out
+
+
 def montar(eventos: list[Evento], sprints: list[Sprint], hoje: date, ancoras: dict[str, str] | None = None) -> str:
     ancoras = ancoras or {}
     eventos = sorted(eventos, key=lambda e: (e.quando, e.tipo != "marco"), reverse=True)
@@ -272,74 +379,49 @@ def montar(eventos: list[Evento], sprints: list[Sprint], hoje: date, ancoras: di
     documentos = sorted({e.origem_rotulo for e in versoes})
     autores = sorted({a.strip() for e in versoes for a in re.split(r",| e ", e.autor) if a.strip()})
     codigos = sorted({c for e in reais for c in e.codigos}, key=lambda c: (c[:2], c))
+    atual = next((s for s in sprints if s.inicio <= hoje <= s.fim), None)
+    proximo = next((m for m in MARCOS if m[0] >= hoje), None)
+    n_cliente = sum(1 for e in atas if e.tipo == "ata-cliente")
 
     out: list[str] = []
     w = out.append
     w("---\nhide:\n  - toc\n---\n")
     w("# Histórico e evolução\n")
     w(
-        "Linha do tempo do projeto: versões de cada documento do site, reuniões da equipe, interações com o "
-        "Instituto No Setor, sprints e marcos da disciplina. Cada registro leva ao documento de origem, onde está "
-        "o conteúdo vigente; o histórico do Documento de Visão como um todo está no "
-        "[Sumário e versões](../visao/index.md#historico-de-versoes).\n"
+        "Como o projeto e os requisitos evoluíram: sprints e marcos da disciplina numa linha do tempo, as mudanças "
+        "de cada requisito e de cada história e o registro completo das versões e das reuniões. Cada item leva ao "
+        "documento de origem, onde está o conteúdo vigente. O detalhe de cada sprint está em "
+        "[Sprints](sprints/index.md); a entrega e as lições de cada unidade, em "
+        "[Marcos da disciplina](../entregas/index.md); as datas dos marcos, na "
+        "[seção 6.6](../visao/6-cronograma.md#66-marcos-da-disciplina).\n"
     )
 
-    # 1. Resumo: onde o projeto está hoje
-    atual = next((s for s in sprints if s.inicio <= hoje <= s.fim), None)
-    proximo = next((m for m in MARCOS if m[0] >= hoje), None)
-    n_cliente = sum(1 for e in atas if e.tipo == "ata-cliente")
-    blocos = [
-        ("Sprint atual", f"Sprint {atual.numero}" if atual else "Fora de sprint",
-         f"{atual.inicio:%d/%m} a {atual.fim:%d/%m}" if atual else ""),
-        ("Próximo marco", proximo[1] if proximo else "Encerrado",
-         (f"{proximo[0]:%d/%m} · em {(proximo[0] - hoje).days} dias" if proximo and proximo[0] > hoje
-          else "hoje" if proximo else "")),
-        ("Documentos", str(len(documentos)), f"{_n(len(versoes), 'versão', 'versões')} registradas"),
-        ("Reuniões", str(len(atas)), f"{n_cliente} com o Instituto"),
-    ]
-    w('<div class="grid cards hist-resumo" markdown="0"><ul>')
-    for rotulo, valor, detalhe in blocos:
-        w(f'<li><span class="hist-resumo__rotulo">{_e(rotulo)}</span>'
-          f'<strong class="hist-resumo__valor">{_e(valor)}</strong>'
-          f'<span class="hist-resumo__detalhe">{_e(detalhe)}</span></li>')
-    w("</ul></div>\n")
+    # 1. Linha do tempo visual
+    w("## Linha do tempo\n")
+    resumo = []
+    if atual:
+        resumo.append(f"**Sprint {atual.numero}** em andamento ({atual.inicio:%d/%m} a {atual.fim:%d/%m})")
+    if proximo:
+        resumo.append(f"próximo marco: **{proximo[1]}**, {proximo[0]:%d/%m}")
+    resumo.append(f"{_n(len(versoes), 'versão', 'versões')} em {_n(len(documentos), 'documento', 'documentos')}")
+    resumo.append(f"{_n(len(atas), 'reunião', 'reuniões')}, {n_cliente} com o Instituto")
+    w(" · ".join(resumo) + ".\n")
+    out.extend(_trilha(sprints, eventos, hoje))
+    w("")
+    w('<p class="hist-trilha__ajuda">Cada barra é uma sprint e filtra o registro completo abaixo; cada marca é '
+      'um marco da disciplina e leva à entrega da unidade.</p>\n')
 
-    # 2. Andamento por sprint e marcos
-    w("## Andamento por sprint\n")
-    w("Cada cartão filtra a linha do tempo pela sprint.\n")
-    regua = [f for f in faixas if not f.startswith("Após")]
-    maior = max((sum(1 for e in reais if e.sprint == f) for f in regua), default=1) or 1  # type: ignore[attr-defined]
-    w('<div class="hist-andamento" markdown="0">')
-    for f in regua:
-        doF = [e for e in reais if e.sprint == f]  # type: ignore[attr-defined]
-        nv = sum(1 for e in doF if e.tipo == "versao")
-        na = sum(1 for e in doF if e.tipo.startswith("ata"))
-        nd = len({e.origem_rotulo for e in doF if e.tipo == "versao"})
-        s = next((s for s in sprints if f == f"Sprint {s.numero}"), None)
-        periodo = f"{s.inicio:%d/%m} a {s.fim:%d/%m}" if s else f"até {sprints[0].inicio:%d/%m}" if sprints else ""
-        corrente = s is not None and s.inicio <= hoje <= s.fim
-        pct = round(100 * len(doF) / maior)
-        meta = (f'<span class="hist-faixa__meta" title="{_e(s.meta)}">{_e(meta_curta(s.meta))}</span>'
-                if s and s.meta else "")
-        w(
-            f'<a class="hist-faixa{" hist-faixa--corrente" if corrente else ""}" href="#{slug(f)}" '
-            f'data-filtro="sprint" data-valor="{slug(f)}">'
-            f'<span class="hist-faixa__nome">{_e(f)}{" · atual" if corrente else ""}</span>'
-            f'<span class="hist-faixa__periodo">{_e(periodo)}</span>{meta}'
-            f'<span class="hist-faixa__barra"><span style="width:{pct}%"></span></span>'
-            f'<span class="hist-faixa__numeros">{_n(nv, "versão", "versões")} · {_n(na, "reunião", "reuniões")} · '
-            f'{_n(nd, "documento alterado", "documentos alterados")}</span></a>'
-        )
-    w("</div>\n")
-    w('<ol class="hist-marcos" markdown="0">')
-    for quando, nome, _ in MARCOS:
-        estado = "feito" if quando < hoje else "hoje" if quando == hoje else "previsto"
-        rotulo = {"feito": "realizado", "hoje": "hoje", "previsto": "previsto"}[estado]
-        w(f'<li class="hist-marcos__item hist-marcos__item--{estado}"><strong>{_e(nome)}</strong>'
-          f'<span>{quando:%d/%m/%Y} · {rotulo}</span></li>')
-    w("</ol>\n")
+    # 2. Evolução dos requisitos
+    w("## Evolução dos requisitos\n")
+    w(
+        "A organização e atualização dos requisitos ([seção 5](../visao/5-engenharia-requisitos.md)) em uma vista: "
+        "cada requisito e cada história que mudou, com as mudanças em ordem de data e o documento e a versão de "
+        "origem. A definição vigente fica na seção 8 ou na ficha da seção 10.1.\n"
+    )
+    out.extend(_evolucao_requisitos(versoes, ancoras))
+    w("")
 
-    # 3. Linha do tempo com filtros
+    # 3. Registro completo com filtros
     def opcoes(valores: list[str], rotulo=lambda v: v) -> str:
         return '<option value="">Todos</option>' + "".join(
             f'<option value="{_e(slug(v))}">{_e(rotulo(v))}</option>' for v in valores
@@ -348,10 +430,12 @@ def montar(eventos: list[Evento], sprints: list[Sprint], hoje: date, ancoras: di
     tipos = '<option value="">Todos</option>' + "".join(
         f'<option value="{k}">{_e(v)}</option>' for k, v in TIPOS.items()
     )
-    w("## Linha do tempo\n")
+    w("## Registro completo\n")
+    w("Versões de documentos, reuniões, inícios de sprint e marcos, agrupados por sprint. Só a sprint em "
+      "andamento vem aberta; um filtro abre as que tiverem registros.\n")
     por_tipo = {k: sum(1 for e in eventos if e.tipo == k) for k in TIPOS}
     w('<div class="hist-filtros" id="hist-filtros" markdown="0">')
-    w('<label class="hist-filtros__busca"><span class="hist-filtros__rotulo">Buscar na linha do tempo</span>'
+    w('<label class="hist-filtros__busca"><span class="hist-filtros__rotulo">Buscar no registro</span>'
       '<input type="search" data-busca placeholder="Palavra, código (RF21, HU-07a), versão ou data"></label>')
     w('<div class="hist-filtros__tipos" role="group" aria-label="Tipo de registro">'
       f'<button type="button" class="hist-tipo" data-tipo="" aria-pressed="true">Todos <span>{len(eventos)}</span></button>'
@@ -376,8 +460,10 @@ def montar(eventos: list[Evento], sprints: list[Sprint], hoje: date, ancoras: di
         doF = [e for e in eventos if e.sprint == f]  # type: ignore[attr-defined]
         if not doF:
             continue
-        w(f'<section class="hist-grupo" id="{slug(f)}" markdown="1">\n')
-        w(f'<h3 class="hist-grupo__titulo">{_e("Próximos marcos" if f.startswith("Após") else f)}</h3>\n')
+        aberto = f.startswith("Após") or (atual is not None and f == f"Sprint {atual.numero}")
+        nome = "Próximos marcos" if f.startswith("Após") else f
+        w(f'<details class="hist-grupo" id="{slug(f)}"{" open" if aberto else ""} markdown="1">\n')
+        w(f'<summary class="hist-grupo__titulo">{_e(nome)} <span>{_n(len(doF), "registro", "registros")}</span></summary>\n')
         for e in doF:
             autores_e = " ".join(slug(a) for a in re.split(r",| e ", e.autor) if a.strip())
             attrs = {
@@ -407,11 +493,11 @@ def montar(eventos: list[Evento], sprints: list[Sprint], hoje: date, ancoras: di
             if rodape:
                 w(f'<p class="hist-item__rodape" markdown="span">{" · ".join(rodape)}</p>\n')
             w("</article>\n")
-        w("</section>\n")
+        w("</details>\n")
     w("</div>\n")
 
-    # 4. Evolução por documento (referência)
-    w("## Evolução por documento\n")
+    # 4. Evolução por documento (referência, recolhida)
+    w('<details class="hist-documentos" markdown="1">\n<summary>Evolução por documento</summary>\n')
     w("| Documento | Versão vigente | Versões | Primeira | Última |")
     w("|---|---|---:|---|---|")
     por_doc: dict[str, list[Evento]] = {}
@@ -423,7 +509,7 @@ def montar(eventos: list[Evento], sprints: list[Sprint], hoje: date, ancoras: di
             f"| [{lista[0].origem_rotulo}]({_link(origem)}) | {lista[-1].versao} | {len(lista)} | "
             f"{lista[0].quando:%d/%m/%Y} | {lista[-1].quando:%d/%m/%Y} |"
         )
-    w("")
+    w("\n</details>\n")
 
     w(
         f"<small>Registros: {len(versoes)} versões de {len(documentos)} documentos, {len(atas)} reuniões, "
@@ -446,6 +532,8 @@ def coletar(docs_dir: Path) -> tuple[list[Evento], list[Sprint]]:
         eventos.extend(ler_versoes(rel, texto))
         if rel == INDICE_ATAS:
             eventos.extend(ler_atas(texto))
+        if rel == CRONOGRAMA:
+            conferir_marcos(texto)
         m = PLANOS.match(rel)
         if m:
             s = ler_sprint(rel, int(m.group(1)), texto)

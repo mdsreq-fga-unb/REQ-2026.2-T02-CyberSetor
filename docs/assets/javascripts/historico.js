@@ -63,8 +63,13 @@
           visiveis += 1;
         }
       });
+      var filtrandoAgora = termo || selects.some(function (s) { return s.value; });
       grupos.forEach(function (g) {
         g.hidden = !g.querySelector(".hist-item:not([hidden])");
+        // Grupo recolhido (details) abre quando um filtro mostra registros dele.
+        if (filtrandoAgora && !g.hidden && "open" in g) {
+          g.open = true;
+        }
       });
       var tipo = seletor("tipo").value;
       chipsTipo.forEach(function (c) {

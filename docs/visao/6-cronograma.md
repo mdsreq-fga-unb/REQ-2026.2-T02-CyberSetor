@@ -16,6 +16,7 @@
 | 16/11/2026 | 1.11 | Momentos de validação com dados de teste até a formalização do tratamento de dados, com remissão à política da 2.6; checkpoint de 29/10 previsto com um projeto real e realizado com dados fictícios; título da 6.5 de "Validação com dados reais" para "Validação com o Instituto" | Maria Eduarda Marques |
 | 16/11/2026 | 1.12 | Remissão à página Sprints, que reúne o acesso ao plano, às tarefas e às atas de cada sprint (ATA-2026-11-12, A6) | Vinicius Vieira |
 | 16/11/2026 | 1.13 | Checkpoint de 29/10 registrado com dados de teste; datas previstas da Sprint 6, a confirmar na Planning 6; marcador de valor provisório só nas seções 8 a 10, como define a DoR | Vinicius Vieira |
+| 16/11/2026 | 1.14 | Entrega da Unidade 1 (08/09) nos marcos da 6.6, que passam a ser a fonte das datas da linha do tempo de Histórico e evolução | Vinicius Vieira |
 
 **Em resumo.** Uma sprint de descoberta e seis sprints de cerca de duas semanas, de 18/08 a 01/12, e uma margem até 08/12. O MVP, recortado na [seção 10.2.6](../requisitos/10-backlog.md#1026-mvp-e-incrementos), fecha em código na Sprint 5, junto com a Unidade 3 (17/11); a Sprint 6 estabiliza, implanta, treina e transfere, sem funcionalidade nova. A validação com o Instituto acontece em cinco momentos (6.5), e não só no fim.
 
@@ -98,6 +99,7 @@ Cada momento é registrado em ata e na seção 7.2 apenas depois de realizado; i
 
 | Data | Marco | Onde cai |
 |---|---|---|
+| 08/09 | Entrega da Unidade 1 | fechamento da Sprint 0 |
 | 10/09 | Apresentação da Unidade 1 | Sprint 1 |
 | 22/09 | Entrega da lista de requisitos funcionais e não funcionais | fechamento da Sprint 1 |
 | 22 a 24/09 | Semana Universitária, sem aula | início da Sprint 2 |

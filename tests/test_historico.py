@@ -131,8 +131,35 @@ def test_site_atual_gera_todos_os_registros():
     assert pagina.count('class="hist-item ') == len(eventos)
     assert len(sprints) >= 4
     assert all(s.meta for s in sprints)
-    assert 'class="hist-faixa__meta"' in pagina
+    assert pagina.count('hist-trilha__seg') == len(sprints) + 1  # concepção e cada sprint
+    assert pagina.count('class="hist-trilha__marco ') == len(historico.MARCOS)
+    assert "## Evolução dos requisitos" in pagina and 'class="hist-req__item"' in pagina
     assert "Sprint 4" in pagina
+
+
+def test_marcos_da_secao_66_conferem_com_o_hook():
+    texto = (RAIZ / "docs" / historico.CRONOGRAMA).read_text(encoding="utf-8")
+    assert historico.ler_marcos(texto) == [(q, n) for q, n, _ in historico.MARCOS]
+
+
+def test_marco_divergente_interrompe_o_build():
+    secao = """## 6.6 Marcos da disciplina
+
+| Data | Marco | Onde cai |
+|---|---|---|
+| 08/09 | Entrega da Unidade 1 | Sprint 0 |
+| 14/10 | Entrega da Unidade 2 | Sprint 3 |
+"""
+    assert historico.ler_marcos(secao)[1] == (date(2026, 10, 14), "Unidade 2")
+    with pytest.raises(PluginError, match="6.6"):
+        historico.conferir_marcos(secao)
+
+
+def test_evolucao_agrupa_as_mudancas_por_codigo():
+    eventos = historico.ler_versoes("requisitos/8-requisitos.md", TABELA)
+    pagina = historico.montar(eventos, SPRINTS, date(2026, 11, 3))
+    assert 'id="evolucao-rf46"' in pagina and 'id="evolucao-hu-07c"' in pagina
+    assert "1 mudança · 30/10" in pagina
 
 
 def test_codigo_leva_a_ficha_ou_ao_requisito():

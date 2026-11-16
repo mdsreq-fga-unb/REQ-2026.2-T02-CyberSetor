@@ -1430,3 +1430,168 @@ a.cs-card:focus {
   clip: rect(0 0 0 0);
   white-space: nowrap;
 }
+
+/* ---- Histórico e evolução: linha do tempo visual, evolução dos requisitos e registro recolhido ---- */
+.hist-trilha {
+  position: relative;
+  height: 5.2rem;
+  margin: 2rem 0 0.4rem;
+  border-bottom: 2px solid var(--md-default-fg-color--lightest);
+}
+
+.hist-trilha__faixas {
+  position: absolute;
+  inset: 0 0 2.2rem 0;
+}
+
+.md-typeset a.hist-faixa.hist-trilha__seg {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  min-width: 0;
+  flex-direction: column;
+  justify-content: center;
+  gap: 0.05rem;
+  padding: 0.2rem 0.3rem;
+  overflow: hidden;
+  border-radius: 0.25rem;
+  font-size: 0.68rem;
+  line-height: 1.2;
+  white-space: nowrap;
+}
+
+.hist-trilha__periodo {
+  color: var(--md-default-fg-color--light);
+}
+
+.hist-trilha__marcos {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 2.2rem;
+}
+
+.md-typeset a.hist-trilha__marco {
+  position: absolute;
+  bottom: -0.45rem;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 0.66rem;
+  font-weight: 600;
+  color: var(--md-default-fg-color);
+}
+
+.md-typeset a.hist-trilha__marco::after {
+  content: "";
+  order: 2;
+  width: 0.8rem;
+  height: 0.8rem;
+  margin-top: 0.15rem;
+  border: 2px solid var(--md-default-fg-color--light);
+  border-radius: 50%;
+  background: var(--md-default-bg-color);
+}
+
+.md-typeset a.hist-trilha__marco--feito::after {
+  border-color: var(--md-accent-fg-color);
+  background: var(--md-accent-fg-color);
+}
+
+.hist-trilha__hoje {
+  position: absolute;
+  top: -0.3rem;
+  bottom: -0.3rem;
+  width: 0;
+  border-left: 2px dashed var(--md-typeset-a-color);
+  pointer-events: none;
+}
+
+.hist-trilha__hoje > span {
+  position: absolute;
+  top: -1.1rem;
+  left: 0;
+  transform: translateX(-50%);
+  font-size: 0.62rem;
+  color: var(--md-typeset-a-color);
+  white-space: nowrap;
+}
+
+.md-typeset .hist-trilha__ajuda {
+  font-size: 0.7rem;
+  color: var(--md-default-fg-color--light);
+}
+
+.md-typeset .hist-req__grupo {
+  margin: 1rem 0 0.4rem;
+}
+
+.hist-req {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(8.5rem, 1fr));
+  gap: 0.4rem;
+}
+
+.md-typeset details.hist-req__item {
+  margin: 0;
+  font-size: 0.72rem;
+}
+
+.md-typeset details.hist-req__item[open] {
+  grid-column: 1 / -1;
+}
+
+.md-typeset details.hist-req__item > summary {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.1rem 0.5rem;
+  align-items: baseline;
+}
+
+.md-typeset details.hist-req__item > summary span,
+.md-typeset details.hist-grupo > summary span {
+  font-weight: 400;
+  color: var(--md-default-fg-color--light);
+}
+
+.md-typeset details.hist-req__item ol {
+  margin: 0.4rem 0 0.2rem 1.2rem;
+}
+
+.md-typeset details.hist-grupo {
+  margin: 0.6rem 0;
+}
+
+.md-typeset details.hist-grupo > summary.hist-grupo__titulo {
+  margin-top: 0;
+  border-bottom: 0;
+  font-weight: 600;
+}
+
+@media screen and (max-width: 44.9375em) {
+  .hist-trilha__periodo {
+    display: none;
+  }
+
+  .md-typeset a.hist-faixa.hist-trilha__seg {
+    padding: 0.2rem 0.1rem;
+    align-items: center;
+    font-size: 0.58rem;
+  }
+
+  .hist-trilha {
+    margin-bottom: 1.4rem;
+  }
+
+  .md-typeset a.hist-trilha__marco--abaixo {
+    flex-direction: column-reverse;
+    top: calc(100% - 0.55rem);
+    bottom: auto;
+  }
+
+  .md-typeset a.hist-trilha__marco--abaixo::after {
+    margin: 0 0 0.15rem;
+  }
+}
