@@ -12,7 +12,7 @@
 | 13/11/2026 | 1.5 | Escalas de valor e de esforço da DoR (itens 3 e 4) ligadas às seções 10.2.1, 10.2.2 e 10.2.3 | Maria Eduarda Marques |
 | 16/11/2026 | 1.6 | Citações no sistema numérico das referências | Maria Eduarda Marques |
 | 16/11/2026 | 1.7 | Verificação de desempenho com o RNF12 e com o registro das condições de cada medição | Vinicius Vieira |
-| 16/11/2026 | 1.8 | Fluxo visual da DoR à validação do Instituto e critérios em listas curtas, com o mesmo conteúdo; verificação por classe de requisito não funcional recolhida | Vinicius Vieira |
+| 16/11/2026 | 1.8 | Fluxo visual da DoR à validação do Instituto e critérios em listas curtas, com o mesmo conteúdo; verificação por classe de requisito não funcional recolhida; valor provisório marcado com o selo | Vinicius Vieira |
 
 ---
 
@@ -42,7 +42,7 @@ Uma história de usuário está pronta quando:
 7. **Vinculada aos requisitos:** a pelo menos um requisito funcional da [seção 8](8-requisitos.md) e aos requisitos não funcionais e regras de negócio que a condicionam.
 8. **Sem decisão externa pendente** que impeça o desenvolvimento.
     - Impedem a entrada: ator ou resultado indefinido; critério de aceitação cujo comportamento central depende de resposta do Instituto; dependência de história que não esteja entregue nem planejada antes dela na mesma sprint.
-    - Admitem valor provisório marcado com 🔧, com responsável e prazo registrados na história: parâmetro numérico, campo opcional, regra cujo comportamento padrão já está no critério de aceitação e valor de negócio de história que entra por obrigação legal, por dependência técnica ou herdado de história validada.
+    - Admitem valor provisório marcado com o selo 🔧, com responsável e prazo registrados na história: parâmetro numérico, campo opcional, regra cujo comportamento padrão já está no critério de aceitação e valor de negócio de história que entra por obrigação legal, por dependência técnica ou herdado de história validada.
 9. **Com o fluxo da tela nos critérios de aceitação**, quando há tela nova ou alterada: campos, ações, estado vazio e recusas próprias da história; carregamento, falha de carregamento e alteração simultânea seguem a [RNF15](8-requisitos.md#rnf15). O esboço da tela é material de trabalho da dupla e não entra na história.
 
 ## 9.2 Definition of Done (DoD)

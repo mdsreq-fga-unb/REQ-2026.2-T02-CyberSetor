@@ -20,7 +20,7 @@
 | 16/11/2026 | 2.11 | Nome dos requisitos só na seção 8: avaliação técnica (10.2.3) com os códigos, sem a coluna Requisito funcional | Vinicius Vieira |
 | 16/11/2026 | 2.12 | História dona de cada requisito funcional só na ficha da 10.1: tabela consolidada (10.2.4) sem a coluna Histórias | Vinicius Vieira |
 | 16/11/2026 | 2.13 | Sessão de validação de 12/11/2026 na 10.2.8; reunião de 12/11 registrada como realizada; ata de 29/10 citada como em conferência | Vinicius Vieira |
-| 16/11/2026 | 2.14 | Fichas enxutas (selos, requisitos como códigos e link para a issue) e priorização em visões: colunas MoSCoW, matriz 4 × 4 e mosaico do MVP, com as tabelas-fonte recolhidas | Vinicius Vieira |
+| 16/11/2026 | 2.14 | Fichas enxutas (selos, requisitos como códigos e link para a issue) e priorização em visões: colunas MoSCoW, matriz 4 × 4 e mosaico do MVP, com as tabelas-fonte recolhidas; valor provisório marcado com o selo | Vinicius Vieira |
 
 ---
 
@@ -40,7 +40,7 @@ Cada ficha traz a história, o destino, o valor, o esforço, os requisitos como 
 
     Uma história dividida mantém o número e recebe uma letra (HU-01a, HU-01b).
 
-    Personas das histórias e perfis da [seção 8.5.1](8-requisitos.md#851-perfis-de-acesso-e-permissoes-cp1-e-transversal): Diretora de Projetos, responsável de área e coordenadora de projeto atuam no perfil Presidência e Gestão de Projetos; coordenador pedagógico, coordenador autorizado, educador e integrante do núcleo pedagógico, no perfil Núcleo Pedagógico e Educadores; a pessoa interessada usa o formulário público, sem conta; a administração do sistema tem perfil próprio 🔧. As histórias de uso por perfil dependem da HU-16, que não é repetida nas dependências das fichas.
+    Personas das histórias e perfis da [seção 8.5.1](8-requisitos.md#851-perfis-de-acesso-e-permissoes): Diretora de Projetos, responsável de área e coordenadora de projeto atuam no perfil Presidência e Gestão de Projetos; coordenador pedagógico, coordenador autorizado, educador e integrante do núcleo pedagógico, no perfil Núcleo Pedagógico e Educadores; a pessoa interessada usa o formulário público, sem conta; a administração do sistema tem perfil próprio 🔧. As histórias de uso por perfil dependem da HU-16, que não é repetida nas dependências das fichas.
 
 <a id="hu-01"></a>
 <a id="hu-01a"></a>
@@ -748,7 +748,7 @@ Linhas: valor de negócio. Colunas: esforço técnico. Cada código leva ao requ
 
 <!-- priorizacao-matriz -->
 
-Candidatos ao MVP pela regra da matriz: valor 4 com esforço 1 ou 2, e valor 3 com esforço 1, ponderados pelas dependências, pelo fluxo mínimo completo e pelos riscos. Requisito de valor alto e esforço alto é reduzido, dividido ou adiado, nunca descartado. Nas tabelas recolhidas desta seção, o símbolo 🔧 marca valor ainda em conferência com o Instituto; nas visões, a borda tracejada.
+Candidatos ao MVP pela regra da matriz: valor 4 com esforço 1 ou 2, e valor 3 com esforço 1, ponderados pelas dependências, pelo fluxo mínimo completo e pelos riscos. Requisito de valor alto e esforço alto é reduzido, dividido ou adiado, nunca descartado. Nas tabelas recolhidas desta seção, o selo 🔧 marca valor ainda em conferência com o Instituto; nas visões, a borda tracejada.
 
 <details class="note" markdown="1">
 <summary>Ver a matriz em tabela (em negrito, os requisitos do MVP)</summary>

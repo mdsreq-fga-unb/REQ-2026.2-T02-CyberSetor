@@ -122,4 +122,4 @@ Base legal, finalidade e retenção: [política de dados pessoais](2-solucao-pro
 - *Administrativo-financeiro:* números consolidados de frequência e metas, sem nomes, telefones ou fotos.
 - *Concedentes e auditoria:* relatórios e evidências exigidos pela prestação de contas, pelo tempo da análise, sem a base cadastral.
 
-Matriz completa: [seção 8.5.1](../requisitos/8-requisitos.md#851-perfis-de-acesso-e-permissoes-cp1-e-transversal).
+Matriz completa: [seção 8.5.1](../requisitos/8-requisitos.md#851-perfis-de-acesso-e-permissoes).

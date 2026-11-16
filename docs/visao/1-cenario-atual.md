@@ -173,7 +173,7 @@ Quadrantes com a estratégia de engajamento. A área que valida cada conjunto de
 
 - **3. Coordenação Administrativo-Financeira**
 
-    Cotações, tomada de preços, cartas-convite, contratos e pagamentos (*TransferGov*, *Internet Banking*). A Matriz de Aquisição, a conformidade de fornecedores e as rubricas ficam fora do sistema: o controle financeiro não integra o produto. Consulta instrumentos, metas, consolidados de presença e evidências e relatórios, sem dados nominais ([seção 8.5.1](../requisitos/8-requisitos.md#851-perfis-de-acesso-e-permissoes-cp1-e-transversal)).
+    Cotações, tomada de preços, cartas-convite, contratos e pagamentos (*TransferGov*, *Internet Banking*). A Matriz de Aquisição, a conformidade de fornecedores e as rubricas ficam fora do sistema: o controle financeiro não integra o produto. Consulta instrumentos, metas, consolidados de presença e evidências e relatórios, sem dados nominais ([seção 8.5.1](../requisitos/8-requisitos.md#851-perfis-de-acesso-e-permissoes)).
 
 - **4. Educadores, artistas e voluntários de campo**
 

@@ -12,7 +12,7 @@
 | 11/11/2026 | 1.7 | Resumos no início da 2.4 e da 2.6; políticas de cópia de segurança, operação sem conexão e administração remetidas da 2.4 à 2.6; recorte remetido à 10.2.6; itens fora do MVP marcados por incremento na 2.5, na 2.6 e na 2.7 | Maria Eduarda Marques |
 | 16/11/2026 | 1.8 | Motivação e plano do uso de dados de teste na homologação, na política de dados pessoais da 2.6 (ATA-2026-11-12, D4) | Maria Eduarda Marques |
 | 16/11/2026 | 1.9 | CP8 sem índice de evidências na primeira versão, que chega no incremento 2; menores de idade como possibilidade, coerente com a confirmação pendente; entrada dos dados reais sem remissão à ATA-2026-11-12, que não registra essa decisão | Vinicius Vieira |
-| 16/11/2026 | 2.0 | Seção enxugada e visual: resumo no topo, objetivos e características em cartões, tecnologias em blocos, comparação em quadro, políticas de operação recolhíveis com os requisitos que as verificam e benefícios em cartões, sem mudar decisões | Vinicius Vieira |
+| 16/11/2026 | 2.0 | Seção enxugada e visual: resumo no topo, objetivos e características em cartões, tecnologias em blocos, comparação em quadro, políticas de operação recolhíveis com os requisitos que as verificam e benefícios em cartões, sem mudar decisões; fora do quadro da 2.3, características citadas pelo nome | Vinicius Vieira |
 
 !!! abstract "Em resumo"
     Base única para o ciclo do projeto financiado, do instrumento e das metas ao relatório de execução. Seis objetivos (2.2), oito características (2.3), pilha sem custo para o Instituto durante a disciplina (2.4), fluxo único de dados ligado às metas como diferencial (2.5) e quatro políticas de operação como condição de viabilidade (2.6).
@@ -68,10 +68,10 @@ Características preliminares; o recorte vigente está na [seção 10.2.6](../re
 
 </div>
 
-??? info "A CP8 na primeira versão: relatório em formato próprio"
+??? info "Relatórios na primeira versão: formato próprio"
     Os financiadores seguem o mesmo esqueleto (meta prevista, resultado alcançado, evidência e justificativa quando a meta não fecha), mas cada um tem formulário e protocolo próprios. Por isso a primeira versão entrega um **relatório de execução em formato próprio**, com exportação tabular, para anexar ou para alimentar o preenchimento na plataforma do financiador. O índice de evidências por meta chega com as comprovações, no incremento 2 ([seção 10.2.6](../requisitos/10-backlog.md#1026-mvp-e-incrementos)). Reproduzir o formulário de um financiador específico é capacidade posterior, condicionada aos modelos reais do Instituto. A cópia integral dos dados e dos arquivos é tratada na [transferência](#politica-transferencia) (RNF19), não no relatório.
 
-**Fora da primeira versão:** certificados de participação e declarações de horas para voluntários e educadores. A carga horária registrada pela [CP4](#cp4) e pela [CP5](#cp5) guarda o dado para incluí-los depois sem retrabalho.
+**Fora da primeira versão:** certificados de participação e declarações de horas para voluntários e educadores. A carga horária registrada na participação em campo e no cadastro de pessoas guarda o dado para incluí-los depois sem retrabalho.
 
 ## 2.4 Tecnologias a Serem Utilizadas
 
@@ -175,17 +175,17 @@ O custo da terceira fase é **estimativa por faixas**, não preço fixo, e é re
     Não ter campo chamado "dado sensível" não significa não ter dado sensível: fotografias, relatos e registros de atendimento de pessoas em situação de vulnerabilidade podem revelar informação delicada. O projeto assume:
 
     - **Nenhum campo estruturado** de saúde, origem racial ou étnica, convicção religiosa ou opinião política; texto livre e anexos ficam restritos à finalidade do registro ([RNF05](../requisitos/8-requisitos.md#rnf05)).
-    - **Fotografia e relato são potencialmente reveladores** de condição pessoal, com acesso restrito por perfil ([seção 8.5.1](../requisitos/8-requisitos.md#851-perfis-de-acesso-e-permissoes-cp1-e-transversal)).
+    - **Fotografia e relato são potencialmente reveladores** de condição pessoal, com acesso restrito por perfil ([seção 8.5.1](../requisitos/8-requisitos.md#851-perfis-de-acesso-e-permissoes)).
     - **Comprovar e divulgar são tratamentos distintos.** A imagem que prova a execução fica com quem presta contas; divulgá-la é outra finalidade, com autorização própria e revogável, e a recusa não afeta o atendimento ([RN-12](../requisitos/8-requisitos.md#rn-12)).
     - **Base legal declarada** por finalidade e **retenção configurável por instrumento.** O prazo não é escolha do sistema: os financiadores exigem guarda de dez anos, contados do dia útil seguinte à apresentação da prestação de contas (Lei 13.019/2014, art. 68), e o instrumento o determina ([RN-07](../requisitos/8-requisitos.md#rn-07)).
     - **Consentimento** onde é a base adequada (contato e uso de imagem), sem condicionar a inscrição; o de menor de idade é dado pelo responsável legal ([RN-05](../requisitos/8-requisitos.md#rn-05), [RN-06](../requisitos/8-requisitos.md#rn-06)). Ele não esgota a governança: finalidade, necessidade, acesso, retenção, direitos do titular e responsabilização são requisitos próprios, e os pedidos do titular têm prazo de atendimento ([RNF06](../requisitos/8-requisitos.md#rnf06)).
     - **O Instituto permanece controlador dos dados.** Registrar quem enviou cada material dá rastreabilidade, sem transferir a responsabilidade institucional ao educador.
-    - Os dados mínimos de inscrição estão na [seção 8.5.4](../requisitos/8-requisitos.md#854-inscricao-pessoas-e-lgpd-cp3-e-cp5); a existência de menores entre os atendidos e o responsável institucional por privacidade dependem de confirmação com o Instituto.
+    - Os dados mínimos de inscrição estão na [seção 8.5.4](../requisitos/8-requisitos.md#854-inscricao-pessoas-e-lgpd); a existência de menores entre os atendidos e o responsável institucional por privacidade dependem de confirmação com o Instituto.
 
 <a id="dados-de-teste"></a>
 
 !!! warning "Dados de teste durante a disciplina (parte da política de dados pessoais)"
-    A homologação usa só dados fictícios e contas de teste, e é com eles que o Instituto valida os fluxos ([ATA-2026-10-27](../gestao/atas/2026-10-27-reuniao-equipe.md), D2). O motivo: o Instituto atende pessoas em situação de vulnerabilidade, que podem incluir menores de idade, e inscrição e presença guardam dados pessoais delas. Usar dados reais antes de formalizar com o Instituto o tratamento e a confidencialidade desses dados ([ATA-2026-11-05](../gestao/atas/2026-11-05-sprint-review-retrospectiva-planning.md), P3) exporia os titulares sem os controles e as responsabilidades definidos. Os dados reais só entram depois dessa formalização, no ambiente de produção da [seção 6.4](6-cronograma.md#64-estabilizacao-implantacao-e-transferencia).
+    A homologação usa só dados fictícios e contas de teste, e é com eles que o Instituto valida os fluxos ([ata de 27/10](../gestao/atas/2026-10-27-reuniao-equipe.md), decisão D2). O motivo: o Instituto atende pessoas em situação de vulnerabilidade, que podem incluir menores de idade, e inscrição e presença guardam dados pessoais delas. Usar dados reais antes de formalizar com o Instituto o tratamento e a confidencialidade desses dados ([ata de 05/11](../gestao/atas/2026-11-05-sprint-review-retrospectiva-planning.md), pendência P3) exporia os titulares sem os controles e as responsabilidades definidos. Os dados reais só entram depois dessa formalização, no ambiente de produção da [seção 6.4](6-cronograma.md#64-estabilizacao-implantacao-e-transferencia).
 
 <a id="politica-copia-seguranca"></a>
 
@@ -214,7 +214,7 @@ O custo da terceira fase é **estimativa por faixas**, não preço fixo, e é re
 -   **Instituto No Setor**
 
     - Tempo de transposição entre planilhas volta para o campo.
-    - Metas com responsável, prazo, situação e resultado no MVP; com o cálculo automático (CP6), nos incrementos seguintes, o risco aparece enquanto há prazo para agir.
+    - Metas com responsável, prazo, situação e resultado no MVP; com o acompanhamento automático das metas, nos incrementos seguintes, o risco aparece enquanto há prazo para agir.
     - A confiabilidade dos números reportados tende a aumentar, porque recontagem e transcrição, origem mais frequente dos erros, deixam de ser necessárias no fluxo previsto.
     - Comprovações organizadas e recuperáveis.
     - Em prazo mais longo, memória institucional para novas captações e autonomia total sobre os dados.

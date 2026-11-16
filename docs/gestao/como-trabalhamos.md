@@ -3,6 +3,7 @@
 | Data | Versão | Descrição | Autor |
 |---|---|---|---|
 | 16/11/2026 | 1.0 | Página única do processo da equipe, com ciclo, sprints, fluxo no GitHub, dailies e competências, que reúne as páginas de processo, boas práticas no GitHub, dailies, sprints e matriz de competências | Vinicius Vieira |
+| 16/11/2026 | 1.1 | Período, objetivo e entrega de cada sprint só na seção 6.1, com as abas mostrando a situação e os atalhos; atas citadas pela data | Vinicius Vieira |
 
 A equipe adota o **ScrumXP**: Scrum para gerenciar o trabalho e práticas do eXtreme Programming para a engenharia. A fundamentação da escolha está na [seção 4](../visao/4-estrategia-esw.md); papéis, frequência e duração dos ritos, na [seção 7](../visao/7-equipe-e-cliente.md#72-comunicacao).
 
@@ -12,7 +13,7 @@ A equipe adota o **ScrumXP**: Scrum para gerenciar o trabalho e práticas do eXt
 
 ## Ciclo
 
-Sprints de **duas semanas**, ancoradas nas terças-feiras. Exceções: a Sprint 0, de descoberta, com três semanas, e a Sprint 5, de quinta a quinta, porque a Sprint 4 terminou dois dias depois do previsto ([seção 6.1](../visao/6-cronograma.md#61-calendario-vigente)).
+Sprints de **duas semanas**, ancoradas nas terças-feiras. O calendário, com as exceções e as datas da disciplina, está na [seção 6](../visao/6-cronograma.md#61-calendario-vigente).
 
 <div class="f1-ciclo" markdown>
 
@@ -30,7 +31,7 @@ Entre os ritos: refinamento semanal do backlog e as reuniões de validação com
 - **Desde a Sprint 1:** histórias de usuário, critérios de aceitação, duplas donas das histórias, integração contínua com o site compilado em modo estrito e cliente presente **adaptado** (Product Owner interno entre as validações e validação semanal com o Instituto).
 - **Desde a primeira sprint de código:** testes de aceitação, pequenas releases, programação em pares, propriedade coletiva do código, design simples e padrões de codificação. A evidência de adoção é apresentada na Sprint Review.
 - **Pares, como se aplicam:** duplas por épico. Sessão síncrona fica registrada na coautoria do commit (`Co-authored-by`) e na daily. Quem trabalha sozinho tem o pull request revisado por integrante de outra dupla, controle que substitui o par.
-- **Documentação sem sessões em par** desde 10/11/2026, por falta de tempo para as chamadas ([ATA-2026-11-10](atas/2026-11-10-reuniao-equipe.md), D2): a dupla segue dona da história e o pull request passa pelas [duas aprovações](#fluxo-no-github).
+- **Documentação sem sessões em par** desde 10/11/2026, por falta de tempo para as chamadas ([ata de 10/11](atas/2026-11-10-reuniao-equipe.md), decisão D2): a dupla segue dona da história e o pull request passa pelas [duas aprovações](#fluxo-no-github).
 
 ??? note "Práticas não adotadas, com justificativa"
 
@@ -68,41 +69,41 @@ Entre os ritos: refinamento semanal do backlog e as reuniões de validação com
 
 ## Sprints
 
-Cada sprint numa aba, com os atalhos para o plano, as tarefas e as atas. O objetivo de cada sprint está na [seção 6.1](../visao/6-cronograma.md#61-calendario-vigente); a linha do tempo de tudo o que mudou, em [Histórico e evolução](historico.md).
+Cada sprint numa aba, com a situação e os atalhos para o plano, as tarefas e as atas. Período, objetivo e entrega de cada sprint ficam na [seção 6.1](../visao/6-cronograma.md#61-calendario-vigente); a linha do tempo de tudo o que mudou, em [Histórico e evolução](historico.md).
 
 === "Sprint 5"
 
-    **05/11 a 19/11/2026** · em andamento · Unidade 3 em 17/11
+    **Em andamento**
 
     [Meta da Sprint](sprints/sprint-5.md#42-meta-da-sprint) · [Sprint Backlog](sprints/sprint-5.md#62-sprint-backlog) · [Critérios de aceitação](sprints/sprint-5.md#10-criterios-de-aceitacao-da-sprint) · [Tarefas](sprints/tarefas-sprint-5.md) · [Planning 5](atas/2026-11-05-sprint-review-retrospectiva-planning.md) · [Equipe, 10/11](atas/2026-11-10-reuniao-equipe.md) · [Monitoria, 12/11](atas/2026-11-12-reuniao-monitoria.md)
 
 === "Sprint 4"
 
-    **20/10 a 05/11/2026** · encerrada · meta parcialmente atingida (73 de 84 critérios do MVP)
+    **Encerrada** · meta parcialmente atingida (73 de 84 critérios do MVP)
 
     [Meta da Sprint](sprints/sprint-4.md#42-meta-da-sprint) · [Sprint Backlog](sprints/sprint-4.md#62-sprint-backlog) · [Resultado](sprints/sprint-4.md#12-resultado-da-sprint) · [Tarefas](sprints/tarefas-sprint-4.md) · [Planning 4](atas/2026-10-20-sprint-review-retrospectiva-planning.md) · [Review 4](atas/2026-11-05-sprint-review-retrospectiva-planning.md) · [Equipe, 27/10](atas/2026-10-27-reuniao-equipe.md)
 
 === "Sprint 3"
 
-    **06/10 a 20/10/2026** · encerrada · meta parcialmente atingida
+    **Encerrada** · meta parcialmente atingida
 
     [Meta da Sprint](sprints/sprint-3.md#42-meta-da-sprint) · [Sprint Backlog](sprints/sprint-3.md#62-sprint-backlog) · [Resultado](sprints/sprint-3.md#12-resultado-da-sprint) · [Tarefas](sprints/tarefas-sprint-3.md) · [Planning 3](atas/2026-10-07-sprint-planning.md) · [Review 3](atas/2026-10-20-sprint-review-retrospectiva-planning.md) · [Validação do MVP, 08/10](atas/2026-10-08-validacao-mvp-instituto.md)
 
 === "Sprint 2"
 
-    **22/09 a 06/10/2026** · encerrada · meta parcialmente atingida
+    **Encerrada** · meta parcialmente atingida
 
     [Meta da Sprint](sprints/sprint-2.md#42-meta-da-sprint) · [Sprint Backlog](sprints/sprint-2.md#62-sprint-backlog) · [Critérios de aceitação](sprints/sprint-2.md#10-criterios-de-aceitacao-da-sprint) · [Tarefas](sprints/tarefas-sprint-2.md) · [Planning 2](atas/2026-09-23-sprint-planning.md) · [Review 2](atas/2026-10-06-sprint-review-retrospectiva.md) · [Validação do MVP, 28/09](atas/2026-09-28-validacao-mvp-instituto.md)
 
 === "Sprint 1"
 
-    **08/09 a 22/09/2026** · encerrada · meta parcialmente atingida
+    **Encerrada** · meta parcialmente atingida
 
     [Meta da Sprint](sprints/sprint-1.md#43-meta-da-sprint) · [Critérios de aceitação](sprints/sprint-1.md#11-criterios-de-aceitacao-da-sprint) · [Tarefas](sprints/tarefas-sprint-1.md) · [Planning 1](atas/2026-09-08-sprint-planning.md) · [Review 1](atas/2026-09-22-sprint-review-retrospectiva.md) · [Alinhamento, 15/09](atas/2026-09-15-reuniao-alinhamento-instituto.md) · [Presencial, 21/09](atas/2026-09-21-reuniao-presencial-instituto.md)
 
 === "Sprint 0"
 
-    **18/08 a 08/09/2026** · encerrada · descoberta, sem plano de sprint
+    **Encerrada** · descoberta, sem plano de sprint
 
     [Entrega da Unidade 1](../entregas/unidade-1.md) · [Presencial, 08/09](atas/2026-09-08-reuniao-presencial-instituto.md) · [Equipe, 27/08](atas/2026-08-27-reuniao-equipe.md) · [Equipe, 01/09](atas/2026-09-01-reuniao-equipe.md)
 
@@ -231,7 +232,7 @@ Impedimento: o que está me travando, ou "nenhum"
 ```
 
 - No próprio dia, até o fim do dia, mesmo sem avanço ("sem avanço").
-- Impedimento é obrigatório e é o que trava o trabalho, como revisão ou merge pendente de outro integrante; quem depende de alguém o marca. Prova e outro compromisso acadêmico não são impedimento e são avisados no grupo *Geral* ([ATA-2026-11-10](atas/2026-11-10-reuniao-equipe.md), D3).
+- Impedimento é obrigatório e é o que trava o trabalho, como revisão ou merge pendente de outro integrante; quem depende de alguém o marca. Prova e outro compromisso acadêmico não são impedimento e são avisados no grupo *Geral* ([ata de 10/11](atas/2026-11-10-reuniao-equipe.md), decisão D3).
 - O grupo *Dailys* é só para dailies; discussão vai para o *Geral*, e decisão vira ata.
 - Impedimento declarado é resolvido ou escalado pelo Scrum Master em até 24 horas.
 

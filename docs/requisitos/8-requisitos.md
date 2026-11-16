@@ -36,6 +36,7 @@
 | 16/11/2026 | 2.22 | Árvore de rastreabilidade do problema às histórias e aos requisitos não funcionais, no início da 8.4 | Vinicius Vieira |
 | 16/11/2026 | 2.23 | RNF12 com as condições da medição; RNF13 coerente com a geração do PDF na primeira versão e com as miniaturas do incremento 2; massa de referência definida na 8.5.3; item 21 da 8.6 alinhado; RF09 com o horário da atividade; item 14 da 8.6 com a reunião de 12/11 realizada e os retornos em análise | Vinicius Vieira |
 | 16/11/2026 | 2.24 | Cartões sem gargalo nem link de matriz; matrizes 8.4.1 a 8.4.3 e notas da 8.5 recolhidas; pontos em aberto da 8.6 agrupados por tema, com o número de cada item | Vinicius Vieira |
+| 16/11/2026 | 2.25 | Notas da 8.5 em linguagem direta e títulos sem os códigos das características, com os endereços antigos mantidos; abertura da 8.4 sem repetir a definição de rastreabilidade; marcador de valor provisório nomeado como selo | Vinicius Vieira |
 
 ---
 
@@ -47,7 +48,7 @@ A governança do catálogo adota:
 - **Identificadores unívocos:** Códigos prefixados (`RFxx` e `RNFxx`; `RN-xx` para regras de negócio) em sequência única e contínua, acompanhados de âncoras explícitas para permitir rastreamento direto a partir de issues, histórias de usuário e matrizes. Os RFs estão agrupados por característica de produto; a numeração é contínua e não indica a característica.
 - **Padronização verbal:** Todo requisito funcional é expresso no formato **Verbo no Infinitivo + Objeto Direto**, definindo uma única ação verificável, o que reduz ambiguidades de escopo; as que restarem são tratadas na revisão.
 - **Critérios verificáveis:** Todo requisito não funcional estabelece uma métrica quantitativa numérica, passível de verificação objetiva por testes automatizados, auditoria de código ou inspeção determinística.
-- **Valores iniciais:** O símbolo 🔧 marca parâmetro adotado como valor inicial, sem fonte normativa ou medição que o fixe; permanece válido para verificação até ser confirmado com o Instituto ou recalibrado no piloto.
+- **Valores iniciais:** o selo 🔧 marca o parâmetro adotado como valor inicial, sem norma ou medição que o fixe; esse valor vale para a verificação até ser confirmado com o Instituto ou recalibrado no piloto.
 
 ---
 
@@ -185,7 +186,7 @@ A árvore parte do problema e passa pelos objetivos específicos e pelas caracte
 
 **Em resumo.** A 8.4.1 liga cada requisito funcional ao gargalo, à origem e às histórias e critérios que o verificam; a 8.4.2 liga cada requisito não funcional à origem e aos requisitos funcionais; a 8.4.3 resume a cobertura por gargalo, característica e objetivo. A cobertura no MVP está na [seção 10.2.6](10-backlog.md#1026-mvp-e-incrementos).
 
-A rastreabilidade estabelece o vínculo bidirecional entre os problemas diagnosticados no fluxo atual (BPMN G01 a G06), os Objetivos Específicos (OEs), as Características de Produto (CP1 a CP8), os requisitos especificados e as histórias de usuário da seção 10, com os critérios de aceitação que verificam cada requisito. A história dona de cada requisito funcional fica na ficha da história, na [seção 10.1](10-backlog.md#101-backlog-geral); as demais histórias da 8.4.1 apenas verificam o requisito. As três matrizes abaixo ficam recolhidas.
+A história dona de cada requisito funcional fica na ficha da história, na [seção 10.1](10-backlog.md#101-backlog-geral); as demais histórias da 8.4.1 apenas verificam o requisito. As três matrizes abaixo ficam recolhidas.
 
 ### 8.4.1 Matriz de Rastreabilidade dos Requisitos Funcionais (RFs)
 
@@ -339,10 +340,12 @@ A cobertura no MVP e nos incrementos está na [seção 10.2.6](10-backlog.md#102
 
 ## 8.5 Notas de Domínio e Perguntas-Chave Operacionais
 
-### 8.5.1 Perfis de Acesso e Permissões (CP1 e Transversal)
+<a id="851-perfis-de-acesso-e-permissoes-cp1-e-transversal"></a>
+
+### 8.5.1 Perfis de Acesso e Permissões
 
 ??? note "Ver a matriz de perfis e as regras de acesso"
-    Responde à divisão operacional de responsabilidades entre quem cria, edita ou apenas audita (base de atendimento ao RNF04):
+    A matriz mostra o que cada perfil pode fazer com cada tipo de dado e é a base do controle de acesso do RNF04:
 
     | Perfil de Usuário | Instrumentos, Projetos e Metas | Dados Nominais de Participantes | Presença e Evidências | Relatórios Oficiais |
     | :--- | :--- | :--- | :--- | :--- |
@@ -355,34 +358,40 @@ A cobertura no MVP e nos incrementos está na [seção 10.2.6](10-backlog.md#102
     - **Acesso administrativo:** a coordenação da equipe de execução e a direção de projetos têm o perfil de Presidência e Gestão de Projetos, e a Presidência e a gestão de projetos formam um setor conjunto (validação com o Instituto em 29/10/2026).
     - **Encerramento do projeto:** só a coordenação da equipe de execução encerra o projeto, depois de ver as comprovações pendentes (RN-11).
     - **Trava do relatório:** a liberação do relatório retido por meta sem justificativa é pedida à direção ou à coordenação responsável, que é notificada (RF35).
-    - **Campos obrigatórios do instrumento:** Tipo de instrumento, órgão concedente, número do processo administrativo, valor global (R$), datas de celebração e de vigência, com anexo obrigatório do documento formal homologado em PDF ou DOCX (RF02).
-    - **Tratamento de metas descritivas:** Caso a meta seja qualitativa ou atrelada a marcos (*milestones*), o parâmetro quantitativo é facultativo e a forma documental de comprovação passa a ser o critério de verificação mandatório (RF04).
+    - **Campos obrigatórios do instrumento:** tipo de instrumento, órgão concedente, número do processo administrativo, valor global (R$), datas de celebração e de vigência, com anexo obrigatório do documento formal homologado em PDF ou DOCX (RF02).
+    - **Metas descritivas:** na meta qualitativa ou de marco, o parâmetro numérico é opcional e a forma de comprovação passa a ser o critério de verificação obrigatório (RF04).
 
-### 8.5.2 Campo, Presença e Evidências (CP2, CP4 e CP7)
+<a id="852-campo-presenca-e-evidencias-cp2-cp4-e-cp7"></a>
+
+### 8.5.2 Campo, Presença e Evidências
 
 ??? note "Ver as notas de campo, presença e evidências"
-    - **Reconciliação e Unicidade Offline:** Cada marcação de presença gerada no cliente recebe identificador imutável e vincula-se à chave composta lógica `(participante_id, oficina_sessao_id, data_evento)`. O backend processa o lote com semântica de *Append-Only*, evitando duplicidades mesmo sob retransmissões repetidas de sincronização.
-    - **Exigência Comprobatória por Modalidade:**
-      * *Oficina continuada formativa:* Exige diário de classe digital com chamadas nominais auditáveis e carga horária apurada.
-      * *Evento aberto ou Ação de acolhimento no SCS:* Exige fotografias panorâmicas georreferenciadas, contagem estimativa agregada de público e relatório simplificado do facilitador, dispensando exigência de CPF para preservar a inclusão 🔧.
-    - **Lançamentos Extemporâneos:** O sistema não bloqueia o envio tardio caso o educador fique impossibilitado de lançar no dia, mas submete o registro como extemporâneo (RF19), exigindo justificativa textual e retendo carimbo de data/hora para auditoria da coordenação pedagógica.
+    - **Presença registrada sem conexão:** cada marcação feita no aparelho recebe um identificador que não muda e se liga à pessoa, ao encontro e à data. O servidor só acrescenta registros, nunca os sobrescreve, e reconhece a mesma marcação enviada mais de uma vez, sem duplicá-la.
+    - **Comprovação exigida por modalidade:**
+      * *Oficina formativa contínua:* diário de classe digital, com chamada nominal auditável e carga horária apurada.
+      * *Evento aberto ou ação de acolhimento no SCS:* fotografias panorâmicas com a localização registrada, contagem estimada do público e relato curto de quem conduziu, sem exigir CPF, para não excluir ninguém 🔧.
+    - **Lançamento extemporâneo:** quando o educador não consegue lançar no dia, o sistema aceita o registro depois, marcado como extemporâneo (RF19), com justificativa obrigatória e com a data e a hora do lançamento, para a coordenação pedagógica conferir.
 
-### 8.5.3 Apuração de Metas e Relatórios MROSC (CP6 e CP8)
+<a id="853-apuracao-de-metas-e-relatorios-mrosc-cp6-e-cp8"></a>
+
+### 8.5.3 Apuração de Metas e Relatórios MROSC
 
 ??? note "Ver as notas de apuração e relatórios"
-    - **Cálculo de Metas Não Lineares:**
-      * *Metas quantitativas cumulativas:* Percentual aferido pela razão contínua entre volume realizado (soma de presenças ou horas) e o volume pactuado.
-      * *Metas de marco único (milestones):* cumprida ou não cumprida, sem percentual contínuo (CA-11.3); a evidência formal comprova a entrega.
+    - **Cálculo por tipo de meta:**
+      * *Meta quantitativa cumulativa:* percentual do realizado (soma de presenças ou de horas) sobre o pactuado.
+      * *Meta de marco único:* cumprida ou não cumprida, sem percentual contínuo (CA-11.3); a evidência formal comprova a entrega.
     - **Massa de referência:** massa sintética gerada por script, com o volume de um ano no limite superior das estimativas da seção 1.4: 6 projetos ativos, com os seus instrumentos e metas; 20 atividades por mês (240 no ano); 800 inscrições por mês (9.600 no ano), com as presenças correspondentes; e 3.000 evidências (1.500 por semestre). É a base das medições de desempenho (RNF11, RNF13) e da conferência dos números do relatório (RNF08), e é recalibrada com os dados do projeto piloto. Cada medição registra a versão medida, a configuração do servidor e as condições do ensaio.
     - **Origem do valor alcançado:** no primeiro recorte, o valor alcançado é registrado com data de referência (RF43); quando a apuração automática entra (RF28), ela passa a preencher o valor das metas cuja fonte são presenças e evidências registradas no sistema (RN-08, RN-14).
-    - **Tratamento de Termos Aditivos:** O sistema não sobrescreve os dados pactuados originalmente. Ao aprovar um Termo Aditivo, cria-se uma versão incremental do plano de trabalho, e cada meta repactuada pode ser consultada com o previsto original, o reprogramado e o realizado (RF44).
+    - **Termos aditivos:** o sistema não sobrescreve o que foi pactuado. Cada termo aditivo aprovado cria uma nova versão do plano de trabalho, e cada meta repactuada pode ser consultada com o previsto original, o reprogramado e o realizado (RF44).
 
-### 8.5.4 Inscrição, Pessoas e LGPD (CP3 e CP5)
+<a id="854-inscricao-pessoas-e-lgpd-cp3-e-cp5"></a>
+
+### 8.5.4 Inscrição, Pessoas e LGPD
 
 ??? note "Ver as notas de inscrição, pessoas e LGPD"
-    - **Dados Mínimos Coletados:** Nome, telefone, data de nascimento (ou faixa etária) e consentimentos. E-mail e CPF entram quando o formulário de inscrição os pede (RF42), por exigência do instrumento ou para identificar cadastro repetido (RF22) 🔧. Nenhum dado sensível estruturado (RNF05).
-    - **Consentimento de Menores de Idade:** Para participantes com menos de 18 anos, o formulário identifica o responsável legal (RN-06), que concede em nome do menor os consentimentos de contato e de uso de imagem (RN-05; LGPD, art. 14).
-    - **Independência da Autorização de Imagem:** A autorização para registro e divulgação de fotografias institucionais é colhida de forma separada e opcional (RF25). A eventual recusa pelo titular jamais condiciona ou impede sua inscrição ou participação na atividade.
+    - **Dados mínimos coletados:** nome, telefone, data de nascimento (ou faixa etária) e consentimentos. E-mail e CPF entram quando o formulário de inscrição os pede (RF42), por exigência do instrumento ou para identificar cadastro repetido (RF22) 🔧. Nenhum dado sensível estruturado (RNF05).
+    - **Consentimento de menores de idade:** para participantes com menos de 18 anos, o formulário identifica o responsável legal (RN-06), que concede em nome do menor os consentimentos de contato e de uso de imagem (RN-05; LGPD, art. 14).
+    - **Autorização de imagem à parte:** a autorização de uso institucional e de divulgação da imagem é pedida separadamente e é opcional (RF25). Recusar não impede a inscrição nem a participação na atividade.
 
 ---
 
@@ -423,7 +432,7 @@ A cobertura no MVP e nos incrementos está na [seção 10.2.6](10-backlog.md#102
 
 ## 8.7 Regras de Negócio
 
-Regras que condicionam o comportamento descrito nos requisitos funcionais. Cada regra tem origem declarada; o símbolo 🔧 marca valor inicial pendente de confirmação (seção 8.1).
+Regras que condicionam o comportamento descrito nos requisitos funcionais. Cada regra tem origem declarada; o selo 🔧 marca valor inicial pendente de confirmação (seção 8.1).
 
 | ID | Regra | Origem | Requisitos relacionados |
 | :---: | :--- | :--- | :---: |

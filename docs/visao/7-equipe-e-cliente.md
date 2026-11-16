@@ -18,7 +18,7 @@
 | 13/11/2026 | 1.13 | Resumo no início da seção; alcance da avaliação do Product Owner interno explicado só na 7.3, com a 7.1 apontando para ela; duplas e revisão remetidas às práticas de XP da página Processo e ritos; regras da daily remetidas à mesma página; exceção da Sprint 5 nas cerimônias; checkpoint de 29/10/2026 nas interações realizadas e validação de 05/11/2026 adiada a pedido do Instituto; "ambiente de homologação com dados de teste" no lugar de "protótipo evolutivo" na 7.3 (ATA-2026-11-12, D1) | Maria Eduarda Marques |
 | 16/11/2026 | 1.14 | Citação do livro-texto no sistema numérico das referências | Maria Eduarda Marques |
 | 16/11/2026 | 1.15 | Interação de 12/11 com o Instituto | Vinicius Vieira |
-| 16/11/2026 | 1.16 | Seção enxugada e mais visual: equipe, responsáveis por atividade de ER, ferramentas e áreas competentes em cartões; interações recolhidas em lista; etapas da validação em fluxo; ritos e duplas remetidos a Como trabalhamos | Vinicius Vieira |
+| 16/11/2026 | 1.16 | Seção enxugada e mais visual: equipe, responsáveis por atividade de ER, ferramentas e áreas competentes em cartões; interações recolhidas em lista; etapas da validação em fluxo; ritos e duplas remetidos a Como trabalhamos; atas citadas pela data | Vinicius Vieira |
 
 **Em resumo.** Cinco estudantes, todos engenheiros de requisitos, com uma Product Owner interna e um Scrum Master (7.1). A comunicação passa pelo WhatsApp, pelo Google Meet e pelo GitHub, com ata publicada de cada reunião (7.2). Quem valida é o Instituto, por área competente; a avaliação da Product Owner interna é provisória (7.3).
 
@@ -132,7 +132,7 @@ O trabalho técnico se distribui pelas [competências](../gestao/como-trabalhamo
     - **29/10** · vídeo · Checkpoint na homologação, com o núcleo pedagógico: cadastro repetido como aviso na lista de inscritos, acesso administrativo da coordenação de execução e da direção de projetos, pedidos novos (seção 10.2.8). Ata preliminar, fora do site até a conferência do Instituto.
     - **12/11** · vídeo · Validação em uso na homologação, com a direção pedagógica, o Núcleo Pedagógico e a coordenação administrativo-financeira: projeto piloto liberado; pedidos sobre metas por equipe, comprovação na meta e confirmação da vaga (seção 10.2.8). Ata preliminar, fora do site até a conferência do Instituto.
 
-Só entram encontros realizados. Não ocorreram o alinhamento técnico sobre o banco, previsto em 08/10 para 15/10, e a reunião de 22/10, remarcada para 29/10; a validação de 05/11 foi adiada a pedido do Instituto ([ATA-2026-11-05](../gestao/atas/2026-11-05-sprint-review-retrospectiva-planning.md), D10). A cadência é **semanal**: a ausência se registra, e a cadência não se reescreve.
+Só entram encontros realizados. Não ocorreram o alinhamento técnico sobre o banco, previsto em 08/10 para 15/10, e a reunião de 22/10, remarcada para 29/10; a validação de 05/11 foi adiada a pedido do Instituto ([ata de 05/11](../gestao/atas/2026-11-05-sprint-review-retrospectiva-planning.md), decisão D10). A cadência é **semanal**: a ausência se registra, e a cadência não se reescreve.
 
 ## 7.3 Processo de Validação
 
