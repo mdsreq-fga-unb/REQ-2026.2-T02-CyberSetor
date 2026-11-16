@@ -32,8 +32,6 @@ def test_documento_atual_nao_diverge():
     [
         ("| **RF05** | Atribuir responsável e setor executor a meta |", "| **RF05** | Outro nome |",
          "RF05: nome na 8.4.1 difere da 8.2."),
-        ("[HU-01a](10-backlog.md#hu-01a) |\n| <a id=\"rf02\"", "[HU-01b](10-backlog.md#hu-01b) |\n| <a id=\"rf02\"",
-         "RF01: história na 8.2 (HU-01b) difere da ficha (HU-01a)."),
         ("| HU-01a (CA-01a.1) |", "| HU-01b (CA-01b.1) |", "RF01: a HU-01a não aparece na 8.4.1."),
         ("| **RF07** | Exibir linha do tempo e painel de prazos de metas | G02 |",
          "| **RF07** | Exibir linha do tempo e painel de prazos de metas | G01, G02 |",

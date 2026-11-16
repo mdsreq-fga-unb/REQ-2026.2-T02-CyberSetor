@@ -4,7 +4,8 @@ Cartões dos requisitos nas seções 8.2 e 8.3, compostos a cada build do MkDocs
 As tabelas das seções 8.2 e 8.3 continuam sendo a fonte, e é nelas que se edita um requisito.
 No build, cada tabela vira uma grade de cartões, um por requisito, com o que está registrado
 em outras seções:
-  - história, critérios de aceitação, gargalo e cobertura: matriz 8.4.1;
+  - história dona: tabela 10.2.4 (conferida com as fichas pelo hooks/conferencia.py);
+  - critérios de aceitação, histórias que só verificam o RF, gargalo e cobertura: matriz 8.4.1;
   - requisitos não funcionais ligados ao RF e RFs ligados ao RNF: matriz 8.4.2;
   - valor, esforço e destino (MVP ou fora dele): tabela 10.2.4;
   - classe do RNF no MVP: tabela 10.2.7;
@@ -56,7 +57,7 @@ def faixa(texto: str) -> list[str]:
 
 @dataclass
 class Fontes:
-    destino: dict[str, dict] = field(default_factory=dict)  # RF -> valor, esforço, destino
+    destino: dict[str, dict] = field(default_factory=dict)  # RF -> histórias donas, valor, esforço, destino
     classe_rnf: dict[str, str] = field(default_factory=dict)  # RNF -> classe na 10.2.7
     matriz_rf: dict[str, dict] = field(default_factory=dict)  # RF -> gargalo, histórias, cobertura
     rnf_rfs: dict[str, dict] = field(default_factory=dict)  # RNF -> lista de RFs ou transversal
@@ -71,7 +72,7 @@ def ler_backlog(md: str) -> tuple[dict, dict]:
         if secao == "10.2.4" and LINHA_1024.match(linha):
             c = celulas(linha)
             cod = LINHA_1024.match(linha).group(1)
-            destino[cod] = {"valor": c[2], "esforco": c[3], "destino": c[4]}
+            destino[cod] = {"hus": HU.findall(c[1]), "valor": c[2], "esforco": c[3], "destino": c[4]}
         elif secao == "10.2.7" and linha.startswith("| ") and "RNF" in linha:
             c = celulas(linha)
             for cod in re.findall(r"\[(RNF\d+)\]", c[1]):
@@ -160,19 +161,27 @@ def cartao_rf(linha: str, fontes: Fontes) -> str:
     info = fontes.destino.get(cod)
     nota = f'<span class="rq-chip">Valor {_e(info["valor"])} · Esforço {_e(info["esforco"])}</span>' if info else ""
     matriz = fontes.matriz_rf.get(cod, {})
-    historias = HU.findall(hus) or HU.findall(matriz.get("historia", ""))
+    # A dona vem da 10.2.4; a 8.4.1 traz também as histórias que só verificam o RF.
+    historias = HU.findall(hus) or (info or {}).get("hus", [])
     if not historias:
-        raise PluginError(f"cartoes: {cod} sem história na seção 8.2 nem na matriz 8.4.1.")
-    hist = " · ".join(f"[{h}](10-backlog.md#{h.lower()})" for h in historias)
-    cas = re.search(r"\(([^)]*)\)", matriz.get("historia", ""))
-    if cas:
-        hist += f' <span class="rq-ca">{cas.group(1)}</span>'
+        raise PluginError(f"cartoes: {cod} sem história dona na seção 8.2 nem na tabela 10.2.4.")
+    verificacao = re.findall(rf"({HU.pattern})\s*(?:\(([^)]*)\))?", matriz.get("historia", ""))
+    cas = dict(verificacao)
+    hist = " · ".join(
+        f"[{h}](10-backlog.md#{h.lower()})" + (f' <span class="rq-ca">{cas[h]}</span>' if cas.get(h) else "")
+        for h in historias
+    )
+    outras = [
+        f"[{h}](10-backlog.md#{h.lower()})" + (f' <span class="rq-ca">{ca}</span>' if ca else "")
+        for h, ca in verificacao if h not in historias
+    ]
     rnfs = [r for r, d in fontes.rnf_rfs.items() if cod in d["rfs"]]
     rnf_txt = ", ".join(f"[{r}](#{r.lower()})" for r in rnfs) or "Só os transversais"
     if rnfs:
         rnf_txt += " e os transversais"
     partes = [
         item("História", hist),
+        *([item("Também verificado em", " · ".join(outras))] if outras else []),
         item("Origem", origem.strip() or "—"),
         item("RNF", rnf_txt),
     ]

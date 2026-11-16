@@ -3,9 +3,10 @@ Selos de situação nos requisitos funcionais da seção 8 e nas histórias da s
 
 A situação não é escrita no documento: vem de situacao-historias.json, gerado pelo
 .github/scripts/fetch_issues.py a cada build a partir do quadro do projeto (Status) e do
-fechamento da issue (fechada como "não planejada" = retirada do escopo). O RF segue as
-histórias que o implementam (coluna Rastreabilidade da seção 8). Sem o arquivo, ou sem
-leitura do quadro, as seções saem como estão, sem selos.
+fechamento da issue (fechada como "não planejada" = retirada do escopo). O RF segue a
+história dona, registrada na coluna Histórias da tabela 10.2.4 (que o hooks/conferencia.py
+confere com as fichas). As outras histórias da matriz 8.4.1 só verificam o RF e não mudam o
+selo. Sem o arquivo, ou sem leitura do quadro, as seções saem como estão, sem selos.
 """
 from __future__ import annotations
 
@@ -30,7 +31,8 @@ ROTULO = {
     "m": {"a-fazer": "A fazer", "em-andamento": "Em andamento", "concluido": "Concluído", "retirado": "Retirado do escopo"},
     "f": {"a-fazer": "A fazer", "em-andamento": "Em andamento", "concluido": "Concluída", "retirado": "Retirada do escopo"},
 }
-LINHA_RF = re.compile(r"^(\| <a id=\"rf\d+\"></a>\*\*RF\d+\*\*)(.*)$")
+LINHA_RF = re.compile(r"^(\| <a id=\"rf\d+\"></a>\*\*(RF\d+)\*\*)(.*)$")
+LINHA_1024 = re.compile(r"^\| \[(RF\d+)\]\(")
 NEGRITO_HU = re.compile(r"\*\*(HU-\d{2}[a-z]?)\*\*")
 TITULO_HU = re.compile(r'^(\?\?\?\+? note)( "(HU-\d{2}[a-z]?) · [^"]*)"\s*$')
 HU = re.compile(r"HU-\d{2}[a-z]?")
@@ -77,18 +79,34 @@ def legenda(dados: dict, genero: str, quais: str) -> str:
     )
 
 
-def selar_requisitos(md: str, dados: dict) -> str:
+def donas_da_1024(md10: str) -> dict[str, list[str]]:
+    """RF -> histórias donas, pela coluna Histórias da tabela 10.2.4."""
+    donas, dentro = {}, False
+    for linha in md10.splitlines():
+        if linha.startswith("### "):
+            dentro = linha.startswith("### 10.2.4")
+            continue
+        m = LINHA_1024.match(linha) if dentro else None
+        if m:
+            donas[m.group(1)] = HU.findall(re.split(r"(?<!\\)\|", linha)[2])
+    return donas
+
+
+def selar_requisitos(md: str, dados: dict, donas: dict[str, list[str]] | None = None) -> str:
+    donas = donas or {}
+
     saida, legenda_feita = [], False
     for linha in md.splitlines():
         if not legenda_feita and linha.startswith("## 8.2"):
-            saida += [linha, "", legenda(dados, "m", "dos requisitos funcionais, pelas histórias que os implementam,")]
+            saida += [linha, "", legenda(dados, "m", "dos requisitos funcionais, pela história dona de cada um,")]
             legenda_feita = True
             continue
         m = LINHA_RF.match(linha)
         if m:
-            sit = situacao_do_rf(HU.findall(re.split(r"(?<!\\)\|", linha)[-2]), dados)
+            historias = HU.findall(re.split(r"(?<!\\)\|", linha)[-2]) or donas.get(m.group(2), [])
+            sit = situacao_do_rf(historias, dados)
             if sit:
-                linha = f"{m.group(1)} {_selo(sit, 'm')}{m.group(2)}"
+                linha = f"{m.group(1)} {_selo(sit, 'm')}{m.group(3)}"
         saida.append(linha)
     return "\n".join(saida)
 
@@ -122,4 +140,7 @@ def on_page_markdown(markdown, page, config, files, **kwargs):
     dados = ler_situacao(Path(config["config_file_path"]).parent)
     if not dados:
         return markdown
-    return selar_requisitos(markdown, dados) if caminho == SECAO_RF else selar_backlog(markdown, dados)
+    if caminho == SECAO_HU:
+        return selar_backlog(markdown, dados)
+    backlog = Path(config["docs_dir"], SECAO_HU).read_text(encoding="utf-8")
+    return selar_requisitos(markdown, dados, donas_da_1024(backlog))

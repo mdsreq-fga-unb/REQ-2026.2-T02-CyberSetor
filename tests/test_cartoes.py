@@ -88,3 +88,25 @@ def test_matriz_vira_trilhas_com_volta_ao_cartao():
     assert 'id="m-rf01"' in matriz and 'id="m-rnf19"' in matriz
     assert "[ver na 8.4.1](#m-rf01)" in saida
     assert "| **RF01** |" not in matriz
+
+
+def test_historia_do_cartao_e_so_a_dona_da_1024():
+    linha = '| <a id="rf36"></a>**RF36** | Emitir relatório | Desc. | MROSC art. 63 |'
+    f = cartoes.Fontes(
+        destino={"RF36": {"hus": ["HU-05a"], "valor": "4", "esforco": "2", "destino": "MVP"}},
+        matriz_rf={"RF36": {"gargalo": "G06", "historia": "HU-05a (CA-05a.1, CA-05a.4); HU-04a (CA-04a.6)",
+                            "cobertura": "Total"}},
+    )
+    html = cartoes.cartao_rf(linha, f)
+    historia = re.search(r'rq-item__rotulo">História</span><span class="rq-item__valor">(.*?)</span></div>', html).group(1)
+    assert "HU-05a" in historia and "CA-05a.1, CA-05a.4" in historia and "HU-04a" not in historia
+    assert 'Também verificado em</span><span class="rq-item__valor">[HU-04a](10-backlog.md#hu-04a) <span class="rq-ca">CA-04a.6</span>' in html
+    assert 'data-historias="HU-05a"' in html
+
+
+def test_cartoes_do_documento_mostram_a_dona_da_1024():
+    f = cartoes.carregar(SECAO8, BACKLOG)
+    saida = cartoes.compor(SECAO8, f)
+    for cod, info in f.destino.items():
+        m = re.search(rf'<article [^>]*id="{cod.lower()}"[^>]*data-historias="([^"]*)"', saida)
+        assert m and m.group(1).split() == info["hus"], cod
