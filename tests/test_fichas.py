@@ -23,8 +23,8 @@ SECAO8 = """# 8. Requisitos
 
 | Identificador | Requisito | Descrição | Rastreabilidade |
 | :---: | :--- | :--- | :--- |
-| <a id="rf04"></a>**RF04** | Desdobrar metas | Desdobrar o plano em metas. | MROSC \\| [HU-01b](10-backlog.md#hu-01b) |
-| <a id="rf05"></a>**RF05** | Atribuir responsável | Atribuir responsável à meta. | OE01 \\| [HU-02a](10-backlog.md#hu-02a) |
+| <a id="rf04"></a>**RF04** | Desdobrar metas | Desdobrar o plano em metas. | MROSC |
+| <a id="rf05"></a>**RF05** | Atribuir responsável | Atribuir responsável à meta. | OE01 |
 
 ## 8.3 Lista de Requisitos Não Funcionais (RNFs)
 
@@ -144,7 +144,7 @@ def _ficha(pagina: str, hu: str) -> str:
 def test_le_a_secao_8():
     s = fichas.ler_secao8(SECAO8)
     assert s.rfs["RF04"].nome == "Desdobrar metas"
-    assert s.rfs["RF05"].donas == ["HU-02a"]
+    assert s.rfs["RF05"].donas == []
     assert s.rfs["RF04"].cp == "CP1"
     assert s.cp_oe == {"CP1": "OE01; OE04"}
     assert s.verificacao["RF05"] == [("HU-02a", "CA-02a.1"), ("HU-01b", "CA-01b.2")]
@@ -266,3 +266,15 @@ def test_historia_com_dois_destinos_interrompe_o_build():
     with pytest.raises(PluginError, match="HU-01b precisa de um só destino"):
         fichas.compor_pagina(SECAO10.replace("**Requisitos funcionais:** RF04", "**Requisitos funcionais:** RF04, RF05"),
                              SECAO8, None, [], lambda _: True, REPO)
+
+
+def test_rf_compartilhado_considera_todas_as_historias_da_841():
+    dados_invertidos = {
+        **DADOS,
+        "historias": {
+            "HU-01b": {"situacao": "em-andamento", "issue": 156},
+            "HU-02a": {"situacao": "concluido", "issue": 13},
+        },
+    }
+    f = _ficha(_pagina(dados=dados_invertidos), "HU-02a")
+    assert "[RF05](8-requisitos.md#rf05) **Atribuir responsável** · esforço 1 <span class='selo selo--em-andamento'" in f
