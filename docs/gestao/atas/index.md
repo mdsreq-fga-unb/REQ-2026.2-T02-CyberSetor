@@ -1,8 +1,12 @@
 # Atas de reunião
 
-Registro das reuniões da equipe e das interações com o cliente. Desde 27/08/2026 as reuniões acontecem no Google Meet, com gravação e ata automática. **A ata automática é insumo, não registro final:** gravações e transcrições brutas funcionam exclusivamente como apoio interno restrito no Google Drive. O artefato oficial publicado neste site consiste em atas sintéticas elaboradas pelo relator, revisadas para controle de dados sensíveis e conformidade com a LGPD — ver a [política de registro, acesso e publicação](#politica-de-registro-acesso-e-publicacao) ao fim desta página.
+| Data | Versão | Descrição | Autor |
+|---|---|---|---|
+| 16/11/2026 | 1.0 | Reuniões numa linha do tempo, com filtro por tipo e as decisões de cada ata; política de registro recolhida | Vinicius Vieira |
 
-!!! note "Duas pessoas chamadas Maria Eduarda"
+Reuniões da equipe e interações com o Instituto, da mais recente para a mais antiga. Abra um cartão para ver as decisões da reunião; os códigos de requisito e de história levam à definição. Desde 27/08/2026 as reuniões acontecem no Google Meet. O registro oficial é a ata sintética do relator, conforme a [política de registro, acesso e publicação](#politica-de-registro-acesso-e-publicacao).
+
+??? note "Duas pessoas chamadas Maria Eduarda"
     **Maria Eduarda Marques** é a integrante da equipe CyberSetor e Product Owner interno; **Maria Eduarda, do núcleo pedagógico**, é uma das representantes do Instituto. As atas são registros formais e não são reeditadas depois de publicadas: quando o nome aparecer sem qualificação, vale o contexto da reunião — nas atas de reunião da equipe trata-se da integrante da equipe; na ata da reunião presencial de 08/09, da representante do Instituto, como o próprio documento declara.
 
 ## Reuniões da equipe
@@ -41,15 +45,17 @@ Registro das reuniões da equipe e das interações com o cliente. Desde 27/08/2
 
 ## Política de registro, acesso e publicação
 
-Esta política trata do **material de registro do projeto** — o que a equipe grava, transcreve, recebe do Instituto e publica neste site. Ela não descreve o tratamento dos dados pessoais que o sistema em construção irá armazenar, que é assunto da seção 2.6 do Documento de Visão.
+??? note "Material de registro: onde fica, quem acessa e quando se publica"
+    Esta política trata do **material de registro do projeto**: o que a equipe grava, transcreve, recebe do Instituto e publica neste site. Ela não descreve o tratamento dos dados pessoais que o sistema em construção irá armazenar, que é assunto da seção 2.6 do Documento de Visão.
 
-| Material | Onde fica | Quem acessa | Condição para publicar |
-|---|---|---|---|
-| Gravação de reunião (áudio/vídeo) | Drive da equipe | Integrantes da equipe | **Não se publica** |
-| Transcrição automática | Drive da equipe | Integrantes da equipe | **Não se publica**; é insumo da ata |
-| Ata revisada pelo relator | Este site | Público | Após revisão; atas com o cliente, após conferência do Instituto |
-| Documento fornecido pelo cliente (planilha, relatório, edital) | Repositório de trabalho da equipe | Integrantes da equipe | **Não se publica na íntegra**; publicam-se extratos sem dado pessoal e sem informação sensível, com ciência do Instituto |
-| Citação de fala ou mensagem do cliente | Este site | Público | Com ciência do Instituto, registrada |
-| Dado pessoal de participante das atividades | No sistema em construção, não nos registros do projeto | Conforme o perfil de acesso definido para o sistema | **Não se publica** neste site, nem em ata, nem em extrato de documento do cliente |
+    Desde 27/08/2026 as reuniões acontecem no Google Meet, com gravação e ata automática. **A ata automática é insumo, não registro final:** gravações e transcrições brutas funcionam exclusivamente como apoio interno restrito no Google Drive. O artefato oficial publicado neste site consiste em atas sintéticas elaboradas pelo relator, revisadas para controle de dados sensíveis e conformidade com a LGPD.
 
-**Atas com o cliente.** São publicadas depois de conferidas pelo Instituto; enquanto a conferência não ocorre, a ata permanece em versão preliminar, fora do site. As atas com o cliente publicadas antes desta regra, por serem registros formais, não são retiradas: seguem no site em versão preliminar, com a situação da validação no próprio histórico de versões, até a conferência.
+    - **Gravação de reunião (áudio/vídeo):** fica no Drive da equipe, com acesso dos integrantes da equipe. **Não se publica.**
+    - **Transcrição automática:** fica no Drive da equipe, com acesso dos integrantes da equipe. **Não se publica**; é insumo da ata.
+    - **Ata revisada pelo relator:** fica neste site, com acesso público. Publica-se após revisão; atas com o cliente, após conferência do Instituto.
+    - **Documento fornecido pelo cliente (planilha, relatório, edital):** fica no repositório de trabalho da equipe, com acesso dos integrantes da equipe. **Não se publica na íntegra**; publicam-se extratos sem dado pessoal e sem informação sensível, com ciência do Instituto.
+    - **Citação de fala ou mensagem do cliente:** fica neste site, com acesso público. Publica-se com ciência do Instituto, registrada.
+    - **Dado pessoal de participante das atividades:** fica no sistema em construção, não nos registros do projeto, com acesso conforme o perfil definido para o sistema. **Não se publica** neste site, nem em ata, nem em extrato de documento do cliente.
+
+??? note "Atas com o cliente: versão preliminar e atas fora do site"
+    São publicadas depois de conferidas pelo Instituto; enquanto a conferência não ocorre, a ata permanece em versão preliminar, fora do site. As atas com o cliente publicadas antes desta regra, por serem registros formais, não são retiradas: seguem no site em versão preliminar, com a situação da validação no próprio histórico de versões, até a conferência.

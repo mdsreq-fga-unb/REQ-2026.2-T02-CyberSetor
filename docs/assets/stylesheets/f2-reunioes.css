@@ -1,0 +1,175 @@
+/* Linha do tempo das reuniões (gestao/atas/index.md), gerada por hooks/reunioes.py. */
+
+.reunioes__resumo {
+  color: var(--md-default-fg-color--light);
+  font-size: 0.75rem;
+}
+
+.reunioes__filtro {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  margin: 0.4rem 0 0.8rem;
+}
+
+.reunioes__filtro button {
+  font: inherit;
+  font-size: 0.7rem;
+  padding: 0.2rem 0.7rem;
+  border: 1px solid var(--md-default-fg-color--lighter);
+  border-radius: 1rem;
+  background: var(--md-default-bg-color);
+  color: var(--md-default-fg-color);
+  cursor: pointer;
+}
+
+.reunioes__filtro button[aria-pressed="true"] {
+  border-color: var(--md-accent-fg-color);
+  background: var(--md-accent-fg-color);
+  color: var(--md-accent-bg-color);
+}
+
+.reunioes__filtro button:focus-visible {
+  outline: 2px solid var(--md-accent-fg-color);
+  outline-offset: 1px;
+}
+
+/* Trilho vertical: cada cartão é um ponto na linha. */
+.reunioes {
+  position: relative;
+  padding-left: 1.1rem;
+  border-left: 2px solid var(--md-default-fg-color--lightest);
+}
+
+.md-typeset .reunioes__mes {
+  margin: 1rem 0 0.4rem;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  color: var(--md-default-fg-color--light);
+}
+
+.md-typeset .reunioes__mes:first-child {
+  margin-top: 0;
+}
+
+.md-typeset details.reuniao {
+  position: relative;
+  margin: 0 0 0.5rem;
+  padding: 0;
+  border: 1px solid var(--md-default-fg-color--lightest);
+  border-left-width: 3px;
+  border-radius: 0.3rem;
+  background: var(--md-default-bg-color);
+  box-shadow: none;
+  font-size: 0.75rem;
+  overflow: visible;
+}
+
+.md-typeset details.reuniao::before {
+  content: "";
+  position: absolute;
+  left: calc(-1.1rem - 6px);
+  top: 0.8rem;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--reuniao-cor);
+  box-shadow: 0 0 0 3px var(--md-default-bg-color);
+}
+
+/* Mesmas cores da página "Histórico e evolução": Instituto em verde, equipe em cinza. */
+.md-typeset details.reuniao--instituto { --reuniao-cor: #2e7d32; }
+.md-typeset details.reuniao--equipe { --reuniao-cor: var(--md-default-fg-color--light); }
+.md-typeset details.reuniao--cerimonia { --reuniao-cor: var(--md-accent-fg-color); }
+
+.md-typeset details.reuniao {
+  border-left-color: var(--reuniao-cor);
+}
+
+.md-typeset details.reuniao > summary.reuniao__cabeca {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.2rem 0.6rem;
+  padding: 0.55rem 2rem 0.55rem 0.7rem;
+  background: none;
+  border: 0;
+  font-weight: 400;
+  color: var(--md-default-fg-color);
+  cursor: pointer;
+}
+
+/* Sem o ícone de admonition do tema; a seta de abrir fica à direita. */
+.md-typeset details.reuniao > summary.reuniao__cabeca::before {
+  display: none;
+}
+
+.md-typeset details.reuniao > summary.reuniao__cabeca::after {
+  top: 0.6rem;
+  right: 0.5rem;
+}
+
+.reuniao__data {
+  font-variant-numeric: tabular-nums;
+  font-weight: 700;
+}
+
+.reuniao__tipo {
+  padding: 0 0.45rem;
+  border: 1px solid var(--reuniao-cor);
+  border-radius: 1rem;
+  font-size: 0.65rem;
+  color: var(--md-default-fg-color);
+  white-space: nowrap;
+}
+
+.reuniao__titulo {
+  flex: 1 1 16rem;
+  min-width: 0;
+  font-weight: 600;
+  overflow-wrap: anywhere;
+}
+
+.reuniao__meta {
+  flex-basis: 100%;
+  font-size: 0.65rem;
+  color: var(--md-default-fg-color--light);
+}
+
+.md-typeset details.reuniao > :not(summary) {
+  margin-left: 0.7rem;
+  margin-right: 0.7rem;
+}
+
+.md-typeset details.reuniao > ul {
+  margin-top: 0.2rem;
+}
+
+.md-typeset details.reuniao > ul li {
+  margin-bottom: 0.3rem;
+}
+
+.md-typeset details.reuniao > p:last-child {
+  margin-bottom: 0.6rem;
+}
+
+.reuniao__ata {
+  font-weight: 600;
+}
+
+.reuniao__sem-ata {
+  color: var(--md-default-fg-color--light);
+  font-style: italic;
+}
+
+@media print {
+  .reunioes__filtro { display: none; }
+}
+
+/* O tema dá display aos details; o filtro precisa que [hidden] esconda. */
+.md-typeset details.reuniao[hidden],
+.md-typeset .reunioes__mes[hidden] {
+  display: none;
+}
