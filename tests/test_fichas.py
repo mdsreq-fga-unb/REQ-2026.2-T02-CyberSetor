@@ -167,26 +167,28 @@ def test_titulo_traz_destino_e_preserva_o_selo():
 
 def test_ficha_reune_o_que_vem_das_outras_secoes():
     f = _ficha(_pagina(), "HU-02a")
-    assert "| Destino | [Incremento 2](#1026-mvp-e-incrementos) |" in f
-    assert "| Valor | [4 🔧](#1022-avaliacao-de-negocio-com-o-instituto) · Urgência |" in f
-    assert "(OE01; OE04)" in f
-    assert "[#13](https://github.com/org/repo/issues/13)" in f
-    assert "[RF05](8-requisitos.md#rf05) **Atribuir responsável** · esforço 1" in f
-    assert "Atribuir responsável à meta." in f
-    assert "Em andamento" in f
+    assert "[Incremento 2](#1026-mvp-e-incrementos){ .fx .fx--destino-incremento-2 }" in f
+    assert '[Valor 4 · Must have](#1022-avaliacao-de-negocio-com-o-instituto "Urgência"){ .fx } 🔧' in f
+    assert "[Esforço 1](#1023-avaliacao-tecnica){ .fx }" in f
+    assert ("Característica</span> [CP1](../visao/2-solucao-proposta.md#cp1){ .fx-cod .fx-cod--cp } objetivo "
+            "[OE01](../visao/2-solucao-proposta.md#oe01) · secundário [OE04](../visao/2-solucao-proposta.md#oe04)") in f
+    assert "[Issue #13 no GitHub](https://github.com/org/repo/issues/13)" in f
+    assert '[RF05](8-requisitos.md#rf05 "Atribuir responsável · esforço 1"){ .fx-cod }' in f
+    assert "Atribuir responsável à meta." not in f  # a descrição fica na seção 8
+    assert "selo--em-andamento" not in f  # a situação vai no título (hooks/selos.py), não por requisito
     assert "[RNF02](8-requisitos.md#rnf02) Auditabilidade" in f
     assert "RN-01" not in f  # a regra é do RF04
+    assert "| Vínculo |" not in f  # a ficha não tem mais tabela interna
 
 
 def test_dependencias_nos_dois_sentidos_e_segunda_historia():
     pagina = _pagina()
     f02, f01 = _ficha(pagina, "HU-02a"), _ficha(pagina, "HU-01b")
-    assert "| Depende de | [HU-01b](#hu-01b) <span class='selo selo--concluido'" in f02
-    assert "| É pré-requisito de | —" in f02
-    assert "| É pré-requisito de | [HU-02a](#hu-02a)" in f01
-    assert "| Depende de | — |" in f01
-    assert "| Também verifica | [RF05](8-requisitos.md#rf05) (CA-01b.2) |" in f01
-    assert "Também verificado em [HU-01b](#hu-01b)" in f02
+    assert "Depende de</span> [HU-01b](#hu-01b){ .fx-cod } <span class='selo selo--concluido'" in f02
+    assert "Libera</span>" not in f02
+    assert "Libera</span> [HU-02a](#hu-02a){ .fx-cod }" in f01
+    assert "Depende de</span>" not in f01
+    assert 'Também verifica</span> [RF05](8-requisitos.md#rf05 "CA-01b.2"){ .fx-cod }' in f01
 
 
 def test_regra_de_negocio_vem_com_o_texto():
@@ -211,10 +213,10 @@ def test_filtros_entram_na_legenda_ou_em_bloco_proprio():
     assert sem_legenda.index("data-ficha-filtro") < sem_legenda.index('<a id="hu-01"')
 
 
-def test_sem_leitura_do_quadro_a_ficha_sai_sem_selo_e_sem_issue():
+def test_sem_leitura_do_quadro_a_ficha_sai_sem_selo_e_leva_a_busca_da_issue():
     f = _ficha(_pagina(dados=None), "HU-02a")
     assert "class='selo" not in f
-    assert "| Issue |" not in f
+    assert "[Issue no GitHub](https://github.com/org/repo/issues?q=HU-02a)" in f
     assert "[HU-01b](#hu-01b)" in f
 
 
@@ -266,17 +268,27 @@ def test_historia_com_dois_destinos_interrompe_o_build():
                              SECAO8, None, [], lambda _: True, REPO)
 
 
-def test_rf_compartilhado_segue_a_historia_dona():
-    # RF05 é da HU-02a e só verificado na HU-01b: a situação da HU-01b não muda o selo.
-    dados_invertidos = {
-        **DADOS,
-        "historias": {
-            "HU-01b": {"situacao": "em-andamento", "issue": 156},
-            "HU-02a": {"situacao": "concluido", "issue": 13},
-        },
-    }
-    f = _ficha(_pagina(dados=dados_invertidos), "HU-02a")
-    assert "[RF05](8-requisitos.md#rf05) **Atribuir responsável** · esforço 1 <span class='selo selo--concluido'" in f
+def test_esforco_da_historia_e_a_faixa_dos_requisitos():
+    md = SECAO10.replace("**Requisitos funcionais:** RF04", "**Requisitos funcionais:** RF04").replace(
+        "| [RF05](8-requisitos.md#rf05) | 1 | 1 | 1 | 1,0 | **1** |", "| [RF05](8-requisitos.md#rf05) | 1 | 1 | 1 | 1,0 | **1** 🔧 |")
+    f = _ficha(fichas.compor_pagina(md, SECAO8, None, [], lambda _: True, REPO), "HU-02a")
+    assert "[Esforço 1](#1023-avaliacao-tecnica){ .fx } 🔧" in f
+
+
+def test_visoes_da_priorizacao_saem_das_tabelas_fonte():
+    md = SECAO10.replace("### 10.2.3", "<!-- priorizacao-moscow -->\n\n### 10.2.3").replace(
+        "### 10.2.5 Matriz 4 × 4", "### 10.2.5 Matriz 4 × 4\n\n<!-- priorizacao-matriz -->\n\n<!-- priorizacao-mvp -->")
+    saida = fichas.compor_pagina(md, SECAO8, None, [], lambda _: True, REPO)
+    assert "<!-- priorizacao" not in saida
+    moscow = saida.split('class="pz-moscow"', 1)[1].split('class="pz-legenda"', 1)[0]
+    assert "valor 4 · 2" in moscow and "valor 3 · 0" in moscow
+    assert "[HU-02a](#hu-02a" in moscow and ".pz--incremento-2 .pz-prov" in moscow
+    matriz = saida.split('class="pz-matriz"', 1)[1].split("</div>\n</div>", 1)[0]
+    assert "[RF04](8-requisitos.md#rf04" in matriz and ".pz--mvp" in matriz
+    assert "<strong>1</strong> de 2 histórias no MVP" in saida
+    assert "<strong>1</strong> de 2 requisitos funcionais no MVP" in saida
+    assert "[CP1](../visao/2-solucao-proposta.md#cp1) Gestão" in saida
+    assert "na característica do seu primeiro requisito funcional" in saida
 
 
 def test_le_as_colunas_certas_do_documento():

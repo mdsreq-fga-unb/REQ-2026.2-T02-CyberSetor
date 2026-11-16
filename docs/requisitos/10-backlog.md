@@ -20,6 +20,7 @@
 | 16/11/2026 | 2.11 | Nome dos requisitos só na seção 8: avaliação técnica (10.2.3) com os códigos, sem a coluna Requisito funcional | Vinicius Vieira |
 | 16/11/2026 | 2.12 | História dona de cada requisito funcional só na ficha da 10.1: tabela consolidada (10.2.4) sem a coluna Histórias | Vinicius Vieira |
 | 16/11/2026 | 2.13 | Sessão de validação de 12/11/2026 na 10.2.8; reunião de 12/11 registrada como realizada; ata de 29/10 citada como em conferência | Vinicius Vieira |
+| 16/11/2026 | 2.14 | Fichas enxutas (selos, requisitos como códigos e link para a issue) e priorização em visões: colunas MoSCoW, matriz 4 × 4 e mosaico do MVP, com as tabelas-fonte recolhidas | Vinicius Vieira |
 
 ---
 
@@ -27,18 +28,19 @@ O backlog de produto reúne as histórias de usuário que derivam dos requisitos
 
 ## 10.1 Backlog geral
 
-As histórias derivam dos requisitos funcionais da [seção 8](8-requisitos.md) por quatro regras:
+Cada ficha traz a história, o destino, o valor, o esforço, os requisitos como códigos (cada um abre a definição), os critérios de aceitação e o link para a issue no GitHub. Os filtros separam as histórias por situação, destino e épico. Cada história atende à [Definition of Ready](9-dor-dod.md) antes de entrar em uma sprint.
 
-1. Cada história tem um ator e um resultado que ele observa, e cabe em uma sprint.
-2. Cada requisito funcional pertence a uma única história, onde é construído e aceito; outras histórias podem depender dele.
-3. Um requisito vira história própria quando tem ator diferente ou critério de aceitação próprio; requisito de esforço técnico 3 ou 4 é candidato a história própria.
-4. Os requisitos não funcionais e as regras de negócio de cada história são os que a [matriz 8.4.2](8-requisitos.md#842-matriz-de-rastreabilidade-dos-requisitos-nao-funcionais-rnfs) e a [seção 8.7](8-requisitos.md#87-regras-de-negocio) ligam aos seus requisitos funcionais; os que valem para todo o produto ficam fora das linhas: RNF03, RNF04, RNF15, RNF16 e RNF17 fazem parte da [Definition of Done](9-dor-dod.md), e RNF18 e RNF19 são verificados no ambiente, como descreve a [seção 6.4](../visao/6-cronograma.md#64-estabilizacao-implantacao-e-transferencia).
+??? note "Como as histórias derivam dos requisitos e quem são as personas"
+    As histórias derivam dos requisitos funcionais da [seção 8](8-requisitos.md) por quatro regras:
 
-Uma história dividida mantém o número e recebe uma letra (HU-01a, HU-01b). Cada história atende à [Definition of Ready](9-dor-dod.md) antes de entrar em uma sprint.
+    1. Cada história tem um ator e um resultado que ele observa, e cabe em uma sprint.
+    2. Cada requisito funcional pertence a uma única história, onde é construído e aceito; outras histórias podem depender dele.
+    3. Um requisito vira história própria quando tem ator diferente ou critério de aceitação próprio; requisito de esforço técnico 3 ou 4 é candidato a história própria.
+    4. Os requisitos não funcionais e as regras de negócio de cada história são os que a [matriz 8.4.2](8-requisitos.md#842-matriz-de-rastreabilidade-dos-requisitos-nao-funcionais-rnfs) e a [seção 8.7](8-requisitos.md#87-regras-de-negocio) ligam aos seus requisitos funcionais; os que valem para todo o produto ficam fora das linhas: RNF03, RNF04, RNF15, RNF16 e RNF17 fazem parte da [Definition of Done](9-dor-dod.md), e RNF18 e RNF19 são verificados no ambiente, como descreve a [seção 6.4](../visao/6-cronograma.md#64-estabilizacao-implantacao-e-transferencia).
 
-Cada história tem uma ficha com a situação, o destino, o valor, os requisitos, as dependências, os critérios de aceitação e a evolução, sem sair desta página. Os filtros acima das fichas separam as histórias por situação, destino e épico.
+    Uma história dividida mantém o número e recebe uma letra (HU-01a, HU-01b).
 
-Personas das histórias e perfis da [seção 8.5.1](8-requisitos.md#851-perfis-de-acesso-e-permissoes-cp1-e-transversal): Diretora de Projetos, responsável de área e coordenadora de projeto atuam no perfil Presidência e Gestão de Projetos; coordenador pedagógico, coordenador autorizado, educador e integrante do núcleo pedagógico, no perfil Núcleo Pedagógico e Educadores; a pessoa interessada usa o formulário público, sem conta; a administração do sistema tem perfil próprio 🔧. As histórias de uso por perfil dependem da HU-16, que não é repetida na coluna de dependências.
+    Personas das histórias e perfis da [seção 8.5.1](8-requisitos.md#851-perfis-de-acesso-e-permissoes-cp1-e-transversal): Diretora de Projetos, responsável de área e coordenadora de projeto atuam no perfil Presidência e Gestão de Projetos; coordenador pedagógico, coordenador autorizado, educador e integrante do núcleo pedagógico, no perfil Núcleo Pedagógico e Educadores; a pessoa interessada usa o formulário público, sem conta; a administração do sistema tem perfil próprio 🔧. As histórias de uso por perfil dependem da HU-16, que não é repetida nas dependências das fichas.
 
 <a id="hu-01"></a>
 <a id="hu-01a"></a>
@@ -543,11 +545,16 @@ Cada valor registra o critério que mais pesou: problema central, objetivo do pr
 | 3 | de 6 a 12 h | várias dependências ou incertezas | exige estudo adicional |
 | 4 | mais de 12 h | incerteza alta ou integração crítica | tecnologia não dominada |
 
-O **esforço técnico** de cada requisito é a média das três notas, arredondada para o inteiro mais próximo (0,5 arredonda para cima). A lacuna de capacidade se apoia na [matriz de competências](../gestao/matriz-competencias.md).
+O **esforço técnico** de cada requisito é a média das três notas, arredondada para o inteiro mais próximo (0,5 arredonda para cima). A lacuna de capacidade se apoia na [matriz de competências](../gestao/como-trabalhamos.md#competencias).
 
 ### 10.2.2 Avaliação de negócio com o Instituto
 
 O Instituto deu o valor a quatorze das quinze histórias apresentadas na validação de 28/09/2026, e a HU-15 entrou pela obrigação legal; cada história derivada na 10.1 herda o valor da original. Nas derivadas cujo resultado difere do que foi avaliado (HU-03b, HU-05b, HU-07c e HU-09a), o valor herdado é inicial 🔧 e volta à conferência com o Instituto. A HU-16, de administração de contas, tem o valor proposto pela equipe, a confirmar com o Instituto 🔧.
+
+<!-- priorizacao-moscow -->
+
+<details class="note" markdown="1">
+<summary>Ver a tabela da avaliação, com o critério e a justificativa do Instituto</summary>
 
 | História validada | Histórias derivadas (10.1) | Valor | Critério | Justificativa do Instituto |
 | :--- | :--- | :---: | :--- | :--- |
@@ -569,7 +576,14 @@ O Instituto deu o valor a quatorze das quinze histórias apresentadas na valida�
 | HU-15 | HU-15a, HU-15b | 4 🔧 | Obrigação legal | Obrigação legal (LGPD, art. 18); não foi votada em 28/09 e entrou no recorte confirmado em 08/10/2026. |
 | — | HU-16 | 4 🔧 | Dependência de outra função | Sem valor atribuído pelo Instituto 🔧; as contas e os perfis são condição do acesso por perfil, que vale para todo o produto (RNF04). |
 
+</details>
+
 ### 10.2.3 Avaliação técnica
+
+Cada requisito funcional recebeu as três notas da 10.2.1; a média arredondada é o esforço técnico, que aparece na matriz da 10.2.5.
+
+<details class="note" markdown="1">
+<summary>Ver as notas por requisito</summary>
 
 | Código | Esforço | Complexidade | Lacuna | Média | Esforço técnico |
 | :---: | :---: | :---: | :---: | :---: | :---: |
@@ -619,6 +633,8 @@ O Instituto deu o valor a quatorze das quinze histórias apresentadas na valida�
 | [RF44](8-requisitos.md#rf44) | 2 | 1 | 1 | 1,3 | **1** |
 | [RF45](8-requisitos.md#rf45) | 1 | 1 | 1 | 1,0 | **1** |
 | [RF46](8-requisitos.md#rf46) | 2 | 1 | 1 | 1,3 | **1** 🔧 |
+
+</details>
 
 ??? note "Fundamentação técnica por requisito"
     - **RF01:** CRUD administrativo padrão em Next.js e PostgreSQL (stack consolidada).
@@ -670,6 +686,11 @@ O Instituto deu o valor a quatorze das quinze histórias apresentadas na valida�
 
 ### 10.2.4 Tabela consolidada
 
+Valor, esforço técnico e destino de cada requisito funcional, de onde saem a matriz da 10.2.5 e o recorte da 10.2.6.
+
+<details class="note" markdown="1">
+<summary>Ver a tabela consolidada</summary>
+
 | Código | Valor | Esforço técnico | Destino |
 | :---: | :---: | :---: | :--- |
 | [RF01](8-requisitos.md#rf01) | 4 | 1 | MVP |
@@ -719,9 +740,18 @@ O Instituto deu o valor a quatorze das quinze histórias apresentadas na valida�
 | [RF45](8-requisitos.md#rf45) | 4 | 1 | Incremento 2 |
 | [RF46](8-requisitos.md#rf46) | 4 🔧 | 1 🔧 | MVP 🔧 |
 
+</details>
+
 ### 10.2.5 Matriz 4 × 4
 
-Linhas: valor de negócio. Colunas: esforço técnico. Em negrito, os requisitos do MVP.
+Linhas: valor de negócio. Colunas: esforço técnico. Cada código leva ao requisito; a cor diz o destino. As células destacadas são as candidatas ao MVP.
+
+<!-- priorizacao-matriz -->
+
+Candidatos ao MVP pela regra da matriz: valor 4 com esforço 1 ou 2, e valor 3 com esforço 1, ponderados pelas dependências, pelo fluxo mínimo completo e pelos riscos. Requisito de valor alto e esforço alto é reduzido, dividido ou adiado, nunca descartado. Nas tabelas recolhidas desta seção, o símbolo 🔧 marca valor ainda em conferência com o Instituto; nas visões, a borda tracejada.
+
+<details class="note" markdown="1">
+<summary>Ver a matriz em tabela (em negrito, os requisitos do MVP)</summary>
 
 | Valor \ Esforço | 1 | 2 | 3 | 4 |
 | :---: | :--- | :--- | :--- | :--- |
@@ -730,16 +760,16 @@ Linhas: valor de negócio. Colunas: esforço técnico. Em negrito, os requisitos
 | **2** | RF21 | RF20 | RF16 🔧, RF17, RF18 | — |
 | **1** | — | — | — | — |
 
-Candidatos ao MVP pela regra da matriz: valor 4 com esforço 1 ou 2, e valor 3 com esforço 1, ponderados pelas dependências, pelo fluxo mínimo completo e pelos riscos. Requisito de valor alto e esforço alto é reduzido, dividido ou adiado, nunca descartado. O símbolo 🔧 marca valor ainda em conferência com o Instituto.
-
+</details>
 
 ### 10.2.6 MVP e incrementos
 
+<!-- priorizacao-mvp -->
+
 O MVP é o primeiro recorte utilizável pelo Instituto: cadastrar o instrumento e o projeto, desdobrar requisitos e metas, dar responsável e prazo a cada meta, ser avisado dos vencimentos, registrar aditivos, receber inscrições por link, QR Code ou presencialmente, atender pedidos dos titulares dos dados e gerar a prestação de contas com justificativas. Na validação, o Instituto definiu parcerias e metas como a entrega prioritária, apontou as inscrições como o que "facilitaria para todas as equipes" e confirmou tentar o relatório e a planilha já no MVP. O recorte foi confirmado em 08/10/2026; o que essa sessão e a de 29/10/2026 resolveram e o que segue pendente estão na [seção 10.2.8](#1028-validacao-com-o-instituto).
 
-O que este recorte permite verificar é o controle de instrumentos, metas, prazos e inscrições, com o relatório montado a partir desses registros. A redução do esforço de prestação de contas depende das evidências e da presença, que chegam nos incrementos 2 e 3, e é conferida com o Instituto a cada entrega 🔧.
-
-Se a capacidade da sprint não comportar o recorte inteiro, descem para a sprint seguinte, nesta ordem, o PDF diagramado (HU-05b), o termo aditivo (HU-14) e o aviso por e-mail da HU-02b (CA-02b.4), única parte de história que desce separada do resto. O relatório com o resultado alcançado e as justificativas (HU-05a) e a planilha (HU-13) são preservados, e as histórias dos direitos do titular (HU-15a, HU-15b) não descem enquanto a inscrição pública puder receber dado real.
+<details class="note" markdown="1">
+<summary>Ver as histórias e os requisitos de cada incremento</summary>
 
 | Incremento | Épicos e histórias | Requisitos funcionais |
 | :--- | :--- | :--- |
@@ -748,7 +778,17 @@ Se a capacidade da sprint não comportar o recorte inteiro, descem para a sprint
 | Incremento 3 | Presença em campo: HU-09a, HU-10 | RF16, RF19 |
 | Posterior | Presença em campo: HU-09b, HU-12 · Pessoas: HU-06 · Requisito e meta: HU-11 | RF17, RF18, RF20, RF21, RF28 a RF30 |
 
-**Gargalos atendidos pelo MVP.** Os gargalos do processo atual (seção 8.4.3) ficam assim no primeiro recorte:
+</details>
+
+??? note "O que o recorte permite verificar e a ordem de contenção"
+    O que este recorte permite verificar é o controle de instrumentos, metas, prazos e inscrições, com o relatório montado a partir desses registros. A redução do esforço de prestação de contas depende das evidências e da presença, que chegam nos incrementos 2 e 3, e é conferida com o Instituto a cada entrega 🔧.
+
+    Se a capacidade da sprint não comportar o recorte inteiro, descem para a sprint seguinte, nesta ordem, o PDF diagramado (HU-05b), o termo aditivo (HU-14) e o aviso por e-mail da HU-02b (CA-02b.4), única parte de história que desce separada do resto. O relatório com o resultado alcançado e as justificativas (HU-05a) e a planilha (HU-13) são preservados, e as histórias dos direitos do titular (HU-15a, HU-15b) não descem enquanto a inscrição pública puder receber dado real.
+
+<details class="note" markdown="1">
+<summary>Gargalos atendidos pelo MVP e pelos incrementos</summary>
+
+Os gargalos do processo atual (seção 8.4.3) ficam assim no primeiro recorte:
 
 | Gargalo | No MVP | Nos incrementos |
 | :---: | :--- | :--- |
@@ -759,22 +799,23 @@ Se a capacidade da sprint não comportar o recorte inteiro, descem para a sprint
 | **G05** | Versionamento do plano e comparativo das metas repactuadas (RF31, RF44) | Progresso calculado, apuração e alerta de risco (RF28 a RF30) depois; o painel da Presidência não tem RF |
 | **G06** | Relatório com resultado alcançado e justificativas, PDF e planilha (RF35 a RF39, RF43) | Índice de evidências no relatório (RF36) e miniaturas no PDF (RF37) no incremento 2 |
 
-**Justificativas do recorte.**
+</details>
 
-- **Fluxo mínimo completo.** O MVP fecha dois ciclos: do cadastro do instrumento à emissão do relatório, e da criação da atividade à lista de inscritos, com os controles de dados pessoais que a inscrição exige.
-- **Inscrições no MVP (HU-07a, HU-07b, HU-07c e HU-08).** Valor 4 e esforço 1 ou 2 em todos os requisitos; o Instituto disse que elas "seriam excelentes" para acompanhar inscritos e metas em todas as equipes.
-- **RF09 (cadastrar atividade), da HU-03a.** Entra no MVP por dependência, porque toda inscrição é feita em uma atividade. As comprovações por modalidade (RF10) ficam para o incremento 2, com as evidências; a HU-03a cobre o cadastro e a HU-03b, as comprovações.
-- **HU-15a e HU-15b no MVP, valor 4 🔧.** Com as inscrições, o sistema passa a guardar dados pessoais de participantes, e o atendimento aos direitos do titular é obrigação legal desde o primeiro dado. O RF27 (excluir ou anonimizar, esforço 3) entra por essa obrigação.
-- **RF41 (cadastrar modalidades), da HU-03a.** Entra com o RF09, porque cada atividade é cadastrada em uma modalidade criada pelo Instituto.
-- **Configuração do formulário (RF42), da HU-07b.** Entra com as inscrições porque o campo que identifica cadastro repetido (e-mail ou CPF) é escolhido no formulário, a confirmar com o Instituto 🔧.
-- **HU-16 (contas e perfis) no MVP.** O acesso por perfil vale desde a primeira entrega e depende das contas; a história também serve às validações com o Instituto.
-- **RF37 (relatório em PDF), valor 4 e esforço 3.** Entra por proposta da equipe confirmada pelo Instituto, em forma reduzida: no MVP o PDF reproduz o relatório do RF36 sem as miniaturas de evidências, que chegam com o incremento 2.
-- **RF36 e RF43 (relatório de execução e resultado alcançado).** No MVP o relatório traz metas, indicadores pactuados, o resultado alcançado registrado pelo usuário autorizado (RF43), com o percentual calculado na meta quantitativa, e as justificativas; o índice de comprovações chega com a evidência (incremento 2) e o cálculo automático do alcançado, com o RF28 (HU-11). No MVP, o valor alcançado vem dos controles que o Instituto já mantém (listas de presença, planilhas e registros da execução) e é registrado, com a data de referência, por quem responde pela meta ou pela Presidência e Gestão; a trilha de auditoria guarda autor, data e valor, e a conferência de cada valor com a fonte antes da finalização é procedimento do Instituto 🔧.
-- **Relatório e planilha com os dados existentes (HU-05a, HU-05b e HU-13).** No MVP, o relatório, o PDF e a planilha saem com metas, resultado alcançado e justificativas; as evidências e as presenças passam a compor esses documentos quando a HU-04a e a HU-09a são entregues, cada uma com o critério que o verifica.
-- **Evidências no incremento 2.** O Instituto ordenou as evidências logo depois do MVP; o esforço delas (RF32 e RF34 com esforço 3) não cabe na primeira entrega. A orientação de enquadramento (RF45) vai junto, porque só existe na tela de registro da foto (RF32).
-- **HU-10 (lançamento fora do prazo).** Foi apresentada e validada junto com evidências, mas corrige presenças já registradas; por isso acompanha o registro de presença no incremento 3.
-- **RF16 (registro on-line de presença), valor 2.** Sobe para o incremento 3 por dependência: a HU-10, de valor 4, corrige presenças registradas por ele. O registro sem conexão (RF17) e a sincronização (RF18) ficam para depois.
-- **HU-11 (progresso e risco), valor 3.** Fica para o fim porque o cálculo (RF28) depende de presenças e evidências registradas; antes disso o painel mostraria números enganosos. O RF29, candidato pela matriz, só tem efeito junto com o RF28.
+??? note "Justificativas do recorte"
+    - **Fluxo mínimo completo.** O MVP fecha dois ciclos: do cadastro do instrumento à emissão do relatório, e da criação da atividade à lista de inscritos, com os controles de dados pessoais que a inscrição exige.
+    - **Inscrições no MVP (HU-07a, HU-07b, HU-07c e HU-08).** Valor 4 e esforço 1 ou 2 em todos os requisitos; o Instituto disse que elas "seriam excelentes" para acompanhar inscritos e metas em todas as equipes.
+    - **RF09 (cadastrar atividade), da HU-03a.** Entra no MVP por dependência, porque toda inscrição é feita em uma atividade. As comprovações por modalidade (RF10) ficam para o incremento 2, com as evidências; a HU-03a cobre o cadastro e a HU-03b, as comprovações.
+    - **HU-15a e HU-15b no MVP, valor 4 🔧.** Com as inscrições, o sistema passa a guardar dados pessoais de participantes, e o atendimento aos direitos do titular é obrigação legal desde o primeiro dado. O RF27 (excluir ou anonimizar, esforço 3) entra por essa obrigação.
+    - **RF41 (cadastrar modalidades), da HU-03a.** Entra com o RF09, porque cada atividade é cadastrada em uma modalidade criada pelo Instituto.
+    - **Configuração do formulário (RF42), da HU-07b.** Entra com as inscrições porque o campo que identifica cadastro repetido (e-mail ou CPF) é escolhido no formulário, a confirmar com o Instituto 🔧.
+    - **HU-16 (contas e perfis) no MVP.** O acesso por perfil vale desde a primeira entrega e depende das contas; a história também serve às validações com o Instituto.
+    - **RF37 (relatório em PDF), valor 4 e esforço 3.** Entra por proposta da equipe confirmada pelo Instituto, em forma reduzida: no MVP o PDF reproduz o relatório do RF36 sem as miniaturas de evidências, que chegam com o incremento 2.
+    - **RF36 e RF43 (relatório de execução e resultado alcançado).** No MVP o relatório traz metas, indicadores pactuados, o resultado alcançado registrado pelo usuário autorizado (RF43), com o percentual calculado na meta quantitativa, e as justificativas; o índice de comprovações chega com a evidência (incremento 2) e o cálculo automático do alcançado, com o RF28 (HU-11). No MVP, o valor alcançado vem dos controles que o Instituto já mantém (listas de presença, planilhas e registros da execução) e é registrado, com a data de referência, por quem responde pela meta ou pela Presidência e Gestão; a trilha de auditoria guarda autor, data e valor, e a conferência de cada valor com a fonte antes da finalização é procedimento do Instituto 🔧.
+    - **Relatório e planilha com os dados existentes (HU-05a, HU-05b e HU-13).** No MVP, o relatório, o PDF e a planilha saem com metas, resultado alcançado e justificativas; as evidências e as presenças passam a compor esses documentos quando a HU-04a e a HU-09a são entregues, cada uma com o critério que o verifica.
+    - **Evidências no incremento 2.** O Instituto ordenou as evidências logo depois do MVP; o esforço delas (RF32 e RF34 com esforço 3) não cabe na primeira entrega. A orientação de enquadramento (RF45) vai junto, porque só existe na tela de registro da foto (RF32).
+    - **HU-10 (lançamento fora do prazo).** Foi apresentada e validada junto com evidências, mas corrige presenças já registradas; por isso acompanha o registro de presença no incremento 3.
+    - **RF16 (registro on-line de presença), valor 2.** Sobe para o incremento 3 por dependência: a HU-10, de valor 4, corrige presenças registradas por ele. O registro sem conexão (RF17) e a sincronização (RF18) ficam para depois.
+    - **HU-11 (progresso e risco), valor 3.** Fica para o fim porque o cálculo (RF28) depende de presenças e evidências registradas; antes disso o painel mostraria números enganosos. O RF29, candidato pela matriz, só tem efeito junto com o RF28.
 
 ### 10.2.7 Requisitos não funcionais no MVP
 
@@ -791,55 +832,53 @@ O recorte foi validado com o Instituto em três sessões: a de 28/09/2026 aprovo
 
 **Alcance da validação:** o MVP foi aprovado pelo núcleo pedagógico, que também representou o Instituto em 08/10 e em 29/10. As funcionalidades que a [seção 7.3.1](../visao/7-equipe-e-cliente.md#731-area-competente-por-funcionalidade) atribui a outras áreas aguardam a validação da área competente, em especial o relatório e a planilha (HU-05a, HU-05b e HU-13), da área administrativo-financeira.
 
-**Sessão de 28/09/2026.** Os códigos de história são os da sessão; a correspondência com as histórias derivadas está na 10.2.2.
+??? note "Sessão de 28/09/2026"
+    Os códigos de história são os da sessão; a correspondência com as histórias derivadas está na 10.2.2.
 
-| Item | Registro |
-| :--- | :--- |
-| Data e formato | 28/09/2026, 16h, reunião online com gravação autorizada |
-| Participantes do Instituto | Clara Novaes, diretora pedagógica; Maria Eduarda |
-| Participantes da equipe | Vinicius Vieira, Rodrigo Henrique Donato, Lucas de Paula Leal, Caio Martins; Daniel Batista 🔧 |
-| Apresentado | Quinze histórias em quatro jornadas, com os requisitos e as regras de negócio de cada uma, e a escala de valor de 4 a 1 |
-| Aprovado para o MVP | Parcerias e metas (HU-01, HU-02, HU-14); inscrições públicas e assistidas (HU-07, HU-08); prestação de contas com relatório e planilha (HU-05, HU-13), se couberem na capacidade |
-| Adiado | Evidências para o incremento 2; registro de presença para o incremento 3; registro sem conexão, histórico de participação e painel de risco para depois |
-| Ajustes pedidos | Aviso de vencimento automático com 30 dias de antecedência e aviso manual na própria meta, enviado primeiro por e-mail; encerramento de projeto restrito à coordenação da execução, sem bloqueio por evidência antiga que não pode ser recuperada; trava do relatório por falta de justificativa mantida, com notificação à direção sem parar as demais áreas; correção fora do prazo sem aprovação; modalidades de atividade criadas pelo próprio Instituto |
-| Confirmado sem ajuste | Meta sem parâmetros fica em rascunho; aditivo gera nova versão e preserva a original; alteração em registro já publicado exige justificativa |
-| Pedido novo | Registrar a alteração do período de execução e atualizar os prazos que dependem dele, a especificar |
-| Divergências e pendências | A ordem dos incrementos vai à conferência do Instituto: as inscrições foram confirmadas para o MVP no início da sessão e, na ordem final, o campo ficou depois das evidências; a equipe manteve as inscrições no MVP e posicionou por dependência o RF09 e a HU-15 no MVP e a HU-10 e o RF16 no incremento 3; a HU-15 não foi votada e seu valor vai à conferência; a repetição do aviso depois dos 30 dias está a definir; a trava do relatório sobre pagamentos depende da área financeira |
+    | Item | Registro |
+    | :--- | :--- |
+    | Data e formato | 28/09/2026, 16h, reunião online com gravação autorizada |
+    | Participantes do Instituto | Clara Novaes, diretora pedagógica; Maria Eduarda |
+    | Participantes da equipe | Vinicius Vieira, Rodrigo Henrique Donato, Lucas de Paula Leal, Caio Martins; Daniel Batista 🔧 |
+    | Apresentado | Quinze histórias em quatro jornadas, com os requisitos e as regras de negócio de cada uma, e a escala de valor de 4 a 1 |
+    | Aprovado para o MVP | Parcerias e metas (HU-01, HU-02, HU-14); inscrições públicas e assistidas (HU-07, HU-08); prestação de contas com relatório e planilha (HU-05, HU-13), se couberem na capacidade |
+    | Adiado | Evidências para o incremento 2; registro de presença para o incremento 3; registro sem conexão, histórico de participação e painel de risco para depois |
+    | Ajustes pedidos | Aviso de vencimento automático com 30 dias de antecedência e aviso manual na própria meta, enviado primeiro por e-mail; encerramento de projeto restrito à coordenação da execução, sem bloqueio por evidência antiga que não pode ser recuperada; trava do relatório por falta de justificativa mantida, com notificação à direção sem parar as demais áreas; correção fora do prazo sem aprovação; modalidades de atividade criadas pelo próprio Instituto |
+    | Confirmado sem ajuste | Meta sem parâmetros fica em rascunho; aditivo gera nova versão e preserva a original; alteração em registro já publicado exige justificativa |
+    | Pedido novo | Registrar a alteração do período de execução e atualizar os prazos que dependem dele, a especificar |
+    | Divergências e pendências | A ordem dos incrementos vai à conferência do Instituto: as inscrições foram confirmadas para o MVP no início da sessão e, na ordem final, o campo ficou depois das evidências; a equipe manteve as inscrições no MVP e posicionou por dependência o RF09 e a HU-15 no MVP e a HU-10 e o RF16 no incremento 3; a HU-15 não foi votada e seu valor vai à conferência; a repetição do aviso depois dos 30 dias está a definir; a trava do relatório sobre pagamentos depende da área financeira |
 
-**Sessão de 08/10/2026.**
+??? note "Sessão de 08/10/2026"
+    | Item | Registro |
+    | :--- | :--- |
+    | Data e formato | 08/10/2026, 16h30, reunião online com gravação autorizada; [ata](../gestao/atas/2026-10-08-validacao-mvp-instituto.md) |
+    | Participantes do Instituto | Maria Eduarda (Duda), do núcleo pedagógico |
+    | Participantes da equipe | Vinicius Vieira, Daniel Batista, Maria Eduarda Marques, Lucas de Paula Leal |
+    | Apresentado | As histórias do MVP no quadro do projeto, pelos épicos priorizados em 28/09 |
+    | Confirmado | Instrumento, projeto e metas com indicador e prazos, com os documentos assinados anexados em PDF ou DOCX; responsável, setor e aviso por e-mail 30 dias antes do vencimento; aditivo e mudança do período como nova versão, com a anterior preservada; inscrição por link, QR Code e presencial, com aviso de tratamento de dados, autorização de uso de imagem, vagas, lista de espera e cadastro repetido; atendimento aos titulares dos dados desde a primeira fase; relatório em PDF, travado por meta não atingida sem justificativa, e planilha em XLSX e CSV; fotos e demais comprovações visuais no incremento 2 |
+    | Pendências de 28/09 resolvidas | Ordem dos incrementos: as inscrições ficam no MVP, e as evidências, no incremento 2; a HU-15 fica no MVP, com o atendimento aos titulares desde a primeira fase, e seu valor segue inicial (10.2.2) 🔧; o relatório e a planilha, aprovados em 28/09 se coubessem na capacidade, foram confirmados sem essa condição |
+    | Divergências com o catálogo | Cadastro repetido como aviso no tema e como bloqueio na decisão, resolvido em 29/10 pelo aviso; indicador e datas como condição para a meta sair do rascunho (seção 8.6, item 16) 🔧; e-mail de confirmação da inscrição presencial e inscrição vinculada aos formulários que o Instituto já utiliza (seção 8.6, item 8) 🔧 |
+    | Seguem em aberto | Repetição do aviso depois dos 30 dias e trava do relatório sobre pendências administrativo-financeiras (seção 8.6, itens 6 e 7) |
 
-| Item | Registro |
-| :--- | :--- |
-| Data e formato | 08/10/2026, 16h30, reunião online com gravação autorizada; [ata](../gestao/atas/2026-10-08-validacao-mvp-instituto.md) |
-| Participantes do Instituto | Maria Eduarda (Duda), do núcleo pedagógico |
-| Participantes da equipe | Vinicius Vieira, Daniel Batista, Maria Eduarda Marques, Lucas de Paula Leal |
-| Apresentado | As histórias do MVP no quadro do projeto, pelos épicos priorizados em 28/09 |
-| Confirmado | Instrumento, projeto e metas com indicador e prazos, com os documentos assinados anexados em PDF ou DOCX; responsável, setor e aviso por e-mail 30 dias antes do vencimento; aditivo e mudança do período como nova versão, com a anterior preservada; inscrição por link, QR Code e presencial, com aviso de tratamento de dados, autorização de uso de imagem, vagas, lista de espera e cadastro repetido; atendimento aos titulares dos dados desde a primeira fase; relatório em PDF, travado por meta não atingida sem justificativa, e planilha em XLSX e CSV; fotos e demais comprovações visuais no incremento 2 |
-| Pendências de 28/09 resolvidas | Ordem dos incrementos: as inscrições ficam no MVP, e as evidências, no incremento 2; a HU-15 fica no MVP, com o atendimento aos titulares desde a primeira fase, e seu valor segue inicial (10.2.2) 🔧; o relatório e a planilha, aprovados em 28/09 se coubessem na capacidade, foram confirmados sem essa condição |
-| Divergências com o catálogo | Cadastro repetido como aviso no tema e como bloqueio na decisão, resolvido em 29/10 pelo aviso; indicador e datas como condição para a meta sair do rascunho (seção 8.6, item 16) 🔧; e-mail de confirmação da inscrição presencial e inscrição vinculada aos formulários que o Instituto já utiliza (seção 8.6, item 8) 🔧 |
-| Seguem em aberto | Repetição do aviso depois dos 30 dias e trava do relatório sobre pendências administrativo-financeiras (seção 8.6, itens 6 e 7) |
+??? note "Sessão de 29/10/2026"
+    | Item | Registro |
+    | :--- | :--- |
+    | Data e formato | 29/10/2026, 16h30, reunião online com demonstração no ambiente de homologação; ata em conferência pelo Instituto |
+    | Participantes do Instituto | Clara Novaes e Maria Eduarda (Duda), do núcleo pedagógico |
+    | Participantes da equipe | Vinicius Vieira, Maria Eduarda Marques, Caio Martins |
+    | Apresentado | Painel inicial, perfis de acesso, cadastro de instrumentos, projetos e metas e inscrição pública por link e QR Code |
+    | Confirmado sem ajuste | Rumo do produto; descritivo das metas preenchido à mão na primeira versão; cadastros de participantes mantidos, para formar um banco de participantes, com exclusão e anonimização só a pedido do titular (HU-15b) |
+    | Pontos em aberto respondidos | Cadastro repetido como aviso, sem bloqueio, com indicador na lista de inscritos (RF22, CA-07a.8); acesso administrativo da coordenação de execução e da direção de projetos (seção 8.5.1) |
+    | Pedidos novos | Avisos por e-mail sobre a inscrição e o início das atividades, recuperação de senha e campos personalizados no formulário de inscrição (seção 8.6, item 15) 🔧 |
+    | Seguem em aberto | Projeto modelo dos testes, a confirmar pela direção do Instituto; modelo de formulário do Instituto; dados de acessibilidade, que são dados pessoais sensíveis (seção 8.6, item 15); canal e custo dos avisos por WhatsApp. Os demais pontos da seção 8.6 não foram tratados nesta sessão |
 
-**Sessão de 29/10/2026.**
-
-| Item | Registro |
-| :--- | :--- |
-| Data e formato | 29/10/2026, 16h30, reunião online com demonstração no ambiente de homologação; ata em conferência pelo Instituto |
-| Participantes do Instituto | Clara Novaes e Maria Eduarda (Duda), do núcleo pedagógico |
-| Participantes da equipe | Vinicius Vieira, Maria Eduarda Marques, Caio Martins |
-| Apresentado | Painel inicial, perfis de acesso, cadastro de instrumentos, projetos e metas e inscrição pública por link e QR Code |
-| Confirmado sem ajuste | Rumo do produto; descritivo das metas preenchido à mão na primeira versão; cadastros de participantes mantidos, para formar um banco de participantes, com exclusão e anonimização só a pedido do titular (HU-15b) |
-| Pontos em aberto respondidos | Cadastro repetido como aviso, sem bloqueio, com indicador na lista de inscritos (RF22, CA-07a.8); acesso administrativo da coordenação de execução e da direção de projetos (seção 8.5.1) |
-| Pedidos novos | Avisos por e-mail sobre a inscrição e o início das atividades, recuperação de senha e campos personalizados no formulário de inscrição (seção 8.6, item 15) 🔧 |
-| Seguem em aberto | Projeto modelo dos testes, a confirmar pela direção do Instituto; modelo de formulário do Instituto; dados de acessibilidade, que são dados pessoais sensíveis (seção 8.6, item 15); canal e custo dos avisos por WhatsApp. Os demais pontos da seção 8.6 não foram tratados nesta sessão |
-
-**Sessão de 12/11/2026.**
-
-| Item | Registro |
-| :--- | :--- |
-| Data e formato | 12/11/2026, das 17h20 às 19h, reunião online; validação em uso, depois de o Instituto testar a homologação com as contas de teste; ata em conferência pelo Instituto |
-| Participantes do Instituto | Direção pedagógica, Núcleo Pedagógico e coordenação administrativo-financeira |
-| Participantes da equipe | Vinicius Vieira, Maria Eduarda Marques, Daniel Batista e Rodrigo Henrique Donato |
-| Apresentado | Percurso do projeto e das metas, atividades e inscrições, relatório e perfis de acesso, com os dados de teste |
-| Confirmado | A direção liberou a Escola Carnavalesca, projeto em andamento, como piloto do sistema; a autorização de uso de imagem e voz continua opcional e visível na lista de inscritos |
-| Pedidos novos | "Projeto" como referência na interface, com o número do instrumento e o processo SEI; "meios de aferição" no lugar de "requisitos"; metas organizadas por equipe e etapas dentro da meta; comprovação ligada à meta e guardada por data; inscrição que não garante a vaga, com confirmação pela equipe; acesso enxuto para a captação e envio de material por pessoas de fora do Instituto |
-| Seguem em aberto | Avaliação dos pedidos por valor, esforço e Definition of Ready na Sprint Review 5 (19/11/2026); acesso pelo celular, a investigar; validação do relatório e da planilha pela área administrativo-financeira |
+??? note "Sessão de 12/11/2026"
+    | Item | Registro |
+    | :--- | :--- |
+    | Data e formato | 12/11/2026, das 17h20 às 19h, reunião online; validação em uso, depois de o Instituto testar a homologação com as contas de teste; ata em conferência pelo Instituto |
+    | Participantes do Instituto | Direção pedagógica, Núcleo Pedagógico e coordenação administrativo-financeira |
+    | Participantes da equipe | Vinicius Vieira, Maria Eduarda Marques, Daniel Batista e Rodrigo Henrique Donato |
+    | Apresentado | Percurso do projeto e das metas, atividades e inscrições, relatório e perfis de acesso, com os dados de teste |
+    | Confirmado | A direção liberou a Escola Carnavalesca, projeto em andamento, como piloto do sistema; a autorização de uso de imagem e voz continua opcional e visível na lista de inscritos |
+    | Pedidos novos | "Projeto" como referência na interface, com o número do instrumento e o processo SEI; "meios de aferição" no lugar de "requisitos"; metas organizadas por equipe e etapas dentro da meta; comprovação ligada à meta e guardada por data; inscrição que não garante a vaga, com confirmação pela equipe; acesso enxuto para a captação e envio de material por pessoas de fora do Instituto |
+    | Seguem em aberto | Avaliação dos pedidos por valor, esforço e Definition of Ready na Sprint Review 5 (19/11/2026); acesso pelo celular, a investigar; validação do relatório e da planilha pela área administrativo-financeira |

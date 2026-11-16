@@ -35,6 +35,7 @@
 | 16/11/2026 | 2.21 | Nome dos requisitos só na 8.2 e na 8.3: matrizes 8.4.1 e 8.4.2 com os códigos, sem as colunas Nome e Propriedade de Qualidade; história dona de cada RF só na ficha da história (10.1) | Vinicius Vieira |
 | 16/11/2026 | 2.22 | Árvore de rastreabilidade do problema às histórias e aos requisitos não funcionais, no início da 8.4 | Vinicius Vieira |
 | 16/11/2026 | 2.23 | RNF12 com as condições da medição; RNF13 coerente com a geração do PDF na primeira versão e com as miniaturas do incremento 2; massa de referência definida na 8.5.3; item 21 da 8.6 alinhado; RF09 com o horário da atividade; item 14 da 8.6 com a reunião de 12/11 realizada e os retornos em análise | Vinicius Vieira |
+| 16/11/2026 | 2.24 | Cartões sem gargalo nem link de matriz; matrizes 8.4.1 a 8.4.3 e notas da 8.5 recolhidas; pontos em aberto da 8.6 agrupados por tema, com o número de cada item | Vinicius Vieira |
 
 ---
 
@@ -184,9 +185,12 @@ A árvore parte do problema e passa pelos objetivos específicos e pelas caracte
 
 **Em resumo.** A 8.4.1 liga cada requisito funcional ao gargalo, à origem e às histórias e critérios que o verificam; a 8.4.2 liga cada requisito não funcional à origem e aos requisitos funcionais; a 8.4.3 resume a cobertura por gargalo, característica e objetivo. A cobertura no MVP está na [seção 10.2.6](10-backlog.md#1026-mvp-e-incrementos).
 
-A rastreabilidade estabelece o vínculo bidirecional entre os problemas diagnosticados no fluxo atual (BPMN G01 a G06), os Objetivos Específicos (OEs), as Características de Produto (CP1 a CP8), os requisitos especificados e as histórias de usuário da seção 10, com os critérios de aceitação que verificam cada requisito. A história dona de cada requisito funcional fica na ficha da história, na [seção 10.1](10-backlog.md#101-backlog-geral); as demais histórias da 8.4.1 apenas verificam o requisito.
+A rastreabilidade estabelece o vínculo bidirecional entre os problemas diagnosticados no fluxo atual (BPMN G01 a G06), os Objetivos Específicos (OEs), as Características de Produto (CP1 a CP8), os requisitos especificados e as histórias de usuário da seção 10, com os critérios de aceitação que verificam cada requisito. A história dona de cada requisito funcional fica na ficha da história, na [seção 10.1](10-backlog.md#101-backlog-geral); as demais histórias da 8.4.1 apenas verificam o requisito. As três matrizes abaixo ficam recolhidas.
 
 ### 8.4.1 Matriz de Rastreabilidade dos Requisitos Funcionais (RFs)
+
+<details class="note rq-recolhido" markdown="1">
+<summary>Ver a matriz dos requisitos funcionais, por característica</summary>
 
 #### CP1 — Gestão de Projetos e Metas (OE01; OE04)
 | Requisito | Gargalo BPMN | Norma / Mitigação | História derivada | Cobertura |
@@ -266,9 +270,12 @@ A rastreabilidade estabelece o vínculo bidirecional entre os problemas diagnost
 | **RF38** | G06 | MROSC art. 64 | HU-13 (CA-13.1 a CA-13.5); HU-09a (CA-09a.3) | Total |
 | **RF39** | G06 | RN-13 | HU-05a (CA-05a.3, CA-05a.5) | Total |
 
----
+</details>
 
 ### 8.4.2 Matriz de Rastreabilidade dos Requisitos Não Funcionais (RNFs)
+
+<details class="note rq-recolhido" markdown="1">
+<summary>Ver a matriz dos requisitos não funcionais</summary>
 
 | RNF | Origem (Decisão, Risco Ético ou Norma) | Requisitos Funcionais Relacionados |
 | :--- | :--- | :--- |
@@ -293,9 +300,12 @@ A rastreabilidade estabelece o vínculo bidirecional entre os problemas diagnost
 | **RNF19** | Alinhamento de 15/09/2026 e levantamento presencial de 21/09/2026; Seção 2.5 | *Transversal (Todos os RFs)* |
 | **RNF20** | Seção 3.3.10 | RF16 |
 
----
+</details>
 
 ### 8.4.3 Síntese de Cobertura
+
+<details class="note rq-recolhido" markdown="1">
+<summary>Ver a cobertura por gargalo, característica e objetivo</summary>
 
 #### Cobertura dos Gargalos do Modelo BPMN (B1)
 | Gargalo | Descrição do Gargalo do Processo Atual | Requisitos Cobertos | Situação |
@@ -323,74 +333,91 @@ A cobertura no MVP e nos incrementos está na [seção 10.2.6](10-backlog.md#102
 | **CP7** | Repositório de evidências e documentação | RF32 a RF34, RF45 | OE05; OE06 |
 | **CP8** | Relatórios e exportação de dados | RF35 a RF39 | OE06; OE04, OE05 |
 
+</details>
+
 ---
 
 ## 8.5 Notas de Domínio e Perguntas-Chave Operacionais
 
 ### 8.5.1 Perfis de Acesso e Permissões (CP1 e Transversal)
-Responde à divisão operacional de responsabilidades entre quem cria, edita ou apenas audita (base de atendimento ao RNF04):
 
-| Perfil de Usuário | Instrumentos, Projetos e Metas | Dados Nominais de Participantes | Presença e Evidências | Relatórios Oficiais |
-| :--- | :--- | :--- | :--- | :--- |
-| **Presidência e Gestão de Projetos** | Cria, edita e reprograma | Sem acesso à base cadastral completa | Consulta consolidados | Gera e emite |
-| **Núcleo Pedagógico e Educadores** | Consulta itens de suas atividades | Acessa fichas para mediação pedagógica | Registra e retifica | Consulta |
-| **Administrativo-Financeiro** | Consulta | Bloqueado (apenas totais numéricos) | Consulta consolidados | Consulta |
-| **Órgão Concedente e Auditoria** | Sem acesso direto | Sem acesso à base de pessoas | Evidências vinculadas à prestação | Acesso restrito ao período de análise |
-| **Administração do sistema** 🔧 | Sem acesso; administra contas e perfis (RF40) | Sem acesso | Sem acesso | Sem acesso |
+??? note "Ver a matriz de perfis e as regras de acesso"
+    Responde à divisão operacional de responsabilidades entre quem cria, edita ou apenas audita (base de atendimento ao RNF04):
 
-- **Acesso administrativo:** a coordenação da equipe de execução e a direção de projetos têm o perfil de Presidência e Gestão de Projetos, e a Presidência e a gestão de projetos formam um setor conjunto (validação com o Instituto em 29/10/2026).
-- **Encerramento do projeto:** só a coordenação da equipe de execução encerra o projeto, depois de ver as comprovações pendentes (RN-11).
-- **Trava do relatório:** a liberação do relatório retido por meta sem justificativa é pedida à direção ou à coordenação responsável, que é notificada (RF35).
-- **Campos obrigatórios do instrumento:** Tipo de instrumento, órgão concedente, número do processo administrativo, valor global (R$), datas de celebração e de vigência, com anexo obrigatório do documento formal homologado em PDF ou DOCX (RF02).
-- **Tratamento de metas descritivas:** Caso a meta seja qualitativa ou atrelada a marcos (*milestones*), o parâmetro quantitativo é facultativo e a forma documental de comprovação passa a ser o critério de verificação mandatório (RF04).
+    | Perfil de Usuário | Instrumentos, Projetos e Metas | Dados Nominais de Participantes | Presença e Evidências | Relatórios Oficiais |
+    | :--- | :--- | :--- | :--- | :--- |
+    | **Presidência e Gestão de Projetos** | Cria, edita e reprograma | Sem acesso à base cadastral completa | Consulta consolidados | Gera e emite |
+    | **Núcleo Pedagógico e Educadores** | Consulta itens de suas atividades | Acessa fichas para mediação pedagógica | Registra e retifica | Consulta |
+    | **Administrativo-Financeiro** | Consulta | Bloqueado (apenas totais numéricos) | Consulta consolidados | Consulta |
+    | **Órgão Concedente e Auditoria** | Sem acesso direto | Sem acesso à base de pessoas | Evidências vinculadas à prestação | Acesso restrito ao período de análise |
+    | **Administração do sistema** 🔧 | Sem acesso; administra contas e perfis (RF40) | Sem acesso | Sem acesso | Sem acesso |
+
+    - **Acesso administrativo:** a coordenação da equipe de execução e a direção de projetos têm o perfil de Presidência e Gestão de Projetos, e a Presidência e a gestão de projetos formam um setor conjunto (validação com o Instituto em 29/10/2026).
+    - **Encerramento do projeto:** só a coordenação da equipe de execução encerra o projeto, depois de ver as comprovações pendentes (RN-11).
+    - **Trava do relatório:** a liberação do relatório retido por meta sem justificativa é pedida à direção ou à coordenação responsável, que é notificada (RF35).
+    - **Campos obrigatórios do instrumento:** Tipo de instrumento, órgão concedente, número do processo administrativo, valor global (R$), datas de celebração e de vigência, com anexo obrigatório do documento formal homologado em PDF ou DOCX (RF02).
+    - **Tratamento de metas descritivas:** Caso a meta seja qualitativa ou atrelada a marcos (*milestones*), o parâmetro quantitativo é facultativo e a forma documental de comprovação passa a ser o critério de verificação mandatório (RF04).
 
 ### 8.5.2 Campo, Presença e Evidências (CP2, CP4 e CP7)
-- **Reconciliação e Unicidade Offline:** Cada marcação de presença gerada no cliente recebe identificador imutável e vincula-se à chave composta lógica `(participante_id, oficina_sessao_id, data_evento)`. O backend processa o lote com semântica de *Append-Only*, evitando duplicidades mesmo sob retransmissões repetidas de sincronização.
-- **Exigência Comprobatória por Modalidade:**
-  * *Oficina continuada formativa:* Exige diário de classe digital com chamadas nominais auditáveis e carga horária apurada.
-  * *Evento aberto ou Ação de acolhimento no SCS:* Exige fotografias panorâmicas georreferenciadas, contagem estimativa agregada de público e relatório simplificado do facilitador, dispensando exigência de CPF para preservar a inclusão 🔧.
-- **Lançamentos Extemporâneos:** O sistema não bloqueia o envio tardio caso o educador fique impossibilitado de lançar no dia, mas submete o registro como extemporâneo (RF19), exigindo justificativa textual e retendo carimbo de data/hora para auditoria da coordenação pedagógica.
+
+??? note "Ver as notas de campo, presença e evidências"
+    - **Reconciliação e Unicidade Offline:** Cada marcação de presença gerada no cliente recebe identificador imutável e vincula-se à chave composta lógica `(participante_id, oficina_sessao_id, data_evento)`. O backend processa o lote com semântica de *Append-Only*, evitando duplicidades mesmo sob retransmissões repetidas de sincronização.
+    - **Exigência Comprobatória por Modalidade:**
+      * *Oficina continuada formativa:* Exige diário de classe digital com chamadas nominais auditáveis e carga horária apurada.
+      * *Evento aberto ou Ação de acolhimento no SCS:* Exige fotografias panorâmicas georreferenciadas, contagem estimativa agregada de público e relatório simplificado do facilitador, dispensando exigência de CPF para preservar a inclusão 🔧.
+    - **Lançamentos Extemporâneos:** O sistema não bloqueia o envio tardio caso o educador fique impossibilitado de lançar no dia, mas submete o registro como extemporâneo (RF19), exigindo justificativa textual e retendo carimbo de data/hora para auditoria da coordenação pedagógica.
 
 ### 8.5.3 Apuração de Metas e Relatórios MROSC (CP6 e CP8)
-- **Cálculo de Metas Não Lineares:**
-  * *Metas quantitativas cumulativas:* Percentual aferido pela razão contínua entre volume realizado (soma de presenças ou horas) e o volume pactuado.
-  * *Metas de marco único (milestones):* cumprida ou não cumprida, sem percentual contínuo (CA-11.3); a evidência formal comprova a entrega.
-- **Massa de referência:** massa sintética gerada por script, com o volume de um ano no limite superior das estimativas da seção 1.4: 6 projetos ativos, com os seus instrumentos e metas; 20 atividades por mês (240 no ano); 800 inscrições por mês (9.600 no ano), com as presenças correspondentes; e 3.000 evidências (1.500 por semestre). É a base das medições de desempenho (RNF11, RNF13) e da conferência dos números do relatório (RNF08), e é recalibrada com os dados do projeto piloto. Cada medição registra a versão medida, a configuração do servidor e as condições do ensaio.
-- **Origem do valor alcançado:** no primeiro recorte, o valor alcançado é registrado com data de referência (RF43); quando a apuração automática entra (RF28), ela passa a preencher o valor das metas cuja fonte são presenças e evidências registradas no sistema (RN-08, RN-14).
-- **Tratamento de Termos Aditivos:** O sistema não sobrescreve os dados pactuados originalmente. Ao aprovar um Termo Aditivo, cria-se uma versão incremental do plano de trabalho, e cada meta repactuada pode ser consultada com o previsto original, o reprogramado e o realizado (RF44).
+
+??? note "Ver as notas de apuração e relatórios"
+    - **Cálculo de Metas Não Lineares:**
+      * *Metas quantitativas cumulativas:* Percentual aferido pela razão contínua entre volume realizado (soma de presenças ou horas) e o volume pactuado.
+      * *Metas de marco único (milestones):* cumprida ou não cumprida, sem percentual contínuo (CA-11.3); a evidência formal comprova a entrega.
+    - **Massa de referência:** massa sintética gerada por script, com o volume de um ano no limite superior das estimativas da seção 1.4: 6 projetos ativos, com os seus instrumentos e metas; 20 atividades por mês (240 no ano); 800 inscrições por mês (9.600 no ano), com as presenças correspondentes; e 3.000 evidências (1.500 por semestre). É a base das medições de desempenho (RNF11, RNF13) e da conferência dos números do relatório (RNF08), e é recalibrada com os dados do projeto piloto. Cada medição registra a versão medida, a configuração do servidor e as condições do ensaio.
+    - **Origem do valor alcançado:** no primeiro recorte, o valor alcançado é registrado com data de referência (RF43); quando a apuração automática entra (RF28), ela passa a preencher o valor das metas cuja fonte são presenças e evidências registradas no sistema (RN-08, RN-14).
+    - **Tratamento de Termos Aditivos:** O sistema não sobrescreve os dados pactuados originalmente. Ao aprovar um Termo Aditivo, cria-se uma versão incremental do plano de trabalho, e cada meta repactuada pode ser consultada com o previsto original, o reprogramado e o realizado (RF44).
 
 ### 8.5.4 Inscrição, Pessoas e LGPD (CP3 e CP5)
-- **Dados Mínimos Coletados:** Nome, telefone, data de nascimento (ou faixa etária) e consentimentos. E-mail e CPF entram quando o formulário de inscrição os pede (RF42), por exigência do instrumento ou para identificar cadastro repetido (RF22) 🔧. Nenhum dado sensível estruturado (RNF05).
-- **Consentimento de Menores de Idade:** Para participantes com menos de 18 anos, o formulário identifica o responsável legal (RN-06), que concede em nome do menor os consentimentos de contato e de uso de imagem (RN-05; LGPD, art. 14).
-- **Independência da Autorização de Imagem:** A autorização para registro e divulgação de fotografias institucionais é colhida de forma separada e opcional (RF25). A eventual recusa pelo titular jamais condiciona ou impede sua inscrição ou participação na atividade.
+
+??? note "Ver as notas de inscrição, pessoas e LGPD"
+    - **Dados Mínimos Coletados:** Nome, telefone, data de nascimento (ou faixa etária) e consentimentos. E-mail e CPF entram quando o formulário de inscrição os pede (RF42), por exigência do instrumento ou para identificar cadastro repetido (RF22) 🔧. Nenhum dado sensível estruturado (RNF05).
+    - **Consentimento de Menores de Idade:** Para participantes com menos de 18 anos, o formulário identifica o responsável legal (RN-06), que concede em nome do menor os consentimentos de contato e de uso de imagem (RN-05; LGPD, art. 14).
+    - **Independência da Autorização de Imagem:** A autorização para registro e divulgação de fotografias institucionais é colhida de forma separada e opcional (RF25). A eventual recusa pelo titular jamais condiciona ou impede sua inscrição ou participação na atividade.
 
 ---
 
 ## 8.6 Pontos em Aberto e Auditoria de Lacunas
 
-**Em resumo.** Vinte e um pontos que ainda dependem de definição: lacunas sem requisito funcional (itens 1, 2, 15 e 19), regras de domínio a definir (3 a 9), valores e parâmetros a confirmar (10 a 14, 16 a 18 e 20) e limitações da primeira versão (21). Os marcados com 🔧 têm valor inicial em uso até a confirmação com o Instituto.
+**Em resumo.** Vinte e um pontos que ainda dependem de definição: lacunas sem requisito funcional (itens 1, 2, 15 e 19), regras de domínio a definir (3 a 9), valores e parâmetros a confirmar (10 a 14, 16 a 18 e 20) e limitações da primeira versão (21). Os marcados com 🔧 têm valor inicial em uso até a confirmação com o Instituto. Cada grupo abaixo mantém o número do item.
 
-1. **Gargalos G02 e G05:** o controle interno de ordens de serviço (G02), levantado como demanda candidata no alinhamento de 15/09/2026, e o painel consolidado da Presidência (G05), que depende dos cadastros e registros operacionais segundo o levantamento presencial de 21/09/2026, não têm requisito funcional nesta versão.
-2. **Matriz de Aquisição:** confirmada no levantamento presencial de 21/09/2026 como elemento a modelar no lugar da digitação manual, não tem requisito funcional; o controle financeiro e orçamentário está fora desta versão (seção 2), e a fronteira entre os dois está a definir com a área administrativo-financeira.
-3. **Meta e etapa:** não está definido se a meta é cobrada pelo objetivo inteiro ou por etapa do plano de trabalho, o que afeta o RF04 e o cadastro das metas.
-4. **Encontros e recorrência da atividade 🔧:** não está definido se a oficina contínua é uma atividade com vários encontros ou uma atividade por encontro, nem se os encontros se repetem por semana; a resposta afeta o cadastro da atividade (RF09), a chamada (RF16) e a duração considerada na carga horária (RF20, RN-15).
-5. **Alteração do período de execução:** os prazos das metas fora da nova vigência são sinalizados para revisão, sem mudança automática (CA-14.5) 🔧; a data da prestação de contas final depois da prorrogação está a definir.
-6. **Repetição do aviso de vencimento (RN-03):** a repetição do aviso depois do alerta de 30 dias, enquanto a meta não é concluída, está a definir.
-7. **Trava do relatório por pendência administrativo-financeira (RF35):** aplicação da exigência de justificativa a pendências da área administrativo-financeira, a confirmar com essa área; a solução não inclui controle financeiro.
-8. **Cadastro repetido e confirmação da inscrição:** o registro da validação de 08/10/2026 trazia o cadastro repetido como aviso em um trecho e como bloqueio em outro. Na validação de 29/10/2026 ficou o aviso, sem bloqueio: os cadastros de participantes são mantidos, e a inscrição pelo formulário público com e-mail ou CPF de cadastro existente aparece com indicador na lista de inscritos, sem mostrar o cadastro existente a quem se inscreve (RF22, CA-07a.8). Seguem a definir o campo que identifica a repetição, escolhido no formulário (RF42) 🔧, e o uso do CPF só para identificar repetição 🔧. O e-mail de confirmação na inscrição presencial, do registro de 08/10, passa aos avisos por e-mail pedidos em 29/10 (item 15). O registro de 08/10 também fala em inscrição vinculada aos formulários que o Instituto já utiliza; este documento adota formulário próprio configurável (RF42), que reproduz os campos desses formulários 🔧, e o modelo de formulário do Instituto é aguardado para os campos personalizados (item 15).
-9. **Inscrição de menores:** os campos do responsável legal e as faixas etárias usadas pelo Instituto estão a definir (RN-06, seção 8.5.4).
-10. **Cadastro do instrumento 🔧:** número de processo repetível e código do projeto único no instrumento (CA-01a.1, CA-01a.3); registro do código do instrumento na plataforma do financiador; obrigatoriedade do anexo do documento formal (seção 8.5.1).
-11. **Perfis e contas 🔧:** desde a validação de 29/10/2026, a coordenação da equipe de execução, que encerra o projeto (RN-11), usa o perfil de Presidência e Gestão de Projetos (seção 8.5.1); seguem a definir o perfil do coordenador contratado pelo projeto; perfil de administração do sistema (seção 8.5.1); regras de conta (CA-16.1 a CA-16.3), inclusive o e-mail institucional compartilhado por várias pessoas frente a uma conta por pessoa (RF40); visibilidade das fotos de prova de execução por perfil (CA-04b.1); valor de negócio da HU-15 e da HU-16.
-12. **Valores a confirmar com o Instituto 🔧:** limiar de risco de meta e se ele é fixo ou definido por meta (RF30, CA-11.4); comprovações iniciais de cada modalidade, inclusive a dispensa de CPF na ação de acolhimento (RN-04, seção 8.5.2); prazo de atendimento aos pedidos do titular (RNF06); classes de alcance da meta e uso do valor alcançado no relatório (RN-14); prazo de entrega da cópia integral dos dados (RNF19).
-13. **Parâmetros técnicos a verificar 🔧:** duração e inatividade da sessão e bloqueio por tentativas (RNF03), observando no piloto se o encerramento por inatividade atrapalha oficinas longas; latências, carga e gerações simultâneas (RNF11, RNF13, RNF14); contraste nas telas de campo (RNF15); versões de navegador (RNF16); RTO e frequência do ensaio de restauração (RNF18), sendo o RPO de 6 h o informado no alinhamento de 15/09/2026; tamanho da turma e tempo da chamada (RNF20).
-14. **Apresentação da inscrição (RF46) 🔧:** o contato para dúvidas é o WhatsApp do Instituto; reabrir a inscrição com o prazo vencido pede um prazo novo; o prazo vai até a data da atividade; o limite de 2.000 caracteres da apresentação; o valor de negócio, herdado da HU-07. Levado à reunião de validação de 12/11/2026; os retornos entram na avaliação da Sprint Review 5, em 19/11/2026.
-15. **Pedidos da validação de 29/10/2026, a especificar 🔧:** avisos automáticos por e-mail sobre a inscrição e o início das atividades, com antecedência configurável, e recuperação de senha por e-mail; campos personalizados no formulário de inscrição (múltipla escolha, texto e anexo), a partir do modelo de formulário que o Instituto vai enviar. Os dados de acessibilidade, de mobilidade e de neurodivergência que o Instituto quer conhecer antes das oficinas são dados pessoais sensíveis (LGPD, art. 11): só entram no formulário com finalidade definida e consentimento específico, o que hoje a recusa de campo sensível impede (CA-07b.2, RNF05). Os avisos por WhatsApp são avaliados depois do e-mail.
-16. **Condição de rascunho da meta 🔧:** o registro da validação de 08/10/2026 cita o indicador e as datas de início e de fim como condição para a meta sair do rascunho; este documento exige também a forma de verificação e, na meta quantitativa, o parâmetro planejado com unidade (RN-02, CA-01b.3), a confirmar com o Instituto.
-17. **Visão do Núcleo Pedagógico 🔧:** a matriz da seção 8.5.1 restringe o Núcleo aos itens de suas atividades; a primeira versão mostra a esse perfil todos os instrumentos e projetos. A confirmar com o Instituto se a visão ampla fica ou se a matriz prevalece.
-18. **Anexo do documento formal 🔧:** a seção 8.5.1 exige o anexo do documento formal no instrumento; a primeira versão permite cadastrar o projeto antes do anexo. A confirmar com o Instituto (item 10).
-19. **Encerramento do projeto:** a RN-11 e a seção 8.5.1 tratam do encerramento pela coordenação da equipe de execução, que não tem requisito funcional nem critério de aceitação no MVP.
-20. **Justificativa do aditivo e da apostila 🔧:** a RN-13 pede justificativa para alterar o plano de trabalho; no MVP, o documento de origem (termo aditivo, apostila ou ofício) é tratado como a justificativa (CA-14.4, CA-14.6). A confirmar com o Instituto.
-21. **Guarda decenal e geração do relatório:** a guarda de dez anos (RNF07) depende do ambiente de produção, ainda não definido; e a primeira versão gera o PDF do relatório na própria requisição, uma única vez por versão fechada, e reaproveita o arquivo nas consultas seguintes; a geração fora da requisição volta a ser avaliada quando o relatório trouxer as miniaturas do incremento 2 (RNF13).
+??? note "Lacunas sem requisito funcional (itens 1, 2, 15 e 19)"
+    - **1. Gargalos G02 e G05:** o controle interno de ordens de serviço (G02), levantado como demanda candidata no alinhamento de 15/09/2026, e o painel consolidado da Presidência (G05), que depende dos cadastros e registros operacionais segundo o levantamento presencial de 21/09/2026, não têm requisito funcional nesta versão.
+    - **2. Matriz de Aquisição:** confirmada no levantamento presencial de 21/09/2026 como elemento a modelar no lugar da digitação manual, não tem requisito funcional; o controle financeiro e orçamentário está fora desta versão (seção 2), e a fronteira entre os dois está a definir com a área administrativo-financeira.
+    - **15. Pedidos da validação de 29/10/2026, a especificar 🔧:** avisos automáticos por e-mail sobre a inscrição e o início das atividades, com antecedência configurável, e recuperação de senha por e-mail; campos personalizados no formulário de inscrição (múltipla escolha, texto e anexo), a partir do modelo de formulário que o Instituto vai enviar. Os dados de acessibilidade, de mobilidade e de neurodivergência que o Instituto quer conhecer antes das oficinas são dados pessoais sensíveis (LGPD, art. 11): só entram no formulário com finalidade definida e consentimento específico, o que hoje a recusa de campo sensível impede (CA-07b.2, RNF05). Os avisos por WhatsApp são avaliados depois do e-mail.
+    - **19. Encerramento do projeto:** a RN-11 e a seção 8.5.1 tratam do encerramento pela coordenação da equipe de execução, que não tem requisito funcional nem critério de aceitação no MVP.
+
+??? note "Regras de domínio a definir (itens 3, 4, 5, 6, 7, 8 e 9)"
+    - **3. Meta e etapa:** não está definido se a meta é cobrada pelo objetivo inteiro ou por etapa do plano de trabalho, o que afeta o RF04 e o cadastro das metas.
+    - **4. Encontros e recorrência da atividade 🔧:** não está definido se a oficina contínua é uma atividade com vários encontros ou uma atividade por encontro, nem se os encontros se repetem por semana; a resposta afeta o cadastro da atividade (RF09), a chamada (RF16) e a duração considerada na carga horária (RF20, RN-15).
+    - **5. Alteração do período de execução:** os prazos das metas fora da nova vigência são sinalizados para revisão, sem mudança automática (CA-14.5) 🔧; a data da prestação de contas final depois da prorrogação está a definir.
+    - **6. Repetição do aviso de vencimento (RN-03):** a repetição do aviso depois do alerta de 30 dias, enquanto a meta não é concluída, está a definir.
+    - **7. Trava do relatório por pendência administrativo-financeira (RF35):** aplicação da exigência de justificativa a pendências da área administrativo-financeira, a confirmar com essa área; a solução não inclui controle financeiro.
+    - **8. Cadastro repetido e confirmação da inscrição:** o registro da validação de 08/10/2026 trazia o cadastro repetido como aviso em um trecho e como bloqueio em outro. Na validação de 29/10/2026 ficou o aviso, sem bloqueio: os cadastros de participantes são mantidos, e a inscrição pelo formulário público com e-mail ou CPF de cadastro existente aparece com indicador na lista de inscritos, sem mostrar o cadastro existente a quem se inscreve (RF22, CA-07a.8). Seguem a definir o campo que identifica a repetição, escolhido no formulário (RF42) 🔧, e o uso do CPF só para identificar repetição 🔧. O e-mail de confirmação na inscrição presencial, do registro de 08/10, passa aos avisos por e-mail pedidos em 29/10 (item 15). O registro de 08/10 também fala em inscrição vinculada aos formulários que o Instituto já utiliza; este documento adota formulário próprio configurável (RF42), que reproduz os campos desses formulários 🔧, e o modelo de formulário do Instituto é aguardado para os campos personalizados (item 15).
+    - **9. Inscrição de menores:** os campos do responsável legal e as faixas etárias usadas pelo Instituto estão a definir (RN-06, seção 8.5.4).
+
+??? note "Valores e parâmetros a confirmar (itens 10, 11, 12, 13, 14, 16, 17, 18 e 20)"
+    - **10. Cadastro do instrumento 🔧:** número de processo repetível e código do projeto único no instrumento (CA-01a.1, CA-01a.3); registro do código do instrumento na plataforma do financiador; obrigatoriedade do anexo do documento formal (seção 8.5.1).
+    - **11. Perfis e contas 🔧:** desde a validação de 29/10/2026, a coordenação da equipe de execução, que encerra o projeto (RN-11), usa o perfil de Presidência e Gestão de Projetos (seção 8.5.1); seguem a definir o perfil do coordenador contratado pelo projeto; perfil de administração do sistema (seção 8.5.1); regras de conta (CA-16.1 a CA-16.3), inclusive o e-mail institucional compartilhado por várias pessoas frente a uma conta por pessoa (RF40); visibilidade das fotos de prova de execução por perfil (CA-04b.1); valor de negócio da HU-15 e da HU-16.
+    - **12. Valores a confirmar com o Instituto 🔧:** limiar de risco de meta e se ele é fixo ou definido por meta (RF30, CA-11.4); comprovações iniciais de cada modalidade, inclusive a dispensa de CPF na ação de acolhimento (RN-04, seção 8.5.2); prazo de atendimento aos pedidos do titular (RNF06); classes de alcance da meta e uso do valor alcançado no relatório (RN-14); prazo de entrega da cópia integral dos dados (RNF19).
+    - **13. Parâmetros técnicos a verificar 🔧:** duração e inatividade da sessão e bloqueio por tentativas (RNF03), observando no piloto se o encerramento por inatividade atrapalha oficinas longas; latências, carga e gerações simultâneas (RNF11, RNF13, RNF14); contraste nas telas de campo (RNF15); versões de navegador (RNF16); RTO e frequência do ensaio de restauração (RNF18), sendo o RPO de 6 h o informado no alinhamento de 15/09/2026; tamanho da turma e tempo da chamada (RNF20).
+    - **14. Apresentação da inscrição (RF46) 🔧:** o contato para dúvidas é o WhatsApp do Instituto; reabrir a inscrição com o prazo vencido pede um prazo novo; o prazo vai até a data da atividade; o limite de 2.000 caracteres da apresentação; o valor de negócio, herdado da HU-07. Levado à reunião de validação de 12/11/2026; os retornos entram na avaliação da Sprint Review 5, em 19/11/2026.
+    - **16. Condição de rascunho da meta 🔧:** o registro da validação de 08/10/2026 cita o indicador e as datas de início e de fim como condição para a meta sair do rascunho; este documento exige também a forma de verificação e, na meta quantitativa, o parâmetro planejado com unidade (RN-02, CA-01b.3), a confirmar com o Instituto.
+    - **17. Visão do Núcleo Pedagógico 🔧:** a matriz da seção 8.5.1 restringe o Núcleo aos itens de suas atividades; a primeira versão mostra a esse perfil todos os instrumentos e projetos. A confirmar com o Instituto se a visão ampla fica ou se a matriz prevalece.
+    - **18. Anexo do documento formal 🔧:** a seção 8.5.1 exige o anexo do documento formal no instrumento; a primeira versão permite cadastrar o projeto antes do anexo. A confirmar com o Instituto (item 10).
+    - **20. Justificativa do aditivo e da apostila 🔧:** a RN-13 pede justificativa para alterar o plano de trabalho; no MVP, o documento de origem (termo aditivo, apostila ou ofício) é tratado como a justificativa (CA-14.4, CA-14.6). A confirmar com o Instituto.
+
+??? note "Limitações da primeira versão (item 21)"
+    - **21. Guarda decenal e geração do relatório:** a guarda de dez anos (RNF07) depende do ambiente de produção, ainda não definido; e a primeira versão gera o PDF do relatório na própria requisição, uma única vez por versão fechada, e reaproveita o arquivo nas consultas seguintes; a geração fora da requisição volta a ser avaliada quando o relatório trouxer as miniaturas do incremento 2 (RNF13).
 
 ---
 

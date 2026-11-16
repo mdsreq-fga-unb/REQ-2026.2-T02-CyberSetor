@@ -5,7 +5,8 @@ As tabelas das seções 8.2 e 8.3 continuam sendo a fonte, e é nelas que se edi
 No build, cada tabela vira uma grade de cartões, um por requisito, com o que está registrado
 em outras seções:
   - história dona: ficha da história na 10.1 (campo Requisitos funcionais), lida pelo hooks/fichas.py;
-  - critérios de aceitação, histórias que só verificam o RF, gargalo e cobertura: matriz 8.4.1;
+  - critérios de aceitação e histórias que só verificam o RF: matriz 8.4.1 (o gargalo fica na
+    árvore e na matriz, que a página mostra recolhida);
   - requisitos não funcionais ligados ao RF e RFs ligados ao RNF: matriz 8.4.2;
   - valor, esforço e destino (MVP ou fora dele): tabela 10.2.4;
   - classe do RNF no MVP: tabela 10.2.7;
@@ -187,15 +188,13 @@ def cartao_rf(linha: str, fontes: Fontes) -> str:
     rnf_txt = ", ".join(f"[{r}](#{r.lower()})" for r in rnfs) or "Só os transversais"
     if rnfs:
         rnf_txt += " e os transversais"
+    # Cartão enxuto: o gargalo fica na árvore e na matriz 8.4.1, recolhida, sem repetir aqui.
     partes = [
         item("História", hist),
         *([item("Também verificado em", " · ".join(outras))] if outras else []),
         item("Origem", origem.strip() or "—"),
         item("RNF", rnf_txt),
     ]
-    if matriz.get("gargalo") and matriz["gargalo"] != "—":
-        partes.append(item("Gargalo", matriz["gargalo"]))
-    partes.append(item("Matriz", f"[ver na 8.4.1](#m-{ancora})"))
     return (
         f'<article class="rq-card rq-card--{chave}" id="{ancora}" data-destino="{chave}" data-situacao="{sit}" '
         f'data-historias="{" ".join(historias)}" markdown="1">\n'
@@ -217,8 +216,8 @@ def cartao_rnf(linha: str, fontes: Fontes) -> str:
     rel = fontes.rnf_rfs.get(cod)
     if not rel:
         raise PluginError(f"cartoes: {cod} não está na matriz 8.4.2.")
-    rfs = "Todos os RFs (transversal)" if rel["transversal"] else rel["texto"]
-    partes = [item("RFs", rfs), item("Métrica", metrica), item("Origem", rel["origem"]), item("Matriz", f"[ver na 8.4.2](#m-{ancora})")]
+    rfs = "Todos os RFs (transversal)" if rel["transversal"] else chips_rf(rel["texto"])
+    partes = [item("Métrica", metrica), item("RFs", rfs), item("Origem", rel["origem"])]
     return (
         f'<article class="rq-card rq-card--{chave}" id="{ancora}" data-destino="{chave}" markdown="1">\n'
         f'<div class="rq-card__topo" markdown="span">[{cod}](#{ancora}){destino}<span class="rq-chip">{_e(classif)}</span></div>\n'

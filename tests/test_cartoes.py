@@ -80,14 +80,24 @@ def test_falha_sem_a_tabela_de_destino():
         cartoes.carregar(SECAO8, "# 10. Backlog\n")
 
 
-def test_matriz_vira_trilhas_com_volta_ao_cartao():
+def test_matriz_vira_trilhas_e_cartao_fica_enxuto():
     saida = cartoes.compor(SECAO8, cartoes.carregar(SECAO8, BACKLOG))
     matriz = saida.split("## 8.4", 1)[1].split("## 8.5", 1)[0]
     for tipo in ("rf", "rnf", "g", "cp"):
         assert f"rt-lista--{tipo}" in matriz, tipo
     assert 'id="m-rf01"' in matriz and 'id="m-rnf19"' in matriz
-    assert "[ver na 8.4.1](#m-rf01)" in saida
     assert "| **RF01** |" not in matriz
+    cartoes_ = saida.split("## 8.4", 1)[0]
+    # O gargalo e o link de volta à matriz ficam só na matriz (recolhida na página).
+    assert "ver na 8.4.1" not in cartoes_ and "rq-item__rotulo\">Gargalo" not in cartoes_
+    assert "rq-item__rotulo\">Origem" in cartoes_ and "rq-item__rotulo\">Métrica" in cartoes_
+
+
+def test_matriz_recolhida_em_details_continua_lida():
+    md = SECAO8.replace("### 8.4.2", '### 8.4.2\n\n<details class="note" markdown="1">\n<summary>Ver</summary>\n', 1)
+    md = md.replace("### 8.4.3", "</details>\n\n### 8.4.3", 1)
+    saida = cartoes.compor(md, cartoes.carregar(md, BACKLOG))
+    assert "rt-lista--rnf" in saida and "<summary>Ver</summary>" in saida
 
 
 def test_historia_do_cartao_e_so_a_dona():
