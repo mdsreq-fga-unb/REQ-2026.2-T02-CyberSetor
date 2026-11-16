@@ -4,6 +4,7 @@
 | :--- | :--- | :--- | :--- |
 | 16/11/2026 | 1.0 | Registro da entrega da Unidade 3: itens pedidos pelo docente com o lugar de cada um no site, evidências dos objetivos da unidade e situação na data da entrega | Maria Eduarda Marques |
 | 16/11/2026 | 1.1 | Entrega durante a Sprint 5; revisão por dois integrantes desde 05/11; reunião de 12/11 na 10.2.8; medições do RNF12 e do RNF13; acesso à página das sprints | Vinicius Vieira |
+| 16/11/2026 | 1.2 | Capturas das telas do ambiente de homologação com dados de teste, cada uma com a história que atende (ATA-2026-11-12, A5 e A14) | Vinicius Vieira |
 
 ---
 
@@ -57,3 +58,41 @@ Esta página registra a entrega de 17/11/2026, durante a [Sprint 5](../gestao/sp
 - **Requisitos não funcionais:** o formulário público (RNF12) e o PDF do relatório (RNF13) foram medidos na homologação em 14/11/2026 e atendem às métricas, com tempo máximo de 1,78 s e de 2,13 s; as medições das consultas agregadas (RNF11), de acessibilidade e de navegadores seguem o [plano da Sprint 5](../gestao/sprints/sprint-5.md#62-sprint-backlog).
 - **Issues do docente da Unidade 2:** respondidas no repositório; o fechamento é do docente.
 - **Lições aprendidas:** [11. Lições aprendidas — Unidade 3](../licoes-aprendidas/unidade-3.md).
+
+---
+
+## 6. Ambiente de homologação com dados de teste
+
+Retrato do ambiente de homologação em 16/11/2026, com o MVP desta unidade, os dados fictícios e as contas de teste usados nas validações com o Instituto ([política de dados de teste](../visao/2-solucao-proposta.md#dados-de-teste)). São os fluxos que o Instituto percorreu no checkpoint de 29/10/2026 e na reunião de validação de 12/11/2026. Cada tela traz a história de usuário que ela atende; a ficha da história, na seção 10.1, segue como a referência vigente. A interface continua evoluindo nos próximos incrementos.
+
+**Painel inicial, perfil de gestão ([HU-02b](../requisitos/10-backlog.md#hu-02b)).** Metas vencidas e com prazo nos próximos 30 dias, inscrições abertas e vigência dos instrumentos.
+
+![Painel inicial do perfil de gestão](../assets/img/homologacao/painel.png)
+
+**Metas do projeto em lista ([HU-01b](../requisitos/10-backlog.md#hu-01b), [HU-02a](../requisitos/10-backlog.md#hu-02a)).** Indicador, período, responsável, setor e resultado alcançado de cada meta; a meta incompleta aparece como rascunho, com o que falta.
+
+![Metas do projeto em lista](../assets/img/homologacao/metas-lista.png)
+
+**Metas do projeto no quadro ([HU-02a](../requisitos/10-backlog.md#hu-02a)).** As mesmas metas agrupadas por situação.
+
+![Metas do projeto no quadro por situação](../assets/img/homologacao/metas-quadro.png)
+
+**Prazos do projeto ([HU-02b](../requisitos/10-backlog.md#hu-02b)).** Linha do tempo com os prazos das metas e a vigência.
+
+![Prazos e linha do tempo do projeto](../assets/img/homologacao/prazos.png)
+
+**Formulário público de inscrição ([HU-07a](../requisitos/10-backlog.md#hu-07a), [HU-07d](../requisitos/10-backlog.md#hu-07d)).** Aberto por link ou QR Code, sem conta nem senha, no computador e no celular.
+
+![Formulário público de inscrição no computador](../assets/img/homologacao/inscricao-computador.png)
+
+![Formulário público de inscrição no celular](../assets/img/homologacao/inscricao-celular.png)
+
+**Inscrição com as vagas preenchidas ([HU-07c](../requisitos/10-backlog.md#hu-07c)).** O formulário avisa que a pessoa entra na lista de espera.
+
+![Formulário de inscrição com aviso de lista de espera](../assets/img/homologacao/inscricao-lista-espera.png)
+
+**Relatório de execução e planilha ([HU-05a](../requisitos/10-backlog.md#hu-05a), [HU-13](../requisitos/10-backlog.md#hu-13)).** Prévia das metas do período e exportação dos dados do projeto em planilha.
+
+![Prévia do relatório de execução](../assets/img/homologacao/relatorio-previa.png)
+
+![Diálogo de exportação em planilha](../assets/img/homologacao/exportar-planilha.png)
