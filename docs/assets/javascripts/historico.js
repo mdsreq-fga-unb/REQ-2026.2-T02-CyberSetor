@@ -1,5 +1,5 @@
-/* Filtros da página "Histórico e evolução" (gestao/historico.md, gerada por hooks/historico.py)
-   e dos selos de situação e das fichas das seções 8 e 10.
+/* Filtros da página "Histórico e evolução" (gestao/historico.md, gerada por hooks/historico.py):
+   abas, busca da evolução dos requisitos, registro e linha do tempo; e filtros dos selos de situação e das fichas das seções 8 e 10.
    Sem dependências. Sem JavaScript, todos os registros continuam visíveis.
    O filtro também vem do endereço: #sprint-4, #unidade-2, #hu-07c, #rf21, #tipo-ata-cliente,
    #documento-8-requisitos-de-software, #autor-vinicius-vieira. */
@@ -28,6 +28,9 @@
       if (h.indexOf("evolucao-") === 0) {
         var alvo = document.getElementById(h);
         mostrar("evolucao");
+        if (alvo && alvo.hidden && evolucao) {
+          evolucao.zerar();
+        }
         if (alvo) {
           alvo.open = true;
           alvo.scrollIntoView();
@@ -47,8 +50,70 @@
 
   var abas = null;
   var ouvindoEndereco = false;
+  var evolucao = null;
+
+  // Evolução dos requisitos: busca por código e tipo (RF, RNF, HU). A barra vem com hidden e só
+  // aparece aqui; sem JavaScript, todos os códigos ficam visíveis.
+  function iniciarEvolucao() {
+    var barra = document.getElementById("f5-req-filtros");
+    if (!barra) {
+      return null;
+    }
+    if (evolucao && evolucao.barra === barra) {
+      return evolucao;
+    }
+    var busca = barra.querySelector("[data-req-busca]");
+    var status = barra.querySelector("[data-req-status]");
+    var botoes = Array.prototype.slice.call(barra.querySelectorAll("[data-req-tipo]"));
+    var grupos = Array.prototype.slice.call(document.querySelectorAll("[data-req-grupo]"));
+    var itens = Array.prototype.slice.call(document.querySelectorAll("details[data-req-codigo]"));
+    var inicial = status.textContent;
+    var tipo = "";
+
+    function aplicar() {
+      var termo = (busca.value || "").toLowerCase().replace(/[^a-z0-9]/g, "");
+      var visiveis = 0;
+      grupos.forEach(function (g) {
+        var doTipo = !tipo || g.getAttribute("data-req-grupo") === tipo;
+        var algum = false;
+        Array.prototype.slice.call(g.querySelectorAll("details[data-req-codigo]")).forEach(function (d) {
+          var ok = doTipo && (!termo || d.getAttribute("data-req-codigo").indexOf(termo) !== -1);
+          d.hidden = !ok;
+          if (ok) {
+            algum = true;
+            visiveis += 1;
+          }
+        });
+        g.hidden = !algum;
+      });
+      botoes.forEach(function (b) {
+        b.setAttribute("aria-pressed", b.getAttribute("data-req-tipo") === tipo ? "true" : "false");
+      });
+      status.textContent = tipo || termo
+        ? (visiveis ? visiveis + " de " + itens.length + " códigos com mudanças registradas."
+                    : "Nenhum código com mudança registrada corresponde à busca.")
+        : inicial;
+    }
+
+    function zerar() {
+      tipo = "";
+      busca.value = "";
+      aplicar();
+    }
+
+    busca.addEventListener("input", aplicar);
+    botoes.forEach(function (b) {
+      b.addEventListener("click", function () {
+        tipo = b.getAttribute("data-req-tipo");
+        aplicar();
+      });
+    });
+    barra.hidden = false;
+    return { barra: barra, zerar: zerar };
+  }
 
   function iniciar() {
+    evolucao = iniciarEvolucao();
     abas = iniciarAbas();
     var barra = document.getElementById("hist-filtros");
     var linha = document.getElementById("hist-linha");
@@ -67,7 +132,7 @@
     var status = barra.querySelector("[data-status]");
     var itens = Array.prototype.slice.call(linha.querySelectorAll(".hist-item"));
     var grupos = Array.prototype.slice.call(linha.querySelectorAll(".hist-grupo"));
-    var faixas = Array.prototype.slice.call(document.querySelectorAll(".hist-faixa[data-filtro]"));
+    var faixas = Array.prototype.slice.call(document.querySelectorAll('[data-filtro="sprint"]'));
     var chipsTipo = Array.prototype.slice.call(barra.querySelectorAll(".hist-tipo[data-tipo]"));
 
     function seletor(campo) {
@@ -117,7 +182,13 @@
       });
       var sprint = seletor("sprint").value;
       faixas.forEach(function (f) {
-        f.classList.toggle("hist-faixa--ativa", sprint !== "" && f.getAttribute("data-valor") === sprint);
+        var ativa = sprint !== "" && f.getAttribute("data-valor") === sprint;
+        f.classList.toggle("f5-gantt__linha--ativa", ativa);
+        if (ativa) {
+          f.setAttribute("aria-current", "true");
+        } else {
+          f.removeAttribute("aria-current");
+        }
       });
       var filtrando = termo || selects.some(function (s) { return s.value; });
       limpar.disabled = !filtrando;

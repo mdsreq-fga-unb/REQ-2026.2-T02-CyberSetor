@@ -280,13 +280,31 @@ def ler_ancoras(docs_dir: Path) -> dict[str, str]:
     return ancoras
 
 
+def _href(origem: str, ancora: str = "") -> str:
+    """Endereço publicado de uma página, relativo a esta, para HTML cru (que o MkDocs não reescreve).
+
+    O site usa endereços de diretório: requisitos/8-requisitos.md vira requisitos/8-requisitos/.
+    """
+    alvo = origem[: -len(".md")]
+    alvo = alvo[: -len("index")] if alvo == "index" or alvo.endswith("/index") else alvo + "/"
+    pagina = DESTINO[: -len(".md")]
+    rel = posixpath.relpath(alvo.rstrip("/") or ".", pagina)
+    return (rel + "/" if rel != "." else "./") + (f"#{ancora}" if ancora else "")
+
+
+ALVO_MARCO = {"u1": "entregas/unidade-1.md", "u2": "entregas/unidade-2.md", "u3": "entregas/unidade-3.md"}
+MESES = "jan fev mar abr mai jun jul ago set out nov dez".split()
+
+
 def _marco_alvo(slug_marco: str) -> str:
-    alvos = {"u1": "entregas/unidade-1.md", "u2": "entregas/unidade-2.md", "u3": "entregas/unidade-3.md"}
-    return _link(alvos.get(slug_marco, CRONOGRAMA)) + ("" if slug_marco in alvos else "#66-marcos-da-disciplina")
+    if slug_marco in ALVO_MARCO:
+        return _href(ALVO_MARCO[slug_marco])
+    return _href(CRONOGRAMA, "66-marcos-da-disciplina")
 
 
-def _trilha(sprints: list[Sprint], eventos: list[Evento], hoje: date) -> list[str]:
-    """Linha do tempo visual: sprints em barras proporcionais, marcos da disciplina e o dia do build."""
+def _gantt(sprints: list[Sprint], eventos: list[Evento], hoje: date) -> list[str]:
+    """Linha do tempo em linhas: uma por sprint (barra no período) e uma por marco (ponto no dia),
+    em ordem de data, com as viradas de mês e o traço do dia da publicação."""
     inicio = min([e.quando for e in eventos] + [s.inicio for s in sprints])
     fim = max([FIM_MARCO.get(sl, q) for q, _, sl in MARCOS] + [s.fim for s in sprints])
     total = max((fim - inicio).days, 1)
@@ -294,39 +312,51 @@ def _trilha(sprints: list[Sprint], eventos: list[Evento], hoje: date) -> list[st
     def pos(d: date) -> float:
         return round(100 * max(min((d - inicio).days, total), 0) / total, 2)
 
-    out = ['<div class="hist-trilha" markdown="0">', '<div class="hist-trilha__faixas">']
-    faixas = [("Concepção", "Concepção", inicio, sprints[0].inicio if sprints else inicio, "")]
-    faixas += [(f"Sprint {s.numero}", f"S{s.numero}", s.inicio, s.fim, s.meta) for s in sprints]
-    for nome, curto, a, b, meta in faixas:
-        corrente = a <= hoje <= b and nome != "Concepção"
+    linhas: list[tuple[date, int, str]] = []
+    faixas = [("Concepção", inicio, sprints[0].inicio if sprints else inicio, "")]
+    faixas += [(f"Sprint {s.numero}", s.inicio, s.fim, s.meta) for s in sprints]
+    for nome, a, b, meta in faixas:
+        estado = "corrente" if a <= hoje <= b and nome != "Concepção" else "feita" if b <= hoje else "prevista"
         titulo = f"{nome} · {a:%d/%m} a {b:%d/%m}" + (f" · {meta_curta(meta)}" if meta else "")
-        out.append(
-            f'<a class="hist-faixa hist-trilha__seg{" hist-faixa--corrente" if corrente else ""}" '
-            f'style="left:{pos(a)}%;width:{max(pos(b) - pos(a), 1.5)}%" href="#{slug(nome)}" '
+        linhas.append((a, 1, (
+            f'<a class="f5-gantt__linha f5-gantt__linha--sprint f5-gantt__linha--{estado}" href="#{slug(nome)}" '
             f'data-filtro="sprint" data-valor="{slug(nome)}" title="{_e(titulo)}">'
-            f'<span class="hist-trilha__nome">{_e(curto)}</span>'
-            f'<span class="hist-trilha__periodo">{a:%d/%m}</span></a>'
-        )
-    out.append("</div>")
-    out.append('<div class="hist-trilha__marcos">')
-    anterior, abaixo_antes = -100.0, False
+            f'<span class="f5-gantt__rotulo"><strong>{_e(nome)}</strong><small>{a:%d/%m} a {b:%d/%m}</small></span>'
+            f'<span class="f5-gantt__pista"><span class="f5-gantt__barra" '
+            f'style="left:{pos(a)}%;width:{max(round(pos(b) - pos(a), 2), 1)}%"></span></span></a>'
+        )))
     for quando, nome, sl in MARCOS:
-        estado = "feito" if quando < hoje else "hoje" if quando == hoje else "previsto"
-        curto = "QAG" if sl == "qag" else nome.replace("Unidade ", "U")
-        # Marco a menos de 8% do anterior: na tela estreita o rótulo desce, alternando, para não sobrepor.
-        abaixo = pos(quando) - anterior < 8 and not abaixo_antes
-        anterior, abaixo_antes = pos(quando), abaixo
-        out.append(
-            f'<a class="hist-trilha__marco hist-trilha__marco--{estado}{" hist-trilha__marco--abaixo" if abaixo else ""}" '
-            f'style="left:{pos(quando)}%" '
-            f'href="{_e(_marco_alvo(sl))}" title="{_e(nome)} · {quando:%d/%m}{(" a " + format(FIM_MARCO[sl], "%d/%m")) if sl in FIM_MARCO else ""}/{quando:%Y}"><span>{_e(curto)}</span></a>'
-        )
-    out.append("</div>")
+        ate = FIM_MARCO.get(sl)
+        estado = "feito" if (ate or quando) < hoje else "hoje" if quando <= hoje <= (ate or quando) else "previsto"
+        periodo = f"{quando:%d/%m}" + (f" a {ate:%d/%m}" if ate else "")
+        janela = (f'<span class="f5-gantt__janela" style="left:{pos(quando)}%;width:{round(pos(ate) - pos(quando), 2)}%"></span>'
+                  if ate else "")
+        linhas.append((quando, 0, (
+            f'<a class="f5-gantt__linha f5-gantt__linha--marco f5-gantt__linha--{estado}" href="{_e(_marco_alvo(sl))}" '
+            f'title="{_e(nome)} · {periodo}/{quando:%Y}">'
+            f'<span class="f5-gantt__rotulo"><strong>{_e(nome)}</strong><small>{periodo}</small></span>'
+            f'<span class="f5-gantt__pista">{janela}<span class="f5-gantt__ponto" style="left:{pos(quando)}%"></span></span></a>'
+        )))
+
+    out = ['<div class="f5-gantt" markdown="0">', '<div class="f5-gantt__escala" aria-hidden="true"></div>']
+    out += [h for _, _, h in sorted(linhas, key=lambda l: (l[0], l[1]))]
+    mes = date(inicio.year + (inicio.month == 12), inicio.month % 12 + 1, 1)
+    while mes <= fim:
+        out.append(f'<span class="f5-gantt__mes" style="--pos:{pos(mes)}" aria-hidden="true"><span>{MESES[mes.month - 1]}</span></span>')
+        mes = date(mes.year + (mes.month == 12), mes.month % 12 + 1, 1)
     if inicio <= hoje <= fim:
-        out.append(f'<span class="hist-trilha__hoje" style="left:{pos(hoje)}%" title="Data desta publicação">'
+        out.append(f'<span class="f5-gantt__hoje" style="--pos:{pos(hoje)}" title="Dia desta publicação">'
                    f'<span>{hoje:%d/%m}</span></span>')
+    out.append('<div class="f5-gantt__pe" aria-hidden="true"></div>')
     out.append("</div>")
     return out
+
+
+def _indicadores(itens: list[tuple[str, str, str]]) -> str:
+    """Resumo em números curtos: (rótulo, valor, detalhe)."""
+    return '<ul class="f5-indicadores" markdown="0">' + "".join(
+        f"<li><span>{_e(r)}</span><strong>{_e(v)}</strong><small>{_e(d)}</small></li>" for r, v, d in itens
+    ) + "</ul>\n"
 
 
 def _evolucao_requisitos(versoes: list[Evento], ancoras: dict[str, str]) -> list[str]:
@@ -335,31 +365,50 @@ def _evolucao_requisitos(versoes: list[Evento], ancoras: dict[str, str]) -> list
     for e in versoes:
         for c in e.codigos:
             por_codigo.setdefault(c, []).append(e)
-    grupos = [("Requisitos funcionais", "RF"), ("Requisitos não funcionais", "RNF"), ("Histórias de usuário", "HU-")]
-    out: list[str] = []
-    for titulo, prefixo in grupos:
-        codigos = sorted((c for c in por_codigo if c.startswith(prefixo) and not (prefixo == "RF" and c.startswith("RNF"))),
-                         key=lambda c: (len(re.sub(r"[a-z]$", "", c)), c))
+    grupos = [("rf", "RF", "Requisitos funcionais"), ("rnf", "RNF", "Requisitos não funcionais"), ("hu", "HU", "Histórias de usuário")]
+    por_grupo = {g: sorted((c for c in por_codigo if _grupo_codigo(c) == g), key=lambda c: (len(re.sub(r"[a-z]$", "", c)), c))
+                 for g, _, _ in grupos}
+    total = sum(len(v) for v in por_grupo.values())
+    if not total:
+        return []
+    # Barra de busca e tipo: só aparece com JavaScript (historico.js tira o hidden); sem ele, tudo fica visível.
+    out = ['<div class="f5-req-filtros" id="f5-req-filtros" hidden markdown="0">',
+           '<label class="f5-req-filtros__busca"><span>Buscar código</span>'
+           '<input type="search" data-req-busca placeholder="RF21, RNF12, HU-07a" autocomplete="off"></label>',
+           '<div class="f5-req-filtros__tipos" role="group" aria-label="Tipo de código">'
+           f'<button type="button" data-req-tipo="" aria-pressed="true">Todos <span>{total}</span></button>'
+           + "".join(f'<button type="button" data-req-tipo="{g}" aria-pressed="false" title="{_e(t)}">{r} <span>{len(por_grupo[g])}</span></button>'
+                     for g, r, t in grupos if por_grupo[g])
+           + "</div>",
+           f'<p class="f5-req-filtros__status" data-req-status aria-live="polite">{_n(total, "código com mudança registrada", "códigos com mudanças registradas")}.</p>',
+           "</div>"]
+    for g, _, titulo in grupos:
+        codigos = por_grupo[g]
         if not codigos:
             continue
-        out.append(f'<p class="hist-req__grupo"><strong>{_e(titulo)}</strong> · {_n(len(codigos), "com mudança registrada", "com mudanças registradas")}</p>')
-        out.append('<div class="hist-req" markdown="0">')
+        out.append(f'<section class="f5-req-grupo" data-req-grupo="{g}" markdown="0">')
+        out.append(f'<p class="f5-req-grupo__titulo"><strong>{_e(titulo)}</strong> <span>{_n(len(codigos), "com mudança registrada", "com mudanças registradas")}</span></p>')
+        out.append('<div class="hist-req">')
         for c in codigos:
             lista = sorted(por_codigo[c], key=lambda e: e.quando)
-            out.append(f'<details class="hist-req__item" id="evolucao-{slug(c)}"><summary><strong>{_e(c)}</strong>'
+            out.append(f'<details class="hist-req__item" id="evolucao-{slug(c)}" data-req-codigo="{re.sub(r"[^a-z0-9]", "", c.lower())}">'
+                       f'<summary><strong>{_e(c)}</strong>'
                        f'<span>{_n(len(lista), "mudança", "mudanças")} · {lista[-1].quando:%d/%m}</span></summary><ol>')
             for e in lista:
                 rotulo = f"{e.origem_rotulo} · versão {e.versao}" if e.tipo == "versao" else f"{TIPOS[e.tipo]}: {e.titulo}"
-                alvo = f'<a href="{_e(_link(e.origem))}">{_e(rotulo)}</a>' if e.origem else _e(rotulo)
+                alvo = f'<a href="{_e(_href(e.origem))}">{_e(rotulo)}</a>' if e.origem else _e(rotulo)
                 out.append(f'<li><time datetime="{e.quando.isoformat()}">{e.quando:%d/%m/%Y}</time> {alvo}: {_e(e.descricao)}</li>')
             out.append("</ol>")
             pagina = ancoras.get(c.lower())
             if pagina:
-                alvo = posixpath.relpath(pagina, posixpath.dirname(DESTINO))
-                out.append(f'<p><a href="{_e(alvo)}#{c.lower()}">Definição vigente de {_e(c)}</a></p>')
+                out.append(f'<p><a href="{_e(_href(pagina, c.lower()))}">Definição vigente de {_e(c)}</a></p>')
             out.append("</details>")
-        out.append("</div>")
+        out.append("</div></section>")
     return out
+
+
+def _grupo_codigo(codigo: str) -> str:
+    return "rnf" if codigo.startswith("RNF") else "rf" if codigo.startswith("RF") else "hu"
 
 
 def montar(eventos: list[Evento], sprints: list[Sprint], hoje: date, ancoras: dict[str, str] | None = None) -> str:
@@ -389,22 +438,25 @@ def montar(eventos: list[Evento], sprints: list[Sprint], hoje: date, ancoras: di
     w("---\nhide:\n  - toc\n---\n")
     w("# Histórico e evolução\n")
     w("Como o projeto e os requisitos evoluíram. Cada item leva ao documento de origem, onde está o conteúdo vigente.\n")
-
-    # 1. Linha do tempo visual
-    w("## Linha do tempo\n")
     resumo = []
     if atual:
-        resumo.append(f"**Sprint {atual.numero}** em andamento ({atual.inicio:%d/%m} a {atual.fim:%d/%m})")
+        resumo.append(("Sprint atual", f"Sprint {atual.numero}", f"{atual.inicio:%d/%m} a {atual.fim:%d/%m}"))
     if proximo:
-        resumo.append(f"próximo marco: **{proximo[1]}**, {proximo[0]:%d/%m}")
-    resumo.append(f"{_n(len(versoes), 'versão', 'versões')} em {_n(len(documentos), 'documento', 'documentos')}")
-    resumo.append(f"{_n(len(atas), 'reunião', 'reuniões')}, {n_cliente} com o Instituto")
-    w(" · ".join(resumo) + ".\n")
-    out.extend(_trilha(sprints, eventos, hoje))
+        resumo.append(("Próximo marco", proximo[1],
+                       ("hoje, " if proximo[0] == hoje else "") + f"{proximo[0]:%d/%m}"))
+    resumo.append(("Versões", str(len(versoes)), f"em {_n(len(documentos), 'documento', 'documentos')}"))
+    resumo.append(("Reuniões", str(len(atas)), f"{n_cliente} com o Instituto"))
+    w(_indicadores(resumo))
+
+    # 1. Linha do tempo: uma linha por sprint e por marco
+    w("## Linha do tempo\n")
+    out.extend(_gantt(sprints, eventos, hoje))
     w("")
-    w('Barra: filtra o registro pela sprint ([detalhe em Sprints](sprints/index.md)). '
-      'Marca: leva à entrega da unidade ([datas na seção 6.6](../visao/6-cronograma.md#66-marcos-da-disciplina)).\n'
-      '{: .hist-trilha__ajuda }\n')
+    w('<span class="f5-leg f5-leg--sprint"></span> Sprint: filtra o registro ([detalhe em Sprints](como-trabalhamos.md#sprints)). '
+      '<span class="f5-leg f5-leg--marco"></span> Marco: leva à entrega da unidade '
+      '([datas na seção 6.6](../visao/6-cronograma.md#66-marcos-da-disciplina)). '
+      f'<span class="f5-leg f5-leg--hoje"></span> Dia desta publicação, {hoje:%d/%m/%Y}.\n'
+      '{: .f5-gantt__legenda }\n')
     w('<div class="hist-abas" role="tablist" aria-label="Partes do histórico" markdown="0">'
       '<button type="button" role="tab" data-aba="evolucao" aria-selected="true">Evolução dos requisitos</button>'
       '<button type="button" role="tab" data-aba="registro" aria-selected="false">Registro completo</button></div>\n')
@@ -495,17 +547,16 @@ def montar(eventos: list[Evento], sprints: list[Sprint], hoje: date, ancoras: di
 
     # 4. Evolução por documento (referência, recolhida)
     w('<details class="hist-documentos" markdown="1">\n<summary>Evolução por documento</summary>\n')
-    w("| Documento | Versão vigente | Versões | Primeira | Última |")
-    w("|---|---|---:|---|---|")
+    w("Versão vigente, número de versões e período de cada documento, do mais recente ao mais antigo.\n")
     por_doc: dict[str, list[Evento]] = {}
     for e in versoes:
         por_doc.setdefault(e.origem or "", []).append(e)
     for origem, lista in sorted(por_doc.items(), key=lambda kv: max(e.quando for e in kv[1]), reverse=True):
         lista.sort(key=lambda e: e.quando)
-        w(
-            f"| [{lista[0].origem_rotulo}]({_link(origem)}) | {lista[-1].versao} | {len(lista)} | "
-            f"{lista[0].quando:%d/%m/%Y} | {lista[-1].quando:%d/%m/%Y} |"
-        )
+        periodo = (f"em {lista[0].quando:%d/%m/%Y}" if lista[0].quando == lista[-1].quando
+                   else f"de {lista[0].quando:%d/%m/%Y} a {lista[-1].quando:%d/%m/%Y}")
+        w(f"- [{lista[0].origem_rotulo}]({_link(origem)}): versão **{lista[-1].versao}**, "
+          f"{_n(len(lista), 'versão', 'versões')} {periodo}")
     w("\n</details>\n")
 
     w(
