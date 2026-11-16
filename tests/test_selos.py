@@ -68,3 +68,28 @@ def test_sem_leitura_do_quadro_nao_ha_selos(tmp_path):
     assert selos.ler_situacao(tmp_path) is None
     (tmp_path / selos.SITUACAO).write_text(json.dumps(DADOS), encoding="utf-8")
     assert selos.ler_situacao(tmp_path)["historias"]["HU-01a"]["situacao"] == "em-andamento"
+
+
+def test_rf_compartilhado_segue_a_dona_da_1024():
+    # RF04 é da HU-01b (10.2.4) e só verificado na HU-02b (8.4.1): a HU-02b a fazer não muda o selo.
+    md = (
+        "## 8.2 Lista\n\n| Identificador | Requisito | Descrição | Rastreabilidade |\n| :---: | :--- | :--- | :--- |\n"
+        '| <a id="rf04"></a>**RF04** | Desdobrar | Texto | MROSC art. 22 |\n'
+        "| **RF04** | Desdobrar | G01 | — | HU-01b (CA-01b.1); HU-02b (CA-02b.3) | Total |\n"
+    )
+    md10 = (
+        "### 10.2.3 Avaliação técnica\n\n| [RF04](8-requisitos.md#rf04) | HU-02b | 2 |\n\n"
+        "### 10.2.4 Tabela consolidada\n\n| Código | Histórias | Valor | Esforço técnico | Destino |\n"
+        "| :---: | :--- | :---: | :---: | :--- |\n| [RF04](8-requisitos.md#rf04) | HU-01b | 4 | 2 | MVP |\n\n"
+        "### 10.2.5 Matriz\n"
+    )
+    donas = selos.donas_da_1024(md10)
+    assert donas == {"RF04": ["HU-01b"]}
+    saida = selos.selar_requisitos(md, DADOS, donas)
+    assert "**RF04** <span class='selo selo--concluido' data-situacao='concluido'>Concluído</span> |" in saida
+
+
+def test_donas_da_1024_no_documento():
+    md10 = (RAIZ / "docs" / "requisitos" / "10-backlog.md").read_text(encoding="utf-8")
+    donas = selos.donas_da_1024(md10)
+    assert donas["RF24"] == ["HU-07a"] and donas["RF36"] == ["HU-05a"] and donas["RF38"] == ["HU-13"]

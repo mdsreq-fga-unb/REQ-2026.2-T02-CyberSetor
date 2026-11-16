@@ -305,8 +305,8 @@ def compor(f: Ficha, fichas: list[Ficha], s: Secao8, p: Priorizacao, dados: dict
             raise PluginError(f"fichas: {r}, da ficha da {f.hu}, não está na seção 8.2.")
         selo = ""
         if dados:
-            historias = [h for h, _ in s.verificacao.get(r, [])] or q.donas or [f.hu]
-            sit = selos.situacao_do_rf(historias, dados)
+            # O RF segue a história dona (esta ficha); as outras da 8.4.1 só o verificam.
+            sit = selos.situacao_do_rf([f.hu], dados)
             selo = f" {selos._selo(sit, 'm')}" if sit else ""
         outras = [ref_hu(h, dados) + (f" ({ca})" if ca else "") for h, ca in s.verificacao.get(r, []) if h != f.hu]
         tambem = f"<br>Também verificado em {', '.join(outras)}." if outras else ""

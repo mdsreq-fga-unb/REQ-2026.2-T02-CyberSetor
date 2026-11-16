@@ -268,7 +268,8 @@ def test_historia_com_dois_destinos_interrompe_o_build():
                              SECAO8, None, [], lambda _: True, REPO)
 
 
-def test_rf_compartilhado_considera_todas_as_historias_da_841():
+def test_rf_compartilhado_segue_a_historia_dona():
+    # RF05 é da HU-02a e só verificado na HU-01b: a situação da HU-01b não muda o selo.
     dados_invertidos = {
         **DADOS,
         "historias": {
@@ -277,4 +278,4 @@ def test_rf_compartilhado_considera_todas_as_historias_da_841():
         },
     }
     f = _ficha(_pagina(dados=dados_invertidos), "HU-02a")
-    assert "[RF05](8-requisitos.md#rf05) **Atribuir responsável** · esforço 1 <span class='selo selo--em-andamento'" in f
+    assert "[RF05](8-requisitos.md#rf05) **Atribuir responsável** · esforço 1 <span class='selo selo--concluido'" in f
