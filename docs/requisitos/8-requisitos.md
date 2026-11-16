@@ -32,6 +32,7 @@
 | 13/11/2026 | 2.18 | Resumos no início da 8.4 e da 8.6; requisitos funcionais do RNF08 em intervalo na matriz 8.4.2 | Maria Eduarda Marques |
 | 16/11/2026 | 2.19 | Remoção dos vínculos de histórias (`HU-XX`) da coluna Rastreabilidade da seção 8.2: a história dona de cada RF fica na ficha e na tabela 10.2.4, e as demais histórias da matriz 8.4.1 aparecem no cartão como "Também verificado em", sem mudar o selo (ata de 12/11, D3/A4; #187, #188) | Daniel Batista |
 | 16/11/2026 | 2.20 | Citações da introdução no sistema numérico da página de Referências: diretrizes da disciplina (1), FURPS+ (13) e Sommerville (14) (ata de 12/11, D7/A10) | Maria Eduarda Marques |
+| 16/11/2026 | 2.21 | Nome dos requisitos só na 8.2 e na 8.3: matrizes 8.4.1 e 8.4.2 com os códigos, sem as colunas Nome e Propriedade de Qualidade | Vinicius Vieira |
 
 ---
 
@@ -182,109 +183,109 @@ A rastreabilidade estabelece o vínculo bidirecional entre os problemas diagnost
 ### 8.4.1 Matriz de Rastreabilidade dos Requisitos Funcionais (RFs)
 
 #### CP1 — Gestão de Projetos e Metas (OE01; OE04)
-| Requisito | Nome | Gargalo BPMN | Norma / Mitigação | História derivada | Cobertura |
-| :--- | :--- | :---: | :--- | :--- | :---: |
-| **RF01** | Cadastrar instrumento convocatório e parceria | G01 | MROSC art. 16 e 42 | HU-01a (CA-01a.1) | Total |
-| **RF02** | Anexar documento formal homologado de parceria | G01 | MROSC art. 16 e 42 | HU-01a (CA-01a.2) | Total |
-| **RF03** | Cadastrar projeto operacional | G01 | — | HU-01a (CA-01a.3) | Total |
-| **RF04** | Desdobrar requisitos contratuais e metas | G01 | MROSC art. 22 e 42; RN-01, RN-02 | HU-01b (CA-01b.1 a CA-01b.4) | Total |
-| **RF05** | Atribuir responsável e setor executor a meta | G02 | Decisão 3 da ata de 08/09 | HU-02a (CA-02a.1) | Total |
-| **RF06** | Fixar prazo fatal e status de meta | G02 | RN-13 | HU-02a (CA-02a.1 a CA-02a.3) | Total |
-| **RF07** | Exibir linha do tempo e painel de prazos de metas | G02 | RN-01 | HU-02b (CA-02b.1) | Total |
-| **RF08** | Emitir alertas de proximidade e pendências de metas | G02 | RN-03 | HU-02b (CA-02b.2 a CA-02b.4) | Total |
-| **RF40** | Administrar contas e perfis de acesso | — | Seção 8.5.1 | HU-16 (CA-16.1 a CA-16.5) | Total |
+| Requisito | Gargalo BPMN | Norma / Mitigação | História derivada | Cobertura |
+| :--- | :---: | :--- | :--- | :---: |
+| **RF01** | G01 | MROSC art. 16 e 42 | HU-01a (CA-01a.1) | Total |
+| **RF02** | G01 | MROSC art. 16 e 42 | HU-01a (CA-01a.2) | Total |
+| **RF03** | G01 | — | HU-01a (CA-01a.3) | Total |
+| **RF04** | G01 | MROSC art. 22 e 42; RN-01, RN-02 | HU-01b (CA-01b.1 a CA-01b.4) | Total |
+| **RF05** | G02 | Decisão 3 da ata de 08/09 | HU-02a (CA-02a.1) | Total |
+| **RF06** | G02 | RN-13 | HU-02a (CA-02a.1 a CA-02a.3) | Total |
+| **RF07** | G02 | RN-01 | HU-02b (CA-02b.1) | Total |
+| **RF08** | G02 | RN-03 | HU-02b (CA-02b.2 a CA-02b.4) | Total |
+| **RF40** | — | Seção 8.5.1 | HU-16 (CA-16.1 a CA-16.5) | Total |
 
 #### CP2 — Gestão de Atividades (OE01; OE04, OE06)
-| Requisito | Nome | Gargalo BPMN | Norma / Mitigação | História derivada | Cobertura |
-| :--- | :--- | :---: | :--- | :--- | :---: |
-| **RF09** | Cadastrar atividade por modalidade de objeto | G03 | Seção 3.3.6; RN-04 | HU-03a (CA-03a.2, CA-03a.3) | Total |
-| **RF10** | Parametrizar exigência de comprovação de presença | G03 | Seção 3.3.6; RN-04 | HU-03b (CA-03b.1 a CA-03b.4) | Total |
-| **RF41** | Cadastrar modalidades de objeto | G03 | Seção 3.3.6 | HU-03a (CA-03a.1) | Total |
+| Requisito | Gargalo BPMN | Norma / Mitigação | História derivada | Cobertura |
+| :--- | :---: | :--- | :--- | :---: |
+| **RF09** | G03 | Seção 3.3.6; RN-04 | HU-03a (CA-03a.2, CA-03a.3) | Total |
+| **RF10** | G03 | Seção 3.3.6; RN-04 | HU-03b (CA-03b.1 a CA-03b.4) | Total |
+| **RF41** | G03 | Seção 3.3.6 | HU-03a (CA-03a.1) | Total |
 
 #### CP3 — Inscrição de Participantes (OE02; OE01)
-| Requisito | Nome | Gargalo BPMN | Norma / Mitigação | História derivada | Cobertura |
-| :--- | :--- | :---: | :--- | :--- | :---: |
-| **RF11** | Disponibilizar formulário público de inscrição | G03, G04 | RN-05, RN-06 | HU-07a (CA-07a.1, CA-07a.2, CA-07a.4); HU-07d (CA-07d.2) | Total |
-| **RF12** | Gerar link e QR Code de inscrição | G03 | — | HU-07b (CA-07b.3) | Total |
-| **RF13** | Registrar inscrição presencial assistida | G03 | Seção 3.3.10; RN-05, RN-06 | HU-08 (CA-08.1) | Total |
-| **RF14** | Limitar vagas da atividade | G03 | — | HU-07c (CA-07c.1); HU-07b (CA-07b.1) | Total |
-| **RF15** | Registrar lista de espera | G03 | — | HU-07c (CA-07c.1, CA-07c.2) | Total |
-| **RF42** | Configurar o formulário de inscrição | G04 | Seção 8.5.4; RNF05 | HU-07b (CA-07b.1, CA-07b.2) | Total |
-| **RF46** | Apresentar a inscrição | G03 | — | HU-07d (CA-07d.1 a CA-07d.7) | Total |
+| Requisito | Gargalo BPMN | Norma / Mitigação | História derivada | Cobertura |
+| :--- | :---: | :--- | :--- | :---: |
+| **RF11** | G03, G04 | RN-05, RN-06 | HU-07a (CA-07a.1, CA-07a.2, CA-07a.4); HU-07d (CA-07d.2) | Total |
+| **RF12** | G03 | — | HU-07b (CA-07b.3) | Total |
+| **RF13** | G03 | Seção 3.3.10; RN-05, RN-06 | HU-08 (CA-08.1) | Total |
+| **RF14** | G03 | — | HU-07c (CA-07c.1); HU-07b (CA-07b.1) | Total |
+| **RF15** | G03 | — | HU-07c (CA-07c.1, CA-07c.2) | Total |
+| **RF42** | G04 | Seção 8.5.4; RNF05 | HU-07b (CA-07b.1, CA-07b.2) | Total |
+| **RF46** | G03 | — | HU-07d (CA-07d.1 a CA-07d.7) | Total |
 
 #### CP4 — Registro de Participação em Campo (OE03; OE04)
-| Requisito | Nome | Gargalo BPMN | Norma / Mitigação | História derivada | Cobertura |
-| :--- | :--- | :---: | :--- | :--- | :---: |
-| **RF16** | Registrar frequência em dispositivo móvel | G03 | — | HU-09a (CA-09a.1, CA-09a.2) | Total |
-| **RF17** | Operar registro de presença em modo offline | G03 | Seção 3.3.3 | HU-09b (CA-09b.1 a CA-09b.3) | Total |
-| **RF18** | Sincronizar presenças com reconciliação idempotente | G03 | Seção 3.3.3 | HU-12 (CA-12.1 a CA-12.5) | Total |
-| **RF19** | Registrar lançamento extemporâneo com justificativa | G03 | Seção 3.3.8; RN-13 | HU-10 (CA-10.1 a CA-10.5) | Total |
-| **RF20** | Apurar carga horária de participantes e facilitadores | G03 | RN-15 | HU-06 (CA-06.6) | Total |
+| Requisito | Gargalo BPMN | Norma / Mitigação | História derivada | Cobertura |
+| :--- | :---: | :--- | :--- | :---: |
+| **RF16** | G03 | — | HU-09a (CA-09a.1, CA-09a.2) | Total |
+| **RF17** | G03 | Seção 3.3.3 | HU-09b (CA-09b.1 a CA-09b.3) | Total |
+| **RF18** | G03 | Seção 3.3.3 | HU-12 (CA-12.1 a CA-12.5) | Total |
+| **RF19** | G03 | Seção 3.3.8; RN-13 | HU-10 (CA-10.1 a CA-10.5) | Total |
+| **RF20** | G03 | RN-15 | HU-06 (CA-06.6) | Total |
 
 #### CP5 — Cadastro e Histórico de Pessoas (OE01; OE03, OE06)
-| Requisito | Nome | Gargalo BPMN | Norma / Mitigação | História derivada | Cobertura |
-| :--- | :--- | :---: | :--- | :--- | :---: |
-| **RF21** | Consultar histórico de participação | G04 | — | HU-06 (CA-06.1, CA-06.5) | Total |
-| **RF22** | Avisar cadastro repetido | G04 | — | HU-07a (CA-07a.8); HU-08 (CA-08.3) | Total |
-| **RF23** | Registrar aviso de tratamento de dados na inscrição | G04 | LGPD art. 7º, 8º, 9º e 14; Seção 2.6; RN-05, RN-06 | HU-07a (CA-07a.3) | Total |
-| **RF24** | Registrar autorização de contato | G04 | Seção 3.3.5; LGPD art. 8º, §5º; RN-05 | HU-07a (CA-07a.5, CA-07a.6); HU-06 (CA-06.4) | Total |
-| **RF25** | Registrar autorização de uso de imagem | G04 | Seção 3.3.4; LGPD art. 7º e 8º, §5º; RN-05, RN-12 | HU-07a (CA-07a.5, CA-07a.6) | Total |
-| **RF26** | Corrigir dados a pedido do titular | G04 | Seção 3.3.9; LGPD art. 18, III | HU-15a (CA-15a.1) | Total |
-| **RF27** | Excluir ou anonimizar dados de pessoa | G04 | Seção 3.3.9; LGPD art. 16, I, e 18, IV e VI; RN-07 | HU-15b (CA-15b.1 a CA-15b.3) | Total |
+| Requisito | Gargalo BPMN | Norma / Mitigação | História derivada | Cobertura |
+| :--- | :---: | :--- | :--- | :---: |
+| **RF21** | G04 | — | HU-06 (CA-06.1, CA-06.5) | Total |
+| **RF22** | G04 | — | HU-07a (CA-07a.8); HU-08 (CA-08.3) | Total |
+| **RF23** | G04 | LGPD art. 7º, 8º, 9º e 14; Seção 2.6; RN-05, RN-06 | HU-07a (CA-07a.3) | Total |
+| **RF24** | G04 | Seção 3.3.5; LGPD art. 8º, §5º; RN-05 | HU-07a (CA-07a.5, CA-07a.6); HU-06 (CA-06.4) | Total |
+| **RF25** | G04 | Seção 3.3.4; LGPD art. 7º e 8º, §5º; RN-05, RN-12 | HU-07a (CA-07a.5, CA-07a.6) | Total |
+| **RF26** | G04 | Seção 3.3.9; LGPD art. 18, III | HU-15a (CA-15a.1) | Total |
+| **RF27** | G04 | Seção 3.3.9; LGPD art. 16, I, e 18, IV e VI; RN-07 | HU-15b (CA-15b.1 a CA-15b.3) | Total |
 
 #### CP6 — Acompanhamento Automático de Metas (OE04; OE01)
-| Requisito | Nome | Gargalo BPMN | Norma / Mitigação | História derivada | Cobertura |
-| :--- | :--- | :---: | :--- | :--- | :---: |
-| **RF28** | Calcular progresso físico de metas automaticamente | G05 | RN-02, RN-08, RN-14 | HU-11 (CA-11.1, CA-11.2, CA-11.6) | Total |
-| **RF29** | Parametrizar apuração de metas por acúmulo contínuo ou marco de entrega | G05 | Seção 2.3; RN-08 | HU-11 (CA-11.3, CA-11.5) | Total |
-| **RF30** | Emitir alertas de risco de inexecução | G05 | — | HU-11 (CA-11.4) | Parcial |
-| **RF31** | Versionar o plano de trabalho | G05 | MROSC art. 55 e 57; RN-09, RN-13 | HU-14 (CA-14.1, CA-14.2, CA-14.4, CA-14.5) | Total |
-| **RF43** | Registrar o resultado alcançado da meta | G06 | MROSC art. 66; RN-14 | HU-05a (CA-05a.1, CA-05a.6) | Total |
-| **RF44** | Comparar metas repactuadas | G05 | MROSC art. 57; RN-09 | HU-14 (CA-14.3) | Total |
+| Requisito | Gargalo BPMN | Norma / Mitigação | História derivada | Cobertura |
+| :--- | :---: | :--- | :--- | :---: |
+| **RF28** | G05 | RN-02, RN-08, RN-14 | HU-11 (CA-11.1, CA-11.2, CA-11.6) | Total |
+| **RF29** | G05 | Seção 2.3; RN-08 | HU-11 (CA-11.3, CA-11.5) | Total |
+| **RF30** | G05 | — | HU-11 (CA-11.4) | Parcial |
+| **RF31** | G05 | MROSC art. 55 e 57; RN-09, RN-13 | HU-14 (CA-14.1, CA-14.2, CA-14.4, CA-14.5) | Total |
+| **RF43** | G06 | MROSC art. 66; RN-14 | HU-05a (CA-05a.1, CA-05a.6) | Total |
+| **RF44** | G05 | MROSC art. 57; RN-09 | HU-14 (CA-14.3) | Total |
 
 #### CP7 — Repositório de Evidências e Documentação (OE05; OE06)
-| Requisito | Nome | Gargalo BPMN | Norma / Mitigação | História derivada | Cobertura |
-| :--- | :--- | :---: | :--- | :--- | :---: |
-| **RF32** | Anexar evidências documentais e fotográficas | G03 | RN-10 | HU-04a (CA-04a.1, CA-04a.2) | Total |
-| **RF33** | Vincular evidência a meta contratual | G03 | RN-04, RN-10, RN-11, RN-13 | HU-04a (CA-04a.1, CA-04a.3 a CA-04a.5) | Total |
-| **RF34** | Restringir o acesso a fotos de prova de execução | G03 | Seção 3.3.4; LGPD art. 7º, I, e 14; RN-12 | HU-04b (CA-04b.1) | Total |
-| **RF45** | Orientar o enquadramento de fotos | G03 | Seção 3.3.4; LGPD art. 14 | HU-04b (CA-04b.2) | Total |
+| Requisito | Gargalo BPMN | Norma / Mitigação | História derivada | Cobertura |
+| :--- | :---: | :--- | :--- | :---: |
+| **RF32** | G03 | RN-10 | HU-04a (CA-04a.1, CA-04a.2) | Total |
+| **RF33** | G03 | RN-04, RN-10, RN-11, RN-13 | HU-04a (CA-04a.1, CA-04a.3 a CA-04a.5) | Total |
+| **RF34** | G03 | Seção 3.3.4; LGPD art. 7º, I, e 14; RN-12 | HU-04b (CA-04b.1) | Total |
+| **RF45** | G03 | Seção 3.3.4; LGPD art. 14 | HU-04b (CA-04b.2) | Total |
 
 #### CP8 — Relatórios e Exportação de Dados (OE06; OE04, OE05)
-| Requisito | Nome | Gargalo BPMN | Norma / Mitigação | História derivada | Cobertura |
-| :--- | :--- | :---: | :--- | :--- | :---: |
-| **RF35** | Exigir justificativa prévia para metas não atingidas | G06 | MROSC art. 64, §1º; RN-11 | HU-05a (CA-05a.2) | Total |
-| **RF36** | Emitir Relatório de Execução do Objeto | G06 | MROSC art. 63 a 66; RN-11, RN-14 | HU-05a (CA-05a.1, CA-05a.4); HU-04a (CA-04a.6) | Total |
-| **RF37** | Gerar relatório diagramado em PDF | G06 | Seção 2.4 | HU-05b (CA-05b.1); HU-04a (CA-04a.6) | Total |
-| **RF38** | Exportar dados analíticos e consolidados em planilha aberta | G06 | MROSC art. 64 | HU-13 (CA-13.1 a CA-13.5); HU-09a (CA-09a.3) | Total |
-| **RF39** | Registrar trilha de auditoria das operações de prestação de contas | G06 | RN-13 | HU-05a (CA-05a.3, CA-05a.5) | Total |
+| Requisito | Gargalo BPMN | Norma / Mitigação | História derivada | Cobertura |
+| :--- | :---: | :--- | :--- | :---: |
+| **RF35** | G06 | MROSC art. 64, §1º; RN-11 | HU-05a (CA-05a.2) | Total |
+| **RF36** | G06 | MROSC art. 63 a 66; RN-11, RN-14 | HU-05a (CA-05a.1, CA-05a.4); HU-04a (CA-04a.6) | Total |
+| **RF37** | G06 | Seção 2.4 | HU-05b (CA-05b.1); HU-04a (CA-04a.6) | Total |
+| **RF38** | G06 | MROSC art. 64 | HU-13 (CA-13.1 a CA-13.5); HU-09a (CA-09a.3) | Total |
+| **RF39** | G06 | RN-13 | HU-05a (CA-05a.3, CA-05a.5) | Total |
 
 ---
 
 ### 8.4.2 Matriz de Rastreabilidade dos Requisitos Não Funcionais (RNFs)
 
-| RNF | Propriedade de Qualidade | Origem (Decisão, Risco Ético ou Norma) | Requisitos Funcionais Relacionados |
-| :--- | :--- | :--- | :--- |
-| **RNF01** | Integridade transacional dos dados | HU-01b (CA-01b.3) | RF04, RF18 |
-| **RNF02** | Auditabilidade das alterações | Seção 3.3.9 | RF01 a RF06, RF09 a RF11, RF13, RF19, RF26, RF27, RF31 a RF33, RF38 a RF43, RF46 |
-| **RNF03** | Segurança das comunicações e das sessões | Seções 3.3.1 e 3.3.2; NIST SP 800-52 Rev. 2 | *Transversal (Todos os RFs)* |
-| **RNF04** | Controle de acesso por perfil | Seção 3.5 (visibilidade por perfil); matriz da seção 8.5.1 | *Transversal (Todos os RFs, exceto as operações públicas do formulário de inscrição do RF11)* |
-| **RNF05** | Minimização de dados pessoais | LGPD art. 5º, II; Restrição HU-06 | RF11, RF13, RF19, RF21, RF26, RF32 a RF35, RF38, RF42, RF43 |
-| **RNF06** | Prazo de atendimento à exclusão de dados | LGPD art. 18 | RF27 |
-| **RNF07** | Retenção documental decenal | MROSC art. 68 | RF32, RF36 |
-| **RNF08** | Integridade de relatórios fechados | MROSC art. 63 a 66 | RF31, RF35 a RF37, RF43 |
-| **RNF09** | Resiliência offline e sincronização sem duplicidade | Seção 3.3.3 | RF16 a RF19, RF32 |
-| **RNF10** | Descarte de dados pessoais no aparelho | Seções 3.3.1 e 3.3.2 | RF17, RF18, RF32 |
-| **RNF11** | Desempenho das consultas agregadas | OE04 | RF07, RF08, RF28 |
-| **RNF12** | Desempenho da inscrição pública | OE02 | RF11, RF12, RF46 |
-| **RNF13** | Desempenho da geração de relatórios | OE06 | RF36, RF37 |
-| **RNF14** | Eficiência no envio de evidências | Seção 3.3.1 | RF32 |
-| **RNF15** | Usabilidade móvel e acessibilidade | Seção 3.3.10 | *Transversal (Todos os RFs com tela)* |
-| **RNF16** | Compatibilidade entre navegadores e dispositivos | Seção 2.4 | *Transversal (Todos os RFs)* |
-| **RNF17** | Restrição tecnológica e qualidade de código | Seção 2.4 | *Transversal (Todos os RFs)* |
-| **RNF18** | Cópia de segurança e recuperação de dados | Seção 2.6 | *Transversal (Todos os RFs)* |
-| **RNF19** | Portabilidade dos dados | Alinhamento de 15/09/2026 e levantamento presencial de 21/09/2026; Seção 2.5 | *Transversal (Todos os RFs)* |
-| **RNF20** | Eficiência do registro de presença | Seção 3.3.10 | RF16 |
+| RNF | Origem (Decisão, Risco Ético ou Norma) | Requisitos Funcionais Relacionados |
+| :--- | :--- | :--- |
+| **RNF01** | HU-01b (CA-01b.3) | RF04, RF18 |
+| **RNF02** | Seção 3.3.9 | RF01 a RF06, RF09 a RF11, RF13, RF19, RF26, RF27, RF31 a RF33, RF38 a RF43, RF46 |
+| **RNF03** | Seções 3.3.1 e 3.3.2; NIST SP 800-52 Rev. 2 | *Transversal (Todos os RFs)* |
+| **RNF04** | Seção 3.5 (visibilidade por perfil); matriz da seção 8.5.1 | *Transversal (Todos os RFs, exceto as operações públicas do formulário de inscrição do RF11)* |
+| **RNF05** | LGPD art. 5º, II; Restrição HU-06 | RF11, RF13, RF19, RF21, RF26, RF32 a RF35, RF38, RF42, RF43 |
+| **RNF06** | LGPD art. 18 | RF27 |
+| **RNF07** | MROSC art. 68 | RF32, RF36 |
+| **RNF08** | MROSC art. 63 a 66 | RF31, RF35 a RF37, RF43 |
+| **RNF09** | Seção 3.3.3 | RF16 a RF19, RF32 |
+| **RNF10** | Seções 3.3.1 e 3.3.2 | RF17, RF18, RF32 |
+| **RNF11** | OE04 | RF07, RF08, RF28 |
+| **RNF12** | OE02 | RF11, RF12, RF46 |
+| **RNF13** | OE06 | RF36, RF37 |
+| **RNF14** | Seção 3.3.1 | RF32 |
+| **RNF15** | Seção 3.3.10 | *Transversal (Todos os RFs com tela)* |
+| **RNF16** | Seção 2.4 | *Transversal (Todos os RFs)* |
+| **RNF17** | Seção 2.4 | *Transversal (Todos os RFs)* |
+| **RNF18** | Seção 2.6 | *Transversal (Todos os RFs)* |
+| **RNF19** | Alinhamento de 15/09/2026 e levantamento presencial de 21/09/2026; Seção 2.5 | *Transversal (Todos os RFs)* |
+| **RNF20** | Seção 3.3.10 | RF16 |
 
 ---
 

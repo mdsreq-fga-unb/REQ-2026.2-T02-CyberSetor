@@ -117,13 +117,14 @@ def ler_secao8(md: str) -> Secao8:
             s.cp_oe[m.group(1)] = m.group(2)
         m = LINHA_RF.match(linha)
         if m:
+            # Requisito | Gargalo | Norma / mitigação | História derivada | Cobertura (o nome fica na 8.2).
             s.verificacao[m.group(1)] = [
-                (h, ca.strip(" ()")) for h, ca in re.findall(rf"({HU})\s*(\([^)]*\))?", celulas(linha)[4])
+                (h, ca.strip(" ()")) for h, ca in re.findall(rf"({HU})\s*(\([^)]*\))?", celulas(linha)[3])
             ]
     for linha in trecho(md, "### 8.4.2", "### 8.4.3").splitlines():
         m = LINHA_RNF.match(linha)
         if m:
-            coluna = celulas(linha)[3]
+            coluna = celulas(linha)[2]  # RNF | Origem | RFs relacionados (o nome fica na 8.3)
             # RNF transversal vale para o produto inteiro e não se repete em cada história.
             s.rnf_rfs[m.group(1)] = set() if "Transversal" in coluna else faixa(coluna)
     for linha in trecho(md, "## 8.7", None).splitlines():

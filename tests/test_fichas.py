@@ -38,17 +38,17 @@ SECAO8 = """# 8. Requisitos
 ### 8.4.1 Matriz de Rastreabilidade dos Requisitos Funcionais (RFs)
 
 #### CP1 — Gestão de Projetos e Metas (OE01; OE04)
-| Requisito | Nome | Gargalo BPMN | Norma | História derivada | Cobertura |
-| :--- | :--- | :---: | :--- | :--- | :---: |
-| **RF04** | Desdobrar metas | G01 | — | HU-01b (CA-01b.1) | Total |
-| **RF05** | Atribuir responsável | G02 | — | HU-02a (CA-02a.1); HU-01b (CA-01b.2) | Total |
+| Requisito | Gargalo BPMN | Norma / Mitigação | História derivada | Cobertura |
+| :--- | :---: | :--- | :--- | :---: |
+| **RF04** | G01 | — | HU-01b (CA-01b.1) | Total |
+| **RF05** | G02 | — | HU-02a (CA-02a.1); HU-01b (CA-01b.2) | Total |
 
 ### 8.4.2 Matriz de Rastreabilidade dos Requisitos Não Funcionais (RNFs)
 
-| RNF | Propriedade | Origem | Requisitos Funcionais Relacionados |
-| :--- | :--- | :--- | :--- |
-| **RNF02** | Auditabilidade | Seção 3 | RF04 a RF05 |
-| **RNF04** | Controle de acesso | Seção 3 | *Transversal (Todos os RFs, exceto o RF04)* |
+| RNF | Origem (Decisão, Risco Ético ou Norma) | Requisitos Funcionais Relacionados |
+| :--- | :--- | :--- |
+| **RNF02** | Seção 3 | RF04 a RF05 |
+| **RNF04** | Seção 3 | *Transversal (Todos os RFs, exceto o RF04)* |
 
 ### 8.4.3 Síntese de Cobertura
 
@@ -105,10 +105,10 @@ SECAO10 = """# 10. Backlog
 
 ### 10.2.3 Avaliação técnica
 
-| Código | Requisito funcional | Esforço | Complexidade | Lacuna | Média | Esforço técnico |
-| :---: | :--- | :---: | :---: | :---: | :---: | :---: |
-| [RF04](8-requisitos.md#rf04) | Desdobrar metas | 2 | 2 | 1 | 1,7 | **2** |
-| [RF05](8-requisitos.md#rf05) | Atribuir responsável | 1 | 1 | 1 | 1,0 | **1** |
+| Código | Esforço | Complexidade | Lacuna | Média | Esforço técnico |
+| :---: | :---: | :---: | :---: | :---: | :---: |
+| [RF04](8-requisitos.md#rf04) | 2 | 2 | 1 | 1,7 | **2** |
+| [RF05](8-requisitos.md#rf05) | 1 | 1 | 1 | 1,0 | **1** |
 
 ### 10.2.4 Tabela consolidada
 
@@ -279,3 +279,15 @@ def test_rf_compartilhado_segue_a_historia_dona():
     }
     f = _ficha(_pagina(dados=dados_invertidos), "HU-02a")
     assert "[RF05](8-requisitos.md#rf05) **Atribuir responsável** · esforço 1 <span class='selo selo--concluido'" in f
+
+
+def test_le_as_colunas_certas_do_documento():
+    md8 = (RAIZ / "docs/requisitos/8-requisitos.md").read_text(encoding="utf-8")
+    md10 = (RAIZ / "docs/requisitos/10-backlog.md").read_text(encoding="utf-8")
+    s = fichas.ler_secao8(md8)
+    assert s.verificacao["RF22"] == [("HU-07a", "CA-07a.8"), ("HU-08", "CA-08.3")]
+    assert s.rnf_rfs["RNF06"] == {"RF27"} and s.rnf_rfs["RNF15"] == set()
+    assert s.rnf["RNF06"] == "Prazo de atendimento à exclusão de dados"
+    p = fichas.ler_priorizacao(md10)
+    assert p.esforco["RF10"] == "3" and p.esforco["RF46"] == "1 🔧"
+    assert p.destino["RF16"] == "Incremento 3"

@@ -40,7 +40,7 @@ def test_selo_na_linha_do_rf_e_legenda():
     md = (
         "## 8.2 Lista\n\n| Identificador | Requisito | Descrição | Rastreabilidade |\n| :---: | :--- | :--- | :--- |\n"
         '| <a id="rf04"></a>**RF04** | Desdobrar | Texto | MROSC art. 22 \\| [HU-01b](10-backlog.md#hu-01b) |\n'
-        "| **RF04** | Desdobrar | G01 | — | HU-01b (CA-01b.1) | Total |\n"
+        "| **RF04** | G01 | — | HU-01b (CA-01b.1) | Total |\n"
     )
     saida = selos.selar_requisitos(md, DADOS)
     assert "**RF04** <span class='selo selo--concluido' data-situacao='concluido'>Concluído</span> |" in saida
@@ -75,10 +75,10 @@ def test_rf_compartilhado_segue_a_dona_da_1024():
     md = (
         "## 8.2 Lista\n\n| Identificador | Requisito | Descrição | Rastreabilidade |\n| :---: | :--- | :--- | :--- |\n"
         '| <a id="rf04"></a>**RF04** | Desdobrar | Texto | MROSC art. 22 |\n'
-        "| **RF04** | Desdobrar | G01 | — | HU-01b (CA-01b.1); HU-02b (CA-02b.3) | Total |\n"
+        "| **RF04** | G01 | — | HU-01b (CA-01b.1); HU-02b (CA-02b.3) | Total |\n"
     )
     md10 = (
-        "### 10.2.3 Avaliação técnica\n\n| [RF04](8-requisitos.md#rf04) | HU-02b | 2 |\n\n"
+        "### 10.2.3 Avaliação técnica\n\n| [RF04](8-requisitos.md#rf04) | 2 | 2 | 1 | 1,7 | **2** |\n\n"
         "### 10.2.4 Tabela consolidada\n\n| Código | Histórias | Valor | Esforço técnico | Destino |\n"
         "| :---: | :--- | :---: | :---: | :--- |\n| [RF04](8-requisitos.md#rf04) | HU-01b | 4 | 2 | MVP |\n\n"
         "### 10.2.5 Matriz\n"

@@ -17,6 +17,7 @@
 | 10/11/2026 | 2.8 | Confirmações da HU-07d com o Instituto passadas para a reunião de validação da Sprint 5, adiada de 05/11/2026 | Vinicius Vieira |
 | 10/11/2026 | 2.9 | Fichas completas por história na seção 10.1, no lugar da tabela-resumo: situação, destino, valor, requisitos, dependências e evolução na própria página, compostos a partir das seções de origem | Vinicius Vieira |
 | 11/11/2026 | 2.10 | Valor herdado em conferência (🔧) nas histórias HU-03b, HU-05b, HU-07c e HU-09a, também na tabela 10.2.4 e na matriz 10.2.5; retirada da regra de maior valor da 10.2.1, que não se aplicava porque cada requisito funcional pertence a uma única história (regra 2 da 10.1) | Maria Eduarda Marques |
+| 16/11/2026 | 2.11 | Nome dos requisitos só na seção 8: avaliação técnica (10.2.3) com os códigos, sem a coluna Requisito funcional | Vinicius Vieira |
 
 ---
 
@@ -568,54 +569,54 @@ O Instituto deu o valor a quatorze das quinze histórias apresentadas na valida�
 
 ### 10.2.3 Avaliação técnica
 
-| Código | Requisito funcional | Esforço | Complexidade | Lacuna | Média | Esforço técnico |
-| :---: | :--- | :---: | :---: | :---: | :---: | :---: |
-| [RF01](8-requisitos.md#rf01) | Cadastrar instrumento convocatório e parceria | 2 | 1 | 1 | 1,3 | **1** |
-| [RF02](8-requisitos.md#rf02) | Anexar documento formal homologado de parceria | 2 | 1 | 1 | 1,3 | **1** |
-| [RF03](8-requisitos.md#rf03) | Cadastrar projeto operacional | 1 | 1 | 1 | 1,0 | **1** |
-| [RF04](8-requisitos.md#rf04) | Desdobrar requisitos contratuais e metas | 2 | 2 | 1 | 1,7 | **2** |
-| [RF05](8-requisitos.md#rf05) | Atribuir responsável e setor executor a meta | 1 | 1 | 1 | 1,0 | **1** |
-| [RF06](8-requisitos.md#rf06) | Fixar prazo fatal e status de meta | 1 | 1 | 1 | 1,0 | **1** |
-| [RF07](8-requisitos.md#rf07) | Exibir linha do tempo e painel de prazos de metas | 2 | 2 | 1 | 1,7 | **2** |
-| [RF08](8-requisitos.md#rf08) | Emitir alertas de proximidade e pendências de metas | 2 | 2 | 1 | 1,7 | **2** |
-| [RF09](8-requisitos.md#rf09) | Cadastrar atividade por modalidade de objeto | 1 | 1 | 2 | 1,3 | **1** |
-| [RF10](8-requisitos.md#rf10) | Parametrizar exigência de comprovação de presença | 2 | 3 | 3 | 2,7 | **3** |
-| [RF11](8-requisitos.md#rf11) | Disponibilizar formulário público de inscrição | 2 | 2 | 1 | 1,7 | **2** |
-| [RF12](8-requisitos.md#rf12) | Gerar link e QR Code de inscrição | 1 | 1 | 1 | 1,0 | **1** |
-| [RF13](8-requisitos.md#rf13) | Registrar inscrição presencial assistida | 2 | 1 | 1 | 1,3 | **1** |
-| [RF14](8-requisitos.md#rf14) | Limitar vagas da atividade | 2 | 2 | 1 | 1,7 | **2** |
-| [RF15](8-requisitos.md#rf15) | Registrar lista de espera | 2 | 2 | 1 | 1,7 | **2** |
-| [RF16](8-requisitos.md#rf16) | Registrar frequência em dispositivo móvel | 3 | 2 | 3 | 2,7 | **3** |
-| [RF17](8-requisitos.md#rf17) | Operar registro de presença em modo offline | 3 | 4 | 3 | 3,3 | **3** |
-| [RF18](8-requisitos.md#rf18) | Sincronizar presenças com reconciliação idempotente | 2 | 3 | 3 | 2,7 | **3** |
-| [RF19](8-requisitos.md#rf19) | Registrar lançamento extemporâneo com justificativa | 1 | 1 | 2 | 1,3 | **1** |
-| [RF20](8-requisitos.md#rf20) | Apurar carga horária de participantes e facilitadores | 2 | 2 | 1 | 1,7 | **2** |
-| [RF21](8-requisitos.md#rf21) | Consultar histórico de participação | 2 | 1 | 1 | 1,3 | **1** |
-| [RF22](8-requisitos.md#rf22) | Avisar cadastro repetido | 2 | 2 | 1 | 1,7 | **2** |
-| [RF23](8-requisitos.md#rf23) | Registrar aviso de tratamento de dados na inscrição | 1 | 1 | 1 | 1,0 | **1** |
-| [RF24](8-requisitos.md#rf24) | Registrar autorização de contato | 1 | 1 | 1 | 1,0 | **1** |
-| [RF25](8-requisitos.md#rf25) | Registrar autorização de uso de imagem | 2 | 2 | 1 | 1,7 | **2** |
-| [RF26](8-requisitos.md#rf26) | Corrigir dados a pedido do titular | 2 | 1 | 1 | 1,3 | **1** |
-| [RF27](8-requisitos.md#rf27) | Excluir ou anonimizar dados de pessoa | 3 | 3 | 2 | 2,7 | **3** |
-| [RF28](8-requisitos.md#rf28) | Calcular progresso físico de metas automaticamente | 3 | 2 | 1 | 2,0 | **2** |
-| [RF29](8-requisitos.md#rf29) | Parametrizar apuração de metas por acúmulo contínuo ou marco de entrega | 2 | 1 | 1 | 1,3 | **1** |
-| [RF30](8-requisitos.md#rf30) | Emitir alertas de risco de inexecução | 3 | 2 | 1 | 2,0 | **2** |
-| [RF31](8-requisitos.md#rf31) | Versionar o plano de trabalho | 3 | 2 | 1 | 2,0 | **2** |
-| [RF32](8-requisitos.md#rf32) | Anexar evidências documentais e fotográficas | 2 | 3 | 3 | 2,7 | **3** |
-| [RF33](8-requisitos.md#rf33) | Vincular evidência a meta contratual | 2 | 2 | 2 | 2,0 | **2** |
-| [RF34](8-requisitos.md#rf34) | Restringir o acesso a fotos de prova de execução | 3 | 3 | 2 | 2,7 | **3** |
-| [RF35](8-requisitos.md#rf35) | Exigir justificativa prévia para metas não atingidas | 1 | 1 | 1 | 1,0 | **1** |
-| [RF36](8-requisitos.md#rf36) | Emitir Relatório de Execução do Objeto | 3 | 2 | 1 | 2,0 | **2** |
-| [RF37](8-requisitos.md#rf37) | Gerar relatório diagramado em PDF | 4 | 3 | 2 | 3,0 | **3** |
-| [RF38](8-requisitos.md#rf38) | Exportar dados analíticos e consolidados em planilha aberta | 2 | 1 | 1 | 1,3 | **1** |
-| [RF39](8-requisitos.md#rf39) | Registrar trilha de auditoria das operações de prestação de contas | 2 | 1 | 1 | 1,3 | **1** |
-| [RF40](8-requisitos.md#rf40) | Administrar contas e perfis de acesso | 1 | 1 | 1 | 1,0 | **1** |
-| [RF41](8-requisitos.md#rf41) | Cadastrar modalidades de objeto | 1 | 1 | 1 | 1,0 | **1** |
-| [RF42](8-requisitos.md#rf42) | Configurar o formulário de inscrição | 2 | 2 | 1 | 1,7 | **2** |
-| [RF43](8-requisitos.md#rf43) | Registrar o resultado alcançado da meta | 1 | 1 | 1 | 1,0 | **1** |
-| [RF44](8-requisitos.md#rf44) | Comparar metas repactuadas | 2 | 1 | 1 | 1,3 | **1** |
-| [RF45](8-requisitos.md#rf45) | Orientar o enquadramento de fotos | 1 | 1 | 1 | 1,0 | **1** |
-| [RF46](8-requisitos.md#rf46) | Apresentar a inscrição | 2 | 1 | 1 | 1,3 | **1** 🔧 |
+| Código | Esforço | Complexidade | Lacuna | Média | Esforço técnico |
+| :---: | :---: | :---: | :---: | :---: | :---: |
+| [RF01](8-requisitos.md#rf01) | 2 | 1 | 1 | 1,3 | **1** |
+| [RF02](8-requisitos.md#rf02) | 2 | 1 | 1 | 1,3 | **1** |
+| [RF03](8-requisitos.md#rf03) | 1 | 1 | 1 | 1,0 | **1** |
+| [RF04](8-requisitos.md#rf04) | 2 | 2 | 1 | 1,7 | **2** |
+| [RF05](8-requisitos.md#rf05) | 1 | 1 | 1 | 1,0 | **1** |
+| [RF06](8-requisitos.md#rf06) | 1 | 1 | 1 | 1,0 | **1** |
+| [RF07](8-requisitos.md#rf07) | 2 | 2 | 1 | 1,7 | **2** |
+| [RF08](8-requisitos.md#rf08) | 2 | 2 | 1 | 1,7 | **2** |
+| [RF09](8-requisitos.md#rf09) | 1 | 1 | 2 | 1,3 | **1** |
+| [RF10](8-requisitos.md#rf10) | 2 | 3 | 3 | 2,7 | **3** |
+| [RF11](8-requisitos.md#rf11) | 2 | 2 | 1 | 1,7 | **2** |
+| [RF12](8-requisitos.md#rf12) | 1 | 1 | 1 | 1,0 | **1** |
+| [RF13](8-requisitos.md#rf13) | 2 | 1 | 1 | 1,3 | **1** |
+| [RF14](8-requisitos.md#rf14) | 2 | 2 | 1 | 1,7 | **2** |
+| [RF15](8-requisitos.md#rf15) | 2 | 2 | 1 | 1,7 | **2** |
+| [RF16](8-requisitos.md#rf16) | 3 | 2 | 3 | 2,7 | **3** |
+| [RF17](8-requisitos.md#rf17) | 3 | 4 | 3 | 3,3 | **3** |
+| [RF18](8-requisitos.md#rf18) | 2 | 3 | 3 | 2,7 | **3** |
+| [RF19](8-requisitos.md#rf19) | 1 | 1 | 2 | 1,3 | **1** |
+| [RF20](8-requisitos.md#rf20) | 2 | 2 | 1 | 1,7 | **2** |
+| [RF21](8-requisitos.md#rf21) | 2 | 1 | 1 | 1,3 | **1** |
+| [RF22](8-requisitos.md#rf22) | 2 | 2 | 1 | 1,7 | **2** |
+| [RF23](8-requisitos.md#rf23) | 1 | 1 | 1 | 1,0 | **1** |
+| [RF24](8-requisitos.md#rf24) | 1 | 1 | 1 | 1,0 | **1** |
+| [RF25](8-requisitos.md#rf25) | 2 | 2 | 1 | 1,7 | **2** |
+| [RF26](8-requisitos.md#rf26) | 2 | 1 | 1 | 1,3 | **1** |
+| [RF27](8-requisitos.md#rf27) | 3 | 3 | 2 | 2,7 | **3** |
+| [RF28](8-requisitos.md#rf28) | 3 | 2 | 1 | 2,0 | **2** |
+| [RF29](8-requisitos.md#rf29) | 2 | 1 | 1 | 1,3 | **1** |
+| [RF30](8-requisitos.md#rf30) | 3 | 2 | 1 | 2,0 | **2** |
+| [RF31](8-requisitos.md#rf31) | 3 | 2 | 1 | 2,0 | **2** |
+| [RF32](8-requisitos.md#rf32) | 2 | 3 | 3 | 2,7 | **3** |
+| [RF33](8-requisitos.md#rf33) | 2 | 2 | 2 | 2,0 | **2** |
+| [RF34](8-requisitos.md#rf34) | 3 | 3 | 2 | 2,7 | **3** |
+| [RF35](8-requisitos.md#rf35) | 1 | 1 | 1 | 1,0 | **1** |
+| [RF36](8-requisitos.md#rf36) | 3 | 2 | 1 | 2,0 | **2** |
+| [RF37](8-requisitos.md#rf37) | 4 | 3 | 2 | 3,0 | **3** |
+| [RF38](8-requisitos.md#rf38) | 2 | 1 | 1 | 1,3 | **1** |
+| [RF39](8-requisitos.md#rf39) | 2 | 1 | 1 | 1,3 | **1** |
+| [RF40](8-requisitos.md#rf40) | 1 | 1 | 1 | 1,0 | **1** |
+| [RF41](8-requisitos.md#rf41) | 1 | 1 | 1 | 1,0 | **1** |
+| [RF42](8-requisitos.md#rf42) | 2 | 2 | 1 | 1,7 | **2** |
+| [RF43](8-requisitos.md#rf43) | 1 | 1 | 1 | 1,0 | **1** |
+| [RF44](8-requisitos.md#rf44) | 2 | 1 | 1 | 1,3 | **1** |
+| [RF45](8-requisitos.md#rf45) | 1 | 1 | 1 | 1,0 | **1** |
+| [RF46](8-requisitos.md#rf46) | 2 | 1 | 1 | 1,3 | **1** 🔧 |
 
 ??? note "Fundamentação técnica por requisito"
     - **RF01:** CRUD administrativo padrão em Next.js e PostgreSQL (stack consolidada).

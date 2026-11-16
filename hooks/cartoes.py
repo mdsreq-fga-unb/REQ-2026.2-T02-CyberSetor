@@ -86,17 +86,19 @@ def ler_matrizes(md: str) -> tuple[dict, dict]:
         m = LINHA_841.match(linha)
         if m:
             c = celulas(linha)
-            matriz_rf[m.group(1)] = {"gargalo": c[2], "historia": c[4], "cobertura": c[5]}
+            # Requisito | Gargalo | Norma / mitigação | História derivada | Cobertura (o nome fica na 8.2).
+            matriz_rf[m.group(1)] = {"gargalo": c[1], "historia": c[3], "cobertura": c[4]}
             continue
         m = LINHA_842.match(linha)
         if m:
             c = celulas(linha)
-            transversal = c[3].startswith("*Transversal")
+            # RNF | Origem | RFs relacionados (o nome fica na 8.3).
+            transversal = c[2].startswith("*Transversal")
             rnf_rfs[m.group(1)] = {
-                "origem": c[2],
-                "texto": c[3],
+                "origem": c[1],
+                "texto": c[2],
                 "transversal": transversal,
-                "rfs": [] if transversal else faixa(c[3]),
+                "rfs": [] if transversal else faixa(c[2]),
             }
     return matriz_rf, rnf_rfs
 
@@ -252,11 +254,11 @@ def trilha_rf(c: list[str], fontes: Fontes) -> str:
     chave, destino = chip_destino(info)
     return (
         f'<div class="rt-linha rt--rf" id="m-{cod.lower()}" data-destino="{chave}" markdown="1">\n'
-        + col("Gargalo", c[2] if c[2] != "—" else '<span class="rt-nota">sem gargalo</span>', " rt-col--g")
-        + col("Requisito", f'[{cod}](#{cod.lower()}) {c[1]}', " rt-col--req")
-        + col("História", c[4], " rt-col--hu")
-        + col("Norma / mitigação", c[3] if c[3] != "—" else '<span class="rt-nota">—</span>')
-        + col("Cobertura", chip_cobertura(c[5]) + destino, " rt-col--cob")
+        + col("Gargalo", c[1] if c[1] != "—" else '<span class="rt-nota">sem gargalo</span>', " rt-col--g")
+        + col("Requisito", f'[{cod}](#{cod.lower()})', " rt-col--req")
+        + col("História", c[3], " rt-col--hu")
+        + col("Norma / mitigação", c[2] if c[2] != "—" else '<span class="rt-nota">—</span>')
+        + col("Cobertura", chip_cobertura(c[4]) + destino, " rt-col--cob")
         + "\n</div>"
     )
 
@@ -266,9 +268,9 @@ def trilha_rnf(c: list[str], fontes: Fontes) -> str:
     chave, destino = chip_classe(fontes.classe_rnf.get(cod))
     return (
         f'<div class="rt-linha rt--rnf" id="m-{cod.lower()}" data-destino="{chave}" markdown="1">\n'
-        + col("Requisito", f'[{cod}](#{cod.lower()}) {c[1]}', " rt-col--req")
-        + col("Origem", c[2])
-        + col("RFs relacionados", chips_rf(c[3]), " rt-col--rfs")
+        + col("Requisito", f'[{cod}](#{cod.lower()})', " rt-col--req")
+        + col("Origem", c[1])
+        + col("RFs relacionados", chips_rf(c[2]), " rt-col--rfs")
         + col("No MVP", destino, " rt-col--cob")
         + "\n</div>"
     )
@@ -301,8 +303,8 @@ def trilha_cp(c: list[str]) -> str:
 
 
 MATRIZES = {
-    "| Requisito | Nome | Gargalo BPMN |": ("rf", ["Gargalo", "Requisito", "História e critérios", "Norma / mitigação", "Cobertura"]),
-    "| RNF | Propriedade de Qualidade |": ("rnf", ["Requisito", "Origem", "RFs relacionados", "No MVP"]),
+    "| Requisito | Gargalo BPMN |": ("rf", ["Gargalo", "Requisito", "História e critérios", "Norma / mitigação", "Cobertura"]),
+    "| RNF | Origem ": ("rnf", ["Requisito", "Origem", "RFs relacionados", "No MVP"]),
     "| Gargalo | Descrição do Gargalo": ("g", ["Gargalo", "Requisitos", "Situação"]),
     "| CP | Nome da Característica |": ("cp", ["Característica", "Requisitos", "Objetivos específicos"]),
 }

@@ -110,3 +110,28 @@ def test_cartoes_do_documento_mostram_a_dona_da_1024():
     for cod, info in f.destino.items():
         m = re.search(rf'<article [^>]*id="{cod.lower()}"[^>]*data-historias="([^"]*)"', saida)
         assert m and m.group(1).split() == info["hus"], cod
+
+
+def test_nome_do_requisito_so_no_cartao():
+    # O nome fica na 8.2 e na 8.3; as trilhas da 8.4 levam só o código, que liga ao cartão.
+    saida = cartoes.compor(SECAO8, cartoes.carregar(SECAO8, BACKLOG))
+    nomes = re.findall(r'^\| <a id="rn?f\d+"></a>\*\*RN?F\d+\*\*[^|]*\| ([^|]+?) \|', SECAO8, re.M)
+    assert len(nomes) > 60
+    matriz = saida.split("## 8.4", 1)[1].split("### 8.4.3", 1)[0]
+    for nome in nomes:
+        assert saida.count(f">{nome}</p>") == 1, nome
+        assert nome not in matriz, nome
+    assert '<span class="rt-val">[RF01](#rf01)</span>' in matriz
+    assert '<span class="rt-val">[RNF19](#rnf19)</span>' in matriz
+    m = re.search(r'id="m-rf36"(.*?)\n</div>', matriz, re.S).group(1)
+    assert "G06" in m and "HU-05a (CA-05a.1, CA-05a.4); HU-04a (CA-04a.6)" in m and "MROSC art. 63 a 66" in m
+    m = re.search(r'id="m-rnf01"(.*?)\n</div>', matriz, re.S).group(1)
+    assert "HU-01b (CA-01b.3)" in m and 'href="#rf04"' in m and 'href="#rf18"' in m
+
+
+def test_matriz_do_documento_lida_pelas_colunas_certas():
+    f = cartoes.carregar(SECAO8, BACKLOG)
+    assert f.matriz_rf["RF07"] == {"gargalo": "G02", "historia": "HU-02b (CA-02b.1)", "cobertura": "Total"}
+    assert f.matriz_rf["RF30"]["cobertura"] == "Parcial"
+    assert f.rnf_rfs["RNF06"] == {"origem": "LGPD art. 18", "texto": "RF27", "transversal": False, "rfs": ["RF27"]}
+    assert f.rnf_rfs["RNF03"]["transversal"] and f.rnf_rfs["RNF03"]["rfs"] == []
