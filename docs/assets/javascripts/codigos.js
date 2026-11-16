@@ -89,12 +89,14 @@
     partes.detalhes = el("dl", "cod-janela__detalhes");
     var acoes = el("div", "cod-janela__acoes");
     partes.abrir = el("a", "cod-janela__botao cod-janela__botao--principal", "Abrir definição");
+    partes.evolucao = el("a", "cod-janela__botao", "Evolução");
     var fechar = el("button", "cod-janela__botao", "Fechar");
     fechar.type = "button";
     var x = el("button", "cod-janela__x", "×");
     x.type = "button";
     x.setAttribute("aria-label", "Fechar");
     acoes.appendChild(partes.abrir);
+    acoes.appendChild(partes.evolucao);
     acoes.appendChild(fechar);
     corpo.appendChild(x);
     corpo.appendChild(partes.tipo);
@@ -108,6 +110,11 @@
     fechar.addEventListener("click", function () { fecharJanela(); });
     x.addEventListener("click", function () { fecharJanela(); });
     // "Abrir definição": a janela fecha e o link segue o caminho normal (inclusive Ctrl-clique).
+    partes.evolucao.addEventListener("click", function (ev) {
+      if (ev.button === 0 && !ev.metaKey && !ev.ctrlKey && !ev.shiftKey && !ev.altKey) {
+        fecharJanela();
+      }
+    });
     partes.abrir.addEventListener("click", function (ev) {
       if (ev.button === 0 && !ev.metaKey && !ev.ctrlKey && !ev.shiftKey && !ev.altKey) {
         fecharJanela();
@@ -136,9 +143,9 @@
     partes.titulo.textContent = "";
     partes.titulo.appendChild(el("span", "cod-janela__cod", e.codigo));
     if (e.titulo) {
-      partes.titulo.appendChild(document.createTextNode(" " + e.titulo));
+      partes.titulo.appendChild(document.createTextNode(" " + e.titulo.replace(/\s*🔧/g, "")));
     }
-    partes.resumo.textContent = e.resumo || "";
+    partes.resumo.textContent = (e.resumo || "").replace(/\s*🔧/g, "");
     partes.detalhes.textContent = "";
     (e.detalhes || []).forEach(function (d) {
       partes.detalhes.appendChild(el("dt", "", d[0]));
@@ -146,6 +153,14 @@
     });
     partes.detalhes.hidden = !(e.detalhes && e.detalhes.length);
     partes.abrir.href = e.href;
+    // Evolução: quantas mudanças o histórico registra e o botão que leva até elas.
+    if (e.evolucao) {
+      partes.evolucao.hidden = false;
+      partes.evolucao.href = new URL(e.evolucao.url, raiz).href;
+      partes.evolucao.textContent = "Evolução (" + e.evolucao.n + ", última em " + e.evolucao.ultima + ")";
+    } else {
+      partes.evolucao.hidden = true;
+    }
     janela.classList.toggle("cod-janela--fora", e.mvp === false);
     if (!janela.open) {
       origem = de || document.activeElement;

@@ -335,11 +335,11 @@ def compor(f: Ficha, fichas: list[Ficha], s: Secao8, p: Priorizacao, dados: dict
                 eventos.append(e)
     eventos.sort(key=lambda e: e.quando, reverse=True)
     if eventos:
-        corpo += ["", f'??? abstract "Evolução ({len(eventos)})"', ""]
-        corpo += ["    " + _evento(e, existe) for e in eventos]
+        # A evolução detalhada fica só na página Histórico e evolução; a ficha leva até ela.
         alvo = posixpath.relpath(HISTORICO, posixpath.dirname(SECAO_HU))
-        filtro = f"#{f.hu.lower()}" if f.hu in por_codigo else ""
-        corpo += ["", f"    [Ver no Histórico e evolução]({alvo}{filtro})"]
+        ancora = f"#evolucao-{f.hu.lower()}" if f.hu in por_codigo else ""
+        corpo += ["", f"[Evolução da {f.hu}: {len(eventos)} {'registro' if len(eventos) == 1 else 'registros'}, "
+                      f"o último em {eventos[0].quando:%d/%m}]({alvo}{ancora}){{ .ficha-evolucao }}"]
     return saida + [f"    {c}" if c else "" for c in corpo]
 
 

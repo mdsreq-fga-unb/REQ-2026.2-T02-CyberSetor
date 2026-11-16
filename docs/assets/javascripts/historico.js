@@ -9,7 +9,47 @@
   var CAMPOS = ["tipo", "sprint", "unidade", "documento", "autor", "codigo"];
   var atual = null; // página montada agora: { barra, lerEndereco }
 
+  // Abas da página Histórico e evolução. Sem JavaScript, as duas partes aparecem em sequência.
+  function iniciarAbas() {
+    var botoes = Array.prototype.slice.call(document.querySelectorAll(".hist-abas [data-aba]"));
+    var paineis = Array.prototype.slice.call(document.querySelectorAll(".hist-aba[data-aba]"));
+    if (!botoes.length) {
+      return null;
+    }
+    function mostrar(nome) {
+      botoes.forEach(function (b) { b.setAttribute("aria-selected", b.getAttribute("data-aba") === nome ? "true" : "false"); });
+      paineis.forEach(function (p) { p.hidden = p.getAttribute("data-aba") !== nome; });
+    }
+    botoes.forEach(function (b) {
+      b.addEventListener("click", function () { mostrar(b.getAttribute("data-aba")); });
+    });
+    function peloEndereco() {
+      var h = decodeURIComponent((window.location.hash || "").slice(1));
+      if (h.indexOf("evolucao-") === 0) {
+        var alvo = document.getElementById(h);
+        mostrar("evolucao");
+        if (alvo) {
+          alvo.open = true;
+          alvo.scrollIntoView();
+        }
+        return;
+      }
+      var doRegistro = h && h !== "linha-do-tempo" && h !== "evolucao-dos-requisitos" && h.indexOf("codigo-") !== 0;
+      mostrar(doRegistro ? "registro" : "evolucao");
+    }
+    peloEndereco();
+    if (!ouvindoEndereco) {
+      ouvindoEndereco = true;
+      window.addEventListener("hashchange", function () { if (abas) { abas.peloEndereco(); } });
+    }
+    return { mostrar: mostrar, peloEndereco: peloEndereco };
+  }
+
+  var abas = null;
+  var ouvindoEndereco = false;
+
   function iniciar() {
+    abas = iniciarAbas();
     var barra = document.getElementById("hist-filtros");
     var linha = document.getElementById("hist-linha");
     if (!barra || !linha) {
@@ -147,6 +187,7 @@
       f.addEventListener("click", function (ev) {
         ev.preventDefault();
         var valor = f.getAttribute("data-valor");
+        if (abas) { abas.mostrar("registro"); }
         var s = seletor("sprint");
         s.value = s.value === valor ? "" : valor;
         aplicar();

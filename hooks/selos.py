@@ -152,3 +152,42 @@ def on_page_markdown(markdown, page, config, files, **kwargs):
         return selar_backlog(markdown, dados)
     backlog = Path(config["docs_dir"], SECAO_HU).read_text(encoding="utf-8")
     return selar_requisitos(markdown, dados, donas_das_fichas(backlog))
+
+
+# ---- Marcador de valor provisório (🔧) ----
+# Na fonte, o 🔧 marca o valor provisório definido na DoR (seção 9.1, item 8). No site, ele vira um selo
+# com texto e explicação, sem emoji. A troca é só no texto do HTML: atributos, código e scripts ficam intactos.
+
+MARCADOR_PROVISORIO = "🔧"
+SELO_PROVISORIO = ('<span class="selo-provisorio" title="Valor provisório, a confirmar com o Instituto '
+                   '(Definition of Ready, item 8)">provisório</span>')
+_PARTES_HTML = re.compile(r"(<[^>]+>)")
+_SEM_TROCA = ("code", "pre", "script", "style", "textarea")
+
+
+def trocar_marcador(conteudo: str) -> str:
+    if MARCADOR_PROVISORIO not in conteudo:
+        return conteudo
+    saida, dentro = [], 0
+    for parte in _PARTES_HTML.split(conteudo):
+        if parte.startswith("<"):
+            nome = re.match(r"</?\s*([a-zA-Z0-9]+)", parte)
+            if nome and nome.group(1).lower() in _SEM_TROCA and not parte.endswith("/>"):
+                dentro += -1 if parte.startswith("</") else 1
+            saida.append(parte)
+        elif dentro <= 0 and MARCADOR_PROVISORIO in parte:
+            saida.append(parte.replace(MARCADOR_PROVISORIO, SELO_PROVISORIO))
+        else:
+            saida.append(parte)
+    return "".join(saida)
+
+
+def _limpar_sumario(itens) -> None:
+    for item in itens or []:
+        item.title = item.title.replace(f" {MARCADOR_PROVISORIO}", "").replace(MARCADOR_PROVISORIO, "")
+        _limpar_sumario(getattr(item, "children", None))
+
+
+def on_page_content(html, page, config, files, **kwargs):
+    _limpar_sumario(getattr(page, "toc", None))  # o sumário lateral é montado à parte do conteúdo
+    return trocar_marcador(html)

@@ -106,3 +106,11 @@ def test_donas_das_fichas_no_documento():
         for r in f.rfs:
             pelas_fichas.setdefault(r, []).append(f.hu)
     assert donas == pelas_fichas and len(donas) == 46
+
+
+def test_marcador_provisorio_vira_selo_so_no_texto():
+    html = ('<p>Valor 4 🔧.</p><span title="meta 🔧">x</span><code>a 🔧</code>'
+            '<pre><code>b 🔧</code></pre><td>2 🔧</td>')
+    saida = selos.trocar_marcador(html)
+    assert saida.count('class="selo-provisorio"') == 2
+    assert 'title="meta 🔧"' in saida and "<code>a 🔧</code>" in saida and "<code>b 🔧</code>" in saida

@@ -230,19 +230,17 @@ def test_evolucao_junta_historia_requisitos_e_origem():
         _evento(date(2026, 11, 4), "Outra", "Mudou a HU-01b", ["HU-01b"]),
     ]
     f = _ficha(_pagina(eventos=eventos), "HU-02a")
-    assert 'Evolução (3)' in f
-    assert f.index("03/11/2026") < f.index("26/10/2026") < f.index("28/09/2026")
-    assert "Outra" not in f
-    assert "[Ver no Histórico e evolução](../gestao/historico.md#hu-02a)" in f
+    # A ficha só leva à evolução; o detalhe fica na página Histórico e evolução.
+    assert "[Evolução da HU-02a: 3 registros, o último em 03/11](../gestao/historico.md#evolucao-hu-02a)" in f
+    assert "Mudou o RF05" not in f and "Outra" not in f
 
 
 def test_evolucao_nao_liga_pagina_fora_do_site_e_encurta_o_texto():
     longo = "[palavra](x.md) " * 40
     eventos = [_evento(date(2026, 10, 29), "Checkpoint", longo, ["HU-02a"], "gestao/atas/fora.md")]
     f = _ficha(_pagina(eventos=eventos, existe=lambda _: False), "HU-02a")
-    assert "29/10/2026 · Checkpoint: palavra" in f
-    assert "x.md" not in f and "fora.md" not in f
-    assert "…" in f
+    assert "Evolução da HU-02a: 1 registro, o último em 29/10" in f
+    assert "x.md" not in f and "fora.md" not in f and "Checkpoint" not in f
 
 
 def test_sem_evento_nao_ha_evolucao():

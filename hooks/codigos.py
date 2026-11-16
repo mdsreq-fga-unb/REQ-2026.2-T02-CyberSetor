@@ -35,6 +35,7 @@ from pathlib import Path
 from mkdocs.exceptions import PluginError
 
 import fichas
+import historico
 import ligacoes
 
 VISAO1 = "visao/1-cenario-atual.md"
@@ -403,9 +404,26 @@ def href(destino: str, pagina: str) -> str:
     return rel + (f"#{frag}" if frag else "")
 
 
-def indice_json(f: Fontes, enderecos: dict[str, str]) -> str:
+def evolucao(eventos: list, pagina_historico: str) -> dict[str, dict]:
+    """Por código: quantas mudanças a página Histórico e evolução registra, a última e o endereço do item."""
+    por: dict[str, list] = {}
+    for e in eventos:
+        if e.tipo in ("sprint", "marco"):
+            continue
+        for c in e.codigos:
+            por.setdefault(c, []).append(e.quando)
+    return {c: {"n": len(d), "ultima": max(d).strftime("%d/%m"), "url": f"{pagina_historico}#evolucao-{c.lower()}"}
+            for c, d in por.items()}
+
+
+def indice_json(f: Fontes, enderecos: dict[str, str], evol: dict[str, dict] | None = None) -> str:
     ordem = sorted(f.codigos, key=lambda c: (list(ROTULO).index(f.codigos[c].tipo), _numero(c)))
-    dados = {"codigos": {c: f.codigos[c].json(enderecos[c]) for c in ordem}}
+    dados = {"codigos": {}}
+    for c in ordem:
+        d = f.codigos[c].json(enderecos[c])
+        if evol and c in evol:
+            d["evolucao"] = evol[c]
+        dados["codigos"][c] = d
     return json.dumps(dados, ensure_ascii=False, separators=(",", ":"))
 
 
@@ -539,4 +557,6 @@ def on_post_build(config, **kwargs):
     f = fontes(config["docs_dir"])
     destino = Path(config["site_dir"]) / SAIDA
     destino.parent.mkdir(parents=True, exist_ok=True)
-    destino.write_text(indice_json(f, urls(f, _estado.get("files"))), encoding="utf-8")
+    eventos, _ = historico.coletar(Path(config["docs_dir"]))
+    evol = evolucao(eventos, url_da_pagina(historico.DESTINO, _estado.get("files")))
+    destino.write_text(indice_json(f, urls(f, _estado.get("files")), evol), encoding="utf-8")

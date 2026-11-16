@@ -349,8 +349,9 @@ def _evolucao_requisitos(versoes: list[Evento], ancoras: dict[str, str]) -> list
             out.append(f'<details class="hist-req__item" id="evolucao-{slug(c)}"><summary><strong>{_e(c)}</strong>'
                        f'<span>{_n(len(lista), "mudança", "mudanças")} · {lista[-1].quando:%d/%m}</span></summary><ol>')
             for e in lista:
-                out.append(f'<li><time datetime="{e.quando.isoformat()}">{e.quando:%d/%m/%Y}</time> '
-                           f'<a href="{_e(_link(e.origem))}">{_e(e.origem_rotulo)} · versão {_e(e.versao)}</a>: {_e(e.descricao)}</li>')
+                rotulo = f"{e.origem_rotulo} · versão {e.versao}" if e.tipo == "versao" else f"{TIPOS[e.tipo]}: {e.titulo}"
+                alvo = f'<a href="{_e(_link(e.origem))}">{_e(rotulo)}</a>' if e.origem else _e(rotulo)
+                out.append(f'<li><time datetime="{e.quando.isoformat()}">{e.quando:%d/%m/%Y}</time> {alvo}: {_e(e.descricao)}</li>')
             out.append("</ol>")
             pagina = ancoras.get(c.lower())
             if pagina:
@@ -387,14 +388,7 @@ def montar(eventos: list[Evento], sprints: list[Sprint], hoje: date, ancoras: di
     w = out.append
     w("---\nhide:\n  - toc\n---\n")
     w("# Histórico e evolução\n")
-    w(
-        "Como o projeto e os requisitos evoluíram: sprints e marcos da disciplina numa linha do tempo, as mudanças "
-        "de cada requisito e de cada história e o registro completo das versões e das reuniões. Cada item leva ao "
-        "documento de origem, onde está o conteúdo vigente. O detalhe de cada sprint está em "
-        "[Sprints](sprints/index.md); a entrega e as lições de cada unidade, em "
-        "[Marcos da disciplina](../entregas/index.md); as datas dos marcos, na "
-        "[seção 6.6](../visao/6-cronograma.md#66-marcos-da-disciplina).\n"
-    )
+    w("Como o projeto e os requisitos evoluíram. Cada item leva ao documento de origem, onde está o conteúdo vigente.\n")
 
     # 1. Linha do tempo visual
     w("## Linha do tempo\n")
@@ -408,18 +402,22 @@ def montar(eventos: list[Evento], sprints: list[Sprint], hoje: date, ancoras: di
     w(" · ".join(resumo) + ".\n")
     out.extend(_trilha(sprints, eventos, hoje))
     w("")
-    w('<p class="hist-trilha__ajuda">Cada barra é uma sprint e filtra o registro completo abaixo; cada marca é '
-      'um marco da disciplina e leva à entrega da unidade.</p>\n')
+    w('Barra: filtra o registro pela sprint ([detalhe em Sprints](sprints/index.md)). '
+      'Marca: leva à entrega da unidade ([datas na seção 6.6](../visao/6-cronograma.md#66-marcos-da-disciplina)).\n'
+      '{: .hist-trilha__ajuda }\n')
+    w('<div class="hist-abas" role="tablist" aria-label="Partes do histórico" markdown="0">'
+      '<button type="button" role="tab" data-aba="evolucao" aria-selected="true">Evolução dos requisitos</button>'
+      '<button type="button" role="tab" data-aba="registro" aria-selected="false">Registro completo</button></div>\n')
 
     # 2. Evolução dos requisitos
+    w('<div class="hist-aba" data-aba="evolucao" role="tabpanel" markdown="1">\n')
     w("## Evolução dos requisitos\n")
-    w(
-        "A organização e atualização dos requisitos ([seção 5](../visao/5-engenharia-requisitos.md)) em uma vista: "
-        "cada requisito e cada história que mudou, com as mudanças em ordem de data e o documento e a versão de "
-        "origem. A definição vigente fica na seção 8 ou na ficha da seção 10.1.\n"
-    )
-    out.extend(_evolucao_requisitos(versoes, ancoras))
+    w("Cada requisito e cada história que mudou, com as mudanças em ordem de data e a origem: é a organização e "
+      "atualização dos requisitos ([seção 5](../visao/5-engenharia-requisitos.md)) em uma vista.\n")
+    out.extend(_evolucao_requisitos([e for e in reais if e.tipo != "sprint"], ancoras))
     w("")
+    w("</div>\n")
+    w('<div class="hist-aba" data-aba="registro" role="tabpanel" markdown="1">\n')
 
     # 3. Registro completo com filtros
     def opcoes(valores: list[str], rotulo=lambda v: v) -> str:
@@ -431,8 +429,7 @@ def montar(eventos: list[Evento], sprints: list[Sprint], hoje: date, ancoras: di
         f'<option value="{k}">{_e(v)}</option>' for k, v in TIPOS.items()
     )
     w("## Registro completo\n")
-    w("Versões de documentos, reuniões, inícios de sprint e marcos, agrupados por sprint. Só a sprint em "
-      "andamento vem aberta; um filtro abre as que tiverem registros.\n")
+    w("Versões, reuniões, sprints e marcos, por sprint; só a sprint em andamento vem aberta.\n")
     por_tipo = {k: sum(1 for e in eventos if e.tipo == k) for k in TIPOS}
     w('<div class="hist-filtros" id="hist-filtros" markdown="0">')
     w('<label class="hist-filtros__busca"><span class="hist-filtros__rotulo">Buscar no registro</span>'
@@ -515,6 +512,7 @@ def montar(eventos: list[Evento], sprints: list[Sprint], hoje: date, ancoras: di
         f"<small>Registros: {len(versoes)} versões de {len(documentos)} documentos, {len(atas)} reuniões, "
         f"{sum(1 for e in reais if e.tipo == 'sprint')} sprints e {len(MARCOS)} marcos.</small>\n"
     )
+    w("</div>\n")
     return "\n".join(out)
 
 

@@ -1595,3 +1595,55 @@ a.cs-card:focus {
     margin: 0 0 0.15rem;
   }
 }
+
+/* Abas da página Histórico e evolução (docs/assets/javascripts/historico.js) */
+.hist-abas {
+  display: flex;
+  gap: 0.2rem;
+  margin: 1.2rem 0 0.4rem;
+  border-bottom: 1px solid var(--md-default-fg-color--lightest);
+}
+
+.md-typeset .hist-abas button {
+  padding: 0.45rem 0.8rem;
+  border: 0;
+  border-bottom: 2px solid transparent;
+  background: none;
+  color: var(--md-default-fg-color--light);
+  font: inherit;
+  font-size: 0.75rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.md-typeset .hist-abas button[aria-selected="true"] {
+  border-bottom-color: var(--md-accent-fg-color);
+  color: var(--md-default-fg-color);
+}
+
+.hist-aba[hidden] {
+  display: none !important;
+}
+
+.md-typeset .hist-aba > h2:first-child {
+  margin-top: 0.6rem;
+}
+
+.md-typeset a.ficha-evolucao {
+  font-size: 0.72rem;
+}
+
+/* Valor provisório (🔧 na fonte, hooks/selos.py) */
+.md-typeset .selo-provisorio {
+  display: inline-block;
+  margin: 0 0.15em;
+  padding: 0 0.4em;
+  border: 1px solid var(--md-default-fg-color--lighter);
+  border-radius: 0.6em;
+  color: var(--md-default-fg-color--light);
+  font-size: 0.75em;
+  line-height: 1.5;
+  vertical-align: 0.08em;
+  white-space: nowrap;
+  cursor: help;
+}

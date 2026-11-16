@@ -180,12 +180,12 @@ nav:
       - entregas/index.md
       - Unidade 1:
           - Entrega: entregas/unidade-1.md
-          - "11. Lições aprendidas": licoes-aprendidas/unidade-1.md
+          - Lições aprendidas: licoes-aprendidas/unidade-1.md
       - Unidade 2:
           - Entrega: entregas/unidade-2.md
           - "Atividade 3: ajuste da lista de requisitos": entregas/atividade-3.md
-          - "11. Lições aprendidas": licoes-aprendidas/unidade-2.md
+          - Lições aprendidas: licoes-aprendidas/unidade-2.md
       - Unidade 3:
           - Entrega: entregas/unidade-3.md
-          - "11. Lições aprendidas": licoes-aprendidas/unidade-3.md
+          - Lições aprendidas: licoes-aprendidas/unidade-3.md
   - Referências: referencias.md
