@@ -32,7 +32,8 @@
 | 13/11/2026 | 2.18 | Resumos no início da 8.4 e da 8.6; requisitos funcionais do RNF08 em intervalo na matriz 8.4.2 | Maria Eduarda Marques |
 | 16/11/2026 | 2.19 | Remoção dos vínculos de histórias (`HU-XX`) da coluna Rastreabilidade da seção 8.2: a história dona de cada RF fica na ficha e na tabela 10.2.4, e as demais histórias da matriz 8.4.1 aparecem no cartão como "Também verificado em", sem mudar o selo (ata de 12/11, D3/A4; #187, #188) | Daniel Batista |
 | 16/11/2026 | 2.20 | Citações da introdução no sistema numérico da página de Referências: diretrizes da disciplina (1), FURPS+ (13) e Sommerville (14) (ata de 12/11, D7/A10) | Maria Eduarda Marques |
-| 16/11/2026 | 2.21 | Nome dos requisitos só na 8.2 e na 8.3: matrizes 8.4.1 e 8.4.2 com os códigos, sem as colunas Nome e Propriedade de Qualidade | Vinicius Vieira |
+| 16/11/2026 | 2.21 | Nome dos requisitos só na 8.2 e na 8.3: matrizes 8.4.1 e 8.4.2 com os códigos, sem as colunas Nome e Propriedade de Qualidade; história dona de cada RF só na ficha da história (10.1) | Vinicius Vieira |
+| 16/11/2026 | 2.22 | Árvore de rastreabilidade do problema às histórias e aos requisitos não funcionais, no início da 8.4 | Vinicius Vieira |
 
 ---
 
@@ -176,9 +177,13 @@ A governança do catálogo adota:
 
 ## 8.4 Matriz de Rastreabilidade Bidirecional
 
+A árvore parte do problema e passa pelos objetivos específicos e pelas características de produto até as histórias de usuário, com os requisitos funcionais e não funcionais de cada história. Cada código leva à sua definição.
+
+<!-- arvore-rastreabilidade -->
+
 **Em resumo.** A 8.4.1 liga cada requisito funcional ao gargalo, à origem e às histórias e critérios que o verificam; a 8.4.2 liga cada requisito não funcional à origem e aos requisitos funcionais; a 8.4.3 resume a cobertura por gargalo, característica e objetivo. A cobertura no MVP está na [seção 10.2.6](10-backlog.md#1026-mvp-e-incrementos).
 
-A rastreabilidade estabelece o vínculo bidirecional entre os problemas diagnosticados no fluxo atual (BPMN G01 a G06), os Objetivos Específicos (OEs), as Características de Produto (CP1 a CP8), os requisitos especificados e as histórias de usuário da seção 10, com os critérios de aceitação que verificam cada requisito. A história dona de cada requisito funcional fica na ficha da história e na [tabela 10.2.4](10-backlog.md#1024-tabela-consolidada); as demais histórias da 8.4.1 apenas verificam o requisito.
+A rastreabilidade estabelece o vínculo bidirecional entre os problemas diagnosticados no fluxo atual (BPMN G01 a G06), os Objetivos Específicos (OEs), as Características de Produto (CP1 a CP8), os requisitos especificados e as histórias de usuário da seção 10, com os critérios de aceitação que verificam cada requisito. A história dona de cada requisito funcional fica na ficha da história, na [seção 10.1](10-backlog.md#101-backlog-geral); as demais histórias da 8.4.1 apenas verificam o requisito.
 
 ### 8.4.1 Matriz de Rastreabilidade dos Requisitos Funcionais (RFs)
 
