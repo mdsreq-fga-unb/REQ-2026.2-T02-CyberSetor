@@ -44,7 +44,7 @@ Reunião de validação do recorte do MVP com o Instituto. Maria Eduarda (Duda) 
 ### 2.3 Inscrições
 
 * **Inscrição pública:** por link ou QR Code, para cursos, oficinas e eventos, vinculada aos formulários que o Instituto já utiliza.
-* **Regras da inscrição:** aviso de tratamento de dados, autorização de uso de imagem, limite de vagas, lista de espera e tratamento de cadastro repetido com base em e-mail ou CPF (registrado nesta sessão como bloqueio e revisto no checkpoint de 29/10/2026 para aviso na lista de inscritos, sem bloquear a inscrição — ver [RF22](../../requisitos/8-requisitos.md#rf22) e [seção 10.2.8](../../requisitos/10-backlog.md#1028-validacao-com-o-instituto)). Validado pelo Instituto.
+* **Regras da inscrição:** aviso de tratamento de dados, autorização de uso de imagem, limite de vagas, lista de espera e aviso de cadastro repetido com base em e-mail ou CPF. Validado pelo Instituto.
 * **Inscrição presencial:** cadastro no próprio local para pessoas sem celular, com atendimento rápido e envio de e-mail de confirmação.
 
 ### 2.4 Direitos do titular dos dados
@@ -70,7 +70,7 @@ Reunião de validação do recorte do MVP com o Instituto. Maria Eduarda (Duda) 
 | 1 | A primeira versão contempla o cadastro de instrumentos, projetos e metas com indicador obrigatório e prazos, além do upload de documentos já assinados. |
 | 2 | Cada meta tem responsável e setor, com acompanhamento de prazos e aviso automático por e-mail, enviado inicialmente por um domínio de teste. |
 | 3 | Termos aditivos e mudanças no período de execução geram nova versão do plano, com a versão anterior preservada e alterações registradas com justificativa. |
-| 4 | O módulo de inscrições contempla link e QR Code, aviso de privacidade, controle de vagas, lista de espera, bloqueio de cadastro repetido (revisto na validação de 29/10/2026 para aviso de cadastro existente na lista de inscritos, sem bloquear — [RF22](../../requisitos/8-requisitos.md#rf22)) e inscrição presencial. |
+| 4 | O módulo de inscrições contempla link e QR Code, aviso de privacidade, controle de vagas, lista de espera, bloqueio de cadastro repetido e inscrição presencial. |
 | 5 | Pedidos de correção, exclusão ou anonimização de dados pessoais são atendidos desde a primeira fase. |
 | 6 | A prestação de contas gera relatório em PDF e planilhas, com justificativa obrigatória para meta não atingida; as evidências fotográficas ficam para o segundo incremento. |
 | 7 | Sprints de duas semanas, revisão do MVP com o Instituto em data a definir e alinhamentos técnicos às quintas-feiras. |
@@ -91,4 +91,3 @@ Reunião de validação do recorte do MVP com o Instituto. Maria Eduarda (Duda) 
 | Versão | Data | Autor | Descrição |
 |---|---|---|---|
 | 0.1 | 09/10/2026 | Maria Eduarda Marques | Elaboração inicial a partir da ata automática da reunião, com revisão de dados sensíveis |
-| 0.2 | 16/11/2026 | Rodrigo Henrique | Nota na decisão 4 e na seção 2.3 sobre a revisão de 29/10/2026 que trocou o bloqueio de cadastro repetido por aviso na inscrição, sem bloquear (RF22) |
