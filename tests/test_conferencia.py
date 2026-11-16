@@ -61,14 +61,14 @@ def test_divergencia_na_secao_8(de, para, esperado):
          "RF02: aparece mais de uma vez na 10.2.3."),
         ("**Requisitos funcionais:** RF01, RF02, RF03", "**Requisitos funcionais:** RF02, RF03",
          "RF01: precisa estar em uma ficha só; está em nenhum."),
-        ("| [RF01](8-requisitos.md#rf01) | HU-01a | 4 | 1 | MVP |", "| [RF01](8-requisitos.md#rf01) | HU-01b | 4 | 1 | MVP |",
-         "RF01: história na 10.2.4 (HU-01b) difere da ficha (HU-01a)."),
-        ("| [RF01](8-requisitos.md#rf01) | HU-01a | 4 | 1 | MVP |", "| [RF01](8-requisitos.md#rf01) | HU-01a | 4 | 2 | MVP |",
+        ("| Código | Valor | Esforço técnico | Destino |", "| Código | Histórias | Valor | Esforço técnico | Destino |",
+         "10.2.4: colunas diferentes das esperadas"),
+        ("| [RF01](8-requisitos.md#rf01) | 4 | 1 | MVP |", "| [RF01](8-requisitos.md#rf01) | 4 | 2 | MVP |",
          "RF01: esforço na 10.2.4 difere da 10.2.3."),
-        ("| [RF01](8-requisitos.md#rf01) | HU-01a | 4 | 1 | MVP |", "| [RF01](8-requisitos.md#rf01) | HU-01a | 3 | 1 | MVP |",
+        ("| [RF01](8-requisitos.md#rf01) | 4 | 1 | MVP |", "| [RF01](8-requisitos.md#rf01) | 3 | 1 | MVP |",
          "RF01: valor na 10.2.4 difere do valor da HU-01a na 10.2.2."),
-        ("| [RF01](8-requisitos.md#rf01) | HU-01a | 4 | 1 | MVP |",
-         "| [RF01](8-requisitos.md#rf01) | HU-01a | 4 | 1 | Incremento 2 |",
+        ("| [RF01](8-requisitos.md#rf01) | 4 | 1 | MVP |",
+         "| [RF01](8-requisitos.md#rf01) | 4 | 1 | Incremento 2 |",
          "MVP: requisitos na 10.2.6 diferem da 10.2.4 (RF01)."),
         ("| **4** | **RF01**, ", "| **4** | RF01, ", "RF01: negrito do MVP na 10.2.5 difere do destino na 10.2.4."),
         ("| **4** | **RF01**, ", "| **4** | ", "RF01: está na 10.2.4 e não na 10.2.5."),
@@ -84,6 +84,15 @@ def test_divergencia_na_secao_8(de, para, esperado):
 def test_divergencia_na_secao_10(de, para, esperado):
     erros = conferencia.conferir(MD8, _trocar(MD10, de, para))
     assert any(esperado in e for e in erros), erros
+
+
+def test_dona_vem_da_ficha():
+    # RF01 passa da ficha da HU-01a (valor 4) para a da HU-11 (valor 3, posterior): a 10.2.4 deixa de bater.
+    md10 = _trocar(MD10, "**Requisitos funcionais:** RF01, RF02, RF03", "**Requisitos funcionais:** RF02, RF03")
+    md10 = _trocar(md10, "**Requisitos funcionais:** RF28, RF29, RF30", "**Requisitos funcionais:** RF01, RF28, RF29, RF30")
+    erros = conferencia.conferir(MD8, md10)
+    assert "RF01: valor na 10.2.4 difere do valor da HU-11 na 10.2.2." in erros
+    assert "RF01: a HU-11 não aparece na 8.4.1." in erros
 
 
 def test_build_para_e_lista_o_que_corrigir(tmp_path):

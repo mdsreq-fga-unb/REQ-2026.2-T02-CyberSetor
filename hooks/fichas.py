@@ -161,7 +161,7 @@ def ler_priorizacao(md: str) -> Priorizacao:
     for linha in trecho(md, "### 10.2.4", "### 10.2.5").splitlines():
         m = LINK_RF.match(linha)
         if m:
-            p.destino[m.group(1)] = celulas(linha)[4]
+            p.destino[m.group(1)] = celulas(linha)[3]  # Código | Valor | Esforço técnico | Destino
     return p
 
 

@@ -10,7 +10,7 @@ com a lista do que corrigir.
   códigos dos RFs         8.2        8.4.1, 10.2.3, 10.2.4
   códigos dos RNFs        8.3        8.4.2
   colunas das tabelas     —          8.4.1, 8.4.2, 10.2.3, 10.2.4 (os hooks leem por posição)
-  RF e história dona      ficha      8.4.1, 10.2.4
+  RF e história dona      ficha      8.4.1
   esforço técnico         10.2.3     10.2.4, 10.2.5
   valor                   10.2.2     10.2.4, 10.2.5
   destino                 10.2.4     10.2.5, 10.2.6
@@ -51,7 +51,7 @@ COLUNAS = {
     "8.4.1": "| Requisito | Gargalo BPMN | Norma / Mitigação | História derivada | Cobertura |",
     "8.4.2": "| RNF | Origem (Decisão, Risco Ético ou Norma) | Requisitos Funcionais Relacionados |",
     "10.2.3": "| Código | Esforço | Complexidade | Lacuna | Média | Esforço técnico |",
-    "10.2.4": "| Código | Histórias | Valor | Esforço técnico | Destino |",
+    "10.2.4": "| Código | Valor | Esforço técnico | Destino |",
 }
 
 
@@ -83,18 +83,22 @@ def conferir_codigos(s, md8: str, md10: str) -> list[str]:
     return erros
 
 
-def conferir_donas(s, lista, consolidada: dict) -> list[str]:
-    erros = []
-    donas: dict[str, list[str]] = {}
+def donas(lista) -> dict[str, list[str]]:
+    """RF -> histórias cujas fichas o listam em Requisitos funcionais (a dona é a única fonte)."""
+    saida: dict[str, list[str]] = {}
     for f in lista:
         for r in f.rfs:
-            donas.setdefault(r, []).append(f.hu)
+            saida.setdefault(r, []).append(f.hu)
+    return saida
+
+
+def conferir_donas(s, lista) -> list[str]:
+    erros = []
+    por_rf = donas(lista)
     for r, q in s.rfs.items():
-        ficha = donas.get(r, [])
+        ficha = por_rf.get(r, [])
         if len(ficha) != 1:
             erros.append(f"{r}: precisa estar em uma ficha só; está em {_lista(ficha)}.")
-        if r in consolidada and sorted(consolidada[r]["hus"]) != sorted(ficha):
-            erros.append(f"{r}: história na 10.2.4 ({_lista(consolidada[r]['hus'])}) difere da ficha ({_lista(ficha)}).")
         na_matriz = [h for h, _ in s.verificacao.get(r, [])]
         for h in ficha:
             if h not in na_matriz:
@@ -102,14 +106,15 @@ def conferir_donas(s, lista, consolidada: dict) -> list[str]:
     return erros
 
 
-def ler_consolidada(md10: str) -> dict:
+def ler_consolidada(md10: str, por_rf: dict[str, list[str]]) -> dict:
+    """Tabela 10.2.4 (Código | Valor | Esforço técnico | Destino), com a história dona vinda da ficha."""
     tabela = {}
     for linha in trecho(md10, "### 10.2.4", "### 10.2.5").splitlines():
         m = LINK_RF.match(linha)
         if m:
             c = celulas(linha)
-            tabela[m.group(1)] = {"hus": re.findall(HU, c[1]), "valor": _limpo(c[2]), "esforco": _limpo(c[3]),
-                                  "destino": _limpo(c[4])}
+            tabela[m.group(1)] = {"hus": por_rf.get(m.group(1), []), "valor": _limpo(c[1]), "esforco": _limpo(c[2]),
+                                  "destino": _limpo(c[3])}
     return tabela
 
 
@@ -220,10 +225,10 @@ def conferir(md8: str, md10: str) -> list[str]:
     s = fichas.ler_secao8(md8)
     p = fichas.ler_priorizacao(md10)
     lista = fichas.ler_fichas(md10.splitlines())
-    consolidada = ler_consolidada(md10)
+    consolidada = ler_consolidada(md10, donas(lista))
     return [
         *conferir_codigos(s, md8, md10),
-        *conferir_donas(s, lista, consolidada),
+        *conferir_donas(s, lista),
         *conferir_priorizacao(p, consolidada, md10),
         *conferir_destinos(consolidada, md10),
         *conferir_gargalos(md8, md10),

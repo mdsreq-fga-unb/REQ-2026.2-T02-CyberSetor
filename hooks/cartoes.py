@@ -4,7 +4,7 @@ Cartões dos requisitos nas seções 8.2 e 8.3, compostos a cada build do MkDocs
 As tabelas das seções 8.2 e 8.3 continuam sendo a fonte, e é nelas que se edita um requisito.
 No build, cada tabela vira uma grade de cartões, um por requisito, com o que está registrado
 em outras seções:
-  - história dona: tabela 10.2.4 (conferida com as fichas pelo hooks/conferencia.py);
+  - história dona: ficha da história na 10.1 (campo Requisitos funcionais), lida pelo hooks/fichas.py;
   - critérios de aceitação, histórias que só verificam o RF, gargalo e cobertura: matriz 8.4.1;
   - requisitos não funcionais ligados ao RF e RFs ligados ao RNF: matriz 8.4.2;
   - valor, esforço e destino (MVP ou fora dele): tabela 10.2.4;
@@ -24,6 +24,7 @@ from pathlib import Path
 
 from mkdocs.exceptions import PluginError
 
+import fichas
 import ligacoes
 
 SECAO_RF = "requisitos/8-requisitos.md"
@@ -65,6 +66,10 @@ class Fontes:
 
 def ler_backlog(md: str) -> tuple[dict, dict]:
     destino, classe, secao = {}, {}, ""
+    donas: dict[str, list[str]] = {}
+    for f in fichas.ler_fichas(md.splitlines()):
+        for r in f.rfs:
+            donas.setdefault(r, []).append(f.hu)
     for linha in md.splitlines():
         if linha.startswith("### "):
             secao = linha[4:10]
@@ -72,7 +77,8 @@ def ler_backlog(md: str) -> tuple[dict, dict]:
         if secao == "10.2.4" and LINHA_1024.match(linha):
             c = celulas(linha)
             cod = LINHA_1024.match(linha).group(1)
-            destino[cod] = {"hus": HU.findall(c[1]), "valor": c[2], "esforco": c[3], "destino": c[4]}
+            # Código | Valor | Esforço técnico | Destino; a história dona vem da ficha.
+            destino[cod] = {"hus": donas.get(cod, []), "valor": c[1], "esforco": c[2], "destino": c[3]}
         elif secao == "10.2.7" and linha.startswith("| ") and "RNF" in linha:
             c = celulas(linha)
             for cod in re.findall(r"\[(RNF\d+)\]", c[1]):
@@ -163,10 +169,10 @@ def cartao_rf(linha: str, fontes: Fontes) -> str:
     info = fontes.destino.get(cod)
     nota = f'<span class="rq-chip">Valor {_e(info["valor"])} · Esforço {_e(info["esforco"])}</span>' if info else ""
     matriz = fontes.matriz_rf.get(cod, {})
-    # A dona vem da 10.2.4; a 8.4.1 traz também as histórias que só verificam o RF.
+    # A dona vem da ficha da história; a 8.4.1 traz também as histórias que só verificam o RF.
     historias = HU.findall(hus) or (info or {}).get("hus", [])
     if not historias:
-        raise PluginError(f"cartoes: {cod} sem história dona na seção 8.2 nem na tabela 10.2.4.")
+        raise PluginError(f"cartoes: {cod} sem história dona: nenhuma ficha da seção 10.1 o lista.")
     verificacao = re.findall(rf"({HU.pattern})\s*(?:\(([^)]*)\))?", matriz.get("historia", ""))
     cas = dict(verificacao)
     hist = " · ".join(

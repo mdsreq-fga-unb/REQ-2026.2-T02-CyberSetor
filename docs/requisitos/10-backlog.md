@@ -18,6 +18,7 @@
 | 10/11/2026 | 2.9 | Fichas completas por história na seção 10.1, no lugar da tabela-resumo: situação, destino, valor, requisitos, dependências e evolução na própria página, compostos a partir das seções de origem | Vinicius Vieira |
 | 11/11/2026 | 2.10 | Valor herdado em conferência (🔧) nas histórias HU-03b, HU-05b, HU-07c e HU-09a, também na tabela 10.2.4 e na matriz 10.2.5; retirada da regra de maior valor da 10.2.1, que não se aplicava porque cada requisito funcional pertence a uma única história (regra 2 da 10.1) | Maria Eduarda Marques |
 | 16/11/2026 | 2.11 | Nome dos requisitos só na seção 8: avaliação técnica (10.2.3) com os códigos, sem a coluna Requisito funcional | Vinicius Vieira |
+| 16/11/2026 | 2.12 | História dona de cada requisito funcional só na ficha da 10.1: tabela consolidada (10.2.4) sem a coluna Histórias | Vinicius Vieira |
 
 ---
 
@@ -668,54 +669,54 @@ O Instituto deu o valor a quatorze das quinze histórias apresentadas na valida�
 
 ### 10.2.4 Tabela consolidada
 
-| Código | Histórias | Valor | Esforço técnico | Destino |
-| :---: | :--- | :---: | :---: | :--- |
-| [RF01](8-requisitos.md#rf01) | HU-01a | 4 | 1 | MVP |
-| [RF02](8-requisitos.md#rf02) | HU-01a | 4 | 1 | MVP |
-| [RF03](8-requisitos.md#rf03) | HU-01a | 4 | 1 | MVP |
-| [RF04](8-requisitos.md#rf04) | HU-01b | 4 | 2 | MVP |
-| [RF05](8-requisitos.md#rf05) | HU-02a | 4 | 1 | MVP |
-| [RF06](8-requisitos.md#rf06) | HU-02a | 4 | 1 | MVP |
-| [RF07](8-requisitos.md#rf07) | HU-02b | 4 | 2 | MVP |
-| [RF08](8-requisitos.md#rf08) | HU-02b | 4 | 2 | MVP |
-| [RF09](8-requisitos.md#rf09) | HU-03a | 4 | 1 | MVP |
-| [RF10](8-requisitos.md#rf10) | HU-03b | 4 🔧 | 3 | Incremento 2 |
-| [RF11](8-requisitos.md#rf11) | HU-07a | 4 | 2 | MVP |
-| [RF12](8-requisitos.md#rf12) | HU-07b | 4 | 1 | MVP |
-| [RF13](8-requisitos.md#rf13) | HU-08 | 4 | 1 | MVP |
-| [RF14](8-requisitos.md#rf14) | HU-07c | 4 🔧 | 2 | MVP |
-| [RF15](8-requisitos.md#rf15) | HU-07c | 4 🔧 | 2 | MVP |
-| [RF16](8-requisitos.md#rf16) | HU-09a | 2 🔧 | 3 | Incremento 3 |
-| [RF17](8-requisitos.md#rf17) | HU-09b | 2 | 3 | Posterior |
-| [RF18](8-requisitos.md#rf18) | HU-12 | 2 | 3 | Posterior |
-| [RF19](8-requisitos.md#rf19) | HU-10 | 4 | 1 | Incremento 3 |
-| [RF20](8-requisitos.md#rf20) | HU-06 | 2 | 2 | Posterior |
-| [RF21](8-requisitos.md#rf21) | HU-06 | 2 | 1 | Posterior |
-| [RF22](8-requisitos.md#rf22) | HU-08 | 4 | 2 | MVP |
-| [RF23](8-requisitos.md#rf23) | HU-07a | 4 | 1 | MVP |
-| [RF24](8-requisitos.md#rf24) | HU-07a | 4 | 1 | MVP |
-| [RF25](8-requisitos.md#rf25) | HU-07a | 4 | 2 | MVP |
-| [RF26](8-requisitos.md#rf26) | HU-15a | 4 🔧 | 1 | MVP |
-| [RF27](8-requisitos.md#rf27) | HU-15b | 4 🔧 | 3 | MVP |
-| [RF28](8-requisitos.md#rf28) | HU-11 | 3 | 2 | Posterior |
-| [RF29](8-requisitos.md#rf29) | HU-11 | 3 | 1 | Posterior |
-| [RF30](8-requisitos.md#rf30) | HU-11 | 3 | 2 | Posterior |
-| [RF31](8-requisitos.md#rf31) | HU-14 | 4 | 2 | MVP |
-| [RF32](8-requisitos.md#rf32) | HU-04a | 4 | 3 | Incremento 2 |
-| [RF33](8-requisitos.md#rf33) | HU-04a | 4 | 2 | Incremento 2 |
-| [RF34](8-requisitos.md#rf34) | HU-04b | 4 | 3 | Incremento 2 |
-| [RF35](8-requisitos.md#rf35) | HU-05a | 4 | 1 | MVP |
-| [RF36](8-requisitos.md#rf36) | HU-05a | 4 | 2 | MVP |
-| [RF37](8-requisitos.md#rf37) | HU-05b | 4 🔧 | 3 | MVP |
-| [RF38](8-requisitos.md#rf38) | HU-13 | 4 | 1 | MVP |
-| [RF39](8-requisitos.md#rf39) | HU-05a | 4 | 1 | MVP |
-| [RF40](8-requisitos.md#rf40) | HU-16 | 4 🔧 | 1 | MVP |
-| [RF41](8-requisitos.md#rf41) | HU-03a | 4 | 1 | MVP |
-| [RF42](8-requisitos.md#rf42) | HU-07b | 4 | 2 | MVP |
-| [RF43](8-requisitos.md#rf43) | HU-05a | 4 | 1 | MVP |
-| [RF44](8-requisitos.md#rf44) | HU-14 | 4 | 1 | MVP |
-| [RF45](8-requisitos.md#rf45) | HU-04b | 4 | 1 | Incremento 2 |
-| [RF46](8-requisitos.md#rf46) | HU-07d | 4 🔧 | 1 🔧 | MVP 🔧 |
+| Código | Valor | Esforço técnico | Destino |
+| :---: | :---: | :---: | :--- |
+| [RF01](8-requisitos.md#rf01) | 4 | 1 | MVP |
+| [RF02](8-requisitos.md#rf02) | 4 | 1 | MVP |
+| [RF03](8-requisitos.md#rf03) | 4 | 1 | MVP |
+| [RF04](8-requisitos.md#rf04) | 4 | 2 | MVP |
+| [RF05](8-requisitos.md#rf05) | 4 | 1 | MVP |
+| [RF06](8-requisitos.md#rf06) | 4 | 1 | MVP |
+| [RF07](8-requisitos.md#rf07) | 4 | 2 | MVP |
+| [RF08](8-requisitos.md#rf08) | 4 | 2 | MVP |
+| [RF09](8-requisitos.md#rf09) | 4 | 1 | MVP |
+| [RF10](8-requisitos.md#rf10) | 4 🔧 | 3 | Incremento 2 |
+| [RF11](8-requisitos.md#rf11) | 4 | 2 | MVP |
+| [RF12](8-requisitos.md#rf12) | 4 | 1 | MVP |
+| [RF13](8-requisitos.md#rf13) | 4 | 1 | MVP |
+| [RF14](8-requisitos.md#rf14) | 4 🔧 | 2 | MVP |
+| [RF15](8-requisitos.md#rf15) | 4 🔧 | 2 | MVP |
+| [RF16](8-requisitos.md#rf16) | 2 🔧 | 3 | Incremento 3 |
+| [RF17](8-requisitos.md#rf17) | 2 | 3 | Posterior |
+| [RF18](8-requisitos.md#rf18) | 2 | 3 | Posterior |
+| [RF19](8-requisitos.md#rf19) | 4 | 1 | Incremento 3 |
+| [RF20](8-requisitos.md#rf20) | 2 | 2 | Posterior |
+| [RF21](8-requisitos.md#rf21) | 2 | 1 | Posterior |
+| [RF22](8-requisitos.md#rf22) | 4 | 2 | MVP |
+| [RF23](8-requisitos.md#rf23) | 4 | 1 | MVP |
+| [RF24](8-requisitos.md#rf24) | 4 | 1 | MVP |
+| [RF25](8-requisitos.md#rf25) | 4 | 2 | MVP |
+| [RF26](8-requisitos.md#rf26) | 4 🔧 | 1 | MVP |
+| [RF27](8-requisitos.md#rf27) | 4 🔧 | 3 | MVP |
+| [RF28](8-requisitos.md#rf28) | 3 | 2 | Posterior |
+| [RF29](8-requisitos.md#rf29) | 3 | 1 | Posterior |
+| [RF30](8-requisitos.md#rf30) | 3 | 2 | Posterior |
+| [RF31](8-requisitos.md#rf31) | 4 | 2 | MVP |
+| [RF32](8-requisitos.md#rf32) | 4 | 3 | Incremento 2 |
+| [RF33](8-requisitos.md#rf33) | 4 | 2 | Incremento 2 |
+| [RF34](8-requisitos.md#rf34) | 4 | 3 | Incremento 2 |
+| [RF35](8-requisitos.md#rf35) | 4 | 1 | MVP |
+| [RF36](8-requisitos.md#rf36) | 4 | 2 | MVP |
+| [RF37](8-requisitos.md#rf37) | 4 🔧 | 3 | MVP |
+| [RF38](8-requisitos.md#rf38) | 4 | 1 | MVP |
+| [RF39](8-requisitos.md#rf39) | 4 | 1 | MVP |
+| [RF40](8-requisitos.md#rf40) | 4 🔧 | 1 | MVP |
+| [RF41](8-requisitos.md#rf41) | 4 | 1 | MVP |
+| [RF42](8-requisitos.md#rf42) | 4 | 2 | MVP |
+| [RF43](8-requisitos.md#rf43) | 4 | 1 | MVP |
+| [RF44](8-requisitos.md#rf44) | 4 | 1 | MVP |
+| [RF45](8-requisitos.md#rf45) | 4 | 1 | Incremento 2 |
+| [RF46](8-requisitos.md#rf46) | 4 🔧 | 1 🔧 | MVP 🔧 |
 
 ### 10.2.5 Matriz 4 × 4
 

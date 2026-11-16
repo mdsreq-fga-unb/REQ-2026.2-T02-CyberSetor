@@ -112,10 +112,10 @@ SECAO10 = """# 10. Backlog
 
 ### 10.2.4 Tabela consolidada
 
-| Código | Histórias | Valor | Esforço técnico | Destino |
-| :---: | :--- | :---: | :---: | :--- |
-| [RF04](8-requisitos.md#rf04) | HU-01b | 4 | 2 | MVP |
-| [RF05](8-requisitos.md#rf05) | HU-02a | 4 🔧 | 1 | Incremento 2 |
+| Código | Valor | Esforço técnico | Destino |
+| :---: | :---: | :---: | :--- |
+| [RF04](8-requisitos.md#rf04) | 4 | 2 | MVP |
+| [RF05](8-requisitos.md#rf05) | 4 🔧 | 1 | Incremento 2 |
 
 ### 10.2.5 Matriz 4 × 4
 """

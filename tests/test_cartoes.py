@@ -90,7 +90,7 @@ def test_matriz_vira_trilhas_com_volta_ao_cartao():
     assert "| **RF01** |" not in matriz
 
 
-def test_historia_do_cartao_e_so_a_dona_da_1024():
+def test_historia_do_cartao_e_so_a_dona():
     linha = '| <a id="rf36"></a>**RF36** | Emitir relatório | Desc. | MROSC art. 63 |'
     f = cartoes.Fontes(
         destino={"RF36": {"hus": ["HU-05a"], "valor": "4", "esforco": "2", "destino": "MVP"}},
@@ -104,7 +104,7 @@ def test_historia_do_cartao_e_so_a_dona_da_1024():
     assert 'data-historias="HU-05a"' in html
 
 
-def test_cartoes_do_documento_mostram_a_dona_da_1024():
+def test_cartoes_do_documento_mostram_a_dona_da_ficha():
     f = cartoes.carregar(SECAO8, BACKLOG)
     saida = cartoes.compor(SECAO8, f)
     for cod, info in f.destino.items():
