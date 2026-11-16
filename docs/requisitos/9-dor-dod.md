@@ -11,6 +11,7 @@
 | 26/10/2026 | 1.4 | Item de código atende aos requisitos não funcionais listados na história, conferidos pela métrica; controle de acesso por perfil (RNF04) e usabilidade e acessibilidade (RNF15) entre os requisitos de todo o produto; DoR: o que impede a entrada separado do que admite valor provisório com 🔧; fluxo da tela nos critérios de aceitação no lugar do esboço, com os estados comuns a todas as telas na RNF15; valor herdado e regra com comportamento padrão entre os valores provisórios. DoD: história concluída na versão publicada na homologação, com o percurso executado; item concluído distinto do incremento; validação pendente em "Aguardando"; tratamento do retorno do Instituto; registro de conclusão no quadro do projeto; revisor de outra dupla ou integrante independente; item de código e história com listas próprias; verificação por classe de requisito não funcional | Vinicius Vieira |
 | 13/11/2026 | 1.5 | Escalas de valor e de esforço da DoR (itens 3 e 4) ligadas às seções 10.2.1, 10.2.2 e 10.2.3 | Maria Eduarda Marques |
 | 16/11/2026 | 1.6 | Citações no sistema numérico das referências | Maria Eduarda Marques |
+| 16/11/2026 | 1.7 | Verificação de desempenho com o RNF12 e com o registro das condições de cada medição | Vinicius Vieira |
 
 ---
 
@@ -75,7 +76,7 @@ O incremento é a versão das duas linhas publicada junta na homologação, e é
 | Minimização de dados | [RNF05](8-requisitos.md#rnf05) | Revisão do esquema do banco, dos formulários e das permissões no pull request |
 | Usabilidade | [RNF15](8-requisitos.md#rnf15) | Testes de tela dos estados vazio, de falha de carregamento e de recusa e testes visuais a 360 e 1280 px na integração contínua; WCAG, alvos de toque e contraste 🔧 |
 | Integridade e auditoria | [RNF01](8-requisitos.md#rnf01), [RNF02](8-requisitos.md#rnf02) | Teste da trilha de auditoria |
-| Desempenho | [RNF11](8-requisitos.md#rnf11), [RNF13](8-requisitos.md#rnf13) | Medição na homologação 🔧 |
+| Desempenho | [RNF11](8-requisitos.md#rnf11), [RNF12](8-requisitos.md#rnf12), [RNF13](8-requisitos.md#rnf13) | Medição na homologação, nas condições da métrica de cada requisito, com a versão medida e as condições do ensaio registradas |
 | Compatibilidade | [RNF16](8-requisitos.md#rnf16) | Testes visuais em Chromium a 360 e 1280 px na integração contínua; 1920 px, Firefox e WebKit 🔧 |
 | Qualidade de código | [RNF17](8-requisitos.md#rnf17) | Formatação, linter sem avisos, tipagem estrita, testes e build de produção na integração contínua |
 | Recuperação | [RNF18](8-requisitos.md#rnf18) | Ensaio de restauração registrado |

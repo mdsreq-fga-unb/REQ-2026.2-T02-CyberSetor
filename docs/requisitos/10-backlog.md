@@ -19,6 +19,7 @@
 | 11/11/2026 | 2.10 | Valor herdado em conferência (🔧) nas histórias HU-03b, HU-05b, HU-07c e HU-09a, também na tabela 10.2.4 e na matriz 10.2.5; retirada da regra de maior valor da 10.2.1, que não se aplicava porque cada requisito funcional pertence a uma única história (regra 2 da 10.1) | Maria Eduarda Marques |
 | 16/11/2026 | 2.11 | Nome dos requisitos só na seção 8: avaliação técnica (10.2.3) com os códigos, sem a coluna Requisito funcional | Vinicius Vieira |
 | 16/11/2026 | 2.12 | História dona de cada requisito funcional só na ficha da 10.1: tabela consolidada (10.2.4) sem a coluna Histórias | Vinicius Vieira |
+| 16/11/2026 | 2.13 | Sessão de validação de 12/11/2026 na 10.2.8; reunião de 12/11 registrada como realizada; ata de 29/10 citada como em conferência | Vinicius Vieira |
 
 ---
 
@@ -375,7 +376,7 @@ Personas das histórias e perfis da [seção 8.5.1](8-requisitos.md#851-perfis-d
     - CA-07d.7 Reabrir uma inscrição com o prazo vencido pede um prazo novo; sem ele, a reabertura é recusada com o motivo.
 
 
-    Comportamento padrão a confirmar com o Instituto na reunião de validação da Sprint 5, em 12/11/2026 🔧: o contato é o WhatsApp do Instituto, reabrir com o prazo vencido pede prazo novo e o prazo vai até a data da atividade.
+    Comportamento padrão levado à reunião de validação de 12/11/2026, com os retornos em análise pela equipe 🔧: o contato é o WhatsApp do Instituto, reabrir com o prazo vencido pede prazo novo e o prazo vai até a data da atividade.
 
 <a id="hu-08"></a>
 ??? note "HU-08 · Inscrever presencialmente pessoa sem celular"
@@ -563,7 +564,7 @@ O Instituto deu o valor a quatorze das quinze histórias apresentadas na valida�
 | HU-12 | HU-12 | 2 | Urgência | Mesmo motivo da HU-09: sincronização sem conexão fica para depois. |
 | HU-06 | HU-06 | 2 | Impacto para os usuários | "Sonho do pedagógico", mas não é prioridade no contexto geral do Instituto. |
 | HU-07 | HU-07a, HU-07b, HU-07c | 4 | Abrangência de uso | "Seria excelente": facilitaria o controle de inscritos e de metas para todas as equipes. |
-| HU-07 | HU-07d | 4 🔧 | Abrangência de uso | Herdado da HU-07: no checkpoint de 29/10/2026, o Instituto disse que as perguntas são fixas e "a única variação… é o descritivo"; confirmar na reunião de validação da Sprint 5, em 12/11/2026. |
+| HU-07 | HU-07d | 4 🔧 | Abrangência de uso | Herdado da HU-07: no checkpoint de 29/10/2026, o Instituto disse que as perguntas são fixas e "a única variação… é o descritivo"; levado à reunião de validação de 12/11/2026, com o retorno em análise pela equipe. |
 | HU-08 | HU-08 | 4 | Abrangência de uso | Mesmo valor das inscrições por link ("seria excelente"); para a equipe, garante acesso a quem não tem celular. |
 | HU-15 | HU-15a, HU-15b | 4 🔧 | Obrigação legal | Obrigação legal (LGPD, art. 18); não foi votada em 28/09 e entrou no recorte confirmado em 08/10/2026. |
 | — | HU-16 | 4 🔧 | Dependência de outra função | Sem valor atribuído pelo Instituto 🔧; as contas e os perfis são condição do acesso por perfil, que vale para todo o produto (RNF04). |
@@ -822,7 +823,7 @@ O recorte foi validado com o Instituto em três sessões: a de 28/09/2026 aprovo
 
 | Item | Registro |
 | :--- | :--- |
-| Data e formato | 29/10/2026, 16h30, reunião online com demonstração no ambiente de homologação; [ata](../gestao/atas/2026-10-29-checkpoint-instituto.md) |
+| Data e formato | 29/10/2026, 16h30, reunião online com demonstração no ambiente de homologação; ata em conferência pelo Instituto |
 | Participantes do Instituto | Clara Novaes e Maria Eduarda (Duda), do núcleo pedagógico |
 | Participantes da equipe | Vinicius Vieira, Maria Eduarda Marques, Caio Martins |
 | Apresentado | Painel inicial, perfis de acesso, cadastro de instrumentos, projetos e metas e inscrição pública por link e QR Code |
@@ -830,3 +831,15 @@ O recorte foi validado com o Instituto em três sessões: a de 28/09/2026 aprovo
 | Pontos em aberto respondidos | Cadastro repetido como aviso, sem bloqueio, com indicador na lista de inscritos (RF22, CA-07a.8); acesso administrativo da coordenação de execução e da direção de projetos (seção 8.5.1) |
 | Pedidos novos | Avisos por e-mail sobre a inscrição e o início das atividades, recuperação de senha e campos personalizados no formulário de inscrição (seção 8.6, item 15) 🔧 |
 | Seguem em aberto | Projeto modelo dos testes, a confirmar pela direção do Instituto; modelo de formulário do Instituto; dados de acessibilidade, que são dados pessoais sensíveis (seção 8.6, item 15); canal e custo dos avisos por WhatsApp. Os demais pontos da seção 8.6 não foram tratados nesta sessão |
+
+**Sessão de 12/11/2026.**
+
+| Item | Registro |
+| :--- | :--- |
+| Data e formato | 12/11/2026, das 17h20 às 19h, reunião online; validação em uso, depois de o Instituto testar a homologação com as contas de teste; ata em conferência pelo Instituto |
+| Participantes do Instituto | Direção pedagógica, Núcleo Pedagógico e coordenação administrativo-financeira |
+| Participantes da equipe | Vinicius Vieira, Maria Eduarda Marques, Daniel Batista e Rodrigo Henrique Donato |
+| Apresentado | Percurso do projeto e das metas, atividades e inscrições, relatório e perfis de acesso, com os dados de teste |
+| Confirmado | A direção liberou a Escola Carnavalesca, projeto em andamento, como piloto do sistema; a autorização de uso de imagem e voz continua opcional e visível na lista de inscritos |
+| Pedidos novos | "Projeto" como referência na interface, com o número do instrumento e o processo SEI; "meios de aferição" no lugar de "requisitos"; metas organizadas por equipe e etapas dentro da meta; comprovação ligada à meta e guardada por data; inscrição que não garante a vaga, com confirmação pela equipe; acesso enxuto para a captação e envio de material por pessoas de fora do Instituto |
+| Seguem em aberto | Avaliação dos pedidos por valor, esforço e Definition of Ready na Sprint Review 5 (19/11/2026); acesso pelo celular, a investigar; validação do relatório e da planilha pela área administrativo-financeira |

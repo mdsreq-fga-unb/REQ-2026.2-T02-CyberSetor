@@ -12,6 +12,7 @@
 | 11/11/2026 | 1.8 | Impedimento na daily restrito ao que trava o trabalho, com provas avisadas no grupo Geral; documentação sem sessões em par, com a revisão por outra dupla | Maria Eduarda Marques |
 | 13/11/2026 | 1.9 | Exceção da Sprint 5, de quinta a quinta, remetida à seção 6.1; comunicação remetida à seção 7.2, sem repetir as ferramentas | Maria Eduarda Marques |
 | 16/11/2026 | 1.10 | Homologação só com dados de teste, com remissão à política de dados pessoais da 2.6 | Maria Eduarda Marques |
+| 16/11/2026 | 1.11 | Modelo da daily sem emojis | Vinicius Vieira |
 
 A equipe CyberSetor adota o **ScrumXP**: o framework Scrum para o gerenciamento do trabalho e as práticas técnicas do eXtreme Programming para a engenharia. Esta página registra como o processo funciona na prática. A fundamentação da escolha está na seção 4 do Documento de Visão.
 
@@ -28,10 +29,10 @@ A equipe é formada por cinco estudantes com grades e compromissos distintos, e 
 ### Molde da daily
 
 ```
-📅 [DD/MM] — Seu Nome
-✅ Feito: o que concluí desde a última daily
-🔄 Fazendo: o que vou tocar hoje
-🚧 Impedimento: o que está me travando, ou "nenhum"
+[DD/MM] — Seu Nome
+Feito: o que concluí desde a última daily
+Fazendo: o que vou tocar hoje
+Impedimento: o que está me travando, ou "nenhum"
 ```
 
 **Regras:** nos dias úteis sem encontro presencial, no próprio dia, até o fim do dia, inclusive sem avanço (escreve-se "sem avanço") · impedimento é campo obrigatório · impedimento é o que trava o trabalho, como uma revisão ou um merge pendente de outro integrante; prova e outro compromisso acadêmico não são impedimento e são avisados no grupo *Geral* ([ATA-2026-11-10](atas/2026-11-10-reuniao-equipe.md), D3) · quem depende de outra pessoa a marca · o grupo *Dailys* é exclusivo para dailies; discussão vai para o grupo *Geral* e decisão vira ata · impedimento declarado é resolvido ou escalado pelo Scrum Master em até 24 horas.

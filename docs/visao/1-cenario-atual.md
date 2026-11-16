@@ -12,6 +12,7 @@
 | 05/10/2026 | 1.7 | Fechamento do dimensionamento empírico com estimativas da coordenação, restauração do mapa circular de stakeholders e unificação da matriz de interesse e poder | Rodrigo Henrique |
 | 26/10/2026 | 1.8 | Conectividade no campo com quedas pontuais (1.3 e 1.5); área administrativo-financeira com a rotina atual fora do sistema e a consulta a consolidados e relatórios, sem dados nominais (1.6 e 1.7); painel da presidência como capacidade candidata sem requisito funcional, sem saldo (1.7); desafios de conectividade, de dados pessoais e de manutenção com remissão às políticas da seção 2.6 (1.5) | Vinicius Vieira |
 | 11/11/2026 | 1.9 | Resumo do problema no início da 1.4; relatório próprio com remissão à 2.3 e ao incremento 2 do índice de comprovações (1.5); painel gerencial como capacidade candidata (1.6) | Maria Eduarda Marques |
+| 16/11/2026 | 1.10 | Números da 1.4 como estimativas da coordenação, a confirmar com os dados do projeto piloto | Vinicius Vieira |
 
 ---
 
@@ -63,14 +64,14 @@ O fluxo em que os gargalos se originam está modelado em notação BPMN na pági
 
 ## 1.4 Identificação e Dimensionamento Empírico do Problema
 
-**Em resumo.** O Instituto gere de 4 a 6 projetos e termos de fomento com 20 a 30 planilhas, listas em papel e fotos em celulares pessoais; a consolidação manual consome de 30 a 50 horas por ciclo e só revela metas em atraso no fechamento, com risco de glosa.
+**Em resumo.** Pelas estimativas da coordenação, o Instituto gere de 4 a 6 projetos e termos de fomento com 20 a 30 planilhas, listas em papel e fotos em celulares pessoais; a consolidação manual consome de 30 a 50 horas por ciclo e só revela metas em atraso no fechamento, com risco de glosa.
 
 <figure markdown>
   ![Diagrama de Ishikawa: causas dos gargalos na consolidação das informações para a prestação de contas](../assets/img/ishikawa.jpg)
   <figcaption>Figura 2 – Diagrama de Ishikawa. Fonte: elaborada pelos autores.</figcaption>
 </figure>
 
-O processo atual gera descompasso severo entre a execução prática no SCS e a comprovação documental exigida pelos órgãos concedentes. A ausência de um sistema integrado centralizado impõe os seguintes gargalos mensuráveis (estimativas informadas pela coordenação do Instituto em reuniões de elicitação):
+O processo atual gera descompasso severo entre a execução prática no SCS e a comprovação documental exigida pelos órgãos concedentes. A ausência de um sistema integrado centralizado impõe os seguintes gargalos mensuráveis (estimativas da coordenação do Instituto nas reuniões de elicitação, em ordem de grandeza, a confirmar com os dados do projeto piloto):
 
 - **Projetos em Paralelo:** Média de 4 a 6 projetos e termos de fomento geridos simultaneamente (identificados no ciclo atual pelos códigos operacionais 061 a 065 e 068).
 - **Volume de Planilhas Dispersas:** 20 a 30 planilhas eletrônicas independentes por ciclo de projeto (controles de turmas, frequências de oficineiros e a Matriz de Aquisição em Excel), armazenadas em drives pessoais e vulneráveis a inconsistências e exclusão acidental.
