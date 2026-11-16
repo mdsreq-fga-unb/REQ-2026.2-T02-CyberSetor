@@ -176,7 +176,8 @@ nav:
           - Sprint 5:
               - Plano da Sprint 5: gestao/sprints/sprint-5.md
               - Tarefas da Sprint 5: gestao/sprints/tarefas-sprint-5.md
-  - Entregas por unidade:
+  - Marcos da disciplina:
+      - entregas/index.md
       - Unidade 1:
           - Entrega: entregas/unidade-1.md
           - "11. Lições aprendidas": licoes-aprendidas/unidade-1.md
