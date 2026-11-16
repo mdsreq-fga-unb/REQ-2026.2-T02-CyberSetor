@@ -10,6 +10,7 @@
 | 05/10/2026 | 1.5 | Revisão editorial: formatação direta, sem supressão de técnicas, artefatos ou mapeamento do ScrumXP | Rodrigo Henrique |
 | 26/10/2026 | 1.6 | Observação direta das instalações, dos processos administrativos e das planilhas, com a observação da chamada prevista para o incremento de presença; caso de triangulação; prototipação evolutiva, com a homologação como protótipo avaliado pelo Instituto e os testes visuais como verificação da tela; termos de domínio definidos na seção 8, sem glossário à parte; requisitos que resultaram da observação | Vinicius Vieira |
 | 13/11/2026 | 1.7 | Técnicas de representação, verificação e organização ligadas aos artefatos publicados: Rich Picture, mapa de stakeholders, modelo BPMN, Definition of Ready, matriz de rastreabilidade e atas; "ambiente de homologação com dados de teste" no lugar de "protótipo" e "prototipação" (ATA-2026-11-12, D1) | Maria Eduarda Marques |
+| 16/11/2026 | 1.8 | Citações do livro-texto no sistema numérico das referências | Maria Eduarda Marques |
 
 As seis atividades da Engenharia de Requisitos adotadas pela disciplina (elicitação e descoberta, análise e consenso, declaração, representação, verificação e validação, organização e atualização) não são etapas sequenciais. Elas se repetem e se entrelaçam ao longo do ciclo de desenvolvimento. Esta seção associa cada atividade às técnicas que a equipe usará no projeto e mapeia essas técnicas nas fases do ScrumXP.
 
@@ -25,9 +26,9 @@ As seis atividades da Engenharia de Requisitos adotadas pela disciplina (elicita
 **Análise e Consenso**
 
 - **Diagrama de Ishikawa:** Organização das causas do problema central (seção 1.4) por categoria, delimitando o que a solução ataca.
-- **Workshop de requisitos:** Sessão com as áreas competentes do Instituto aplicando priorização e negociação para ordenar características e resolver divergências (livro, §8.4.1).
+- **Workshop de requisitos:** Sessão com as áreas competentes do Instituto aplicando priorização e negociação para ordenar características e resolver divergências ([1](../referencias.md#ref-1), §8.4.1).
 - **MoSCoW:** Classificação das características em obrigatórias, desejáveis, opcionais e fora de escopo para fundamentar o MVP.
-- **Avaliação técnica × valor de negócio:** Matriz cruzando o valor percebido pelo cliente com o esforço estimado pela equipe, defendendo o corte de escopo com dados (livro, §8.4.2).
+- **Avaliação técnica × valor de negócio:** Matriz cruzando o valor percebido pelo cliente com o esforço estimado pela equipe, defendendo o corte de escopo com dados ([1](../referencias.md#ref-1), §8.4.2).
 - **Negociação:** Condução de conversas reposicionando desejos do cliente em relação às necessidades identificadas, sem recusa direta.
 
 **Declaração**
@@ -39,9 +40,9 @@ As seis atividades da Engenharia de Requisitos adotadas pela disciplina (elicita
 
 **Representação**
 
-- **Rich Picture:** Representação sistêmica e informal do cenário atual (livro, §10.5), apresentada na [seção 1.3](1-cenario-atual.md#13-rich-picture-e-mapeamento-do-fluxo-do-problema).
-- **Mapa de stakeholders:** Situação dos envolvidos e suas relações com a solução (livro, §§10.4–10.5), apresentada na [seção 1.6](1-cenario-atual.md#16-mapa-e-matriz-de-stakeholders).
-- **Modelo BPMN:** Diagramação formal do fluxo atual de inscrições e prestação de contas, localizando onde a solução intervém (livro, §10.6.2), publicada no [anexo B1](../requisitos/b1-bpmn-processo-atual.md).
+- **Rich Picture:** Representação sistêmica e informal do cenário atual ([1](../referencias.md#ref-1), §10.5), apresentada na [seção 1.3](1-cenario-atual.md#13-rich-picture-e-mapeamento-do-fluxo-do-problema).
+- **Mapa de stakeholders:** Situação dos envolvidos e suas relações com a solução ([1](../referencias.md#ref-1), §§10.4–10.5), apresentada na [seção 1.6](1-cenario-atual.md#16-mapa-e-matriz-de-stakeholders).
+- **Modelo BPMN:** Diagramação formal do fluxo atual de inscrições e prestação de contas, localizando onde a solução intervém ([1](../referencias.md#ref-1), §10.6.2), publicada no [anexo B1](../requisitos/b1-bpmn-processo-atual.md).
 - **Ambiente de homologação com dados de teste:** A equipe não faz protótipo de baixa fidelidade em ferramenta de desenho. O esboço de tela orienta a dupla e é material de trabalho, não publicado; o sistema publicado no ambiente de homologação, com dados de teste, é o que o Instituto avalia na demonstração; as referências dos testes visuais, em 360 e 1280 px, são a verificação da tela.
 
 **Verificação e Validação**
@@ -61,7 +62,7 @@ As seis atividades da Engenharia de Requisitos adotadas pela disciplina (elicita
 
 ## 5.2 Engenharia de Requisitos e o ScrumXP
 
-Elicitação, verificação e validação, e organização e atualização aparecem em mais de uma fase, porque as atividades da Engenharia de Requisitos são iterativas e entrelaçadas, e não etapas sequenciais (MARSICANO, 2026, §5.3).
+Elicitação, verificação e validação, e organização e atualização aparecem em mais de uma fase, porque as atividades da Engenharia de Requisitos são iterativas e entrelaçadas, e não etapas sequenciais ([1](../referencias.md#ref-1), §5.3).
 
 | Fase do ScrumXP | Atividade de ER | Prática | Técnica | Resultado esperado |
 |---|---|---|---|---|

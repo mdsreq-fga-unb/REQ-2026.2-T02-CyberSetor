@@ -16,6 +16,7 @@
 | 26/10/2026 | 1.11 | Interações de 21/09, 28/09 e 08/10 com o Instituto; alinhamento técnico de 15/10 e reunião de 22/10, remarcada para 29/10, registrados como encontros que não ocorreram; ausência registrada sem exigência de motivo; atas de 08/09 e 15/09 ligadas na tabela; trabalho em duplas com revisão por outra dupla (7.1); validação da interface pela demonstração em homologação (7.3); termos do Instituto nas notas de domínio da seção 8 | Vinicius Vieira |
 | 11/11/2026 | 1.12 | Responsabilidades por atividade de ER (7.1.1) alinhadas à composição da equipe: Caio Martins na declaração e na organização e atualização, pela rastreabilidade | Maria Eduarda Marques |
 | 13/11/2026 | 1.13 | Resumo no início da seção; alcance da avaliação do Product Owner interno explicado só na 7.3, com a 7.1 apontando para ela; duplas e revisão remetidas às práticas de XP da página Processo e ritos; regras da daily remetidas à mesma página; exceção da Sprint 5 nas cerimônias; checkpoint de 29/10/2026 nas interações realizadas e validação de 05/11/2026 adiada a pedido do Instituto; "ambiente de homologação com dados de teste" no lugar de "protótipo evolutivo" na 7.3 (ATA-2026-11-12, D1) | Maria Eduarda Marques |
+| 16/11/2026 | 1.14 | Citação do livro-texto no sistema numérico das referências | Maria Eduarda Marques |
 
 **Em resumo.** Cinco estudantes, todos engenheiros de requisitos, com uma Product Owner interna e um Scrum Master (7.1). A comunicação passa pelo WhatsApp, pelo Google Meet e pelo GitHub, com ata publicada de cada reunião (7.2). Quem valida é o Instituto, por área competente; a avaliação da Product Owner interna é provisória (7.3).
 
@@ -49,7 +50,7 @@ O que a tabela abaixo registra é **quem conduz cada atividade e responde por su
 | **Verificação e validação** | Vinicius Vieira organiza a revisão cruzada; a validação cabe ao Instituto, por área competente — ver §7.3 | Cada dupla revisa o material de outra dupla | Registro da revisão por par; ata da sessão de validação |
 | **Organização e atualização** | Vinicius Vieira (Scrum Master) · Caio Martins (rastreabilidade) | Cada integrante mantém atualizados os itens sob sua responsabilidade no quadro | Quadro do projeto; matriz de rastreabilidade; planos de sprint |
 
-A nomenclatura das seis atividades segue o livro-texto da disciplina (MARSICANO, 2026, §5.3): elicitação e descoberta, análise e consenso, declaração, representação, verificação e validação, organização e atualização.
+A nomenclatura das seis atividades segue o livro-texto da disciplina ([1](../referencias.md#ref-1), §5.3): elicitação e descoberta, análise e consenso, declaração, representação, verificação e validação, organização e atualização.
 
 **O papel do cliente.** O Instituto No Setor **valida as entregas**, **indica o valor dos itens e participa da ordenação do Product Backlog** e é a fonte primária dos requisitos. O Product Owner interno **propõe** a ordenação a partir desse valor e a mantém atualizada entre os encontros; a proposta vale até o Instituto confirmá-la. O alcance da avaliação do Product Owner interno está na [seção 7.3](#73-processo-de-validacao), e quem valida cada conjunto de funcionalidades, na seção 7.3.1.
 
