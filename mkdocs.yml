@@ -108,6 +108,7 @@ exclude_docs: |
   *.txt
   # Atas com o cliente em versão preliminar, fora do site até a conferência do Instituto
   gestao/atas/2026-10-29-checkpoint-instituto.md
+  gestao/atas/2026-11-12-validacao-instituto.md
   # Apontamentos do docente: o docente acompanha pelas issues do repositório (ATA-2026-11-12, D6)
   entregas/debitos-u1.md
 

@@ -39,6 +39,7 @@ Registro das reuniões da equipe e das interações com o cliente. Desde 27/08/2
 | [28/09/2026](2026-09-28-validacao-mvp-instituto.md) | Videoconferência | Validação do MVP e priorização por MoSCoW com Maria Clara Novaes (diretora pedagógica) e Maria Eduarda (Duda — Núcleo Pedagógico): parcerias e metas como base do MVP, inscrições públicas e assistidas no MVP, evidências no segundo incremento, aviso de vencimento com 30 dias |
 | [08/10/2026](2026-10-08-validacao-mvp-instituto.md) | Videoconferência | Validação do MVP com Maria Eduarda (Duda — Núcleo Pedagógico): parcerias e metas, aditivos e auditoria, inscrições, direitos do titular e prestação de contas; evidências fotográficas no segundo incremento; sprints de duas semanas e alinhamentos técnicos às quintas-feiras |
 | 29/10/2026 | Videoconferência | Checkpoint com demonstração na homologação para Maria Clara Novaes e Maria Eduarda (Duda — Núcleo Pedagógico): cadastros de participantes mantidos, cadastro já existente identificado na nova inscrição, avisos por e-mail, campos personalizados no formulário e acesso administrativo estendido; ata em conferência pelo Instituto |
+| 12/11/2026 | Videoconferência | Validação em uso na homologação com a direção pedagógica, o Núcleo Pedagógico e a coordenação administrativo-financeira: projeto piloto liberado, metas por equipe, comprovação na meta e por data, inscrição que não garante a vaga; ata em conferência pelo Instituto |
 
 ## Política de registro, acesso e publicação
 
