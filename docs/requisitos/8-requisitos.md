@@ -31,12 +31,13 @@
 | 11/11/2026 | 2.17 | Requisitos das seções 8.2 e 8.3 apresentados em cartões, com história, critérios de aceitação, origem, RNF, gargalo e destino no MVP ou fora dele, compostos a cada build a partir das tabelas desta seção e da seção 10; filtro por destino e busca; matriz 8.4 em trilhas (gargalo, requisito, história e critérios), com cada código (HU, CA, RF, RNF, RN, OE, CP, gargalo e seção) levando ao ponto da documentação que o define | Maria Eduarda Marques |
 | 13/11/2026 | 2.18 | Resumos no início da 8.4 e da 8.6; requisitos funcionais do RNF08 em intervalo na matriz 8.4.2 | Maria Eduarda Marques |
 | 16/11/2026 | 2.19 | Remoção dos vínculos de histórias (`HU-XX`) da coluna Rastreabilidade da seção 8.2: a história dona de cada RF fica na ficha e na tabela 10.2.4, e as demais histórias da matriz 8.4.1 aparecem no cartão como "Também verificado em", sem mudar o selo (ata de 12/11, D3/A4; #187, #188) | Daniel Batista |
+| 16/11/2026 | 2.20 | Citações da introdução no sistema numérico da página de Referências: diretrizes da disciplina (1), FURPS+ (13) e Sommerville (14) (ata de 12/11, D7/A10) | Maria Eduarda Marques |
 
 ---
 
 ## 8.1 Introdução Metodológica
 
-A especificação de requisitos do sistema CyberSetor orienta-se pela abordagem ágil ScrumXP combinada aos preceitos da Engenharia de Requisitos contemporânea. A declaração e a taxonomia seguem as diretrizes metodológicas da disciplina (Marsicano, 2026), com requisitos funcionais orientados à ação e requisitos não funcionais fundamentados no modelo **FURPS+** e na taxonomia de **Ian Sommerville**.
+A especificação de requisitos do sistema CyberSetor orienta-se pela abordagem ágil ScrumXP combinada aos preceitos da Engenharia de Requisitos contemporânea. A declaração e a taxonomia seguem as diretrizes metodológicas da disciplina ([1](../referencias.md#ref-1)), com requisitos funcionais orientados à ação e requisitos não funcionais fundamentados no modelo **FURPS+** ([13](../referencias.md#ref-13)) e na taxonomia de **Ian Sommerville** ([14](../referencias.md#ref-14)).
 
 A governança do catálogo adota:
 - **Identificadores unívocos:** Códigos prefixados (`RFxx` e `RNFxx`; `RN-xx` para regras de negócio) em sequência única e contínua, acompanhados de âncoras explícitas para permitir rastreamento direto a partir de issues, histórias de usuário e matrizes. Os RFs estão agrupados por característica de produto; a numeração é contínua e não indica a característica.
