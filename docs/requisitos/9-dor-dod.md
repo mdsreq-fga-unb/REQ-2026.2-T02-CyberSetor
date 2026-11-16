@@ -9,6 +9,7 @@
 | 05/10/2026 | 1.2 | Conclusão do item na branch de integração do seu tipo: `docs-homologacao` para documentação, `api-develop` ou `web-develop` para código; demonstração no ambiente de homologação | Vinicius Vieira |
 | 20/10/2026 | 1.3 | Requisitos não funcionais de todo o produto (RNF03, RNF16 e RNF17) como condição de conclusão do item de código | Equipe CyberSetor |
 | 26/10/2026 | 1.4 | Item de código atende aos requisitos não funcionais listados na história, conferidos pela métrica; controle de acesso por perfil (RNF04) e usabilidade e acessibilidade (RNF15) entre os requisitos de todo o produto; DoR: o que impede a entrada separado do que admite valor provisório com 🔧; fluxo da tela nos critérios de aceitação no lugar do esboço, com os estados comuns a todas as telas na RNF15; valor herdado e regra com comportamento padrão entre os valores provisórios. DoD: história concluída na versão publicada na homologação, com o percurso executado; item concluído distinto do incremento; validação pendente em "Aguardando"; tratamento do retorno do Instituto; registro de conclusão no quadro do projeto; revisor de outra dupla ou integrante independente; item de código e história com listas próprias; verificação por classe de requisito não funcional | Vinicius Vieira |
+| 13/11/2026 | 1.5 | Escalas de valor e de esforço da DoR (itens 3 e 4) ligadas às seções 10.2.1, 10.2.2 e 10.2.3 | Maria Eduarda Marques |
 
 ---
 
@@ -22,8 +23,8 @@ Uma história de usuário está pronta quando:
 
 1. **Independente (I):** não repete o resultado de outra história e pode ser ordenada e entregue sem depender artificialmente de outra; a dependência que existir está registrada na própria história.
 2. **Negociável (N):** descreve a necessidade e o comportamento esperado, sem fixar a solução técnica.
-3. **Valiosa (V):** tem valor claro para um perfil do Instituto, com o ator explícito na própria história (*Como …, quero … para …*), e valor de negócio validado com o Instituto, na escala MoSCoW pontuada de 4 a 1, com a justificativa registrada na [seção 10](10-backlog.md). A história que entra por obrigação legal ou por dependência técnica, ou que herda o valor de história validada, pode ter valor provisório, nas condições do item 8.
-4. **Estimável (E):** a equipe avaliou esforço, complexidade e lacuna de capacidade dos requisitos funcionais da história ([seção 10](10-backlog.md)); incerteza grande leva a dividir a história ou a investigar antes.
+3. **Valiosa (V):** tem valor claro para um perfil do Instituto, com o ator explícito na própria história (*Como …, quero … para …*), e valor de negócio validado com o Instituto, na escala MoSCoW pontuada de 4 a 1 ([seção 10.2.1](10-backlog.md#1021-criterios-e-escalas)), com a justificativa registrada na [seção 10.2.2](10-backlog.md#1022-avaliacao-de-negocio-com-o-instituto). A história que entra por obrigação legal ou por dependência técnica, ou que herda o valor de história validada, pode ter valor provisório, nas condições do item 8.
+4. **Estimável (E):** a equipe avaliou esforço, complexidade e lacuna de capacidade dos requisitos funcionais da história, nas escalas da [seção 10.2.1](10-backlog.md#1021-criterios-e-escalas), com o registro na [seção 10.2.3](10-backlog.md#1023-avaliacao-tecnica); incerteza grande leva a dividir a história ou a investigar antes.
 5. **Pequena (S):** cabe em uma sprint; a que não cabe é dividida antes de entrar.
 6. **Testável (T):** tem critérios de aceitação em lista, cada um verificável e sem ambiguidade identificada na revisão por quem desenvolve.
 7. **Vinculada aos requisitos:** a pelo menos um requisito funcional da [seção 8](8-requisitos.md) e aos requisitos não funcionais e às regras de negócio que a condicionam.
