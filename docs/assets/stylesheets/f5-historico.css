@@ -1,0 +1,373 @@
+/* Histórico e evolução (gestao/historico.md, gerada por hooks/historico.py):
+   indicadores do topo, linha do tempo em linhas e filtros da evolução dos requisitos. */
+
+/* ---- Indicadores do topo ---- */
+.md-typeset ul.f5-indicadores {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 8rem), 1fr));
+  gap: 0.5rem;
+  margin: 0.8rem 0 0.4rem;
+  padding: 0;
+  list-style: none;
+}
+
+.md-typeset ul.f5-indicadores > li {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  padding: 0.45rem 0.7rem;
+  border: 1px solid var(--md-default-fg-color--lightest);
+  border-left: 3px solid var(--md-accent-fg-color);
+  border-radius: 0.25rem;
+  line-height: 1.3;
+}
+
+.f5-indicadores span {
+  font-size: 0.62rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--md-default-fg-color--light);
+}
+
+.f5-indicadores strong {
+  font-size: 0.95rem;
+}
+
+.f5-indicadores small {
+  font-size: 0.66rem;
+  color: var(--md-default-fg-color--light);
+}
+
+/* ---- Linha do tempo em linhas (Gantt simples) ---- */
+.f5-gantt {
+  --rotulo: 12rem;
+  position: relative;
+  margin: 0.6rem 0 0.4rem;
+  font-size: 0.68rem;
+}
+
+/* Espaço para os nomes dos meses (em cima) e para a data da publicação (embaixo). */
+.f5-gantt__escala,
+.f5-gantt__pe {
+  height: 1.1rem;
+}
+
+.md-typeset a.f5-gantt__linha {
+  display: grid;
+  grid-template-columns: var(--rotulo) minmax(0, 1fr);
+  align-items: stretch;
+  min-height: 1.7rem;
+  border-top: 1px solid var(--md-default-fg-color--lightest);
+  color: var(--md-default-fg-color);
+}
+
+.md-typeset a.f5-gantt__linha:last-of-type {
+  border-bottom: 1px solid var(--md-default-fg-color--lightest);
+}
+
+.md-typeset a.f5-gantt__linha:hover,
+.md-typeset a.f5-gantt__linha:focus-visible,
+.md-typeset a.f5-gantt__linha--ativa {
+  background: var(--md-accent-fg-color--transparent);
+}
+
+.md-typeset a.f5-gantt__linha--ativa .f5-gantt__rotulo strong {
+  color: var(--md-typeset-a-color);
+}
+
+.f5-gantt__rotulo {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  align-content: center;
+  gap: 0 0.4rem;
+  padding: 0.15rem 0.4rem 0.15rem 0;
+  line-height: 1.25;
+}
+
+.f5-gantt__rotulo strong {
+  font-weight: 600;
+}
+
+.f5-gantt__rotulo small {
+  font-size: 0.6rem;
+  color: var(--md-default-fg-color--light);
+}
+
+.f5-gantt__linha--marco .f5-gantt__rotulo strong {
+  font-weight: 400;
+}
+
+.f5-gantt__pista {
+  position: relative;
+}
+
+.f5-gantt__barra,
+.f5-gantt__janela {
+  position: absolute;
+  top: 0.4rem;
+  bottom: 0.4rem;
+  border-radius: 0.2rem;
+}
+
+.f5-gantt__barra {
+  background: var(--md-typeset-a-color);
+  opacity: 0.4;
+}
+
+.f5-gantt__linha--corrente .f5-gantt__barra {
+  background: var(--md-accent-fg-color);
+  opacity: 1;
+}
+
+.f5-gantt__linha--prevista .f5-gantt__barra {
+  background: none;
+  border: 1px dashed var(--md-default-fg-color--light);
+  opacity: 1;
+}
+
+.f5-gantt__linha--corrente .f5-gantt__rotulo strong {
+  color: var(--md-accent-fg-color);
+}
+
+.f5-gantt__janela {
+  top: 0.65rem;
+  bottom: 0.65rem;
+  background: var(--md-default-fg-color--lighter);
+}
+
+/* Ponto do marco: losango cheio = realizado; vazio = previsto; destacado = hoje. */
+.f5-gantt__ponto {
+  position: absolute;
+  top: 50%;
+  width: 0.6rem;
+  height: 0.6rem;
+  border: 2px solid var(--md-typeset-a-color);
+  background: var(--md-default-bg-color);
+  transform: translate(-50%, -50%) rotate(45deg);
+  box-sizing: border-box;
+}
+
+.f5-gantt__linha--feito .f5-gantt__ponto {
+  background: var(--md-typeset-a-color);
+}
+
+.f5-gantt__linha--hoje .f5-gantt__ponto {
+  border-color: var(--md-accent-fg-color);
+  background: var(--md-accent-fg-color);
+  box-shadow: 0 0 0 3px var(--md-accent-fg-color--transparent);
+}
+
+/* Viradas de mês e dia da publicação: traços verticais sobre a área das barras. */
+.f5-gantt__mes,
+.f5-gantt__hoje {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: calc(var(--rotulo) + (100% - var(--rotulo)) * var(--pos) / 100);
+  width: 0;
+  pointer-events: none;
+}
+
+.f5-gantt__mes {
+  bottom: 1.1rem;
+  border-left: 1px dotted var(--md-default-fg-color--lighter);
+}
+
+.f5-gantt__mes > span {
+  position: absolute;
+  top: 0;
+  left: 0.2rem;
+  font-size: 0.6rem;
+  color: var(--md-default-fg-color--light);
+}
+
+.f5-gantt__hoje {
+  top: 1.1rem;
+  border-left: 2px dashed var(--md-accent-fg-color);
+}
+
+.f5-gantt__hoje > span {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  transform: translateX(-50%);
+  padding: 0 0.2rem;
+  font-size: 0.6rem;
+  font-weight: 600;
+  color: var(--md-accent-fg-color);
+  background: var(--md-default-bg-color);
+  white-space: nowrap;
+}
+
+.md-typeset .f5-gantt__legenda {
+  font-size: 0.68rem;
+  color: var(--md-default-fg-color--light);
+}
+
+.f5-leg {
+  display: inline-block;
+  width: 0.9rem;
+  height: 0.5rem;
+  margin: 0 0.15rem 0 0.4rem;
+  vertical-align: middle;
+}
+
+.f5-leg:first-child {
+  margin-left: 0;
+}
+
+.f5-leg--sprint {
+  border-radius: 0.15rem;
+  background: var(--md-typeset-a-color);
+  opacity: 0.4;
+}
+
+.f5-leg--marco {
+  width: 0.5rem;
+  background: var(--md-typeset-a-color);
+  transform: rotate(45deg);
+}
+
+.f5-leg--hoje {
+  width: 0;
+  height: 0.8rem;
+  border-left: 2px dashed var(--md-accent-fg-color);
+}
+
+/* ---- Evolução dos requisitos: busca por código e tipo ---- */
+.f5-req-filtros {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: 0.5rem 0.8rem;
+  margin: 0.6rem 0 0.4rem;
+  font-size: 0.7rem;
+}
+
+.f5-req-filtros[hidden] {
+  display: none;
+}
+
+.f5-req-filtros__busca {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  flex: 1 1 10rem;
+  font-weight: 600;
+}
+
+.f5-req-filtros input,
+.f5-req-filtros button {
+  font: inherit;
+  padding: 0.3rem 0.5rem;
+  border: 1px solid var(--md-default-fg-color--lighter);
+  border-radius: 0.2rem;
+  background: var(--md-default-bg-color);
+  color: var(--md-default-fg-color);
+}
+
+.f5-req-filtros input {
+  font-weight: 400;
+  font-size: 0.75rem;
+  max-width: 100%;
+}
+
+.f5-req-filtros input:focus {
+  outline: 2px solid var(--md-accent-fg-color);
+  outline-offset: 1px;
+}
+
+.f5-req-filtros__tipos {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+}
+
+.f5-req-filtros button {
+  border-radius: 1rem;
+  padding: 0.25rem 0.75rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.f5-req-filtros button span {
+  font-weight: 400;
+  color: var(--md-default-fg-color--light);
+}
+
+.f5-req-filtros button[aria-pressed="true"] {
+  border-color: var(--md-accent-fg-color);
+  background: var(--md-accent-fg-color);
+  color: var(--md-accent-bg-color);
+}
+
+.f5-req-filtros button[aria-pressed="true"] span {
+  color: inherit;
+}
+
+.md-typeset .f5-req-filtros__status {
+  flex-basis: 100%;
+  margin: 0;
+  color: var(--md-default-fg-color--light);
+}
+
+.f5-req-grupo[hidden],
+.md-typeset details.hist-req__item[hidden] {
+  display: none;
+}
+
+.md-typeset .f5-req-grupo__titulo {
+  margin: 1rem 0 0.4rem;
+}
+
+.f5-req-grupo__titulo span {
+  font-size: 0.68rem;
+  color: var(--md-default-fg-color--light);
+}
+
+/* ---- Evolução por documento, em lista ---- */
+.md-typeset details.hist-documentos ul {
+  columns: 2 18rem;
+  column-gap: 1.5rem;
+  font-size: 0.7rem;
+}
+
+.md-typeset details.hist-documentos li {
+  break-inside: avoid;
+}
+
+/* ---- Celular: rótulo mais estreito, sem rolagem horizontal ---- */
+@media screen and (max-width: 44.9375em) {
+  .f5-gantt {
+    --rotulo: 5.8rem;
+    font-size: 0.62rem;
+  }
+
+  .f5-gantt__rotulo {
+    display: block;
+  }
+
+  .f5-gantt__rotulo small {
+    display: block;
+  }
+
+  .md-typeset ul.f5-indicadores {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .md-typeset ul.f5-indicadores > li {
+    padding: 0.35rem 0.5rem;
+  }
+
+  /* Filtros do registro em duas colunas, para o registro aparecer mais cedo. */
+  .hist-filtros__grade {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .f5-gantt__mes > span {
+    left: 0.1rem;
+    font-size: 0.55rem;
+  }
+}

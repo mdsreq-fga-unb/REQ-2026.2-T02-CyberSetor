@@ -4,8 +4,9 @@ Cartões dos requisitos nas seções 8.2 e 8.3, compostos a cada build do MkDocs
 As tabelas das seções 8.2 e 8.3 continuam sendo a fonte, e é nelas que se edita um requisito.
 No build, cada tabela vira uma grade de cartões, um por requisito, com o que está registrado
 em outras seções:
-  - história dona: tabela 10.2.4 (conferida com as fichas pelo hooks/conferencia.py);
-  - critérios de aceitação, histórias que só verificam o RF, gargalo e cobertura: matriz 8.4.1;
+  - história dona: ficha da história na 10.1 (campo Requisitos funcionais), lida pelo hooks/fichas.py;
+  - critérios de aceitação e histórias que só verificam o RF: matriz 8.4.1 (o gargalo fica na
+    árvore e na matriz, que a página mostra recolhida);
   - requisitos não funcionais ligados ao RF e RFs ligados ao RNF: matriz 8.4.2;
   - valor, esforço e destino (MVP ou fora dele): tabela 10.2.4;
   - classe do RNF no MVP: tabela 10.2.7;
@@ -24,6 +25,7 @@ from pathlib import Path
 
 from mkdocs.exceptions import PluginError
 
+import fichas
 import ligacoes
 
 SECAO_RF = "requisitos/8-requisitos.md"
@@ -65,6 +67,10 @@ class Fontes:
 
 def ler_backlog(md: str) -> tuple[dict, dict]:
     destino, classe, secao = {}, {}, ""
+    donas: dict[str, list[str]] = {}
+    for f in fichas.ler_fichas(md.splitlines()):
+        for r in f.rfs:
+            donas.setdefault(r, []).append(f.hu)
     for linha in md.splitlines():
         if linha.startswith("### "):
             secao = linha[4:10]
@@ -72,7 +78,8 @@ def ler_backlog(md: str) -> tuple[dict, dict]:
         if secao == "10.2.4" and LINHA_1024.match(linha):
             c = celulas(linha)
             cod = LINHA_1024.match(linha).group(1)
-            destino[cod] = {"hus": HU.findall(c[1]), "valor": c[2], "esforco": c[3], "destino": c[4]}
+            # Código | Valor | Esforço técnico | Destino; a história dona vem da ficha.
+            destino[cod] = {"hus": donas.get(cod, []), "valor": c[1], "esforco": c[2], "destino": c[3]}
         elif secao == "10.2.7" and linha.startswith("| ") and "RNF" in linha:
             c = celulas(linha)
             for cod in re.findall(r"\[(RNF\d+)\]", c[1]):
@@ -86,17 +93,19 @@ def ler_matrizes(md: str) -> tuple[dict, dict]:
         m = LINHA_841.match(linha)
         if m:
             c = celulas(linha)
-            matriz_rf[m.group(1)] = {"gargalo": c[2], "historia": c[4], "cobertura": c[5]}
+            # Requisito | Gargalo | Norma / mitigação | História derivada | Cobertura (o nome fica na 8.2).
+            matriz_rf[m.group(1)] = {"gargalo": c[1], "historia": c[3], "cobertura": c[4]}
             continue
         m = LINHA_842.match(linha)
         if m:
             c = celulas(linha)
-            transversal = c[3].startswith("*Transversal")
+            # RNF | Origem | RFs relacionados (o nome fica na 8.3).
+            transversal = c[2].startswith("*Transversal")
             rnf_rfs[m.group(1)] = {
-                "origem": c[2],
-                "texto": c[3],
+                "origem": c[1],
+                "texto": c[2],
                 "transversal": transversal,
-                "rfs": [] if transversal else faixa(c[3]),
+                "rfs": [] if transversal else faixa(c[2]),
             }
     return matriz_rf, rnf_rfs
 
@@ -161,10 +170,10 @@ def cartao_rf(linha: str, fontes: Fontes) -> str:
     info = fontes.destino.get(cod)
     nota = f'<span class="rq-chip">Valor {_e(info["valor"])} · Esforço {_e(info["esforco"])}</span>' if info else ""
     matriz = fontes.matriz_rf.get(cod, {})
-    # A dona vem da 10.2.4; a 8.4.1 traz também as histórias que só verificam o RF.
+    # A dona vem da ficha da história; a 8.4.1 traz também as histórias que só verificam o RF.
     historias = HU.findall(hus) or (info or {}).get("hus", [])
     if not historias:
-        raise PluginError(f"cartoes: {cod} sem história dona na seção 8.2 nem na tabela 10.2.4.")
+        raise PluginError(f"cartoes: {cod} sem história dona: nenhuma ficha da seção 10.1 o lista.")
     verificacao = re.findall(rf"({HU.pattern})\s*(?:\(([^)]*)\))?", matriz.get("historia", ""))
     cas = dict(verificacao)
     hist = " · ".join(
@@ -179,15 +188,13 @@ def cartao_rf(linha: str, fontes: Fontes) -> str:
     rnf_txt = ", ".join(f"[{r}](#{r.lower()})" for r in rnfs) or "Só os transversais"
     if rnfs:
         rnf_txt += " e os transversais"
+    # Cartão enxuto: o gargalo fica na árvore e na matriz 8.4.1, recolhida, sem repetir aqui.
     partes = [
         item("História", hist),
         *([item("Também verificado em", " · ".join(outras))] if outras else []),
         item("Origem", origem.strip() or "—"),
         item("RNF", rnf_txt),
     ]
-    if matriz.get("gargalo") and matriz["gargalo"] != "—":
-        partes.append(item("Gargalo", matriz["gargalo"]))
-    partes.append(item("Matriz", f"[ver na 8.4.1](#m-{ancora})"))
     return (
         f'<article class="rq-card rq-card--{chave}" id="{ancora}" data-destino="{chave}" data-situacao="{sit}" '
         f'data-historias="{" ".join(historias)}" markdown="1">\n'
@@ -209,8 +216,8 @@ def cartao_rnf(linha: str, fontes: Fontes) -> str:
     rel = fontes.rnf_rfs.get(cod)
     if not rel:
         raise PluginError(f"cartoes: {cod} não está na matriz 8.4.2.")
-    rfs = "Todos os RFs (transversal)" if rel["transversal"] else rel["texto"]
-    partes = [item("RFs", rfs), item("Métrica", metrica), item("Origem", rel["origem"]), item("Matriz", f"[ver na 8.4.2](#m-{ancora})")]
+    rfs = "Todos os RFs (transversal)" if rel["transversal"] else chips_rf(rel["texto"])
+    partes = [item("Métrica", metrica), item("RFs", rfs), item("Origem", rel["origem"])]
     return (
         f'<article class="rq-card rq-card--{chave}" id="{ancora}" data-destino="{chave}" markdown="1">\n'
         f'<div class="rq-card__topo" markdown="span">[{cod}](#{ancora}){destino}<span class="rq-chip">{_e(classif)}</span></div>\n'
@@ -252,11 +259,11 @@ def trilha_rf(c: list[str], fontes: Fontes) -> str:
     chave, destino = chip_destino(info)
     return (
         f'<div class="rt-linha rt--rf" id="m-{cod.lower()}" data-destino="{chave}" markdown="1">\n'
-        + col("Gargalo", c[2] if c[2] != "—" else '<span class="rt-nota">sem gargalo</span>', " rt-col--g")
-        + col("Requisito", f'[{cod}](#{cod.lower()}) {c[1]}', " rt-col--req")
-        + col("História", c[4], " rt-col--hu")
-        + col("Norma / mitigação", c[3] if c[3] != "—" else '<span class="rt-nota">—</span>')
-        + col("Cobertura", chip_cobertura(c[5]) + destino, " rt-col--cob")
+        + col("Gargalo", c[1] if c[1] != "—" else '<span class="rt-nota">sem gargalo</span>', " rt-col--g")
+        + col("Requisito", f'[{cod}](#{cod.lower()})', " rt-col--req")
+        + col("História", c[3], " rt-col--hu")
+        + col("Norma / mitigação", c[2] if c[2] != "—" else '<span class="rt-nota">—</span>')
+        + col("Cobertura", chip_cobertura(c[4]) + destino, " rt-col--cob")
         + "\n</div>"
     )
 
@@ -266,9 +273,9 @@ def trilha_rnf(c: list[str], fontes: Fontes) -> str:
     chave, destino = chip_classe(fontes.classe_rnf.get(cod))
     return (
         f'<div class="rt-linha rt--rnf" id="m-{cod.lower()}" data-destino="{chave}" markdown="1">\n'
-        + col("Requisito", f'[{cod}](#{cod.lower()}) {c[1]}', " rt-col--req")
-        + col("Origem", c[2])
-        + col("RFs relacionados", chips_rf(c[3]), " rt-col--rfs")
+        + col("Requisito", f'[{cod}](#{cod.lower()})', " rt-col--req")
+        + col("Origem", c[1])
+        + col("RFs relacionados", chips_rf(c[2]), " rt-col--rfs")
         + col("No MVP", destino, " rt-col--cob")
         + "\n</div>"
     )
@@ -301,8 +308,8 @@ def trilha_cp(c: list[str]) -> str:
 
 
 MATRIZES = {
-    "| Requisito | Nome | Gargalo BPMN |": ("rf", ["Gargalo", "Requisito", "História e critérios", "Norma / mitigação", "Cobertura"]),
-    "| RNF | Propriedade de Qualidade |": ("rnf", ["Requisito", "Origem", "RFs relacionados", "No MVP"]),
+    "| Requisito | Gargalo BPMN |": ("rf", ["Gargalo", "Requisito", "História e critérios", "Norma / mitigação", "Cobertura"]),
+    "| RNF | Origem ": ("rnf", ["Requisito", "Origem", "RFs relacionados", "No MVP"]),
     "| Gargalo | Descrição do Gargalo": ("g", ["Gargalo", "Requisitos", "Situação"]),
     "| CP | Nome da Característica |": ("cp", ["Característica", "Requisitos", "Objetivos específicos"]),
 }

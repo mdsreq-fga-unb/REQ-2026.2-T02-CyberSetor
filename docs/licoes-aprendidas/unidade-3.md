@@ -3,6 +3,7 @@
 | Data | Versão | Descrição | Autor |
 |---|---|---|---|
 | 16/11/2026 | 1.0 | Registro das lições aprendidas das Sprints 3 a 5 para a entrega da Unidade 3, a partir das Retrospectivas 3 e 4 e da reunião de equipe de 10/11 | Maria Eduarda Marques |
+| 16/11/2026 | 1.1 | Adesão às dailies sem comparação entre critérios diferentes; indicador limitado às ações da equipe | Vinicius Vieira |
 
 Nas Sprints 3 a 5, a equipe passou da especificação para a construção do MVP, com a homologação no ar, o checkpoint e a reunião de validação com o Instituto e a reorganização da documentação. As lições abaixo vêm das [Retrospectivas 3](../gestao/atas/2026-10-20-sprint-review-retrospectiva-planning.md) e [4](../gestao/atas/2026-11-05-sprint-review-retrospectiva-planning.md) e da [reunião de equipe de 10/11](../gestao/atas/2026-11-10-reuniao-equipe.md). A Retrospectiva 5 confere os indicadores.
 
@@ -24,7 +25,7 @@ Nas Sprints 3 a 5, a equipe passou da especificação para a construção do MVP
 
 **Adesão às dailies**
 
-- *Desafio:* A adesão subiu para 84% na Sprint 3, acima da meta de 80%, e caiu para 73% na Sprint 4, na fase de construção. A Sprint 4 também não teve a contagem de relatos registrada ([registro das dailies](../gestao/dailies.md)).
+- *Desafio:* A adesão apresentada nas Reviews foi de 84% na Sprint 3 e de 73% na Sprint 4, com critérios de apuração diferentes; a comparação depende do critério fixado na Retrospectiva 5. A Sprint 4 também não teve a contagem de relatos registrada ([registro das dailies](../gestao/dailies.md)).
 - *Ação de melhoria:* O impedimento registrado na daily passou a ser só o que bloqueia o trabalho, e o critério de apuração da adesão é fixado na Retrospectiva 5.
 - *Responsável:* Scrum Master e integrantes da equipe.
 - *Prazo:* Retrospectiva 5 (19/11/2026).
@@ -36,7 +37,7 @@ Nas Sprints 3 a 5, a equipe passou da especificação para a construção do MVP
 - *Ação de melhoria:* As issues do docente passaram a ter responsável e prazo no plano da sprint. A documentação foi reorganizada sem duplicação, com resumo no início das seções longas, e os pedidos da monitoria de 12/11 foram registrados em ata com ações e responsáveis.
 - *Responsável:* Equipe, com a conferência das respostas às issues do docente a cargo de um integrante designado.
 - *Prazo:* Sprint 5.
-- *Indicador da ação:* Todas as issues do docente da Unidade 2 respondidas e todas as ações da ata da monitoria concluídas antes da entrega da Unidade 3.
+- *Indicador da ação:* Todas as issues do docente da Unidade 2 respondidas e as ações da equipe com prazo na Unidade 3, da ata da monitoria, concluídas antes da entrega.
 
 **Validação com o Instituto**
 

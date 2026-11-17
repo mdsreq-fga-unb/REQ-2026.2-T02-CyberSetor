@@ -6,8 +6,11 @@ documento e recebem links, mas não podem divergir dela. Uma divergência interr
 com a lista do que corrigir.
 
   Dado                    Fonte      Cópias conferidas
-  nome do RF              8.2        8.4.1, 10.2.3
-  RF e história dona      ficha      8.2, 8.4.1, 10.2.4
+  nome do RF e do RNF     8.2, 8.3   nenhuma: as outras tabelas trazem só o código
+  códigos dos RFs         8.2        8.4.1, 10.2.3, 10.2.4
+  códigos dos RNFs        8.3        8.4.2
+  colunas das tabelas     —          8.4.1, 8.4.2, 10.2.3, 10.2.4 (os hooks leem por posição)
+  RF e história dona      ficha      8.4.1
   esforço técnico         10.2.3     10.2.4, 10.2.5
   valor                   10.2.2     10.2.4, 10.2.5
   destino                 10.2.4     10.2.5, 10.2.6
@@ -24,7 +27,7 @@ from pathlib import Path
 from mkdocs.exceptions import PluginError
 
 import fichas
-from fichas import HU, LINHA_RF, LINK_RF, celulas, faixa, trecho
+from fichas import HU, LINHA_RF, LINHA_RNF, LINK_RF, celulas, faixa, trecho
 
 CA = r"CA-\d{2}[a-z]?\.\d+"
 LINHA_GARGALO = re.compile(r"^\| \*\*(G\d{2})\*\* \|")
@@ -41,29 +44,61 @@ def _lista(valores) -> str:
     return ", ".join(sorted(valores)) or "nenhum"
 
 
-def conferir_nomes(s, md8: str, md10: str) -> list[str]:
+# Cabeçalho esperado de cada tabela que repete códigos da 8.2 e da 8.3. O nome do requisito fica
+# só na definição; os hooks leem estas tabelas por posição de coluna, e uma coluna a mais ou a
+# menos trocaria um dado por outro sem aviso.
+COLUNAS = {
+    "8.4.1": "| Requisito | Gargalo BPMN | Norma / Mitigação | História derivada | Cobertura |",
+    "8.4.2": "| RNF | Origem (Decisão, Risco Ético ou Norma) | Requisitos Funcionais Relacionados |",
+    "10.2.3": "| Código | Esforço | Complexidade | Lacuna | Média | Esforço técnico |",
+    "10.2.4": "| Código | Valor | Esforço técnico | Destino |",
+}
+
+
+def _tabelas(md8: str, md10: str) -> dict:
+    return {
+        "8.4.1": (trecho(md8, "### 8.4.1", "### 8.4.2"), LINHA_RF),
+        "8.4.2": (trecho(md8, "### 8.4.2", "### 8.4.3"), LINHA_RNF),
+        "10.2.3": (trecho(md10, "### 10.2.3", "### 10.2.4"), LINK_RF),
+        "10.2.4": (trecho(md10, "### 10.2.4", "### 10.2.5"), LINK_RF),
+    }
+
+
+def conferir_codigos(s, md8: str, md10: str) -> list[str]:
+    """As tabelas que citam os requisitos trazem só o código, com as colunas esperadas e os mesmos requisitos da 8.2 e da 8.3."""
     erros = []
-    fontes = {"8.4.1": ("### 8.4.1", "### 8.4.2", md8, LINHA_RF), "10.2.3": ("### 10.2.3", "### 10.2.4", md10, LINK_RF)}
-    for secao, (ini, fim, md, padrao) in fontes.items():
-        for linha in trecho(md, ini, fim).splitlines():
-            m = padrao.match(linha)
-            if m and m.group(1) in s.rfs and celulas(linha)[1] != s.rfs[m.group(1)].nome:
-                erros.append(f"{m.group(1)}: nome na {secao} difere da 8.2.")
+    for secao, (texto, padrao) in _tabelas(md8, md10).items():
+        linhas = texto.splitlines()
+        for i, linha in enumerate(linhas[:-1]):
+            if linha.startswith("| ") and linhas[i + 1].startswith("| :") and linha.strip() != COLUNAS[secao]:
+                erros.append(f"{secao}: colunas diferentes das esperadas ({linha.strip()}).")
+        achados = [m.group(1) for m in map(padrao.match, linhas) if m]
+        fonte, origem = (s.rnf, "8.3") if secao == "8.4.2" else (s.rfs, "8.2")
+        for r in sorted(set(fonte) - set(achados)):
+            erros.append(f"{r}: está na {origem} e não na {secao}.")
+        for r in sorted(set(achados) - set(fonte)):
+            erros.append(f"{r}: está na {secao} e não na {origem}.")
+        for r in sorted({r for r in achados if achados.count(r) > 1}):
+            erros.append(f"{r}: aparece mais de uma vez na {secao}.")
     return erros
 
 
-def conferir_donas(s, lista, consolidada: dict) -> list[str]:
-    erros = []
-    donas: dict[str, list[str]] = {}
+def donas(lista) -> dict[str, list[str]]:
+    """RF -> histórias cujas fichas o listam em Requisitos funcionais (a dona é a única fonte)."""
+    saida: dict[str, list[str]] = {}
     for f in lista:
         for r in f.rfs:
-            donas.setdefault(r, []).append(f.hu)
+            saida.setdefault(r, []).append(f.hu)
+    return saida
+
+
+def conferir_donas(s, lista) -> list[str]:
+    erros = []
+    por_rf = donas(lista)
     for r, q in s.rfs.items():
-        ficha = donas.get(r, [])
+        ficha = por_rf.get(r, [])
         if len(ficha) != 1:
             erros.append(f"{r}: precisa estar em uma ficha só; está em {_lista(ficha)}.")
-        if r in consolidada and sorted(consolidada[r]["hus"]) != sorted(ficha):
-            erros.append(f"{r}: história na 10.2.4 ({_lista(consolidada[r]['hus'])}) difere da ficha ({_lista(ficha)}).")
         na_matriz = [h for h, _ in s.verificacao.get(r, [])]
         for h in ficha:
             if h not in na_matriz:
@@ -71,14 +106,15 @@ def conferir_donas(s, lista, consolidada: dict) -> list[str]:
     return erros
 
 
-def ler_consolidada(md10: str) -> dict:
+def ler_consolidada(md10: str, por_rf: dict[str, list[str]]) -> dict:
+    """Tabela 10.2.4 (Código | Valor | Esforço técnico | Destino), com a história dona vinda da ficha."""
     tabela = {}
     for linha in trecho(md10, "### 10.2.4", "### 10.2.5").splitlines():
         m = LINK_RF.match(linha)
         if m:
             c = celulas(linha)
-            tabela[m.group(1)] = {"hus": re.findall(HU, c[1]), "valor": _limpo(c[2]), "esforco": _limpo(c[3]),
-                                  "destino": _limpo(c[4])}
+            tabela[m.group(1)] = {"hus": por_rf.get(m.group(1), []), "valor": _limpo(c[1]), "esforco": _limpo(c[2]),
+                                  "destino": _limpo(c[3])}
     return tabela
 
 
@@ -137,7 +173,7 @@ def conferir_gargalos(md8: str, md10: str) -> list[str]:
     for linha in trecho(md8, "### 8.4.1", "### 8.4.2").splitlines():
         m = LINHA_RF.match(linha)
         if m:
-            for g in re.findall(r"G\d{2}", celulas(linha)[2]):
+            for g in re.findall(r"G\d{2}", celulas(linha)[1]):
                 por_gargalo.setdefault(g, set()).add(m.group(1))
     erros = []
     for linha in trecho(md8, "### 8.4.3", "## 8.5").splitlines():
@@ -189,10 +225,10 @@ def conferir(md8: str, md10: str) -> list[str]:
     s = fichas.ler_secao8(md8)
     p = fichas.ler_priorizacao(md10)
     lista = fichas.ler_fichas(md10.splitlines())
-    consolidada = ler_consolidada(md10)
+    consolidada = ler_consolidada(md10, donas(lista))
     return [
-        *conferir_nomes(s, md8, md10),
-        *conferir_donas(s, lista, consolidada),
+        *conferir_codigos(s, md8, md10),
+        *conferir_donas(s, lista),
         *conferir_priorizacao(p, consolidada, md10),
         *conferir_destinos(consolidada, md10),
         *conferir_gargalos(md8, md10),

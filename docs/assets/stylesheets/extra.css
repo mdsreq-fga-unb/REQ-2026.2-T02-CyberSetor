@@ -1006,3 +1006,644 @@ a.cs-card:focus {
 
 /* Selo longo (classificação do RNF) quebra linha no celular em vez de passar do cartão. */
 .md-typeset .rq-chip { max-width: 100%; white-space: normal; }
+
+/* ---- Janela dos códigos (assets/javascripts/codigos.js, índice de hooks/codigos.py) ----
+   Abre ao clicar num link para a definição de HU, RF, RNF, RN, OE, CP ou gargalo. Usa as
+   variáveis do tema, por isso acompanha os esquemas claro e escuro. Em telas estreitas, a
+   janela ocupa a largura e encosta na base da tela. */
+.cod-janela {
+  width: min(34rem, calc(100vw - 2rem));
+  max-height: min(85vh, 40rem);
+  padding: 0;
+  border: 1px solid var(--md-default-fg-color--lightest);
+  border-radius: 0.4rem;
+  background: var(--md-default-bg-color);
+  color: var(--md-default-fg-color);
+  box-shadow: var(--md-shadow-z3);
+  font-family: var(--md-text-font-family);
+  font-size: 0.8rem;
+  line-height: 1.5;
+}
+
+.cod-janela::backdrop { background: rgba(0, 0, 0, 0.5); }
+
+.cod-janela__corpo {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  padding: 1rem 1.2rem 1.1rem;
+}
+
+.cod-janela__tipo {
+  margin: 0;
+  padding-right: 2rem;
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--md-default-fg-color--light);
+}
+
+.cod-janela__titulo {
+  margin: 0;
+  padding-right: 1.5rem;
+  font-size: 0.95rem;
+  font-weight: 700;
+  line-height: 1.35;
+  color: var(--md-default-fg-color);
+}
+
+.cod-janela__titulo:focus { outline: none; }
+.cod-janela__titulo:focus-visible { outline: 2px solid var(--md-accent-fg-color); outline-offset: 2px; }
+
+.cod-janela__cod {
+  font-family: var(--md-code-font-family);
+  color: var(--md-typeset-a-color);
+}
+
+.cod-janela__resumo {
+  margin: 0;
+  color: var(--md-default-fg-color--light);
+}
+
+.cod-janela__detalhes {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 0.2rem 0.7rem;
+  margin: 0;
+  padding-top: 0.5rem;
+  border-top: 1px solid var(--md-default-fg-color--lightest);
+  font-size: 0.7rem;
+}
+
+.cod-janela__detalhes[hidden] { display: none; }
+.cod-janela__detalhes dt { font-weight: 700; color: var(--md-default-fg-color--light); }
+.cod-janela__detalhes dd { margin: 0; overflow-wrap: anywhere; }
+
+.cod-janela__acoes {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 0.5rem;
+  margin-top: 0.2rem;
+}
+
+.cod-janela__botao {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2.2rem;
+  padding: 0 0.9rem;
+  border: 1px solid var(--md-default-fg-color--lighter);
+  border-radius: 1.2rem;
+  background: transparent;
+  color: var(--md-default-fg-color);
+  font: inherit;
+  font-weight: 700;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.cod-janela__botao--principal {
+  border-color: var(--md-accent-fg-color);
+  background: var(--md-accent-fg-color);
+  color: var(--md-accent-bg-color, #fff);
+}
+
+.cod-janela__botao:hover { border-color: var(--md-accent-fg-color); }
+.cod-janela__botao--principal:hover { color: var(--md-accent-bg-color, #fff); filter: brightness(1.08); }
+
+.cod-janela__x {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.6rem;
+  width: 2.2rem;
+  height: 2.2rem;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  color: var(--md-default-fg-color--light);
+  font-size: 1.2rem;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.cod-janela__x:hover { background: var(--md-default-fg-color--lightest); color: var(--md-default-fg-color); }
+
+.cod-janela__botao:focus-visible,
+.cod-janela__x:focus-visible {
+  outline: 2px solid var(--md-accent-fg-color);
+  outline-offset: 2px;
+}
+
+.cod-janela--fora .cod-janela__tipo::after {
+  content: "";
+  display: inline-block;
+  width: 1.4rem;
+  margin-left: 0.4rem;
+  border-top: 2px dashed currentColor;
+  vertical-align: middle;
+}
+
+@media screen and (max-width: 44.9375em) {
+  .cod-janela {
+    width: 100%;
+    max-width: 100%;
+    margin: auto 0 0;
+    border-radius: 0.6rem 0.6rem 0 0;
+  }
+
+  .cod-janela__acoes { justify-content: stretch; }
+  .cod-janela__botao { flex: 1 1 auto; justify-content: center; }
+}
+
+/* ---- Árvore de rastreabilidade (início da 8.4), montada por hooks/codigos.py ----
+   Problema → objetivos → característica → histórias, com os RNF de cada história e o trilho
+   dos transversais. Com JavaScript, uma característica por vez (abas); sem ele, todas empilhadas.
+   História fora do MVP com borda tracejada. */
+.md-typeset .arv {
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+  margin: 0.8rem 0 1.6rem;
+  padding: 0.9rem;
+  border: 1px solid var(--md-default-fg-color--lightest);
+  border-radius: 0.4rem;
+  font-size: 0.7rem;
+  line-height: 1.45;
+}
+
+.md-typeset .arv-no {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  min-width: 0;
+  padding: 0.45rem 0.6rem;
+  border: 1px solid var(--md-default-fg-color--lighter);
+  border-radius: 0.35rem;
+  background: var(--md-default-bg-color);
+  color: var(--md-default-fg-color);
+  overflow-wrap: anywhere;
+}
+
+.md-typeset .arv-no:hover,
+.md-typeset .arv-no:focus-visible { border-color: var(--md-accent-fg-color); color: var(--md-default-fg-color); }
+
+.md-typeset .arv-cod {
+  font-family: var(--md-code-font-family);
+  font-weight: 700;
+  color: var(--md-typeset-a-color);
+}
+
+.md-typeset .arv-nome { font-weight: 600; }
+.md-typeset .arv-txt { color: var(--md-default-fg-color--light); }
+
+.md-typeset .arv-rot {
+  font-size: 0.6rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--md-default-fg-color--light);
+}
+
+.md-typeset .arv-no--problema { border-left: 3px solid var(--md-primary-fg-color); }
+[data-md-color-scheme="slate"] .md-typeset .arv-no--problema { border-left-color: var(--md-default-fg-color--light); }
+
+/* Ligações entre os níveis: traço vertical antes de cada nível. */
+.md-typeset .arv-oes,
+.md-typeset .arv-abas,
+.md-typeset .arv-hus { position: relative; }
+
+.md-typeset .arv-oes::before,
+.md-typeset .arv-abas::before,
+.md-typeset .arv-cp .arv-hus::before {
+  content: "";
+  position: absolute;
+  top: -0.9rem;
+  left: 1.2rem;
+  height: 0.9rem;
+  border-left: 2px solid var(--md-default-fg-color--lightest);
+}
+
+.md-typeset ol.arv-oes:not([hidden]) {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(9.5rem, 100%), 1fr));
+  gap: 0.4rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.md-typeset .arv-oes > li,
+.md-typeset .arv-hus > li { margin: 0; }
+
+.md-typeset .arv-oes > li { display: flex; }
+.md-typeset .arv-oes .arv-no { flex: 1; }
+.md-typeset .arv-oes .arv-txt { font-size: 0.64rem; }
+
+.md-typeset .arv-oe--principal .arv-no {
+  border-color: var(--md-accent-fg-color);
+  box-shadow: inset 0 3px 0 var(--md-accent-fg-color);
+}
+
+.md-typeset .arv-oe--secundario .arv-no {
+  border-style: dashed;
+  border-color: var(--md-accent-fg-color);
+}
+
+/* Abas das características: só com JavaScript; sem ele, as características aparecem empilhadas. */
+.md-typeset .arv-abas { display: none; }
+
+.md-typeset .arv--js .arv-abas {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(10rem, 100%), 1fr));
+  gap: 0.35rem;
+}
+
+.md-typeset .arv-aba {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.1rem;
+  min-width: 0;
+  min-height: 2.4rem;
+  padding: 0.4rem 0.6rem;
+  border: 1px solid var(--md-default-fg-color--lighter);
+  border-radius: 0.35rem;
+  background: transparent;
+  color: var(--md-default-fg-color);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.md-typeset .arv-aba:hover { border-color: var(--md-accent-fg-color); }
+.md-typeset .arv-aba:focus-visible { outline: 2px solid var(--md-accent-fg-color); outline-offset: 2px; }
+
+.md-typeset .arv-aba[aria-selected="true"] {
+  border-color: var(--md-accent-fg-color);
+  background: var(--md-accent-fg-color--transparent);
+  box-shadow: inset 0 -3px 0 var(--md-accent-fg-color);
+}
+
+.md-typeset .arv-conta { font-size: 0.6rem; color: var(--md-default-fg-color--light); }
+
+/* No celular, os objetivos vão em duas colunas, sem o elemento do problema (que a janela do
+   objetivo mostra), e as abas mostram o código e a contagem; o nome continua para leitores de
+   tela e aparece no topo da característica escolhida. */
+@media screen and (max-width: 44.9375em) {
+  .md-typeset ol.arv-oes:not([hidden]) { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .md-typeset .arv-oes .arv-txt { display: none; }
+  .md-typeset .arv--js .arv-abas { grid-template-columns: repeat(auto-fill, minmax(4.4rem, 1fr)); }
+  .md-typeset .arv-aba .arv-nome {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+  }
+  .md-typeset .arv-aba { position: relative; }
+}
+
+.md-typeset .arv-cp {
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+}
+
+.md-typeset .arv-cp + .arv-cp { padding-top: 0.9rem; border-top: 1px solid var(--md-default-fg-color--lightest); }
+.md-typeset .arv--js .arv-cp + .arv-cp { padding-top: 0; border-top: 0; }
+.md-typeset .arv-cp[hidden] { display: none; }
+
+.md-typeset .arv-cp__topo {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.4rem 0.8rem;
+}
+
+.md-typeset .arv-no--cp { flex-direction: row; flex-wrap: wrap; gap: 0.4rem; border-color: var(--md-accent-fg-color); }
+.md-typeset .arv-oe-lig { color: var(--md-default-fg-color--light); }
+
+.md-typeset ul.arv-hus:not([hidden]) {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(14rem, 100%), 1fr));
+  gap: 0.45rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.md-typeset .arv-hu {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  min-width: 0;
+  padding: 0.5rem 0.6rem;
+  border: 1px solid var(--md-default-fg-color--lighter);
+  border-left: 3px solid var(--md-accent-fg-color);
+  border-radius: 0.35rem;
+}
+
+.md-typeset .arv-hu--fora {
+  border-style: dashed;
+  border-left-color: var(--md-default-fg-color--light);
+}
+
+.md-typeset .arv-hu .arv-no { padding: 0; border: 0; background: transparent; }
+.md-typeset .arv-destino { font-size: 0.6rem; font-weight: 700; color: var(--md-default-fg-color--light); }
+
+.md-typeset .arv-req {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.2rem;
+}
+
+.md-typeset .arv-req .arv-rot { min-width: 2rem; }
+.md-typeset .arv-nada { color: var(--md-default-fg-color--light); font-size: 0.62rem; }
+
+.md-typeset a.arv-chip {
+  display: inline-block;
+  padding: 0 0.4rem;
+  border: 1px solid var(--md-default-fg-color--lightest);
+  border-radius: 0.25rem;
+  font-family: var(--md-code-font-family);
+  font-size: 0.62rem;
+  line-height: 1.7;
+}
+
+.md-typeset a.arv-chip:hover { border-color: var(--md-accent-fg-color); }
+
+.md-typeset .arv-trilho {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.5rem 0.6rem;
+  border-radius: 0.35rem;
+  background: var(--md-accent-fg-color--transparent);
+}
+
+.md-typeset .arv-trilho .arv-rot { margin-right: 0.3rem; }
+
+.md-typeset .arv-legenda {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem 1.1rem;
+  margin: 0;
+  font-size: 0.62rem;
+  color: var(--md-default-fg-color--light);
+}
+
+.md-typeset .arv-amostra {
+  display: inline-block;
+  width: 1.3rem;
+  height: 0.75rem;
+  margin-right: 0.35rem;
+  border: 1px solid var(--md-default-fg-color--lighter);
+  border-left: 3px solid var(--md-accent-fg-color);
+  border-radius: 0.15rem;
+  vertical-align: middle;
+}
+
+.md-typeset .arv-amostra--fora {
+  border-style: dashed;
+  border-left-color: var(--md-default-fg-color--light);
+}
+
+/* Histórico de versões recolhido (docs/assets/javascripts/versoes.js) */
+.md-typeset details.cs-versoes {
+  margin: 0.6rem 0 1.2rem;
+  font-size: 0.72rem;
+}
+.md-typeset details.cs-versoes > summary {
+  cursor: pointer;
+  color: var(--md-default-fg-color--light);
+}
+.md-typeset .cs-versoes__titulo {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+/* ---- Histórico e evolução: linha do tempo visual, evolução dos requisitos e registro recolhido ---- */
+.hist-trilha {
+  position: relative;
+  height: 5.2rem;
+  margin: 2rem 0 0.4rem;
+  border-bottom: 2px solid var(--md-default-fg-color--lightest);
+}
+
+.hist-trilha__faixas {
+  position: absolute;
+  inset: 0 0 2.2rem 0;
+}
+
+.md-typeset a.hist-faixa.hist-trilha__seg {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  min-width: 0;
+  flex-direction: column;
+  justify-content: center;
+  gap: 0.05rem;
+  padding: 0.2rem 0.3rem;
+  overflow: hidden;
+  border-radius: 0.25rem;
+  font-size: 0.68rem;
+  line-height: 1.2;
+  white-space: nowrap;
+}
+
+.hist-trilha__periodo {
+  color: var(--md-default-fg-color--light);
+}
+
+.hist-trilha__marcos {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 2.2rem;
+}
+
+.md-typeset a.hist-trilha__marco {
+  position: absolute;
+  bottom: -0.45rem;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 0.66rem;
+  font-weight: 600;
+  color: var(--md-default-fg-color);
+}
+
+.md-typeset a.hist-trilha__marco::after {
+  content: "";
+  order: 2;
+  width: 0.8rem;
+  height: 0.8rem;
+  margin-top: 0.15rem;
+  border: 2px solid var(--md-default-fg-color--light);
+  border-radius: 50%;
+  background: var(--md-default-bg-color);
+}
+
+.md-typeset a.hist-trilha__marco--feito::after {
+  border-color: var(--md-accent-fg-color);
+  background: var(--md-accent-fg-color);
+}
+
+.hist-trilha__hoje {
+  position: absolute;
+  top: -0.3rem;
+  bottom: -0.3rem;
+  width: 0;
+  border-left: 2px dashed var(--md-typeset-a-color);
+  pointer-events: none;
+}
+
+.hist-trilha__hoje > span {
+  position: absolute;
+  top: -1.1rem;
+  left: 0;
+  transform: translateX(-50%);
+  font-size: 0.62rem;
+  color: var(--md-typeset-a-color);
+  white-space: nowrap;
+}
+
+.md-typeset .hist-trilha__ajuda {
+  font-size: 0.7rem;
+  color: var(--md-default-fg-color--light);
+}
+
+.md-typeset .hist-req__grupo {
+  margin: 1rem 0 0.4rem;
+}
+
+.hist-req {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(8.5rem, 1fr));
+  gap: 0.4rem;
+}
+
+.md-typeset details.hist-req__item {
+  margin: 0;
+  font-size: 0.72rem;
+}
+
+.md-typeset details.hist-req__item[open] {
+  grid-column: 1 / -1;
+}
+
+.md-typeset details.hist-req__item > summary {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.1rem 0.5rem;
+  align-items: baseline;
+}
+
+.md-typeset details.hist-req__item > summary span,
+.md-typeset details.hist-grupo > summary span {
+  font-weight: 400;
+  color: var(--md-default-fg-color--light);
+}
+
+.md-typeset details.hist-req__item ol {
+  margin: 0.4rem 0 0.2rem 1.2rem;
+}
+
+.md-typeset details.hist-grupo {
+  margin: 0.6rem 0;
+}
+
+.md-typeset details.hist-grupo > summary.hist-grupo__titulo {
+  margin-top: 0;
+  border-bottom: 0;
+  font-weight: 600;
+}
+
+@media screen and (max-width: 44.9375em) {
+  .hist-trilha__periodo {
+    display: none;
+  }
+
+  .md-typeset a.hist-faixa.hist-trilha__seg {
+    padding: 0.2rem 0.1rem;
+    align-items: center;
+    font-size: 0.58rem;
+  }
+
+  .hist-trilha {
+    margin-bottom: 1.4rem;
+  }
+
+  .md-typeset a.hist-trilha__marco--abaixo {
+    flex-direction: column-reverse;
+    top: calc(100% - 0.55rem);
+    bottom: auto;
+  }
+
+  .md-typeset a.hist-trilha__marco--abaixo::after {
+    margin: 0 0 0.15rem;
+  }
+}
+
+/* Abas da página Histórico e evolução (docs/assets/javascripts/historico.js) */
+.hist-abas {
+  display: flex;
+  gap: 0.2rem;
+  margin: 1.2rem 0 0.4rem;
+  border-bottom: 1px solid var(--md-default-fg-color--lightest);
+}
+
+.md-typeset .hist-abas button {
+  padding: 0.45rem 0.8rem;
+  border: 0;
+  border-bottom: 2px solid transparent;
+  background: none;
+  color: var(--md-default-fg-color--light);
+  font: inherit;
+  font-size: 0.75rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.md-typeset .hist-abas button[aria-selected="true"] {
+  border-bottom-color: var(--md-accent-fg-color);
+  color: var(--md-default-fg-color);
+}
+
+.hist-aba[hidden] {
+  display: none !important;
+}
+
+.md-typeset .hist-aba > h2:first-child {
+  margin-top: 0.6rem;
+}
+
+.md-typeset a.ficha-evolucao {
+  font-size: 0.72rem;
+}
+
+/* Valor provisório (🔧 na fonte, hooks/selos.py) */
+.md-typeset .selo-provisorio {
+  display: inline-block;
+  margin: 0 0.15em;
+  padding: 0 0.4em;
+  border: 1px solid var(--md-default-fg-color--lighter);
+  border-radius: 0.6em;
+  color: var(--md-default-fg-color--light);
+  font-size: 0.75em;
+  line-height: 1.5;
+  vertical-align: 0.08em;
+  white-space: nowrap;
+  cursor: help;
+}

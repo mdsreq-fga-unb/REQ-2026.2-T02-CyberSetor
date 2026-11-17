@@ -6,6 +6,7 @@
 | 17/09/2026 | 1.1 | Inclusão da cadeia de evidências de ER, rastreabilidade bidirecional e segregação LGPD | Rodrigo Henrique |
 | 17/09/2026 | 1.2 | Participantes por data conforme a ata; nomenclatura das características alinhada à seção 2; capacidades previstas no lugar de identificadores ainda não atribuídos; figura com legenda numerada | Vinicius Vieira |
 | 13/11/2026 | 1.3 | Aviso de registro de 17/09/2026: códigos de história anteriores à divisão da seção 10.1, com remissão à cobertura vigente nas seções 8.4.3 e 10.2.6 | Maria Eduarda Marques |
+| 16/11/2026 | 1.4 | Seção 4 só com o gargalo e o impacto no processo atual; os requisitos que cobrem cada gargalo ficam na seção 8.4.3, sem os códigos de história anteriores à divisão da seção 10.1 | Vinicius Vieira |
 
 | Campo | Informação |
 | :--- | :--- |
@@ -16,7 +17,7 @@
 ---
 
 !!! note "Registro de 17/09/2026"
-    O modelo e a rastreabilidade da seção 4 usam os códigos de história da época (HU-01 a HU-06), antes da divisão das histórias na [seção 10.1](10-backlog.md#101-backlog-geral). A cobertura vigente de cada gargalo está na [seção 8.4.3](8-requisitos.md#843-sintese-de-cobertura) e, no MVP e nos incrementos, na [seção 10.2.6](10-backlog.md#1026-mvp-e-incrementos).
+    A seção 1 usa os códigos de história da época (HU-01 a HU-06), antes da divisão das histórias na [seção 10.1](10-backlog.md#101-backlog-geral). A cobertura vigente de cada gargalo está na [seção 8.4.3](8-requisitos.md#843-sintese-de-cobertura) e, no MVP e nos incrementos, na [seção 10.2.6](10-backlog.md#1026-mvp-e-incrementos).
 
 ## 1. Evidência da atividade de Engenharia de Requisitos
 
@@ -94,14 +95,15 @@ O diagrama abaixo ilustra a cadeia operacional do Instituto No Setor. A piscina 
 
 ## 4. Rastreabilidade dos gargalos às capacidades previstas
 
-Para demonstrar a utilidade prática do modelo no projeto, cada ponto de atrito observado no processo atual foi mapeado diretamente para uma capacidade prevista no CyberSetor:
+Cada ponto de atrito observado no processo atual e o impacto que ele causa hoje no Instituto:
 
-| Gargalo Operacional Identificado | Impacto no Cenário AS-IS | Requisito / Solução no CyberSetor |
-| :--- | :--- | :--- |
-| **G01: Destrinchamento manual de editais** | Perda de prazos contratuais e requisitos esquecidos. | **HU-01:** Cadastro padronizado de requisitos com indicador, aferição e prazos. |
-| **G02: Descentralização de demandas por e-mail/WhatsApp** | Sobrecarga de analistas e falta de visibilidade sobre pendências. | **Candidato, sem história derivada:** abertura e acompanhamento de chamados ou ordens de serviço, pedido em 15/09. **HU-02** cobre apenas responsável, setor e prazo por requisito. |
-| **G03: Listas físicas em papel e fotos dispersas** | Alto esforço de resgate documental e risco de extravio. | **HU-03 e HU-04:** Registro de atividades por tipo de objeto e vinculação direta de evidências às metas. |
-| **G04: Contatos retidos em celulares particulares** | Falta de histórico de participantes e vulnerabilidade à LGPD. | **HU-06:** Base única de pessoas com histórico e governança de dados pessoais. |
-| **G05: Ausência de visão unificada para a Presidência** | Dependência de planilhas frágeis em Excel para consultar status. | **Candidato, sem história derivada:** painel consolidado para a presidência, demanda de 15/09 relatada em nome do presidente e ainda não validada com ele nem priorizada. |
-| **G06: Risco iminente de glosa na prestação de contas** | Obrigatoriedade legal de ressarcimento por ausência de justificativa prévia. | **HU-05:** Geração automatizada do Relatório de Execução do Objeto com exigência de justificativa em metas parciais. |
+| Gargalo Operacional Identificado | Impacto no Cenário AS-IS |
+| :--- | :--- |
+| **G01: Destrinchamento manual de editais** | Perda de prazos contratuais e requisitos esquecidos. |
+| **G02: Descentralização de demandas por e-mail/WhatsApp** | Sobrecarga de analistas e falta de visibilidade sobre pendências. |
+| **G03: Listas físicas em papel e fotos dispersas** | Alto esforço de resgate documental e risco de extravio. |
+| **G04: Contatos retidos em celulares particulares** | Falta de histórico de participantes e vulnerabilidade à LGPD. |
+| **G05: Ausência de visão unificada para a Presidência** | Dependência de planilhas frágeis em Excel para consultar status. |
+| **G06: Risco iminente de glosa na prestação de contas** | Obrigatoriedade legal de ressarcimento por ausência de justificativa prévia. |
 
+Os requisitos que cobrem cada gargalo, e se a cobertura é total ou parcial, estão na [seção 8.4.3](8-requisitos.md#843-sintese-de-cobertura).

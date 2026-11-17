@@ -80,17 +80,27 @@ def test_falha_sem_a_tabela_de_destino():
         cartoes.carregar(SECAO8, "# 10. Backlog\n")
 
 
-def test_matriz_vira_trilhas_com_volta_ao_cartao():
+def test_matriz_vira_trilhas_e_cartao_fica_enxuto():
     saida = cartoes.compor(SECAO8, cartoes.carregar(SECAO8, BACKLOG))
     matriz = saida.split("## 8.4", 1)[1].split("## 8.5", 1)[0]
     for tipo in ("rf", "rnf", "g", "cp"):
         assert f"rt-lista--{tipo}" in matriz, tipo
     assert 'id="m-rf01"' in matriz and 'id="m-rnf19"' in matriz
-    assert "[ver na 8.4.1](#m-rf01)" in saida
     assert "| **RF01** |" not in matriz
+    cartoes_ = saida.split("## 8.4", 1)[0]
+    # O gargalo e o link de volta à matriz ficam só na matriz (recolhida na página).
+    assert "ver na 8.4.1" not in cartoes_ and "rq-item__rotulo\">Gargalo" not in cartoes_
+    assert "rq-item__rotulo\">Origem" in cartoes_ and "rq-item__rotulo\">Métrica" in cartoes_
 
 
-def test_historia_do_cartao_e_so_a_dona_da_1024():
+def test_matriz_recolhida_em_details_continua_lida():
+    md = SECAO8.replace("### 8.4.2", '### 8.4.2\n\n<details class="note" markdown="1">\n<summary>Ver</summary>\n', 1)
+    md = md.replace("### 8.4.3", "</details>\n\n### 8.4.3", 1)
+    saida = cartoes.compor(md, cartoes.carregar(md, BACKLOG))
+    assert "rt-lista--rnf" in saida and "<summary>Ver</summary>" in saida
+
+
+def test_historia_do_cartao_e_so_a_dona():
     linha = '| <a id="rf36"></a>**RF36** | Emitir relatório | Desc. | MROSC art. 63 |'
     f = cartoes.Fontes(
         destino={"RF36": {"hus": ["HU-05a"], "valor": "4", "esforco": "2", "destino": "MVP"}},
@@ -104,9 +114,34 @@ def test_historia_do_cartao_e_so_a_dona_da_1024():
     assert 'data-historias="HU-05a"' in html
 
 
-def test_cartoes_do_documento_mostram_a_dona_da_1024():
+def test_cartoes_do_documento_mostram_a_dona_da_ficha():
     f = cartoes.carregar(SECAO8, BACKLOG)
     saida = cartoes.compor(SECAO8, f)
     for cod, info in f.destino.items():
         m = re.search(rf'<article [^>]*id="{cod.lower()}"[^>]*data-historias="([^"]*)"', saida)
         assert m and m.group(1).split() == info["hus"], cod
+
+
+def test_nome_do_requisito_so_no_cartao():
+    # O nome fica na 8.2 e na 8.3; as trilhas da 8.4 levam só o código, que liga ao cartão.
+    saida = cartoes.compor(SECAO8, cartoes.carregar(SECAO8, BACKLOG))
+    nomes = re.findall(r'^\| <a id="rn?f\d+"></a>\*\*RN?F\d+\*\*[^|]*\| ([^|]+?) \|', SECAO8, re.M)
+    assert len(nomes) > 60
+    matriz = saida.split("## 8.4", 1)[1].split("### 8.4.3", 1)[0]
+    for nome in nomes:
+        assert saida.count(f">{nome}</p>") == 1, nome
+        assert nome not in matriz, nome
+    assert '<span class="rt-val">[RF01](#rf01)</span>' in matriz
+    assert '<span class="rt-val">[RNF19](#rnf19)</span>' in matriz
+    m = re.search(r'id="m-rf36"(.*?)\n</div>', matriz, re.S).group(1)
+    assert "G06" in m and "HU-05a (CA-05a.1, CA-05a.4); HU-04a (CA-04a.6)" in m and "MROSC art. 63 a 66" in m
+    m = re.search(r'id="m-rnf01"(.*?)\n</div>', matriz, re.S).group(1)
+    assert "HU-01b (CA-01b.3)" in m and 'href="#rf04"' in m and 'href="#rf18"' in m
+
+
+def test_matriz_do_documento_lida_pelas_colunas_certas():
+    f = cartoes.carregar(SECAO8, BACKLOG)
+    assert f.matriz_rf["RF07"] == {"gargalo": "G02", "historia": "HU-02b (CA-02b.1)", "cobertura": "Total"}
+    assert f.matriz_rf["RF30"]["cobertura"] == "Parcial"
+    assert f.rnf_rfs["RNF06"] == {"origem": "LGPD art. 18", "texto": "RF27", "transversal": False, "rfs": ["RF27"]}
+    assert f.rnf_rfs["RNF03"]["transversal"] and f.rnf_rfs["RNF03"]["rfs"] == []
