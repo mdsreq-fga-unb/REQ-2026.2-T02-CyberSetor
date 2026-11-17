@@ -108,6 +108,7 @@ exclude_docs: |
   *.txt
   # Atas com o cliente em versão preliminar, fora do site até a conferência do Instituto
   gestao/atas/2026-10-29-checkpoint-instituto.md
+  gestao/atas/2026-11-12-validacao-instituto.md
   # Apontamentos do docente: o docente acompanha pelas issues do repositório (ATA-2026-11-12, D6)
   entregas/debitos-u1.md
 
@@ -145,6 +146,7 @@ nav:
               - 01/09 · Equipe: gestao/atas/2026-09-01-reuniao-equipe.md
               - 15/09 · Equipe: gestao/atas/2026-09-15-reuniao-equipe.md
               - 21/09 · Alinhamento: gestao/atas/2026-09-21-reuniao-equipe.md
+              - 19/10 · Equipe: gestao/atas/2026-10-19-reuniao-equipe.md
               - 27/10 · Equipe: gestao/atas/2026-10-27-reuniao-equipe.md
               - 10/11 · Equipe: gestao/atas/2026-11-10-reuniao-equipe.md
               - 12/11 · Monitoria: gestao/atas/2026-11-12-reuniao-monitoria.md
