@@ -442,8 +442,8 @@ describe('Avisos de meta por e-mail (e2e)', () => {
   });
 
   describe('trava do relatório (CA-05a.2)', () => {
-    async function blockedGoal() {
-      await request(app.getHttpServer())
+    async function blockedGoal(): Promise<string> {
+      const res = await request(app.getHttpServer())
         .post(`/v1/projects/${projetoId}/goals`)
         .set('Authorization', `Bearer ${tokens[Perfil.PRESIDENCIA_GESTAO]}`)
         .send({
@@ -462,6 +462,7 @@ describe('Avisos de meta por e-mail (e2e)', () => {
           responsavelId: ids[RESPONSAVEL],
         })
         .expect(201);
+      return (res.body as { id: string }).id;
     }
 
     function finalize() {
@@ -489,6 +490,68 @@ describe('Avisos de meta por e-mail (e2e)', () => {
       expect(mensagem.subject).toBe('Relatório do P01 bloqueado');
       expect(mensagem.text).not.toContain('Realizar oficinas');
       expect(mensagem.text).toContain('sem resultado registrado');
+      expect(mensagem.text).toContain('01/01/2025 a 30/06/2025');
+      expect(mensagem.text).toContain(`/projetos/${projetoId}#relatorios`);
+    });
+
+    it('notifica na tentativa de retificação bloqueada por resultado alterado sem justificativa, respeitando o limite diário (CA-05a.2, CA-05a.3)', async () => {
+      const metaId = await blockedGoal();
+
+      await request(app.getHttpServer())
+        .post(`/v1/goals/${metaId}/results`)
+        .set('Authorization', `Bearer ${tokens[Perfil.PRESIDENCIA_GESTAO]}`)
+        .send({
+          dataReferencia: '2025-06-15',
+          descricao: '50 participantes apurados inicialmente.',
+          valorAlcancado: 50,
+        })
+        .expect(201);
+
+      const emitido = await request(app.getHttpServer())
+        .post(`/v1/projects/${projetoId}/reports/finalize`)
+        .set('Authorization', `Bearer ${tokens[Perfil.PRESIDENCIA_GESTAO]}`)
+        .send({
+          from: '2025-01-01',
+          to: '2025-06-30',
+          justificativas: [{ metaId, texto: 'Chuva intensa na quinzena inicial.' }],
+        })
+        .expect(201);
+      const reportId = (emitido.body as { id: string }).id;
+
+      await request(app.getHttpServer())
+        .post(`/v1/goals/${metaId}/results`)
+        .set('Authorization', `Bearer ${tokens[Perfil.PRESIDENCIA_GESTAO]}`)
+        .send({
+          dataReferencia: '2025-06-28',
+          descricao: '75 participantes após conferência de listas.',
+          valorAlcancado: 75,
+        })
+        .expect(201);
+
+      const rectifyBlocked = () =>
+        request(app.getHttpServer())
+          .post(`/v1/projects/${projetoId}/reports/${reportId}/rectify`)
+          .set('Authorization', `Bearer ${tokens[Perfil.PRESIDENCIA_GESTAO]}`)
+          .send({ motivo: 'Conferência de listas sem atualizar justificativa.' })
+          .expect(422);
+
+      const res = await rectifyBlocked();
+      expect((res.body as { code: string }).code).toBe('REPORT_FINALIZATION_BLOCKED');
+      await vi.waitFor(() => {
+        expect(send).toHaveBeenCalledTimes(1);
+      });
+
+      await rectifyBlocked();
+      await new Promise((resolve) => setTimeout(resolve, 200));
+      expect(send).toHaveBeenCalledTimes(1);
+
+      expect(destinatarios()).toEqual([SEGUNDA_GESTAO]);
+      const [mensagem] = send.mock.calls[0];
+      expect(mensagem.tag).toBe('TRAVA_RELATORIO');
+      expect(mensagem.subject).toBe('Relatório do P01 bloqueado');
+      expect(mensagem.text).not.toContain('Realizar oficinas');
+      expect(mensagem.text).not.toContain('Conferência de listas');
+      expect(mensagem.text).toContain('sem justificativa');
       expect(mensagem.text).toContain('01/01/2025 a 30/06/2025');
       expect(mensagem.text).toContain(`/projetos/${projetoId}#relatorios`);
     });
