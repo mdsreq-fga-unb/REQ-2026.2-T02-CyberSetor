@@ -69,7 +69,7 @@
 
   <section class="cs-section cs-section--alt">
     <div class="cs-inner">
-      <h2 class="cs-section__title">Entregas por unidade</h2>
+      <h2 class="cs-section__title"><a href="{{ 'entregas/' | url }}">Marcos da disciplina</a></h2>
       <div class="cs-grid cs-grid--entregas">
         <a class="cs-card cs-card--entrega" href="{{ 'entregas/unidade-1/' | url }}">
           <span class="cs-card__etiqueta cs-card__etiqueta--ok">Entregue</span>
@@ -83,12 +83,12 @@
           <span class="cs-card__sub">13/10/2026</span>
           <span class="cs-card__papel">Requisitos (seção 8); DoR e DoD (seção 9); backlog, priorização e MVP (seção 10)</span>
         </a>
-        <div class="cs-card cs-card--entrega">
-          <span class="cs-card__etiqueta cs-card__etiqueta--andamento">Em andamento</span>
+        <a class="cs-card cs-card--entrega" href="{{ 'entregas/unidade-3/' | url }}">
+          <span class="cs-card__etiqueta cs-card__etiqueta--ok">Entregue</span>
           <strong class="cs-card__nome">Unidade 3</strong>
           <span class="cs-card__sub">17/11/2026</span>
-          <span class="cs-card__papel">Desenvolvimento e validação do incremento</span>
-        </div>
+          <span class="cs-card__papel">Representação, verificação e validação, organização e atualização dos requisitos; MVP na homologação</span>
+        </a>
         <div class="cs-card cs-card--entrega">
           <span class="cs-card__etiqueta">Prevista</span>
           <strong class="cs-card__nome">Unidade 4</strong>
@@ -119,9 +119,9 @@
           <strong class="cs-card__nome">10. Backlog e MVP</strong>
           <span class="cs-card__papel">Histórias de usuário, priorização e o recorte da primeira entrega</span>
         </a>
-        <a class="cs-card cs-card--nav" href="{{ 'gestao/processo-scrumxp/' | url }}">
-          <strong class="cs-card__nome">Processo e ritos</strong>
-          <span class="cs-card__papel">Como a equipe trabalha com ScrumXP</span>
+        <a class="cs-card cs-card--nav" href="{{ 'gestao/como-trabalhamos/' | url }}">
+          <strong class="cs-card__nome">Como trabalhamos</strong>
+          <span class="cs-card__papel">Ciclo ScrumXP, sprints, fluxo no GitHub, dailies e competências</span>
         </a>
         <a class="cs-card cs-card--nav" href="{{ 'gestao/atas/' | url }}">
           <strong class="cs-card__nome">Reuniões</strong>

@@ -30,7 +30,7 @@ def test_secoes_numeradas_levam_ao_titulo():
     t = IND.ligar("Seções 3.3.1 e 3.3.2; seção 8.5.1", P8)
     assert "[3.3.1](../visao/3-intervencao-social.md#331-" in t
     assert "[3.3.2](../visao/3-intervencao-social.md#332-" in t
-    assert "[8.5.1](#851-perfis-de-acesso-e-permissoes-cp1-e-transversal)" in t
+    assert "[8.5.1](#851-perfis-de-acesso-e-permissoes)" in t
 
 
 def test_nao_mexe_em_link_html_nem_em_codigo_desconhecido():

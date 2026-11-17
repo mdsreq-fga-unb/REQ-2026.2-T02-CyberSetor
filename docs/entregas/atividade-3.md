@@ -5,6 +5,7 @@
 | 29/09/2026 | 1.0 | Decisões por apontamento da verificação em pares e da monitoria e evidência da revisão e da validação da lista de requisitos | Equipe CyberSetor |
 | 26/10/2026 | 1.1 | Situação de cada ajuste conferida contra a versão 2.9 da seção 8: aplicado, com o lugar, ou aceito e não aplicado | Vinicius Vieira |
 | 11/11/2026 | 1.2 | Contagem das decisões por apontamento; nota sobre a coluna Rastreabilidade da seção 8 vigente | Maria Eduarda Marques |
+| 16/11/2026 | 1.3 | Nota sobre onde a seção 8 vigente indica a história de cada RF | Vinicius Vieira |
 
 A lista de requisitos da [seção 8](../requisitos/8-requisitos.md) foi ajustada a partir de duas revisões externas da versão 2.1: a verificação em pares feita pela equipe SevenSpecs, da mesma turma (46 apontamentos), e o retorno da monitoria (7 pontos). Cada apontamento recebeu uma decisão: Aceito, Parcialmente aceito, Não aceito ou Não aplicável. A versão revisada é a 2.4 da seção 8; para os ajustes que não entraram nela, a tabela indica onde foram aplicados depois ou se continuam aceitos e não aplicados.
 
@@ -155,7 +156,7 @@ Além dos apontamentos recebidos, a lista inteira foi conferida para consistênc
 - Tabela de códigos provisórios retirada da seção 8; a correspondência está nesta página.
 
 !!! note "Revisto depois"
-    A seção 8 vigente indica a história de cada RF na coluna Rastreabilidade, além da matriz.
+    Na seção 8 vigente, a história de cada RF está na matriz 8.4.1 e na ficha da história, na seção 10.1.
 
 Aceito para depois da versão 2.4, com a situação na seção 8 atual:
 

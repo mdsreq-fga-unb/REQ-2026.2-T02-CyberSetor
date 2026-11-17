@@ -12,86 +12,114 @@
 | 20/10/2026 | 1.7 | Sprints 4 e 5 alinhadas ao MVP e aos incrementos da seção 10.2.6: MVP concluído na Sprint 4, evidências e presença em campo na Sprint 5; checkpoint de 29/10 até a inscrição; alcance do MVP com as histórias da seção 10.1 | Equipe CyberSetor |
 | 26/10/2026 | 1.8 | Prestação de contas com o resultado alcançado; orientação de enquadramento (RF45) no incremento de evidências; teste de restauração do banco e dos arquivos juntos; Sprint 3 com a meta do seu plano; histórias previstas por sprint e ligação aos planos das sprints; características da Sprint 4 e da Sprint 5 pelos requisitos que entram; alcance do MVP remetido à seção 10.2.6; exportação do projeto (RF38) e cópia integral dos dados (RNF19) na transferência, com o que avança e o que depende de responsável nomeado pelo Instituto; CP5 na Sprint 4 com RF22 a RF27, sem o histórico de participação (RF21); manual técnico de operação na transferência; políticas de cópia de segurança e de transferência remetidas à seção 2.6, ficando na 6.4 as atividades; checkpoint de 29/10 pelas histórias publicadas até a véspera | Vinicius Vieira |
 | 10/11/2026 | 1.9 | Período real das Sprints 4 e 5 (ATA-2026-11-05); Sprint 5 com o fechamento do MVP em código e a Unidade 3; incrementos 2 e 3 fora das sprints da disciplina, salvo folga; histórias da Sprint 4 pela seção 10.2.6, sem repetir a contagem; momentos de validação com a reunião remarcada para 12/11 | Vinicius Vieira |
+| 13/11/2026 | 1.10 | Resumo no início da seção; ritos da Sprint 5 na quinta-feira, na explicação das datas que coincidem | Maria Eduarda Marques |
+| 16/11/2026 | 1.11 | Momentos de validação com dados de teste até a formalização do tratamento de dados, com remissão à política da 2.6; checkpoint de 29/10 previsto com um projeto real e realizado com dados fictícios; título da 6.5 de "Validação com dados reais" para "Validação com o Instituto" | Maria Eduarda Marques |
+| 16/11/2026 | 1.12 | Remissão à página Sprints, que reúne o acesso ao plano, às tarefas e às atas de cada sprint (ATA-2026-11-12, A6) | Vinicius Vieira |
+| 16/11/2026 | 1.13 | Checkpoint de 29/10 registrado com dados de teste; datas previstas da Sprint 6, a confirmar na Planning 6; marcador de valor provisório só nas seções 8 a 10, como define a DoR | Vinicius Vieira |
+| 16/11/2026 | 1.14 | Entrega da Unidade 1 (08/09) nos marcos da 6.6, que passam a ser a fonte das datas da linha do tempo de Histórico e evolução | Vinicius Vieira |
+| 16/11/2026 | 1.15 | Seção enxugada e mais visual: ordem de construção e momentos de validação em fluxo, com as características pelo nome; o que cada sprint entrega em um parágrafo, com a lista de histórias só na seção 10.2.6; uma sessão de validação por sprint, da Sprint 1 em diante, incluída a confirmação do MVP em 08/10, com o conteúdo de cada encontro na 7.2; frentes da 6.4 em cartões; cadência das sprints e situação de cada uma em Como trabalhamos | Vinicius Vieira |
+
+**Em resumo.** Uma sprint de descoberta e seis sprints de cerca de duas semanas, de 18/08 a 01/12, e uma margem até 08/12. O MVP, recortado na [seção 10.2.6](../requisitos/10-backlog.md#1026-mvp-e-incrementos), fecha em código na Sprint 5, junto com a Unidade 3 (17/11); a Sprint 6 estabiliza, implanta, treina e transfere, sem funcionalidade nova. Da Sprint 1 em diante, cada sprint tem uma sessão de validação com o Instituto (6.5), e não só a última.
+
+Esta seção é o plano: período, objetivo e entrega de cada sprint, e as datas da disciplina. A situação de cada sprint, com o plano detalhado, as tarefas e as atas, está em [Como trabalhamos](../gestao/como-trabalhamos.md#sprints).
 
 ## 6.1 Calendário vigente
 
-O projeto é organizado em sprints de **duas semanas, ancoradas nas terças-feiras**, conforme a estratégia da seção 4. A Sprint 0 tem três semanas, por coincidir com a formação da equipe e com o prazo da Unidade 1. A Sprint 4 terminou dois dias depois do previsto, em 05/11, e a Sprint 5 vai de quinta a quinta, de 05/11 a 19/11 (ATA-2026-11-05, D5); a Sprint 6 volta à terça 🔧.
+Exceções à [cadência de duas semanas](../gestao/como-trabalhamos.md#ciclo): a Sprint 0, de três semanas, com a formação da equipe e a Unidade 1; e a Sprint 5, de quinta a quinta, porque a Sprint 4 terminou dois dias depois do previsto ([ata de 05/11](../gestao/atas/2026-11-05-sprint-review-retrospectiva-planning.md), decisão D5). As datas da Sprint 6 se confirmam na Planning 6.
 
 | Sprint | Período | Objetivo | Entrega que fecha a sprint |
 |---|---|---|---|
 | **0 · Descoberta** | 18/08 – 08/09 | Compreender o Instituto e o problema; formar a equipe e o processo | Unidade 1: proposta, Documento de Visão, site e vídeo |
 | [**1**](../gestao/sprints/sprint-1.md) | 08/09 – 22/09 | Elicitar, analisar e declarar os requisitos | Lista de requisitos funcionais e não funcionais |
 | [**2**](../gestao/sprints/sprint-2.md) | 22/09 – 06/10 | Validar os requisitos, priorizar e recortar o MVP | Backlog priorizado, MVP e acordos de pronto e de concluído |
-| [**3**](../gestao/sprints/sprint-3.md) | 06/10 – 20/10 | Publicar a Unidade 2, confirmar o MVP com o Instituto e preparar a base técnica | Unidade 2 publicada; MVP confirmado; linhas da API e do front com integração contínua; histórias do MVP iniciadas |
-| [**4**](../gestao/sprints/sprint-4.md) | 20/10 – 05/11 | Concluir o MVP: inscrições, titulares dos dados e relatório | MVP em homologação; meta parcialmente atingida (73 de 84 critérios) |
-| [**5**](../gestao/sprints/sprint-5.md) | 05/11 – 19/11 | Concluir o MVP em código, publicar a Unidade 3 e fechar os retornos do Instituto e as issues do docente | Unidade 3 publicada em 17/11; MVP 100% em código |
-| **6 · Estabilização** | 19/11 – 01/12 🔧 | Corrigir, implantar, treinar e transferir, sem funcionalidade nova | Produto implantado e equipe do Instituto treinada |
+| [**3**](../gestao/sprints/sprint-3.md) | 06/10 – 20/10 | Publicar a Unidade 2, confirmar o MVP com o Instituto e preparar a base técnica | Unidade 2 publicada; MVP confirmado; integração contínua da API e do front; histórias do MVP iniciadas |
+| [**4**](../gestao/sprints/sprint-4.md) | 20/10 – 05/11 | Concluir o MVP: projetos e metas, atividades, inscrições, titulares dos dados e relatório | MVP em homologação e checkpoint com o Instituto em 29/10 |
+| [**5**](../gestao/sprints/sprint-5.md) | 05/11 – 19/11 | Concluir o MVP em código, publicar a Unidade 3 e fechar os retornos do Instituto e as issues do docente | Unidade 3 publicada em 17/11; MVP 100% em código, com os critérios exercitados |
+| **6 · Estabilização** | 19/11 – 01/12 | Corrigir, implantar, treinar e transferir, sem funcionalidade nova | Produto implantado, restauração testada, equipe do Instituto treinada, transferência ensaiada |
 | **Margem** | 01/12 – 08/12 | Absorver contingência e encerrar, sem escopo novo | Unidade 4: aceite e transferência |
 
-O número de cada sprint, a partir da Sprint 1, leva ao plano da sprint, com o Sprint Backlog e a alocação por dupla.
+O número da sprint leva ao plano dela. Uma sprint encerra e a seguinte começa no mesmo dia porque esse dia é ocupado pelos ritos (Review, Retrospectiva e Planning), e não pela produção: o plano da Sprint 1 atribui a ele capacidade produtiva zero. Da Sprint 3 em diante, o calendário é planejamento revisto a cada Retrospectiva, não compromisso validado pelo Instituto.
 
-Uma sprint encerra e a seguinte inicia na mesma terça-feira porque esse dia é ocupado pelos ritos — Review, Retrospectiva e Planning —, e não pela produção: o plano da Sprint 1 atribui a ele capacidade produtiva zero. As datas coincidem por isso, sem que nenhum dia de trabalho seja contado duas vezes.
+## 6.2 Ordem de construção
 
-O planejamento é atualizado ao fim de cada sprint, na Retrospectiva. As Sprints 1 e 2 seguem o que a Sprint Planning de 08/09 deliberou; as seguintes são planejamento, revisto a cada Retrospectiva, e não compromisso já validado pelo Instituto.
+As sprints seguem a dependência de dados entre as [características da seção 2.3](2-solucao-proposta.md#23-caracteristicas-de-produto-mapeadas-com-os-objetivos-especificos-do-produto):
 
-## 6.2 Dependências entre as características de produto
+<div class="f3-fluxo" markdown>
 
-As sprints de construção respeitam a dependência de dados entre as características da seção 2.3, e não a ordem em que aparecem naquela tabela; quando uma característica entra antes de outra de que depende, entra com os dados já existentes, como explicam os itens abaixo:
+1. **Projetos e metas**
+2. **Atividades**
+3. **Pessoas**
+4. **Inscrição e presença em campo**
+5. **Evidências**
+6. **Progresso das metas**
+7. **Relatório e exportação**
 
-```text
-CP1 projetos e metas → CP2 atividades → CP5 pessoas → CP3 inscrição · CP4 participação em campo → CP7 evidências → CP6 progresso de metas → CP8 relatório e exportação
-```
+</div>
 
-- **Pessoas junto da inscrição.** Inscrição, presença e contagem de participantes únicos dependem da base de pessoas, do aviso de cadastro repetido e do registro de consentimento; por isso a CP5 entra na Sprint 4 com a CP3, e a presença em campo (CP4) vem depois.
-- **Relatório em duas etapas.** No MVP, o relatório sai com metas, resultado alcançado e justificativas, sobre os dados do checkpoint de 29/10; as evidências entram depois do MVP (incremento 2), fora das sprints da disciplina salvo folga 🔧, e o progresso calculado (CP6) depende de presença e evidência registradas.
-- **Condições transversais, não acabamento.** Autenticação e perfis, controle de acesso por área, auditoria, cópia de segurança e restauração acompanham cada incremento desde a Sprint 3; não ficam para a Sprint 6.
-- **Característica parcial.** Na Sprint 4, a CP6 entra só com o versionamento do plano e o comparativo das metas repactuadas (RF31, RF44) e com o resultado alcançado registrado pelo usuário (RF43), sem progresso calculado (RF28 a RF30), e a CP5 entra sem o histórico de participação (RF21). As comprovações por modalidade (RF10) ficam com o incremento 2 🔧.
+- **Pessoas com a inscrição.** Inscrição, presença e contagem de participantes únicos dependem do cadastro de pessoas, do aviso de cadastro repetido e do consentimento; a presença em campo vem depois da inscrição.
+- **Relatório em duas etapas.** No MVP, sai com metas, resultado registrado e justificativas; o progresso calculado depende de presença e evidência, que vêm depois.
+- **Transversais desde a Sprint 3.** Autenticação e perfis, acesso por área, auditoria, cópia de segurança e restauração acompanham cada entrega; não ficam para a Sprint 6.
 
-| Sprint | Características cobertas | Histórias previstas | Condição de saída |
-|---|---|---|---|
-| 3 | nenhuma concluída · base técnica, autenticação e perfis | histórias do MVP iniciadas | Unidade 2 publicada, MVP confirmado pelo Instituto, linhas da API e do front com integração contínua |
-| 4 | CP1, CP2 (RF09, RF41), CP3, CP5 (RF22 a RF27), CP6 (só RF31, RF43, RF44), CP8 | as do MVP ([seção 10.2.6](../requisitos/10-backlog.md#1026-mvp-e-incrementos)) | MVP completo em homologação; checkpoint com dados reais realizado |
-| 5 | conclusão de CP1 (RF07, RF08 na HU-02b), CP8 (RF38) e do acesso por perfil (8.5.1) | as do MVP sem registro de conclusão; HU-13 | MVP 100% em código, com os critérios exercitados; Unidade 3 publicada |
-| 6 | nenhuma nova | nenhuma | produto implantado, restauração testada, pessoas treinadas, transferência ensaiada |
+Na prática, a Sprint 3 montou a base técnica, a autenticação e os perfis. A Sprint 4 desenvolveu projetos e metas, cadastro de atividades, inscrição, cadastro de pessoas com os direitos do titular, versões do plano com o resultado registrado e o relatório, e fechou com parte dos critérios pendentes. A Sprint 5 conclui essas histórias e completa a linha do tempo e os alertas das metas, a exportação do projeto em planilha e o acesso por perfil. A Sprint 6 não abre história nova. A lista de histórias e requisitos de cada recorte fica só na [seção 10.2.6](../requisitos/10-backlog.md#1026-mvp-e-incrementos).
 
 ## 6.3 Alcance do MVP e o que fica fora
 
-Construir as oito características completas, acrescidas de operação sem conexão, sincronização assíncrona, cálculo preditivo e múltiplos relatórios customizados, excede a capacidade produtiva de cinco estudantes com dedicação parcial ao longo de três sprints de desenvolvimento. Por isso, o recorte segue o critério de fluxo mínimo completo: **o MVP percorre os dois ciclos da [seção 10.2.6](../requisitos/10-backlog.md#1026-mvp-e-incrementos) — do instrumento às metas com resultado alcançado e ao relatório com justificativas, e da atividade à lista de inscritos**.
+As oito características completas, com operação sem conexão, cálculo preditivo e relatórios customizados, excedem três sprints de cinco estudantes em tempo parcial. Por isso o MVP, recortado na [seção 10.2.6](../requisitos/10-backlog.md#1026-mvp-e-incrementos), fecha dois ciclos mínimos: **do instrumento às metas com resultado registrado e ao relatório com justificativas**, e **da atividade à lista de inscritos**. Valor de negócio na [10.2.2](../requisitos/10-backlog.md#1022-avaliacao-de-negocio-com-o-instituto); validação na [10.2.8](../requisitos/10-backlog.md#1028-validacao-com-o-instituto).
 
-A composição do MVP e dos incrementos, por história e por requisito, está na seção 10.2.6, com o valor de negócio atribuído pelo Instituto na [seção 10.2.2](../requisitos/10-backlog.md#1022-avaliacao-de-negocio-com-o-instituto) e o registro da validação na [seção 10.2.8](../requisitos/10-backlog.md#1028-validacao-com-o-instituto). A tabela da 6.2 distribui o MVP nas Sprints 4 e 5; os incrementos 2 e 3, a operação sem conexão, o progresso calculado e o histórico de participação ficam fora das sprints da disciplina, salvo folga 🔧.
+Ficam para depois das sprints da disciplina, salvo folga: o incremento 2 (evidências), o incremento 3 (presença em campo), a operação sem conexão, o progresso calculado e o histórico de participação.
 
-**Fora do escopo desta versão:** integração com serviços de mensagens proprietários (WhatsApp, SMS), módulos financeiro-contábeis próprios e adaptadores específicos para leiautes arbitrários de múltiplos financiadores externos.
+**Fora do escopo desta versão:** serviços de mensagens proprietários (WhatsApp, SMS), módulos financeiro-contábeis próprios e adaptadores para leiautes arbitrários de múltiplos financiadores.
 
 ## 6.4 Estabilização, implantação e transferência
 
-A Sprint 6 e a margem final são tempo sem funcionalidade nova. As políticas de [cópia de segurança](2-solucao-proposta.md#politica-copia-seguranca) e de [transferência](2-solucao-proposta.md#politica-transferencia) estão na seção 2.6; aqui ficam as atividades. O que se entrega nesse período:
+Sem funcionalidade nova. Políticas de [cópia de segurança](2-solucao-proposta.md#politica-copia-seguranca) e de [transferência](2-solucao-proposta.md#politica-transferencia) na seção 2.6; aqui, atividades e evidências.
 
-| Frente | O que precisa estar pronto | Evidência |
-|---|---|---|
-| Estabilização | correções do checkpoint e da Review da Unidade 3; revisão de segurança dos perfis de acesso | registro de defeitos fechados; teste de permissão por perfil |
-| Implantação | produto publicado no ambiente de produção descrito na seção 2.4, com domínio, certificado e cópia de segurança agendada | endereço acessível às pessoas do Instituto; registro da configuração |
-| Teste de restauração | ensaio de restauração conjunta do banco e dos arquivos, nos termos do [RNF18](../requisitos/8-requisitos.md#rnf18) | registro datado com identificador da cópia, tempo total e resultado |
-| Treinamento | sessões com as facilitadoras e com a coordenação, sobre o fluxo real de uma atividade e de um relatório | ata do treinamento; roteiro de tarefas críticas executado pela pessoa treinada |
-| Transferência | **credenciais** entregues por canal seguro e acessos da equipe revogados; **documentação** de operação, manual de usuário e manual técnico de operação; **domínio** e certificado no nome do Instituto ou com renovação atribuída; **infraestrutura** inventariada sem segredos; **cópia de segurança** com política, cópia externa e último ensaio; **responsáveis** nomeados pelo Instituto — dono operacional, administrador técnico e substituto; **dados**: cópia integral dos dados e dos arquivos em formatos abertos (RNF19), além da exportação de cada projeto em planilha aberta (RF38), conferidas | checklist de transferência assinado pelo representante do Instituto |
+<div class="grid cards f3-compacto" markdown>
 
-Quem recebe o sistema e quem custeia a manutenção após dezembro é definido com a direção do Instituto. Sem essa definição, avançam a documentação de operação, o manual de usuário e o manual técnico de operação, o inventário da infraestrutura, o ensaio de restauração e a cópia integral dos dados. Ficam bloqueados até haver responsável nomeado pelo Instituto a entrega das credenciais, o domínio e o certificado no nome do Instituto, a revogação dos acessos da equipe e o aceite formal.
+-   **Estabilização**
 
-## 6.5 Validação com dados reais
+    Correções do checkpoint e da Review da Unidade 3; segurança dos perfis.<br>*Evidência:* defeitos fechados; teste de permissão por perfil.
 
-A validação não se concentra na última sprint. Há cinco momentos, cada um com objeto próprio:
+-   **Implantação**
 
-1. **Sprint 1 (21/09):** workshop de requisitos com a coordenação do Instituto, para apresentar a lista de requisitos, explicar o método de priorização e resolver divergências antes da entrega de 22/09.
-2. **Sprint 2 (cerca de 29/09):** modelo de meta e esboço de relatório sobre um projeto real, com a Diretoria de Projetos e o núcleo pedagógico — prevista na ata de 08/09.
-3. **Sprint 4 (29/10):** checkpoint com um projeto real e dados minimizados, sobre as histórias publicadas na homologação até a véspera: do instrumento à meta e da modalidade à atividade e à abertura da inscrição.
-4. **Sprint 5:** reunião de validação com o Instituto, adiada de 05/11 a pedido dele, com roteiro e slides para os testes na homologação; em 12/11, das 16h às 17h, online (ATA-2026-11-05, D7 e D10; ATA-2026-11-10).
-5. **Sprint 6:** validação final em uso real pelas áreas competentes, durante o treinamento.
+    Produção da seção 2.4, com domínio, certificado e cópia de segurança agendada.<br>*Evidência:* endereço acessível ao Instituto; registro da configuração.
 
-Cada momento é registrado em ata e na seção 7.2 apenas depois de realizado; intenção e convite não contam como validação.
+-   **Teste de restauração**
+
+    Banco e arquivos restaurados juntos, nos termos do [RNF18](../requisitos/8-requisitos.md#rnf18).<br>*Evidência:* registro datado com identificador da cópia, tempo total e resultado.
+
+-   **Treinamento**
+
+    Facilitadoras e coordenação, no fluxo real de uma atividade e de um relatório.<br>*Evidência:* ata; roteiro de tarefas críticas executado pela pessoa treinada.
+
+-   **Transferência**
+
+    **Credenciais** por canal seguro e acessos da equipe revogados; **documentação** de operação, manual de usuário e manual técnico; **domínio** e certificado no nome do Instituto ou com renovação atribuída; **infraestrutura** inventariada sem segredos; **cópia de segurança** com política, cópia externa e último ensaio; **responsáveis** nomeados pelo Instituto (dono operacional, administrador técnico e substituto); **dados**: cópia integral em formatos abertos (RNF19) e exportação de cada projeto em planilha aberta (RF38), conferidas.<br>*Evidência:* checklist assinado pelo representante do Instituto.
+
+</div>
+
+Quem recebe e custeia o sistema após dezembro se define com a direção do Instituto. Até lá, **avançam** documentação e manuais, inventário, ensaio de restauração e cópia integral dos dados; **esperam um responsável nomeado** credenciais, domínio e certificado no nome do Instituto, revogação dos acessos da equipe e aceite formal.
+
+## 6.5 Validação com o Instituto
+
+Além das conversas semanais ([seção 7.2](7-equipe-e-cliente.md#72-comunicacao)), cada sprint, da Sprint 1 em diante, tem uma sessão de validação da sprint. Até a formalização do tratamento de dados, todas usam dados de teste ([política](2-solucao-proposta.md#dados-de-teste)). O que cada sessão tratou está na lista de interações da 7.2. Uma sessão só conta depois de realizada; a da Sprint 6 é prevista.
+
+<div class="f3-fluxo" markdown>
+
+1. **Sprint 1 · 21/09**<br>Levantamento presencial na sede, antes da entrega da lista de requisitos.
+2. **Sprint 2 · 28/09**<br>Histórias e priorização do MVP.
+3. **Sprint 3 · 08/10**<br>Confirmação do recorte do MVP.
+4. **Sprint 4 · 29/10**<br>Checkpoint na homologação, com dados fictícios por decisão da equipe em [27/10](../gestao/atas/2026-10-27-reuniao-equipe.md).
+5. **Sprint 5 · 12/11**<br>Validação em uso na homologação.
+6. **Sprint 6 · prevista**<br>Validação final pelas áreas competentes, no treinamento.
+
+</div>
 
 ## 6.6 Marcos da disciplina
 
 | Data | Marco | Onde cai |
 |---|---|---|
+| 08/09 | Entrega da Unidade 1 | fechamento da Sprint 0 |
 | 10/09 | Apresentação da Unidade 1 | Sprint 1 |
 | 22/09 | Entrega da lista de requisitos funcionais e não funcionais | fechamento da Sprint 1 |
 | 22 a 24/09 | Semana Universitária, sem aula | início da Sprint 2 |
@@ -101,4 +129,4 @@ Cada momento é registrado em ata e na seção 7.2 apenas depois de realizado; i
 | 24/11 | Questionário de avaliação geral | Sprint 6 |
 | 01 a 08/12 | Entrega da Unidade 4 | margem final |
 
-As entregas que caem no interior de uma sprint são verificadas pelo conteúdo publicado na data, e não pelo fechamento da sprint. A equipe realiza a Retrospectiva ao fim de cada sprint; as ações de melhoria acumuladas em cada unidade compõem a seção 11.
+Entrega no meio de uma sprint vale pelo conteúdo publicado na data. As melhorias das Retrospectivas de cada unidade estão na seção 11.

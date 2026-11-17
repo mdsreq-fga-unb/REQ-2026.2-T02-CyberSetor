@@ -40,7 +40,7 @@ def test_selo_na_linha_do_rf_e_legenda():
     md = (
         "## 8.2 Lista\n\n| Identificador | Requisito | Descrição | Rastreabilidade |\n| :---: | :--- | :--- | :--- |\n"
         '| <a id="rf04"></a>**RF04** | Desdobrar | Texto | MROSC art. 22 \\| [HU-01b](10-backlog.md#hu-01b) |\n'
-        "| **RF04** | Desdobrar | G01 | — | HU-01b (CA-01b.1) | Total |\n"
+        "| **RF04** | G01 | — | HU-01b (CA-01b.1) | Total |\n"
     )
     saida = selos.selar_requisitos(md, DADOS)
     assert "**RF04** <span class='selo selo--concluido' data-situacao='concluido'>Concluído</span> |" in saida
@@ -68,3 +68,49 @@ def test_sem_leitura_do_quadro_nao_ha_selos(tmp_path):
     assert selos.ler_situacao(tmp_path) is None
     (tmp_path / selos.SITUACAO).write_text(json.dumps(DADOS), encoding="utf-8")
     assert selos.ler_situacao(tmp_path)["historias"]["HU-01a"]["situacao"] == "em-andamento"
+
+
+def test_rf_compartilhado_segue_a_dona_da_ficha():
+    # RF04 é da HU-01b (ficha da 10.1) e só verificado na HU-02b (8.4.1): a HU-02b a fazer não muda o selo.
+    md = (
+        "## 8.2 Lista\n\n| Identificador | Requisito | Descrição | Rastreabilidade |\n| :---: | :--- | :--- | :--- |\n"
+        '| <a id="rf04"></a>**RF04** | Desdobrar | Texto | MROSC art. 22 |\n'
+        "| **RF04** | G01 | — | HU-01b (CA-01b.1); HU-02b (CA-02b.3) | Total |\n"
+    )
+    md10 = (
+        "## 10.1 Backlog geral\n\n"
+        '??? note "HU-01b · Desdobrar requisitos"\n    Como Diretora, quero desdobrar.\n\n'
+        "    **Épico:** Requisito e meta\n\n    **Requisitos funcionais:** RF04\n\n    **Depende de:** —\n\n"
+        '??? note selo-a-fazer "HU-02b · Acompanhar prazos"\n    Como Diretora, quero acompanhar.\n\n'
+        "    **Épico:** Requisito e meta\n\n    **Requisitos funcionais:** RF07, RF08\n\n    **Depende de:** HU-01b\n\n"
+        "## 10.2 Priorização\n\n### 10.2.4 Tabela consolidada\n\n| Código | Valor | Esforço técnico | Destino |\n"
+        "| :---: | :---: | :---: | :--- |\n| [RF04](8-requisitos.md#rf04) | 4 | 2 | MVP |\n"
+    )
+    donas = selos.donas_das_fichas(md10)
+    assert donas == {"RF04": ["HU-01b"], "RF07": ["HU-02b"], "RF08": ["HU-02b"]}
+    saida = selos.selar_requisitos(md, DADOS, donas)
+    assert "**RF04** <span class='selo selo--concluido' data-situacao='concluido'>Concluído</span> |" in saida
+
+
+def test_donas_das_fichas_no_documento():
+    md10 = (RAIZ / "docs" / "requisitos" / "10-backlog.md").read_text(encoding="utf-8")
+    donas = selos.donas_das_fichas(md10)
+    assert donas["RF24"] == ["HU-07a"] and donas["RF36"] == ["HU-05a"] and donas["RF38"] == ["HU-13"]
+    assert donas["RF22"] == ["HU-08"] and donas["RF14"] == ["HU-07c"]
+    # Mesma leitura do hooks/fichas.py, que selos não importa.
+    sys.path.insert(0, str(RAIZ / "hooks"))
+    import fichas
+
+    pelas_fichas = {}
+    for f in fichas.ler_fichas(md10.splitlines()):
+        for r in f.rfs:
+            pelas_fichas.setdefault(r, []).append(f.hu)
+    assert donas == pelas_fichas and len(donas) == 46
+
+
+def test_marcador_provisorio_vira_selo_so_no_texto():
+    html = ('<p>Valor 4 🔧.</p><span title="meta 🔧">x</span><code>a 🔧</code>'
+            '<pre><code>b 🔧</code></pre><td>2 🔧</td>')
+    saida = selos.trocar_marcador(html)
+    assert saida.count('class="selo-provisorio"') == 2
+    assert 'title="meta 🔧"' in saida and "<code>a 🔧</code>" in saida and "<code>b 🔧</code>" in saida

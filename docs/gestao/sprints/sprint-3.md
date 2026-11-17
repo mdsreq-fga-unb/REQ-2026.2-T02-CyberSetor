@@ -131,6 +131,8 @@ O fluxo de branches por componente e os pontos de publicação do site, em vigor
 
 Referência de capacidade: cerca de 2 horas por dia por integrante 🟨, como na Sprint 2. Caio e Maria Eduarda tiveram provas em 08/10.
 
+**Nota de reorganização (saída de integrante em 13/10/2026):** com a saída de um integrante, a equipe passou a cinco integrantes e optou por **manter as duas duplas já consolidadas** (**Maria Eduarda Marques e Caio Martins**; **Daniel Batista e Rodrigo Henrique Donato**), enquanto o Scrum Master (**Vinicius Vieira**) deixou de atuar em dupla fixa e passou a **apoiar as duas duplas** de forma transversal (infraestrutura, integração, base técnica e suporte nos épicos *Pessoas* e *Presença em campo*), em vez de atuar como integrante isolado.
+
 ---
 
 ## 6. Product Backlog e Sprint Backlog
@@ -328,3 +330,4 @@ Meta **parcialmente atingida** (ata de 20/10/2026, D1): a Unidade 2 foi publicad
 | 1.0 | 09/10/2026 | Emissão com o deliberado na Sprint Planning de 07/10 e nos encaminhamentos de 08/10 (confirmação do MVP) e 09/10 (fluxo de branches, linhas de código, segundo épico de cada dupla): meta, calendário, Sprint Backlog em três partes, priorização, alocação, riscos e critérios de aceitação | Vinicius |
 | 1.1 | 19/10/2026 | Saída de um integrante: perfil da equipe, Sprint Backlog, alocação e segundo épico atualizados para cinco integrantes; risco R07 substituído pelo de capacidade reduzida | Maria Eduarda Marques |
 | 1.2 | 26/10/2026 | Resultado da Sprint: critérios de aceitação e itens do Sprint Backlog avaliados a partir da Review de 20/10 | Vinicius Vieira |
+| 1.3 | 15/11/2026 | Nota de reorganização da equipe após saída de integrante em 13/10/2026: manutenção das duas duplas e atuação do Scrum Master em apoio a ambas (ata de 12/11, D2/A3; #185) | Daniel Batista |

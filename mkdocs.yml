@@ -55,10 +55,18 @@ theme:
 
 extra_css:
   - assets/stylesheets/extra.css
+  - assets/stylesheets/f1-gestao.css
+  - assets/stylesheets/f3-visao.css
+  - assets/stylesheets/f2-reunioes.css
+  - assets/stylesheets/f5-historico.css
+  - assets/stylesheets/f4-requisitos.css
 
 extra_javascript:
   - assets/javascripts/historico.js
   - assets/javascripts/requisitos.js
+  - assets/javascripts/codigos.js
+  - assets/javascripts/versoes.js
+  - assets/javascripts/f2-reunioes.js
 
 hooks:
   - hooks/historico.py
@@ -67,6 +75,8 @@ hooks:
   - hooks/conferencia.py
   - hooks/ligacoes.py
   - hooks/cartoes.py
+  - hooks/codigos.py
+  - hooks/reunioes.py
 
 markdown_extensions:
   - abbr
@@ -108,6 +118,9 @@ exclude_docs: |
   *.txt
   # Atas com o cliente em versão preliminar, fora do site até a conferência do Instituto
   gestao/atas/2026-10-29-checkpoint-instituto.md
+  gestao/atas/2026-11-12-validacao-instituto.md
+  # Apontamentos do docente: o docente acompanha pelas issues do repositório (ATA-2026-11-12, D6)
+  entregas/debitos-u1.md
 
 nav:
   - Início: index.md
@@ -123,16 +136,10 @@ nav:
       - 8. Requisitos de software: requisitos/8-requisitos.md
       - 9. DoR e DoD: requisitos/9-dor-dod.md
       - 10. Backlog de produto: requisitos/10-backlog.md
-      - 11. Lições aprendidas:
-          - Unidade 1: licoes-aprendidas/unidade-1.md
-          - Unidade 2: licoes-aprendidas/unidade-2.md
       - Anexo B1 · Modelo do processo atual (BPMN): requisitos/b1-bpmn-processo-atual.md
   - Gestão do projeto:
+      - Como trabalhamos: gestao/como-trabalhamos.md
       - Histórico e evolução: gestao/historico.md
-      - Processo e ritos (ScrumXP): gestao/processo-scrumxp.md
-      - Boas práticas no GitHub: gestao/boas-praticas-github.md
-      - Matriz de competências e stack: gestao/matriz-competencias.md
-      - Registro das dailies: gestao/dailies.md
       - Reuniões:
           - gestao/atas/index.md
           - Com o Instituto:
@@ -146,8 +153,10 @@ nav:
               - 01/09 · Equipe: gestao/atas/2026-09-01-reuniao-equipe.md
               - 15/09 · Equipe: gestao/atas/2026-09-15-reuniao-equipe.md
               - 21/09 · Alinhamento: gestao/atas/2026-09-21-reuniao-equipe.md
+              - 19/10 · Equipe: gestao/atas/2026-10-19-reuniao-equipe.md
               - 27/10 · Equipe: gestao/atas/2026-10-27-reuniao-equipe.md
               - 10/11 · Equipe: gestao/atas/2026-11-10-reuniao-equipe.md
+              - 12/11 · Monitoria: gestao/atas/2026-11-12-reuniao-monitoria.md
           - Cerimônias ScrumXP:
               - 08/09 · Sprint Planning 1: gestao/atas/2026-09-08-sprint-planning.md
               - 22/09 · Review e Retrospectiva 1: gestao/atas/2026-09-22-sprint-review-retrospectiva.md
@@ -156,25 +165,16 @@ nav:
               - 07/10 · Sprint Planning 3: gestao/atas/2026-10-07-sprint-planning.md
               - 20/10 · Review, Retrospectiva 3 e Planning 4: gestao/atas/2026-10-20-sprint-review-retrospectiva-planning.md
               - 05/11 · Review, Retrospectiva 4 e Planning 5: gestao/atas/2026-11-05-sprint-review-retrospectiva-planning.md
-      - Sprints:
-          - Sprint 1:
-              - Plano da Sprint 1: gestao/sprints/sprint-1.md
-              - Tarefas da Sprint 1: gestao/sprints/tarefas-sprint-1.md
-          - Sprint 2:
-              - Plano da Sprint 2: gestao/sprints/sprint-2.md
-              - Tarefas da Sprint 2: gestao/sprints/tarefas-sprint-2.md
-          - Sprint 3:
-              - Plano da Sprint 3: gestao/sprints/sprint-3.md
-              - Tarefas da Sprint 3: gestao/sprints/tarefas-sprint-3.md
-          - Sprint 4:
-              - Plano da Sprint 4: gestao/sprints/sprint-4.md
-              - Tarefas da Sprint 4: gestao/sprints/tarefas-sprint-4.md
-          - Sprint 5:
-              - Plano da Sprint 5: gestao/sprints/sprint-5.md
-              - Tarefas da Sprint 5: gestao/sprints/tarefas-sprint-5.md
-  - Entregas:
-      - Unidade 1: entregas/unidade-1.md
-      - Apontamentos do docente: entregas/debitos-u1.md
-      - Unidade 2: entregas/unidade-2.md
-      - "Atividade 3: ajuste da lista de requisitos": entregas/atividade-3.md
+  - Marcos da disciplina:
+      - entregas/index.md
+      - Unidade 1:
+          - Entrega: entregas/unidade-1.md
+          - Lições aprendidas: licoes-aprendidas/unidade-1.md
+      - Unidade 2:
+          - Entrega: entregas/unidade-2.md
+          - "Atividade 3: ajuste da lista de requisitos": entregas/atividade-3.md
+          - Lições aprendidas: licoes-aprendidas/unidade-2.md
+      - Unidade 3:
+          - Entrega: entregas/unidade-3.md
+          - Lições aprendidas: licoes-aprendidas/unidade-3.md
   - Referências: referencias.md

@@ -10,106 +10,25 @@
 | 26/10/2026 | 1.6 | Incremento como a versão integrada da API e do front publicada na homologação; programação em pares descrita como é aplicada | Vinicius Vieira |
 | 09/11/2026 | 1.7 | Registro dos ritos de encerramento da Sprint 4 e de planejamento da Sprint 5 | Maria Eduarda Marques |
 | 11/11/2026 | 1.8 | Impedimento na daily restrito ao que trava o trabalho, com provas avisadas no grupo Geral; documentação sem sessões em par, com a revisão por outra dupla | Maria Eduarda Marques |
+| 13/11/2026 | 1.9 | Exceção da Sprint 5, de quinta a quinta, remetida à seção 6.1; comunicação remetida à seção 7.2, sem repetir as ferramentas | Maria Eduarda Marques |
+| 16/11/2026 | 1.10 | Homologação só com dados de teste, com remissão à política de dados pessoais da 2.6 | Maria Eduarda Marques |
+| 16/11/2026 | 1.11 | Modelo da daily sem emojis | Vinicius Vieira |
+| 16/11/2026 | 1.12 | Conteúdo reunido na página Como trabalhamos; ficam aqui o histórico de versões e os endereços antigos, com remissão | Vinicius Vieira |
 
-A equipe CyberSetor adota o **ScrumXP**: o framework Scrum para o gerenciamento do trabalho e as práticas técnicas do eXtreme Programming para a engenharia. Esta página registra como o processo funciona na prática. A fundamentação da escolha está na seção 4 do Documento de Visão.
-
-## Papéis e cerimônias
-
-A composição da equipe, os papéis e o papel do cliente estão na [seção 7.1 do Documento de Visão](../visao/7-equipe-e-cliente.md); a cadência das cerimônias, com frequência, duração e formato, está na [seção 7.2](../visao/7-equipe-e-cliente.md#72-comunicacao). Esta página registra o que é próprio da operação da equipe: como a daily acontece, quais artefatos sustentam o processo, quais práticas de XP estão em uso e como a equipe se comunica.
-
-Sprints de duas semanas, ancoradas nas terças-feiras. A Sprint 0 (18/08 a 08/09) é excepcional, com três semanas, por ser de descoberta e formação da equipe.
+O processo da equipe está agora em [Como trabalhamos](como-trabalhamos.md#ciclo). Esta página guarda o histórico de versões e mantém os endereços antigos.
 
 ## Como a daily acontece
 
-A equipe é formada por cinco estudantes com grades e compromissos distintos, e uma daily síncrona todos os dias não se sustentaria. Às terças e quintas, dias de aula e da reunião da equipe, a daily é presencial. Nos demais dias úteis, ela é escrita, no grupo *Dailys*. O que a cerimônia precisa entregar é **compromisso** e **visibilidade de impedimentos**, dois dos sete valores da Engenharia de Requisitos adotados pela disciplina; a forma escrita, no mesmo lugar, entrega isso nos dias sem encontro. É uma adaptação consciente do rito ao contexto. A adesão por sprint está no [registro das dailies](dailies.md).
-
-### Molde da daily
-
-```
-📅 [DD/MM] — Seu Nome
-✅ Feito: o que concluí desde a última daily
-🔄 Fazendo: o que vou tocar hoje
-🚧 Impedimento: o que está me travando, ou "nenhum"
-```
-
-**Regras:** nos dias úteis sem encontro presencial, no próprio dia, até o fim do dia, inclusive sem avanço (escreve-se "sem avanço") · impedimento é campo obrigatório · impedimento é o que trava o trabalho, como uma revisão ou um merge pendente de outro integrante; prova e outro compromisso acadêmico não são impedimento e são avisados no grupo *Geral* ([ATA-2026-11-10](atas/2026-11-10-reuniao-equipe.md), D3) · quem depende de outra pessoa a marca · o grupo *Dailys* é exclusivo para dailies; discussão vai para o grupo *Geral* e decisão vira ata · impedimento declarado é resolvido ou escalado pelo Scrum Master em até 24 horas.
-
-## Artefatos
-
-| Artefato | Onde vive | Responsável |
-|---|---|---|
-| Visão do Produto | Este site | Equipe |
-| Product Backlog | GitHub Projects e Issues | Product Owner interno, com a ordenação validada pelo Instituto |
-| Sprint Backlog | GitHub Projects | Time |
-| Incremento | Versão integrada da API e do front publicada na homologação, identificada pelo commit da `api-develop` e da `web-develop` ([Ambientes do produto](#ambientes-do-produto)) | Time |
-| Atas de reunião | [Atas de reunião](atas/index.md) | Relator da reunião |
-| Definition of Ready e Definition of Done | [Seção 9 do Documento de Visão](../requisitos/9-dor-dod.md) | Equipe |
-| Matriz de competências | [Matriz de competências e stack](matriz-competencias.md) | Scrum Master |
-
-Histórias de usuário seguem o formato do XP: escritas em linguagem não técnica, na perspectiva de quem usa, acompanhadas por uma lista de critérios de aceitação objetivos e verificáveis.
-
-```
-Como <perfil do Instituto>, quero <ação> para <resultado esperado>.
-
-Critérios de aceitação:
-- [Condição observável ou regra que o sistema deve cumprir]
-- [Restrição de negócio, técnica ou de privacidade/LGPD]
-```
-
-Cada história é aberta pelo formulário de história do repositório, que pede a história nesse formato, as características de produto e os objetivos específicos em caixas de marcação (seções 2.3 e 2.2), os RFs, RNFs e regras de negócio que a condicionam, os critérios de aceitação em lista e as dependências. No quadro do projeto, características e objetivos ficam em campos de seleção múltipla com os mesmos títulos.
+Molde e regras da daily em [Como trabalhamos › Dailies](como-trabalhamos.md#dailies).
 
 ## Ambientes do produto
 
-| Ambiente | Endereço | Origem |
-|---|---|---|
-| Homologação | [cybersetor-web.netvitae.org](https://cybersetor-web.netvitae.org) · API e documentação em [cybersetor-api.netvitae.org/docs](https://cybersetor-api.netvitae.org/docs) | linhas `web-develop` e `api-develop` |
-| Produção | publicada na estabilização ([seção 6.4](../visao/6-cronograma.md#64-estabilizacao-implantacao-e-transferencia)) | linhas `web` e `api` |
-
-O acesso à homologação é por conta criada pela administração do sistema, sem cadastro aberto. Ela guarda dados de teste e, nas validações com o Instituto, dados reais minimizados de um projeto ([seção 6.5](../visao/6-cronograma.md#65-validacao-com-dados-reais)).
-
-## Registro dos ritos
-
-| Sprint | Rito | Data | Registro |
-|---|---|---|---|
-| Sprint 1 | Sprint Planning | 08/09/2026 | [Ata](atas/2026-09-08-sprint-planning.md) |
-| Sprint 1 | Sprint Review e Retrospectiva | 22/09/2026 | [Ata](atas/2026-09-22-sprint-review-retrospectiva.md) |
-| Sprint 2 | Sprint Planning | 23/09/2026 | [Ata](atas/2026-09-23-sprint-planning.md) |
-| Sprint 2 | Sprint Review e Retrospectiva | 06/10/2026 | [Ata](atas/2026-10-06-sprint-review-retrospectiva.md) |
-| Sprint 3 | Sprint Planning | 07/10/2026 | [Ata](atas/2026-10-07-sprint-planning.md) |
-| Sprint 3 | Sprint Review e Retrospectiva | 20/10/2026 | [Ata](atas/2026-10-20-sprint-review-retrospectiva-planning.md) |
-| Sprint 4 | Sprint Planning | 20/10/2026 | [Ata](atas/2026-10-20-sprint-review-retrospectiva-planning.md) |
-| Sprint 4 | Sprint Review e Retrospectiva | 05/11/2026 | [Ata](atas/2026-11-05-sprint-review-retrospectiva-planning.md) |
-| Sprint 5 | Sprint Planning | 05/11/2026 | [Ata](atas/2026-11-05-sprint-review-retrospectiva-planning.md) |
-
-As reuniões com o Instituto que alimentam a validação estão no [índice de atas](atas/index.md#interacoes-com-o-cliente).
+Homologação e produção em [Como trabalhamos › Ambientes do produto](como-trabalhamos.md#ambientes-do-produto).
 
 ## Práticas de XP
 
-**Em uso desde a Sprint 1:** histórias de usuário · critérios de aceitação · duplas donas das histórias na documentação, com revisão por outra dupla · integração contínua, que compila o site em modo estrito a cada alteração · cliente presente **adaptado**, com Product Owner interno no intervalo entre validações e validação semanal com o Instituto (Documento de Visão, seção 7.2).
+Práticas em uso, programação em pares e práticas não adotadas em [Como trabalhamos › Práticas de XP](como-trabalhamos.md#praticas-de-xp).
 
-**A partir da primeira sprint de código:** testes de aceitação · pequenas releases · programação em pares, na forma descrita abaixo · propriedade coletiva do código · design simples · padrões de codificação. Cada uma passa a valer quando houver código a que aplicá-la, e a evidência de adoção é registrada na Sprint Review correspondente.
+## Registro dos ritos
 
-**Programação em pares, como é aplicada:** as histórias são distribuídas por duplas, uma por épico. Quando a dupla trabalha junta, a sessão é síncrona e fica registrada pela coautoria do commit (`Co-authored-by`) e na daily. Quem trabalha sozinho tem o pull request revisado obrigatoriamente por integrante de outra dupla, controle que substitui o par. A evidência de cada sprint, com as sessões tiradas do histórico de commits, é apresentada na Sprint Review.
-
-**Documentação sem sessões em par:** desde 10/11/2026, as sessões síncronas em par deixaram de ser usadas na documentação, por falta de tempo para as chamadas ([ATA-2026-11-10](atas/2026-11-10-reuniao-equipe.md), D2). A dupla continua dona da história, e o pull request da documentação passa pelas duas aprovações das [boas práticas no GitHub](boas-praticas-github.md), ao menos uma de integrante de outra dupla ou do integrante independente.
-
-**Não adotadas, com justificativa:**
-
-| Prática | Justificativa |
-|---|---|
-| TDD integral | A equipe não tem maturidade para sustentá-lo. Adotam-se testes de aceitação |
-| Refatoração contínua agressiva | Exige uma suíte de testes ampla, que não existirá no prazo |
-| Metáfora do sistema | Baixo retorno em projeto pequeno |
-| Semana de 40 horas | Não se aplica ao contexto acadêmico |
-
-## Comunicação
-
-Comunidade no WhatsApp *CyberSetor - Requisitos*, com três grupos: *Avisos* (comunicados), *CyberSetor - Geral* (discussão e decisões) e *Dailys* (só dailies). Reuniões no Google Meet, com gravação e transcrição de apoio armazenadas no Drive com acesso restrito, e ata sintética oficial elaborada pelo relator, com revisão de dados sensíveis (LGPD). Entregas publicadas neste site; o Google Docs é rascunho.
-
-## Referências
-
-BECK, K.; ANDRES, C. **Extreme Programming Explained: Embrace Change.** 2. ed. Boston: Addison-Wesley, 2004.
-
-MARSICANO, G. **Requisitos de Software: Comunicação é tudo!** v1.1 draft. Brasília: FCTE/UnB, 2026.
-
-SCHWABER, K.; SUTHERLAND, J. **The Scrum Guide.** 2020. Disponível em: https://scrumguides.org. Acesso em: 2 set. 2026.
+As atas de Planning e de Review e Retrospectiva de cada sprint estão nas abas de [Como trabalhamos › Sprints](como-trabalhamos.md#sprints).

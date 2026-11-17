@@ -1,10 +1,64 @@
 # Documento de Visão de Produto e Projeto
 
-Documento elaborado a partir do Template de Visão de Produto e Projeto (v8) da disciplina Requisitos de Software (FGA0313), FCTE/UnB. A numeração das seções segue a do template.
+Documento elaborado sobre o Template de Visão de Produto e Projeto (v8) da disciplina Requisitos de Software (FGA0313), FCTE/UnB, com a numeração do template. Cada seção vale pela versão mais recente; o recorte vigente do MVP está na [seção 10.2.6](../requisitos/10-backlog.md#1026-mvp-e-incrementos). Atas, entregas e linhas de histórico são registros do seu momento e não são reescritos.
+
+## Sumário
+
+<div class="grid cards f3-compacto" markdown>
+
+- **[1. Cenário atual](1-cenario-atual.md)**
+
+    Cliente, contexto, Rich Picture, problema, desafios, stakeholders e segmentos.
+
+- **[2. Solução proposta](2-solucao-proposta.md)**
+
+    Objetivos, características, tecnologias, mercado, viabilidade e benefícios.
+
+- **[3. Intervenção social](3-intervencao-social.md)**
+
+    Impactos, princípios, riscos e mitigações.
+
+- **[4. Estratégias de engenharia de software](4-estrategia-esw.md)**
+
+    Abordagem, ciclo de vida e processo ScrumXP.
+
+- **[5. Engenharia de requisitos](5-engenharia-requisitos.md)**
+
+    Atividades, técnicas e lugar de cada uma no ScrumXP.
+
+- **[6. Cronograma e entregas](6-cronograma.md)**
+
+    Calendário, MVP, validações e marcos.
+
+- **[7. Interação entre equipe e cliente](7-equipe-e-cliente.md)**
+
+    Equipe, papéis, comunicação e validação.
+
+- **[8. Requisitos de software](../requisitos/8-requisitos.md)**
+
+    Requisitos funcionais, não funcionais e regras de negócio.
+
+- **[9. DoR e DoD](../requisitos/9-dor-dod.md)**
+
+    Critérios de Ready e de Done.
+
+- **[10. Backlog de produto](../requisitos/10-backlog.md)**
+
+    Histórias, priorização e MVP.
+
+- **11. Lições aprendidas**
+
+    Por unidade: [Unidade 1](../licoes-aprendidas/unidade-1.md) · [Unidade 2](../licoes-aprendidas/unidade-2.md) · [Unidade 3](../licoes-aprendidas/unidade-3.md); no menu, junto da entrega de cada unidade.
+
+- **[12. Referências bibliográficas](../referencias.md)**
+
+    Fontes citadas no documento.
+
+</div>
 
 ## Histórico de versões
 
-Este histórico é o do Documento de Visão como um todo. Cada seção traz, no seu início, o histórico das versões em que ela mudou. A página [Histórico e evolução](../gestao/historico.md) reúne os dois níveis em uma linha do tempo, com as reuniões, as sprints e os marcos da disciplina, e permite filtrar por sprint, unidade, seção, autor e requisito.
+Histórico do documento como um todo; cada seção traz o seu no início. A página [Histórico e evolução](../gestao/historico.md) reúne os dois níveis numa linha do tempo, com reuniões, sprints e marcos, e filtros.
 
 | Data | Versão | Descrição | Autor |
 |---|---|---|---|
@@ -21,22 +75,6 @@ Este histórico é o do Documento de Visão como um todo. Cada seção traz, no 
 | 26/10/2026 | 1.10 | Resultado alcançado da meta no MVP e no relatório; portabilidade dos dados no lugar da exportação integral como função; requisitos divididos para verificação (RF44, RF45, RNF20) e métricas dos RNFs com ambiente, massa e restauração conjunta; conectividade com quedas pontuais; papel da área administrativo-financeira no sistema; trabalho em duplas e prototipação evolutiva como aplicados; DoR e DoD com entrada provisória, conclusão na homologação e validação pendente; cronograma com as histórias por sprint; interações de setembro e outubro (seções 1 a 10); políticas de operação sem conexão, dados pessoais, cópia de segurança e transferência explicadas na seção 2.6, com remissão nas seções 1, 3 e 6; usabilidade e estados das telas para todo o produto, com o estado vazio e as recusas de cada história nos critérios; quadro comparativo da seção 4 sem qualificar os processos | Vinicius Vieira |
 | 03/11/2026 | 1.11 | Remissão para a página Histórico e evolução, que reúne as versões do documento e de cada seção com as reuniões, as sprints e os marcos da disciplina | Vinicius Vieira |
 | 11/11/2026 | 1.12 | Nota sobre o que está vigente no documento e o que é registro; resumos e remissões ao recorte vigente nas seções 1 a 4 | Maria Eduarda Marques |
-
-## Sumário
-
-| Seção | Conteúdo |
-|---|---|
-| [1. Cenário atual do cliente e do negócio](1-cenario-atual.md) | Identificação do cliente, contexto, Rich Picture, problema, desafios, stakeholders e segmentação |
-| [2. Solução proposta](2-solucao-proposta.md) | Objetivo geral, objetivos específicos, características, tecnologias, análise competitiva, viabilidade e benefícios |
-| [3. Intervenção social](3-intervencao-social.md) | Impactos pretendidos, princípios, riscos da intervenção e suas mitigações operacionais |
-| [4. Estratégias de engenharia de software](4-estrategia-esw.md) | Estratégia priorizada, abordagem, ciclo de vida, processo ScrumXP e justificativas |
-| [5. Engenharia de requisitos](5-engenharia-requisitos.md) | Atividades, técnicas aplicadas e mapeamento de ER nas fases do ScrumXP |
-| [6. Cronograma e entregas](6-cronograma.md) | Planejamento temporal, dependências, escopo do MVP e validações |
-| [7. Interação entre equipe e cliente](7-equipe-e-cliente.md) | Composição da equipe, responsabilidades, cadência de comunicação e fluxo de validação |
-| [8. Requisitos de software](../requisitos/8-requisitos.md) | Catálogo unificado de Requisitos Funcionais, Não Funcionais e Regras de Negócio |
-| [9. DoR e DoD](../requisitos/9-dor-dod.md) | Critérios de prontidão das histórias (Ready) e de conclusão dos itens de documentação e de código (Done) |
-| [10. Backlog de produto](../requisitos/10-backlog.md) | Histórias de usuário, priorização técnica vs. valor e definição do MVP |
-| [11. Lições aprendidas](../licoes-aprendidas/unidade-1.md) | Lições e ações de melhoria registradas por unidade, a partir das retrospectivas |
-| [12. Referências bibliográficas](../referencias.md) | Fontes citadas no documento |
-
-Cada seção vale pela sua versão mais recente, indicada no histórico de versões no início da página. O recorte vigente do MVP e dos incrementos está na [seção 10.2.6](../requisitos/10-backlog.md#1026-mvp-e-incrementos). Atas, entregas das unidades e linhas de histórico de versões são registros do momento em que foram feitos e não são reescritos.
+| 16/11/2026 | 1.13 | Seção 11 com as lições de cada unidade, que no menu ficam junto da entrega da unidade (ATA-2026-11-12, D5) | Maria Eduarda Marques |
+| 16/11/2026 | 1.14 | Seção 11 com as lições da Unidade 3 | Maria Eduarda Marques |
+| 16/11/2026 | 1.15 | Sumário em cartões, antes do histórico; seções 1 a 7 enxugadas e mais visuais | Vinicius Vieira |
