@@ -1,0 +1,165 @@
+/* Documento de Visão (seções 1 a 7): componentes visuais leves.
+   Tudo funciona sem JavaScript e usa os tokens de cor do tema (claro e escuro). */
+
+/* ---- Tabela-fonte apresentada como cartões ----
+   A tabela continua no Markdown (é lida pelos hooks e legível sem CSS);
+   cada linha vira um cartão. Uso: <div class="f3-cartoes" markdown> + tabela. */
+.md-typeset .f3-cartoes .md-typeset__scrollwrap,
+.md-typeset .f3-cartoes .md-typeset__table {
+  display: block;
+  margin: 0;
+  overflow: visible;
+}
+.md-typeset .f3-cartoes table:not([class]) {
+  display: block;
+  border: 0;
+  background: none;
+  font-size: 0.72rem;
+  max-width: 100%;
+  overflow: visible;
+}
+.md-typeset .f3-cartoes table:not([class]) thead {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+.md-typeset .f3-cartoes table:not([class]) tbody {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 15rem), 1fr));
+  gap: 0.6rem;
+}
+.md-typeset .f3-cartoes table:not([class]) tbody tr {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  padding: 0.6rem 0.75rem;
+  border: 1px solid var(--md-default-fg-color--lightest);
+  border-radius: 0.3rem;
+  background: var(--md-default-bg-color);
+  box-shadow: none;
+}
+.md-typeset .f3-cartoes table:not([class]) tbody tr:hover {
+  background: var(--md-default-bg-color);
+  box-shadow: 0 0.1rem 0.4rem var(--md-default-fg-color--lightest);
+}
+.md-typeset .f3-cartoes table:not([class]) td {
+  display: block;
+  padding: 0;
+  border: 0;
+  vertical-align: top;
+}
+.md-typeset .f3-cartoes table:not([class]) td:first-child {
+  font-size: 0.65rem;
+  font-weight: 700;
+  color: var(--md-primary-fg-color);
+}
+.md-typeset .f3-cartoes table:not([class]) td:nth-child(2) {
+  font-weight: 700;
+  font-size: 0.78rem;
+}
+.md-typeset .f3-cartoes .f3-rotulo,
+.md-typeset .f3-cartoes td[data-rotulo]::before {
+  color: var(--md-default-fg-color--light);
+}
+
+/* Rótulos por coluna (2.3: CP, característica, descrição, VN, valor, OE principal, OE secundário) */
+.md-typeset .f3-cartoes--cp td:nth-child(4) {
+  font-size: 0.65rem;
+  font-weight: 700;
+  color: var(--md-default-fg-color--light);
+}
+.md-typeset .f3-cartoes--cp td:nth-child(5)::before { content: "Valor: "; color: var(--md-default-fg-color--light); }
+.md-typeset .f3-cartoes--cp td:nth-child(6),
+.md-typeset .f3-cartoes--cp td:nth-child(7) {
+  display: inline-block !important;
+  font-size: 0.65rem;
+}
+.md-typeset .f3-cartoes--cp td:nth-child(6)::before { content: "Principal: "; color: var(--md-default-fg-color--light); }
+.md-typeset .f3-cartoes--cp td:nth-child(7)::before { content: "Secundário: "; color: var(--md-default-fg-color--light); }
+.md-typeset .f3-cartoes--cp td:nth-child(6) { margin-top: auto; }
+
+/* ---- Fluxo em etapas numeradas (lista ordenada) ----
+   Uso: <div class="f3-fluxo" markdown> + lista numerada. */
+.md-typeset .f3-fluxo > ol {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 10rem), 1fr));
+  gap: 0.6rem;
+  margin: 0.8rem 0;
+  padding: 0;
+  list-style: none;
+  counter-reset: f3passo;
+}
+.md-typeset .f3-fluxo > ol > li {
+  position: relative;
+  margin: 0;
+  padding: 1.5rem 0.65rem 0.6rem;
+  border: 1px solid var(--md-default-fg-color--lightest);
+  border-top: 0.2rem solid var(--md-primary-fg-color);
+  border-radius: 0.3rem;
+  font-size: 0.7rem;
+  counter-increment: f3passo;
+}
+.md-typeset .f3-fluxo > ol > li::before {
+  content: counter(f3passo);
+  position: absolute;
+  top: 0.35rem;
+  left: 0.65rem;
+  font-weight: 700;
+  font-size: 0.7rem;
+  color: var(--md-primary-fg-color);
+}
+.md-typeset .f3-fluxo > ol > li > ul {
+  margin: 0.3rem 0 0;
+  padding-left: 0.9rem;
+}
+.md-typeset .f3-fluxo > ol > li > ul > li {
+  margin: 0.1rem 0;
+}
+
+/* ---- Camadas encaixadas (abordagem > ciclo de vida > processo) ----
+   Uso: <div class="f3-camadas" markdown> + lista com um item por camada, da externa para a interna. */
+.md-typeset .f3-camadas > ul {
+  margin: 0.8rem 0;
+  padding: 0;
+  list-style: none;
+}
+.md-typeset .f3-camadas > ul > li {
+  margin: 0 0 0.35rem;
+  padding: 0.55rem 0.8rem;
+  border-left: 0.25rem solid var(--md-primary-fg-color);
+  border-radius: 0.2rem;
+  background: var(--md-code-bg-color);
+  font-size: 0.72rem;
+}
+.md-typeset .f3-camadas > ul > li:nth-child(2) { margin-left: 1.2rem; }
+.md-typeset .f3-camadas > ul > li:nth-child(3) { margin-left: 2.4rem; }
+.md-typeset .f3-camadas > ul > li:nth-child(4) { margin-left: 3.6rem; }
+@media screen and (max-width: 30em) {
+  .md-typeset .f3-camadas > ul > li:nth-child(n) { margin-left: 0; }
+}
+
+/* ---- Chips curtos (tecnologias, técnicas) ---- */
+.md-typeset .f3-chips code,
+.md-typeset .f3-chip {
+  display: inline-block;
+  margin: 0.1rem 0.15rem 0.1rem 0;
+  padding: 0.05rem 0.4rem;
+  border-radius: 1rem;
+  font-size: 0.68rem;
+}
+
+/* Cartões do Material um pouco mais compactos nas seções da Visão */
+.md-typeset .grid.cards.f3-compacto {
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 14rem), 1fr));
+  gap: 0.6rem;
+}
+.md-typeset .grid.cards.f3-compacto > ul > li {
+  font-size: 0.72rem;
+  padding: 0.6rem 0.75rem;
+}
+.md-typeset .grid.cards.f3-compacto > ul > li > p {
+  margin: 0.3em 0;
+}
