@@ -47,7 +47,7 @@ O sistema unifica a cadeia de dados das atividades socioculturais realizadas no 
 - [ ] Desenvolvimento incremental do MVP.
 - [ ] Testes de aceitação e integração contínua.
 - [ ] Validação com o cliente (Sprint Review).
-- [ ] Vídeo de apresentação da Unidade 3.
+- [x] **Vídeo de apresentação:** [Apresentação no YouTube (12m 23s)](https://youtu.be/VjhMRD6nAn4).
 
 ### Unidade 4 – Consolidação e Entrega Final
 - [ ] Homologação final e transição do produto.
