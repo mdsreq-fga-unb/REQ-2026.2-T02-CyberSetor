@@ -6,6 +6,7 @@
 | 16/11/2026 | 1.1 | Entrega durante a Sprint 5; revisão por dois integrantes desde 05/11; reunião de 12/11 na 10.2.8; medições do RNF12 e do RNF13; acesso à página das sprints | Vinicius Vieira |
 | 16/11/2026 | 1.2 | Capturas das telas do ambiente de homologação com dados de teste, cada uma com a história que atende (ATA-2026-11-12, A5 e A14) | Vinicius Vieira |
 | 16/11/2026 | 1.3 | Evidências do processo remetidas à página Como trabalhamos | Vinicius Vieira |
+| 16/11/2026 | 1.4 | Incorporação do vídeo de apresentação da Unidade 3 | Rodrigo Henrique |
 
 ---
 
@@ -20,8 +21,11 @@ Esta página registra a entrega de 17/11/2026, durante a [Sprint 5](../gestao/sp
 
 ## 2. Apresentação da Unidade 3
 
-!!! warning "Vídeo a incluir 🔧"
-    O vídeo de apresentação entra nesta seção antes da publicação de 17/11, com o link direto para o YouTube.
+<div style="text-align: center; margin: 1.5em 0;">
+  <iframe width="100%" height="450" src="https://www.youtube.com/embed/VjhMRD6nAn4" title="Apresentação da Unidade 3 - CyberSetor" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+</div>
+
+- **Link direto para a gravação:** [Apresentação da Unidade 3 — YouTube](https://youtu.be/VjhMRD6nAn4) (12m 23s)
 
 ---
 
@@ -38,7 +42,7 @@ Esta página registra a entrega de 17/11/2026, durante a [Sprint 5](../gestao/sp
 | Rastreabilidade (problema, OG, OEs, CPs, RFs e RNFs, declarações) | [8.4 Matriz de rastreabilidade](../requisitos/8-requisitos.md#84-matriz-de-rastreabilidade-bidirecional), [B1 — gargalos e capacidades](../requisitos/b1-bpmn-processo-atual.md#4-rastreabilidade-dos-gargalos-as-capacidades-previstas) e as fichas das histórias na [seção 10.1](../requisitos/10-backlog.md#101-backlog-geral) |
 | Cumprimento e atualização do planejamento (cronograma) | [6.1 Calendário vigente](../visao/6-cronograma.md#61-calendario-vigente), [6.6 Marcos da disciplina](../visao/6-cronograma.md#66-marcos-da-disciplina) e os critérios de aceitação de cada plano de sprint |
 | Site do projeto (GitHub Pages) | Este site, publicado a partir da branch `main` com a tag `u3-2026-11-17` |
-| Vídeo de apresentação | [Seção 2 desta página](#2-apresentacao-da-unidade-3) 🔧 |
+| Vídeo de apresentação | [Seção 2 desta página](#2-apresentacao-da-unidade-3) · [Vídeo no YouTube](https://youtu.be/VjhMRD6nAn4) |
 
 ---
 
