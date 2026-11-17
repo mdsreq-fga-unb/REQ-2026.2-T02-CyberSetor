@@ -295,6 +295,14 @@ def _chip_hu(hu: str, dados: dict | None) -> str:
     return ref_hu(hu, dados).replace(f"(#{hu.lower()})", f"(#{hu.lower()}){{ .fx-cod }}", 1)
 
 
+def _condicao(depende: str, hu: str) -> str:
+    """Condição escrita depois de uma história no campo Depende de: 'HU-04a para as miniaturas' → 'para as miniaturas'."""
+    for trecho in re.split(r"[;,]", depende):
+        if re.search(rf"\b{re.escape(hu)}\b", trecho):
+            return re.sub(rf"\b{re.escape(hu)}\b", "", trecho).strip(" .")
+    return ""
+
+
 def _linha(rotulo: str, valor: str) -> str:
     return f'<span class="fx-rot">{rotulo}</span> {valor}'
 
@@ -353,10 +361,13 @@ def compor(f: Ficha, fichas: list[Ficha], s: Secao8, p: Priorizacao, dados: dict
     linhas.append(_linha("Requisitos", " ".join(rfs)))
     linhas.append(_linha("Característica", "; ".join(_cp_com_oe(c, s) for c in cps)))
     if re.findall(HU, f.depende):
-        linhas.append(_linha("Depende de", " ".join(_chip_hu(h, dados) for h in re.findall(HU, f.depende))))
-    prerequisito = [o.hu for o in fichas if o.hu != f.hu and f.hu in re.findall(HU, o.depende)]
-    if prerequisito:
-        linhas.append(_linha("Libera", " ".join(_chip_hu(h, dados) for h in prerequisito)))
+        # O texto da fonte fica: a condição ("para o índice de evidências") diz que a dependência é parcial.
+        texto = html.escape(f.depende, quote=False)
+        linhas.append(_linha("Depende de", re.sub(HU, lambda m: _chip_hu(m.group(0), dados), texto)))
+    liberadas = [(o.hu, _condicao(o.depende, f.hu)) for o in fichas if o.hu != f.hu and f.hu in re.findall(HU, o.depende)]
+    if liberadas:
+        linhas.append(_linha("Libera", ", ".join(
+            _chip_hu(h, dados) + (f" ({html.escape(c, quote=False)})" if c else "") for h, c in liberadas)))
     verifica = [
         f'[{r}](8-requisitos.md#{r.lower()} "{ca}"){{ .fx-cod }}' if ca else f"[{r}](8-requisitos.md#{r.lower()}){{ .fx-cod }}"
         for r, lista in s.verificacao.items() if r not in f.rfs

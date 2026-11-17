@@ -191,6 +191,22 @@ def test_dependencias_nos_dois_sentidos_e_segunda_historia():
     assert 'Também verifica</span> [RF05](8-requisitos.md#rf05 "CA-01b.2"){ .fx-cod }' in f01
 
 
+def test_dependencia_parcial_mantem_a_condicao_nos_dois_sentidos():
+    md = SECAO10.replace("    **Depende de:** HU-01b\n", "    **Depende de:** HU-01b para o realizado\n")
+    pagina = fichas.compor_pagina(md, SECAO8, DADOS, [], lambda _: True, REPO)
+    f02, f01 = _ficha(pagina, "HU-02a"), _ficha(pagina, "HU-01b")
+    assert "Depende de</span> [HU-01b](#hu-01b){ .fx-cod } <span class='selo selo--concluido'" in f02
+    assert "</span> para o realizado" in f02
+    assert "Libera</span> [HU-02a](#hu-02a){ .fx-cod }" in f01
+    assert "(para o realizado)" in f01
+
+
+def test_condicao_da_dependencia():
+    assert fichas._condicao("HU-02a; HU-14 quando houver meta repactuada; HU-04a para o índice de evidências", "HU-04a") \
+        == "para o índice de evidências"
+    assert fichas._condicao("HU-03a, HU-03b", "HU-03b") == ""
+
+
 def test_regra_de_negocio_vem_com_o_texto():
     f = _ficha(_pagina(), "HU-01b")
     assert "[RN-01](8-requisitos.md#rn-01) Requisito e meta são registros distintos." in f

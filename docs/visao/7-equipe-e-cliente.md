@@ -18,7 +18,7 @@
 | 13/11/2026 | 1.13 | Resumo no início da seção; alcance da avaliação do Product Owner interno explicado só na 7.3, com a 7.1 apontando para ela; duplas e revisão remetidas às práticas de XP da página Processo e ritos; regras da daily remetidas à mesma página; exceção da Sprint 5 nas cerimônias; checkpoint de 29/10/2026 nas interações realizadas e validação de 05/11/2026 adiada a pedido do Instituto; "ambiente de homologação com dados de teste" no lugar de "protótipo evolutivo" na 7.3 (ATA-2026-11-12, D1) | Maria Eduarda Marques |
 | 16/11/2026 | 1.14 | Citação do livro-texto no sistema numérico das referências | Maria Eduarda Marques |
 | 16/11/2026 | 1.15 | Interação de 12/11 com o Instituto | Vinicius Vieira |
-| 16/11/2026 | 1.16 | Seção enxugada e mais visual: equipe, responsáveis por atividade de ER, ferramentas e áreas competentes em cartões; interações recolhidas em lista; etapas da validação em fluxo; ritos e duplas remetidos a Como trabalhamos; atas citadas pela data | Vinicius Vieira |
+| 16/11/2026 | 1.16 | Seção enxugada e mais visual: equipe, responsáveis por atividade de ER, ferramentas e áreas competentes em cartões; interações recolhidas em lista; etapas da validação em fluxo; ritos e duplas remetidos a Como trabalhamos; atas citadas pela data; participação da coordenação administrativo-financeira em 12/11 na 7.3.1, com a validação do relatório em aberto | Vinicius Vieira |
 
 **Em resumo.** Cinco estudantes, todos engenheiros de requisitos, com uma Product Owner interna e um Scrum Master (7.1). A comunicação passa pelo WhatsApp, pelo Google Meet e pelo GitHub, com ata publicada de cada reunião (7.2). Quem valida é o Instituto, por área competente; a avaliação da Product Owner interna é provisória (7.3).
 
@@ -181,7 +181,7 @@ O núcleo pedagógico **não é a única fonte de validação**. Cada conjunto d
 
 </div>
 
-A cobertura de cada área, encontro a encontro, está nas interações da seção 7.2. A consulta à área administrativo-financeira e à Diretoria de Projetos vem dos encaminhamentos da reunião presencial de 08/09/2026.
+A cobertura de cada área, encontro a encontro, está nas interações da seção 7.2. A consulta à área administrativo-financeira e à Diretoria de Projetos vem dos encaminhamentos da reunião presencial de 08/09/2026. Em 12/11/2026, a coordenação administrativo-financeira participou da validação em uso; a validação do relatório e da planilha por essa área segue em aberto ([seção 10.2.8](../requisitos/10-backlog.md#1028-validacao-com-o-instituto)).
 
 ### 7.3.2 O que a validação de 02/09/2026 cobre — e o que não cobre
 
