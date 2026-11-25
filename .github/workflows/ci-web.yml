@@ -25,10 +25,15 @@ permissions:
 jobs:
   visual:
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    # Três navegadores (RNF16): Chromium, Firefox e WebKit.
+    timeout-minutes: 30
     container:
       image: mcr.microsoft.com/playwright:v1.64.1-noble
       options: --ipc=host
+    # O container roda como root; o Firefox não abre com o HOME do pwuser
+    # ("Running Nightly as root in a regular user's session is not supported").
+    env:
+      HOME: /root
     defaults:
       run:
         working-directory: web
