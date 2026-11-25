@@ -66,7 +66,11 @@ function TabsPanel({ className, ...props }: ComponentProps<typeof TabsPrimitive.
   return (
     <TabsPrimitive.Panel
       data-slot="tabs-panel"
-      className={cn('flex flex-col gap-6 outline-none', className)}
+      // O painel recebe foco pelo Tab (padrão de abas da WAI-ARIA): o anel de foco aparece (WCAG 2.4.7).
+      className={cn(
+        'flex flex-col gap-6 rounded-lg outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-4 focus-visible:ring-offset-background',
+        className,
+      )}
       {...props}
     />
   );

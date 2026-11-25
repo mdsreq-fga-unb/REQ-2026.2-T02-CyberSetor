@@ -36,24 +36,19 @@ export function AccountMenu() {
 
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger
-        render={
-          <Button
-            variant="ghost"
-            className="gap-2 px-2"
-            aria-label={`Conta${name ? ` de ${name}` : ''}: ${profile}`}
-          />
-        }
-      >
+      {/* O nome acessível vem do texto do botão e começa pelo que está escrito nele (WCAG 2.5.3,
+          RNF15): no celular o nome fica só para o leitor de tela, no lugar de sumir. */}
+      <DropdownMenuTrigger render={<Button variant="ghost" className="gap-2 px-2" />}>
         <span
           aria-hidden="true"
           className="flex size-8 shrink-0 items-center justify-center rounded-full bg-primary text-xs font-semibold text-primary-foreground"
         >
           {initials(name ?? profile)}
         </span>
-        <span className="hidden max-w-48 truncate text-sm font-medium md:inline">
+        <span className="sr-only text-sm font-medium md:not-sr-only md:max-w-48 md:truncate">
           {name ?? profile}
         </span>
+        <span className="sr-only">{name ? `, conta: ${profile}` : ', conta'}</span>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="min-w-64">
         <div className="flex flex-col gap-0.5 px-3 py-2">
