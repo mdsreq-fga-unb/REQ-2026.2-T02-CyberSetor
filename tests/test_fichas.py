@@ -317,3 +317,21 @@ def test_le_as_colunas_certas_do_documento():
     p = fichas.ler_priorizacao(md10)
     assert p.esforco["RF10"] == "3" and p.esforco["RF46"] == "1 🔧"
     assert p.destino["RF16"] == "Incremento 3"
+
+
+def test_ficha_aponta_direto_para_andamento_na_gestao():
+    dados_com_sprint = {
+        "leitura": "25/11/2026, 10:00",
+        "com_quadro": True,
+        "historias": {
+            "HU-01b": {"situacao": "concluido", "issue": 156, "sprint": 6},
+            "HU-02a": {"situacao": "em-andamento", "issue": 13},
+        },
+    }
+    pagina = _pagina(dados=dados_com_sprint)
+    f01 = _ficha(pagina, "HU-01b")
+    f02 = _ficha(pagina, "HU-02a")
+    assert "[Andamento na Sprint 6](../gestao/sprints/tarefas-sprint-6.md#hu-01b)" in f01
+    assert "[Andamento na gestão](../gestao/como-trabalhamos.md#sprints)" in f02
+    sem_arquivo = _ficha(_pagina(dados=dados_com_sprint, existe=lambda _: False), "HU-01b")
+    assert "Andamento na" not in sem_arquivo

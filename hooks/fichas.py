@@ -387,11 +387,19 @@ def compor(f: Ficha, fichas: list[Ficha], s: Secao8, p: Priorizacao, dados: dict
             corpo.append(f"    - [{c}](8-requisitos.md#{c.lower()}) {s.rn.get(c, '')}")
 
     rodape = []
-    issue = (dados or {}).get("historias", {}).get(f.hu, {}).get("issue")
+    info_hu = (dados or {}).get("historias", {}).get(f.hu, {})
+    issue = info_hu.get("issue")
     if issue:
         rodape.append(f"[Issue #{issue} no GitHub]({repo.rstrip('/')}/issues/{issue})")
     else:
         rodape.append(f"[Issue no GitHub]({BUSCA_ISSUE.format(repo=repo.rstrip('/'), codigo=f.hu)})")
+    sprint_hu = info_hu.get("sprint")
+    if sprint_hu and existe(f"gestao/sprints/tarefas-sprint-{sprint_hu}.md"):
+        alvo_s = posixpath.relpath(f"gestao/sprints/tarefas-sprint-{sprint_hu}.md", posixpath.dirname(SECAO_HU))
+        rodape.append(f"[Andamento na Sprint {sprint_hu}]({alvo_s}#{f.hu.lower()})")
+    elif existe("gestao/como-trabalhamos.md"):
+        alvo_g = posixpath.relpath("gestao/como-trabalhamos.md", posixpath.dirname(SECAO_HU))
+        rodape.append(f"[Andamento na gestão]({alvo_g}#sprints)")
     codigos = [f.hu, *f.rfs]
     if f.hu in p.origem:
         codigos.append(p.origem[f.hu])

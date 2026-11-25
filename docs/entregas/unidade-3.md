@@ -7,10 +7,14 @@
 | 16/11/2026 | 1.2 | Capturas das telas do ambiente de homologação com dados de teste, cada uma com a história que atende (ATA-2026-11-12, A5 e A14) | Vinicius Vieira |
 | 16/11/2026 | 1.3 | Evidências do processo remetidas à página Como trabalhamos | Vinicius Vieira |
 | 16/11/2026 | 1.4 | Incorporação do vídeo de apresentação da Unidade 3 | Rodrigo Henrique |
+| 25/11/2026 | 1.5 | Destaque de fotografia histórica de 17/11/2026 e remissão às fontes vigentes posteriores | Rodrigo Henrique |
 
 ---
 
 ## 1. Visão geral da entrega
+
+!!! info "Fotografia histórica de 17/11/2026 (`u3-2026-11-17`)"
+    Esta página preserva o retrato da entrega congelada em **17/11/2026**, durante a Sprint 5. O replanejamento da Sprint 6 (22/11/2026), a evolução das histórias, as medições complementares de requisitos não funcionais e o tratamento dos retornos do Instituto são mantidos nas fontes vigentes: [Como trabalhamos](../gestao/como-trabalhamos.md#fontes-vigentes), [seção 6](../visao/6-cronograma.md), [seção 8](../requisitos/8-requisitos.md) e [seção 10](../requisitos/10-backlog.md).
 
 Esta página registra a entrega de 17/11/2026, durante a [Sprint 5](../gestao/sprints/sprint-5.md), que termina em 19/11/2026. A Unidade 3 tem três objetivos: **representação**, **verificação e validação** e **organização e atualização** dos requisitos. Os documentos vigentes estão nas seções da Visão de Produto e Projeto e nas [seções 8](../requisitos/8-requisitos.md), [9](../requisitos/9-dor-dod.md) e [10](../requisitos/10-backlog.md). Esta página só indica onde cada item está.
 

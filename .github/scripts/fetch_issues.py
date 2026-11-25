@@ -25,7 +25,7 @@ TOKEN = os.environ.get("GITHUB_TOKEN")
 FEEDBACK_FILE = "docs/entregas/debitos-u1.md"
 SPRINT_FILE = "docs/gestao/sprints/tarefas-sprint-{n}.md"
 SITUACAO_FILE = "situacao-historias.json"
-SPRINTS = [1, 2, 3, 4, 5]  # páginas geradas; acrescentar aqui e no nav do mkdocs.yml a cada sprint
+SPRINTS = [1, 2, 3, 4, 5, 6]  # páginas geradas; acrescentar aqui e no nav do mkdocs.yml a cada sprint
 PROFESSOR = "marsicanogeorge"
 
 if not TOKEN:
@@ -102,12 +102,17 @@ def campos_do_quadro(node):
     return valores
 
 
-def sprint_da_issue(campos):
+def sprint_da_issue(campos, node=None):
     valor = campos.get("sprint")  # ex.: "Sprint 2"
     if valor:
         m = re.search(r"(\d+)", valor)
         if m:
             return int(m.group(1))
+    if node:
+        for lbl in node.get("labels", {}).get("nodes", []):
+            m = re.match(r"^sprint:\s*(\d+)$", (lbl.get("name") or "").lower())
+            if m:
+                return int(m.group(1))
     return None
 
 
@@ -150,7 +155,7 @@ por_sprint = {n: [] for n in SPRINTS}
 for node in issues:
     if e_do_professor(node):
         continue
-    s = sprint_da_issue(campos_do_quadro(node))
+    s = sprint_da_issue(campos_do_quadro(node), node)
     if s in por_sprint:
         por_sprint[s].append(node)
 
@@ -187,7 +192,9 @@ for n in SPRINTS:
         campos = campos_do_quadro(node)
         tags = [l["name"] for l in node.get("labels", {}).get("nodes", []) if l["name"].startswith(("er:", "tipo:"))]
         tipo = ", ".join(f"`{t}`" for t in tags) if tags else "—"
-        texto += (f"| **#{node['number']}** | {node['title'].replace('|', '-')} | {tipo} | {responsaveis(node)} | "
+        m_hu = HISTORIA.match(node["title"])
+        ancora = f'<a id="{m_hu.group(1).lower()}"></a>' if m_hu else ""
+        texto += (f"| {ancora}**#{node['number']}** | {node['title'].replace('|', '-')} | {tipo} | {responsaveis(node)} | "
                   f"{situacao(node, campos)} | [Ver no GitHub]({node['url']}) |\n")
     caminho = SPRINT_FILE.format(n=n)
     os.makedirs(os.path.dirname(caminho), exist_ok=True)
@@ -214,7 +221,12 @@ historias = {}
 for node in issues:
     m = HISTORIA.match(node["title"])
     if m and not e_do_professor(node):
-        historias[m.group(1)] = {"situacao": selo(node, campos_do_quadro(node)), "issue": node["number"]}
+        campos = campos_do_quadro(node)
+        s = sprint_da_issue(campos, node)
+        registro = {"situacao": selo(node, campos), "issue": node["number"]}
+        if s:
+            registro["sprint"] = s
+        historias[m.group(1)] = registro
 with open(SITUACAO_FILE, "w", encoding="utf-8") as f:
     json.dump({"leitura": LEITURA, "com_quadro": com_quadro > 0, "historias": historias},
               f, ensure_ascii=False, indent=1, sort_keys=True)
