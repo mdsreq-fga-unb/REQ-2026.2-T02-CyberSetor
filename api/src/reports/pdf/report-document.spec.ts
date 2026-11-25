@@ -112,6 +112,102 @@ describe('documento do relatório em PDF (RF37, CA-05b.1)', () => {
   });
 });
 
+describe('números da massa com resultados conhecidos no PDF (RNF08)', () => {
+  // A mesma massa do teste e2e test/rnf08-integridade.e2e-spec.ts, como sai do relatório emitido.
+  const massa: [Partial<ReportGoalItemResponse>, string[]][] = [
+    [
+      {
+        unidade: 'participantes',
+        parametroPlanejado: 100,
+        valorAlcancado: 100,
+        percentual: 100,
+        alcance: 'CUMPRIDA',
+      },
+      ['100 participantes', '100 participantes', '100%', 'Cumprida'],
+    ],
+    [
+      {
+        unidade: 'participantes',
+        parametroPlanejado: 100,
+        valorAlcancado: 125,
+        percentual: 125,
+        alcance: 'CUMPRIDA',
+      },
+      ['100 participantes', '125 participantes', '125%', 'Cumprida'],
+    ],
+    [
+      {
+        unidade: 'turmas',
+        parametroPlanejado: 3,
+        valorAlcancado: 2,
+        percentual: 66.67,
+        alcance: 'PARCIALMENTE_CUMPRIDA',
+      },
+      ['3 turmas', '2 turmas', '66,67%', 'Parcialmente cumprida'],
+    ],
+    [
+      {
+        unidade: 'horas',
+        parametroPlanejado: 12.5,
+        valorAlcancado: 10,
+        percentual: 80,
+        alcance: 'PARCIALMENTE_CUMPRIDA',
+      },
+      ['12,5 horas', '10 horas', '80%', 'Parcialmente cumprida'],
+    ],
+    [
+      {
+        unidade: 'apresentações',
+        parametroPlanejado: 40,
+        valorAlcancado: 0,
+        percentual: 0,
+        alcance: 'NAO_CUMPRIDA',
+      },
+      ['40 apresentações', '0 apresentações', '0%', 'Não cumprida'],
+    ],
+    [
+      {
+        modalidadeAfericao: 'QUALITATIVA',
+        unidade: null,
+        parametroPlanejado: null,
+        valorAlcancado: null,
+        percentual: null,
+        alcance: 'PARCIALMENTE_CUMPRIDA',
+      },
+      ['—', '—', '—', 'Parcialmente cumprida'],
+    ],
+  ];
+
+  it('a tabela de metas mostra o pactuado, o alcançado, o percentual e o alcance de cada meta', () => {
+    const report: ReportForPdf = {
+      ...REPORT,
+      metas: massa.map(([dados], i) => goal({ id: `item-${i + 1}`, metaOrdem: i + 1, ...dados })),
+    };
+    const content = buildReportDocument(report).content as unknown[];
+    type Bloco = { table?: { headerRows?: number; body: unknown[][] } } | null;
+    const blocos = (JSON.parse(JSON.stringify(content)) as unknown[]).flat(2) as Bloco[];
+    const tabela = blocos.find((bloco) => bloco?.table?.headerRows === 1) as {
+      table: { body: unknown[][] };
+    };
+    const linhas = tabela.table.body
+      .slice(1)
+      .map((linha) =>
+        linha
+          .slice(1)
+          .map((celula) =>
+            typeof celula === 'string' ? celula : (celula as { text: string }).text,
+          ),
+      );
+    expect(linhas).toEqual(massa.map(([, esperado]) => esperado));
+
+    const text = JSON.stringify(content);
+    expect(text).toContain('"Cumprida",{"text":"2"');
+    expect(text).toContain('"Parcialmente cumprida",{"text":"3"');
+    expect(text).toContain('"Não cumprida",{"text":"1"');
+    expect(text).toContain('{"text":"Metas apuradas","bold":true},{"text":"6"');
+  });
+});
+
 describe('gerador do PDF (RNF08)', () => {
   const renderer = new ReportPdfRenderer();
 
