@@ -9,14 +9,36 @@ import type { Session } from './types';
 
 const REFRESH_LOCK = 'cybersetor-renovacao';
 
+/** Tempo de inatividade da sessão no servidor (RNF03). */
+export const SESSION_IDLE_TIMEOUT_MS = 30 * 60 * 1000;
+/**
+ * Antecedência do aviso (WCAG 2.2.1): 3 min antes dos 30 min para garantir
+ * pelo menos 2 min úteis mesmo considerando a janela de 60 s de escrita de
+ * `ultimoUsoEm` na API.
+ */
+export const SESSION_WARNING_LEAD_MS = 3 * 60 * 1000;
+
 let current: Session | null = null;
 let generation = 0;
 let refreshing: Promise<Session | null> | null = null;
+let lastActivityAt: number | null = null;
 const listeners = new Set<() => void>();
+const activityListeners = new Set<() => void>();
 
 function setCurrent(session: Session | null): void {
   current = session;
   listeners.forEach((listener) => listener());
+}
+
+function markActivity(): void {
+  lastActivityAt = Date.now();
+  activityListeners.forEach((listener) => listener());
+}
+
+function clearActivity(): void {
+  if (lastActivityAt === null) return;
+  lastActivityAt = null;
+  activityListeners.forEach((listener) => listener());
 }
 
 export function getSession(): Session | null {
@@ -28,8 +50,18 @@ export function subscribeSession(listener: () => void): () => void {
   return () => listeners.delete(listener);
 }
 
+export function getLastActivityAt(): number | null {
+  return lastActivityAt;
+}
+
+export function subscribeSessionActivity(listener: () => void): () => void {
+  activityListeners.add(listener);
+  return () => activityListeners.delete(listener);
+}
+
 export function clearLocalSession(): void {
   generation += 1;
+  clearActivity();
   setCurrent(null);
 }
 
@@ -46,11 +78,15 @@ async function requestRefresh(): Promise<Session | null> {
       withSessionCookie: true,
     });
     if (started !== generation) return current;
+    if (lastActivityAt === null) markActivity();
     setCurrent(session);
     return session;
   } catch (error) {
     if (error instanceof ApiError && error.status === 401) {
-      if (started === generation) setCurrent(null);
+      if (started === generation) {
+        clearActivity();
+        setCurrent(null);
+      }
       return started === generation ? null : current;
     }
     throw error;
@@ -74,6 +110,7 @@ export async function signIn(email: string, password: string): Promise<Session> 
     }),
   );
   generation += 1;
+  markActivity();
   setCurrent(session);
   return session;
 }
@@ -86,6 +123,7 @@ export async function signOut(): Promise<void> {
       apiRequest<void>('/auth/logout', { method: 'POST', withSessionCookie: true }),
     );
   } finally {
+    clearActivity();
     setCurrent(null);
   }
 }
@@ -94,13 +132,17 @@ async function withAccessToken<T>(run: (accessToken: string) => Promise<T>): Pro
   const used = current ?? (await refreshSession());
   if (!used) throw new ApiError(401, 'UNAUTHENTICATED', 'Sessão encerrada. Entre novamente.');
   try {
-    return await run(used.accessToken);
+    const result = await run(used.accessToken);
+    markActivity();
+    return result;
   } catch (error) {
     if (!(error instanceof ApiError) || error.status !== 401) throw error;
     if (current === null) throw error;
     const refreshed = current.accessToken !== used.accessToken ? current : await refreshSession();
     if (!refreshed) throw error;
-    return run(refreshed.accessToken);
+    const result = await run(refreshed.accessToken);
+    markActivity();
+    return result;
   }
 }
 
@@ -113,6 +155,11 @@ export function authorizedRequest<T>(
 
 export function authorizedDownload(path: string): Promise<ApiDownload> {
   return withAccessToken((accessToken) => apiDownload(path, { accessToken }));
+}
+
+/** Renova o registro de atividade da sessão no servidor sem desmontar a tela atual. */
+export async function keepSessionAlive(): Promise<void> {
+  await authorizedRequest('/auth/session');
 }
 
 export async function changePassword(currentPassword: string, newPassword: string): Promise<void> {
