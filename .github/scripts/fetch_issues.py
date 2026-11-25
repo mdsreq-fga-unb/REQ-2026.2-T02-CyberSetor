@@ -27,6 +27,7 @@ SPRINT_FILE = "docs/gestao/sprints/tarefas-sprint-{n}.md"
 SITUACAO_FILE = "situacao-historias.json"
 SPRINTS = [1, 2, 3, 4, 5, 6]  # páginas geradas; acrescentar aqui e no nav do mkdocs.yml a cada sprint
 PROFESSOR = "marsicanogeorge"
+HISTORIA = re.compile(r"^(HU-\d{2}[a-z]?)\s*:")
 
 if not TOKEN:
     print("GITHUB_TOKEN ausente. Execução ignorada.")
@@ -202,7 +203,6 @@ for n in SPRINTS:
         f.write(texto)
 
 # ---- situação das histórias, para os selos das seções 8 e 10 ----
-HISTORIA = re.compile(r"^(HU-\d{2}[a-z]?)\s*:")
 
 
 def selo(node, campos):
