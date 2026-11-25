@@ -21,6 +21,7 @@
 | 16/11/2026 | 2.12 | História dona de cada requisito funcional só na ficha da 10.1: tabela consolidada (10.2.4) sem a coluna Histórias | Vinicius Vieira |
 | 16/11/2026 | 2.13 | Sessão de validação de 12/11/2026 na 10.2.8; reunião de 12/11 registrada como realizada; ata de 29/10 citada como em conferência | Vinicius Vieira |
 | 16/11/2026 | 2.14 | Fichas enxutas (selos, requisitos como códigos e link para a issue) e priorização em visões: colunas MoSCoW, matriz 4 × 4 e mosaico do MVP, com as tabelas-fonte recolhidas; valor provisório marcado com o selo | Vinicius Vieira |
+| 25/11/2026 | 2.15 | Objeto avaliado em cada sessão da 10.2.8 (recorte do MVP ou incremento implementado), com remissão à seção 7.3.3 | Maria Eduarda Marques |
 
 ---
 
@@ -828,7 +829,7 @@ Os gargalos do processo atual (seção 8.4.3) ficam assim no primeiro recorte:
 
 ### 10.2.8 Validação com o Instituto
 
-O recorte foi validado com o Instituto em três sessões: a de 28/09/2026 aprovou o MVP, a de 08/10/2026 confirmou o recorte e a de 29/10/2026, com a demonstração da primeira entrega, respondeu parte dos pontos em aberto da [seção 8.6](8-requisitos.md#86-pontos-em-aberto-e-auditoria-de-lacunas). Os registros de 08/10 e de 29/10 são preliminares e aguardam a conferência do Instituto.
+O recorte foi validado com o Instituto em três sessões: a de 28/09/2026 aprovou o MVP, a de 08/10/2026 confirmou o recorte e a de 29/10/2026, com a demonstração da primeira entrega, respondeu parte dos pontos em aberto da [seção 8.6](8-requisitos.md#86-pontos-em-aberto-e-auditoria-de-lacunas). Os registros de 08/10 e de 29/10 são preliminares e aguardam a conferência do Instituto. Cada sessão avaliou um objeto diferente (o recorte do MVP ou o incremento implementado), e a [seção 7.3.3](../visao/7-equipe-e-cliente.md#733-avaliacoes-realizadas-e-o-que-cada-uma-cobre) diz o que cada uma cobre.
 
 **Alcance da validação:** o MVP foi aprovado pelo núcleo pedagógico, que também representou o Instituto em 08/10 e em 29/10. As funcionalidades que a [seção 7.3.1](../visao/7-equipe-e-cliente.md#731-area-competente-por-funcionalidade) atribui a outras áreas aguardam a validação da área competente, em especial o relatório e a planilha (HU-05a, HU-05b e HU-13), da área administrativo-financeira.
 
@@ -837,6 +838,7 @@ O recorte foi validado com o Instituto em três sessões: a de 28/09/2026 aprovo
 
     | Item | Registro |
     | :--- | :--- |
+    | Objeto avaliado | Recorte do MVP: histórias e priorização, sem sistema |
     | Data e formato | 28/09/2026, 16h, reunião online com gravação autorizada |
     | Participantes do Instituto | Clara Novaes, diretora pedagógica; Maria Eduarda |
     | Participantes da equipe | Vinicius Vieira, Rodrigo Henrique Donato, Lucas de Paula Leal, Caio Martins; Daniel Batista 🔧 |
@@ -851,6 +853,7 @@ O recorte foi validado com o Instituto em três sessões: a de 28/09/2026 aprovo
 ??? note "Sessão de 08/10/2026"
     | Item | Registro |
     | :--- | :--- |
+    | Objeto avaliado | Recorte do MVP, pelas histórias no quadro do projeto |
     | Data e formato | 08/10/2026, 16h30, reunião online com gravação autorizada; [ata](../gestao/atas/2026-10-08-validacao-mvp-instituto.md) |
     | Participantes do Instituto | Maria Eduarda (Duda), do núcleo pedagógico |
     | Participantes da equipe | Vinicius Vieira, Daniel Batista, Maria Eduarda Marques, Lucas de Paula Leal |
@@ -863,6 +866,7 @@ O recorte foi validado com o Instituto em três sessões: a de 28/09/2026 aprovo
 ??? note "Sessão de 29/10/2026"
     | Item | Registro |
     | :--- | :--- |
+    | Objeto avaliado | Incremento implementado: a primeira entrega, no ambiente de homologação |
     | Data e formato | 29/10/2026, 16h30, reunião online com demonstração no ambiente de homologação; ata em conferência pelo Instituto |
     | Participantes do Instituto | Clara Novaes e Maria Eduarda (Duda), do núcleo pedagógico |
     | Participantes da equipe | Vinicius Vieira, Maria Eduarda Marques, Caio Martins |
@@ -875,6 +879,7 @@ O recorte foi validado com o Instituto em três sessões: a de 28/09/2026 aprovo
 ??? note "Sessão de 12/11/2026"
     | Item | Registro |
     | :--- | :--- |
+    | Objeto avaliado | Incremento implementado, em uso pelo Instituto na homologação |
     | Data e formato | 12/11/2026, das 17h20 às 19h, reunião online; validação em uso, depois de o Instituto testar a homologação com as contas de teste; ata em conferência pelo Instituto |
     | Participantes do Instituto | Direção pedagógica, Núcleo Pedagógico e coordenação administrativo-financeira |
     | Participantes da equipe | Vinicius Vieira, Maria Eduarda Marques, Daniel Batista e Rodrigo Henrique Donato |

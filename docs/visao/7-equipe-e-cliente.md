@@ -19,6 +19,7 @@
 | 16/11/2026 | 1.14 | Citação do livro-texto no sistema numérico das referências | Maria Eduarda Marques |
 | 16/11/2026 | 1.15 | Interação de 12/11 com o Instituto | Vinicius Vieira |
 | 16/11/2026 | 1.16 | Seção enxugada e mais visual: equipe, responsáveis por atividade de ER, ferramentas e áreas competentes em cartões; interações recolhidas em lista; etapas da validação em fluxo; ritos e duplas remetidos a Como trabalhamos; atas citadas pela data; participação da coordenação administrativo-financeira em 12/11 na 7.3.1, com a validação do relatório em aberto | Vinicius Vieira |
+| 25/11/2026 | 1.17 | Avaliações realizadas por objeto avaliado (requisito, proposta, recorte do MVP ou incremento implementado), com participantes, resultados e pendências; avaliações internas como verificação; plano de validação do relatório e da planilha com a área administrativo-financeira (7.3.3) | Maria Eduarda Marques |
 
 **Em resumo.** Cinco estudantes, todos engenheiros de requisitos, com uma Product Owner interna e um Scrum Master (7.1). A comunicação passa pelo WhatsApp, pelo Google Meet e pelo GitHub, com ata publicada de cada reunião (7.2). Quem valida é o Instituto, por área competente; a avaliação da Product Owner interna é provisória (7.3).
 
@@ -188,3 +189,30 @@ A cobertura de cada área, encontro a encontro, está nas interações da seçã
 **Cobre:** depois de ler a **proposta de solução**, as representantes do núcleo pedagógico concordaram com o problema identificado. Isso confirma o problema da seção 1.4 e os objetivos da seção 2 **como ponto de partida**.
 
 **Não cobre:** a manifestação foi por mensagem, **antes** da elicitação presencial de 08/09/2026, e é **preliminar**. Não valida o que se descobriu depois: o produto centrado no ciclo do projeto financiado, a estrutura organizacional real do Instituto e o modelo de requisito/meta com indicador e parâmetro de aferição ([ata de 08/09](../gestao/atas/2026-09-08-reuniao-presencial-instituto.md)). Aprovação anterior não se estende a fatos posteriores.
+
+### 7.3.3 Avaliações realizadas e o que cada uma cobre
+
+As avaliações não são equivalentes. Aprovar o recorte do MVP não significa que as funcionalidades foram implementadas ou aceitas em uso, e validar uma proposta não cobre o comportamento implementado a partir dela. Cada avaliação vale para o objeto que foi avaliado:
+
+- **Requisito ou história:** o texto, os critérios de aceitação e a prioridade, antes de existir sistema.
+- **Proposta:** uma organização ou tela futura, apresentada ao Instituto antes de ser implementada.
+- **Recorte do MVP:** o conjunto de histórias que forma a primeira versão.
+- **Incremento implementado:** o sistema construído, exercitado no ambiente de homologação com dados de teste.
+
+| Data | Objeto avaliado | Quem avaliou | O que se considerou | Resultado | Pendências e correções |
+|---|---|---|---|---|---|
+| 02/09/2026 | Proposta de solução | Núcleo pedagógico, por mensagem | O problema e os objetivos | Concordância **preliminar** com o problema (7.3.2) | Não cobre o que se descobriu na elicitação de 08/09 |
+| 28/09/2026 | Recorte do MVP | Diretora pedagógica e núcleo pedagógico | Quinze histórias em quatro jornadas, com valor de 4 a 1 | MVP aprovado, com ajustes | Ordem dos incrementos e valor da HU-15, resolvidos em 08/10 ([10.2.8](../requisitos/10-backlog.md#1028-validacao-com-o-instituto)) |
+| 08/10/2026 | Recorte do MVP | Núcleo pedagógico | As histórias do MVP no quadro do projeto | Recorte confirmado; relatório e planilha sem a condição de capacidade | Divergências com o catálogo levadas à [seção 8.6](../requisitos/8-requisitos.md#86-pontos-em-aberto-e-auditoria-de-lacunas) |
+| 29/10/2026 | Incremento implementado | Núcleo pedagógico | Painel, perfis, instrumentos, projetos, metas e inscrição pública, na homologação | Rumo do produto confirmado | Cadastro repetido como aviso, implementado na lista de inscritos (CA-07a.8); pedidos novos na seção 8.6 |
+| 12/11/2026 | Incremento implementado, em uso | Direção pedagógica, Núcleo Pedagógico e coordenação administrativo-financeira | Percurso do projeto e das metas, atividades e inscrições, relatório e perfis, depois de o Instituto testar com as contas de teste | Projeto piloto liberado; pedidos S1 a S20 | Destino de cada pedido na seção 8.6; acesso pelo celular (S20) em correção; reorganização do projeto como proposta da Sprint 6 |
+
+**Avaliações internas.** A Sprint Review sem o Instituto, a revisão cruzada entre duplas, a conferência da [Definition of Ready](../requisitos/9-dor-dod.md#91-definition-of-ready-dor) e os testes automatizados são **verificação**: confirmam que o requisito está bem escrito e que o incremento cumpre os critérios de aceitação, mas não que atende à necessidade do Instituto. O que é verificado internamente fica *pendente de validação externa* até a sessão seguinte com a área competente.
+
+**Plano de validação com a área administrativo-financeira.** O relatório de execução (HU-05a), o PDF diagramado (HU-05b) e a planilha (HU-13) foram aprovados no recorte do MVP pelo núcleo pedagógico, mas a área que responde por eles (7.3.1) ainda não os validou:
+
+1. **Objeto:** o relatório, o PDF e a planilha implementados, no ambiente de homologação, com os dados de teste de um projeto com metas atingidas, não atingidas e com justificativa.
+2. **Quem avalia:** a coordenação administrativo-financeira, com o acompanhamento da Product Owner interna.
+3. **O que se considera:** os critérios de aceitação das três histórias e três perguntas: o relatório tem o que a prestação de contas ao financiador exige; a trava por falta de justificativa corresponde à regra da área; os formatos da planilha servem à conferência da área.
+4. **Quando:** no próximo encontro com o Instituto, a combinar com a direção pedagógica.
+5. **Registro:** o resultado vai para a ata e para a [seção 10.2.8](../requisitos/10-backlog.md#1028-validacao-com-o-instituto); falhas e dúvidas viram itens no backlog, com nova verificação depois da correção. Até lá, as três histórias seguem aprovadas apenas no recorte.

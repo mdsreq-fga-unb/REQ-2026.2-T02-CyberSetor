@@ -7,6 +7,7 @@
 | 17/09/2026 | 1.2 | Participantes por data conforme a ata; nomenclatura das características alinhada à seção 2; capacidades previstas no lugar de identificadores ainda não atribuídos; figura com legenda numerada | Vinicius Vieira |
 | 13/11/2026 | 1.3 | Aviso de registro de 17/09/2026: códigos de história anteriores à divisão da seção 10.1, com remissão à cobertura vigente nas seções 8.4.3 e 10.2.6 | Maria Eduarda Marques |
 | 16/11/2026 | 1.4 | Seção 4 só com o gargalo e o impacto no processo atual; os requisitos que cobrem cada gargalo ficam na seção 8.4.3, sem os códigos de história anteriores à divisão da seção 10.1 | Vinicius Vieira |
+| 25/11/2026 | 1.5 | Aviso de que o modelo representa o processo atual (AS-IS), distinto do comportamento futuro do produto e da reorganização pedida em 12/11/2026 | Maria Eduarda Marques |
 
 | Campo | Informação |
 | :--- | :--- |
@@ -15,6 +16,9 @@
 | **Rastreabilidade** | OE01, OE02, CP1, CP2, CP7, CP8, Lei 13.019/2014 (MROSC) |
 
 ---
+
+!!! info "Processo atual, e não processo futuro"
+    Este modelo representa o processo **como o Instituto o executava antes do sistema**, observado em 08/09 e 15/09/2026. Ele não é o desenho do processo futuro: o comportamento do produto está nas histórias e nos critérios de aceitação da [seção 10.1](10-backlog.md#101-backlog-geral) e é avaliado no ambiente de homologação. A reorganização do projeto pedida pelo Instituto em 12/11/2026 muda o produto, e não este modelo. A finalidade de cada representação está na [seção 5.1](../visao/5-engenharia-requisitos.md#51-atividades-e-tecnicas-de-er).
 
 !!! note "Registro de 17/09/2026"
     A seção 1 usa os códigos de história da época (HU-01 a HU-06), antes da divisão das histórias na [seção 10.1](10-backlog.md#101-backlog-geral). A cobertura vigente de cada gargalo está na [seção 8.4.3](8-requisitos.md#843-sintese-de-cobertura) e, no MVP e nos incrementos, na [seção 10.2.6](10-backlog.md#1026-mvp-e-incrementos).
