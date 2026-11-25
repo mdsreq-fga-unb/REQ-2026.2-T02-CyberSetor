@@ -38,6 +38,7 @@ const FORM: PublicForm = {
 describe.each([
   ['celular', 360, 2000],
   ['desktop', 1280, 1700],
+  ['tela-larga', 1920, 1700],
 ])('formulario publico no %s', (device, width, height) => {
   beforeEach(async () => {
     await page.viewport(width, height);
@@ -64,6 +65,9 @@ describe.each([
     await expect.element(screen.getByText('Confirmar inscrição')).toBeVisible();
     await expect
       .element(screen.getByTestId('frame'))
-      .toMatchScreenshot(`inscricao-publica-${device}`);
+      // O campo de data vazio mostra a data do dia no WebKit; a máscara mantém a foto estável.
+      .toMatchScreenshot(`inscricao-publica-${device}`, {
+        screenshotOptions: { mask: [page.getByLabelText('Data de nascimento')] },
+      });
   });
 });

@@ -28,6 +28,7 @@ function json(body: unknown): Response {
 describe.each([
   ['celular', 360, 900],
   ['desktop', 1280, 800],
+  ['tela-larga', 1920, 800],
 ])('inscrição presencial assistida no %s', (device, width, height) => {
   beforeEach(async () => {
     await page.viewport(width, height);
@@ -93,6 +94,9 @@ describe.each([
     await expect.element(page.getByText(/usa os dados deste formulário/)).toBeVisible();
     await expect
       .element(page.getByRole('dialog'))
-      .toMatchScreenshot(`inscricao-assistida-${device}`);
+      // O campo de data vazio mostra a data do dia no WebKit; a máscara mantém a foto estável.
+      .toMatchScreenshot(`inscricao-assistida-${device}`, {
+        screenshotOptions: { mask: [page.getByLabelText('Data de nascimento')] },
+      });
   });
 });

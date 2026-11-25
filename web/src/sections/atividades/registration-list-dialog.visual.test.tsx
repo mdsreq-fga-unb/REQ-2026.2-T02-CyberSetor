@@ -57,6 +57,7 @@ function json(body: unknown): Response {
 describe.each([
   ['celular', 360, 900],
   ['desktop', 1280, 800],
+  ['tela-larga', 1920, 800],
 ])('inscritos da atividade no %s', (device, width, height) => {
   beforeEach(async () => {
     await page.viewport(width, height);
