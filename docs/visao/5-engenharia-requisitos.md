@@ -12,6 +12,7 @@
 | 13/11/2026 | 1.7 | Técnicas de representação, verificação e organização ligadas aos artefatos publicados: Rich Picture, mapa de stakeholders, modelo BPMN, Definition of Ready, matriz de rastreabilidade e atas; "ambiente de homologação com dados de teste" no lugar de "protótipo" e "prototipação" (ATA-2026-11-12, D1) | Maria Eduarda Marques |
 | 16/11/2026 | 1.8 | Citações do livro-texto no sistema numérico das referências | Maria Eduarda Marques |
 | 16/11/2026 | 1.9 | Atividades em cartões e fases do ScrumXP em fluxo, no lugar da tabela | Vinicius Vieira |
+| 25/11/2026 | 1.10 | Finalidade, dúvida apoiada, versão e requisitos e histórias de cada representação, com o modelo BPMN como processo atual e a proposta de reorganização de 12/11 distinta do incremento implementado | Maria Eduarda Marques |
 
 As seis atividades de Engenharia de Requisitos adotadas pela disciplina não são etapas sequenciais: elas se repetem e se entrelaçam ao longo do desenvolvimento ([1](../referencias.md#ref-1), §5.3). A 5.1 liga cada atividade às técnicas e aos artefatos publicados; a 5.2 mostra em que fase do ScrumXP cada uma acontece.
 
@@ -81,6 +82,19 @@ As seis atividades de Engenharia de Requisitos adotadas pela disciplina não sã
 **Triangulação.** Cruza entrevistas, documentos e observações para separar a visão formal da organização da prática cotidiana. Exemplo: na visita de 21/09, a Matriz de Aquisição foi apontada como o instrumento mais crítico da rotina administrativa; cruzada com o escopo acordado em 08/09, que deixa o controle financeiro fora do produto, ela não virou requisito funcional e ficou como ponto em aberto, com a fronteira a definir com a área administrativo-financeira ([seção 8.6](../requisitos/8-requisitos.md#86-pontos-em-aberto-e-auditoria-de-lacunas), item 2).
 
 **Homologação no lugar de protótipo.** A equipe não faz protótipo de baixa fidelidade em ferramenta de desenho. O esboço de tela orienta a dupla e não é publicado; o Instituto avalia o sistema publicado no ambiente de homologação, com dados de teste; as referências dos testes visuais, em 360 e 1280 px, verificam a tela.
+
+**Para que serve cada representação.** As representações têm finalidades diferentes: umas retratam o trabalho como ele é feito hoje, outras o comportamento que o produto passa a ter. A tabela diz a dúvida que cada uma ajuda a resolver, a que versão ela corresponde e onde ela se concretiza em requisitos e histórias.
+
+| Representação | O que retrata | Dúvida que ajuda a resolver | Versão | Onde se concretiza |
+|---|---|---|---|---|
+| [Rich Picture](1-cenario-atual.md#13-rich-picture-e-mapeamento-do-fluxo-do-problema) | Cenário atual, observado | Quem participa do ciclo do projeto financiado e em que ponto a informação se perde | Seção 1, refeito em 28/09/2026 com o que se observou em 08/09 e 21/09 | Problema da [seção 1.4](1-cenario-atual.md#14-identificacao-e-dimensionamento-empirico-do-problema) e objetivos da [seção 2](2-solucao-proposta.md) |
+| [Mapa de stakeholders](1-cenario-atual.md#16-mapa-e-matriz-de-stakeholders) | Áreas e pessoas do Instituto, hoje | Quem usa, quem decide e quem valida cada conjunto de funcionalidades | Seção 1, atualizado em 30/09/2026 | Área competente por funcionalidade ([seção 7.3.1](7-equipe-e-cliente.md#731-area-competente-por-funcionalidade)) |
+| [Modelo BPMN](../requisitos/b1-bpmn-processo-atual.md) | Processo atual (AS-IS), sem o sistema | Onde o fluxo de projetos, inscrições e prestação de contas trava | Anexo B1, modelado em 17/09/2026 com o observado em 08/09 e 15/09 | Gargalos G01 a G06, cobertos pelos requisitos da [seção 8.4.3](../requisitos/8-requisitos.md#843-sintese-de-cobertura) |
+| [Histórias e critérios de aceitação](../requisitos/10-backlog.md#101-backlog-geral) | Comportamento futuro do produto, história a história | O que o sistema faz, para quem, e como se verifica que fez | Backlog vigente da seção 10.1 | Requisitos funcionais da [seção 8.2](../requisitos/8-requisitos.md#82-lista-de-requisitos-funcionais-rfs) |
+| Ambiente de homologação com dados de teste | Incremento implementado | Se o comportamento construído atende ao uso real de cada área | O incremento demonstrado em cada sessão da [seção 10.2.8](../requisitos/10-backlog.md#1028-validacao-com-o-instituto) | Histórias concluídas pela [DoD](../requisitos/9-dor-dod.md#92-definition-of-done-dod) |
+| Proposta de reorganização do projeto | Organização futura pedida em 12/11/2026: o projeto como porta de entrada, metas por etapa, comprovação ligada à meta e o vocabulário do Instituto | Se a nova organização desfaz o bloqueio de fluxo relatado em 12/11 | Proposta da Sprint 6, posterior ao incremento validado em 12/11 | Pedidos S1 e S3 a S7 da [ata de 12/11](../gestao/atas/2026-11-12-validacao-instituto.md); afeta as histórias de projeto e metas (HU-01a, HU-01b, HU-02a), a comprovação ligada à meta (HU-04a) e, pelo pedido S10, a confirmação da vaga (HU-07c), conforme o destino de cada pedido na [seção 8.6](../requisitos/8-requisitos.md#86-pontos-em-aberto-e-auditoria-de-lacunas) |
+
+O modelo BPMN continua sendo o retrato do processo observado: a reorganização pedida em 12/11 muda o produto, e não o processo que o Instituto executava antes dele. Validar uma representação também não valida outra: a aprovação da proposta de reorganização não cobre o comportamento implementado a partir dela, que volta ao Instituto na homologação ([seção 7.3.3](7-equipe-e-cliente.md#733-avaliacoes-realizadas-e-o-que-cada-uma-cobre)).
 
 ## 5.2 Engenharia de Requisitos e o ScrumXP
 
