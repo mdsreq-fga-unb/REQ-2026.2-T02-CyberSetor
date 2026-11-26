@@ -39,6 +39,7 @@
 | 16/11/2026 | 2.25 | Notas da 8.5 em linguagem direta e títulos sem os códigos das características, com os endereços antigos mantidos; abertura da 8.4 sem repetir a definição de rastreabilidade; marcador de valor provisório nomeado como selo | Vinicius Vieira |
 | 25/11/2026 | 2.26 | Relação entre requisitos e histórias na 8.1; distinção entre cobertura especificada e atendimento por recorte na 8.4.3; governança de itens provisórios e consolidação das solicitações de 12/11/2026 na 8.6 | Rodrigo Henrique |
 | 26/11/2026 | 2.27 | Remoção de repetição na 8.4.3 e de termos tecnológicos na 8.6; alinhamento do item 22 à publicação da ata de 22/11/2026 | Rodrigo Henrique |
+| 26/11/2026 | 2.28 | Registro do percurso contínuo de decisões de Engenharia de Requisitos (08/09 a 12/11/2026) na 8.6 | Rodrigo Henrique |
 
 ---
 
@@ -417,6 +418,15 @@ A cobertura no MVP e nos incrementos está na [seção 10.2.6](10-backlog.md#102
     | **CA-14.5** (metas fora da nova vigência) | Sinalização sem alteração automática dos prazos das metas | Diretoria de Projetos | Piloto com aditivo | Destaque visual nas metas fora da vigência e regra de validação na edição |
     | **RF40 e HU-16** (administração e contas individuais) | Conta por pessoa e perfil técnico de administração do sistema | Direção e responsável técnico na transferência | Definição de transferência (seção 6.4) | Políticas de criação de contas e revisão de matriz de permissões (seção 8.5.1) |
     | **Valores herdados 🔧** (`HU-03b`, `HU-05b`, `HU-07c`, `HU-07d`, `HU-09a`, `HU-15a`, `HU-15b`, `HU-16`) | Valor de negócio proposto pela equipe com base na história de origem | Instituto (por área competente) | Validação da Sprint 6 e fechamento do piloto | Reordenação eventual de incrementos posteriores; sem bloqueio de testes automatizados |
+
+??? note "Percurso das decisões de Engenharia de Requisitos: da observação à implementação e validação"
+    | Marco / interação | Decisão ou achado de Engenharia de Requisitos | Transformação em requisito / especificação | Efeito em implementação e validação |
+    | :--- | :--- | :--- | :--- |
+    | **08/09 e 15/09 · Visitas iniciais e alinhamento** | Mapeamento das rotinas do ciclo de projetos, dor central no controle de metas e prazos e restrições de uso em campo. | Estruturação da Visão do Produto, modelagem do processo atual ([Anexo B1](b1-bpmn-processo-atual.md)), catálogo inicial de `RF`/`RNF` e histórias do MVP. | Base para priorização dos incrementos iniciais e validação contínua de aderência ao fluxo do Instituto. |
+    | **21/09 · Reunião presencial no Instituto** | Detalhamento do vínculo entre instrumento, metas, atividades e inscrições e necessidade de coleta rápida pelo celular. | Formalização das regras de negócio `RN-01` a `RN-07`, critérios de aceitação testáveis (`CA-*`) e requisitos do formulário público com QR Code. | Orientou o Incremento 1 e permitiu verificação objetiva dos primeiros fluxos publicados em homologação. |
+    | **28/09 e 08/10 · Validações do MVP** | Retornos operacionais sobre duplicidade de inscritos, autorização de imagem, prazos de metas e ajustes nos relatórios. | Revisão de critérios do catálogo, inclusão de novos requisitos (`RF42` a `RF47`) e sinalização transparente de pontos provisórios (`🔧`). | Gerou ajustes incrementais nos ciclos seguintes e novas baterias de testes unitários, de contrato e de interface. |
+    | **29/10 · Checkpoint com o Instituto** | Confirmação de demandas ligadas a exportação de relatórios/presenças, prorrogação por termo aditivo e prévia documental. | Refinamento de `HU-05a`, `HU-13` e `HU-14` com critérios explícitos e amarração na matriz de rastreabilidade (`8.4`). | Implementação entregue nos incrementos 2 e 3 com cobertura automatizada e evidência vinculada às histórias. |
+    | **12/11 · Validação em uso com o Instituto** | Ensaio guiado em homologação identificou vinte observações (`S1` a `S20`) de terminologia, agrupamento por projeto/SEI e acesso móvel. | Triagem por valor de negócio, esforço e DoR em planejamento da equipe, separando ajustes do escopo vigente, pendências de confirmação e itens fora desta versão. | Direcionou a remodelação prioritária na Sprint 6, acompanhada de testes e nova validação prevista antes da entrega final. |
 
 ??? note "Consolidação das solicitações da validação de 12/11/2026 (item 22)"
     A validação em uso de 12/11/2026 registrou vinte solicitações e observações (`S1` a `S20`), remetidas pela própria ata à avaliação de valor, esforço e Definition of Ready pela equipe. Enquanto a ata da Planning de 22/11/2026 segue em publicação no [índice de reuniões](../gestao/atas/index.md), o encaminhamento registrado é:
