@@ -16,6 +16,7 @@
 | 13/11/2026 | 1.11 | "Ambiente de homologação com dados de teste" no lugar de "protótipo evolutivo" no quadro comparativo (ATA-2026-11-12, D1) | Maria Eduarda Marques |
 | 16/11/2026 | 1.12 | Citações no sistema numérico das referências | Maria Eduarda Marques |
 | 16/11/2026 | 1.13 | Camadas em diagrama, razões e etapas do ScrumXP em cartões e fluxo, quadro comparativo enxuto, alternativas descartadas em lista; ritos, cadência e fluxo de trabalho remetidos a "Como trabalhamos" | Vinicius Vieira |
+| 26/11/2026 | 1.14 | Evidências objetivas de aplicação das práticas de ScrumXP nos incrementos produzidos e tratamento de incrementos parciais | Rodrigo Henrique |
 
 As decisões seguem as três camadas metodológicas do referencial da disciplina: **abordagem**, **ciclo de vida** e **processo**. Os ritos, a cadência e o fluxo de trabalho do dia a dia estão em [Como trabalhamos](../gestao/como-trabalhamos.md#ciclo).
 
@@ -64,6 +65,17 @@ As decisões seguem as três camadas metodológicas do referencial da disciplina
 </div>
 
 **Práticas selecionadas.** Do Scrum: Product Backlog único no GitHub Projects, ordenado pelo impacto na rotina do Instituto; sprints de duas semanas; Planning, Review com o cliente e Retrospectiva ([sprints](../gestao/como-trabalhamos.md#sprints)). Do XP: programação em pares por duplas de épico ([como é aplicada](../gestao/como-trabalhamos.md#ciclo)); integração contínua com compilação, estilo e testes a cada pull request ([fluxo no GitHub](../gestao/como-trabalhamos.md#fluxo-no-github)); testes de aceitação a partir dos critérios das histórias; propriedade coletiva do código e refatoração dentro da história.
+
+### Evidências de aplicação das práticas de ScrumXP
+
+A adoção efetiva das práticas escolhidas é verificável nos artefatos e no histórico de integração de cada linha do repositório:
+
+| Prática de ScrumXP | Como foi executada nos incrementos | Evidência verificável |
+| :--- | :--- | :--- |
+| **Integração contínua e pequenas releases** | Três linhas independentes (`docs-homologacao`, `api-develop` e `web-develop`) com verificação automática em todo pull request e publicação progressiva em homologação com tags de marco (`u1`, `u2`, `u3`). | Pipelines em execução contínua: compilação estrita e 123 testes de hooks na documentação; formatação, linter, tipagem estrita, verificação de modelos de e-mail, testes e build na API; linter, tipagem, testes unitários e regressão visual a `360` e `1280 px` no front, sustentando dezenas de pull requests integrados em API e front. |
+| **Testes de aceitação e verificação de RNFs** | Critérios de aceitação convertidos em testes unitários, de integração por perfil e visuais, somados a medições em homologação. | Suítes de API e front vinculadas às histórias do MVP; medições de desempenho (`RNF12` em `1,78 s` e `RNF13` em `2,13 s`) em `14/11/2026` e verificações de integridade (`RNF08`), acessibilidade (`RNF15`) e compatibilidade entre navegadores (`RNF16`) conduzidas na Sprint 6. |
+| **Duplas, revisão por pares e propriedade coletiva** | Atribuição por épico em duplas, revisão obrigatória por integrante independente antes de integrar e proibição de envio direto às branches principais. | Bloqueio automático de commits fora de pull request integrado (`guarda-de-branches` e `verificar-push`) e registro formal de revisão nas Sprints 3 a 6 (duas aprovações em `05/11`–`22/11`; uma aprovação independente na Sprint 6 com pedido explícito em pontos cruciais). |
+| **Tratamento de incrementos parciais e replanejamento** | Balanço explícito do que foi integrado, do que ficou pendente e da redistribuição ao fim de cada sprint. | Registro de 73 de 84 critérios implementados na Review 4, fechamento parcial da Sprint 5 e replanejamento formal da Sprint 6 em `22/11/2026` consolidados na [seção 6.1.1](6-cronograma.md#611-resultados-efetivos-por-sprint-replanejamento-e-viabilidade). |
 
 ## 4.2 Quadro Comparativo: OpenUP x ScrumXP
 
