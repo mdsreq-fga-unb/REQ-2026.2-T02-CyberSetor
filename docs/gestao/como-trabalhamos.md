@@ -5,6 +5,7 @@
 | 16/11/2026 | 1.0 | Página única do processo da equipe, com ciclo, sprints, fluxo no GitHub, dailies e competências, que reúne as páginas de processo, boas práticas no GitHub, dailies, sprints e matriz de competências | Vinicius Vieira |
 | 16/11/2026 | 1.1 | Período, objetivo e entrega de cada sprint só na seção 6.1, com as abas mostrando a situação e os atalhos; atas citadas pela data | Vinicius Vieira |
 | 25/11/2026 | 1.2 | Mapa de fontes vigentes, fechamento da Sprint 5, abertura da Sprint 6 e regra de revisão aprovada em 22/11/2026 | Rodrigo Henrique |
+| 26/11/2026 | 1.3 | Ajuste do período de duas aprovações (Sprint 5) e redação da proposta apresentada na Sprint 6 | Rodrigo Henrique |
 
 A equipe adota o **ScrumXP**: Scrum para gerenciar o trabalho e práticas do eXtreme Programming para a engenharia. A fundamentação da escolha está na [seção 4](../visao/4-estrategia-esw.md); papéis, frequência e duração dos ritos, na [seção 7](../visao/7-equipe-e-cliente.md#72-comunicacao).
 
@@ -84,7 +85,7 @@ Cada sprint numa aba, com a situação e os atalhos para o plano, as tarefas e a
 
 === "Sprint 6"
 
-    **Em andamento** · 22/11 a 01/12/2026 — remodelação do front validada com o Instituto, fechamento dos critérios e medições pendentes do MVP, validação final, manual de utilização e estabilização ([Planning de 22/11](atas/index.md))
+    **Em andamento** · 22/11 a 01/12/2026 — remodelação do front a partir da proposta apresentada ao Instituto, fechamento dos critérios e medições pendentes do MVP, validação final, manual de utilização e estabilização (Planning de 22/11/2026; ata em publicação no [índice de reuniões](atas/index.md))
 
     [Tarefas](sprints/tarefas-sprint-6.md) · [Calendário](../visao/6-cronograma.md#61-calendario-vigente)
 
@@ -170,7 +171,7 @@ O histórico de commits e de pull requests é a evidência do processo. A docume
 **Regras essenciais**
 
 1. Toda mudança entra por pull request; nenhum push direto nas seis branches fixas.
-2. **Revisão independente:** nas Sprints 4 e 5 vigoraram **duas aprovações**; na Sprint 6 (Planning de 22/11/2026), passa a vigorar **uma aprovação** por integrante de outra dupla ou pelo integrante independente, devendo o autor pedir nova revisão explícita em pontos cruciais.
+2. **Revisão independente:** de 05/11 a 22/11/2026 (Sprint 5) vigoraram **duas aprovações** ([ata de 05/11](atas/2026-11-05-sprint-review-retrospectiva-planning.md), decisão D3); na Sprint 6 (Planning de 22/11/2026), passa a vigorar **uma aprovação** por integrante de outra dupla ou pelo integrante independente, devendo o autor pedir nova revisão explícita em pontos cruciais.
 3. Com a aprovação necessária atendida e sem conflito, **o próprio autor faz o merge**, por *merge commit*; sem *squash*; conflito se resolve com *rebase*.
 4. Referência de até cerca de **1.000 linhas** por pull request, sem contar as de teste, e de 24 horas para a revisão; nenhuma das duas é regra estrita.
 5. **Sem código na linha da documentação:** o `guarda-de-branches` confere origem e destino de todo pull request.
