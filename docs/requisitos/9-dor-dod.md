@@ -13,6 +13,8 @@
 | 16/11/2026 | 1.6 | Citações no sistema numérico das referências | Maria Eduarda Marques |
 | 16/11/2026 | 1.7 | Verificação de desempenho com o RNF12 e com o registro das condições de cada medição | Vinicius Vieira |
 | 16/11/2026 | 1.8 | Fluxo visual da DoR à validação do Instituto e critérios em listas curtas, com o mesmo conteúdo; verificação por classe de requisito não funcional recolhida; valor provisório marcado com o selo | Vinicius Vieira |
+| 25/11/2026 | 1.9 | Evidência de aplicação da DoR nas sprints e acompanhamento dos pontos provisórios (🔧) | Rodrigo Henrique |
+| 26/11/2026 | 1.10 | Ligação direta da conferência da DoR aos registros publicados nos planos das Sprints 4 e 5 e na ata de 05/11/2026 | Rodrigo Henrique |
 
 ---
 
@@ -44,6 +46,11 @@ Uma história de usuário está pronta quando:
     - Impedem a entrada: ator ou resultado indefinido; critério de aceitação cujo comportamento central depende de resposta do Instituto; dependência de história que não esteja entregue nem planejada antes dela na mesma sprint.
     - Admitem valor provisório marcado com o selo 🔧, com responsável e prazo registrados na história: parâmetro numérico, campo opcional, regra cujo comportamento padrão já está no critério de aceitação e valor de negócio de história que entra por obrigação legal, por dependência técnica ou herdado de história validada.
 9. **Com o fluxo da tela nos critérios de aceitação**, quando há tela nova ou alterada: campos, ações, estado vazio e recusas próprias da história; carregamento, falha de carregamento e alteração simultânea seguem a [RNF15](8-requisitos.md#rnf15). O esboço da tela é material de trabalho da dupla e não entra na história.
+
+??? note "Aplicação da DoR nas sprints e acompanhamento dos pontos provisórios (🔧)"
+    No refinamento de cada sprint, a dupla responsável confere os nove itens acima antes de mover a história para o Sprint Backlog. Os registros publicados dessa conferência constam no [plano da Sprint 4](../gestao/sprints/sprint-4.md) (tabela de conferência em 26/10/2026 das dezesseis histórias selecionadas, com valor de negócio, pendências admitidas com 🔧 e critérios de tela), no [plano da Sprint 5](../gestao/sprints/sprint-5.md#61-historias-selecionadas-para-a-sprint) e na [ata de 05/11/2026](../gestao/atas/2026-11-05-sprint-review-retrospectiva-planning.md).
+
+    Histórias que possuíam apenas parâmetros secundários ou valores herdados marcados com 🔧 ingressaram com base no item 8, porque o comportamento central e as regras de recusa já estavam fixados nos critérios de aceitação, viabilizando implementação e testes automatizados determinísticos. Em contrapartida, pedidos cujo comportamento central ou impacto em proteção de dados dependia de definição institucional (como perguntas personalizadas com possíveis dados pessoais sensíveis, envio por terceiros sem conta ou rotinas financeiras) foram barrados pela DoR e mantidos na [seção 8.6](8-requisitos.md#86-pontos-em-aberto-e-auditoria-de-lacunas). Para cada ponto provisório relevante aceito em desenvolvimento, o responsável pela confirmação, o momento previsto de validação e o impacto constam na tabela de governança dos comportamentos provisórios da [seção 8.6](8-requisitos.md#86-pontos-em-aberto-e-auditoria-de-lacunas).
 
 ## 9.2 Definition of Done (DoD)
 

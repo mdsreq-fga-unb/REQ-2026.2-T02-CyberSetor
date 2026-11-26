@@ -37,6 +37,9 @@
 | 16/11/2026 | 2.23 | RNF12 com as condições da medição; RNF13 coerente com a geração do PDF na primeira versão e com as miniaturas do incremento 2; massa de referência definida na 8.5.3; item 21 da 8.6 alinhado; RF09 com o horário da atividade; item 14 da 8.6 com a reunião de 12/11 realizada e os retornos em análise | Vinicius Vieira |
 | 16/11/2026 | 2.24 | Cartões sem gargalo nem link de matriz; matrizes 8.4.1 a 8.4.3 e notas da 8.5 recolhidas; pontos em aberto da 8.6 agrupados por tema, com o número de cada item | Vinicius Vieira |
 | 16/11/2026 | 2.25 | Notas da 8.5 em linguagem direta e títulos sem os códigos das características, com os endereços antigos mantidos; abertura da 8.4 sem repetir a definição de rastreabilidade; marcador de valor provisório nomeado como selo | Vinicius Vieira |
+| 25/11/2026 | 2.26 | Relação entre requisitos e histórias na 8.1; distinção entre cobertura especificada e atendimento por recorte na 8.4.3; governança de itens provisórios e consolidação das solicitações de 12/11/2026 na 8.6 | Rodrigo Henrique |
+| 26/11/2026 | 2.27 | Remoção de repetição na 8.4.3 e de termos tecnológicos na 8.6; alinhamento do item 22 à publicação da ata de 22/11/2026 | Rodrigo Henrique |
+| 26/11/2026 | 2.28 | Registro do percurso contínuo de decisões de Engenharia de Requisitos (08/09 a 12/11/2026) na 8.6 | Rodrigo Henrique |
 
 ---
 
@@ -49,6 +52,8 @@ A governança do catálogo adota:
 - **Padronização verbal:** Todo requisito funcional é expresso no formato **Verbo no Infinitivo + Objeto Direto**, definindo uma única ação verificável, o que reduz ambiguidades de escopo; as que restarem são tratadas na revisão.
 - **Critérios verificáveis:** Todo requisito não funcional estabelece uma métrica quantitativa numérica, passível de verificação objetiva por testes automatizados, auditoria de código ou inspeção determinística.
 - **Valores iniciais:** o selo 🔧 marca o parâmetro adotado como valor inicial, sem norma ou medição que o fixe; esse valor vale para a verificação até ser confirmado com o Instituto ou recalibrado no piloto.
+- **Relação entre RFs e histórias de usuário:** na seção 8, cada requisito funcional declara uma capacidade atômica verificável agrupada por característica de produto (CP1 a CP8); na [seção 10.1](10-backlog.md#101-backlog-geral), requisitos que compõem uma mesma entrega observável para um mesmo ator na mesma sprint são reunidos em uma história de usuário, preservando propriedade unívoca (cada RF pertence a uma única história dona, conferida a cada compilação do site).
+- **Leitura da situação de implementação:** quando uma história reúne mais de um RF e encontra-se em andamento, o selo exibido na seção 8.2 reflete o estado agregado da história dona no quadro do projeto; um RF individual só é considerado atendido após o cumprimento integral dos critérios de aceitação que o verificam na matriz 8.4.1 e dos requisitos não funcionais aplicáveis em homologação, e não apenas pelo início da história ou pela existência de uma tela.
 
 ---
 
@@ -309,6 +314,9 @@ A história dona de cada requisito funcional fica na ficha da história, na [se�
 <summary>Ver a cobertura por gargalo, característica e objetivo</summary>
 
 #### Cobertura dos Gargalos do Modelo BPMN (B1)
+
+A coluna **Situação** indica apenas se o catálogo completo especifica requisitos funcionais para o gargalo (`Total`) ou deixa parte dele fora do catálogo (`Parcial`). Ela não significa atendimento imediato pelo MVP: por exemplo, **G03** possui especificação total no catálogo, mas atendimento parcial no MVP porque evidências e presença em campo pertencem a incrementos posteriores. O detalhamento por incremento está na [seção 10.2.6](10-backlog.md#1026-mvp-e-incrementos).
+
 | Gargalo | Descrição do Gargalo do Processo Atual | Requisitos Cobertos | Situação |
 | :---: | :--- | :--- | :---: |
 | **G01** | Destrinchamento manual de editais e instrumentos | RF01, RF02, RF03, RF04 | **Total** |
@@ -397,7 +405,38 @@ A cobertura no MVP e nos incrementos está na [seção 10.2.6](10-backlog.md#102
 
 ## 8.6 Pontos em Aberto e Auditoria de Lacunas
 
-**Em resumo.** Vinte e um pontos que ainda dependem de definição: lacunas sem requisito funcional (itens 1, 2, 15 e 19), regras de domínio a definir (3 a 9), valores e parâmetros a confirmar (10 a 14, 16 a 18 e 20) e limitações da primeira versão (21). Os marcados com 🔧 têm valor inicial em uso até a confirmação com o Instituto. Cada grupo abaixo mantém o número do item.
+**Em resumo.** Vinte e dois pontos que ainda dependem de definição ou consolidação: lacunas sem requisito funcional (itens 1, 2, 15 e 19), regras de domínio a definir (3 a 9), valores e parâmetros a confirmar (10 a 14, 16 a 18 e 20), limitações da primeira versão (21) e retorno consolidado da validação de 12/11/2026 (22). Os marcados com 🔧 têm valor inicial em uso até a confirmação com o Instituto. Cada grupo abaixo mantém o número do item.
+
+??? note "Governança dos comportamentos provisórios relevantes (🔧): responsável, confirmação e impacto"
+    | Ponto provisório (🔧) | Comportamento inicial em uso | Responsável pela confirmação | Momento previsto | Impacto em implementação e testes |
+    | :--- | :--- | :--- | :--- | :--- |
+    | **CA-01a.1 e CA-01a.3** (processo repetível; código único no instrumento) | Aceita mesmo número de processo em mais de um instrumento e exige código de projeto único dentro do instrumento | Diretoria de Projetos e Captação | Validação de Sprint 6 e piloto | Regra de unicidade no cadastro e testes de recusa de duplicidade |
+    | **CA-01b.3 e RN-02** (rascunho da meta) | Meta quantitativa sem parâmetro planejado numérico e forma de comprovação permanece como rascunho | Núcleo Pedagógico e Diretoria de Projetos | Validação de Sprint 6 | Regra de transição de rascunho para ativa e filtros no relatório e no painel |
+    | **RF14, RF15 e HU-07c** (lista de espera e confirmação de vaga) | Lista de espera ativada por padrão na inscrição e confirmação pela equipe | Núcleo Pedagógico | Validação de Sprint 6 (com revisão da solicitação S10) | Fluxo de status da inscrição, contagem de confirmados e testes do formulário público |
+    | **RF42 e RF22** (identificação de duplicidade) | Campo que sinaliza cadastro repetido escolhido na configuração da inscrição (e-mail ou CPF) | Núcleo Pedagógico e Direção | Validação de Sprint 6 | Regra de comparação no cadastro e exibição do indicador na lista de inscritos |
+    | **RF46 e HU-07d** (apresentação e prazo da inscrição) | Limite de 2.000 caracteres, encerramento na data da atividade e contato pelo WhatsApp institucional | Núcleo Pedagógico | Validação de Sprint 6 | Regras de validação do formulário público e de reabertura após vencimento |
+    | **CA-14.5** (metas fora da nova vigência) | Sinalização sem alteração automática dos prazos das metas | Diretoria de Projetos | Piloto com aditivo | Destaque visual nas metas fora da vigência e regra de validação na edição |
+    | **RF40 e HU-16** (administração e contas individuais) | Conta por pessoa e perfil técnico de administração do sistema | Direção e responsável técnico na transferência | Definição de transferência (seção 6.4) | Políticas de criação de contas e revisão de matriz de permissões (seção 8.5.1) |
+    | **Valores herdados 🔧** (`HU-03b`, `HU-05b`, `HU-07c`, `HU-07d`, `HU-09a`, `HU-15a`, `HU-15b`, `HU-16`) | Valor de negócio proposto pela equipe com base na história de origem | Instituto (por área competente) | Validação da Sprint 6 e fechamento do piloto | Reordenação eventual de incrementos posteriores; sem bloqueio de testes automatizados |
+
+??? note "Percurso das decisões de Engenharia de Requisitos: da observação à implementação e validação"
+    | Marco / interação | Decisão ou achado de Engenharia de Requisitos | Transformação em requisito / especificação | Efeito em implementação e validação |
+    | :--- | :--- | :--- | :--- |
+    | **08/09 e 15/09 · Visitas iniciais e alinhamento** | Mapeamento das rotinas do ciclo de projetos, dor central no controle de metas e prazos e restrições de uso em campo. | Estruturação da Visão do Produto, modelagem do processo atual ([Anexo B1](b1-bpmn-processo-atual.md)), catálogo inicial de `RF`/`RNF` e histórias do MVP. | Base para priorização dos incrementos iniciais e validação contínua de aderência ao fluxo do Instituto. |
+    | **21/09 · Reunião presencial no Instituto** | Detalhamento do vínculo entre instrumento, metas, atividades e inscrições e necessidade de coleta rápida pelo celular. | Formalização das regras de negócio `RN-01` a `RN-07`, critérios de aceitação testáveis (`CA-*`) e requisitos do formulário público com QR Code. | Orientou o Incremento 1 e permitiu verificação objetiva dos primeiros fluxos publicados em homologação. |
+    | **28/09 e 08/10 · Validações do MVP** | Retornos operacionais sobre duplicidade de inscritos, autorização de imagem, prazos de metas e ajustes nos relatórios. | Revisão de critérios do catálogo, inclusão de novos requisitos (`RF42` a `RF47`) e sinalização transparente de pontos provisórios (`🔧`). | Gerou ajustes incrementais nos ciclos seguintes e novas baterias de testes unitários, de contrato e de interface. |
+    | **29/10 · Checkpoint com o Instituto** | Confirmação de demandas ligadas a exportação de relatórios/presenças, prorrogação por termo aditivo e prévia documental. | Refinamento de `HU-05a`, `HU-13` e `HU-14` com critérios explícitos e amarração na matriz de rastreabilidade (`8.4`). | Implementação entregue nos incrementos 2 e 3 com cobertura automatizada e evidência vinculada às histórias. |
+    | **12/11 · Validação em uso com o Instituto** | Ensaio guiado em homologação identificou vinte observações (`S1` a `S20`) de terminologia, agrupamento por projeto/SEI e acesso móvel. | Triagem por valor de negócio, esforço e DoR em planejamento da equipe, separando ajustes do escopo vigente, pendências de confirmação e itens fora desta versão. | Direcionou a remodelação prioritária na Sprint 6, acompanhada de testes e nova validação prevista antes da entrega final. |
+
+??? note "Consolidação das solicitações da validação de 12/11/2026 (item 22)"
+    A validação em uso de 12/11/2026 registrou vinte solicitações e observações (`S1` a `S20`), remetidas pela própria ata à avaliação de valor, esforço e Definition of Ready pela equipe. Enquanto a ata da Planning de 22/11/2026 segue em publicação no [índice de reuniões](../gestao/atas/index.md), o encaminhamento registrado é:
+
+    - **Em tratamento na Sprint 6:** proposta de reorganização do fluxo com referência central pelo **projeto**, número do instrumento, processo SEI e **meios de aferição** (`S1`, `S6`), divisão de metas por equipe/etapa e comprovações ligadas à meta (`S3`, `S4`, `S5`, `S7`, dependentes de validação com o Instituto) e correção do acesso pelo celular (`S20`).
+    - **Comportamento existente confirmado em 12/11:** opção de autorização de uso de imagem e voz visível por inscrito na lista (`S14`).
+    - **Aguardando consolidação na ata de 22/11 ou fora desta versão:**
+      * *Fora do escopo por pertencerem à rotina administrativo-financeira (seção 2.6 e item 2 desta seção):* guarda de notas fiscais (`S15`) e cadastro único de fornecedores e prestadores (`S16`).
+      * *Condicionadas à especificação e política de dados (item 15 desta seção e RNF05):* perguntas personalizadas no formulário (`S13`, observando vedação a dados sensíveis sem finalidade específica), avisos em lista de espera (`S11`) e ficha de transparência institucional (`S2`).
+      * *Demais itens da triagem (`S8`, `S9`, `S10`, `S12`, `S17`, `S18`, `S19`):* envio externo por terceiros (`S8`), reorganização de modalidades (`S9`), confirmação explícita de vaga (`S10`), atalho de contato na lista (`S12`), sinalizador de projeto travado (`S17`), visão enxuta de captação (`S18`) e consulta à trilha de alterações (`S19`, cujos registros já integram o RNF02) têm o destino final conferido na publicação da ata de 22/11/2026.
 
 ??? note "Lacunas sem requisito funcional (itens 1, 2, 15 e 19)"
     - **1. Gargalos G02 e G05:** o controle interno de ordens de serviço (G02), levantado como demanda candidata no alinhamento de 15/09/2026, e o painel consolidado da Presidência (G05), que depende dos cadastros e registros operacionais segundo o levantamento presencial de 21/09/2026, não têm requisito funcional nesta versão.

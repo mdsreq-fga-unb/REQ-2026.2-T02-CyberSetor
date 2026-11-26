@@ -13,6 +13,7 @@
 | 16/11/2026 | 1.8 | Motivação e plano do uso de dados de teste na homologação, na política de dados pessoais da 2.6 (ATA-2026-11-12, D4) | Maria Eduarda Marques |
 | 16/11/2026 | 1.9 | CP8 sem índice de evidências na primeira versão, que chega no incremento 2; menores de idade como possibilidade, coerente com a confirmação pendente; entrada dos dados reais sem remissão à ATA-2026-11-12, que não registra essa decisão | Vinicius Vieira |
 | 16/11/2026 | 2.0 | Seção enxugada e visual: resumo no topo, objetivos e características em cartões, tecnologias em blocos, comparação em quadro, políticas de operação recolhíveis com os requisitos que as verificam e benefícios em cartões, sem mudar decisões; fora do quadro da 2.3, características citadas pelo nome | Vinicius Vieira |
+| 25/11/2026 | 2.1 | Alcance explícito da validação por área competente (2.1 e 2.6) e distinção entre registros conferidos pelo Instituto e atas preliminares em conferência | Rodrigo Henrique |
 
 !!! abstract "Em resumo"
     Base única para o ciclo do projeto financiado, do instrumento e das metas ao relatório de execução. Seis objetivos (2.2), oito características (2.3), pilha sem custo para o Instituto durante a disciplina (2.4), fluxo único de dados ligado às metas como diferencial (2.5) e quatro políticas de operação como condição de viabilidade (2.6).
@@ -21,7 +22,7 @@
 
 Centralizar numa base única as informações operacionais e as evidências de execução do Instituto No Setor, com o dado coletado na origem, da inscrição ao arquivamento das comprovações, e automatizar a apuração de resultados para a prestação de contas de editais e parcerias. Efeito esperado: menos consolidação manual de planilhas e mais previsibilidade sobre os compromissos firmados.
 
-A primeira entrega demonstra os dois ciclos da [seção 10.2.6](../requisitos/10-backlog.md#1026-mvp-e-incrementos): do instrumento às metas com resultado alcançado e ao relatório com justificativas, e da atividade à lista de inscritos. Presença, evidências e apuração automática vêm nos incrementos seguintes.
+A primeira entrega demonstra os dois ciclos da [seção 10.2.6](../requisitos/10-backlog.md#1026-mvp-e-incrementos): do instrumento às metas com resultado alcançado e ao relatório com justificativas, e da atividade à lista de inscritos. Presença, evidências e apuração automática vêm nos incrementos seguintes. O recorte foi aprovado pelo núcleo pedagógico, sem substituir a validação específica das demais áreas competentes — em especial da área administrativo-financeira sobre o relatório e a planilha exportada ([seção 7.3.1](7-equipe-e-cliente.md#731-area-competente-por-funcionalidade) e [seção 10.2.8](../requisitos/10-backlog.md#1028-validacao-com-o-instituto)).
 
 ## 2.2 Objetivos Específicos (OE) do Produto
 
@@ -137,7 +138,7 @@ A consolidação manual das planilhas é demorada e sujeita a erros de contagem.
 
 - **Equipe:** cinco integrantes com disponibilidade parcial; a capacidade de cada sprint limita o escopo, por isso o recorte da [seção 10.2.6](../requisitos/10-backlog.md#1026-mvp-e-incrementos) é estreito (papéis na seção 7.1).
 - **Prazo:** prioridade ao encadeamento atividade, participação, meta e relatório; evidências no incremento 2, presença no 3, financeiro fora. Tempo para construir, estabilizar e transferir: seção 6.
-- **Acesso ao cliente:** concordância **preliminar** em 02/09/2026 e elicitação na sede em 08/09/2026. Confirma o problema, **não valida o escopo**, que depende das áreas competentes (seção 7.3). Canal direto e representantes designadas; agenda restrita, por isso validações curtas e periódicas.
+- **Acesso ao cliente:** concordância **preliminar** em 02/09/2026 e elicitação na sede em 08/09/2026. Confirma o problema, **não valida o escopo**, que depende das áreas competentes (seção 7.3). A aprovação do recorte do MVP pelo núcleo pedagógico não estende aceite à área administrativo-financeira quanto a relatório e planilha, e os registros de 29/10 e 12/11 permanecem diferenciados como preliminares até a conferência formal pelo Instituto ([seção 10.2.8](../requisitos/10-backlog.md#1028-validacao-com-o-instituto)). Canal direto e representantes designadas; agenda restrita, por isso validações curtas e periódicas.
 - **Conhecimento técnico:** a [matriz de competências](../gestao/como-trabalhamos.md#competencias) mostra domínio nas camadas fundamentais e lacunas em ferramentas específicas, tratadas em nivelamento antes da construção; nenhuma tecnologia depende de uma só pessoa sem plano de nivelamento.
 - **Sem legado:** o Instituto não tem sistema de gestão em uso nem a arquitetura exige hardware dedicado, o que afasta a classe de risco mais comum em projetos dessa duração.
 

@@ -21,6 +21,8 @@
 | 16/11/2026 | 2.12 | História dona de cada requisito funcional só na ficha da 10.1: tabela consolidada (10.2.4) sem a coluna Histórias | Vinicius Vieira |
 | 16/11/2026 | 2.13 | Sessão de validação de 12/11/2026 na 10.2.8; reunião de 12/11 registrada como realizada; ata de 29/10 citada como em conferência | Vinicius Vieira |
 | 16/11/2026 | 2.14 | Fichas enxutas (selos, requisitos como códigos e link para a issue) e priorização em visões: colunas MoSCoW, matriz 4 × 4 e mosaico do MVP, com as tabelas-fonte recolhidas; valor provisório marcado com o selo | Vinicius Vieira |
+| 25/11/2026 | 2.15 | Delimitação das dependências parciais entre histórias na 10.1 e explicitação do alcance do MVP em 17/11/2026, efeito das lacunas de evidências e presença no relatório e hipóteses de valor por área na 10.2.6 | Rodrigo Henrique |
+| 26/11/2026 | 2.16 | Alinhamento das hipóteses avaliadas na 10.2.6 aos registros efetivos das sessões de 28/09 a 12/11/2026 | Rodrigo Henrique |
 
 ---
 
@@ -41,6 +43,12 @@ Cada ficha traz a história, o destino, o valor, o esforço, os requisitos como 
     Uma história dividida mantém o número e recebe uma letra (HU-01a, HU-01b).
 
     Personas das histórias e perfis da [seção 8.5.1](8-requisitos.md#851-perfis-de-acesso-e-permissoes): Diretora de Projetos, responsável de área e coordenadora de projeto atuam no perfil Presidência e Gestão de Projetos; coordenador pedagógico, coordenador autorizado, educador e integrante do núcleo pedagógico, no perfil Núcleo Pedagógico e Educadores; a pessoa interessada usa o formulário público, sem conta; a administração do sistema tem perfil próprio 🔧. As histórias de uso por perfil dependem da HU-16, que não é repetida nas dependências das fichas.
+
+??? note "Delimitação das dependências parciais e consistência entre estados"
+    Uma dependência indicada em **Depende de** identifica a capacidade ou estrutura de dados mínima de que a história necessita, podendo estar satisfeita na parcela exigida mesmo quando a história precedente ainda possui critérios complementares em andamento:
+
+    - **HU-01b em relação à HU-01a:** a HU-01b requer o cadastro persistido do instrumento e do projeto (RF01 e RF03, já integrados e operacionais na homologação); a HU-01a permanece em andamento apenas por pendências próprias do anexo formal (RF02) e de confirmação das regras de unicidade de código e processo (CA-01a.1 e CA-01a.3), o que não impede a criação nem a validação de metas da HU-01b.
+    - **Relação acíclica entre HU-05a e HU-14:** na primeira entrega, a HU-05a opera de forma autônoma sobre a versão original do plano de trabalho e define o registro do resultado alcançado de cada meta (RF43). A HU-14 utiliza o modelo de resultado da HU-05a apenas para exibir a coluna de realizado no comparativo de metas repactuadas (RF44, CA-14.3); uma vez registrado um termo aditivo (RF31), a HU-05a passa a ler a versão vigente do plano sem exigir a HU-14 para projetos sem repactuação.
 
 <a id="hu-01"></a>
 <a id="hu-01a"></a>
@@ -784,6 +792,11 @@ O MVP é o primeiro recorte utilizável pelo Instituto: cadastrar o instrumento 
     O que este recorte permite verificar é o controle de instrumentos, metas, prazos e inscrições, com o relatório montado a partir desses registros. A redução do esforço de prestação de contas depende das evidências e da presença, que chegam nos incrementos 2 e 3, e é conferida com o Instituto a cada entrega 🔧.
 
     Se a capacidade da sprint não comportar o recorte inteiro, descem para a sprint seguinte, nesta ordem, o PDF diagramado (HU-05b), o termo aditivo (HU-14) e o aviso por e-mail da HU-02b (CA-02b.4), única parte de história que desce separada do resto. O relatório com o resultado alcançado e as justificativas (HU-05a) e a planilha (HU-13) são preservados, e as histórias dos direitos do titular (HU-15a, HU-15b) não descem enquanto a inscrição pública puder receber dado real.
+
+??? note "Alcance funcional em 17/11, efeito do recorte parcial e hipóteses de valor"
+    - **Fotografia de 17/11/2026 vs. evolução na Sprint 6:** na entrega da Unidade 3 encontravam-se disponíveis em homologação os cadastros de instrumentos, projetos e metas (lista, quadro e linha do tempo), modalidades e atividades, formulário público de inscrição com link/QR Code e lista de espera, além de prévia do relatório e exportação básica. Permaneceram para fechamento na Sprint 6 a correção de acesso pelo celular, a reorganização da entrada centrada no projeto e etapas e critérios complementares de PDF, planilha com presenças e versionamento por aditivo.
+    - **Efeito da ausência de evidências (Incremento 2) e presença (Incremento 3) no relatório e na planilha do MVP:** no primeiro recorte, o relatório (HU-05a e HU-05b) e a planilha aberta (HU-13) reúnem os indicadores pactuados, os resultados alcançados informados pela equipe a partir de seus controles externos (RF43, com data de referência e trilha de auditoria) e as justificativas obrigatórias (RF35), sem cálculo automático a partir de chamadas digitais nem índice consolidado de arquivos comprobatórios.
+    - **Hipóteses de valor avaliadas vs. pendentes:** nas sessões de 28/09 e 08/10/2026, o núcleo pedagógico validou o recorte do MVP; no checkpoint de 29/10/2026 confirmou o rumo do produto e a manutenção do banco de participantes com aviso de duplicidade; e na validação em uso de 12/11/2026 liberou a Escola Carnavalesca como projeto piloto, confirmou a autorização opcional de imagem e voz e apontou ajustes na organização por projeto e metas por equipe (em andamento na Sprint 6, condicionada à validação da proposta com o Instituto). Já o ganho na montagem da prestação de contas (relatório e planilha) permanece pendente de validação formal pela área administrativo-financeira ([seção 7.3.1](../visao/7-equipe-e-cliente.md#731-area-competente-por-funcionalidade) e [seção 10.2.8](#1028-validacao-com-o-instituto)).
 
 <details class="note" markdown="1">
 <summary>Gargalos atendidos pelo MVP e pelos incrementos</summary>
