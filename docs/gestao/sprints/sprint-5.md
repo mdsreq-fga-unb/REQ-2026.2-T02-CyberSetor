@@ -228,9 +228,20 @@ Duplas mantidas até o fim do semestre (D8): Maria Eduarda Marques e Caio Martin
 
 ---
 
+## 11. Resultado da Sprint
+
+Meta **parcialmente atingida** (Sprint Review 5 e Planning 6 em 22/11/2026; período real estendido de 05/11 a 22/11/2026).
+
+- **Integrado e demonstrado na Sprint 5:** publicação da Unidade 3 em 17/11/2026 com a tag `u3-2026-11-17`; exportação do projeto em planilha XLSX e CSV (`HU-13`, PRs #269 e #281); linha do tempo, painel de prazos e avisos por e-mail de metas e trava do relatório (`HU-02b` e `HU-05a`, PRs #271, #272, #273 e #317); trilha e motivo de retificação do relatório (`HU-05a`, PRs #282 e #314); confirmação manual de vaga e cancelamento (`HU-07c`, PR #298); indicador de cadastro existente na lista de inscritos (`HU-07a`, PRs #296 e #297); medições de desempenho de inscrição pública (`RNF12`, até 1,78 s) e geração de PDF (`RNF13`, até 2,13 s) em 14/11/2026; e validação em uso com o Instituto em 12/11/2026 (liberação da Escola Carnavalesca como projeto piloto).
+- **Pendências redistribuídas para a Sprint 6 (Planning de 22/11/2026):** investigação e correção do acesso pelo celular (`S20`); proposta e remodelação da interface centrada em projeto e metas por equipe (`12/11`); conferência da DoD história a história no backlog; critérios complementares de PDF, planilha e aditivos; definição sobre o perfil Órgão Concedente e Auditoria; e conclusão das medições de `RNF08`, `RNF11`, `RNF15`, `RNF16` e `RNF18`.
+- **Ajustes de processo deliberados para a Sprint 6:** uma aprovação independente por pull request (com solicitação explícita de nova revisão em pontos cruciais), quadro público do projeto, página dedicada de declaração das ferramentas utilizadas e nova validação com o Instituto antes da entrega da Unidade 4.
+
+---
+
 ## Controle de versões
 
 | Versão | Data | Alteração | Responsável |
 |---|---|---|---|
 | 1.0 | 10/11/2026 | Emissão com o deliberado na Sprint Planning de 05/11 (ATA-2026-11-05): período de 05/11 a 19/11, meta, duplas mantidas, regras de revisão, Sprint Backlog em três partes, priorização, riscos e critérios de aceitação | Vinicius Vieira |
 | 1.1 | 11/11/2026 | Data da reunião de validação com o Instituto, 12/11, das 16h às 17h, definida na reunião da equipe de 10/11 (ATA-2026-11-10) | Vinicius Vieira |
+| 1.2 | 26/11/2026 | Registro do resultado da Sprint 5, entregas integradas em código e documentação e pendências redistribuídas à Sprint 6 | Rodrigo Henrique |
