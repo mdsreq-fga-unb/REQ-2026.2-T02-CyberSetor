@@ -140,7 +140,6 @@ nav:
   - Gestão do projeto:
       - Como trabalhamos: gestao/como-trabalhamos.md
       - Histórico e evolução: gestao/historico.md
-      - Ferramentas e uso de IA: gestao/ferramentas.md
       - Reuniões:
           - gestao/atas/index.md
           - Com o Instituto:
@@ -166,6 +165,7 @@ nav:
               - 07/10 · Sprint Planning 3: gestao/atas/2026-10-07-sprint-planning.md
               - 20/10 · Review, Retrospectiva 3 e Planning 4: gestao/atas/2026-10-20-sprint-review-retrospectiva-planning.md
               - 05/11 · Review, Retrospectiva 4 e Planning 5: gestao/atas/2026-11-05-sprint-review-retrospectiva-planning.md
+  - Ferramentas Utilizadas: gestao/ferramentas.md
   - Marcos da disciplina:
       - entregas/index.md
       - Unidade 1:

@@ -1,9 +1,10 @@
-# Ferramentas e uso de IA
+# Ferramentas Utilizadas
 
 | Data | Versão | Descrição | Autor |
 |---|---|---|---|
 | 25/11/2026 | 1.0 | Declaração das ferramentas adotadas na gestão, engenharia de requisitos, desenvolvimento, testes, infraestrutura e apoio de inteligência artificial | Rodrigo Henrique |
 | 26/11/2026 | 1.1 | Alinhamento das bibliotecas e ferramentas declaradas ao código vigente das branches de integração | Rodrigo Henrique |
+| 26/11/2026 | 1.2 | Promoção da página para aba principal Ferramentas Utilizadas e detalhamento do papel da IA em testes unitários, integração e revisão de requisitos e validação de código da equipe | Rodrigo Henrique |
 
 Esta página declara as ferramentas usadas pela equipe na condução do projeto CyberSetor e as atividades em que cada uma foi aplicada, com atenção específica ao papel e aos limites das ferramentas de inteligência artificial.
 
@@ -33,11 +34,12 @@ A construção e a validação técnica do produto empregam diretamente os pacot
 
 Conforme deliberado pela equipe nas atas de [27/08](atas/2026-08-27-reuniao-equipe.md), [27/10](atas/2026-10-27-reuniao-equipe.md) e [05/11/2026](atas/2026-11-05-sprint-review-retrospectiva-planning.md), ferramentas de IA foram utilizadas exclusivamente como apoio operacional à produtividade e à verificação, preservando a autoria humana e a validação com o cliente.
 
-| Ferramenta / recurso | Atividades em que foi usada | O que permaneceu humano |
+| Ferramenta / recurso | Papel no fluxo da equipe | O que permaneceu humano |
 |---|---|---|
 | **Transcrição e anotações automáticas (Google Meet)** | Apoio ao registro bruto das reuniões da equipe e das sessões remotas autorizadas com o Instituto, guardadas no Drive restrito da equipe. | Redação da ata sintética oficial, conferência de fidelidade das falas, remoção de dados pessoais/sensíveis e validação dos acordos com o Instituto. |
-| **Assistentes e agentes de codificação (Claude / Claude Code, Google Gemini / Antigravity, ChatGPT e GitHub Copilot)** | Geração assistida de estrutura inicial de módulos NestJS e páginas Next.js a partir dos critérios de aceitação já especificados; ampliação de suítes de testes (Vitest, Supertest, Playwright e axe-core em integração na Sprint 6); diagnóstico de erros de tipagem e build; manutenção dos hooks em Python do MkDocs. | Definição arquitetural, modelagem de dados, adequação às regras de negócio e MROSC/LGPD, revisão linha a linha de cada pull request e decisão sobre o que integrar. |
-| **Apoio editorial e conferência documental** | Revisão de clareza redacional, padronização estrutural de tabelas Markdown e verificação cruzada de referências entre seções da documentação. | Elicitação, negociação de escopo, priorização MoSCoW/valor × esforço, decisões de projeto e aceite com o Instituto. |
+| **Apoio na escrita e ampliação de testes unitários e de integração (Claude / Claude Code, Google Gemini / Antigravity, ChatGPT e GitHub Copilot)** | Elaboração e expansão de suítes de testes unitários, de contrato e de ponta a ponta (Vitest, Supertest, Testing Library, Playwright e `axe-core`), cobrindo casos de borda, permissões por perfil e cenários derivados dos critérios de aceitação, além da manutenção de testes dos hooks Python (`pytest`). | Definição dos cenários críticos de negócio, validação do significado das asserções e verificação de que os testes refletem os critérios acordados sem mascarar falhas reais. |
+| **Apoio na integração e revisão de requisitos** | Verificação cruzada entre Visão do Produto, requisitos (RFs/RNFs), regras de negócio, critérios de aceitação, matriz de rastreabilidade e atas; identificação de ambiguidades, lacunas de rastreabilidade, termos inconsistentes e checagem de aderência aos guias e validações da disciplina. | Elicitação em campo, negociação de escopo, priorização MoSCoW/valor × esforço, decisões arquiteturais de requisitos e validação final com o Instituto e com a disciplina. |
+| **Validação auxiliar de código escrito pela equipe e apoio de implementação** | Revisão preliminar de módulos NestJS, páginas Next.js e hooks Python já escritos pela equipe, checando aderência aos critérios de aceitação, tipagem estrita TypeScript, tratamento de erros, casos de borda, acessibilidade e responsividade, além do diagnóstico de falhas de lint, build ou migrações. | Modelagem de dados, regras MROSC/LGPD, decisão de arquitetura, revisão linha a linha em pull request por outro integrante da equipe e aprovação de merge. |
 
 ## Limites e salvaguardas no uso de IA
 
