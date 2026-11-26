@@ -38,6 +38,7 @@
 | 16/11/2026 | 2.24 | Cartões sem gargalo nem link de matriz; matrizes 8.4.1 a 8.4.3 e notas da 8.5 recolhidas; pontos em aberto da 8.6 agrupados por tema, com o número de cada item | Vinicius Vieira |
 | 16/11/2026 | 2.25 | Notas da 8.5 em linguagem direta e títulos sem os códigos das características, com os endereços antigos mantidos; abertura da 8.4 sem repetir a definição de rastreabilidade; marcador de valor provisório nomeado como selo | Vinicius Vieira |
 | 25/11/2026 | 2.26 | Relação entre requisitos e histórias na 8.1; distinção entre cobertura especificada e atendimento por recorte na 8.4.3; governança de itens provisórios e consolidação das solicitações de 12/11/2026 na 8.6 | Rodrigo Henrique |
+| 26/11/2026 | 2.27 | Remoção de repetição na 8.4.3 e de termos tecnológicos na 8.6; alinhamento do item 22 à publicação da ata de 22/11/2026 | Rodrigo Henrique |
 
 ---
 
@@ -313,7 +314,7 @@ A história dona de cada requisito funcional fica na ficha da história, na [se�
 
 #### Cobertura dos Gargalos do Modelo BPMN (B1)
 
-A coluna **Situação** indica apenas se o catálogo completo especifica requisitos funcionais para o gargalo (`Total`) ou deixa parte dele fora do catálogo (`Parcial`). Ela não significa atendimento imediato pelo MVP: o que entra em cada recorte está detalhado abaixo e na [seção 10.2.6](10-backlog.md#1026-mvp-e-incrementos).
+A coluna **Situação** indica apenas se o catálogo completo especifica requisitos funcionais para o gargalo (`Total`) ou deixa parte dele fora do catálogo (`Parcial`). Ela não significa atendimento imediato pelo MVP: por exemplo, **G03** possui especificação total no catálogo, mas atendimento parcial no MVP porque evidências e presença em campo pertencem a incrementos posteriores. O detalhamento por incremento está na [seção 10.2.6](10-backlog.md#1026-mvp-e-incrementos).
 
 | Gargalo | Descrição do Gargalo do Processo Atual | Requisitos Cobertos | Situação |
 | :---: | :--- | :--- | :---: |
@@ -325,15 +326,6 @@ A coluna **Situação** indica apenas se o catálogo completo especifica requisi
 | **G06** | Risco de glosa e insegurança na prestação de contas | RF35 a RF39, RF43 | **Total** |
 
 G02: o controle interno de chamados não tem RF. G05: o painel da Presidência não tem RF.
-
-**Atendimento efetivo por recorte (MVP vs. incrementos posteriores):**
-
-- **G01 (editais e instrumentos):** especificação total; integralmente previsto no MVP (RF01 a RF04), restando confirmações pontuais de unicidade e anexo formal em HU-01a.
-- **G02 (demandas e prazos):** especificação parcial (chamados internos sem RF); atribuição de responsável, prazos e avisos no MVP (RF05 a RF08).
-- **G03 (listas em papel, chamadas e fotos):** especificação total no catálogo completo, mas **atendimento parcial no MVP** — o primeiro recorte cobre apenas atividades e inscrições digitais (RF09, RF11 a RF15, RF41, RF46); comprovações e evidências entram no Incremento 2 (RF10, RF32 a RF34, RF45), chamada em campo no Incremento 3 (RF16, RF19) e operação sem conexão e carga horária depois (RF17, RF18, RF20).
-- **G04 (dados pessoais em celulares e LGPD):** especificação total; coleta estruturada com consentimentos e atendimento aos direitos do titular no MVP (RF11, RF22 a RF27, RF42), ficando o histórico consolidado por pessoa para depois (RF21).
-- **G05 (visão unificada da Presidência):** especificação parcial (painel exclusivo sem RF); no MVP entram apenas versionamento de plano e comparativo de metas repactuadas (RF31, RF44), enquanto cálculo automático de progresso e alerta de risco entram depois (RF28 a RF30).
-- **G06 (risco de glosa na prestação de contas):** especificação total; no MVP entram relatório com resultado alcançado registrado, trava por falta de justificativa, PDF e planilha (RF35 a RF39, RF43), ainda pendentes de validação pela área administrativo-financeira, enquanto o índice e as miniaturas de evidências dependem do Incremento 2.
 
 A cobertura no MVP e nos incrementos está na [seção 10.2.6](10-backlog.md#1026-mvp-e-incrementos).
 
@@ -417,25 +409,24 @@ A cobertura no MVP e nos incrementos está na [seção 10.2.6](10-backlog.md#102
 ??? note "Governança dos comportamentos provisórios relevantes (🔧): responsável, confirmação e impacto"
     | Ponto provisório (🔧) | Comportamento inicial em uso | Responsável pela confirmação | Momento previsto | Impacto em implementação e testes |
     | :--- | :--- | :--- | :--- | :--- |
-    | **CA-01a.1 e CA-01a.3** (processo repetível; código único no instrumento) | Aceita mesmo número de processo em mais de um instrumento e exige código de projeto único dentro do instrumento | Diretoria de Projetos e Captação | Validação de Sprint 6 e piloto | Restrição de unicidade no esquema Prisma, validação na API e testes de recusa de cadastro |
-    | **CA-01b.3 e RN-02** (rascunho da meta) | Meta quantitativa sem parâmetro planejado numérico e forma de comprovação permanece como rascunho | Núcleo Pedagógico e Diretoria de Projetos | Validação de Sprint 6 | Critério de transição de rascunho para ativa na API e filtros no relatório e painel |
+    | **CA-01a.1 e CA-01a.3** (processo repetível; código único no instrumento) | Aceita mesmo número de processo em mais de um instrumento e exige código de projeto único dentro do instrumento | Diretoria de Projetos e Captação | Validação de Sprint 6 e piloto | Regra de unicidade no cadastro e testes de recusa de duplicidade |
+    | **CA-01b.3 e RN-02** (rascunho da meta) | Meta quantitativa sem parâmetro planejado numérico e forma de comprovação permanece como rascunho | Núcleo Pedagógico e Diretoria de Projetos | Validação de Sprint 6 | Regra de transição de rascunho para ativa e filtros no relatório e no painel |
     | **RF14, RF15 e HU-07c** (lista de espera e confirmação de vaga) | Lista de espera ativada por padrão na inscrição e confirmação pela equipe | Núcleo Pedagógico | Validação de Sprint 6 (com revisão da solicitação S10) | Fluxo de status da inscrição, contagem de confirmados e testes do formulário público |
-    | **RF42 e RF22** (identificação de duplicidade) | Campo que sinaliza cadastro repetido escolhido na configuração da inscrição (e-mail ou CPF) | Núcleo Pedagógico e Direção | Validação de Sprint 6 | Regra de comparação no backend e exibição do indicador na lista de inscritos |
-    | **RF46 e HU-07d** (apresentação e prazo da inscrição) | Limite de 2.000 caracteres, encerramento na data da atividade e contato pelo WhatsApp institucional | Núcleo Pedagógico | Validação de Sprint 6 | Validações de formulário público e regras de reabertura após vencimento |
+    | **RF42 e RF22** (identificação de duplicidade) | Campo que sinaliza cadastro repetido escolhido na configuração da inscrição (e-mail ou CPF) | Núcleo Pedagógico e Direção | Validação de Sprint 6 | Regra de comparação no cadastro e exibição do indicador na lista de inscritos |
+    | **RF46 e HU-07d** (apresentação e prazo da inscrição) | Limite de 2.000 caracteres, encerramento na data da atividade e contato pelo WhatsApp institucional | Núcleo Pedagógico | Validação de Sprint 6 | Regras de validação do formulário público e de reabertura após vencimento |
     | **CA-14.5** (metas fora da nova vigência) | Sinalização sem alteração automática dos prazos das metas | Diretoria de Projetos | Piloto com aditivo | Destaque visual nas metas fora da vigência e regra de validação na edição |
     | **RF40 e HU-16** (administração e contas individuais) | Conta por pessoa e perfil técnico de administração do sistema | Direção e responsável técnico na transferência | Definição de transferência (seção 6.4) | Políticas de criação de contas e revisão de matriz de permissões (seção 8.5.1) |
-    | **Valores herdados 🔧** (`HU-03b`, `HU-05b`, `HU-07c`, `HU-07d`, `HU-09a`, `HU-15a`, `HU-15b`, `HU-16`) | Valor de negócio proposto pela equipe com base na história de origem | Instituto (por área competente) | Validação da Sprint 6 e fechamento do piloto | Reordenação eventual de incrementos posteriores; sem bloqueio de testes unitários ou visuais |
+    | **Valores herdados 🔧** (`HU-03b`, `HU-05b`, `HU-07c`, `HU-07d`, `HU-09a`, `HU-15a`, `HU-15b`, `HU-16`) | Valor de negócio proposto pela equipe com base na história de origem | Instituto (por área competente) | Validação da Sprint 6 e fechamento do piloto | Reordenação eventual de incrementos posteriores; sem bloqueio de testes automatizados |
 
 ??? note "Consolidação das solicitações da validação de 12/11/2026 (item 22)"
-    A validação em uso de 12/11/2026 produziu vinte solicitações e observações (`S1` a `S20`), encaminhadas conforme o impacto e a capacidade da Sprint 6:
+    A validação em uso de 12/11/2026 registrou vinte solicitações e observações (`S1` a `S20`), remetidas pela própria ata à avaliação de valor, esforço e Definition of Ready pela equipe. Enquanto a ata da Planning de 22/11/2026 segue em publicação no [índice de reuniões](../gestao/atas/index.md), o encaminhamento registrado é:
 
-    - **Incorporadas na reorganização de telas e correções da Sprint 6:** referência central pelo **projeto** com número do instrumento e processo SEI (`S1`), nomenclatura **meios de aferição** no lugar de requisitos (`S6`), organização de metas por área/equipe e etapas (`S3`, `S4`, `S5`), vínculo de comprovações à meta por data dentro do escopo previsto (`S7`), fluxo de inscrição indicando não garantia automática de vaga e botão de contato por WhatsApp na lista (`S10`, `S12`) e investigação/correção do acesso pelo celular (`S20`).
-    - **Comportamento existente confirmado pelo cliente:** opção de autorização de uso de imagem e voz visível por inscrito na lista (`S14`).
-    - **Fora desta versão (com justificativa e destino):**
-      * *Ficha de transparência institucional (`S2`), avisos em lista de espera (`S11`) e perguntas personalizadas no formulário (`S13`):* encaminhados para avaliação pós-piloto no item 15 desta seção, condicionando perguntas novas à vedação de dados pessoais sensíveis sem base legal específica (RNF05).
-      * *Envio externo por terceiros sem conta (`S8`) e reorganização interna de modalidades no projeto (`S9`):* adiados para pós-MVP (Incremento 2 / evolução de CP2), por exigirem novo fluxo de autenticação externa e moderação pela execução.
-      * *Guarda de notas fiscais (`S15`) e cadastro único de fornecedores e prestadores (`S16`):* mantidos fora do escopo do produto por pertencerem à rotina administrativo-financeira (seção 2.6 e item 2 desta seção).
-      * *Sinalizador de projeto travado no financiador (`S17`), acesso enxuto de captação (`S18`) e interface dedicada de consulta à trilha de alterações (`S19`):* registrados para o backlog de evolução de CP1 e auditoria (os logs do `S19` já são gravados pelo RNF02, faltando apenas a tela própria de consulta).
+    - **Em tratamento na Sprint 6:** proposta de reorganização do fluxo com referência central pelo **projeto**, número do instrumento, processo SEI e **meios de aferição** (`S1`, `S6`), divisão de metas por equipe/etapa e comprovações ligadas à meta (`S3`, `S4`, `S5`, `S7`, dependentes de validação com o Instituto) e correção do acesso pelo celular (`S20`).
+    - **Comportamento existente confirmado em 12/11:** opção de autorização de uso de imagem e voz visível por inscrito na lista (`S14`).
+    - **Aguardando consolidação na ata de 22/11 ou fora desta versão:**
+      * *Fora do escopo por pertencerem à rotina administrativo-financeira (seção 2.6 e item 2 desta seção):* guarda de notas fiscais (`S15`) e cadastro único de fornecedores e prestadores (`S16`).
+      * *Condicionadas à especificação e política de dados (item 15 desta seção e RNF05):* perguntas personalizadas no formulário (`S13`, observando vedação a dados sensíveis sem finalidade específica), avisos em lista de espera (`S11`) e ficha de transparência institucional (`S2`).
+      * *Demais itens da triagem (`S8`, `S9`, `S10`, `S12`, `S17`, `S18`, `S19`):* envio externo por terceiros (`S8`), reorganização de modalidades (`S9`), confirmação explícita de vaga (`S10`), atalho de contato na lista (`S12`), sinalizador de projeto travado (`S17`), visão enxuta de captação (`S18`) e consulta à trilha de alterações (`S19`, cujos registros já integram o RNF02) têm o destino final conferido na publicação da ata de 22/11/2026.
 
 ??? note "Lacunas sem requisito funcional (itens 1, 2, 15 e 19)"
     - **1. Gargalos G02 e G05:** o controle interno de ordens de serviço (G02), levantado como demanda candidata no alinhamento de 15/09/2026, e o painel consolidado da Presidência (G05), que depende dos cadastros e registros operacionais segundo o levantamento presencial de 21/09/2026, não têm requisito funcional nesta versão.
