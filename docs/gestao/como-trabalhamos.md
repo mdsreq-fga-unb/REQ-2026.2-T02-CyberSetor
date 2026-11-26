@@ -4,12 +4,24 @@
 |---|---|---|---|
 | 16/11/2026 | 1.0 | Página única do processo da equipe, com ciclo, sprints, fluxo no GitHub, dailies e competências, que reúne as páginas de processo, boas práticas no GitHub, dailies, sprints e matriz de competências | Vinicius Vieira |
 | 16/11/2026 | 1.1 | Período, objetivo e entrega de cada sprint só na seção 6.1, com as abas mostrando a situação e os atalhos; atas citadas pela data | Vinicius Vieira |
+| 25/11/2026 | 1.2 | Mapa de fontes vigentes, fechamento da Sprint 5, abertura da Sprint 6 e regra de revisão aprovada em 22/11/2026 | Rodrigo Henrique |
+| 26/11/2026 | 1.3 | Ajuste do período de duas aprovações (Sprint 5) e redação da proposta apresentada na Sprint 6 | Rodrigo Henrique |
 
 A equipe adota o **ScrumXP**: Scrum para gerenciar o trabalho e práticas do eXtreme Programming para a engenharia. A fundamentação da escolha está na [seção 4](../visao/4-estrategia-esw.md); papéis, frequência e duração dos ritos, na [seção 7](../visao/7-equipe-e-cliente.md#72-comunicacao).
 
 <div class="f1-atalhos" markdown>
-[Ciclo](#ciclo) [Sprints](#sprints) [Fluxo no GitHub](#fluxo-no-github) [Dailies](#dailies) [Competências](#competencias)
+[Fontes vigentes](#fontes-vigentes) [Ciclo](#ciclo) [Sprints](#sprints) [Fluxo no GitHub](#fluxo-no-github) [Dailies](#dailies) [Competências](#competencias)
 </div>
+
+## Fontes vigentes
+
+Cada dimensão do projeto possui uma fonte única de verdade, preservando os documentos anteriores apenas como registro histórico:
+
+- **Escopo do produto, recorte do MVP e pontos em aberto:** [seção 10.2.6](../requisitos/10-backlog.md#1026-mvp-e-incrementos) e [seção 8.6](../requisitos/8-requisitos.md#86-pontos-em-aberto-e-auditoria-de-lacunas).
+- **Situação das histórias, tarefas e conferência de conclusão:** [quadro do projeto](https://github.com/orgs/mdsreq-fga-unb/projects/121), páginas de acompanhamento em [Sprints](#sprints) e fichas da [seção 10.1](../requisitos/10-backlog.md#101-backlog-geral).
+- **Calendário planejado, entregas efetivas e replanejamento:** [seção 6.1](../visao/6-cronograma.md#61-calendario-vigente) e abas em [Sprints](#sprints).
+- **Decisões e validações por área competente do Instituto:** [seção 7.3.1](../visao/7-equipe-e-cliente.md#731-area-competente-por-funcionalidade) e [seção 10.2.8](../requisitos/10-backlog.md#1028-validacao-com-o-instituto).
+- **Fotografias congeladas das entregas da disciplina:** páginas da [Unidade 1](../entregas/unidade-1.md), [Unidade 2](../entregas/unidade-2.md) e [Unidade 3](../entregas/unidade-3.md), mantidas como retratos nas datas de suas tags.
 
 ## Ciclo
 
@@ -71,9 +83,15 @@ Entre os ritos: refinamento semanal do backlog e as reuniões de validação com
 
 Cada sprint numa aba, com a situação e os atalhos para o plano, as tarefas e as atas. Período, objetivo e entrega de cada sprint ficam na [seção 6.1](../visao/6-cronograma.md#61-calendario-vigente); a linha do tempo de tudo o que mudou, em [Histórico e evolução](historico.md).
 
+=== "Sprint 6"
+
+    **Em andamento** · 22/11 a 01/12/2026 — remodelação do front a partir da proposta apresentada ao Instituto, fechamento dos critérios e medições pendentes do MVP, validação final, manual de utilização e estabilização (Planning de 22/11/2026; ata em publicação no [índice de reuniões](atas/index.md))
+
+    [Tarefas](sprints/tarefas-sprint-6.md) · [Calendário](../visao/6-cronograma.md#61-calendario-vigente)
+
 === "Sprint 5"
 
-    **Em andamento**
+    **Encerrada** · meta parcialmente atingida (Unidade 3 publicada em 17/11/2026 com a tag `u3-2026-11-17`; critérios pendentes e ajustes da validação de 12/11 replanejados para a Sprint 6)
 
     [Meta da Sprint](sprints/sprint-5.md#42-meta-da-sprint) · [Sprint Backlog](sprints/sprint-5.md#62-sprint-backlog) · [Critérios de aceitação](sprints/sprint-5.md#10-criterios-de-aceitacao-da-sprint) · [Tarefas](sprints/tarefas-sprint-5.md) · [Planning 5](atas/2026-11-05-sprint-review-retrospectiva-planning.md) · [Equipe, 10/11](atas/2026-11-10-reuniao-equipe.md) · [Monitoria, 12/11](atas/2026-11-12-reuniao-monitoria.md)
 
@@ -153,8 +171,8 @@ O histórico de commits e de pull requests é a evidência do processo. A docume
 **Regras essenciais**
 
 1. Toda mudança entra por pull request; nenhum push direto nas seis branches fixas.
-2. **Duas aprovações**, ao menos uma de integrante de outra dupla ou do integrante independente.
-3. Com a segunda aprovação e sem conflito, **o próprio autor faz o merge**, por *merge commit*; sem *squash*; conflito se resolve com *rebase*.
+2. **Revisão independente:** de 05/11 a 22/11/2026 (Sprint 5) vigoraram **duas aprovações** ([ata de 05/11](atas/2026-11-05-sprint-review-retrospectiva-planning.md), decisão D3); na Sprint 6 (Planning de 22/11/2026), passa a vigorar **uma aprovação** por integrante de outra dupla ou pelo integrante independente, devendo o autor pedir nova revisão explícita em pontos cruciais.
+3. Com a aprovação necessária atendida e sem conflito, **o próprio autor faz o merge**, por *merge commit*; sem *squash*; conflito se resolve com *rebase*.
 4. Referência de até cerca de **1.000 linhas** por pull request, sem contar as de teste, e de 24 horas para a revisão; nenhuma das duas é regra estrita.
 5. **Sem código na linha da documentação:** o `guarda-de-branches` confere origem e destino de todo pull request.
 6. Commits em Conventional Commits, com o título sem acentos.
