@@ -1,6 +1,7 @@
 import { act, cleanup, fireEvent, render, screen } from '@testing-library/react';
 import {
   SESSION_IDLE_TIMEOUT_MS,
+  authorizedRequest,
   SESSION_WARNING_LEAD_MS,
   clearLocalSession,
   getSession,
@@ -23,6 +24,7 @@ describe('aviso de expiracao da sessao (WCAG 2.2.1)', () => {
   afterEach(() => {
     cleanup();
     clearLocalSession();
+    window.localStorage.clear();
     vi.useRealTimers();
     vi.unstubAllGlobals();
   });
@@ -147,5 +149,81 @@ describe('aviso de expiracao da sessao (WCAG 2.2.1)', () => {
     const alert = screen.getByRole('alert');
     expect(alert).toHaveTextContent('Não foi possível renovar a sessão. Tente novamente.');
     expect(alert).not.toHaveTextContent('SQL connection dropped');
+  });
+
+  it('uso em outra aba adia o aviso e nao encerra a sessao da aba em uso', async () => {
+    const fetchMock = vi.fn((url: string) => {
+      if (url.includes('/auth/login')) return Promise.resolve(jsonResponse(200, ACCESS));
+      if (url.includes('/auth/logout')) return Promise.resolve(jsonResponse(204));
+      return Promise.resolve(jsonResponse(401, { code: 'UNAUTHENTICATED', message: 'x' }));
+    });
+    vi.stubGlobal('fetch', fetchMock);
+    await signIn('pessoa@instituto.org.br', 'senha-de-teste-longa');
+    render(<SessionTimeoutWarning />);
+
+    // Aos 20 min, a outra aba usa o sistema e avisa esta pelo evento de armazenamento.
+    await act(async () => {
+      await vi.advanceTimersByTimeAsync(20 * 60_000);
+    });
+    const otherTab = String(Date.now());
+    window.localStorage.setItem('cybersetor-ultima-atividade', otherTab);
+    await act(async () => {
+      window.dispatchEvent(
+        new StorageEvent('storage', { key: 'cybersetor-ultima-atividade', newValue: otherTab }),
+      );
+    });
+
+    await act(async () => {
+      await vi.advanceTimersByTimeAsync(SESSION_IDLE_TIMEOUT_MS - 20 * 60_000);
+    });
+    expect(screen.queryByRole('alertdialog')).not.toBeInTheDocument();
+    expect(getSession()).toEqual(ACCESS);
+
+    // Mesmo sem o evento, a aba confere o registro compartilhado antes de sair.
+    await act(async () => {
+      await vi.advanceTimersByTimeAsync(5 * 60_000);
+    });
+    // Aos 35 min: o prazo antigo (50 min) passa, mas o registrado agora vai a 65 min.
+    window.localStorage.setItem('cybersetor-ultima-atividade', String(Date.now()));
+    await act(async () => {
+      await vi.advanceTimersByTimeAsync(16 * 60_000);
+    });
+    expect(screen.queryByRole('alertdialog')).not.toBeInTheDocument();
+    expect(getSession()).toEqual(ACCESS);
+    expect(fetchMock.mock.calls.some(([url]) => String(url).includes('/auth/logout'))).toBe(false);
+  });
+
+  it('o erro da renovacao nao volta no aviso seguinte', async () => {
+    const fetchMock = vi.fn((url: string) => {
+      if (url.includes('/auth/login')) return Promise.resolve(jsonResponse(200, ACCESS));
+      if (url.includes('/auth/session')) {
+        return Promise.resolve(jsonResponse(500, { code: 'INTERNAL_ERROR', message: 'x' }));
+      }
+      return Promise.resolve(jsonResponse(200, []));
+    });
+    vi.stubGlobal('fetch', fetchMock);
+    await signIn('pessoa@instituto.org.br', 'senha-de-teste-longa');
+    render(<SessionTimeoutWarning />);
+
+    await act(async () => {
+      await vi.advanceTimersByTimeAsync(SESSION_IDLE_TIMEOUT_MS - SESSION_WARNING_LEAD_MS);
+    });
+    await act(async () => {
+      fireEvent.click(screen.getByRole('button', { name: 'Continuar conectado' }));
+      await Promise.resolve();
+    });
+    expect(screen.getByRole('alert')).toBeInTheDocument();
+
+    // Uma requisição em segundo plano renova a atividade e fecha o aviso.
+    await act(async () => {
+      await authorizedRequest('/projects');
+    });
+    expect(screen.queryByRole('alertdialog')).not.toBeInTheDocument();
+
+    await act(async () => {
+      await vi.advanceTimersByTimeAsync(SESSION_IDLE_TIMEOUT_MS - SESSION_WARNING_LEAD_MS);
+    });
+    expect(screen.getByRole('alertdialog')).toBeInTheDocument();
+    expect(screen.queryByRole('alert')).not.toBeInTheDocument();
   });
 });

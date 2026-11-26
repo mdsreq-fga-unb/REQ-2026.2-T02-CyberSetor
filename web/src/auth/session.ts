@@ -30,15 +30,53 @@ function setCurrent(session: Session | null): void {
   listeners.forEach((listener) => listener());
 }
 
+/** Última atividade compartilhada entre as abas: uso em uma aba adia o aviso nas outras. */
+const ACTIVITY_KEY = 'cybersetor-ultima-atividade';
+
+function notifyActivity(): void {
+  activityListeners.forEach((listener) => listener());
+}
+
+function readSharedActivity(): number | null {
+  try {
+    const value = Number(window.localStorage.getItem(ACTIVITY_KEY));
+    return Number.isFinite(value) && value > 0 ? value : null;
+  } catch {
+    return null;
+  }
+}
+
+function adoptActivity(value: number | null): void {
+  if (lastActivityAt === null || value === null || value <= lastActivityAt) return;
+  lastActivityAt = value;
+  notifyActivity();
+}
+
 function markActivity(): void {
   lastActivityAt = Date.now();
-  activityListeners.forEach((listener) => listener());
+  try {
+    window.localStorage.setItem(ACTIVITY_KEY, String(lastActivityAt));
+  } catch {
+    // Sem armazenamento, a aba segue com a própria atividade.
+  }
+  notifyActivity();
+}
+
+if (typeof window !== 'undefined') {
+  window.addEventListener('storage', (event) => {
+    if (event.key === ACTIVITY_KEY) adoptActivity(Number(event.newValue) || null);
+  });
+}
+
+/** Traz a atividade registrada por outra aba antes de decidir pelo aviso ou pela saída. */
+export function syncSessionActivity(): void {
+  adoptActivity(readSharedActivity());
 }
 
 function clearActivity(): void {
   if (lastActivityAt === null) return;
   lastActivityAt = null;
-  activityListeners.forEach((listener) => listener());
+  notifyActivity();
 }
 
 export function getSession(): Session | null {

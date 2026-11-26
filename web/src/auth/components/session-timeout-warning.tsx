@@ -19,6 +19,7 @@ import {
   keepSessionAlive,
   signOut,
   subscribeSessionActivity,
+  syncSessionActivity,
 } from '../session';
 
 export function formatRemainingTime(remainingMs: number): string {
@@ -98,7 +99,8 @@ export function SessionTimeoutWarning({
   );
   const [now, setNow] = useState<number>(() => Date.now());
   const [renewing, setRenewing] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+  // O erro vale só para o aviso em que ocorreu: nova atividade abre outro aviso, sem ele.
+  const [error, setError] = useState<{ message: string; activityAt: number | null } | null>(null);
   const expiredForRef = useRef<number | null>(null);
 
   const deadline = lastActivityAt !== null ? lastActivityAt + idleTimeoutMs : null;
@@ -116,6 +118,8 @@ export function SessionTimeoutWarning({
     };
 
     const sync = () => {
+      syncSessionActivity();
+      if (getLastActivityAt() !== lastActivityAt) return;
       const current = Date.now();
       setNow(current);
       if (current >= deadline) expireOnce();
@@ -157,7 +161,10 @@ export function SessionTimeoutWarning({
       setNow(Date.now());
     } catch (caught) {
       if (caught instanceof ApiError && caught.status === 401) return;
-      setError('Não foi possível renovar a sessão. Tente novamente.');
+      setError({
+        message: 'Não foi possível renovar a sessão. Tente novamente.',
+        activityAt: getLastActivityAt(),
+      });
     } finally {
       setRenewing(false);
     }
@@ -175,7 +182,7 @@ export function SessionTimeoutWarning({
       open={warningOpen}
       remainingMs={remainingMs}
       renewing={renewing}
-      error={error}
+      error={error?.activityAt === lastActivityAt ? error.message : null}
       onContinue={() => void handleContinue()}
       onSignOut={handleSignOut}
     />
