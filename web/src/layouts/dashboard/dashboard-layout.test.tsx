@@ -24,7 +24,7 @@ function render(ui: ReactNode) {
 }
 
 async function openAccountMenu(): Promise<HTMLElement> {
-  fireEvent.click(await screen.findByRole('button', { name: /^Conta/ }));
+  fireEvent.click(await screen.findByRole('button', { name: /, conta/ }));
   return screen.findByRole('menu');
 }
 
@@ -88,7 +88,7 @@ describe('leiaute do painel', () => {
     expect(within(menu).getByRole('link', { name: 'Início' })).toBeInTheDocument();
     expect(
       await screen.findByRole('button', {
-        name: 'Conta de Ana Maria Souza: Administração do sistema',
+        name: 'Ana Maria Souza, conta: Administração do sistema',
       }),
     ).toBeInTheDocument();
     expect(screen.getByText('AS')).toBeInTheDocument();
@@ -116,7 +116,7 @@ describe('leiaute do painel', () => {
 
     const menu = screen.getByRole('navigation', { name: 'Navegação principal' });
     expect(within(menu).getByRole('link', { name: 'Início' })).toHaveClass('h-12');
-    expect(await screen.findByRole('button', { name: /^Conta/ })).toHaveClass('h-12');
+    expect(await screen.findByRole('button', { name: /, conta/ })).toHaveClass('h-12');
     const trail = screen.getByRole('navigation', { name: 'Trilha de navegação' });
     expect(within(trail).getByRole('link', { name: 'Início' })).toHaveClass('min-h-12');
     expect(screen.getByRole('button', { name: 'Abrir ou fechar o menu' })).toHaveClass('size-12');

@@ -340,7 +340,7 @@ export function TermList({ terms, hoje }: { terms: InstrumentTerm[]; hoje: strin
                 href={paths.dashboard.instrument(term.id)}
                 className={cn(ITEM_LINK, 'min-w-0 text-sm')}
               >
-                <span className="truncate">{term.numeroProcesso}</span>
+                <span className="break-words">{term.numeroProcesso}</span>
                 <ItemArrow />
               </Link>
               <span className="shrink-0 text-xs text-muted-foreground">
@@ -351,7 +351,7 @@ export function TermList({ terms, hoje }: { terms: InstrumentTerm[]; hoje: strin
               value={total > 0 ? (elapsed / total) * 100 : 100}
               label={`Vigência decorrida do processo ${term.numeroProcesso}`}
             />
-            <p className="truncate text-xs text-muted-foreground">{term.orgaoConcedente}</p>
+            <p className="break-words text-xs text-muted-foreground">{term.orgaoConcedente}</p>
             <p className="text-xs text-muted-foreground">
               {formatDate(term.vigenciaInicio)} a {formatDate(term.vigenciaFim)}
             </p>
@@ -393,7 +393,7 @@ export function UpcomingActivityList({ activities }: { activities: UpcomingActiv
                 {activity.titulo}
                 <ItemArrow />
               </Link>
-              <p className="truncate text-sm text-muted-foreground">
+              <p className="break-words text-sm text-muted-foreground">
                 {formatDate(activity.data)} · {activity.local} · {activity.projeto.codigo}
               </p>
               <p className="text-sm sm:hidden">{registrationText(activity)}</p>
