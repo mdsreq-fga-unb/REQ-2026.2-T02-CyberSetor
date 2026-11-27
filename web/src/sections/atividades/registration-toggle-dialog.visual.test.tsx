@@ -28,6 +28,7 @@ function json(body: unknown): Response {
 describe.each([
   ['celular', 360, 800],
   ['desktop', 1280, 700],
+  ['tela-larga', 1920, 700],
 ])('reabrir inscricao com o prazo vencido no %s', (device, width, height) => {
   beforeEach(async () => {
     await page.viewport(width, height);

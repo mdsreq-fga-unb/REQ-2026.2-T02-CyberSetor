@@ -36,6 +36,7 @@ async function show(timeline: ProjectTimeline, waitFor: string, name: string) {
 describe.each([
   ['celular', 360, 2600],
   ['desktop', 1280, 1500],
+  ['tela-larga', 1920, 1500],
 ])('prazos do projeto no %s', (device, width, height) => {
   beforeEach(async () => {
     await page.viewport(width, height);

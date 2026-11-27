@@ -42,7 +42,8 @@ export default defineConfig({
                 ? { connectOptions: { wsEndpoint: remoteBrowser, exposeNetwork: '<loopback>' } }
                 : {},
             ),
-            instances: [{ browser: 'chromium' }],
+            // RNF16: as três famílias de navegador, nas larguras de 360 a 1920 px de cada teste.
+            instances: [{ browser: 'chromium' }, { browser: 'firefox' }, { browser: 'webkit' }],
             expect: {
               toMatchScreenshot: {
                 resolveScreenshotPath: ({

@@ -63,6 +63,7 @@ function json(body: unknown): Response {
 describe.each([
   ['celular', 360, 800],
   ['desktop', 1280, 700],
+  ['tela-larga', 1920, 700],
 ])('relatorios emitidos no %s', (device, width, height) => {
   beforeEach(async () => {
     await page.viewport(width, height);
@@ -112,6 +113,8 @@ describe.each([
       .click();
     await page.getByRole('menuitem', { name: 'Baixar PDF' }).click();
     await expect.element(page.getByLabelText('SHA-256 do arquivo')).toBeVisible();
+    // O anel de foco depois do clique varia entre navegadores (:focus-visible); a foto é do conteúdo.
+    (document.activeElement as HTMLElement | null)?.blur();
     await expect.element(page.getByRole('dialog')).toMatchScreenshot(`relatorio-pdf-${device}`);
   });
 

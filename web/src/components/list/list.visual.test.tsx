@@ -28,6 +28,7 @@ function Frame({ children }: { children: React.ReactNode }) {
 describe.each([
   ['celular', 360],
   ['desktop', 1280],
+  ['tela-larga', 1920],
 ])('estados da lista no %s', (device, width) => {
   beforeEach(async () => {
     await page.viewport(width, 800);
