@@ -4,8 +4,10 @@ import {
   refreshSession,
   authorizedDownload,
   authorizedRequest,
+  keepSessionAlive,
   signOut,
   getSession,
+  getLastActivityAt,
 } from './session';
 
 const ACCESS = { accessToken: 'token-1', perfil: 'PRESIDENCIA_GESTAO', deveTrocarSenha: false };
@@ -220,5 +222,26 @@ describe('sessao no cliente', () => {
       new Uint8Array([0xef, 0xbb, 0xbf]),
     );
     await expect(downloaded.blob.text()).resolves.toBe('Projeto;P01');
+  });
+
+  it('keepSessionAlive chama /auth/session, atualiza a atividade e renova em 401', async () => {
+    const fetchMock = vi
+      .fn()
+      .mockResolvedValueOnce(response(200, ACCESS))
+      .mockResolvedValueOnce(response(401, { code: 'UNAUTHENTICATED', message: 'x' }))
+      .mockResolvedValueOnce(response(200, { ...ACCESS, accessToken: 'token-2' }))
+      .mockResolvedValueOnce(response(200, { usuarioId: 'u1' }));
+    vi.stubGlobal('fetch', fetchMock);
+    await signIn('pessoa@instituto.org.br', 'senha-de-teste-longa');
+    const started = getLastActivityAt();
+    expect(started).not.toBeNull();
+
+    await keepSessionAlive();
+
+    expect(callsTo(fetchMock, '/auth/session')).toHaveLength(2);
+    expect(getLastActivityAt()).toBeGreaterThanOrEqual(started!);
+
+    clearLocalSession();
+    expect(getLastActivityAt()).toBeNull();
   });
 });

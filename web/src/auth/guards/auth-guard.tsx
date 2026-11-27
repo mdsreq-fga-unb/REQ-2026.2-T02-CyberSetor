@@ -3,6 +3,7 @@
 import { useRouter } from 'next/navigation';
 import { useEffect, type ReactNode } from 'react';
 import { paths } from '@/routes/paths';
+import { SessionTimeoutWarning } from '../components/session-timeout-warning';
 import { useSession } from '../hooks/use-session';
 import { SessionLoading } from './session-loading';
 
@@ -23,5 +24,10 @@ export function AuthGuard({
   }, [status, mustChangePassword, router]);
 
   if (status !== 'authenticated' || mustChangePassword) return <SessionLoading />;
-  return children;
+  return (
+    <>
+      {children}
+      <SessionTimeoutWarning />
+    </>
+  );
 }
