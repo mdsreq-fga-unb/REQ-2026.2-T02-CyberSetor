@@ -1,0 +1,244 @@
+/* Página "Como trabalhamos" (docs/gestao/como-trabalhamos.md).
+   Sem este arquivo o conteúdo continua legível: listas, parágrafos e abas. */
+
+/* ---- Atalhos para as seções ---- */
+.md-typeset .f1-atalhos p {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.md-typeset .f1-atalhos a {
+  border: 1px solid var(--md-default-fg-color--lightest);
+  border-radius: 999px;
+  padding: 0.15rem 0.7rem;
+  font-size: 0.75rem;
+}
+
+.md-typeset .f1-atalhos a:hover,
+.md-typeset .f1-atalhos a:focus-visible {
+  border-color: var(--md-accent-fg-color);
+}
+
+/* ---- Ciclo: quatro ritos em fluxo, com seta entre eles ---- */
+.md-typeset .f1-ciclo > ol {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 1.4rem;
+  margin: 1rem 0;
+  padding: 0;
+  list-style: none;
+  counter-reset: f1-rito;
+}
+
+.md-typeset .f1-ciclo > ol > li {
+  position: relative;
+  margin: 0;
+  padding: 0.7rem 0.8rem;
+  border: 1px solid var(--md-default-fg-color--lightest);
+  border-top: 3px solid var(--md-accent-fg-color);
+  border-radius: 0.3rem;
+  background: var(--md-default-bg-color);
+  font-size: 0.72rem;
+  line-height: 1.5;
+  counter-increment: f1-rito;
+}
+
+.md-typeset .f1-ciclo > ol > li::before {
+  content: counter(f1-rito);
+  display: inline-block;
+  min-width: 1.3rem;
+  margin-right: 0.3rem;
+  border-radius: 999px;
+  background: var(--md-accent-fg-color);
+  color: var(--md-default-bg-color);
+  font-weight: 700;
+  text-align: center;
+}
+
+.md-typeset .f1-ciclo > ol > li + li::after {
+  content: "→";
+  position: absolute;
+  top: 0.6rem;
+  left: -1.15rem;
+  color: var(--md-default-fg-color--light);
+  font-weight: 700;
+}
+
+/* ---- Linhas de branches e caminho do pull request ---- */
+.md-typeset .f1-linhas {
+  display: grid;
+  gap: 0.6rem;
+  margin: 1rem 0;
+}
+
+.md-typeset .f1-linha {
+  padding: 0.5rem 0.8rem;
+  border-left: 3px solid var(--md-accent-fg-color);
+  border-radius: 0.2rem;
+  background: var(--md-code-bg-color);
+}
+
+.md-typeset .f1-linha--pr {
+  border-left-color: var(--md-default-fg-color--light);
+}
+
+.md-typeset .f1-linha > p {
+  margin: 0 0 0.3rem;
+  font-size: 0.72rem;
+}
+
+.md-typeset .f1-linha > ul {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.3rem 1.5rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.md-typeset .f1-linha > ul > li {
+  position: relative;
+  margin: 0;
+  padding: 0.2rem 0.5rem;
+  border: 1px solid var(--md-default-fg-color--lightest);
+  border-radius: 0.2rem;
+  background: var(--md-default-bg-color);
+  font-size: 0.7rem;
+  line-height: 1.35;
+}
+
+.md-typeset .f1-linha > ul > li + li::before {
+  content: "→";
+  position: absolute;
+  top: 50%;
+  left: -1.15rem;
+  transform: translateY(-50%);
+  color: var(--md-default-fg-color--light);
+}
+
+.md-typeset .f1-linha small {
+  color: var(--md-default-fg-color--light);
+}
+
+/* ---- Adesão às dailies: barras com a marca da meta ---- */
+.md-typeset .f1-barras {
+  max-width: 34rem;
+  margin: 0.8rem 0;
+}
+
+.md-typeset .f1-barra {
+  display: grid;
+  grid-template-columns: 4.5rem 1fr 3rem;
+  align-items: center;
+  gap: 0.6rem;
+  margin: 0.35rem 0;
+  font-size: 0.72rem;
+}
+
+.md-typeset .f1-barra__trilho {
+  position: relative;
+  height: 0.8rem;
+  border-radius: 0.2rem;
+  background: var(--md-default-fg-color--lightest);
+}
+
+.md-typeset .f1-barra__trilho > span {
+  display: block;
+  height: 100%;
+  border-radius: 0.2rem;
+  background: var(--md-accent-fg-color);
+}
+
+.md-typeset .f1-barra__meta {
+  position: absolute;
+  top: -0.2rem;
+  bottom: -0.2rem;
+  left: 80%;
+  border-left: 2px dashed var(--md-default-fg-color);
+}
+
+.md-typeset .f1-barra__valor {
+  font-weight: 700;
+  text-align: right;
+}
+
+/* ---- Competências: legenda, chips e cartões ---- */
+.md-typeset .f1-legenda {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin: 0.6rem 0;
+}
+
+.md-typeset .f1-chip {
+  display: inline-block;
+  margin: 0.15rem 0;
+  padding: 0 0.45rem;
+  border: 1px solid transparent;
+  border-radius: 999px;
+  font-size: 0.62rem;
+  font-weight: 700;
+  line-height: 1.6;
+}
+
+.md-typeset .f1-chip--adotar {
+  border-color: var(--md-accent-fg-color);
+  background: var(--md-accent-fg-color);
+  color: var(--md-default-bg-color);
+}
+
+.md-typeset .f1-chip--experimentar {
+  border-color: var(--md-accent-fg-color);
+  border-style: dashed;
+  background: var(--md-accent-fg-color--transparent);
+  color: var(--md-typeset-a-color);
+}
+
+.md-typeset .f1-chip--uso {
+  border-color: var(--md-default-fg-color--light);
+  color: var(--md-default-fg-color--light);
+}
+
+.md-typeset .grid.cards.f1-pilha > ul {
+  grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr));
+}
+
+.md-typeset .grid.cards.f1-pilha > ul > li {
+  font-size: 0.7rem;
+  line-height: 1.5;
+}
+
+/* ---- Telas estreitas: ritos em coluna, seta para baixo ---- */
+@media screen and (max-width: 44.9375em) {
+  .md-typeset .f1-ciclo > ol {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 1.2rem;
+  }
+
+  .md-typeset .f1-ciclo > ol > li + li::after {
+    content: "↓";
+    top: -1.15rem;
+    left: 50%;
+  }
+
+  .md-typeset .f1-linha > ul {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+
+  .md-typeset .f1-linha > ul > li {
+    max-width: 100%;
+    overflow-wrap: anywhere;
+  }
+
+  .md-typeset .f1-linha > ul > li + li::before {
+    content: "↓";
+    top: -0.95rem;
+    left: 0.6rem;
+    transform: none;
+    line-height: 1;
+  }
+}

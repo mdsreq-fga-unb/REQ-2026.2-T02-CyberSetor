@@ -1,0 +1,294 @@
+/* Seções 8, 9 e 10: fichas enxutas, visões da priorização e fluxo da DoR e da DoD.
+   As visões são compostas por hooks/fichas.py a partir das tabelas-fonte, que seguem recolhidas. */
+
+/* ---- Ficha da história (10.1) ---- */
+.md-typeset details.ficha .ficha-selos,
+.md-typeset details.ficha .ficha-req {
+  margin: 0.5em 0;
+  line-height: 2;
+}
+
+.md-typeset .fx,
+.md-typeset .fx-cod {
+  display: inline-block;
+  padding: 0 0.5rem;
+  border-radius: 1rem;
+  font-size: 0.64rem;
+  font-weight: 600;
+  line-height: 1.6;
+  white-space: nowrap;
+  vertical-align: middle;
+}
+
+.md-typeset .fx {
+  background: var(--md-default-fg-color--lightest);
+  color: var(--md-default-fg-color);
+}
+
+.md-typeset .fx--destino-mvp {
+  background: var(--md-accent-fg-color);
+  color: var(--md-accent-bg-color);
+}
+
+.md-typeset .fx--epico {
+  background: transparent;
+  border: 1px solid var(--md-default-fg-color--lighter);
+  font-weight: 400;
+}
+
+.md-typeset .fx-cod {
+  border: 1px solid var(--md-typeset-a-color);
+  font-family: var(--md-code-font-family);
+  font-weight: 400;
+}
+
+.md-typeset .fx-cod--cp {
+  border-style: dashed;
+}
+
+.md-typeset .fx-rot {
+  display: inline-block;
+  min-width: 7.5rem;
+  color: var(--md-default-fg-color--light);
+  font-size: 0.68rem;
+  font-weight: 600;
+}
+
+.md-typeset details.ficha .ficha-rodape {
+  margin-top: 0.8em;
+  font-size: 0.66rem;
+  text-align: right;
+}
+
+.md-typeset details.ficha .ficha-rodape a {
+  color: var(--md-default-fg-color--light);
+}
+
+/* ---- Visões da priorização (10.2) ---- */
+.md-typeset .pz-chip {
+  display: inline-block;
+  margin: 0.12rem 0.05rem;
+  padding: 0 0.4rem;
+  border: 2px solid var(--md-accent-fg-color);
+  border-radius: 0.3rem;
+  font-family: var(--md-code-font-family);
+  font-size: 0.62rem;
+  line-height: 1.6;
+  white-space: nowrap;
+  color: var(--md-default-fg-color);
+}
+
+.md-typeset .pz--mvp {
+  background: var(--md-accent-fg-color);
+  color: var(--md-accent-bg-color);
+}
+
+.md-typeset .pz--incremento-2 {
+  background: var(--md-accent-fg-color--transparent);
+}
+
+.md-typeset .pz--incremento-3 {
+  border-color: var(--md-default-fg-color--light);
+  background: var(--md-default-fg-color--lighter);
+}
+
+.md-typeset .pz--posterior {
+  border-color: var(--md-default-fg-color--lighter);
+  color: var(--md-default-fg-color--light);
+}
+
+.md-typeset .pz-prov {
+  border-style: dashed;
+}
+
+.md-typeset .pz-moscow {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0.6rem;
+  margin: 1em 0 0.4em;
+}
+
+@media screen and (max-width: 45em) {
+  .md-typeset .pz-moscow {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.md-typeset .pz-col {
+  padding: 0.5rem 0.6rem;
+  border-top: 4px solid var(--md-default-fg-color--lighter);
+  border-radius: 0.2rem;
+  background: var(--md-code-bg-color);
+}
+
+.md-typeset .pz-col--4 { border-top-color: var(--md-accent-fg-color); }
+.md-typeset .pz-col--3 { border-top-color: var(--md-primary-fg-color); }
+
+.md-typeset .pz-col__topo {
+  margin: 0 0 0.3rem;
+  font-size: 0.7rem;
+}
+
+.md-typeset .pz-col__topo span {
+  color: var(--md-default-fg-color--light);
+}
+
+.md-typeset .pz-col__chips {
+  margin: 0;
+}
+
+.md-typeset .pz-matriz {
+  display: grid;
+  grid-template-columns: minmax(3.5rem, 0.6fr) repeat(4, minmax(0, 1fr));
+  gap: 3px;
+  margin: 1em 0 0.4em;
+  font-size: 0.66rem;
+}
+
+.md-typeset .pz-eixo {
+  padding: 0.3rem;
+  color: var(--md-default-fg-color--light);
+  font-weight: 600;
+  text-align: center;
+  align-self: center;
+}
+
+.md-typeset .pz-cel {
+  min-height: 2.4rem;
+  padding: 0.25rem;
+  background: var(--md-code-bg-color);
+  border-radius: 0.2rem;
+}
+
+.md-typeset .pz-cel--alvo {
+  outline: 2px solid var(--md-accent-fg-color--transparent);
+  background: var(--md-accent-fg-color--transparent);
+}
+
+.md-typeset .pz-vazio {
+  color: var(--md-default-fg-color--lighter);
+}
+
+.md-typeset .pz-numeros {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem 1.6rem;
+  font-size: 0.8rem;
+}
+
+.md-typeset .pz-numeros strong {
+  font-size: 1.4rem;
+  color: var(--md-accent-fg-color);
+}
+
+.md-typeset .pz-mosaico {
+  margin: 0.6em 0 0.4em;
+}
+
+.md-typeset .pz-linha {
+  display: grid;
+  grid-template-columns: minmax(8rem, 15rem) 1fr;
+  gap: 0.2rem 0.8rem;
+  align-items: center;
+  padding: 0.2rem 0;
+  border-bottom: 1px solid var(--md-default-fg-color--lightest);
+}
+
+.md-typeset .pz-linha p {
+  margin: 0;
+}
+
+.md-typeset .pz-linha__cp {
+  font-size: 0.68rem;
+}
+
+.md-typeset .pz-chip.pz-q {
+  min-width: 3.6rem;
+  padding: 0.35rem 0.2rem;
+  text-align: center;
+}
+
+.md-typeset .pz-legenda {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.2rem 1rem;
+  color: var(--md-default-fg-color--light);
+  font-size: 0.62rem;
+}
+
+.md-typeset .pz-amostra {
+  display: inline-block;
+  width: 0.8rem;
+  height: 0.8rem;
+  margin-right: 0.3rem;
+  border: 2px solid var(--md-accent-fg-color);
+  border-radius: 0.15rem;
+  vertical-align: middle;
+}
+
+.md-typeset .pz-amostra.pz-prov {
+  border-color: var(--md-default-fg-color--light);
+}
+
+@media screen and (max-width: 30em) {
+  .md-typeset .pz-linha {
+    grid-template-columns: 1fr;
+  }
+
+  .md-typeset .pz-matriz {
+    grid-template-columns: 2.6rem repeat(4, minmax(0, 1fr));
+    font-size: 0.6rem;
+  }
+
+  .md-typeset .pz-matriz .pz-chip {
+    padding: 0 0.15rem;
+    font-size: 0.55rem;
+  }
+}
+
+/* ---- Fluxo da DoR e da DoD (seção 9) ---- */
+.md-typeset .fluxo-dd {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: stretch;
+  gap: 0.3rem;
+  margin: 1em 0;
+  padding: 0;
+  list-style: none;
+  counter-reset: none;
+}
+
+.md-typeset .fluxo-dd li {
+  flex: 1 1 7rem;
+  margin: 0;
+  padding: 0.5rem 0.6rem;
+  border-radius: 0.3rem;
+  background: var(--md-code-bg-color);
+  font-size: 0.66rem;
+  line-height: 1.4;
+}
+
+.md-typeset .fluxo-dd li strong {
+  display: block;
+  font-size: 0.74rem;
+}
+
+.md-typeset .fluxo-dd li.fluxo-dd__portao {
+  background: var(--md-accent-fg-color);
+  color: var(--md-accent-bg-color);
+}
+
+.md-typeset .fluxo-dd li.fluxo-dd__portao a {
+  color: inherit;
+  text-decoration: underline;
+}
+
+.md-typeset .fluxo-dd li + li::before {
+  content: "→ ";
+  font-weight: 700;
+}
+
+/* ---- Seção 8: matriz e notas recolhidas ---- */
+.md-typeset details.rq-recolhido > summary {
+  font-weight: 600;
+}
